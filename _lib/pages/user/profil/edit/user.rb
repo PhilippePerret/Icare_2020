@@ -15,15 +15,17 @@ class User
   # informations.
   def check_and_save_profil
     new_data = {}
-    [:mail, :pseudo].each do |prop|
-      formkey = "user_#{prop}".to_sym
-      next if param(formkey) == data[prop]
-      new_data.merge!(prop => param(formkey))
+    {mail: :user_mail, pseudo: :user_pseudo}.each do |prop, formprop|
+      next if param(formprop) == data[prop]
+      new_data.merge!(prop => param(formprop))
     end
-    debug "new_data:#{new_data.inspect}"
-    if new_data.empty?
-      message "Aucune donnée n'a été modiifée…"
-      return
+    # debug "new_data:#{new_data.inspect}"
+    return message(ERRORS[:no_data_modified]) if new_data.empty?
+    # Des données ont été modifiées, il faut les checker pour
+    # voir si elles sont correctes
+    require_module('user/checker_data')
+    if User.check_data(new_data, self)
+      save(new_data)
     end
   end #/ check_and_save_profil
 

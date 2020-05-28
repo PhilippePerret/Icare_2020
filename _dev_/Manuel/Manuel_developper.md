@@ -112,6 +112,32 @@ Pour un message dans le journal de suivi. Comme le titre l’indique, on peut en
 
 
 
+### Constantes de messages
+
+On peut trouver dans le fichier `./_lib/required/__first/constants/errors.rb` des constantes de messages d’erreur qui peuvent être appelés par `ERRORS[:<key>]`. On peut trouver de la même manière des messages notice par `MESSAGES[:<key>]`.
+
+Certains messages peuvent même comporter des variables qu’on modifie par :
+
+~~~ruby
+erreur( ERRORS[:message_variable] % {var:'première', var2:'deuxième'})
+
+# ou
+
+erreur( ERRORS[:message_vars] % ['première', 'deuxième'])
+
+# Avec :
+
+ERRORS = {
+  ...
+  message_variable: "Mon %{var} et %{var2}.",
+  message_vars: "Mon %s et %s."
+ }
+~~~
+
+
+
+
+
 ---
 
 ## Helpers de formatage
