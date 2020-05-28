@@ -28,7 +28,7 @@ class Form
   def out
     save_token
     <<-HTML
-<form id="#{data[:id]}" action="" method="#{data[:method]||'POST'}">
+<form id="#{data[:id]}" style="#{size}" action="" method="#{data[:method]||'POST'}">
   <input type="hidden" name="form_token" value="#{token}">
   <input type="hidden" name="form_id" value="#{data[:id]}">
   <input type="hidden" name="route" value="#{data[:action]||data[:route]}">
@@ -40,6 +40,11 @@ class Form
 </form>
     HTML
   end
+
+  # Pour forcer la taille du formulaire
+  def size
+    "width:#{data[:size] ? "#{data[:size]}px" : 'auto'};"
+  end #/ size
 
   # Retourne un token unique pour ce formulaire
   def token
@@ -97,8 +102,9 @@ class Form
   }
 
   def value_field_for dfield
+    dfield.key?(:name) || raise("Il faut définir le paramètre :name")
     dfield.merge!(:id => dfield[:name].gsub(/-/,'_'))
-    dfield.key?(:value) || dfield.merge!(value: '')
+    dfield[:value] ||= dfield[:default] || ''
     dfield.key?(:class) || dfield.merge!(class: '')
     field = TAGS_TYPES[dfield[:type].to_sym]
     field || raise("Type de balise/field inconnu: #{@dfield[:type]}")

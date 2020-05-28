@@ -191,18 +191,44 @@ Les formulaires peuvent être facilement créés grâce à la classe `Form`.
 Pour instancier le formulaire, il lui suffit d’un identifiant et d’un action (ou d’une route) pour le traitement.
 
 ~~~ruby
-form = Form.new({id:'...', route:'...'})
+form = Form.new({id:'...', route:'...', size: ...})
 ~~~
+
+Par exemple :
+
+~~~ruby
+require_module('forms')
+form = Form.new(id:'login-form', route:'user/login', size: 300)
+# => Instance du formulaire
+~~~
+
+
+
+
 
 On peut définir ensuite les rangées par :
 
 ~~~ruby
 form.rows = {
-  '<prop>' => {... définition de la rangée ...},
-  '<prop>' => {... définition de la rangée ...},
+  '<Label prop>' => {... définition de la rangée ...},
+  '<Label prop>' => {... définition de la rangée ...},
   ...
  }
 ~~~
+
+Par exemple :
+
+~~~ruby
+form.rows = {
+  "Votre pseudo" => {name:'user_pseudo', type:'text', value: "Phil"}
+  }
+~~~
+
+> Note 1 : la propriété `:name` et `:type` sont absolument requises.
+>
+> Note 2 : la propriété `:value` peut être remplacée par `:default`.
+
+
 
 Le nom du **bouton de soumission** du formulaire se définit par :
 

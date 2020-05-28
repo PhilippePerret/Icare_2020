@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-NEW_ROUTE = 'user/change_password'
+NEW_ROUTE = 'user/profil/edit'
 DATA_PAGE = {
-  titre: "Changement du mot de passe",
-  body_erb:  false,          # si true, on crée le fichier body.erb
+  titre: "Édition du profil",
+  body_erb:  true,          # si true, on crée le fichier body.erb
   module_user: true,        # si true, on crée 'user.rb'
   icarien_required: true,   # true, une barrière sera "posée"
   admin_required: false,    # si true, une barrière sera posée
@@ -28,6 +28,7 @@ def create_body_erb(folder)
     f.write <<-ERB
 <p>Nouvelle route</p>
     ERB
+  end
 end #/ create_body_erb
 
 def create_module_user(folder)
