@@ -1,0 +1,44 @@
+div#main-cadre {
+  position:relative;
+  border: 4px solid #111111;
+  margin:40px 8% 140px;
+  text-align:center;
+  padding:0.8em;
+  min-width:300px;
+  border-radius:1em;
+  background-color:steelblue;
+  color:white;
+}
+div#main-cadre a {color:white!important}
+div#main-cadre div#titre {
+  font-size:50pt;
+}
+div#main-cadre div#sous-titre {
+  font-size:16.7pt;
+}
+div#legende {
+  font-size:0.71em;
+  color:#111111;
+}
+
+img#papillon {
+  position:absolute;
+  top:7%;
+  left:1%;
+}
+
+section#header {
+  text-align:right;
+}
+section#header a {
+  font-size:13pt;
+  padding:0.1em 1em 0.1em;
+  border:1px solid;
+  border-radius:0.5em;
+  color:steelblue;
+  font-variant:small-caps;
+}
+section#header a:hover {
+  background-color:steelblue;
+  color:white;
+}

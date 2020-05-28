@@ -1,0 +1,27 @@
+<%
+# Gabarit pour afficher le travail de l'icarien, lorsqu'il est actif
+%>
+
+<%
+# --- ÉTAT DES LIEUX DU MODULE ---
+%>
+<div id="etat-des-lieux" class="state-list vert">
+  <%= StateList.row('Module', user.absmodule.data[:name]) %>
+  <%= StateList.row('Commencé le', user.icmodule.f_started_at, {css:'small'}) %>
+  <%= StateList.row('Étape', "#{user.absetape.data[:numero]}. #{user.absetape.data[:titre]}") %>
+  <%= StateList.row('Commencé le', user.icetape.f_started_at, {css:'small'}) %>
+  <hr>
+  <%= StateList.row('À remettre le', echeance_field) %>
+</div>
+
+<%
+# --- DESCRIPTION DU TRAVAIL ---
+%>
+
+<%
+# --- MINI-FAQ DE L'ÉTAPE ---
+%>
+
+<%
+# --- QUAI DES DOCS (DOCUMENTS DE L'ÉTAPE) ---
+%>

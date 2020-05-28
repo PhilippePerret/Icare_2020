@@ -1,0 +1,58 @@
+div.state-list {
+  position:relative;
+  display:inline-block;
+  border:1px solid #CCCCCC;
+  padding:1em 2em;
+}
+
+div.state-list a.btn-modify {
+  position:absolute;
+  right:1em;
+  top:8px;
+  opacity:0.6;
+}
+div.state-list a.btn-modify:hover {
+  opacity:1;
+}
+
+div.state-list.vert,
+div.state-list.vert span.libelle {
+  background-color:cadetblue;
+  color:white;
+}
+
+div.state-list div.row {
+  display: inline-block;
+  width:100%;
+}
+
+div.state-list div.row > span {
+  display:inline-block;
+}
+div.state-list div.row span.libelle {
+  font-size:0.85em;
+  font-style:italic;
+  opacity: 0.6;
+  margin-right:12px;
+}
+
+div.state-list div.row span.libelle {
+  width: 120px;
+}
+div.state-list.left div.row span.libelle {
+  text-align:left!important;
+}
+div.state-list.medium div.row span.libelle {
+  width: 180px;
+}
+div.state-list.large div.row span.libelle {
+  width: 200px;
+}
+
+div.state-list div.row span.libelle:after {
+  /* content:' :' */
+}
+
+div.state-list div.row span.value {
+
+}

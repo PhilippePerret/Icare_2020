@@ -1,0 +1,104 @@
+body {
+  font-family:Avenir;
+  font-size:16pt;
+  max-width: 1200px;
+  margin:0;
+  padding:0;
+}
+
+p { text-align: justify; }
+
+section#header {
+  padding:4px 24px;
+}
+section#header:not(.home) {
+  box-shadow:6px 6px 6px 1px #d2d2d2;
+  margin-bottom:1em;
+  background-color:steelblue;
+}
+section#header div#div-logo {
+  font-size:1.4em;
+  color:white;
+}
+section#header div#div-logo a {
+  color:white;
+}
+section#header div#div-logo img#logo-papillon {
+  width:40px;
+  vertical-align:top;
+}
+section#header div#header-tools {
+  float:right;
+}
+section#header div#header-tools a {
+  font-family:Arial,Geneva,Helvetica;
+  font-size:12.8pt;
+  padding:2px 8px;
+  background-color:rgb(140, 178, 209);
+  color:white;
+}
+section#header div#header-tools a:hover {
+  background-color:white;
+  color:steelblue;
+  transition:0.3s;
+}
+
+h2.page-title {
+  font-weight:normal;
+  color:steelblue;
+  font-size:1.7em;
+  margin:0;
+  margin-left:1em;
+}
+
+section#body {
+  min-height:280px;
+  margin-top:2em;
+}
+
+section#footer {
+  background-color:steelblue;
+  color:white;
+  margin-top:4em;
+  padding:.5em 1em;
+  margin-bottom:0;
+}
+
+pre#debug {
+  margin:0;
+  background-color:black;
+  color:white;
+  padding:1em;
+  font-size:14.5pt;
+  white-space:break-spaces;
+}
+
+/*
+  LE PIED DE PAGE
+*/
+section#footer {
+  text-align:center;
+}
+section#footer a {
+  font-size:11.8pt;
+  margin-right:1em;
+  color:white;
+}
+
+/*
+  LES MESSAGES
+*/
+section#messages {}
+
+section#messages > div {
+  display:inline-block;
+  padding:0 1em;
+}
+section#messages .errors {
+  background-color:#FFCCCC;
+  color:red;
+}
+section#messages .notices {
+  background-color:#ccffcd;
+  color:rgb(0, 136, 45);
+}

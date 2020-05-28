@@ -1,0 +1,24 @@
+<p>Bienvenue dans votre bureau de travail à l'atelier Icare, <%= pseudo %>.</p>
+<div class="goto">
+  🏠 <%= MAIN_LINKS[:work] %>
+</div>
+
+<div class="goto">
+  📣 <%= MAIN_LINKS[:notices] % {nombre: nombre_notifications}%>
+</div>
+
+<div class="goto">
+  📬 <%= MAIN_LINKS[:frigo] % {nombre: nombre_messages_frigo} %>
+</div>
+
+<div class="goto">
+  📚 <a href="bureau/documents">Documents</a>
+</div>
+
+<div class="goto">
+  <%= femme? ? '👩🏻‍💻' : '👨🏻‍💻' %> <a href="bureau/profil">Profil</a>
+</div>
+
+<div class="goto">
+  ⚙️ <a href="bureau/preferences">Préférences</a>
+</div>

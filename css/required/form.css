@@ -1,0 +1,110 @@
+
+form {
+  display:inline-block;
+}
+form:not(.inline){
+  min-width:50%;
+  border:1px solid steelblue;
+  border-radius:9px;
+  padding:2em;
+}
+form div.row {
+  display:flex;
+}
+form div.row span.libelle {
+  width:200px;
+  margin-top:4px;
+}
+form div.row span.value {
+  display:inline-block;
+  flex-grow:2;
+}
+form div.row span.value > * {
+  width:100%;
+  font-family:inherit;
+  font-size:inherit;
+  font-style:inherit;
+}
+
+form div.buttons {
+  text-align:right;
+  margin-top:1em;
+}
+form:not(.inline) div.buttons input[type="submit"] {
+  border:1px solid;
+  padding:9px 40px;
+  color:rgb(27, 106, 227);
+  background-color:white;
+  font-size:inherit;
+  font-family:Arial,Helvetica,Geneva;
+  border-radius:0.3em;
+}
+form div.buttons input[type="submit"]:hover {
+  background-color:rgb(27, 106, 227);
+  color:white;
+}
+form:not(.inline) div.buttons div.other_buttons {
+  float:left;
+}
+
+a.btn,
+input.btn {
+  padding:2px 8px;
+  margin-left:4px;
+  font-family:inherit;
+  font-size:inherit;
+}
+a.btn:not(.main){
+  color:steelblue;
+  background-color:white;
+}
+a.btn:not(.noborder) {
+  border:1px solid;
+  border-radius:4px;
+}
+a.btn:not(.main):hover {
+  background-color:steelblue;
+  color:white;
+}
+a.btn.main {
+  background-color:steelblue;
+  color:white;
+}
+a.btn.main:hover {
+  color:steelblue;
+  background-color:white;
+}
+
+/*
+  MINI FORMULAIRE POUR LES DATES
+*/
+span.date-fields {
+  display:inline-block;
+  white-space:nowrap;
+  border:1px solid transparent;
+}
+span.date-fields.warning {
+  border-color:rgb(226, 53, 53);
+  background-color:rgb(226, 53, 53);
+}
+span.date-fields.warning select {
+  border-color:red;
+}
+
+span.date-fields select,
+span.date-fields select option
+{
+  all:unset;
+  font-family:inherit;
+  font-size:inherit;
+  font-style:inherit;
+}
+
+span.date-fields select {
+  margin-right:6px;
+  border:1px solid;
+  padding:1px 3px;
+}
+span.date-fields select:not(.warning){
+  border-color:#CCCCCC;
+}

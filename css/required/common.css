@@ -1,0 +1,19 @@
+/*
+  Les styles communs à l'atelier
+*/
+a, a:link, a:hover, a:visited, a:active {
+  text-decoration:none;
+  color:steelblue;
+}
+
+.red {color:red}
+.blue {color:blue}
+
+.small {font-size:0.75em;}
+
+.center {text-align:center}
+.right {text-align:right}
+.left {text-align:left}
+
+.mt1 {margin-top:1em}
+.mt2 {margin-top:2em}

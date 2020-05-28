@@ -1,0 +1,14 @@
+<div class="state-list medium left">
+  <%= StateList.button_modify('user/profil/edit',{title:'Modifier les données du profil'}) %>
+  <% [
+    ['Pseudo', pseudo],
+    ['Mail', data[:mail]],
+    ['Inscription', formate_date(data[:created_at])],
+    ['Mot de passe', '<a href="user/change_password">Changer le mot de passe</a>'.freeze],
+    ['Module courant', data[:icmodule_id]],
+    ['Après identification', redirection_apres_login],
+    ['Session', session.id]
+  ].each do |pair| %>
+    <%= StateList.row(pair.first, pair.last) %>
+  <% end %>
+</div>
