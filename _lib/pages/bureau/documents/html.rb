@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "#{lien_retour_bureau} 🏠 vos documents"
+    "#{RETOUR_BUREAU}🏠 vos documents".freeze
   end
   def exec
     # Code à exécuter avant la construction de la page

@@ -32,6 +32,6 @@ end
 # Affichage du debug
 # -------------------------
 # Pour afficher le débug en bas de page (il faut être en offline)
-SHOW_DEBUG = false # pour ne jamais le montrer
-# SHOW_DEBUG = OFFLINE && true # pour l'afficher en offline
+# SHOW_DEBUG = false # pour ne jamais le montrer
+SHOW_DEBUG = OFFLINE && true # pour l'afficher en offline
 # SHOW_DEBUG = true # pour l'afficher dans tous les cas

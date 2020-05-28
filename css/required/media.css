@@ -12,6 +12,12 @@
   section#messages {
     margin-left:2em;
   }
+  section#footer {
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -38,4 +44,9 @@
   section#messages {
     margin-left:0;
   }
+
+  section#footer {
+    position:relative;
+  }
+
 }

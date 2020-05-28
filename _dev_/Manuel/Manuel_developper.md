@@ -116,13 +116,30 @@ Pour un message dans le journal de suivi. Comme le titre l’indique, on peut en
 
 ## Helpers de formatage
 
+
+
+### Constantes LIENS fréquents
+
+#### Liens de retour (pour revenir à une partir principale)
+
+~~~ruby
+RETOUR_BUREAU		# Pour retourner au bureau (avec le signe ↩︎ devant)
+RETOUR_PROFIL		# Pour retourner au profil (avec le signe ↩︎ devant)
+~~~
+
+On peut trouver d’autres liens dans le fichier `./_lib/required/__first/constants/links.rb`.
+
+
+
+### Blocs particuliers
+
 Plusieurs méthodes permettent de produire rapidement du code, lorsqu’il est fréquent. C’est le cas des méthodes suivantes.
 
 > De manière générale, on trouve les méthodes helpers dans le dossier `./lib/required/__first/handies` mais il faut comprendre aussi que des méthodes particulières sont définies dans les modules (par exemple les helpers pour les formulaires, dans le module 'forms').
 
 
 
-### `divGoto("... inner ...")`
+#### `divGoto("... inner ...")`
 
 Pour écrire un lien dans un « bloc » comme ceux qu’on peut trouver sur la page de plan ou sur les accueils de bureau.
 
@@ -132,7 +149,7 @@ Pour écrire un lien dans un « bloc » comme ceux qu’on peut trouver sur la p
 
 
 
-### `StateList.row("libelle", value[, {options}])`
+#### `StateList.row("libelle", value[, {options}])`
 
 Génère une rangée de type « Statelist » comme on peut en trouver sur la page du travail courant pour afficher l’état du module (nom, échéance)
 
@@ -164,7 +181,7 @@ Ainsi, si on veut une liste avec large libellé alignés à gauche, on utilise 
 
 
 
-#### Bouton pour modifier les données de la StateList
+##### Bouton pour modifier les données de la StateList
 
 Si les données contenues dans la **StateList** sont modifiables, on peut ajouter un bouton (crayon pour le moment) qui permet de se rendre au formulaire de modification :
 

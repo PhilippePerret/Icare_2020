@@ -2,7 +2,7 @@
 require_module('user/modules')
 class HTML
   def titre
-    "#{lien_retour_bureau} 🏠 Votre travail"
+    "#{RETOUR_BUREAU}🏠 Votre travail".freeze
   end
   def exec
     icarien_required

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "#{lien_retour_bureau} 🏠 Votre profil"
+    "#{RETOUR_BUREAU}🏠 Votre profil"
   end
   def exec
     # Code à exécuter avant la construction de la page
