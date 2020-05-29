@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{retour_base}👩‍💼👨🏾‍🦱👨‍⚕️ Parcours fictif de 3 icarien·ne·s".freeze
+    "👩‍🦰👨🏾‍🦱🧔 Parcours fictif de 3 icarien·ne·s".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

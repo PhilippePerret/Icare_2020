@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{retour_base}🦋 Les 10 bonnes raisons de choisir l’atelier Icare".freeze
+    "🦋 Les 10 bonnes raisons de choisir l’atelier Icare".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

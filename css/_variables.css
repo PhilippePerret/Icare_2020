@@ -13,4 +13,6 @@
 
   /* Par exemple la table des matières flottante */
   --contre-color-normal: rgb(59, 186, 184);
+
+  --text-max-width: 720px;
 }

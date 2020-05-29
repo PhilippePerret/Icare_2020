@@ -29,12 +29,24 @@ class HTML
     @lien_reussites ||= formate_lien(route:'overview/reussites', titre: 'belles réussites')
   end #/ lien_reussites
 
+  def lien_parcours
+    @lien_parcours ||= formate_lien(route:'overview/parcours', titre: 'Parcours de 3 icarien·ne·s')
+  end #/ lien_reussites
+
+  def lien_raisons
+    @lien_raisons ||= formate_lien(route:'overview/raisons', titre: '10 raisons de choisir l’atelier Icare')
+  end #/ lien_reussites
+
   def lien_documents_candidature
     @lien_documents_candidature ||= formate_lien(route:'user/signup', titre:'documents de candidature')
   end #/ lien_documents_candidature
 
   def lien_signup(titre = 's’inscrire')
     formate_lien(route:'user/signup', titre: titre)
+  end #/ lien_signup
+
+  def lien_contact(titre = 'contact')
+    formate_lien(route:'contact', titre: titre)
   end #/ lien_signup
 
   def lien_narration

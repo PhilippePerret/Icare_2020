@@ -28,11 +28,3 @@ end
 def cgi
   URL.cgi
 end
-
-def deserb relpath, owner = nil
-  Deserb.deserb(relpath, owner, Kernel.caller[0].split(':')[0])
-end
-
-def redirect_to(route, options = nil)
-  Retour.redirect_to(route, options)
-end

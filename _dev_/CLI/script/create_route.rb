@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-NEW_ROUTE = 'overview/raisons'
+NEW_ROUTE = 'overview/reussites'
 DATA_PAGE = {
-  titre: "🦋 Les 10 bonnes raisons de choisir l’atelier Icare",
+  titre: "🎉 Les belles réussites (hall of fame)",
   body_erb:  true,          # si true, on crée le fichier body.erb
   form: false,              # si true, on requiert le module 'forms'
   module_user: false,        # si true, on crée 'user.rb'
@@ -57,8 +57,8 @@ class HTML
   def exec
     #{"icarien_required\n" if DATA_PAGE[:icarien_required]}#{"admin_required\n" if DATA_PAGE[:admin_required]}
   end
+  # Fabrication du body
   def build_body
-    # Construction du body
     @body = #{DATA_PAGE[:body_erb] ? 'deserb(\'body\', self)' : "<<-HTML#{RC2}  HTML"}
   end
 end #/HTML

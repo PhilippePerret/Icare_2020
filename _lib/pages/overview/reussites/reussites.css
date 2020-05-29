@@ -1,0 +1,25 @@
+div.div-reussite {
+  font-family:Courier;
+  font-size:1em;
+  font-variant:small-caps;
+  margin-bottom:1em;
+  text-align:justify
+}
+div.div-reussite div.date {
+  float:left;
+  color:#777;
+  margin-right:2em;
+  font-family:Helvetica;
+  font-size:11pt;
+  color:#6495ed;
+  font-weight:bold
+}
+div.div-reussite div.content {
+  margin-left:8em
+}
+div.div-reussite div.content p {
+  margin:13px 0
+}
+div.div-reussite div.content p:first-child {
+  margin-top:0
+}
