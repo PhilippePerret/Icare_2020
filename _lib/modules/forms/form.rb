@@ -95,11 +95,6 @@ class Form
     end.join(RC)
   end
 
-  TAGS_TYPES = {
-    text: '<input type="text" id="%{id}" name="%{name}" value="%{value}" class="%{class}" />'.freeze,
-    password: '<input type="password" id="%{id}" name="%{name}" value="%{value}" class="%{class}" />'.freeze,
-    hidden: '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze
-  }
 
   def value_field_for dfield
     dfield.key?(:name) || raise("Il faut définir le paramètre :name")

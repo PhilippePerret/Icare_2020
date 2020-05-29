@@ -1,14 +1,17 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-NEW_ROUTE = 'user/profil/edit'
+NEW_ROUTE = nil
 DATA_PAGE = {
-  titre: "Édition du profil",
+  titre: "📧\#{SPACE}Contact",
   body_erb:  true,          # si true, on crée le fichier body.erb
-  module_user: true,        # si true, on crée 'user.rb'
-  icarien_required: true,   # true, une barrière sera "posée"
+  form: false,              # si true, on requiert le module 'forms'
+  module_user: false,        # si true, on crée 'user.rb'
+  icarien_required: false,   # true, une barrière sera "posée"
   admin_required: false,    # si true, une barrière sera posée
 }
+
+raise "Il faut définir la route" if NEW_ROUTE.nil?
 
 def create_route
   require './_lib/constants'
@@ -45,9 +48,10 @@ end
 def html_code_type
   <<-RUBY
 # encoding: UTF-8
+#{'require_module(\'forms\')' if DATA_PAGE[:form]}
 class HTML
   def titre
-    "#{DATA_PAGE[:titre]||"TITRE MANQUANT"}"
+    "#{DATA_PAGE[:titre]||"TITRE MANQUANT"}".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

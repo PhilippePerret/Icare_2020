@@ -34,10 +34,16 @@ div.goto {
   text-align:center;
   margin-top:1em;
   margin-right:12px;
-  background-color:rgb(42, 127, 168);
   color:white;
   border:1px solid;
 }
+div.goto:not(.exergue) {
+  background-color:var(--fond-inner-object);
+}
+div.goto.exergue {
+  background-color:var(--fond-exergue-inner-object);
+}
+
 div.goto:hover {
   background-color:#EEEEEE;
   border-color:rgb(42, 127, 168);

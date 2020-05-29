@@ -1,0 +1,13 @@
+:root {
+  /* Pour les titres de page, le fond du bandeau et du footer, etc. */
+  --dark-color-normal: steelblue;
+  --inverse-dark-color-normal: white; /* son opposé */
+
+  /* Pour les liens-outils principaux de l'entête */
+  --lighter-color-normal: rgb(140, 178, 209);
+  --inverse-lighter-color-normal: white;
+
+  /* Pour les block goto, etc. */
+  --fond-inner-object: rgb(42, 127, 168);
+  --fond-exergue-inner-object: cadetblue;
+}

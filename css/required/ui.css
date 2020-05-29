@@ -14,14 +14,14 @@ section#header {
 section#header:not(.home) {
   box-shadow:6px 6px 6px 1px #d2d2d2;
   margin-bottom:1em;
-  background-color:steelblue;
+  background-color:var(--dark-color-normal);
 }
 section#header div#div-logo {
   font-size:1.4em;
-  color:white;
+  color:var(--inverse-dark-color-normal);
 }
 section#header div#div-logo a {
-  color:white;
+  color:var(--inverse-dark-color-normal);
 }
 section#header div#div-logo img#logo-papillon {
   width:40px;
@@ -34,18 +34,18 @@ section#header div#header-tools a {
   font-family:Arial,Geneva,Helvetica;
   font-size:12.8pt;
   padding:2px 8px;
-  background-color:rgb(140, 178, 209);
-  color:white;
+  background-color:var(--lighter-color-normal);
+  color:var(--inverse-lighter-color-normal);
 }
 section#header div#header-tools a:hover {
   background-color:white;
-  color:steelblue;
+  color:var(--dark-color-normal);
   transition:0.3s;
 }
 
 h2.page-title {
   font-weight:normal;
-  color:steelblue;
+  color:var(--dark-color-normal);
   font-size:1.7em;
   margin:0;
   margin-left:1em;
@@ -57,7 +57,7 @@ section#body {
 }
 
 section#footer {
-  background-color:steelblue;
+  background-color:var(--dark-color-normal);
   color:white;
   margin-top:4em;
   padding:.5em 1em;
@@ -82,7 +82,7 @@ section#footer {
 section#footer a {
   font-size:11.8pt;
   margin-right:1em;
-  color:white;
+  color:var(--inverse-dark-color-normal);
 }
 
 /*

@@ -17,7 +17,7 @@ div.state-list a.btn-modify:hover {
 
 div.state-list.vert,
 div.state-list.vert span.libelle {
-  background-color:cadetblue;
+  background-color: var(--fond-exergue-inner-object);
   color:white;
 }
 

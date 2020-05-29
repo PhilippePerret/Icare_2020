@@ -1,16 +1,5 @@
 # encoding: UTF-8
-HIDDEN_FIELD  = '<input type="hidden" name="%{name}" value="%{value}" />'.freeze
-SUBMIT_BUTTON = '<input type="submit" class="btn" value="%{name}" />'.freeze
-
-SPAN_TAG = '<span class="%{class}">%{text}</a>'.freeze
-
-SPAN_DATE_FIELDS = '<span id="%{prefix_id}-date-fields" class="%{class}">%{select_day}%{select_month}%{select_year}</span>'
-OPTION_TAG = '<option value="%{value}">%{titre}</option>'.freeze
-OPTION_SELECTED_TAG = '<option value="%{value}" selected>%{titre}</option>'.freeze
-SELECT_TAG = '<select id="%{id}" name="%{name}" class="select-%{prefix} %{class}">%{options}</select>'.freeze
-
 class Form
-
 class << self
   # Retourne un "champ de date", c'est-à-dire trois menus qui
   # permettent de définir ou d'afficher une date

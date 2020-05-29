@@ -3,6 +3,9 @@
   Accès interdit à une page
 =end
 class HTML
+  def titre
+    "⚡#{SPACE}Accès interdit"
+  end #/ titre
   def build_body
     @body = <<-HTML
 <div class="only-message">Désolé, mais l’accès à cette page vous est interdit.</div>

@@ -4,6 +4,9 @@ class HTML
     @user_init = user
     user.deconnecte
   end
+  def titre
+    "👋#{SPACE}À bientôt".freeze
+  end #/ titre
   def build_body
     @body = deserb('body', @user_init)
   end

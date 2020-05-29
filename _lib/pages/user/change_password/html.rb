@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "Changement du mot de passe"
+    "🔏#{SPACE}Changement du mot de passe"
   end
   # Code à exécuter avant la construction de la page
   def exec

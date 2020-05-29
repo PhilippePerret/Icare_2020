@@ -5,9 +5,11 @@
 
 # Pour construire un div "goto", comme on en trouve à l'accueil des sections
 # en général, avec des blocs cliquables.
-def divGoto(inner)
+def divGoto(inner, options = {})
+  css = ['goto']
+  css << 'exergue' if options[:exergue]
   <<-HTML
-<div class="goto">
+<div class="#{css.join(' ')}">
   #{inner}
 </div>
   HTML

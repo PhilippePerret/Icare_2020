@@ -4,6 +4,7 @@ class HTML
 
   # Construction complète de la page
   def build_page
+    add_css('./css/_variables.css')
     Page.load(route)
     proceed_exec if self.respond_to?(:exec)
     build_body
