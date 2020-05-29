@@ -36,3 +36,9 @@ def formate_date(time, options = nil)
   end
   return d
 end #/ formate_date
+
+# Pour formater un lien
+def formate_lien(hdata)
+  hdata.key?(:class) || hdata.merge!(class:'')
+  TAG_LIEN % hdata
+end #/ formate_lien

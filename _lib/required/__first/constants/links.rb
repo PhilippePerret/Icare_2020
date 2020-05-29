@@ -2,6 +2,7 @@
 =begin
   Différentes constantes qui servent souvent
 =end
+TAG_LIEN = '<a href="%{route}" class="%{class}">%{titre}</a>'.freeze
 RETOUR_LINK = "<a href='%{route}' class='small'><span style='vertical-align:sub;'>↩︎</span>&nbsp;%{titre}</a>&nbsp;".freeze
 
 

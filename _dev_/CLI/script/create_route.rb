@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-NEW_ROUTE = nil
+NEW_ROUTE = 'overview/raisons'
 DATA_PAGE = {
-  titre: "📧\#{SPACE}Contact",
+  titre: "🦋 Les 10 bonnes raisons de choisir l’atelier Icare",
   body_erb:  true,          # si true, on crée le fichier body.erb
   form: false,              # si true, on requiert le module 'forms'
   module_user: false,        # si true, on crée 'user.rb'
@@ -59,9 +59,7 @@ class HTML
   end
   def build_body
     # Construction du body
-    @body = <<-HTML
-
-    HTML
+    @body = #{DATA_PAGE[:body_erb] ? 'deserb(\'body\', self)' : "<<-HTML#{RC2}  HTML"}
   end
 end #/HTML
   RUBY

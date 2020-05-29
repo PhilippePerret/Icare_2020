@@ -16,7 +16,7 @@ class HTML
 
 #{divGoto('<a href="user/profil">'+user.visage+' Profil</a>'.freeze) if user.icarien?}
 
-#{divGoto('<a href="overview/home">🔬 Aperçu</a>'.freeze)}
+#{divGoto('<a href="overview/home">🌎 Aperçu</a>'.freeze)}
 
 #{divGoto('<a href="overview/reussites">👍 Belles réussites</a>'.freeze)}
 
@@ -29,7 +29,7 @@ class HTML
 
 #{divGoto('<a href="contact">📧 Contact</a>'.freeze)}
 
-#{divGoto("🔎 #{MAIN_LINKS[:aide]}".freeze)}
+#{divGoto("⚓ #{MAIN_LINKS[:aide]}".freeze)}
 
 #{divGoto('<a href="overview/temoignages">🖼 Témoignages</a>'.freeze)}
 

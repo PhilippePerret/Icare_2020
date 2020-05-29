@@ -4,4 +4,9 @@ class << self
     @current ||= self.new
   end
 end #/<< self
+
+def bind
+  binding()
+end #/ bind
+
 end

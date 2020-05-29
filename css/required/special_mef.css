@@ -73,3 +73,28 @@ div.goto:hover span.pastille {
   background-color:red!important;
   color:white!important;
 }
+
+/*
+  Les tables des matières flottantes dans la page
+*/
+div.float-tdm {
+  display:inline-block;
+  width:auto;
+  max-width:50%;
+  border:1px solid var(--contre-color-normal);
+  /* border:1px solid var(--dark-color-normal); */
+  border-radius:1em;
+  padding:1em 2em;
+}
+
+div.float-tdm:not(.left) {
+  float:right;
+  margin:3em 0 2em 3em;
+}
+div.float-tdm.left {
+  margin:3em 3em 2em 0;
+}
+div.float-tdm > a {
+  display:block;
+  color: var(--contre-color-normal);
+}

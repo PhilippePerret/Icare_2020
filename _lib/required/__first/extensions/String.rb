@@ -2,6 +2,7 @@
 
 RC = '
 '.freeze
+RC2 = (RC*2).freeze
 
 BR = '<br/>'.freeze
 

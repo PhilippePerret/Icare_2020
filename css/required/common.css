@@ -5,6 +5,11 @@ a, a:link, a:hover, a:visited, a:active {
   text-decoration:none;
   color:steelblue;
 }
+/* Un lien courant dans une table des matières */
+a.current {
+  font-style:italic!important;
+  opacity:0.4;
+}
 
 .red {color:red}
 .blue {color:blue}
@@ -14,6 +19,9 @@ a, a:link, a:hover, a:visited, a:active {
 .center {text-align:center}
 .right {text-align:right}
 .left {text-align:left}
+
+.fleft {float:left}
+.fright {float:right}
 
 .mt1 {margin-top:1em}
 .mt2 {margin-top:2em}

@@ -525,7 +525,11 @@ Pour les autres méthodes, cf. le module `./lib/required/__first/ContainerClass.
 
 
 
+## Annexe
 
+### Émojis
+
+Cf. le site [Smiley cool](https://smiley.cool/fr/emoji-list.php).
 
 
 
