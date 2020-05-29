@@ -97,14 +97,24 @@ class Form
 
 
   def value_field_for dfield
-    dfield.key?(:name) || raise("Il faut définir le paramètre :name")
-    dfield.merge!(:id => dfield[:name].gsub(/-/,'_'))
-    dfield[:value] ||= dfield[:default] || ''
-    dfield.key?(:class) || dfield.merge!(class: '')
+    dfield = default_values_for(dfield)
     field = TAGS_TYPES[dfield[:type].to_sym]
     field || raise("Type de balise/field inconnu: #{@dfield[:type]}")
     field % dfield
   end
+
+  # Appliquer les valeurs par défaut manquantes et les retourne
+  def default_values_for(dfield)
+    dfield.key?(:name) || raise("Il faut définir le paramètre :name")
+    dfield.merge!(:id => dfield[:name].gsub(/-/,'_'))
+    dfield[:value] ||= dfield[:default] || ''
+    dfield.key?(:class) || dfield.merge!(class: '')
+    case dfield[:type].to_s
+    when 'textarea'.freeze
+      dfield.key?(:height) || dfield.merge!(height: 60)
+    end
+    return dfield
+  end #/ default_values_for
 
 
   def build_other_buttons

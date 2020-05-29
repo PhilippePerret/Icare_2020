@@ -173,6 +173,24 @@ Pour écrire un lien dans un « bloc » comme ceux qu’on peut trouver sur la p
 
 
 
+Quand il y en a plusieurs et qu’on veut en mettre en exergue, on peut ajouter la classe `exergue` de cette façon :
+
+~~~html
+<div class="goto exergue">
+  ... le contenu ...
+</div>
+~~~
+
+Avec la méthode divGoto :
+
+~~~ruby
+div = divGoto('<inner>', exergue: true)
+~~~
+
+
+
+
+
 
 
 #### `StateList.row("libelle", value[, {options}])`

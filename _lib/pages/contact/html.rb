@@ -17,10 +17,10 @@ class HTML
 
   # Construit et retourne le formulaire
   def formulaire
-    form = Form.new(id:'contact-form', size:700)
+    form = Form.new(id:'contact-form', size:700, route:'contact')
     rows = {
-      'Titre' => {name:'envoi_titre', type:'text'},
-      'Message' => {name:'envoi_message', type:'textarea'}
+      'Titre'   => {name:'envoi_titre', type:'text'},
+      'Message' => {name:'envoi_message', type:'textarea', height:260}
     }
     unless user.icarien?
       rows.merge!('Votre mail' => {name:'envoi_mail', type:'text'})

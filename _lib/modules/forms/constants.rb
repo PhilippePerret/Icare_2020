@@ -11,7 +11,7 @@ SELECT_TAG = '<select id="%{id}" name="%{name}" class="select-%{prefix} %{class}
 
 INPUT_TEXT_TAG = '<input type="text" id="%{id}" name="%{name}" value="%{value}" class="%{class}" />'.freeze
 PASSWORD_TAG = '<input type="password" id="%{id}" name="%{name}" value="%{value}" class="%{class}" />'.freeze
-TEXTAREA_TAG = '<textarea id="%{id}" name="%{name}" class="%{class}">%{value}</textarea>'.freeze
+TEXTAREA_TAG = '<textarea id="%{id}" name="%{name}" class="%{class}" style="height:%{height}px;">%{value}</textarea>'.freeze
 
 TAGS_TYPES = {
   text:       INPUT_TEXT_TAG,
