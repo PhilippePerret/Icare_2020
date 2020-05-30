@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-require_module('forms')
+require_module('form')
 
 class IcModule < ContainerClass
 end #/IcModule
@@ -29,11 +29,11 @@ end #/IcEtape < ContainerClass
 class User
   def echeance_field
     '<form method="POST" class="inline">' +
-      HIDDEN_FIELD % {value:'bureau/travail', name:'route'} +
-      HIDDEN_FIELD % {value:'echeance', name:'ope'} +
+      Tag.hidden(value:'bureau/travail', name:'route') +
+      Tag.hidden(value:'echeance', name:'ope') +
       user.icetape.f_expected_end +
-      SUBMIT_BUTTON % {name: 'Modifier l’échéance'} +
-      SPAN_TAG % {text:'  (après l’avoir ajustée)'.freeze, class:'small'} +
+      Tag.submit_button('Modifier l’échéance') +
+      Tag.span(text:'  (après l’avoir ajustée)'.freeze, class:'small') +
     '</form>'
   end
 

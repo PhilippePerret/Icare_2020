@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "🎉 Les belles réussites (hall of fame)".freeze
+    "#{DIV_AIR}🎉 Les belles réussites (hall of fame)#{DIV_AIR}".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -19,8 +19,11 @@ class HTML
     reussites = data_reussites.collect do |dreussite|
                   succ = Reussite.new(*dreussite.values)
                   succ.out
-                end.join
-    File.open(path_erb,'wb'){|f| f.write reussites}
+                end
+    # On insert les deux tables des matières
+    reussites.unshift(tdm)
+    reussites.insert(-3, tdm)
+    File.open(path_erb,'wb'){|f| f.write reussites.join}
   end #/ update_data_erb
 
   def data_reussites

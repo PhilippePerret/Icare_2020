@@ -6,7 +6,7 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     icarien_required
-    require_module('forms')
+    require_module('form')
     if param(:form_id) == 'profil-form'
       user.check_and_save_profil
     end

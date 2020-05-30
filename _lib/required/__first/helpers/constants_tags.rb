@@ -5,3 +5,5 @@
 
 # Pour un bouton modifié (utilisé pour le moment dans les StateLists)
 TAG_BUTTON_MODIFY = '<a href="%{route}" class="%{class}" title="%{title}">✏️</a>'.freeze
+
+DIV_AIR = '<div class="mt1">&nbsp;</div>'.freeze

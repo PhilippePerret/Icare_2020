@@ -148,6 +148,24 @@ ERRORS = {
 
 
 
+### `Tag`, builder de balises
+
+La classe `Tag`, définies dans [./_lib/required/__first/helpers/Tags.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tags.rb), permet de créer très facilement des liens à l’aide de la méthode :
+
+~~~ruby
+Tag.<type tage>({<params>})
+~~~
+
+Par exemple :
+
+~~~ruby
+lien = Tag.link({route:"ma/route", titre:"Suivre ma route", class:'class-du-lien'})
+~~~
+
+Voir dans le fichier ci-dessus toutes les méthodes utilisables.
+
+
+
 ### Constantes LIENS fréquents
 
 #### Liens de retour (pour revenir à une partir principale)
@@ -157,9 +175,7 @@ RETOUR_BUREAU		# Pour retourner au bureau (avec le signe ↩︎ devant)
 RETOUR_PROFIL		# Pour retourner au profil (avec le signe ↩︎ devant)
 ~~~
 
-On peut trouver d’autres liens dans le fichier `./_lib/required/__first/constants/links.rb`.
-
-
+<a name="specsblocks"></a>
 
 ### Blocs particuliers
 
@@ -262,7 +278,7 @@ form = Form.new({id:'...', route:'...', size: ...})
 Par exemple :
 
 ~~~ruby
-require_module('forms')
+require_module('form')
 form = Form.new(id:'login-form', route:'user/login', size: 300)
 # => Instance du formulaire
 ~~~
@@ -360,7 +376,7 @@ Noter qu’il faut requérir le module 'forms'.
 Exemple :
 
 ~~~ruby
-require_module('forms')
+require_module('form')
 
 monForm = Form.date_field({prefix_id:'pref', format_mois: :court})
 ~~~
@@ -368,7 +384,7 @@ monForm = Form.date_field({prefix_id:'pref', format_mois: :court})
 Pour récupérer la nouvelle date, il suffira de faire :
 
 ~~~ruby
-require_module('forms')
+require_module('form')
 
 newDate = Form.date_field_value('pref') 
 # => instance Time

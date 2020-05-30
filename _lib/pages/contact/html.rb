@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require_module('forms')
+require_module('form')
 class HTML
   def titre
     "📧#{SPACE}Contact".freeze

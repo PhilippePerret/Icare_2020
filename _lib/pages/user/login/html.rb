@@ -2,7 +2,7 @@
 =begin
   Page d'identification
 =end
-require_module('forms')
+require_module('form')
 class HTML
 def titre
   "🔐#{SPACE}Identification"
