@@ -1,0 +1,19 @@
+/* Liste contenant des documents (en cartes) */
+div.qdd-documents {
+  
+}
+div.qdd-card {
+  display:inline-block;
+  width: 15em;
+  padding:1em;
+  border:1px solid steelblue;
+  border-radius:12px;
+  font-size:0.9em;
+  margin:4px;
+}
+
+div.qdd-card div,
+div.qdd-card span
+{
+  overflow:hidden;
+}
