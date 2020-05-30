@@ -29,6 +29,10 @@ Commencer par lire les [principes fondateurs](#principes) du nouveau site.
 
 Créer le dossier de la nouvelle route dans `./lib/pages/`. Par exemple, si la route est `user/pourvoir`,  on doit créer le dossier `./lib/pages/user/pourvoir/`. Ce dossier sera  appelé **dossier de la route** dans la suite.
 
+> Il existe un script pratique, à `./_dev_/CLI/scrip/create_route.rb` qui permet de créer une route très facilement et efficacement.
+
+**Attention** : une route ne doit pas être créée dans une autre, puisque tout le dossier d’une route est entièrement chargé, ruby, css, javascript quand elle est appelée (donc le dossier de l’autre route à l’intérieur serait lui chargé…).
+
 Créer dans ce *dossier de la route*  un fichier `html.rb` (ou autre nom, peu importe) qui contienne :
 
 ~~~ruby
