@@ -29,9 +29,18 @@ a.current {
 .mt1 {margin-top:1em}
 .mt2 {margin-top:2em}
 
+.mr1 {margin-right:8px}
+
 .noborder {
   border:unset!important;
 }
 .nomargin {
   margin:unset!important;
+}
+.nowrap {
+  white-space:nowrap;
+}
+
+.vmiddle {
+  vertical-align:middle;
 }

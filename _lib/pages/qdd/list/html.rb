@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{retour_qdd}📑 Liste des documents filtrés".freeze
+    "#{DIV_AIR}#{retour_qdd}📑 Liste des documents filtrés".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -22,8 +22,7 @@ class HTML
   def build_body
     @body = <<-HTML
 #{qdd.filtre_formated}
-<div id="qdd-documents">
-</div>
+#{qdd.documents_filtred_formated}
     HTML
   end
 
