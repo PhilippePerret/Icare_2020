@@ -32,7 +32,7 @@ h2.page-title {
 
 p, .p, ul.p li {
   text-align: justify;
-  max-width: var(--text-max-width);
+  /* max-width: var(--text-max-width); */
   opacity:0.8;
 }
 ul.p {
@@ -100,6 +100,13 @@ section#body {
   min-height:280px;
   margin-top:2em;
   margin-bottom: 10em;
+}
+
+section#body > * {
+  max-width: var(--text-max-width);
+}
+section#body > fieldset {
+  max-width: calc(var(--text-max-width) - 2em);
 }
 
 section#footer {

@@ -9,6 +9,9 @@ class HTML
       raise "La procédure de redémarrage de module doit être implémentée."
     when 'echeance'
       user.icetape.modify_echeance
+    when 'minifaq-add-question'
+      # TODO
+      message("Je dois ajouter une question minifaq")
     end
   end #/ exec_operation
 

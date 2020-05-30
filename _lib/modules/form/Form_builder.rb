@@ -28,7 +28,7 @@ class Form
   def out
     save_token
     <<-HTML
-<form id="#{data[:id]}" style="#{size}" action="" method="#{data[:method]||'POST'}">
+<form id="#{data[:id]}"#{form_style} action="" method="#{data[:method]||'POST'}" class="#{css}">
   <input type="hidden" name="form_token" value="#{token}">
   <input type="hidden" name="form_id" value="#{data[:id]}">
   <input type="hidden" name="route" value="#{data[:action]||data[:route]}">
@@ -41,11 +41,31 @@ class Form
     HTML
   end
 
-  # Pour forcer la taille du formulaire
-  def size
-    "width:#{data[:size] ? "#{data[:size]}px" : 'auto'};"
-  end #/ size
+  def form_style
+    @form_style ||= begin
+      sty = []
+      sty << "width:#{data[:size]}px;" if data.key?(:size)
+      sty.empty? ? '' : " style=\"#{sty.join(';')}\""
+    end
+  end #/ form_style
 
+  # Pour voir s'il faut ajouter du style au .libelle
+  def libelle_style
+    @libelle_style ||= begin
+      sty = []
+      sty << "width:#{data[:libelle_size]}px;" if data.key?(:libelle_size)
+      sty.empty? ? '' : " style=\"#{sty.join(';')}\""
+    end
+  end #/ libelle_style
+
+  # Retourne la class CSS du formulaire (tag form)
+  def css
+    @css ||= begin
+      c = []
+      c << data[:class] if data.key?(:class)
+      c.join(' ')
+    end
+  end #/ css
   # Retourne un token unique pour ce formulaire
   def token
     @token ||= Time.now.to_i.to_s
@@ -85,7 +105,7 @@ class Form
       else
         <<-HTML
 <div class="row">
-  <span class="libelle">#{label}</span>
+  <span class="libelle"#{libelle_style}>#{label}</span>
   <span class="value">
     #{value_field_for(dfield)}
   </span>

@@ -14,3 +14,9 @@ def divGoto(inner, options = {})
 </div>
   HTML
 end #/ divGoto
+
+def divRow(libelle, value, options = {})
+  spanLib = Tag.span(text:libelle,  class:'libelle')
+  spanVal = Tag.span(text:value,    class:'value')
+  Tag.div(text:(spanLib + spanVal), class:'row-flex')
+end #/ divRow

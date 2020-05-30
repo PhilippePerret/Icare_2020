@@ -62,6 +62,57 @@ class IcEtape
     end
   end #/ section_etape_methode
 
+  # ---------------------------------------------------------------------
+  #   MÉTHODE DE LA PARTIE MINIFAQ
+  # ---------------------------------------------------------------------
+  def formulaire_minifaq
+    require_module('form')
+    form = Form.new(id:'form-minifaq', route:'bureau/travail', libelle_size:100, class:'noborder nomargin')
+    form.rows = {
+      'ope-minifaq' => {name:'ope', type:'hidden', value: 'minifaq-add-question'},
+      'Question'    => {name:'minifaq_question', type:'textarea', height:160}
+    }
+    form.submit_button = "Poser cette question"
+    form.out
+  end #/ formulaire_minifaq
+
+  def liste_reponses_minifaq
+    # request = "SELECT * FROM mini_faq WHERE abs_etape_id = #{abs_etape_id}"
+    request = "SELECT * FROM mini_faq WHERE abs_etape_id = 2"
+    reponses = db_exec(request)
+    if reponses.empty?
+      Tag.div(text:'Aucune question pour cette étape.'.freeze, class:'italic small'.freeze)
+    else
+      log("réponses minifaq: #{reponses.inspect}")
+      reponses.collect do |dreponse|
+        reponse = ReponseMinifaq.new(dreponse) # cf. en bas de ce module
+        reponse.out
+      end.join
+    end
+  end #/ liste_reponses_minifaq
+
+  # ---------------------------------------------------------------------
+  #   QUAI DES DOCS
+  # ---------------------------------------------------------------------
+
+  # Retourne la liste complète des documents, formatée
+  def nombre_documents_qdd_et_lien
+    nombre = db_count('icdocuments', "abs_etape_id = #{abs_etape_id} AND ( options LIKE '2%' OR options LIKE '_________2%' )")
+    if nombre == 0
+      Tag.div(text:"Il n'y a aucun document partagé pour cette étape.", class:'small italic')
+    else
+      s = nombre > 1 ? 's' : ''
+      Tag.div(text:"Les icarien·ne·s ont déjà produit et partagé <strong>#{nombre} document#{s} pour cette étape</strong>.<div class=\"center\"><a href=\"qdd/list?aet=#{abs_etape_id}\" class=\"btn\">Voir/lire les documents</a></div>")
+    end
+  end #/ liste_documents_qdd
+
+  # Retourne l'avertissement donné pour un icarien à l'essai, qui ne
+  # peut télécharger que 5 documents
+  def avertissement_non_vrai_icarien
+    return '' if owner.real?
+
+  end #/ avertissement_non_vrai_icarien
+
   private
 
     # Return TRUE si l'étape possède des liens, soit par l'étape absolue,
@@ -127,3 +178,22 @@ LienEtape = Struct.new(:dataline) do
     end
   end #/ cible
 end
+
+class ReponseMinifaq
+  def initialize data
+    data.each { |k,v| self.instance_variable_set("@#{k}", v)}
+  end #/ initialize
+  def out
+    <<-HTML
+<div class="minifaq-qr">
+  <div class="minifaq-question">
+    <span class="fright">#{@pseudo}</span>
+    #{@question}
+  </div>
+  <div class="minifaq-reponse">
+    #{@reponse}
+  </div>
+</div>
+    HTML
+  end #/ out
+end #/ReponseMinifaq

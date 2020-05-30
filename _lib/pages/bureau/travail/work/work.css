@@ -6,6 +6,10 @@ section.etape_work {
   margin-top:2em;
 }
 
+section.etape_work fieldset {
+  max-width:var(--text-max-width);
+}
+
 fieldset.etape_work dl {
   margin-left:4em;
 }

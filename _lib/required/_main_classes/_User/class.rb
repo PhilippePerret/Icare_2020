@@ -8,6 +8,12 @@ class User
 class << self
   attr_accessor :current
 
+  def get(uid)
+    uid = uid.to_i
+    @items ||= {}
+    @items[uid] ||= new(db_get('users', {id: uid}))
+  end #/ get
+
   # Initialisation de l'utilisateur courant
   # Soit c'est l'utilisateur reconnu par la session, soit c'est un invité
   def init

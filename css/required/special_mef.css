@@ -1,8 +1,19 @@
 /*
 */
+div.row-flex {
+  display:flex;
+}
+div.row-flex span.libelle {
+  flex:1;
+}
+div.row-flex span.value {
+  flex:2;
+}
+/*
+*/
 span.libelle {
   display:inline-block;
-  padding:0 1em;
+  padding:0 12px;
   color:#555555;
   font-size:0.9em;
   font-style:italic;

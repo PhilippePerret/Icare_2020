@@ -302,7 +302,27 @@ form = Form.new(id:'login-form', route:'user/login', size: 300)
 # => Instance du formulaire
 ~~~
 
+**Propriétés obligatoires**
 
+~~~ruby
+{
+  id: 'identifiant du formulaire',
+  route: 'route/pour/la/soumission'
+ }
+~~~
+
+
+
+**Propriétés optionnelles** définissables :
+
+~~~ruby
+{
+  size: 800, 					# largeur totale du formulaire
+  libelle_size: 100, 	# largeur des libellés (pour les réduire, souvent)
+	class: 'classCSS'		# Class CSS du formulaire  
+  										# Par exemple 'noborder' pour retirer le cadre du formulaire
+}
+~~~
 
 
 

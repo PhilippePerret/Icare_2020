@@ -28,3 +28,10 @@ a.current {
 
 .mt1 {margin-top:1em}
 .mt2 {margin-top:2em}
+
+.noborder {
+  border:unset!important;
+}
+.nomargin {
+  margin:unset!important;
+}

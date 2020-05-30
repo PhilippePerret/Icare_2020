@@ -24,6 +24,8 @@ end
 # +filter+
 # NOTE Retourne UNE SEULE valeur
 def db_get(table, filter, params = {})
+  filter = {id: filter} if filter.is_a?(Integer)
+  params = {columns: params} if params.is_a?(Array)
   params.merge!(request_suffix: 'LIMIT 1')
   db_get_all(table, filter, params).first
 end

@@ -14,6 +14,15 @@ class User
     @is_icarien
   end
 
+  def real?
+    @is_real_icarien = bit_options(24) > 1 if @is_real_icarien.nil? # TODO à vérifier
+    @is_real_icarien
+  end #/ real?
+
+  def essai?
+    !real?
+  end #/ essai?
+
   def admin?
     @is_admin = bit_options(0) > 0 if @is_admin.nil?
     @is_admin

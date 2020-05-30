@@ -1,0 +1,13 @@
+div.minifaq-qr {
+  background-color:#EEEEEF;
+  font-size:0.85em;
+  padding:1em;
+  margin-bottom:1em;
+}
+div.minifaq-qr div.minifaq-question {
+  font-style:italic;
+}
+div.minifaq-qr div.minifaq-reponse {
+  margin-left:3em;
+  margin-top:1em;
+}

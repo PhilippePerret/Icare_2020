@@ -18,7 +18,8 @@ MAIN_LINKS = {
   # DIVERS
   aide:     '<a href="aide/home">aide</a>'.freeze,
   contact:  '<a href="contact">contact</a>'.freeze,
-  plan:     '<a href="plan" class="btn small">PLAN</a>'.freeze
+  plan:     '<a href="plan" class="btn small">PLAN</a>'.freeze,
+  qdd:      '<a href="qdd/home">Quai Des Docs</a>'.freeze
 }
 
 

@@ -4,7 +4,7 @@
   }
   form:not(.inline) {
     margin:3em;
-    width:auto;
+    width:calc(100% - 6em);
   }
   div.only-message {
     padding:4em;
@@ -24,6 +24,19 @@
   section#body {
     padding:8px;
     text-align:center;
+  }
+  section#body div.row,
+  section#body form,
+  section#body .libelle,
+  section#body .value {
+    display:block!important;
+  }
+  section#body .libelle {
+    text-align:left!important;
+  }
+  section#body form {
+    padding:2px!important;
+    margin:unset!important;
   }
   section#header {
     text-align:center;

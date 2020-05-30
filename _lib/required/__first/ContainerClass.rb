@@ -44,6 +44,13 @@ class ContainerClass
     @data = values
   end #/ data=
 
+  # Retourne le propriétaire ({User}) si user_id est défini
+  def owner
+    @owner ||= begin
+      User.get(user_id) if data.key?(:user_id)
+    end
+  end #/ owner
+
   def get(key)
     return data[key.to_sym]
   end #/ get

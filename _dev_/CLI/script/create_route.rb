@@ -1,17 +1,20 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-NEW_ROUTE = 'overview/reussites'
+NEW_ROUTE = nil
 DATA_PAGE = {
-  titre: "🎉 Les belles réussites (hall of fame)",
+  titre: "📑 Le Quai des Docs",
   body_erb:  true,          # si true, on crée le fichier body.erb
   form: false,              # si true, on requiert le module 'forms'
   module_user: false,        # si true, on crée 'user.rb'
-  icarien_required: false,   # true, une barrière sera "posée"
+  icarien_required: true,   # true, une barrière sera "posée"
   admin_required: false,    # si true, une barrière sera posée
 }
 
 raise "Il faut définir la route" if NEW_ROUTE.nil?
+
+RC = "\n"
+RC2 = RC * 2
 
 def create_route
   require './_lib/constants'
@@ -59,7 +62,7 @@ class HTML
   end
   # Fabrication du body
   def build_body
-    @body = #{DATA_PAGE[:body_erb] ? 'deserb(\'body\', self)' : "<<-HTML#{RC2}  HTML"}
+    @body = #{DATA_PAGE[:body_erb] ? 'deserb(\'body\', self)' : "<<-HTML#{RC2}    HTML"}
   end
 end #/HTML
   RUBY
