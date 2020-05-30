@@ -33,6 +33,7 @@ h2.page-title {
 p, .p, ul.p li {
   text-align: justify;
   max-width: var(--text-max-width);
+  opacity:0.8;
 }
 ul.p {
   list-style: square;
@@ -42,6 +43,23 @@ strong, b {
   color: var(--dark-color-normal);
   font-weight:900;
 }
+
+fieldset {
+  border-color:var(--lighter-color-normal);
+  border-width:1px;
+  border-radius:0.3em;
+  margin-top: 2em;
+}
+fieldset legend {
+  font-style:italic;
+  color:var(--lighter-color-normal);
+}
+
+/* ---------------------------------------------------------------------
+
+  SECTIONS PRÉCISES
+
+--------------------------------------------------------------------- */
 
 section#header {
   padding:4px 24px;

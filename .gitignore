@@ -2,5 +2,5 @@
 
 _lib/data/secret/
 
-_lib/tmp/
-_lib/tmp/forms/
+tmp/
+tmp/forms/

@@ -7,11 +7,27 @@ class Tag
 class << self
 
   # Un lien quelconque
+  #
+  # Si params[:new], on met le target à _blank
   def lien params
-    params = normalize_params(params, [:id, :route, :class, :titre, :title])
+    params[:new] && params.merge!(target: '_blank')
+    params[:target] ||= 'self'
+    params = normalize_params(params, [:id, :route, :class, :titre, :title, :target])
     (TAG_LIEN % params).freeze
   end #/ lien
   alias :link :lien
+
+  def div params
+    params = {text: params} if params.is_a?(String)
+    params = normalize_params(params, [:id, :text, :class, :style])
+    (TAG_DIV % params).freeze
+  end #/ div
+
+  def li params
+    params = {text: params} if params.is_a?(String)
+    params = normalize_params(params, [:id, :text, :class, :style])
+    (TAG_LI % params).freeze
+  end #/ li
 
   # Un champ HIDDEN
   def hidden params
@@ -22,7 +38,7 @@ class << self
   # Un SPAN
   def span params
     params = normalize_params(params, [:text, :class])
-    (SPAN_TAG % params).freeze
+    (TAG_SPAN % params).freeze
   end #/ span
 
   def submit_button params
@@ -53,9 +69,11 @@ end #/Tag
 # Constantes tags
 # Note : d'autres sont définis dans ./_lib/modules/forms/constants.rb qui
 # sera chargé avec 'require_module('form')'
-SPAN_TAG = '<span class="%{class}">%{text}</a>'.freeze
+TAG_SPAN  = '<span class="%{class}">%{text}</a>'.freeze
+TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{target}">%{titre}</a>'.freeze
+TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
+TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze
 
-TAG_LIEN = '<a href="%{route}" class="%{class}" title="%{title}">%{titre}</a>'.freeze
 # Formulaires
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze
 SUBMIT_BUTTON = '<input type="submit" class="btn" value="%{name}" />'.freeze

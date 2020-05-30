@@ -1,0 +1,66 @@
+/*
+  Noter que cette feuille de styles sera chargée tout le temps, même lorsque
+  l'icarien ne suit pas/plus de module.
+*/
+section.etape_work {
+  margin-top:2em;
+}
+
+fieldset.etape_work dl {
+  margin-left:4em;
+}
+fieldset.etape_work dl dt {
+  font-weight:bold;
+  font-family:Helvetica;
+  font-size:.9em;
+  margin-top:1em;
+  margin-bottom:.5em;
+}
+fieldset.etape_work ol,fieldset.etape_work ul {
+  margin-left:8em;
+  margin-top:2em;
+  margin-bottom:2em;
+}
+fieldset.etape_work ol li,fieldset.etape_work ul li {
+  margin-top:1em;
+}
+fieldset.etape_work a.edit {
+  float:right;
+  margin-top:38px;
+  font-size:14pt;
+}
+fieldset.etape_work div#etape_liens > form {
+  display:block;
+  margin-left:4em;
+}
+fieldset.etape_work div#div_mini_faq form#minifaq_form {
+  margin-top:2em;
+}
+fieldset.etape_work div#div_mini_faq div#mini_faq {
+  margin-left:4em;
+}
+section#section_etape_mini_faq div.mf_qr {
+  margin-bottom:.5em;
+  padding-bottom:.5em;
+  border-bottom:1px solid;
+  clear:both;}
+section#section_etape_mini_faq div.mf_qr.yours {
+  background-color:#DFE !important;
+  padding:1em !important;
+}
+section#section_etape_mini_faq div.mf_qr div.mf_auteur {
+  text-align:right;
+  font-style:italic;
+  font-size:.8em;
+}
+section#section_etape_mini_faq div.mf_qr div.mf_question {
+  width:65%;
+  margin-bottom:1em;
+  font-style:italic;
+}
+section#section_etape_mini_faq div.mf_qr div.mf_reponse {
+  width:80%;
+  margin-left:20%;
+  padding:12px;
+  border-left:1px solid;
+}

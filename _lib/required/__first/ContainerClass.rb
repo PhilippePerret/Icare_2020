@@ -26,9 +26,23 @@ class ContainerClass
     @id = id
   end #/ initialize
 
+  def bind
+    binding()
+  end #/ bind
+
+  def method_missing method_name, *args, &block
+    return data[method_name] if data.key?(method_name)
+    raise "Méthode manquante : #{self}##{method_name}"
+  end #/ method_missing
+
   def data
     @data ||= db_get(self.class.table, {id: id})
   end #/ data
+
+  # Pour certaines classes comme les travaux-type
+  def data= values
+    @data = values
+  end #/ data=
 
   def get(key)
     return data[key.to_sym]

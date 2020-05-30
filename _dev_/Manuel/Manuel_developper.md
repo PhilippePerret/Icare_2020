@@ -148,6 +148,25 @@ ERRORS = {
 
 
 
+### Titre de la page
+
+Le titre de la page est défini par la méthode `HTML#titre`.
+
+Quand le titre doit être « détaché » du bandeau de log et du contenu de la page — comme cela arrive avec le hall of fame par exemple, on peut utiliser la constante `DIV_AIR` pour ajouter de l’air.
+
+Par exemple :
+
+~~~ruby
+class HTML
+  def titre
+    @titre ||= "#{DIV_AIR}Mon beau titre#{DIV_AIR}".freeze
+  end
+  ...
+end #/HTML
+~~~
+
+
+
 ### `Tag`, builder de balises
 
 La classe `Tag`, définies dans [./_lib/required/__first/helpers/Tags.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tags.rb), permet de créer très facilement des liens à l’aide de la méthode :

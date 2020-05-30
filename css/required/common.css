@@ -20,6 +20,7 @@ a.current {
 .right {text-align:right}
 .left {text-align:left}
 
+.bold {font-weight:900}
 .italic {font-style:italic}
 
 .fleft {float:left}

@@ -16,7 +16,7 @@ APP_FOLDER      = File.dirname(LIB_FOLDER)
 PAGES_FOLDER    = File.join(LIB_FOLDER,'pages')
 DATA_FOLDER     = File.join(LIB_FOLDER,'data')
 MODULES_FOLDER  = File.join(LIB_FOLDER,'modules')
-TEMP_FOLDER     = File.join(LIB_FOLDER,'tmp')
+TEMP_FOLDER     = File.join(APP_FOLDER,'tmp')
 FORMS_FOLDER    = File.join(TEMP_FOLDER,'forms')
 LOGS_FOLDER     = File.join(TEMP_FOLDER,'logs')
 
