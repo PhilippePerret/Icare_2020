@@ -21,7 +21,7 @@ end #/ filtre=
 # Retourne l'affichage des documents filtrés
 def documents_filtred_formated
   documents_filtred.collect do |doc|
-    doc.card
+    doc.cards
   end.join
 end #/ documents_filtred_formated
 
@@ -49,46 +49,17 @@ def filtre_formated
     f << "Étape « #{absetape.titre} » (n°#{absetape.numero})  du module #{absetape.module.name}."
   end
 
-  if f.empty?
-    Tag.div(text:"Aucun filtre appliqué".freeze, class:'small italic')
-  else
-    Tag.div(divRow('Filtre appliqué', f.join(VG)))
-  end
+  data =  if f.empty?
+            {text:"Aucun filtre appliqué".freeze, class:'small italic'}
+          else
+            {text:divRow('Filtre appliqué', f.join(VG)), class:'mb2'}
+          end
+  Tag.div(data)
 end #/ filtre_formated
 
 
 end #/QDD
 
-# ---------------------------------------------------------------------
-#   classe QddDoc
-#   -------------
-#   Pour les documents du QDD
-# ---------------------------------------------------------------------
-class QddDoc
-class << self
-
-end # /<< self
-# ---------------------------------------------------------------------
-#   INSTANCES
-# ---------------------------------------------------------------------
-attr_reader :id, :original_name, :user_id, :abs_etape_id
-def initialize data
-  data.each {|k,v| self.instance_variable_set("@#{k}", v)}
-end #/ initialize
-# Retourne une 'carte du document'
-def card
-  inner = ''
-  inner << Tag.div(text:"<img src='img/icones/document_pdf.png' class='vmiddle mr1' />#{original_name}", class:'nowrap')
-  inner << divRow('Module', etape.module.name)
-  inner << divRow('Étape', etape.ref)
-  Tag.div(text:inner, class:'qdd-card')
-end #/ card
-
-def etape
-  @etape ||= QddAbsEtape.get(abs_etape_id)
-end #/ etape
-
-end #/QddDoc
 
 
 # ---------------------------------------------------------------------

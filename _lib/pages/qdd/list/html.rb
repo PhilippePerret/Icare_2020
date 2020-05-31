@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{DIV_AIR}#{retour_qdd}📑 Liste des documents filtrés".freeze
+    "#{retour_qdd}📑 Liste des documents filtrés".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

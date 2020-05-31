@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-NEW_ROUTE = nil
+NEW_ROUTE = nil # remettre à nil après pour éviter les erreurs
 DATA_PAGE = {
-  titre: "📑 Le Quai des Docs",
-  body_erb:  true,          # si true, on crée le fichier body.erb
+  titre: "📥 Téléchargement",
+  body_erb:  false,          # si true, on crée le fichier body.erb
   form: false,              # si true, on requiert le module 'forms'
   module_user: false,        # si true, on crée 'user.rb'
   icarien_required: true,   # true, une barrière sera "posée"

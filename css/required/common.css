@@ -35,6 +35,9 @@ a.current {
 .mg1 {margin-left:1em}
 .mg2 {margin-left:2em}
 
+.mb1 {margin-bottom:1em}
+.mb2 {margin-bottom:2em}
+
 .noborder {
   border:unset!important;
 }

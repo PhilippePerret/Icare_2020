@@ -6,7 +6,9 @@ RC2 = (RC*2).freeze
 
 BR = '<br/>'.freeze
 
-VG = ', '.freeze
+VG = ', '.freeze # VG pour VirGule
+
+PV = ';'.freeze # PV pour Point Virgule
 
 SPACE = '&nbsp;'
 

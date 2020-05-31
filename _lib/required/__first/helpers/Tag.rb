@@ -37,7 +37,7 @@ class << self
 
   # Un SPAN
   def span params
-    params = normalize_params(params, [:text, :class])
+    params = normalize_params(params, [:text, :class, :style])
     (TAG_SPAN % params).freeze
   end #/ span
 
@@ -69,7 +69,7 @@ end #/Tag
 # Constantes tags
 # Note : d'autres sont définis dans ./_lib/modules/forms/constants.rb qui
 # sera chargé avec 'require_module('form')'
-TAG_SPAN  = '<span class="%{class}">%{text}</span>'.freeze
+TAG_SPAN  = '<span class="%{class}" style="%{style}">%{text}</span>'.freeze
 TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{target}">%{titre}</a>'.freeze
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
 TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze

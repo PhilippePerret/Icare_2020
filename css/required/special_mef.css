@@ -4,7 +4,7 @@ div.row-flex {
   display:flex;
 }
 div.row-flex span.libelle {
-  flex:1;
+  /* flex:1; NON, C'EST divRow QUI DOIT LE DÉFINIR */
 }
 div.row-flex span.value {
   flex:2;
