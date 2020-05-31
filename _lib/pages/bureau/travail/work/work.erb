@@ -3,28 +3,36 @@
   <h4><%= absetape.numero %>. <%= absetape.titre %></h4>
 
   <fieldset>
-    <legend>Objectif</legend>
-    <ul><%= objectifs_formated %></ul>
-  </fieldset>
+    <legend>Travail à effectuer</legend>
 
-  <fieldset>
-    <legend>Travail de l'étape</legend>
-    <%= travail_formated %>
-  </fieldset>
+    <fieldset>
+      <legend>Objectif</legend>
+      <ul><%= objectifs_formated %></ul>
+    </fieldset>
 
-  <fieldset>
-    <legend>Travail propre</legend>
-    <%= travail_propre_formated %>
-  </fieldset>
+    <fieldset>
+      <legend>Énoncé</legend>
+      <%= travail_formated %>
+    </fieldset>
 
-  <fieldset>
-    <legend>Liens utiles</legend>
-    <%= etape_liens %>
-  </fieldset>
+    <fieldset>
+      <legend>Travail propre</legend>
+      <%= travail_propre_formated %>
+    </fieldset>
 
-  <fieldset>
-    <legend>Éléments de méthodes</legend>
-    <%= etape_methode %>
-  </fieldset>
+    <fieldset>
+      <legend>Éléments de méthodes</legend>
+      <%= etape_methode %>
+    </fieldset>
+
+    <fieldset>
+      <legend>Liens utiles</legend>
+      <%= etape_liens %>
+    </fieldset>
+
+  </fieldset><%# fieldset principal travail%>
+
+
+
 
 </section><%# /section.etape_work %>
