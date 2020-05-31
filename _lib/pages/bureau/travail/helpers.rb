@@ -32,6 +32,7 @@ class User
       Tag.hidden(value:'bureau/travail', name:'route') +
       Tag.hidden(value:'echeance', name:'ope') +
       user.icetape.f_expected_end +
+      BR +
       Tag.submit_button('Modifier l’échéance') +
       Tag.span(text:'  (après l’avoir ajustée)'.freeze, class:'small') +
     '</form>'

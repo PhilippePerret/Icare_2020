@@ -9,7 +9,8 @@
 
   /* Pour les block goto, etc. */
   --fond-inner-object: rgb(42, 127, 168);
-  --fond-exergue-inner-object: cadetblue;
+  --font-exergue-inner-object: rgb(203, 217, 232);
+  /* --fond-exergue-inner-object: cadetblue; */
 
   /* Par exemple la table des matières flottante */
   --contre-color-normal: rgb(59, 186, 184);

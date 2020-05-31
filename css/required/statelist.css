@@ -18,7 +18,7 @@ div.state-list a.btn-modify:hover {
 div.state-list.vert,
 div.state-list.vert span.libelle {
   background-color: var(--fond-exergue-inner-object);
-  color:white;
+  color:black;
 }
 
 div.state-list div.row {
@@ -34,6 +34,8 @@ div.state-list div.row span.libelle {
   font-style:italic;
   opacity: 0.6;
   margin-right:12px;
+  vertical-align:top;
+  margin-top:3px;
 }
 
 div.state-list div.row span.libelle {

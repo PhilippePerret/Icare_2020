@@ -30,6 +30,10 @@ a.current {
 .mt2 {margin-top:2em}
 
 .mr1 {margin-right:8px}
+.mr2 {margin-right:16px}
+
+.mg1 {margin-left:1em}
+.mg2 {margin-left:2em}
 
 .noborder {
   border:unset!important;

@@ -5,7 +5,7 @@
 <%
 # --- ÉTAT DES LIEUX DU MODULE ---
 %>
-<div id="etat-des-lieux" class="state-list vert">
+<div id="etat-des-lieux" class="state-list mg2">
   <%= StateList.row('Module', absmodule.data[:name]) %>
   <%= StateList.row('Commencé le', icmodule.f_started_at, {css:'small'}) %>
   <%= StateList.row('Étape', "#{absetape.data[:numero]}. #{user.absetape.data[:titre]}") %>
