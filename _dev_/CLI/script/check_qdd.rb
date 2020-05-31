@@ -1,6 +1,21 @@
 # encoding: UTF-8
 =begin
   Module qui permet de checker la validité des documents QDD
+
+  On peut lancer ce script en toute sécurité puisqu'aucune modification n'est
+  opérée. Il faut les faire à la main.
+
+  Ce script fait deux choses :
+
+  1.  Il vérifie que les fichiers PDF correspondent bien TOUS à un enregistrement
+      dans la table 'icdocuments'
+  2.  Il vérifie que tous les enregistrements de la table 'icdocuments' trouvent
+      bien leur document PDF lorsque ça doit être le cas.
+
+  Note : beaucoup de documents :originaux n'étaient
+  pas enregistrés au début de l'atelier, donc on se contente de tester les
+  documents commentaire.
+
 =end
 require './_lib/required'
 require_folder('./_lib/pages/qdd/xrequired/Qdd')
@@ -104,8 +119,10 @@ class QDDChecker
     errors = []
     db_exec("SELECT * FROM icdocuments").each do |datadoc|
       qdoc = QddDoc.new(datadoc)
-      errors << qdoc.check_original if qdoc.exists?(:original)
-      errors << qdoc.check_comments if qdoc.exists?(:comments)
+      # errors << qdoc.check_original if qdoc.exists?(:original)
+      if qdoc.exists?(:comments) && qdoc.shared_sharing(:comments) && !qdoc.pdf_exists?(:comments)
+        errors << QddDoc::ERROR_UNFOUND_PDF % [':comments', qdoc.name(:comments)]
+      end
     end
     errors = errors.compact # supprimer les nil
     if errors.empty?
@@ -122,8 +139,9 @@ end #/QDDChecker
 #   Extention de la class QddDoc pour le check
 # ---------------------------------------------------------------------
 class QddDoc
-  ERROR_UNFOUND_PDF = 'fichier PDF %s inexistant : %s'.freeze
+  ERROR_UNFOUND_PDF = 'fichier PDF %s partagé mais inexistant : %s'.freeze
   def check_original
+    puts "Check original  de document ##{id}"
     fpath = path(:original)
     if File.exists?(fpath)
       # OK pour l'instant on ne fait rien
@@ -144,5 +162,5 @@ class QddDoc
 end #/QddDoc
 
 checker = QDDChecker.new
-# checker.check
-checker.check_allqdd
+# checker.check_allqdd
+checker.check_if_records_have_pdf

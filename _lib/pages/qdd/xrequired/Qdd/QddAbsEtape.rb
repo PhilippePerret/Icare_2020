@@ -7,6 +7,7 @@
 class QddAbsEtape
 class << self
   def get(id)
+    raise "ID d'AbsEtape indéfini" if id.nil? || id == 0
     id = id.to_i
     @items ||= {}
     @items[id] ||= begin
