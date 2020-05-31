@@ -20,4 +20,26 @@ end #/<< self
   def doctype
     @doctype ||= param(:qdt).to_sym
   end #/ doctype
+
+  # Le chemin d'accès au fichier
+  # Note : attention, ici, il s'agit bien d'un document unique, déterminé
+  # par le 'doctype' qui dit que c'est un original ou un commentaire
+  def path(dtype = nil)
+    dtype ||= doctype
+    @path ||= File.join(QDD_FOLDER, absmodule.id.to_s,name(dtype))
+  end #/ path
+
+  QDD_FILE_NAME = '%{module}_etape_%{etape}_%{pseudo}_%{doc_id}_%{dtype}.pdf'.freeze
+  def name(dtype = nil)
+    dtype ||= doctype
+    @name ||= begin
+      QDD_FILE_NAME % {
+        module: absmodule.module_id.camelize,
+        etape:  etape.numero,
+        pseudo: auteur.pseudo,
+        doc_id: id,
+        dtype: dtype
+      }
+    end
+  end #/ name
 end #/QddDoc

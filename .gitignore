@@ -2,5 +2,7 @@
 
 _lib/data/secret/
 
+_lib/data/qdd/
+
 tmp/
 tmp/forms/

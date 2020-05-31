@@ -60,6 +60,10 @@ def etape
   @etape ||= QddAbsEtape.get(abs_etape_id)
 end #/ etape
 
+def absmodule
+  @absmodule = etape.module
+end #/ absmodule
+
 def formated_date(dtype)
   @formated_date ||= formate_date(send("time_#{dtype}".to_sym))
 end #/ formated_date
