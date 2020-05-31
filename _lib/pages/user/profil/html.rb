@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "#{RETOUR_BUREAU}🏠 Votre profil"
+    "#{RETOUR_BUREAU}#{user.femme? ? '👩🏻‍💻' : '👨🏻‍💻'} Votre profil"
   end
   def exec
     # Code à exécuter avant la construction de la page
