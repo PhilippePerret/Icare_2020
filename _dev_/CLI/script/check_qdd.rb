@@ -29,14 +29,25 @@ class QDDChecker
       apdf = File.basename(pdf, File.extname(pdf))
       next if PDF_TO_OMIT[apdf]
       absmodule_id = File.basename(File.dirname(pdf)).to_i
+      puts "AFFIXE TRAITÉ : #{apdf.inspect}"
       hmodule, rien, numero, pseudo, doc_id, dtype = apdf.split('_')
       numero = numero.to_i
       ddoc = db_get('icdocuments', doc_id.to_i)
       if ddoc.nil?
-        puts "ERREUR Enregistrement introuvable : #{apdf.inspect}"
+        puts "ERREUR Enregistrement introuvable : #{apdf.inspect}#{RC}#{pdf}"
+        pseudo ||= begin
+          if rien.nil?
+            # On essaie avec un nom "<timestamp>-<pseudo>-<numéro étape>"
+            time, pseudo, numero = apdf.split('-')
+            pseudo
+          end
+        end
         # On récupère l'auteur d'après son pseudo
         duser = db_get('users', "pseudo = '#{pseudo}' OR pseudo = '#{pseudo.downcase}'")
-        unless duser.nil?
+        if duser.nil?
+          puts "IMPOSSIBLE DE TROUVER L'AUTEUR"
+          break
+        else
           user_id = duser[:id]
           puts "AUTEUR : #{duser[:pseudo]} ##{user_id}"
           # On peut chercher tous les documents de l'auteur, qui
@@ -54,18 +65,26 @@ class QDDChecker
           if candidats.count == 1
             # Parfait ! un seul candidat => il faut changer le nom
             qd = candidats.first
-            puts "IL FAUT METTRE '#{qd.name(:comments)}' à la place de '#{npdf}'"
+            puts "IL FAUT METTRE '#{absmodule_id}/#{qd.name(:comments)}' à la place de '#{absmodule_id}/#{npdf}'"
+          elsif candidats.count == 0
+            puts "AUCUN CANDIDATS POSSIBLES parmi :"
+            qdocs.each do |qd|
+              puts "#{qd.name(:comments)}"
+            end
           else
             puts "PLUSIEURS CANDIDATS POSSIBLES :#{RC}#{candidats.collect{|qd| qd.name(:comments)}.join(RC)}"
+            puts candidats.inspect
           end
           # … puis en général
         end
         break
       else
+        # Les données existent, il y a juste une erreur de nom
         qdoc = QddDoc.new(ddoc)
+        # puts "ddoc:#{ddoc.inspect}"
         dbname = qdoc.name(dtype.to_sym)
         if dbname != npdf
-          puts "ERREUR SUR : #{npdf} / nom d'après base : #{dbname}"
+          puts "ERREUR SUR : #{absmodule_id}/#{npdf} / nom d'après base : #{absmodule_id}/#{dbname}"
           break
         else
           puts "OK #{npdf}"

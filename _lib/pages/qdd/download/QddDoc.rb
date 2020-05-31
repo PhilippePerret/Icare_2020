@@ -48,7 +48,7 @@ end #/<< self
       QDD_FILE_NAME % {
         module: absmodule.module_id.camelize,
         etape:  etape.numero,
-        pseudo: auteur.pseudo.titleize,
+        pseudo: auteur.pseudo.gsub(/[^a-zA-Z0-9]/,'').titleize,
         doc_id: id,
         dtype: dtype
       }
