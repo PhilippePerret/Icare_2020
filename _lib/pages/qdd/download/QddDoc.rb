@@ -22,11 +22,6 @@ end #/<< self
     shared_same_etape || shared_sharing(doctype)
   end #/ user_enable?
 
-  # Return si le fichier PDF de type +dtype+ existe
-  def pdf_exists?(dtype)
-    File.exists?(path(dtype))
-  end #/ pdf_exists?
-
   # Par défaut, c'est :original
   def doctype
     @doctype ||= (param(:qdt) || 'original').to_sym
@@ -38,29 +33,4 @@ end #/<< self
     @doctype = val
   end #/ doctype=
 
-  # Le chemin d'accès au fichier
-  # Note : attention, ici, il s'agit bien d'un document unique, déterminé
-  # par le 'doctype' qui dit que c'est un original ou un commentaire
-  def path(dtype = nil)
-    dtype ||= doctype
-    if dtype == :original
-      @path_original ||= File.join(QDD_FOLDER, absmodule.id.to_s,name(:original))
-    else
-      @path_comments ||= File.join(QDD_FOLDER, absmodule.id.to_s,name(:comments))
-    end
-  end #/ path
-
-  QDD_FILE_NAME = '%{module}_etape_%{etape}_%{pseudo}_%{doc_id}_%{dtype}.pdf'.freeze
-  def name(dtype = nil)
-    dtype ||= doctype
-    @name ||= begin
-      QDD_FILE_NAME % {
-        module: absmodule.module_id.camelize,
-        etape:  etape.numero,
-        pseudo: auteur.pseudo.gsub(/[^a-zA-Z0-9]/,'').titleize,
-        doc_id: id,
-        dtype: dtype
-      }
-    end
-  end #/ name
 end #/QddDoc
