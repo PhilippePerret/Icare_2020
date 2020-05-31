@@ -13,7 +13,7 @@ DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'
 # ---------------------------------------------------------------------
 #   INSTANCES
 # ---------------------------------------------------------------------
-attr_reader :id, :original_name, :user_id, :abs_etape_id, :options
+attr_reader :id, :original_name, :user_id, :absetape_id, :options
 attr_reader :updated_at, :time_original, :time_comments
 def initialize data
   data.each {|k,v| self.instance_variable_set("@#{k}", v)}
@@ -28,6 +28,13 @@ def cards
   return ary.join
 end #/ cards
 
+# Retourne TRUE si le document de type dtype existe (normalement, c'est
+# seulement utile pour le document commentaire, mais on peut imaginer qu'un
+# document original a été marqué inexistant)
+def exists?(dtype)
+  options[dtype === :original ? 0 : 8].to_i == 1
+end #/ exists?
+
 # Retourne TRUE si le document de type +dtype+ (:original ou :comments) est
 # partagé par l'auteur
 def shared?(dtype)
@@ -36,7 +43,7 @@ end #/ shared?
 
 # Retourne TRUE si l'icarien qui visite est sur la même étape
 def shared_same_etape
-  user.icetape && user.icetape.absetape.id == abs_etape_id
+  user.icetape && user.icetape.absetape.id == absetape_id
 end #/ shared_same_etape
 
 def shared_sharing(dtype)
@@ -57,8 +64,9 @@ def card(dtype = :original)
 end #/ card
 
 def etape
-  @etape ||= QddAbsEtape.get(abs_etape_id)
+  @etape ||= QddAbsEtape.get(absetape_id)
 end #/ etape
+alias :absetape :etape
 
 def absmodule
   @absmodule = etape.module

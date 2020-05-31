@@ -9,7 +9,7 @@ class HTML
     icarien_required
     # On constitue le filtre par rapport aux paramètres
     filtre = {}
-    filtre.merge!(abs_etape_id: param(:aet)) unless param(:aet).nil?
+    filtre.merge!(absetape_id: param(:aet)) unless param(:aet).nil?
     qdd.filtre= filtre
   end
 

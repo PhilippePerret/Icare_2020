@@ -13,7 +13,7 @@ class IcEtape < ContainerClass
 # ---------------------------------------------------------------------
 
 def absetape
-  @absetape ||= AbsEtape.get(data[:abs_etape_id])
+  @absetape ||= AbsEtape.get(data[:absetape_id])
 end #/ absmodule
 
 

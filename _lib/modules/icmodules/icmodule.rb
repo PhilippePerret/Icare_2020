@@ -15,7 +15,7 @@ end # /<< self
 # ---------------------------------------------------------------------
 
 def absmodule
-  @absmodule ||= AbsModule.get(data[:abs_module_id])
+  @absmodule ||= AbsModule.get(data[:absmodule_id])
 end #/ absmodule
 
 end #/IcModule

@@ -584,6 +584,31 @@ Pour les autres méthodes, cf. le module `./lib/required/__first/ContainerClass.
 
 
 
+---
+
+<a name="download"></a>
+
+## Téléchargement
+
+Pour permettre le téléchargement, on utilise la classe `Downloader` qui permet de gérer très facilement ces téléchargements.
+
+~~~ruby
+require_module('download')
+
+downloader = Downloader.new([liste documents], "<nom fichier zip>")
+downLoader.download
+~~~
+
+That’s it! Les documents seront proposés au téléchargement.
+
+**Fonctionnement**
+
+La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` . Ce fichier zip est détruit tout de suite après le téléchargement du zip.
+
+---
+
+
+
 ## Annexe
 
 ### Émojis

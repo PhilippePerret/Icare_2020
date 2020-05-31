@@ -77,8 +77,8 @@ class IcEtape
   end #/ formulaire_minifaq
 
   def liste_reponses_minifaq
-    # request = "SELECT * FROM mini_faq WHERE abs_etape_id = #{abs_etape_id}"
-    request = "SELECT * FROM mini_faq WHERE abs_etape_id = 2"
+    # request = "SELECT * FROM mini_faq WHERE absetape_id = #{absetape_id}"
+    request = "SELECT * FROM mini_faq WHERE absetape_id = 2"
     reponses = db_exec(request)
     if reponses.empty?
       Tag.div(text:'Aucune question pour cette étape.'.freeze, class:'italic small'.freeze)
@@ -97,12 +97,12 @@ class IcEtape
 
   # Retourne la liste complète des documents, formatée
   def nombre_documents_qdd_et_lien
-    nombre = db_count('icdocuments', "abs_etape_id = #{abs_etape_id} AND ( options LIKE '2%' OR options LIKE '_________2%' )")
+    nombre = db_count('icdocuments', "absetape_id = #{absetape_id} AND ( options LIKE '2%' OR options LIKE '_________2%' )")
     if nombre == 0
       Tag.div(text:"Il n'y a aucun document partagé pour cette étape.", class:'small italic')
     else
       s = nombre > 1 ? 's' : ''
-      Tag.div(text:"Les icarien·ne·s ont déjà produit et partagé <strong>#{nombre} document#{s} pour cette étape</strong>.<div class=\"center\"><a href=\"qdd/list?aet=#{abs_etape_id}\" class=\"btn\">Voir/lire les documents</a></div>")
+      Tag.div(text:"Les icarien·ne·s ont déjà produit et partagé <strong>#{nombre} document#{s} pour cette étape</strong>.<div class=\"center\"><a href=\"qdd/list?aet=#{absetape_id}\" class=\"btn\">Voir/lire les documents</a></div>")
     end
   end #/ liste_documents_qdd
 

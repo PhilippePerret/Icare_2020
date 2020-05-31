@@ -29,8 +29,8 @@ end #/ documents_filtred_formated
 def documents_filtred
   @documents_filtred ||= begin
     where = ['( options LIKE \'2%\' OR options LIKE \'_________2%\' )'.freeze]
-    if filtre.key?(:abs_etape_id)
-      where << "abs_etape_id = #{filtre[:abs_etape_id]}".freeze
+    if filtre.key?(:absetape_id)
+      where << "absetape_id = #{filtre[:absetape_id]}".freeze
     end
 
     where = where.join(' AND ')
@@ -44,8 +44,8 @@ end #/ documents_filtred
 # Retourne le filtre appliqué formaté
 def filtre_formated
   f = []
-  if filtre.key?(:abs_etape_id)
-    absetape = QddAbsEtape.get(filtre[:abs_etape_id])
+  if filtre.key?(:absetape_id)
+    absetape = QddAbsEtape.get(filtre[:absetape_id])
     f << "Étape « #{absetape.titre} » (n°#{absetape.numero})  du module #{absetape.module.name}."
   end
 
