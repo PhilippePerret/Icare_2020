@@ -707,7 +707,7 @@ end
 
 
 
-### `<classe>::each([filtre])`
+### `<classe>::each([filtre])`
 
 Même chose que pour `collect` ci-dessus, mais sans retourner de résultat.
 
@@ -720,6 +720,19 @@ end
 ~~~
 
 > Note : c’est juste un exemple car la classe `Watcher`, à l’heure d’aujourd’hui, n’est pas un ContainerClass.
+
+### `<classe>::each_with_index([filtre])`
+
+Même chose que pour `each` ci-dessus, mais avec l'index en deuxième paramètres.
+
+Par exemple :
+
+~~~ruby
+AbsModule.each_with_index("user_id = 1") do |mod, idx|
+  puts "Module d'index #{idx}"
+end
+~~~
+
 
 
 

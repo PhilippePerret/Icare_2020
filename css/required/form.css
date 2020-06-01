@@ -47,30 +47,32 @@ form:not(.inline) div.buttons div.other_buttons {
   float:left;
 }
 
-a.btn,
-input.btn {
+.btn,
+.btn {
   padding:2px 8px;
   margin-left:4px;
   font-family:inherit;
   font-size:inherit;
 }
-a.btn:not(.main){
+.btn:not(.main){
   color:steelblue;
   background-color:white;
 }
-a.btn:not(.noborder) {
+.btn:not(.noborder) {
   border:1px solid;
   border-radius:4px;
 }
-a.btn:not(.main):hover {
+.btn:not(.main):hover {
   background-color:steelblue;
   color:white;
 }
-a.btn.main {
+.btn.main
+{
   background-color:steelblue;
   color:white;
 }
-a.btn.main:hover {
+.btn.main:hover
+{
   color:steelblue;
   background-color:white;
 }

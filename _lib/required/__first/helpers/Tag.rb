@@ -60,6 +60,10 @@ class << self
     else ''.freeze end
   end #/ pastille
 
+  def aname(ancre)
+    TAG_ANCHOR % [ancre]
+  end #/ aname
+
   private
 
     # @private
@@ -81,8 +85,8 @@ TAG_SPAN  = '<span class="%{class}" style="%{style}">%{text}</span>'.freeze
 TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{target}">%{titre}</a>'.freeze
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
 TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze
-
-TAG_PASTILLE = '<span class="pastille">%i</span>'.freeze
+TAG_ANCHOR    = '<a name="%s"></a>'.freeze
+TAG_PASTILLE  = '<span class="pastille">%i</span>'.freeze
 
 # Formulaires
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze

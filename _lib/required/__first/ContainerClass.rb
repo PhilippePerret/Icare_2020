@@ -46,6 +46,15 @@ class ContainerClass
       end
     end #/ each
 
+    def each_with_index(filtre)
+      filtre = " WHERE #{filtre}".freeze unless filtre.nil?
+      db_exec("SELECT * FROM #{table}#{filtre}".freeze).each_with_index do |ditem, idx|
+        item = new(ditem[:id])
+        item.data = ditem
+        yield item, idx
+      end
+    end #/ each
+
   end # /<< self
 
   # ---------------------------------------------------------------------
