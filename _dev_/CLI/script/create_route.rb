@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-NEW_ROUTE = 'admin/tools' # remettre à nil après pour éviter les erreurs
+NEW_ROUTE = 'admin/database' # remettre à nil après pour éviter les erreurs
 DATA_PAGE = {
-  titre: "\#{RETOUR_ADMIN}🛠️ Outils",
+  titre: "\#{RETOUR_ADMIN}🗄️ Base de données",
   body_erb: true,          # si true, on crée le fichier body.erb
   form: true,              # si true, on requiert le module 'forms'
   module_user: false,        # si true, on crée 'user.rb'
