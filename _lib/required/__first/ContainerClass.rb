@@ -13,6 +13,28 @@ class ContainerClass
       @items.key?(item_id) || @items.merge!(item_id => new(item_id))
       @items[item_id]
     end #/ get
+
+    # Pour pouvoir utiliser la méthode <classe>.collect qui va boucler
+    # sur tous les éléments. Noter que cette méthode instancie TOUS les
+    # éléments de la base de données, donc il faut y aller mollo.
+    def collect(filtre = nil)
+      filtre = " WHERE #{filtre}".freeze unless filtre.nil?
+      db_exec("SELECT * FROM #{table}#{filtre}".freeze).collect do |ditem|
+        item = new(ditem[:id])
+        item.data = ditem
+        yield item
+      end
+    end #/ collect
+
+    def each(filtre)
+      filtre = " WHERE #{filtre}".freeze unless filtre.nil?
+      db_exec("SELECT * FROM #{table}#{filtre}".freeze).each do |ditem|
+        item = new(ditem[:id])
+        item.data = ditem
+        yield item
+      end
+    end #/ each
+
   end # /<< self
 
   # ---------------------------------------------------------------------
@@ -39,7 +61,8 @@ class ContainerClass
     @data ||= db_get(self.class.table, {id: id})
   end #/ data
 
-  # Pour certaines classes comme les travaux-type
+  # Pour certaines classes comme les travaux-type ou quand on utilise
+  # les méthodes de classe collect ou each
   def data= values
     @data = values
   end #/ data=

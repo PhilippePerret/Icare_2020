@@ -658,6 +658,38 @@ Pour pouvoir récupérer une instance quelconque.
 
 
 
+### `<classe>::collect([filtre])`
+
+Permet de collecter sur tous les éléments (chargés de la base de données, donc consommateur).
+
+Le filtre optionnel est un `String` définissant la clause WHERE. Par exemple :
+
+~~~ruby
+AbsModule.collect("name LIKE 'S%'") do |absmodule|
+  # On peut travailler sur absmodule, l'instance AbsModule
+  # retenue
+  ...
+end
+~~~
+
+
+
+### `<classe>::each([filtre])`
+
+Même chose que pour `collect` ci-dessus, mais sans retourner de résultat.
+
+Par exemple :
+
+~~~ruby
+Watcher.each("user_id = 1") do |watcher|
+  puts watcher.out
+end
+~~~
+
+> Note : c’est juste un exemple car la classe `Watcher`, à l’heure d’aujourd’hui, n’est pas un ContainerClass.
+
+
+
 ### `<classe>#data`
 
 Pour atteindre les données enregistrées dans la base de données. Toutes les valeurs étant enregistrées avec des `Symbol`s, on utilise :
