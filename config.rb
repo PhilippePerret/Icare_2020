@@ -26,7 +26,7 @@ SHOW_DEVELOPPEMENT_TOOLS = false # pour ne jamais le montrer
 # Pour définir que le site doit fonctionner en mode bac à sable, notamment
 # en utilisant la table icare_test plutôt que icare
 unless defined?(SANDBOX)
-  SANDBOX = false
+  SANDBOX = true
 end
 
 # Affichage du debug

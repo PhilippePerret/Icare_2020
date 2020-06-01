@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require_relative 'handies/messages'
 class Messager
 class << self
   def add msg

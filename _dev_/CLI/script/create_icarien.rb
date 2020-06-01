@@ -6,6 +6,10 @@
 require 'yaml'
 require 'digest/md5'
 
+require './_lib/required'
+MyDB.DBNAME = 'icare_test'
+
+
 DATA_ICARIEN_YAML = <<-YAML
 ---
 :pseudo:          Ella
@@ -42,6 +46,7 @@ class NewUser
 class << self
   def create(data)
     icarien = new(data)
+    icarien.create_user
     if data[:actif]
       # Si l'user est actif, il faut lui créer un module
       icarien.create_module(data[:module])
@@ -67,11 +72,9 @@ def create_user
   now = Time.now.to_i
   columns = []
   values  = []
-  interro = []
-  [:pseudo, :patronyme, :sexe, :naissance, :cpassword, :options,
-    :salt, :date_sortie
+  [:pseudo, :mail, :patronyme, :sexe, :naissance, :cpassword, :options,
+    :salt, :date_sortie, :password
   ].each do |property|
-    interro << '?'
     columns << property.to_s
     values << send(property)
   end
@@ -79,11 +82,16 @@ def create_user
   values << now - (JOUR * data[:depuis])
   columns << 'updated_at'
   values << now
+  interro = Array.new(values.count, '?')
   request = "INSERT users (#{columns.join(', ')}) VALUES (#{interro.join(', ')})"
+  puts "request: #{request}"
   db_exec(request, values)
-  self.id = db_last_id()
-  puts "ID du nouvel utilisateur : ##{id}"
-
+  if MyDB.error
+    puts MyDB.error.inspect
+  else
+    self.id = db_last_id()
+    puts "ID du nouvel utilisateur : ##{id}"
+  end
 end #/ create_user
 
 # ---------------------------------------------------------------------
@@ -96,7 +104,9 @@ def patronyme
   @patronyme ||= data[:patronyme]
 end #/ patronyme
 def sexe
-  @sexe ||= data[:sexe] || ('F' if data[:femme]) || 'H'
+  @sexe ||= begin
+    data[:sexe] ||= (data[:femme] ? 'F' : 'H')
+  end
 end #/ sexe
 def naissance
   @naissance ||= 1960 + rand(40)
@@ -104,6 +114,9 @@ end #/ naissance
 def mail
   @mail ||= data[:mail]
 end #/ mail
+def password
+  @password ||= data[:pwd]
+end #/ password
 def cpassword
   @cpassword ||= Digest::MD5.hexdigest("#{data[:pwd]}#{mail}#{salt}")
 end #/ cpassword
@@ -116,7 +129,7 @@ def icmodule_id
   end
 end #/ icmodule_id
 def salt
-  @salt ||= data[:sel]
+  @salt ||= data[:sel] || 'lesel'
 end #/ salt
 def date_sortie
   @date_sortie ||= begin
@@ -132,9 +145,8 @@ end #/ date_sortie
 
 # Pour créer le module
 def create_module dmodule
-  puts "Je dois créer le module."
+  puts "Je dois créer le module pour #{pseudo} ##{id}."
 end #/ create_module
-
 
 private
   def build_options
@@ -158,11 +170,13 @@ private
                   else
                     "1"
                   end
-    options[18] = data[:after_login]
+    options[18] = data[:after_login].to_s
     options[20] = "0" # mode sans entête
     options[21] = "1" # partage son historique
     options[22] = "1" # notifié si messages
     options[24] = "2" if data[:real]
+
+    return options
   end #/ build_options
 end #/NewUser
 

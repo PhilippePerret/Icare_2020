@@ -8,11 +8,15 @@ def db_exec request, values = nil
     MyDB.db.execute(request, values)
   rescue Exception => e
     MyDB.error = {error:e, request:request, values:values}
-    erreur("MYSQL ERROR: #{e.message} (cf. journal.log)")
-    log("   REQUEST: #{request}")
-    log("    VALUES: #{values.inspect}") unless values.nil?
-    log e.message
-    log e.backtrace.join("\n")
+    if respond_to?(:erreur)
+      erreur("MYSQL ERROR: #{e.message} (cf. journal.log)")
+    end
+    if respond_to?(:log)
+      log("   REQUEST: #{request}")
+      log("    VALUES: #{values.inspect}") unless values.nil?
+      log e.message
+      log e.backtrace.join("\n")
+    end
   end
 end
 # Retourne le dernier ID
