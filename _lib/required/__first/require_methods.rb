@@ -37,4 +37,20 @@ def require_module modname
   else
     raise "Impossible de charger le module #{modname} (#{path})"
   end
+  # Ensuite on charge tous les dossiers xrequired dans la
+  # hiérarchie
+  load_xrequired_on_hierarchy(path)
+end
+
+# Charge les dossiers xrequired qui pourraient se trouver dans la hiérarchie
+# du module
+def load_xrequired_on_hierarchy(the_path)
+  while the_path && File.basename(the_path) != 'modules'
+    the_path = File.dirname(the_path)
+    path_xrequired = File.join(the_path,'xrequired')
+    if File.exists?(path_xrequired)
+      require_folder(path_xrequired)
+      log("Dossier xrequired chargé : #{path_xrequired}")
+    end
+  end
 end

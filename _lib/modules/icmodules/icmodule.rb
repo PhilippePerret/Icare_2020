@@ -14,10 +14,16 @@ class << self
   # Retourne l'icmodule créé.
   #
   def create(data)
-    data[:user] = User.get(data[:user]) if data[:user].is_a?(Integer)
+    require_module('watchers')
+    # L'icarien concerné (possesseur du module)
+    icarien = data[:user]
+    icarien = User.get(icarien) if icarien.is_a?(Integer)
 
-    # Quel que soit le module, un watcher de paiement
-    # TODO
+    # On ajoute l'identifiant du module (pour le watcher)
+    data.merge!(objet_id: db_last_id)
+
+    # Quel que soit le module, un watcher de démarrage
+    icarien.watchers.add(:creation_icmodule, data)
   end #/ create
 
 end # /<< self

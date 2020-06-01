@@ -76,7 +76,19 @@ end
 
 ### Les dossiers `xrequired`
 
-Quand on appelle une route, l’application remonte la hiérarchie complète et charge tous les dossiers `xrequired` qu’elle trouve (en général, il n’y en a qu’un seul).
+Le chargement des routes respecte le [principe des xrequired][]
+
+---
+
+<a name="principes"></a>
+
+## Principes
+
+<a name="principexrequired"></a>
+
+### Principe des xrequired
+
+Le « principe des xrequired » signifie que lorsqu’on charge un dossier (à l’aide de la méthode `require_module` ou `Page.load`), tous les dossiers `xrequired` se trouvant sur la hiérarchie sont automatiquement chargés. Cela permet d’hériter de méthodes supérieures. Pour les [watchers](#leswatchers), cela permet d’hériter des méthodes utiles lorsqu’un watcher est actionné.
 
 Par exemple, si la route à atteindre est `admin/icariens/outils`, cela fait appel à un dossier se trouvant dans :
 
@@ -94,7 +106,11 @@ En appelant cette route, l’application cherche donc à charger les dossiers su
 
 Cela, on le comprend, permet donc de partager des méthodes et des modules dans un même lieu.
 
-Note : c’est le module `_main_classes/page.rb` qui s’en charge avec la méthode `load_xrequired`.
+> Note : pour les routes, c’est le module [`./_lib/_classes/page.rb` ](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb) qui s’en charge avec la méthode `load_xrequired`. Pour les modules, c’est la méthode `load_xrequired_on_hierarchy` du module [./_lib/required/__first/require_methods.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb).
+
+
+
+
 
 ---
 
@@ -501,6 +517,94 @@ end #/HTML
 
 ---
 
+
+
+<a name="leswatchers"></a>
+
+## Les Watchers
+
+
+
+Les watchers permettent de gérer toute l’activité, les actions, possible sur l’atelier. Ils permettent de produire les notifications qui doivent être données à l’administrateur ou à l’icarien/utilisateur.
+
+Les **données de tous les watchers** sont définies dans le fichier [_lib/modules/watchers/constants.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb).
+
+### Constitution des données de watchers
+
+Les données des watchers, enregistrées dans la table `watchers` définissent :
+
+~~~ruby
+{
+	objet:  'IcModule', 			# Nom de la classe de l'objet visé
+  objet_id:	12,							# Identifiant de l'objet. On utilise donc 
+  													# objet.get(objet_id) pour obtenir l'objet. Ici un module
+  processus: 'start',				# Le nom du processus donc de la méthode qui doit être appelée
+  													# lorsque le watcher est "triggué" (actionné). Donc :
+  													# <objet>.get(<objet_id>).<processus>
+  													# -----------------------------------------------------------
+													  # Ce processus doit être défini dans le dossier modules `watchers_data`
+  													# à un chemin d'accès correspondant à <objet>/<processus>/
+  													# Cf. "Création d'un nouveau watcher" ci-dessous
+  													# -----------------------------------------------------------
+  triggered_at: nil,				# Permet de définir la date où le watcher doit être activé, 
+  													# c'est-à-dire où il doit produire une notification.
+  data: nil,								# Éventuellement un Hash jsonné contenant les données utiles.
+  vu: false,								# Pour savoir si le watcher a déjà été vu. Si le watcher n'a pas
+  													# encore été vu, il produit un nombre dans la pastille à l'accueil
+  													# de l'utilisateur (admin ou icarien).
+  required: [:user_id, :objet_id] # Liste des propriétés requises (pour check)
+  																# Noter que :objet et :processus sont toujours requis.
+}
+~~~
+
+
+
+### Ajout d’un watcher à un icarien
+
+Pour ajouter un watcher à un icarien, il suffit d’appeler la méthode :
+
+~~~ruby
+icarien.watchers.add(<watcher type>, {<data>} )
+~~~
+
+
+
+### Lancement d’un watcher
+
+C’est le dossier [./_lib/modules/watchers_processus/xrequired](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/xrequired) qui contient et définit la méthode de lancement des watchers.
+
+Noter que ce dossier, conformément au [principe des xrequired](#principexrequired), est automatiquement chargé dès qu’un watcher est actionné.
+
+### Création d’un nouveau watcher
+
+Il suffit de définir ses données dans le fichier `watcher/constants.rb` vu plus haut.
+
+Ensuite, on crée le dossier :
+
+~~~
+_lib/modules/watchers_processus/<objet>/<processus>/
+~~~
+
+… et on met dedans tous les fichiers utiles. 
+
+À commencer par le fichier `main.rb` qui doit définir :
+
+~~~ruby
+class <objet>                         class IcModule
+  def <processus>												def start
+    ...																		...
+  end 																	end
+end #/<objet>													end #/IcModule
+~~~
+
+
+
+
+
+
+
+---
+
 ## Méthodes pratiques
 
 
@@ -619,4 +723,6 @@ Cf. le site [Smiley cool](https://smiley.cool/fr/emoji-list.php).
 
 [utilisateur courant]: #currentuser
 [dossier de route]: #dossierroute
+[]: 
 [formate_date]: #formate_date
+[principe des xrequired]: #principexrequired
