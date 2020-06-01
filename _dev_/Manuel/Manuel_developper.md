@@ -637,7 +637,7 @@ require_module('watchers') # requis
 icarien.watchers.add(<watcher type>, {<data>} )
 ~~~
 
-
+En général, on définit toujours `:objet_id` dans ces données. On peut aussi régler `vu_user` ou `vu_admin` pour définir que l’icarien ou l’administrateur a vu ce watcher.
 
 ### Lancement d’un watcher
 

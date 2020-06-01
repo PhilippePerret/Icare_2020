@@ -11,7 +11,8 @@
 * Ajouter les colonnes `vu` dans les tables :
 
   ~~~SQL
-  ALTER TABLE `watchers` ADD COLUMN `vu` BOOL AFTER `data`;
+  ALTER TABLE `watchers` ADD COLUMN `vu_admin` BOOL DEFAULT false AFTER `data`;
+  ALTER TABLE `watchers` ADD COLUMN `vu_user` BOOL DEFAULT false AFTER `vu_admin`;
   ~~~
 
 * Modifier les icariens suivants:

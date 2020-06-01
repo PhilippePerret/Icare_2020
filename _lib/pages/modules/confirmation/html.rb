@@ -9,7 +9,7 @@ class HTML
     icarien_required
     require_modules(['watchers', 'absmodules'])
     @absmodule = AbsModule.get(param(:mid))
-    user.watchers.add(:commande_module, {objet_id: absmodule.id})
+    user.watchers.add(:commande_module, {objet_id: absmodule.id, vu_user:true})
   end
   # Fabrication du body
   def build_body
