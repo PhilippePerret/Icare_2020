@@ -110,7 +110,7 @@ section#header div#header-tools a {
   color:var(--inverse-lighter-color-normal);
 }
 section#header div#header-tools a:hover {
-  background-color:white;
+  background-color:#DDDDDD;
   color:var(--dark-color-normal);
   transition:0.3s;
 }

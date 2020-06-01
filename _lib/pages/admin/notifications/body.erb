@@ -1,12 +1,12 @@
 <section class="watchers">
-  <h4>Notifications</h4>
   <div class="infos-watchers cases-line">
     <span class="case-libelle">Total</span><span
     class="case-value"><%= user.watchers.count %></span><span
     class="case-libelle">Non lus</span><span
     class="case-value red"><%= user.watchers.unread.count %></span><span
     class="case-libelle">lus</span><span
-    class="case-value"><%= user.watchers.read.count %></span><span
-    class="case-neutre"><a href="admin/notifications">s'y rendre</a></span>
+    class="case-value"><%= user.watchers.read.count %></span>
   </div>
 </section>
+
+<%= watchers.listing %>
