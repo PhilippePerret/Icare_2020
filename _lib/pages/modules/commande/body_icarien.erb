@@ -1,0 +1,11 @@
+<%
+# Ce module est chargé quand l'icarien, inscrit, à choisi un module
+# à optionner. Il doit confirmer ici sa commande.
+%>
+<p>
+Merci de confirmer votre option sur le module : <%= absmodule.name %>
+</p>
+<p class="center">
+  <a href="modules/confirmation?mid=<%=param(:mid)%>" class='btn'>Je confirme l'option sur le module « <%= absmodule.name %> »</a>
+</p>
+<p class="mt4 small italic">(dès que Phil aura validé cette option, vous pourrez payer et démarrer ce module. Un grand merci de votre confiance)</p>

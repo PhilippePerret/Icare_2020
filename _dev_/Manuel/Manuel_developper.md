@@ -110,6 +110,41 @@ Cela, on le comprend, permet donc de partager des méthodes et des modules dans 
 
 
 
+---
+
+
+
+## Requérir des modules à la volée
+
+Requérir des modules à la volée permet de ne charger que le code nécessaire à une section. C’est un principe fondateur du nouvel atelier.
+
+On les charge à l’aide des méthodes :
+
+~~~ruby
+require_module('nom-module')
+
+require_modules(['module1', 'module2', ..., 'moduleN'])
+~~~
+
+
+
+Requérir un module signifie :
+
+* requérir tous ses fichiers ruby (`.rb`), dans son dossier ou ses sous-dossiers,
+* charger les feuilles de styles (`.css`) de son dossier et ses sous-dossiers,
+* charger les javascripts (`.js`) de son dossier et tous ses sous-dossiers,
+* requérir tous les éléments des dossiers `xrequired` de ses ascendants selon le [principe des xrequired][].
+
+
+
+Ces modules doivent se trouve dans le dossier :
+
+~~~bash
+./_lib/modules/
+~~~
+
+
+
 
 
 ---
@@ -597,6 +632,8 @@ Les données des watchers, enregistrées dans la table `watchers` définissent 
 Pour ajouter un watcher à un icarien, il suffit d’appeler la méthode :
 
 ~~~ruby
+require_module('watchers') # requis
+
 icarien.watchers.add(<watcher type>, {<data>} )
 ~~~
 

@@ -47,9 +47,8 @@ form:not(.inline) div.buttons div.other_buttons {
   float:left;
 }
 
-.btn,
 .btn {
-  padding:2px 8px;
+  padding:0.4em 1.1em 0.3em;
   margin-left:4px;
   font-family:inherit;
   font-size:inherit;

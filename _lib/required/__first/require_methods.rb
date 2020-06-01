@@ -22,6 +22,13 @@ def require_js_in folderpath
   end
 end
 
+# Requérir plusieurs modules en une méthode
+def require_modules ary_modname
+  ary_modname.each do |modname|
+    require_module(modname)
+  end
+end #/ require_modules
+
 def require_module modname
   # Pour éviter de recharger un module déjà chargé
   @loaded_modules ||= {}

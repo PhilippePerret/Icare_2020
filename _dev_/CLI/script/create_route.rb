@@ -3,11 +3,11 @@
 
 NEW_ROUTE = nil # remettre à nil après pour éviter les erreurs
 DATA_PAGE = {
-  titre: "📥 Téléchargement",
-  body_erb:  false,          # si true, on crée le fichier body.erb
+  titre: "\#{retour_modules}📓 Confirmation de commande",
+  body_erb:  true,          # si true, on crée le fichier body.erb
   form: false,              # si true, on requiert le module 'forms'
-  module_user: false,        # si true, on crée 'user.rb'
-  icarien_required: true,   # true, une barrière sera "posée"
+  module_user: true,        # si true, on crée 'user.rb'
+  icarien_required:true,    # true, une barrière sera "posée"
   admin_required: false,    # si true, une barrière sera posée
 }
 
@@ -51,7 +51,7 @@ end
 def html_code_type
   <<-RUBY
 # encoding: UTF-8
-#{'require_module(\'forms\')' if DATA_PAGE[:form]}
+#{'require_module(\'form\')' if DATA_PAGE[:form]}
 class HTML
   def titre
     "#{DATA_PAGE[:titre]||"TITRE MANQUANT"}".freeze

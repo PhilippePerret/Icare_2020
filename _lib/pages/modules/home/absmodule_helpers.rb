@@ -12,6 +12,7 @@ class AbsModule < ContainerClass
   <div class="description mg2 small">
     <div class="titre">Description courte</div>
     <div>#{short_description}</div>
+    #{ligne_infos}
     #{ligne_boutons}
     <div class="titre">Description détaillée</div>
     <div>#{long_description}</div>
@@ -22,6 +23,18 @@ class AbsModule < ContainerClass
     HTML
   end #/ out
 
+  def ligne_infos
+    @ligne_infos ||= begin
+      <<-HTML
+<div class="ligne-infos">
+  <span class="libelle">Tarif</span>
+  <span class="value">#{formated_tarif}</span>
+  <span class="libelle">• Durée approximative</span>
+  <span>#{hduree ? hduree : 'indéfinie'}</span>
+</div>
+      HTML
+    end
+  end #/ ligne_infos
   # Retourne la ligne pour les boutons (revenir en haut et commande)
   def ligne_boutons
     @ligne_boutons ||= begin
@@ -42,6 +55,12 @@ class AbsModule < ContainerClass
   def formated_name(options = {})
     "#{"<span class='vmiddle'>#{options[:picto]}</span> " if options.key?(:picto)}#{"#{id} " if user.admin?}#{name}"
   end #/ formated_name
+
+  def formated_tarif
+    @formated_tarif ||= begin
+      "<span class='bold red'>#{tarif} €#{' / mois' unless hduree}</span>"
+    end
+  end #/ formated_tarif
 
   # Pour que le module se place bien dans la page quand on clique dans
   # la table des matières, il faut que son ancre soit placée dans le code
