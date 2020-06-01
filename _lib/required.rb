@@ -11,7 +11,7 @@ require_relative 'constants'
 require './config'
 
 Dir["#{LIB_FOLDER}/required/__first/**/*.rb"].each{|m|require m}
-Dir["#{LIB_FOLDER}/required/_main_classes/**/*.rb"].each{|m|require m}
+Dir["#{LIB_FOLDER}/required/_classes/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/then/**/*.rb"].each{|m|require m}
 
 # debug "session id: #{session.id}"

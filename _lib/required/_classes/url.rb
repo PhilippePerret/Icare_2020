@@ -13,8 +13,8 @@ MAIN_LINKS = {
   # BUREAU
   bureau:   '<a href="bureau/home">bureau</a>'.freeze,
   work:     '<a href="bureau/travail">Travail courant</a>'.freeze,
-  notices:  '<a href="bureau/notices">Notifications<span class="pastille">%{nombre}</span></a>'.freeze,
-  frigo:    '<a href="bureau/frigo">Porte de frigo<span class="pastille">%{nombre}</span></a>'.freeze,
+  notices:  '<a href="bureau/notices">Notifications%{non_vus}</a>'.freeze,
+  frigo:    '<a href="bureau/frigo">Porte de frigo%{non_vus}'.freeze,
   # DIVERS
   aide:     '<a href="aide/home">aide</a>'.freeze,
   contact:  '<a href="contact">contact</a>'.freeze,

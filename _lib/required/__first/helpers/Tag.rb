@@ -52,6 +52,14 @@ class << self
     (RETOUR_LINK % params).freeze
   end #/ retour
 
+  # Renvoie une pastille (span.pastille) avec le +nombre+ ou
+  # un string vide
+  def pastille_nombre(nombre)
+    if nombre > 0
+      TAG_PASTILLE % [nombre]
+    else ''.freeze end
+  end #/ pastille
+
   private
 
     # @private
@@ -73,6 +81,8 @@ TAG_SPAN  = '<span class="%{class}" style="%{style}">%{text}</span>'.freeze
 TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{target}">%{titre}</a>'.freeze
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
 TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze
+
+TAG_PASTILLE = '<span class="pastille">%i</span>'.freeze
 
 # Formulaires
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze
