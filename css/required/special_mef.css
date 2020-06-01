@@ -89,6 +89,7 @@ div.goto:hover span.pastille {
   Les tables des matières flottantes dans la page
 */
 div.float-tdm {
+  position:relative;
   display:inline-block;
   width:auto;
   max-width:50%;
@@ -108,4 +109,17 @@ div.float-tdm.left {
 div.float-tdm > a {
   display:block;
   color: var(--contre-color-normal);
+}
+
+div.float-tdm legend {
+  position: absolute;
+  top:-0.8em;
+  left:3.5em;
+  font-style:italic;
+  /* color:var(--contre-color-normal); */
+  /* color:var(--fond-discret-inner-object); */
+  color:#999999;
+  background-color:white;
+  padding:0 4px;
+  font-size:0.93em;
 }

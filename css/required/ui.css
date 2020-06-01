@@ -30,6 +30,11 @@ h2.page-title {
   margin-left:1em;
 }
 
+/* Les titres en général */
+.titre {
+  color:var(--dark-color-normal);
+}
+
 p, .p, ul.p li {
   text-align: justify;
   /* max-width: var(--text-max-width); */
@@ -121,6 +126,8 @@ section#body > * {
 section#body > fieldset {
   max-width: calc(var(--text-max-width) - 2em);
 }
+
+/* --- FOOTER --- */
 
 section#footer {
   background-color:var(--dark-color-normal);

@@ -14,6 +14,17 @@ class ContainerClass
       @items[item_id]
     end #/ get
 
+    def get_all(filtre = nil, reset_items = false)
+      @items = {} if reset_items
+      @items ||= {}
+      filtre = " WHERE #{filtre}".freeze unless filtre.nil?
+      db_exec("SELECT * FROM #{table}#{filtre}".freeze).each do |ditem|
+        item = new(ditem[:id])
+        item.data = ditem
+        @items.merge!(item.id => item)
+      end
+    end #/ get_all
+
     # Pour pouvoir utiliser la méthode <classe>.collect qui va boucler
     # sur tous les éléments. Noter que cette méthode instancie TOUS les
     # éléments de la base de données, donc il faut y aller mollo.

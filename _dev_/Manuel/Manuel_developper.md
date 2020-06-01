@@ -451,6 +451,39 @@ message("Le nouveau temps est #{formate_date(newDate)}")
 
 
 
+<a name="tdm-de-page"></a>
+
+## Table des matières de page (flottante)
+
+On peut faire une table des matières flottante dans la page à l’aide de la class `FloatTdm`.
+
+~~~ruby
+tdm = FloatTdm.new(liens[, {options}])
+tdm.out
+# => la table des matières mis en forme
+~~~
+
+Les liens doivent être définis par :
+
+~~~ruby
+liens = [
+  {route:'la/route', titre:'Le titre'[, class:'css']}
+]
+~~~
+
+Si la route courante correspond à la route d’un item, cet item est mis en courant, donc atténué.
+
+Par défaut, la table des matières flotte à droite. Pour la faire flotter à gauche, ajouter `left: true` dans les options envoyés en second argument.
+
+**Options**
+
+~~~ruby
+:titre			{String}			# Si fourni, ce titre est ajouté, un peu comme dans un fieldset
+:left				{Boolean}			# si true, la table des flottante à gauche.
+~~~
+
+
+
 <a name="useerbviews"></a>
 
 ## Utilisation des vues ERB
@@ -689,6 +722,27 @@ end
 > Note : c’est juste un exemple car la classe `Watcher`, à l’heure d’aujourd’hui, n’est pas un ContainerClass.
 
 
+
+### `<classe>::get_all([filtre][, <reset true|false>])`
+
+Permet de charger tout ou partie des données, en les mettant dans la variable `@items`. On peut donc ensuite utiliser `get(id)` pour obtenir l’instance.
+
+Cette méthode est à utiliser lorsqu’on sait qu’il va y avoir un grand nombre d’instance à instances.
+
+Si on met en second argument `true`, alors la variable `@items` est remise à rien et on peut ensuite utiliser `<classe>::each_item` pour boucler sur tous les items retenus. 
+
+Par exemple, pour afficher tous les modules suivis par un icarien, on peut faire :
+
+~~~ruby
+IcModule.get_all("user_id = #{icarien.id}")
+IcModule.each_item do |icmodule|
+  puts icmodule.out
+end
+~~~
+
+> Noter que le code précédent revient à utiliser `IcModule.each("user_id = #{icarien.id}") do ...`
+
+
 
 ### `<classe>#data`
 

@@ -15,10 +15,7 @@ class HTML
       {route:'overview/reussites'.freeze, titre: 'Les belles réussites'.freeze},
       {route:'overview/parcours'.freeze, titre: 'Parcours fictif de 3 icarien·ne·s'.freeze},
       {route:'overview/raisons'.freeze, titre: 'Les dix bonnes raisons de choisir l’atelier Icare'.freeze}
-    ].collect do |dlien|
-      css = dlien[:route] == current_route ? 'current' : ''
-      Tag.lien(route:dlien[:route], titre:dlien[:titre], class:css)
-    end
+    ]
     FloatTdm.new(liens, right:true).out
   end #/ tdm
 
