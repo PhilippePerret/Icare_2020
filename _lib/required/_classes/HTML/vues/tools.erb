@@ -1,5 +1,5 @@
 <div id="header-tools" class="">
   <%= MAIN_LINKS[:aide] %>
   <%= MAIN_LINKS[user.icarien? ? :logout : :login] %>
-  <%= MAIN_LINKS[user.icarien? ? :bureau : :signup] %>
+  <%= user.icarien? ? Tag.lien_bureau : MAIN_LINKS[:signup] %>
 </div>

@@ -4,7 +4,13 @@
 =end
 class User
 def watchers
-  @watchers ||= UserWatchers.new(self)
+  @watchers ||= begin
+    if user.admin?
+      AdminWatchers.new(self)
+    else
+      UserWatchers.new(self)
+    end
+  end
 end #/ watchers
 end #/User
 
@@ -13,13 +19,60 @@ end #/User
 #   class UserWatchers
 #
 # ---------------------------------------------------------------------
-
-class UserWatchers
+class MainWatchers
   attr_reader :owner
   def initialize owner
     @owner = owner
   end #/ initialize
 
+  def count
+    all.count
+  end #/ count
+
+  # Nombre de watchers non vus
+  def non_vus_count
+    @non_vus_count ||= unread.count
+  end #/ non_vus_count
+
+end #/MainWatchers
+
+# ---------------------------------------------------------------------
+#
+#   Class pour l'administrateur
+#
+# ---------------------------------------------------------------------
+class AdminWatchers < MainWatchers
+  # Liste Array de tous les watchers
+  def all
+    @all ||= Watcher.get_all.values
+  end #/ all
+
+  # Liste des watchers non vus
+  def unread
+    @unread ||= begin
+      all.collect do |w|
+        next if w.vu?
+        w
+      end.compact
+    end
+  end #/ unread
+
+  # Liste des watchers vus
+  def read
+    @read ||= all.collect do |w|
+      next unless w.vu?
+      w
+    end.compact
+  end #/ read
+
+end #/AdminWatchers
+
+# ---------------------------------------------------------------------
+#
+#   Class pour un icarien
+#
+# ---------------------------------------------------------------------
+class UserWatchers < MainWatchers
   # Liste Array de tous les watchers
   def all
     @all ||= Watcher.watchers_of(owner)
@@ -55,10 +108,5 @@ class UserWatchers
       erreur("Une erreur est survenue… Consultez le journal de bord.")
     end
   end #/ add
-
-  # Nombre de watchers non vus
-  def non_vus_count
-    @non_vus_count ||= all.reject{|w|w.vu?}.count
-  end #/ non_vus_count
 
 end #/Watchers

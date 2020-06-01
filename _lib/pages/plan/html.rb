@@ -12,7 +12,7 @@ class HTML
     # 👀
     @body = <<-HTML
 
-#{divGoto('<a href="bureau/home">🏠 Bureau</a>'.freeze) if user.icarien?}
+#{divGoto(Tag.lien_bureau) if user.icarien?}
 
 #{divGoto('<a href="user/profil">'+user.visage+' Profil</a>'.freeze) if user.icarien?}
 

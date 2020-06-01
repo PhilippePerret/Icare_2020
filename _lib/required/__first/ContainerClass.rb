@@ -14,6 +14,9 @@ class ContainerClass
       @items[item_id]
     end #/ get
 
+    # Charge tous les items en appliquant le filtre +filtre+ si défini
+    # Les mets dans @items en réinitialisant la liste si +reset_items+ est
+    # true et la renvoie.
     def get_all(filtre = nil, reset_items = false)
       @items = {} if reset_items
       @items ||= {}
@@ -23,6 +26,7 @@ class ContainerClass
         item.data = ditem
         @items.merge!(item.id => item)
       end
+      return @items
     end #/ get_all
 
     # Pour pouvoir utiliser la méthode <classe>.collect qui va boucler

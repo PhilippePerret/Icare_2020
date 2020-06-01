@@ -60,6 +60,14 @@ class << self
     else ''.freeze end
   end #/ pastille
 
+  # Retourne le lien vers le bureau suivant que c'est l'administrateur
+  # ou un icarien qui visite
+  def lien_bureau
+    home_bureau = user.admin? ? 'admin/home' : 'bureau/home'
+    logo_bureau = user.admin? ? '🎮' : '🏠'
+    "<a href=\"#{home_bureau}\">#{logo_bureau} Bureau</a>".freeze
+  end #/ bureau
+
   def aname(ancre)
     TAG_ANCHOR % [ancre]
   end #/ aname

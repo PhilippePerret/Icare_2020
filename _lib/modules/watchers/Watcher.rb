@@ -27,7 +27,13 @@ end # /<< self
 
 # Retourne true si le watcher a été vu par l'icarien
 def vu?
-  data[:vu] == true
+  # data[user.admin? ? :vu_admin : :vu_user] == true
+  log("data: #{data.inspect}")
+  data[:vu_user] == true
 end #/ vu?
+
+def owner
+  @owner ||= User.get(user_id)
+end #/ owner
 
 end #/Watcher

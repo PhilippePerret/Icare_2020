@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-NEW_ROUTE = nil # remettre à nil après pour éviter les erreurs
+NEW_ROUTE = 'admin/tools' # remettre à nil après pour éviter les erreurs
 DATA_PAGE = {
-  titre: "\#{retour_modules}📓 Confirmation de commande",
-  body_erb:  true,          # si true, on crée le fichier body.erb
-  form: false,              # si true, on requiert le module 'forms'
-  module_user: true,        # si true, on crée 'user.rb'
-  icarien_required:true,    # true, une barrière sera "posée"
-  admin_required: false,    # si true, une barrière sera posée
+  titre: "\#{RETOUR_ADMIN}🛠️ Outils",
+  body_erb: true,          # si true, on crée le fichier body.erb
+  form: true,              # si true, on requiert le module 'forms'
+  module_user: false,        # si true, on crée 'user.rb'
+  icarien_required:false,    # true, une barrière sera "posée"
+  admin_required: true,    # si true, une barrière sera posée
 }
 
 raise "Il faut définir la route" if NEW_ROUTE.nil?

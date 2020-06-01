@@ -40,7 +40,9 @@ DATA_ICARIEN = YAML.load(DATA_ICARIEN_YAML)
 
 puts DATA_ICARIEN.inspect
 
-JOUR = 3600 * 24
+unless defined?(JOUR)
+  JOUR = 3600 * 24
+end
 
 class NewUser
 class << self

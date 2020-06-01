@@ -123,3 +123,24 @@ div.float-tdm legend {
   padding:0 4px;
   font-size:0.93em;
 }
+
+div.cases-line {
+  display:inline-block;
+  width:auto;
+  border: 1px solid;
+  font-size:0.75em;
+
+}
+div.cases-line > span {
+  margin:0;
+  padding: 0 24px;
+}
+div.cases-line span.case-libelle {
+  background-color:#CCCCCC;
+  border-left:1px solid;
+  color:grey;
+}
+div.cases-line span.case-value {
+  font-weight: 900;
+  border-right:1px solid black;
+}
