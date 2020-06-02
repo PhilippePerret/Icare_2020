@@ -1,6 +1,12 @@
-<span class="libelle">Nombre total de notifications</span>
-<span class="value"><%= nombre_notifications %></span>
+<section class="watchers mb2">
+  <div class="infos-watchers cases-line">
+    <span class="case-libelle">Total</span><span
+    class="case-value"><%= user.watchers.count %></span><span
+    class="case-libelle">Non lus</span><span
+    class="case-value red"><%= user.watchers.unread.count %></span><span
+    class="case-libelle">lus</span><span
+    class="case-value"><%= user.watchers.read.count %></span>
+  </div>
+</section>
 
-<div class="only-message">
-  Bientôt, ici, toutes vos notifications.
-</div>
+<%= watchers.listing %>

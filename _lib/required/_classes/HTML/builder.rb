@@ -92,7 +92,7 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
   # Retourne le bloc à coller dans la barre d'outils lorsque
   # l'utilisateur est identifié et qu'on a des notifications.
   def tools_block_notifications
-    Tag.div(text:user.pastille_notifications_non_vues, class:'notification-tool')
+    Tag.div(text:user.pastille_notifications_non_vues({linked:true}), class:'notification-tool')
 
   end #/ tools_block_notifications
 end

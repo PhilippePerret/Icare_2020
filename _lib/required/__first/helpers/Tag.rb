@@ -60,10 +60,12 @@ class << self
   #             des notifications.
   def pastille_nombre(nombre, options = nil)
     return '' if nombre == 0
-    nombre = self.lien(route:"#{user.admin? ? 'admin' : 'bureau'}/notifications",titre:nombre) if options && options[:linked]
-    past = TAG_PASTILLE % [nombre.to_s]
-    # past = lien(route:"bureau/notifications", titre:past) if options && options[:linked]
-    return past
+    if options && options[:linked]
+      nombre = self.lien(route:"#{user.admin? ? 'admin' : 'bureau'}/notifications", text:nombre)
+    end
+    log("[pastille_nombre] nombre : #{nombre}")
+    pasti = TAG_PASTILLE % [nombre.to_s]
+    return pasti
   end #/ pastille
 
   # Retourne le lien vers le bureau suivant que c'est l'administrateur
