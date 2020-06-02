@@ -25,43 +25,6 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 
-# Méthode qui affiche le watcher
-def out(options = nil)
-  require_folder_processus
-  key = user.admin? ? :admin : :user
-  erbpath = path_notification(key)
-  if File.exists?(erbpath)
-    Tag.div(text:inner(erbpath), class:'watcher')
-  else '' end
-end #/ out
-
-def inner(erbpath)
-  Tag.div(text:bande_infos, class:'infos') + body(erbpath)
-end #/ inner
-
-# Entête de la notification à afficher
-def bande_infos
-  inf = []
-  inf << "<span class='user'><strong>#{owner.pseudo}</strong> <span class='small'>(##{owner.id})</span></span>" if user.admin?
-  inf << Tag.span(text:titre, class:'titre')
-  inf.join
-end #/ bande_infos
-
-# Corps de la notification
-def body(erbpath)
-  b = deserb(erbpath, self)
-  # Si c'est l'administrateur qui visite, on ajoute un bouton pour
-  # détruire ou éditer le watcher
-  if user.admin?
-    btns = []
-    btns << Tag.lien(route:"#{route.to_s}?op=destroy&wid=#{id}", titre:'détruire', class:'small warning')
-    btns << Tag.lien(route:"#{route.to_s}?op=edit&wid=#{id}", titre:'éditer', class:'small')
-    btns = "<span class='fleft'>#{btns.join}</span>".freeze
-    b.sub!(/(class="buttons">)/, "\\1#{btns}")
-  end
-  return b
-end #/ body
-
 # ---------------------------------------------------------------------
 #   Méthodes publiques
 # ---------------------------------------------------------------------

@@ -5,7 +5,7 @@
 class MainWatchers
   def listing
     [
-      unread.collect { |watcher| watcher.out },
+      unread.collect { |watcher| watcher.out(unread:true) },
       read.collect { |watcher| watcher.out }
     ].join
   end #/ listing

@@ -15,6 +15,31 @@ class MainWatchers
     @owner = owner
   end #/ initialize
 
+  # Méthode qui ajoute un watcher pour l'icarien, de type
+  # +wtype+ avec les données +data+
+  def add wtype, data
+    now = Time.now.to_i
+    dwatcher = {
+      wtype:      wtype, # par exemple 'commande_module'
+      objet_id:   data[:objet_id],
+      user_id:    owner.id,
+      vu_admin:   user.admin?,
+      vu_user:    !user.admin?,
+      updated_at: now,
+      created_at: now
+    }
+    # On procède à l'enregistrement dans la table
+    valeurs = dwatcher.values
+    columns = dwatcher.keys.join(VG)
+    interro = Array.new(valeurs.count, '?').join(VG)
+    request = "INSERT INTO watchers (#{columns}) VALUES (#{interro})"
+    db_exec(request, valeurs)
+    if MyDB.error
+      log(MyDB.error)
+      erreur("Une erreur est survenue… Consultez le journal de bord.")
+    end
+  end #/ add
+
   def count
     all.count
   end #/ count
@@ -67,30 +92,5 @@ class UserWatchers < MainWatchers
   def all
     @all ||= Watcher.watchers_of(owner)
   end #/ all
-
-  # Méthode qui ajoute un watcher pour l'icarien, de type
-  # +wtype+ avec les données +data+
-  def add wtype, data
-    now = Time.now.to_i
-    dwatcher = {
-      wtype:      wtype, # par exemple 'commande_module'
-      objet_id:   data[:objet_id],
-      user_id:    owner.id,
-      vu_admin:   user.admin?,
-      vu_user:    !user.admin?,
-      updated_at: now,
-      created_at: now
-    }
-    # On procède à l'enregistrement dans la table
-    valeurs = dwatcher.values
-    columns = dwatcher.keys.join(VG)
-    interro = Array.new(valeurs.count, '?').join(VG)
-    request = "INSERT INTO watchers (#{columns}) VALUES (#{interro})"
-    db_exec(request, valeurs)
-    if MyDB.error
-      log(MyDB.error)
-      erreur("Une erreur est survenue… Consultez le journal de bord.")
-    end
-  end #/ add
 
 end #/Watchers

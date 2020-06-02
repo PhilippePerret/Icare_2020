@@ -2,6 +2,31 @@
   box-shadow: 2px 6px 16px 7px #EEEEEE;
   padding:4px 1em 1em 1em;
   font-size:0.85em;
+  position:relative;
+}
+.watcher.unread span.pastille-rouge {
+  position:absolute;
+  top:-8px;
+  left:-8px;
+  background-color:red;
+  width:20px;
+  height:20px;
+  border-radius:12px;
+}
+.watcher.unread span.pastille-rouge:after {
+  display:block;
+  font-size:9.8pt;
+  width:300px;
+  content: "Nouvelle notification. Sera marquée lue la prochaine fois.";
+  color:red;
+  margin-top:-2em;
+  padding:0.3em 1em;
+  background-color:white;
+  opacity:0;
+}
+.watcher.unread span.pastille-rouge:hover:after {
+  opacity:0.8;
+  transition:0.5s;
 }
 .watcher div.infos {
   text-align: right;
