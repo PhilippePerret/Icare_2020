@@ -1,4 +1,5 @@
 <div id="header-tools" class="">
+  <%= tools_block_notifications %>
   <%= MAIN_LINKS[:aide] %>
   <%= MAIN_LINKS[user.icarien? ? :logout : :login] %>
   <%= user.icarien? ? Tag.lien_bureau : MAIN_LINKS[:signup] %>

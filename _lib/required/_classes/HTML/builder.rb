@@ -50,7 +50,7 @@ class HTML
   end
 
   def build_header
-    @header = deserb('vues/tools') + deserb('vues/logo')
+    @header = deserb('vues/tools', self) + deserb('vues/logo')
   end
 
   def build_messages
@@ -88,5 +88,11 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
     HTML
   end
 
+  # @helper
+  # Retourne le bloc à coller dans la barre d'outils lorsque
+  # l'utilisateur est identifié et qu'on a des notifications.
+  def tools_block_notifications
+    Tag.div(text:user.pastille_notifications_non_vues, class:'notification-tool')
 
+  end #/ tools_block_notifications
 end

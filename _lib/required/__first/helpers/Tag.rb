@@ -54,10 +54,15 @@ class << self
 
   # Renvoie une pastille (span.pastille) avec le +nombre+ ou
   # un string vide
-  def pastille_nombre(nombre)
-    if nombre > 0
-      TAG_PASTILLE % [nombre]
-    else ''.freeze end
+  # +options+
+  #   :linked   Si true, on met un lien pour rejoindre la section
+  #             des notifications.
+  def pastille_nombre(nombre, options = nil)
+    return '' if nombre == 0
+    nombre = self.lien(route:"#{user.admin? ? 'admin' : 'bureau'}/notifications",titre:nombre) if options && options[:linked]
+    past = TAG_PASTILLE % [nombre.to_s]
+    # past = lien(route:"bureau/notifications", titre:past) if options && options[:linked]
+    return past
   end #/ pastille
 
   # Retourne le lien vers le bureau suivant que c'est l'administrateur
@@ -94,7 +99,7 @@ TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{targ
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
 TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze
 TAG_ANCHOR    = '<a name="%s"></a>'.freeze
-TAG_PASTILLE  = '<span class="pastille">%i</span>'.freeze
+TAG_PASTILLE  = '<span class="pastille">%s</span>'.freeze
 
 # Formulaires
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze

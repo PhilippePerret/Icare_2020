@@ -100,7 +100,6 @@ section#header div#div-logo img#logo-papillon {
 }
 section#header div#header-tools {
   float:right;
-  margin-top:4px;
 }
 section#header div#header-tools a {
   font-family:Arial,Geneva,Helvetica;
@@ -108,11 +107,20 @@ section#header div#header-tools a {
   padding:5px 8px 3px;
   background-color:var(--lighter-color-normal);
   color:var(--inverse-lighter-color-normal);
+  vertical-align:bottom;
 }
 section#header div#header-tools a:hover {
   background-color:#DDDDDD;
   color:var(--dark-color-normal);
   transition:0.3s;
+}
+
+/* Bloc indiquant dans l'entête le nombre de notifications non lues */
+section#header div.notification-tool {
+  float:right;
+  display:inline-block;
+  width:40px;
+  text-align:right;
 }
 
 section#body {

@@ -66,11 +66,7 @@ div.goto:hover a {
   color:rgb(42, 127, 168);
   transition:0.3s;
 }
-
-div.goto span.pastille {
-  position:absolute;
-  top:-8px;
-  right:-8px;
+span.pastille {
   border-radius:2em;
   display:inline-block;
   padding:6px;
@@ -79,6 +75,16 @@ div.goto span.pastille {
   font-size:0.65em;
   width:18px;
   text-align:center;
+}
+span.pastille a {
+  all:unset!important;
+}
+span.pastille a:hover {all:unset!important}
+/* Quand la pastille est dans un bloc goto */
+div.goto span.pastille {
+  position:absolute;
+  top:-8px;
+  right:-8px;
   z-index:10;
 }
 div.goto:hover span.pastille {
