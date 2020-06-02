@@ -753,14 +753,19 @@ Les mails sont des fichiers `ERB` adressés à l’administration ou à l’icar
 ~~~
 mail_admin.erb			# mail à envoyer à l'administrateur 
 mail_user.erb				# mail à envoyer à l'icarien
+
+contre_mail_admin.erb # mail à envoyer à l'administrateur en cas de renoncer (bouton contraire)
+contre_mail_user.erb  # mail à envoyer à l'icarien en cas de contre-processus
+											# Par exemple, pour la commande d'un module, ce mail est envoyé quand
+											# je refuse d'attribuer ce module.
 ~~~
 
 
 
 ### Méthodes d’helpers pour les mails
 
-~~~erb
-# à voir
+~~~ruby
+<%= votre_bureau %>      # insert un lien pour rejoindre son bureau depuis le mail
 ~~~
 
 

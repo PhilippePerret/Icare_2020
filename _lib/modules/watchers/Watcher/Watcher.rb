@@ -113,9 +113,63 @@ def path_notification(who)
   File.join(folder, fname)
 end #/ path_notification
 
+def path_mail(who)
+  fname = "mail_#{who}.erb"
+  File.join(folder, fname)
+end #/ path_mail
+
+def path_contre_mail(who)
+  fname = "contre_mail_#{who}.erb"
+  File.join(folder, fname)
+end #/ path_mail
+
+
 # Dossier du processus
 def folder
   @folder ||= File.join(PROCESSUS_WATCHERS_FOLDER,objet_class,processus)
 end #/ folder
 
+private
+
+  # Procédure d'envoi de mail si tout s'est bien passé
+  def send_mail
+    send_mail_to(:admin) if File.exists?(path_mail(:admin))
+    send_mail_to(:user) if File.exists?(path_mail(:user))
+  end #/ send_mail
+  def contre_send_mail
+    send_contre_mail_to(:admin) if File.exists?(path_contre_mail(:admin))
+    send_contre_mail_to(:user) if File.exists?(path_contre_mail(:user))
+  end #/ contre_send_mail
+
+  def send_mail_to(who)
+    send_mail(who, {body: deserb(path_mail(who), self)})
+  end #/ send_mail_to
+
+  def send_contre_mail_to(who)
+    send_mail(who, {body: deserb(path_contre_mail(who), self)})
+  end #/ send_mail_to
+
+  def send_mail(who, data)
+    require_module('mail')
+    whouser   = who_is(who)
+    otheruser = other_who_is(who)
+    Mail.send(
+      to: whouser.mail,
+      from:otheruser.mail,
+      message: body
+    )
+  end #/ send_mail
+
+  def who_is(who)
+    case who
+    when :admin then User.get(1)
+    when :user  then owner
+    end
+  end #/ who_is
+  def other_who_is(who)
+    case who
+    when :admin then owner
+    when :user  then User.get(1)
+    end
+  end #/ other_who_is
 end #/Watcher

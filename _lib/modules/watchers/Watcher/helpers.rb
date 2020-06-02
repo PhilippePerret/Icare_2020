@@ -18,6 +18,10 @@ class Watcher < ContainerClass
     Tag.lien(route:"#{route.to_s}?op=unrun&wid=#{id}", titre: titre)
   end #/ button_unrun
 
+  def votre_bureau
+    Tag.lien(route: "bureau/home", text:'votre bureau', full:true)
+  end #/ votre_bureau
+
 # ---------------------------------------------------------------------
 #   Méthodes de construction du watcher sur le bureau
 # ---------------------------------------------------------------------
