@@ -9,6 +9,9 @@
   div.only-message {
     padding:4em;
   }
+  div.citation {
+    margin-left:50%;
+  }
   section#messages {
     margin-left:2em;
   }
@@ -37,6 +40,9 @@
   section#body form {
     padding:2px!important;
     margin:unset!important;
+  }
+  div.citation {
+    margin:2%;
   }
   section#header {
     text-align:center;

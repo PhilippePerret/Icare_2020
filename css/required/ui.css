@@ -184,3 +184,17 @@ section#messages .notices {
   background-color:#ccffcd;
   color:rgb(0, 136, 45);
 }
+
+div.citation {
+  display:block;
+  max-width:460px!important;
+  font-size:0.9em;
+  text-align:left;
+}
+div.citation span.content {
+  font-style:italic;
+}
+div.citation div.avertissement {
+  font-size: 9pt;
+  text-align:right;
+}

@@ -1,13 +1,16 @@
 div#main-cadre {
   position:relative;
   border: 4px solid #111111;
-  margin:40px 8% 140px;
+  margin:40px 8% 40px;
   text-align:center;
-  padding:0.8em;
+  padding:2em 0.8em;
   min-width:300px;
   border-radius:1em;
   background-color:steelblue;
   color:white;
+}
+div.citation {
+  margin-bottom:2em;
 }
 div#main-cadre a {color:white!important}
 div#main-cadre div#titre {
