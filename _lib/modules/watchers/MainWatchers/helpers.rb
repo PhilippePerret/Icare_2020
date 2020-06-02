@@ -15,6 +15,6 @@ class MainWatchers
   # notification n'est nouvelle
   def bouton_mark_all_read
     return '' if unread_count == 0
-    Tag.div(text:Tag.lien(route:"#{route.to_s}?op=markread", text:'Tout marquer lu'),class:'right mb2 small')
+    Tag.div(text:Tag.lien(route:"#{route.to_s}?op=allmarkread", text:'Tout marquer lu'),class:'right mb2 small')
   end #/ bouton_mark_all_read
 end #/Watchers

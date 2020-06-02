@@ -44,10 +44,42 @@ class MainWatchers
     all.count
   end #/ count
 
+  # Retourne la liste des watchers lus par l'user
+  def read
+    @read ||= begin
+      filter_key = user.admin? ? :admin : :user
+      all.select do |watcher|
+        next unless watcher.vu_par?(filter_key)
+        watcher
+      end
+    end
+  end #/ read
+
+  def unread
+    log("-> unread")
+    @unread ||= begin
+      filter_key = user.admin? ? :admin : :user
+      ur = all.select do |watcher|
+        next if watcher.vu_par?(filter_key)
+        watcher
+      end
+      log("Unread : #{ur} (key: #{filter_key.inspect})")
+      ur
+    end
+  end #/ read
+
   # Nombre de watchers non vus
   def unread_count
+    log("-> unread_count")
     @unread_count ||= unread.count
   end #/ unread_count
+
+  def allmarkread
+    prop = owner.admin? ? 'vu_admin'.freeze : 'vu_user'.freeze
+    request = "UPDATE watchers SET #{prop} = TRUE WHERE #{prop} = FALSE"
+    db_exec(request)
+    message "Toutes vos notifications ont été marquées lues, #{owner.pseudo}.".freeze
+  end #/ allmarkread
 
 end #/MainWatchers
 
@@ -61,24 +93,6 @@ class AdminWatchers < MainWatchers
   def all
     @all ||= Watcher.get_all.values
   end #/ all
-
-  # Liste des watchers non vus
-  def unread
-    @unread ||= begin
-      all.collect do |w|
-        next if w.vu?
-        w
-      end.compact
-    end
-  end #/ unread
-
-  # Liste des watchers vus
-  def read
-    @read ||= all.collect do |w|
-      next unless w.vu?
-      w
-    end.compact
-  end #/ read
 
 end #/AdminWatchers
 

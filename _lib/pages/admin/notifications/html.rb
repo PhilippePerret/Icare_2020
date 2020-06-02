@@ -10,11 +10,9 @@ class HTML
     if param(:wid)
       watcher = Watcher.get(param(:wid))
       watcher.send(param(:op).to_sym) # :run et :unrun principalement
+    elsif param(:op)
+      user.watchers.send(param(:op).to_sym)
     end
-    # J'essaie d'envoyer un mail
-    require_module('mail')
-    Mail.send(subject:'Message test c’est l’été ?', from:'phil@atelier-icare.net', to:'phil@atelier-icare.net', message:"Un simple message", force:true)
-    message "Si je passe ici, c'est que j'ai envoyé le mail"
   end
   # Fabrication du body
   def build_body

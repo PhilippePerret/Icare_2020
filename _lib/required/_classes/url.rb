@@ -18,9 +18,9 @@ MAIN_LINKS = {
   frigo:    '<a href="bureau/frigo">Porte de frigo%{non_vus}'.freeze,
   # DIVERS
   aide:     '<a href="aide/home">⚓ aide</a>'.freeze,
-  contact:  '<a href="contact">contact</a>'.freeze,
-  plan:     '<a href="plan" class="btn small">PLAN</a>'.freeze,
-  qdd:      '<a href="qdd/home">Quai Des Docs</a>'.freeze
+  contact:  '<a href="contact">📧 contact</a>'.freeze,
+  plan:     '<a href="plan" class="btn small">📍 PLAN</a>'.freeze,
+  qdd:      '<a href="qdd/home">🗄️ Quai Des Docs</a>'.freeze
 }
 
 

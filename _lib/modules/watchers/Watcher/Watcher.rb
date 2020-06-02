@@ -63,11 +63,9 @@ def require_folder_processus
   require_module("watchers_processus/#{relpath}")
 end #/ require_folder_processus
 
-# Retourne true si le watcher a été vu par l'icarien
-def vu?
-  # data[user.admin? ? :vu_admin : :vu_user] == true
-  log("data: #{data.inspect}")
-  data[:vu_user] == true
+# Retourne true si le watcher a été vu par l'icarien +who+
+def vu_par?(who)
+  data["vu_#{who}".to_sym] == 1
 end #/ vu?
 
 # ---------------------------------------------------------------------
