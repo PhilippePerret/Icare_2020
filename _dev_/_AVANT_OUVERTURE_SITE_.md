@@ -10,9 +10,19 @@
 
 * Ajouter les colonnes `vu` dans les tables :
 
+* Modification complète de la table `watchers` (peut-êtr qu'il vaut mieux simplement la refaire complètement, mais en fait, il faudra de toutes façons changer les watchers "à la main")
   ~~~SQL
-  ALTER TABLE `watchers` ADD COLUMN `vu_admin` BOOL DEFAULT false AFTER `data`;
-  ALTER TABLE `watchers` ADD COLUMN `vu_user` BOOL DEFAULT false AFTER `vu_admin`;
+  -- Pour obtenir le schéma
+  mysqldump -d -u root icare watchers > watchers.sql
+  -- Pour le copier
+  mysql icare < watchers.sql
+  ~~~
+  ~~~SQL
+  ALTER TABLE watchers ADD COLUMN `wtype`     VARCHAR(50) NOT NULL AFTER id;
+  ALTER TABLE watchers DROP COLUMN `objet_class`;
+  ALTER TABLE watchers DROP COLUMN processus;
+  ALTER TABLE watchers ADD COLUMN `vu_admin`  BOOL DEFAULT false AFTER data;
+  ALTER TABLE watchers ADD COLUMN `vu_user`   BOOL DEFAULT false AFTER `vu_admin`;
   ~~~
 
 * Modifier les icariens suivants:

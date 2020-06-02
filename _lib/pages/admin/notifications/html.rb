@@ -7,9 +7,9 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     admin_required
-    if param(:op) == 'run' && param(:wid)
+    if param(:wid)
       watcher = Watcher.get(param(:wid))
-      watcher.run
+      watcher.send(param(:op).to_sym) # :run et :unrun principalement
     end
   end
   # Fabrication du body

@@ -26,10 +26,6 @@ form div.row span.value > * {
   font-style:inherit;
 }
 
-form div.buttons {
-  text-align:right;
-  margin-top:1em;
-}
 form:not(.inline) div.buttons input[type="submit"] {
   border:1px solid;
   padding:9px 40px;
@@ -45,35 +41,6 @@ form div.buttons input[type="submit"]:hover {
 }
 form:not(.inline) div.buttons div.other_buttons {
   float:left;
-}
-
-.btn {
-  padding:0.4em 1.1em 0.3em;
-  margin-left:4px;
-  font-family:inherit;
-  font-size:inherit;
-}
-.btn:not(.main){
-  color:steelblue;
-  background-color:white;
-}
-.btn:not(.noborder) {
-  border:1px solid;
-  border-radius:4px;
-}
-.btn:not(.main):hover {
-  background-color:steelblue;
-  color:white;
-}
-.btn.main
-{
-  background-color:steelblue;
-  color:white;
-}
-.btn.main:hover
-{
-  color:steelblue;
-  background-color:white;
 }
 
 /*

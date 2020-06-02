@@ -1,4 +1,22 @@
 .watcher {
   box-shadow: 2px 6px 16px 7px #EEEEEE;
-  padding:1em 1em 0.1em 1em;
+  padding:4px 1em 1em 1em;
+  font-size:0.85em;
+}
+.watcher div.infos {
+  text-align: right;
+  margin-bottom:1em;
+  border-bottom:1px solid;
+}
+.watcher div.infos span.titre {
+  color: #CCCCCC;
+  font-style:italic;
+  font-size:0.85em;
+}
+.watcher div.infos span.user {
+  float:left;
+}
+
+.watcher div.buttons {
+  font-size:0.85em;
 }

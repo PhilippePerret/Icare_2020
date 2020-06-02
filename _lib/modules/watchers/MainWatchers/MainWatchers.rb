@@ -20,9 +20,9 @@ class MainWatchers
   end #/ count
 
   # Nombre de watchers non vus
-  def non_vus_count
-    @non_vus_count ||= unread.count
-  end #/ non_vus_count
+  def unread_count
+    @unread_count ||= unread.count
+  end #/ unread_count
 
 end #/MainWatchers
 
@@ -71,23 +71,17 @@ class UserWatchers < MainWatchers
   # Méthode qui ajoute un watcher pour l'icarien, de type
   # +wtype+ avec les données +data+
   def add wtype, data
-    dwatcher = DATA_WATCHERS[wtype]
-    dwatcher.merge!({
-      objet_id: data[:objet_id],
-      user_id:  owner.id
-      })
-    required = dwatcher.delete(:required)
-    dwatcher.merge!(vu_admin: false)  unless dwatcher.key?(:vu_admin)
-    dwatcher.merge!(vu_user: false)   unless dwatcher.key?(:vu_user)
     now = Time.now.to_i
-    dwatcher.merge!({
+    dwatcher = {
+      wtype:      wtype, # par exemple 'commande_module'
+      objet_id:   data[:objet_id],
+      user_id:    owner.id,
+      vu_admin:   user.admin?,
+      vu_user:    !user.admin?,
       updated_at: now,
       created_at: now
-      })
-    # On vérifie que toutes les valeurs soient bien fournies
-    required.each do |prop|
-      dwatcher.key?(prop) || raise("La clé #{k.inspect} doit être fournie.")
-    end
+    }
+    # On procède à l'enregistrement dans la table
     valeurs = dwatcher.values
     columns = dwatcher.keys.join(VG)
     interro = Array.new(valeurs.count, '?').join(VG)

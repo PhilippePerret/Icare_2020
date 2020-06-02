@@ -195,7 +195,7 @@ ERRORS = {
 
 ---
 
-## Helpers de formatage
+## Construction des pages, helpers
 
 
 
@@ -255,7 +255,27 @@ Plusieurs méthodes permettent de produire rapidement du code, lorsqu’il est f
 
 
 
-#### `divGoto("... inner ...")`
+#### Les div boutons (buttons)
+
+~~~ruby
+<div class="buttons">
+</div>
+~~~
+
+Ils sont toujours formatés en respectant les règles suivantes :
+
+* ils ont le fer à droite,
+* ils laissent de l’air au-dessus de leur tête,
+* traitent tous les liens `<a>` comme des boutons (class `btn`),
+* traitent tous les liens `<a class="main">` comme des boutons principaux.
+
+<a name="blocgoto"></a>
+
+#### Les blocs « GoTo »
+
+~~~ruby
+divGoto("... inner ...")
+~~~
 
 Pour écrire un lien dans un « bloc » comme ceux qu’on peut trouver sur la page de plan ou sur les accueils de bureau.
 
@@ -279,11 +299,11 @@ div = divGoto('<inner>', exergue: true)
 
 
 
+#### Les « listes d'état » (StateList)
 
-
-
-
-#### `StateList.row("libelle", value[, {options}])`
+~~~ruby
+StateList.row("libelle", value[, {options}])
+~~~
 
 Génère une rangée de type « Statelist » comme on peut en trouver sur la page du travail courant pour afficher l’état du module (nom, échéance)
 
@@ -603,29 +623,22 @@ Les données des watchers, enregistrées dans la table `watchers` définissent 
 
 ~~~ruby
 {
-	objet:  'IcModule', 			# Nom de la classe de l'objet visé
+	wtype:  'commande_module',# Le type du watcher. Ce type permet de retrouver ses données
+  													# absolues dans DATA_WATCHERS
   objet_id:	12,							# Identifiant de l'objet. On utilise donc 
   													# objet.get(objet_id) pour obtenir l'objet. Ici un module
-  processus: 'start',				# Le nom du processus donc de la méthode qui doit être appelée
-  													# lorsque le watcher est "triggué" (actionné). Donc :
-  													# <objet>.get(<objet_id>).<processus>
-  													# -----------------------------------------------------------
-													  # Ce processus doit être défini dans le dossier modules `watchers_data`
-  													# à un chemin d'accès correspondant à <objet>/<processus>/
-  													# Cf. "Création d'un nouveau watcher" ci-dessous
-  													# -----------------------------------------------------------
+  user_id: 2								# Identifiant de l'icarien visé par le watcher
+  vu_admin: true						# Pour définir si l'administrateur a vu ce watcher
+  vu_user:  false						# Pour déterminer si le user a vu ce watcher
   triggered_at: nil,				# Permet de définir la date où le watcher doit être activé, 
   													# c'est-à-dire où il doit produire une notification.
   data: nil,								# Éventuellement un Hash jsonné contenant les données utiles.
-  vu: false,								# Pour savoir si le watcher a déjà été vu. Si le watcher n'a pas
-  													# encore été vu, il produit un nombre dans la pastille à l'accueil
-  													# de l'utilisateur (admin ou icarien).
-  required: [:user_id, :objet_id] # Liste des propriétés requises (pour check)
-  																# Noter que :objet et :processus sont toujours requis.
 }
 ~~~
 
+### Visualisation (vu_)
 
+Le données `vu_admin` et `vu_user` sont déterminées à la création du watcher en fonction du fait que c’est l’administrateur ou l’icarien qui génère (ou crée) le watcher. En fait, on pourrait aussi mettre ça dans les données absolues du watcher, mais ça fonctionne très bien comme ça (pour le moment) et ça simplifie la définition des données absolues.
 
 ### Ajout d’un watcher à un icarien
 
@@ -637,13 +650,15 @@ require_module('watchers') # requis
 icarien.watchers.add(<watcher type>, {<data>} )
 ~~~
 
-En général, on définit toujours `:objet_id` dans ces données. On peut aussi régler `vu_user` ou `vu_admin` pour définir que l’icarien ou l’administrateur a vu ce watcher.
+En général, on définit toujours `:objet_id` dans ces données.
+
+
 
 ### Lancement d’un watcher
 
-C’est le dossier [./_lib/modules/watchers_processus/xrequired](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/xrequired) qui contient et définit la méthode de lancement des watchers.
+Noter que le dossier [./_lib/modules/watchers_processus/xrequired](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/xrequired), conformément au [principe des xrequired](#principexrequired), est automatiquement chargé dès qu’un watcher est actionné.
 
-Noter que ce dossier, conformément au [principe des xrequired](#principexrequired), est automatiquement chargé dès qu’un watcher est actionné.
+
 
 ### Création d’un nouveau watcher
 
@@ -652,7 +667,7 @@ Il suffit de définir ses données dans le fichier `watcher/constants.rb` vu plu
 Ensuite, on crée le dossier :
 
 ~~~
-_lib/modules/watchers_processus/<objet>/<processus>/
+_lib/modules/watchers_processus/<objet-class>/<processus>/
 ~~~
 
 … et on met dedans tous les fichiers utiles. 
@@ -661,10 +676,82 @@ _lib/modules/watchers_processus/<objet>/<processus>/
 
 ~~~ruby
 class <objet>                         class IcModule
+  # Methode appelée quand on runne le watcher
   def <processus>												def start
     ...																		...
   end 																	end
+  
+  # Méthode optionnelle appelée quand on refuse le watcher
+  def contre_<processus>								def contre_start
+    ...																		...
+  end																		end
 end #/<objet>													end #/IcModule
+~~~
+
+
+
+Il faut ensuite faire ses notifications, en fonction de ce qui doit être affiché à l’administrateur et l’user.
+
+~~~
+Dans ./_lib/modules/watchers_processus/<objet>/<processu>/
+						main.rb  									# cf. ci-dessus
+						notification_admin.erb		# si l'administrateur doit être notifié
+						notification_user.erb			# si l'icarien doit être notifié
+						mail_admin.erb						# si l'administrateur doit recevoir un mail à run
+						main_user.erb							# si l'icarien doit recevoir un mail au run
+~~~
+
+
+
+### Construction des notifications
+
+Les « notifications » sont des fichiers `ERB` adressés soit à l’administrateur soit à l’icarien. Ils portent les noms :
+
+~~~
+notification_admin.erb		# pour l'administrateur
+notification_user.erb			# pour l'icarien
+~~~
+
+Dans ces fichiers, on doit utiliser un `div.buttons` pour placer les boutons principaux.
+
+~~~erb
+<div class="buttons">
+  <%= button_unrun("Renoncer") %>
+  <%= button_run("Jouer la notification") %>
+</div>
+~~~
+
+Quand c’est une notification administrateur, les boutons pour forcer la destruction et éditer la notification sont automatiquement ajoutés à chaque notification.
+
+
+
+### Méthodes d’helpers pour les notifications
+
+~~~erb
+<%= button_run('Titre bouton') %>
+  # => bouton principal pour jouer le watcher
+
+<%= button_unrun('Renoncer') %>
+	# => bouton secondaire pour "contre-jouer" le watcher (refuser)
+~~~
+
+
+
+### Construction des mails
+
+Les mails sont des fichiers `ERB` adressés à l’administration ou à l’icarien. Noter qu’ils sont envoyés APRÈS avoir joué le processus avec succès. Comme pour les notifications, c’est la présence ou non de ces fichiers qui détermine s’il faut envoyer ou non un mail après exécution du watcher.
+
+~~~
+mail_admin.erb			# mail à envoyer à l'administrateur 
+mail_user.erb				# mail à envoyer à l'icarien
+~~~
+
+
+
+### Méthodes d’helpers pour les mails
+
+~~~erb
+# à voir
 ~~~
 
 

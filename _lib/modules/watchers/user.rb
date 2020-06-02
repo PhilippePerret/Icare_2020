@@ -14,7 +14,7 @@ def watchers
 end #/ watchers
 # Retourne le nombre de notifications pas encore vues
 def pastille_notifications_non_vues
-  Tag.pastille_nombre(watchers.non_vus_count)
+  Tag.pastille_nombre(watchers.unread_count)
 end
 
 end #/User
@@ -35,9 +35,9 @@ class MainWatchers
   end #/ count
 
   # Nombre de watchers non vus
-  def non_vus_count
-    @non_vus_count ||= unread.count
-  end #/ non_vus_count
+  def unread_count
+    @unread_count ||= unread.count
+  end #/ unread_count
 
 end #/MainWatchers
 

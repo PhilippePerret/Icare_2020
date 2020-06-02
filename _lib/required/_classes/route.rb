@@ -8,9 +8,9 @@ class Route
     2 => {hname: 'Profil',                  route: :profil},
     3 => {hname: 'Dernière page consultée', route: :last_page},
     # - ADMINISTRATEUR -
-    7 => {hname: 'Aperçu Icariens', route: 'admin/overview', admin: true},
+    7 => {hname: 'Tableau de bord', route: 'admin/home', admin: true},
     8 => {hname: 'Console', route: 'admin/console', admin: true},
-    9 => {hname: 'Tableau de bord', route: 'admin/dashboard', admin: true}
+    9 => {hname: 'Notifications', route: 'admin/notifications', admin: true}
   }
 
 class << self

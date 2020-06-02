@@ -1,0 +1,58 @@
+/*
+  Les "div boutons"
+*/
+div.buttons {
+  text-align:right;
+  margin-top:1em;
+}
+
+.btn,
+div.buttons a
+{
+  padding:0.4em 1.1em 0.3em;
+  margin-left:4px;
+  font-family:inherit;
+  font-size:inherit;
+}
+.btn:not(.main):not(.warning),
+div.buttons a:not(.main)
+{
+  color:steelblue;
+  background-color:white;
+}
+.btn.warning,
+div.buttons a.warning
+{
+  color:red;
+}
+.btn.warning:hover,
+div.buttons a.warning:hover
+{
+  background-color:red;
+  color:white;
+}
+
+.btn:not(.noborder),
+div.buttons a:not(.noborder)
+{
+  border:1px solid;
+  border-radius:4px;
+}
+.btn:not(.main):not(.warning):hover,
+div.buttons a:not(.main):not(.warning):hover
+{
+  background-color:steelblue;
+  color:white;
+}
+.btn.main,
+div.buttons a.main
+{
+  background-color:steelblue;
+  color:white;
+}
+.btn.main:hover,
+div.buttons a.main:hover
+{
+  color:steelblue;
+  background-color:white;
+}

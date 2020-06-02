@@ -1,5 +1,7 @@
-Le module « <%= objet.name %> » a été optionné par <%= owner.pseudo %>.
-</p>
 <p>
-  <a href="<%= route.to_s %>?op=run&wid=<%=id%>">Lui attribuer</a>
+Module « <%= objet.name %> » a été commandé par <%= owner.pseudo %>.
 </p>
+<div class="buttons">
+  <%= button_unrun('Refuser au motif de…') %>
+  <%= button_run('Accepter') %>
+</div>
