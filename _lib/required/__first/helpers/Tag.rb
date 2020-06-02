@@ -12,6 +12,7 @@ class << self
   def lien params
     params[:new] && params.merge!(target: '_blank')
     params[:target] ||= '_self'
+    params[:titre] = params[:text] if params.key?(:text)
     params = normalize_params(params, [:id, :route, :class, :titre, :title, :target])
     (TAG_LIEN % params).freeze
   end #/ lien

@@ -32,16 +32,16 @@ end # /<< self
 # Méthode qui joue le watcher
 def run
   require_folder_processus
-  objet.send(processus.to_sym)
-  # destroy TODO REMETTRE QUAND OK
-  # send_mail TODO REMETTRE QUAND OK
+  self.send(processus.to_sym)
+  destroy
+  send_mail
 end #/ run
 
 def unrun
   require_folder_processus
-  objet.send("contre_#{processus}".to_sym)
-  # destroy
-  # send_contre_mail (ou peut-être send_mail tout simplement)
+  self.send("contre_#{processus}".to_sym)
+  destroy
+  send_contre_mail
 end #/ unrun
 
 # Destruction du watcher

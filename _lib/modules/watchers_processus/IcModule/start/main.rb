@@ -2,7 +2,7 @@
 =begin
   Watcher IcModule.start
 =end
-class IcModule
+class Watcher < ContainerClass
   def start
     message "Je dois démarrer le module."
   end #/ start

@@ -17,7 +17,7 @@
   display:block;
   font-size:9.8pt;
   width:300px;
-  content: "Nouvelle notification. Sera marquée lue la prochaine fois.";
+  content: "Nouvelle notification. Cliquez sur « Tout marquer lu » pour indiquer que vous l'avez vue.";
   color:red;
   margin-top:-2em;
   padding:0.3em 1em;

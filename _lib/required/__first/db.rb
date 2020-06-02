@@ -6,6 +6,9 @@ def db_exec request, values = nil
   log("MyDB exécution de : '#{request}'")
   begin
     MyDB.db.execute(request, values)
+    # if MyDB.error && respond_to?(:erreur)
+    #   raise MyDB.error
+    # end
   rescue Exception => e
     MyDB.error = {error:e, request:request, values:values}
     if respond_to?(:erreur)
@@ -143,6 +146,8 @@ end # << self
           rescue Mysql2::Error => e
             raise Mysql2::Error.new("PROBLÈME AVEC LA REQUÊTE : `#{request}` : #{e.message}")
           rescue Exception => e
+            erreur ("PROBLÈME SQL: #{e.message}")
+            log(e)
             raise Error.new("PROBLÈME AVEC LA REQUÊTE : `#{request}` : #{e.message}")
           end
         end

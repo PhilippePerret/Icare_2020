@@ -20,7 +20,7 @@ class MainWatchers
   def add wtype, data
     now = Time.now.to_i
     dwatcher = {
-      wtype:      wtype, # par exemple 'commande_module'
+      wtype:      wtype.to_s, # par exemple 'commande_module'
       objet_id:   data[:objet_id],
       user_id:    owner.id,
       vu_admin:   user.admin?,

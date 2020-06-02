@@ -18,7 +18,7 @@
 
 DATA_WATCHERS = {
   # --- LES MODULES ---
-  creation_icmodule:  {
+  module_starting:  {
     titre:  'Démarrage de module',
     relpath:'IcModule/start'
   },

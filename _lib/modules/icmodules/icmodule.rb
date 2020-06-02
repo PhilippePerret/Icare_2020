@@ -13,18 +13,32 @@ class << self
   #
   # Retourne l'icmodule créé.
   #
-  def create(data)
-    require_module('watchers')
-    # L'icarien concerné (possesseur du module)
-    icarien = data[:user]
-    icarien = User.get(icarien) if icarien.is_a?(Integer)
-
-    # On ajoute l'identifiant du module (pour le watcher)
-    data.merge!(objet_id: db_last_id)
-
+  def create_new_for(data, owner)
+    require_module('watchers') unless defined?(Watcher)
+    data[:user_id] ||= owner.id
+    # On crée l'enregistrement dans la table
+    icmodule_id = create_in_db(data)
+    # Données pour le watcher
+    dwatcher = {objet_id: icmodule_id}
     # Quel que soit le module, un watcher de démarrage
-    icarien.watchers.add(:creation_icmodule, data)
+    owner.watchers.add(:module_starting, dwatcher)
+    return icmodule_id
   end #/ create
+
+  def create_in_db(data)
+    now = Time.now.to_i
+    data.merge!(
+      options:    '0'*16,
+      created_at: now,
+      updated_at: now
+    )
+    valeurs = data.values
+    columns = data.keys.join(VG)
+    interro = Array.new(valeurs.count,'?').join(VG)
+    request = "INSERT INTO `icmodules` (#{columns}) VALUES (#{interro})"
+    db_exec(request, valeurs)
+    return db_last_id
+  end #/ create_in_db
 
 end # /<< self
 

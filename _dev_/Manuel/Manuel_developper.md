@@ -675,7 +675,7 @@ _lib/modules/watchers_processus/<objet-class>/<processus>/
 À commencer par le fichier `main.rb` qui doit définir :
 
 ~~~ruby
-class <objet>                         class IcModule
+class Watcher < ContainerClass        class Watcher < ContainerClass
   # Methode appelée quand on runne le watcher
   def <processus>												def start
     ...																		...
@@ -686,6 +686,15 @@ class <objet>                         class IcModule
     ...																		...
   end																		end
 end #/<objet>													end #/IcModule
+~~~
+
+Dans ces méthodes, on a accès à toutes les propriétés du watcher, à commencer par :
+
+~~~ruby
+owner				# {User} Propriétaire du watcher, l'icarien visé
+objet				# l'instance de l'objet visé, par exemple un IcModule d'icarien
+objet_id		# l'identifiant de l'objet visé
+processus		# Le "processus", donc la méthode
 ~~~
 
 
