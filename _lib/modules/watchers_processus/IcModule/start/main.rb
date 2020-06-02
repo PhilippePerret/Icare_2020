@@ -6,6 +6,6 @@ require_module('absmodules')
 require_module('icmodules')
 class Watcher < ContainerClass
   def start
-    message "Je dois démarrer le module."
+    raise "Je dois démarrer le module."
   end #/ start
 end #/IcModule

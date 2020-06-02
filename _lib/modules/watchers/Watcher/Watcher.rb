@@ -12,7 +12,11 @@ class << self
   def watchers_of icarien
     icarien = User.get(icarien) if icarien.is_a?(Integer)
     request = "SELECT * FROM #{table} WHERE user_id = #{icarien.id}"
-    db_exec(request).collect do |dwatcher| new(dwatcher) end
+    db_exec(request).collect do |dwatcher|
+      watcher = new(dwatcher[:id])
+      watcher.data = dwatcher
+      watcher
+    end
   end #/ watchers_of
 
   def table
@@ -33,15 +37,23 @@ end # /<< self
 def run
   require_folder_processus
   self.send(processus.to_sym)
-  destroy
-  send_mail
+  if poursuivre
+    send_mail
+    destroy
+  end
+rescue Exception => e
+  log(e)
+  erreur(e.message)
 end #/ run
 
 def unrun
   require_folder_processus
   self.send("contre_#{processus}".to_sym)
-  destroy
   send_contre_mail
+  destroy
+rescue Exception => e
+  log(e)
+  erreur(e.message)
 end #/ unrun
 
 # Destruction du watcher
@@ -56,8 +68,23 @@ def edit
   message "Je dois éditer le watcher ##{id}"
 end #/ edit
 
+# Pour interrompre le processus joué par le watcher et ne pas le détruire
+# ni n'envoyer les mails
+def stop_process
+  self.poursuivre = false
+end #/ stop
+
 # / Fin méthodes publiques
 # ---------------------------------------------------------------------
+
+def poursuivre
+  @poursuivre = true if @poursuivre.nil?
+  @poursuivre
+end #/ poursuivre
+
+def poursuivre= valeur
+  @poursuivre = false
+end #/ poursuivre=
 
 def require_folder_processus
   require_module("watchers_processus/#{relpath}")

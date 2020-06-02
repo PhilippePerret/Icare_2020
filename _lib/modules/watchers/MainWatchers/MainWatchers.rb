@@ -12,6 +12,7 @@
 class MainWatchers
   attr_reader :owner
   def initialize owner
+    log("-> initialize (#{owner.inspect})")
     @owner = owner
   end #/ initialize
 
@@ -56,11 +57,15 @@ class MainWatchers
   end #/ read
 
   def unread
-    log("-> unread")
+    log("-> unread (@unread = #{@unread.inspect})")
     @unread ||= begin
       filter_key = user.admin? ? :admin : :user
+      log("filter_key: #{filter_key.inspect}")
+      log("all: #{all.inspect}")
       ur = all.select do |watcher|
-        next if watcher.vu_par?(filter_key)
+        log("watcher:#{watcher.inspect}")
+        log("watcher.vu_par?(filter_key): #{watcher.vu_par?(filter_key).inspect}")
+        next false if watcher.vu_par?(filter_key)
         watcher
       end
       log("Unread : #{ur} (key: #{filter_key.inspect})")
@@ -91,7 +96,9 @@ end #/MainWatchers
 class AdminWatchers < MainWatchers
   # Liste Array de tous les watchers
   def all
-    @all ||= Watcher.get_all.values
+    @all ||= Watcher.get_all("user_id = #{owner.id}").values
+    log("@all: #{@all.inspect}")
+    @all
   end #/ all
 
 end #/AdminWatchers

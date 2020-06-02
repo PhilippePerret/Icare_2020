@@ -8,5 +8,8 @@
     class="case-value"><%= user.watchers.read.count %></span>
   </div>
 </section>
-
-<%= watchers.listing %>
+<% if watchers.count > 0 %>
+  <%= watchers.listing %>
+<% else %>
+  <p class="italic">Vous n'avez aucune notification courante.</p>
+<% end %>

@@ -2,7 +2,7 @@
 require_module('form')
 class HTML
   def titre
-    "#{RETOUR_BUREAU}🎮 Notifications".freeze
+    "#{RETOUR_BUREAU}📌 Notifications".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

@@ -4,6 +4,7 @@
 =end
 class MainWatchers
   def listing
+    log("-> listing")
     [
       bouton_mark_all_read,
       unread.collect { |watcher| watcher.out(unread:true) },
