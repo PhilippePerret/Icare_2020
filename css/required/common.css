@@ -40,6 +40,11 @@ a.current {
 .mb1 {margin-bottom:1em}
 .mb2 {margin-bottom:2em}
 
+.pct50 {
+  width:49%!important;
+}
+
+
 .noborder {
   border:unset!important;
 }
@@ -49,6 +54,7 @@ a.current {
 .nowrap {
   white-space:nowrap;
 }
+.nooverflow {overflow:hidden}
 
 .vmiddle {
   vertical-align:middle;

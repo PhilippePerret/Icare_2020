@@ -1,5 +1,10 @@
 #
 
+* Récupérer toutes les données SQL actuelles de l'atelier online
+
+* Modifier ces données, en transformant par exemple `abs_module_id` et `abs_etape_id` en `absmodule_id` et `absetape_id`
+
+* Voir les colonnes qui ont été supprimées
 
 * Changer les colonnes `abs_module_id` et `abs_etape_id` de la table `icdocuments` et de la table `icmodules`
 

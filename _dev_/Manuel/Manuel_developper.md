@@ -477,6 +477,34 @@ end #/HTML
 
 
 
+### Types de champ
+
+~~~
+text					Pour un input text simple
+textarea			Pour un champ textarea
+password			Pour un mot de passe
+select				Pour un menu select. Les valeurs doivent être fournies par :values
+checkbox			Une case à cocher
+file					Pour choisir un fichier
+raw						Pour un code qui sera inséré tel quel (par exemple une liste de cbs)
+titre					Un titre (le label est le titre)
+explication		Une explication discrète pour un champ. Mettre un label unique mais quelconque
+
+~~~
+
+#### Définition d'un menu
+
+~~~ruby
+form.rows = {
+	  ...
+    'MonChoix' => {type:'select', name:'uchoix', values: [[1,"Un"], [2,"Deux"]]}
+  }
+~~~
+
+En `values`, on peut aussi mettre une liste simple, quand les valeurs sont égales aux titres à afficher.
+
+
+
 ### Champ pour les dates
 
 Pour construire un champ avec trois menus pour choisir une date, on peut utiliser la méthode `Form.date_field({<params>})`.
