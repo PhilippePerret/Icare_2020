@@ -189,7 +189,7 @@ div.citation {
   display:block;
   max-width:460px!important;
   font-size:0.9em;
-  text-align:left;
+  text-align:justify;
 }
 div.citation span.content {
   font-style:italic;
