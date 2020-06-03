@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class User
   attr_reader :data
-  
+
   DATA_GUEST = {
     'id': 0,
     'pseudo': 'Guest',
@@ -10,6 +10,7 @@ class User
 
   def id      ; @id       || get(:id)       end
   def pseudo  ; @pseudo   ||= get(:pseudo)  end
+  def mail    ; @mail     ||= get(:mail)    end
 
   def get key
     @data ||= db_get('users', {id: id})

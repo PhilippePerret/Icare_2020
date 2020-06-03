@@ -38,18 +38,21 @@ end #/ initialize
 # Envoi du message
 def send
   Net::SMTP.start(server, port, host, user_smtp, password) do |smtp|
-    smtp.send_message( full_mail, data[:from], data[:to])
+    smtp.send_message( full_mail, destinataire, expediteur)
   end
 end #/ send
+
+def destinataire
+  @destinataire ||= data[:from] || DATA_MAIL[:mail]
+end #/ destinataire
+
+def expediteur
+  @expediteur ||= data[:to] || DATA_MAIL[:mail]
+end #/ expediteur
 
 def full_mail
   deserb('full', self)
 end #/ full_mail
-
-# Construction du message final
-def build
-
-end #/ build
 
 # Le message formaté
 # ------------------

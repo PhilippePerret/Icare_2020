@@ -17,6 +17,7 @@ class User
     chuser = CheckedUser.new(user)
 
     # --- VALIDATION DE TOUTES LES PROPRIÉTÉS ---
+
     chuser.valid?(:pseudo)
     chuser.valid?(:mail)
     chuser.valid?(:naissance)
@@ -26,11 +27,17 @@ class User
     chuser.valid?(:modules)
     chuser.valid?(:documents)
 
-    if chuser.errors.count
-      erreur chuser.errors.join(BR)
+    if chuser.errors.count > 0
+      erreur chuser.errors.collect{|m|Tag.li(m)}.join
     else
-      message "Inscription valide"
+      # Les données sont valides, on doit créer le nouvel icarien
+      # et créer le watcher.
+      require_module('user/create')
+      if User.create_new(chuser)
+        @inscription_is_ok = true # pour afficher la confirmation
+      end
     end
+
   rescue Exception => e
     error "#{e.message}"
     log(e)
@@ -59,13 +66,13 @@ REG_MAIL = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-z]{1,6})$/
 REG_PASSWORD = /^[a-zA-Z0-9\!\?\;\:\.\…\-]+$/
 
 PROPERTIES = [
-  :pseudo, :mail, :naissance, :sexe, :mail_conf, :password, :password_conf,
+  :pseudo, :patronyme, :mail, :naissance, :sexe, :mail_conf, :password, :password_conf,
   :presentation, :motivation, :extrait,
   :cgu
 ]
 
 attr_accessor :errors
-attr_reader :owner
+attr_reader :owner, :modules_ids
 def initialize owner = nil
   @owner = owner
   self.errors = []
@@ -95,24 +102,37 @@ end #/ valid?
 
 
 def pseudo_valid?
-  if pseudo
-    pseudo.length > 3   || errors << 'Le pseudo doit faire au moins 4 caractères'
-    pseudo.length < 50  || errors << 'Le pseudo est trop long (50 signes maximum)'
-  else
+  if pseudo.nil?
     errors << 'Le pseudo est obligatoire'
+  elsif pseudo.length < 4
+    errors << 'Le pseudo doit faire au moins 4 caractères'
+  elsif pseudo.length > 50
+    errors << 'Le pseudo est trop long (50 signes maximum)'
+  elsif pseudo_exists?
+    errors << 'Ce pseudo est déjà utilisé. Merci d’en choisir un autre'
   end
 end #/ pseudo_valid?
 
+# Retourne true si le pseudo existe déjà
+def pseudo_exists?
+  db_exec("SELECT id FROM users WHERE pseudo = ?", [pseudo]).count > 0
+end #/ pseudo_exists?
+
 def mail_valid?
-  log("mail.match?(REG_MAIL): #{mail.match?(REG_MAIL).inspect}")
   if mail.nil?
     errors << 'Votre mail est requis'
   elsif mail.match?(REG_MAIL).false?
     errors << 'Ce mail est invalide'
+  elsif mail_exists?
+    errors << 'Ce mail est déjà utilisé par un icarien. Si vous voulez créer un autre compte à l’atelier, vous devez utiliser une autre adresse mail.'
   elsif mail != mail_conf
     errors << 'La confirmation ne correspond pas au mail donné'
   end
 end #/ mail_valid?
+# Retourne true si le pseudo existe déjà
+def mail_exists?
+  db_exec("SELECT id FROM users WHERE mail = ?", [mail]).count > 0
+end #/ pseudo_exists?
 
 def naissance_valid?
   if naissance.nil?
@@ -153,15 +173,16 @@ def cgu_valid?
 end #/ cgu_valid?
 
 def modules_valid?
-  module_ids = []
+  modules_ids = []
   db_exec("SELECT id FROM absmodules").each do |dmod|
     mod_id = dmod[:id]
-    log("mod_id: #{mod_id}")
-    module_ids << mod_id if param("umodule_#{mod_id}".to_sym)
+    modules_ids << mod_id if param("umodule_#{mod_id}".to_sym)
   end
 
-  if module_ids.count == 0
+  if modules_ids.count == 0
     errors << 'Vous devez choisir au moins 1 module'
+  else
+    @modules_ids = modules_ids # pour le watcher
   end
 end #/ modules_valid?
 

@@ -4,6 +4,12 @@
 
 * Modifier ces données, en transformant par exemple `abs_module_id` et `abs_etape_id` en `absmodule_id` et `absetape_id`
 
+* Modifier la table des tickets
+
+  ~~~SQL
+  ALTER TABLE tickets MODIFY COLUMN `id` INTEGER(11) AUTO_INCREMENT;
+  ~~~
+
 * Voir les colonnes qui ont été supprimées
 
 * Changer les colonnes `abs_module_id` et `abs_etape_id` de la table `icdocuments` et de la table `icmodules`

@@ -2,6 +2,7 @@
   section#body {
     padding:0 4em;
   }
+  section#messages {max-width:50%;}
   form:not(.inline) {
     margin:3em;
     width:calc(100% - 6em);

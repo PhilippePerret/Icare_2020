@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require 'json'
 require 'cgi'
 require 'cgi/session'
 require 'mysql2'

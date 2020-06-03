@@ -17,6 +17,11 @@
 =end
 
 DATA_WATCHERS = {
+  # --- USER ---
+  validation_inscription: {
+    titre: 'Validation inscription',
+    relpath: 'User/signup'
+  },
   # --- LES MODULES ---
   module_starting:  {
     titre:  'Démarrage de module',
