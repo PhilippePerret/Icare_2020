@@ -980,6 +980,18 @@ La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` 
 
 ## Annexe
 
+
+### Paramètres URL
+
+Pour voir les paramètres, on peut utiliser `URL.current.params` qui retourne une table avec les paramètres de l'url.
+
+Par exemple pour les mettre dans le fichier journal.log :
+
+~~~ruby
+log("params: #{URL.current.params.inspect}")
+~~~
+
+
 ### Émojis
 
 Cf. le site [Smiley cool](https://smiley.cool/fr/emoji-list.php).

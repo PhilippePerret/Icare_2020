@@ -13,7 +13,7 @@ TEXTAREA_TAG = '<textarea id="%{id}" name="%{name}" class="%{class}" style="heig
 TITRE_TAG = '<h4>%{label}</h4>'.freeze
 EXPLICATION_TAG = '<div class="explication">%{name}</div>'.freeze
 
-CHECKBOX_TAG = '<input type="checkbox" id="%{id}" name="%{name}"><label for="%{id}">%{values}</label>'
+CHECKBOX_TAG = '<input type="checkbox" id="%{id}" name="%{name}"%{checked}><label for="%{id}">%{values}</label>'
 
 FILE_TAG = '<input type="file" name="%{name}" id="%{id}" />'.freeze
 

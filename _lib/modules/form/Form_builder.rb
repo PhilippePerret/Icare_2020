@@ -93,8 +93,8 @@ class Form
 
   # Retourne true si le formulaire contient des champs pour des fichiers
   def files?
-    @has_files || false
-
+    @has_files = searchforrowfile if @has_files.nil?
+    @has_files
   end #/ files?
   def searchforrowfile
     rows.each do |label,dfield|
@@ -149,9 +149,11 @@ class Form
   def default_values_for(dfield)
     dfield.key?(:name) || raise("Il faut définir le paramètre :name")
     dfield.merge!(:id => dfield[:name].gsub(/-/,'_'))
-    dfield[:value] ||= dfield[:default] || ''
+    dfield[:value] ||= dfield[:default] || param(dfield[:name].to_sym) || ''
     dfield.key?(:class) || dfield.merge!(class: '')
     case dfield[:type].to_s
+    when 'checkbox'.freeze
+      dfield.merge!(checked: param(dfield[:name].to_sym) ? ' CHECKED' : '')
     when 'textarea'.freeze
       dfield.key?(:height) || dfield.merge!(height: 60)
     when 'select'.freeze

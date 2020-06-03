@@ -6,10 +6,16 @@ class HTML
   end
   # Code à exécuter avant la construction de la page
   def exec
-    
+    if param(:form_id) == 'signup-form'
+      user.check_signup
+    end
   end
   # Fabrication du body
   def build_body
-    @body = deserb('body', self)
+    @body = if user.inscription_ok?
+              deserb('signup_ok', self)
+            else
+              signup_form
+            end
   end
 end #/HTML
