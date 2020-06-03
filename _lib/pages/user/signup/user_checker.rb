@@ -19,6 +19,7 @@ class User
     # --- VALIDATION DE TOUTES LES PROPRIÉTÉS ---
 
     chuser.valid?(:pseudo)
+    chuser.valid?(:patronyme)
     chuser.valid?(:mail)
     chuser.valid?(:naissance)
     chuser.valid?(:sexe)
@@ -63,7 +64,7 @@ end #/User
 # Une classe pour checker l'user, avec ses paramètres
 class CheckedUser
 REG_MAIL = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-z]{1,6})$/
-REG_PASSWORD = /^[a-zA-Z0-9\!\?\;\:\.\…\-]+$/
+REG_PASSWORD = /^[a-zA-Z0-9\!\?\;\:\.\…]+$/
 
 PROPERTIES = [
   :pseudo, :patronyme, :mail, :naissance, :sexe, :mail_conf, :password, :password_conf,
@@ -103,15 +104,21 @@ end #/ valid?
 
 def pseudo_valid?
   if pseudo.nil?
-    errors << 'Le pseudo est obligatoire'
+    errors << ERRORS[:pseudo_required]
   elsif pseudo.length < 4
-    errors << 'Le pseudo doit faire au moins 4 caractères'
+    errors << ERRORS[:pseudo_too_short]
   elsif pseudo.length > 50
-    errors << 'Le pseudo est trop long (50 signes maximum)'
+    errors << ERRORS[:pseudo_too_long]
   elsif pseudo_exists?
-    errors << 'Ce pseudo est déjà utilisé. Merci d’en choisir un autre'
+    errors << ERRORS[:pseudo_already_exists]
   end
 end #/ pseudo_valid?
+
+def patronyme_valid?
+  if patronyme && patronyme.length > 100
+    errors << ERRORS[:patronyme_to_long]
+  end
+end #/ patronyme_valid?
 
 # Retourne true si le pseudo existe déjà
 def pseudo_exists?
@@ -120,13 +127,13 @@ end #/ pseudo_exists?
 
 def mail_valid?
   if mail.nil?
-    errors << 'Votre mail est requis'
+    errors << ERRORS[:mail_required]
   elsif mail.match?(REG_MAIL).false?
-    errors << 'Ce mail est invalide'
+    errors << ERRORS[:mail_invalid]
   elsif mail_exists?
-    errors << 'Ce mail est déjà utilisé par un icarien. Si vous voulez créer un autre compte à l’atelier, vous devez utiliser une autre adresse mail.'
+    errors << ERRORS[:mail_already_exists]
   elsif mail != mail_conf
-    errors << 'La confirmation ne correspond pas au mail donné'
+    errors << ERRORS[:conf_mail_dont_match]
   end
 end #/ mail_valid?
 # Retourne true si le pseudo existe déjà
@@ -154,21 +161,21 @@ end #/ sexe_valid?
 
 def password_valid?
   if password.nil?
-    errors << 'Le mot de passe est requis'.freeze
+    errors << ERRORS[:password_required]
   elsif password.length < 6
-    errors << 'Votre mot de passe est trop court (6 signes minimum)'.freeze
+    errors << ERRORS[:password_too_short]
   elsif password.length > 50
-    errors << 'Votre mot de passe est trop long (50 signes maximum)'.freeze
+    errors << ERRORS[:password_too_long]
   elsif password.match?(REG_PASSWORD).false?
-    errors << 'Votre mot de passe ne doit contenir que des lettres, des chiffres et des ponctuations'
+    errors << ERRORS[:password_invalid]
   elsif password != password_conf
-    errors << 'La confirmation de votre mot de passe ne correspond pas'.freeze
+    errors << ERRORS[:conf_password_doesnt_match]
   end
 end #/ password_valid?
 
 def cgu_valid?
   if cgu.nil?
-    errors << 'Vous devez approuver les Conditions Générales d’Utilisation de l’atelier.'
+    errors << ERRORS[:cgu_required]
   end
 end #/ cgu_valid?
 

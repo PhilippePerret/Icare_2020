@@ -123,6 +123,7 @@ class Form
       when 'titre', 'explication'
         value_field_for(dfield)
       else
+        #
         <<-HTML
 <div class="row">
   <span class="libelle"#{libelle_style}>#{label}</span>

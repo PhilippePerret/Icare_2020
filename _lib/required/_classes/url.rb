@@ -7,7 +7,7 @@
 MAIN_LINKS = {
   home:     '<a href="home">ATELIER ICARE</a>'.freeze,
   overview: '<a href="overview">👀 en savoir plus</a>'.freeze,
-  signup:   '<a href="user/signup" class="main">📋 s’inscrire</a>'.freeze,
+  signup:   '<a id="signup-btn" href="user/signup" class="main">📋 s’inscrire</a>'.freeze,
   login:    '<a href="user/login">🔓 s’identifier</a>'.freeze,
   logout:   '<a href="user/logout">🔒 se déconnecter</a>'.freeze,
   # BUREAU
