@@ -1,0 +1,17 @@
+div.cb-module {
+  display:inline-block;
+}
+
+form div.row {
+  margin-bottom: 1em;
+}
+form div.buttons {
+  margin-top: 4em;
+}
+
+span.star-required {
+  font-size:9pt;
+  color:red;
+  vertical-align:top;
+  margin-left:8px;
+}
