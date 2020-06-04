@@ -2,6 +2,9 @@
 
 # Méthode qui s'assure que le candidat créé avec les données +data+
 # a bien été enregistré
+# Cette méthode de test est appelée après que le formulaire a été rempli avec
+# succès et qu'on est arrivé sur la page annonçant que la candidature a bien
+# été reçue.
 def expect_a_valid_candidat_with(datainit)
   # On prépare les data pour qu'elles soient plus utilisables
   data = {}
@@ -44,7 +47,15 @@ def expect_a_valid_candidat_with(datainit)
   # Un ticket doit permettre de valider le mail
   ticket = db_get('tickets', {user_id: user_id})
   ticket ||= raise("Impossible de trouver un seul ticket pour user ##{user_id}")
-  
+
+  # Un mail pour confirmer l'inscription
+  # TODO
+  raise "il faut checker le mail pour confirmer la candidature (non créé encore)"
+
+  # Un mail permettant de valider le mail
+  # TODO
+  raise "Il faut checker le mail pour valider le mail"
+
 end #/ expect_a_valid_candidat_with
 
 feature 'Inscription à l’atelier Icare' do
