@@ -41,8 +41,13 @@ class << self
     log("last id : #{newid.inspect}")
     newu = User.get(newid)
 
-    # Envoi d'un mail pour valider le mail
+    require_module('mail')
+
+    # Envoi d'un message pour valider l'adresse mail
     newu.send_mail_validation_mail
+
+    # Envoi d'un message pour confirmer l'inscription
+    newu.send_mail_confirmation_inscription
 
     # Le watcher qui permettra à l'administrateur de valider l'inscription
     require_module('watchers')
@@ -61,18 +66,17 @@ end # /<< self
 # ---------------------------------------------------------------------
 
 # Envoi du mail de validation de l'adresse mail
+attr_reader :ticket_validation_mail
 def send_mail_validation_mail
   require_module('ticket')
-  require_module('mail')
-  ticket = Ticket.create({user_id:id, code:'owner.validate_mail'})
-  body = <<-HTML
-<p>#{pseudo},</p>
-<p>Merci de valider votre adresse mail en cliquant le bouton ci-dessous.</p>
-<div style="text-align:center;padding:2em;">
-  #{ticket.lien('Valider cette adresse mail', style:STYLE_BUTTON_MAIL)}
-</div>
-<p>Bien à vous,</p>
-  HTML
+  @ticket_validation_mail = Ticket.create({user_id:id, code:'owner.validate_mail'})
+  body = deserb('mail_pour_validation_mail', self)
   Mail.send(to:mail, message:body)
 end #/ send_mail_validation_mail
+
+def send_mail_confirmation_inscription
+  body = deserb('confirmation_inscription', self)
+  Mail.send(to:mail, message:body)
+end #/ send_mail_confirmation_inscription
+
 end #/User

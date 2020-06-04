@@ -48,13 +48,13 @@ def expect_a_valid_candidat_with(datainit)
   ticket = db_get('tickets', {user_id: user_id})
   ticket ||= raise("Impossible de trouver un seul ticket pour user ##{user_id}")
 
-  # Un mail pour confirmer l'inscription
-  # TODO
-  raise "il faut checker le mail pour confirmer la candidature (non créé encore)"
-
   # Un mail permettant de valider le mail
-  # TODO
-  raise "Il faut checker le mail pour valider le mail"
+  expect(TMails.exists?(data[:mail], "?tik=#{ticket[:id]}".freeze)).to be(true),
+    "Le message pour valider l'adresse mail n'a pas été transmis.".freeze
+
+  # Un mail pour confirmer l'inscription
+  expect(TMails.exists?(data[:mail], "Votre candidature à l’atelier Icare a bien été enregistrée".freeze)).to be(true),
+    "Le message de confirmation de l'enregistrement de la candidature n'a pas été transmis.".freeze
 
 end #/ expect_a_valid_candidat_with
 

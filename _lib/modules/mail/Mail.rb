@@ -66,11 +66,11 @@ def save
 end #/ save
 
 def destinataire
-  @destinataire ||= data[:from] || DATA_MAIL[:mail]
+  @destinataire ||= data[:to]||DATA_MAIL[:mail]
 end #/ destinataire
 
 def expediteur
-  @expediteur ||= data[:to] || DATA_MAIL[:mail]
+  @expediteur ||= data[:from]||DATA_MAIL[:mail]
 end #/ expediteur
 
 def full_mail
