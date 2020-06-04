@@ -34,7 +34,12 @@ def db_get(table, filter, params = {})
   filter = {id: filter} if filter.is_a?(Integer)
   params = {columns: params} if params.is_a?(Array)
   params.merge!(request_suffix: 'LIMIT 1')
-  db_get_all(table, filter, params).first
+  candidats = db_get_all(table, filter, params)
+  if candidats.nil? || candidats.empty?
+    nil
+  else
+    candidats.first
+  end
 end
 # Retourne toutes les rangées de +table+ correspondants à +filter+
 # +Params+

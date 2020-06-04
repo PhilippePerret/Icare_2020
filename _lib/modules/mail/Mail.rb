@@ -23,6 +23,15 @@ class << self
   def send(data)
     new(data).send
   end #/ send
+
+  # Dossier temporaire dans lequel sont enregistrés les messages
+  def folder
+    @folder ||= begin
+      pd = File.join(TEMP_FOLDER,'mails')
+      `mkdir -p "#{pd}"` unless File.exists?(pd)
+      pd
+    end
+  end #/ folder
 end # /<< self
 
 # ---------------------------------------------------------------------
@@ -36,11 +45,25 @@ def initialize(data)
 end #/ initialize
 
 # Envoi du message
+# ----------------
+# Si on est en ligne ou que les données contiennent :force => true, alors
+# on envoie le message. Sinon, on ne fait que l'enregistrer dans le dossier
+# tmp/mails, ce qu'on fait toujours.
 def send
-  Net::SMTP.start(server, port, host, user_smtp, password) do |smtp|
-    smtp.send_message( full_mail, destinataire, expediteur)
+  init_server
+  save
+  if ONLINE || data[:force]
+    Net::SMTP.start(server, port, host, user_smtp, password) do |smtp|
+      smtp.send_message( full_mail, destinataire, expediteur)
+    end
   end
 end #/ send
+
+# Enregistrement du message
+def save
+  fpath = File.join(self.class.folder, "#{destinataire}-#{Time.now.to_f}.html")
+  File.open(fpath,'wb'){|f| f.write(full_mail)}
+end #/ save
 
 def destinataire
   @destinataire ||= data[:from] || DATA_MAIL[:mail]
@@ -51,7 +74,7 @@ def expediteur
 end #/ expediteur
 
 def full_mail
-  deserb('full', self)
+  @full_mail ||= deserb('full', self)
 end #/ full_mail
 
 # Le message formaté
@@ -92,6 +115,9 @@ def bind
 end #/ bind
 
 private
+  def init_server
+    require File.join(DATA_FOLDER,'secret','smtp') # => MY_SMTP, MAIL_DATA
+  end #/ init_server
   def server
     @server ||= smtp_data[:server]
   end #/ server
@@ -108,9 +134,6 @@ private
     @password ||= smtp_data[:password]
   end #/ password
   def smtp_data
-    @smtp_data ||= begin
-      require File.join(DATA_FOLDER,'secret','smtp') # => MY_SMTP, MAIL_DATA
-      MY_SMTP
-    end
+    @smtp_data ||= MY_SMTP
   end #/ smtp_data
 end #/Mail

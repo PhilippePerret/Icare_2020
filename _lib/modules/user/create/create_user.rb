@@ -24,6 +24,7 @@ class << self
       salt:         salt,
       cpassword:    Digest::MD5.hexdigest("#{chuser.password}#{chuser.mail}#{salt}"),
       options:      options,
+      session_id:   session.id, # dossier de candidature
       created_at:   now,
       updated_at:   now
     }
@@ -33,7 +34,8 @@ class << self
     request = "INSERT INTO users (#{columns}) VALUES (#{interro})"
     db_exec(request, valeurs)
     if MyDB.error
-      raise MyDB.error
+      log("MyDB.error: #{MyDB.error.inspect}")
+      raise "Une erreur SQL est malheureusement survenue…"
     end
     newid = db_last_id
     log("last id : #{newid.inspect}")
@@ -45,11 +47,11 @@ class << self
     # Le watcher qui permettra à l'administrateur de valider l'inscription
     require_module('watchers')
     newu.watchers.add(:validation_inscription, data: {session_id:session.id, modules:chuser.modules_ids}.to_json)
-    return true
+    return newu
   rescue Exception => e
     log(e)
     erreur e.message
-    return false
+    return nil
   end
 end # /<< self
 # ---------------------------------------------------------------------
@@ -62,7 +64,7 @@ end # /<< self
 def send_mail_validation_mail
   require_module('ticket')
   require_module('mail')
-  ticket = Ticket.new({user_id:id, code:'owner.validate_mail'})
+  ticket = Ticket.create({user_id:id, code:'owner.validate_mail'})
   body = <<-HTML
 <p>#{pseudo},</p>
 <p>Merci de valider votre adresse mail en cliquant le bouton ci-dessous.</p>

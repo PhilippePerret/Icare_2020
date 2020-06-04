@@ -10,8 +10,8 @@
 # -------------------
 # Constante permettant de définir si le log (journal.log) doit être
 # réinitialiser à chaque fois, ou conserver.
-RESET_LOG = OFFLINE && true # => En online, il est toujours conservé
-
+# RESET_LOG = OFFLINE && true # => En online, il est toujours conservé
+RESET_LOG = false # en mode test, pour le moment, on met comme ça
 
 # Outils développements de bas de page
 # ------------------------------------

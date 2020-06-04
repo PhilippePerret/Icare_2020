@@ -7,7 +7,7 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     if param(:form_id) == 'signup-form'
-      user.check_signup
+      user.check_signup_and_record
     end
   end
   # Fabrication du body

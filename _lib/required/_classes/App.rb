@@ -1,5 +1,11 @@
 # encoding: UTF-8
 class App
+
+URL_ONLINE  = 'www.atelier-icare.net'.freeze
+URL_OFFLINE = 'localhost/AlwaysData/Icare_2020'.freeze
+FULL_URL_ONLINE   = "http://#{URL_ONLINE}".freeze
+FULL_URL_OFFLINE  = "http://#{URL_OFFLINE}".freeze
+
 class << self
 
   # Main method
@@ -30,7 +36,7 @@ class << self
 
   # L'url courante, en fonction du fait qu'on est offline ou online
   def url
-    OFFLINE ? 'http://localhost/AlwaysData/Icare_2020'.freeze : 'http://www.atelier-icare.net'.freeze
+    OFFLINE ? FULL_URL_OFFLINE : FULL_URL_ONLINE
   end
 
 end #/ << self

@@ -4,6 +4,7 @@ require 'cgi'
 require 'cgi/session'
 require 'mysql2'
 require 'erb'
+require 'yaml'
 
 
 require_relative 'constants'

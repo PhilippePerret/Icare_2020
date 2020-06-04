@@ -9,6 +9,13 @@ class << self
   def get tid
     new(db_get('tickets', {id: tid.to_i}))
   end #/ get
+
+  # Pour créer un ticket
+  def create(data)
+    ticket = new(data)
+    ticket.save
+    return ticket
+  end #/ create
 end # /<< self
 # ---------------------------------------------------------------------
 #
@@ -25,6 +32,9 @@ end #/ initialize
 def save
   now = Time.now.to_i
   data.merge!(created_at: now, updated_at:now)
+  valeurs = data.values
+  columns = data.keys.join(VG)
+  interro = Array.new(valeurs.count,'?').join(VG)
   request = "INSERT INTO tickets (#{columns}) VALUES (#{interro})"
   db_exec(request, valeurs)
   @data.merge!(id: db_last_id)

@@ -10,7 +10,14 @@ class User
 
   # = main =
   #
-  # Méthode principale qui vérifie que l'inscription est bonne
+  # Méthode qui lance la vérification des données du candidat et
+  # enregistre un fichier d'information dans son dossier de candidature
+  def check_signup_and_record
+    chuser = check_signup
+    save_record(chuser) unless chuser.nil? # en cas d'erreur
+  end #/ check_signup_and_record
+
+  # Méthode qui vérifie que l'inscription est bonne
   def check_signup
     self.errors = []
     @errors_fields = []
@@ -30,19 +37,34 @@ class User
 
     if chuser.errors.count > 0
       erreur chuser.errors.collect{|m|Tag.li(m)}.join
+      return nil
     else
       # Les données sont valides, on doit créer le nouvel icarien
       # et créer le watcher.
       require_module('user/create')
-      if User.create_new(chuser)
-        @inscription_is_ok = true # pour afficher la confirmation
-      end
+      newuser = User.create_new(chuser) # nil si pas ok
+      return nil if newuser.nil?
+      chuser.id = newuser.id
+      @inscription_is_ok = true # pour afficher la confirmation
+      return chuser
     end
-
   rescue Exception => e
     error "#{e.message}"
     log(e)
   end #/ check_signup
+
+  # Procède à l'enregistrement des informations générales de cette
+  # candidature
+  def save_record(chuser)
+    finfos = File.join(signup_folder,'infos.yaml')
+    infos = {
+      user_id: chuser.id,
+      mail: chuser.mail,
+      modules_ids: chuser.modules_ids,
+      date: Time.now.to_s
+    }
+    File.open(finfos,'wb'){|f| f.write infos.to_yaml}
+  end #/ save_record
 
   # Dossier d'inscription
   def signup_folder
@@ -74,6 +96,7 @@ PROPERTIES = [
 
 attr_accessor :errors
 attr_reader :owner, :modules_ids
+attr_accessor :id # sera défini plus tard, lors de la création de l'enregistrement
 def initialize owner = nil
   @owner = owner
   self.errors = []
@@ -187,7 +210,7 @@ def modules_valid?
   end
 
   if modules_ids.count == 0
-    errors << 'Vous devez choisir au moins 1 module'
+    errors << ERRORS[:modules_required]
   else
     @modules_ids = modules_ids # pour le watcher
   end
@@ -199,7 +222,9 @@ def documents_valid?
   if param(:upresentation_ok)
     # Document déjà traité
   elsif presentation.nil?
-    errors << 'Le document de votre présentation est requis'.freeze
+    errors << ERRORS[:presentation_required]
+  elsif extension_invalid?(presentation)
+    errors << ERRORS[:presentation_format_invalid]
   else
     # Enregistrer le document
     SignupDocument.new(presentation, :presentation, owner).upload
@@ -209,7 +234,9 @@ def documents_valid?
   if param(:umotivation_ok)
     # Document déjà traité
   elsif motivation.nil?
-    errors << 'Votre lettre de motivation est requise'.freeze
+    errors <<  ERRORS[:motivation_required]
+  elsif extension_invalid?(motivation)
+    errors << ERRORS[:motivation_format_invalid]
   else
     # Enregistrer le document
     SignupDocument.new(motivation, :motivation, owner).upload
@@ -222,6 +249,11 @@ def documents_valid?
     SignupDocument.new(extrait, :extrait, owner).upload
   end
 end #/ documents_valid?
+
+VALID_EXTNAME = ['.rtf','.odt','.md','.mmd','.txt','.pdf','.doc','.docx']
+def extension_invalid?(file)
+  false == VALID_EXTNAME.include?(File.extname(file.original_filename))
+end #/ extension_invalid?
 
 end #/CheckedUser
 

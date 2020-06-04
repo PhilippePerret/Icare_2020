@@ -238,12 +238,58 @@ Voir dans le fichier ci-dessus toutes les méthodes utilisables.
 
 ### Constantes LIENS fréquents
 
+
+
 #### Liens de retour (pour revenir à une partir principale)
 
 ~~~ruby
 RETOUR_BUREAU		# Pour retourner au bureau (avec le signe ↩︎ devant)
 RETOUR_PROFIL		# Pour retourner au profil (avec le signe ↩︎ devant)
 ~~~
+
+
+
+#### Lien vers le bureau
+
+~~~ruby
+Tag.lien_bureau([titre])
+# Note : il vaut mieux ne pas utiliser `[titre]` pour avoir un picto avec "Bureau"
+~~~
+
+
+
+#### Lien vers des routes connues
+
+On peut obtenir des liens vers des routes connues grâce à la méthode `Tag.route`, en passant en premier argument soit un raccourci de route (par exemple `:aide` pour l’aide) soit une route explicite.
+
+Les raccourcis de route sont définis dans le fichier [./_lib/required/__first/constants/routes.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/routes.rb).
+
+On utilise alors :
+
+~~~ruby
+Tag.route(:<route id>[, "titre", {options}])
+~~~
+
+> Dans `options`, on peut par exemple indiquer `full: true` pour créer un URL entière qui pourra être utilisée dans les mails.
+>
+> Noter que c’est le cas, de manière générale, avec toutes les méthodes générant des liens, à commencer par `Tag.lien`.
+
+
+
+#### Lien « retour » pour titre
+
+Pour définir un lien à ajouter au titre des pages, ressemblant à :
+
+
+
+… on utilise la méthode :
+
+~~~ruby
+Tag.retour(:route, :titre)
+# Les deux arguments sont obligatoire
+~~~
+
+
 
 <a name="specsblocks"></a>
 

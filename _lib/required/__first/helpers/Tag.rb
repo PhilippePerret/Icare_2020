@@ -13,10 +13,17 @@ class << self
     params[:new] && params.merge!(target: '_blank')
     params[:target] ||= '_self'
     params[:titre] = params[:text] if params.key?(:text)
-    params = normalize_params(params, [:id, :route, :class, :titre, :title, :target])
+    params = normalize_params(params, [:id, :route, :class, :titre, :title, :target, :style])
     (TAG_LIEN % params).freeze
   end #/ lien
   alias :link :lien
+
+  def route route_id, titre = nil, params = nil
+    params ||= {}
+    params.merge!(text: titre)
+    params.merge!(route: ROUTES[route_id]||route_id)
+    Tag.lien(params)
+  end #/ route
 
   def div params
     params = {text: params} if params.is_a?(String)
@@ -89,6 +96,9 @@ class << self
       required.each do |prop|
         params.merge!(prop => "") unless params.key?(prop)
       end
+      if params.key?(:route) && params[:full]
+        params[:route] = "#{App::FULL_URL_ONLINE}/#{params[:route]}"
+      end
       params
     end #/ normalize_params
 end # /<< self
@@ -98,7 +108,7 @@ end #/Tag
 # Note : d'autres sont définis dans ./_lib/modules/forms/constants.rb qui
 # sera chargé avec 'require_module('form')'
 TAG_SPAN  = '<span class="%{class}" style="%{style}" title="%{title}">%{text}</span>'.freeze
-TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{target}">%{titre}</a>'.freeze
+TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{target}" style="%{style}">%{titre}</a>'.freeze
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
 TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze
 TAG_ANCHOR    = '<a name="%s"></a>'.freeze
