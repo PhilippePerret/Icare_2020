@@ -15,6 +15,7 @@ class Watcher < ContainerClass
   def download_signup
     message "Je dois télécharger les documents de présentation"
     message "dossier : #{params[:folder]}"
+    download(File.join(TEMP_FOLDER,'signups',params[:folder]),nil,{keep:true})
   end #/ download_signup
 
   # Retourne TRUE si le module +absmodule+ {AbsModule} est choisi par l'user

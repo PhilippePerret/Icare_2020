@@ -16,7 +16,7 @@ class << self
 
 end # /<< self
 
-attr_reader :original_paths, :zipfile_name, options
+attr_reader :original_paths, :zipfile_name, :options
 # On initialise le downloader avec le chemin d'accès aux documents originaux
 # et un nom qui servira pour le fichier zip
 def initialize paths, zipfile_name = nil, options = nil
