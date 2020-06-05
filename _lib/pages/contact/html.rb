@@ -22,7 +22,7 @@ class HTML
       'Titre'   => {name:'envoi_titre', type:'text'},
       'Message' => {name:'envoi_message', type:'textarea', height:260}
     }
-    unless user.icarien?
+    if user.guest?
       rows.merge!('Votre mail' => {name:'envoi_mail', type:'text'})
       rows.merge!('Confirmation' => {name:'envoi_mail_confirmation', type:'text'})
     end
@@ -32,7 +32,7 @@ class HTML
   end #/ formulaire
 
   def traite_envoi
-    if user.icarien?
+    unless user.guest?
       mail = user.data[:mail]
     else
       # Mail fourni en dur

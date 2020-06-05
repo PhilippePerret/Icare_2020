@@ -22,10 +22,12 @@ class HTML
   def build_header
     @header = []
     @header << MAIN_LINKS[:overview]
+    @header << MAIN_LINKS[user.guest? ? :login : :logout]
     if user.guest?
       @header << MAIN_LINKS[:signup]
+    else
+      @header << Tag.lien_bureau #MAIN_LINKS[:bureau]
     end
-    @header << MAIN_LINKS[user.icarien? ? :logout : :login]
     @header = @header.join(' ')
   end
 end

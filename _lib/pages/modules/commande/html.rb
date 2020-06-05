@@ -13,6 +13,6 @@ class HTML
   end
   # Fabrication du body
   def build_body
-    @body = deserb("body_#{user.icarien? ? 'icarien' : 'nobody'}".freeze, self)
+    @body = deserb("body_#{user.guest? ? 'nobody' : 'icarien'}".freeze, self)
   end
 end #/HTML

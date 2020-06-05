@@ -53,7 +53,6 @@ class << self
   # pouvoir le reconnaitre au prochain chargement.
   # On met également sa session en données pour comparer les deux.
   def authentify_user
-    log("@dbuser in authentify_user: #{@dbuser.inspect}")
     session['user_id'] = @dbuser[:id].to_s
     db_exec("UPDATE users SET session_id = ? WHERE id = ?", [session.id, @dbuser[:id]])
     User.current = User.new(@dbuser)
@@ -64,7 +63,6 @@ class << self
   # enregistré (quand il voulait atteindre une page protégée) soit vers
   # sa destination préférée après le login.
   def redirect_user
-    log("dans redirect_user, session['user_id'] = #{session['user_id'].inspect}")
     Route.redirect_to(param(:back_to) || user.route_after_login)
   end
 

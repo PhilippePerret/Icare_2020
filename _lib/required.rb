@@ -15,3 +15,5 @@ require './config'
 Dir["#{LIB_FOLDER}/required/__first/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/_classes/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/then/**/*.rb"].each{|m|require m}
+
+log("ROUTE : #{route.to_s}")

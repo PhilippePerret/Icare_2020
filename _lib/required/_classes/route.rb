@@ -3,8 +3,8 @@ class Route
 
   REDIRECTIONS = {
     # - SIMPLE ICARIEN -
-    0 => {hname: 'Accueil du site',         route: :home},
-    1 => {hname: 'Bureau de travail',       route: :bureau},
+    0 => {hname: 'Bureau de travail',       route: :bureau},
+    1 => {hname: 'Accueil du site',         route: :home},
     2 => {hname: 'Profil',                  route: :profil},
     3 => {hname: 'Dernière page consultée', route: :last_page},
     # - ADMINISTRATEUR -

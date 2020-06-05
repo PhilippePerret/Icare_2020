@@ -8,7 +8,9 @@ Candidature de <%= owner.pseudo %> #<%= owner.id %> à l'atelier. Merci de la va
 -->
 <%
 
-tag = Tag.lien(route:"#{route.to_s}?op=download_signup&uid=#{owner.id}&wid=#{self.id}", text:"Documents de présentation", class:'btn main small')
+bouton_load_presentation = Tag.lien(route:"#{route.to_s}?op=download_signup&uid=#{owner.id}&wid=#{self.id}", text:"Documents de présentation", class:'btn main small')
+
+bouton_refus = Tag.div(Tag.lien(route:"mailto:#{owner.mail}", text:'Notifier le refus par mail'))
 
 # Formulaire pour choisir ou confirmer son module
 form = Form.new(id:'validation-candidature-form', class:'inline', route:route.to_s)
@@ -24,6 +26,8 @@ form.submit_button = "Attribuer ce module"
 
 %>
 <div>
-  <div class="fleft"><%= tag %></div>
+  <div class="fleft">
+    <%= bouton_load_presentation %>
+    <%= bouton_refus %></div>
   <div class="right"><%= form.out %></div>
 </div>

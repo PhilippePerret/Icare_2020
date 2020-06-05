@@ -3,12 +3,11 @@ class IdentificationRequiredError < StandardError; end
 class PrivilegesLevelError < StandardError; end
 
 def icarien_required
-  raise IdentificationRequiredError.new() unless user.icarien?
+  raise IdentificationRequiredError.new() if user.guest?
 end
 
 def admin_required
-  log("-> admin_required (user:#{user.inspect})")
-  raise IdentificationRequiredError.new() unless user.icarien?
+  raise IdentificationRequiredError.new() if user.guest?
   raise PrivilegesLevelError.new() unless user.admin?
 end
 
