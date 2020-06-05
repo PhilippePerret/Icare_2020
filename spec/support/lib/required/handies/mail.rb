@@ -7,27 +7,39 @@ class TMails
 
     # Retourne les mails transmis à +mail_destinataire+ qui contiennent
     # le message +searched+
-    def find(mail_destinataire, searched)
-      self.for(mail_destinataire).select do |tmail|
+    def find(mail_destinataire, searched, options = nil)
+      self.for(mail_destinataire, options).select do |tmail|
         tmail.contains?(searched)
       end
     end #/ find
 
     # Retourne TRUE si un message au moins parmi les messages transmis à
     # +mail_destinataire+ contient +searched+
-    def exists?(mail_destinataire, searched)
-      self.find(mail_destinataire, searched).count > 0
+    def exists?(mail_destinataire, searched, options = nil)
+      self.find(mail_destinataire, searched, options).count > 0
     end #/ exists?
 
-    def for(mail_destinataire)
-      all.partition do |path|
-        File.basename(path).start_with?(mail_destinataire)
-      end.first.collect do |path|
-        TMail.new(path)
+    def for(mail_destinataire, options = nil)
+      options ||= {}
+      options.merge!(destinataire: mail_destinataire)
+      options.merge!(expediteur: options.delete(:from)) if options.key?(:from)
+      # On compose la procédure
+      pr = proc { |tmail, options| [tmail, options] if tmail && tmail.destinataire == options[:destinataire] }
+      if options.key?(:expediteur)
+        pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.expediteur == options[:expediteur]}
       end
+      if options.key?(:after)
+        options[:after] = Time.at(options[:after]) if options[:after].is_a?(Integer)
+        pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.time > options[:after]}
+      end
+      if options.key?(:before)
+        options[:before] = Time.at(options[:before]) if options[:before].is_a?(Integer)
+        pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.time < options[:before]}
+      end
+      all.select do |tmail| pr.call(tmail, options) end
     end #/ for
     def all
-      Dir["./tmp/mails/*.html"]
+      Dir["./tmp/mails/*.html"].collect{|path| TMail.new(path)}
     end #/ all
   end # /<< self
 end #/Mails
@@ -42,4 +54,16 @@ TMail = Struct.new(:path) do
   def contains?(searched)
     content.include?(searched)
   end #/ contains?
+  def time
+    @time ||= Time.at(timestamp)
+  end #/ time
+  def timestamp
+    @timestamp ||= filename.split('-')[1].to_i
+  end #/ timestamp
+  def destinataire
+    @destinataire ||= filename.split('-')[0]
+  end #/ destinataire
+  def expediteur
+    @expediteur ||= content.match(/From: <(.+?)>/).to_a[1]
+  end #/ expediteur
 end

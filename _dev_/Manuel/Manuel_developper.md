@@ -1020,6 +1020,81 @@ That’s it! Les documents seront proposés au téléchargement.
 
 La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` . Ce fichier zip est détruit tout de suite après le téléchargement du zip.
 
+
+
+---
+
+
+
+## Test de l'application
+
+
+
+### Tester les mails
+
+
+
+#### Vider le dossier mail
+
+~~~ruby
+vide_dossier_mails
+~~~
+
+Cela vide le dossier `./tmp/mails` dans lequel sont enregistrés les codes html de tous les mails envoyés, en offline comme en online.
+
+
+
+
+#### Tester si un mail contenant un certain texte a été envoyé
+
+~~~ruby
+TMails.exists?(<dest.>, <cherché>[,<options>])			TMails.exists?("phil@chez.moi", "Bonjour Phil !")
+~~~
+
+
+
+#### Récupérer tous les mails d’un certain utilisateur
+
+~~~ruby
+TMails.for(<mail destinataire>[,<options>])							TMails.for("phil@chez.moi")
+# => Liste d'instance TMail
+~~~
+
+<a name="classtmail"></a>
+
+Cette méthode retourne donc une liste d’instance `TMail` qui répond aux méthodes suivantes :
+
+~~~ruby
+tmail.contains?(str)		# retourne true si contient le texte +str+
+tmail.content						# le contenu textuel du mail
+tmail.time							# Le temps de l'envoi
+tmail.destinataire			# le destinataire de l'envoi
+tmail.expediteur				# l'expéditeur de l'envoi
+tmail.filename					# le nom du fichier
+~~~
+
+
+
+<a name="optionsmails"></a>
+
+#### Options pour les méthodes de mail
+
+Ces options permettent de définir plus finement les recherches, les filtres qui doivent être appliqué à la relève des mails. Par exemple `TMails.find`, `TMails.exists?`, etc.
+
+Toutes ces options sont… optionnelles
+
+~~~ruby
+options = {
+	from:		'<mail expéditeur>',   	# auto explicatif
+  after:	Time,										# le mail doit avoir été envoyé après ce temps
+  before:	Time,										# le mail doit avoir été envoyé avant ce temps
+}
+~~~
+
+
+
+
+
 ---
 
 
