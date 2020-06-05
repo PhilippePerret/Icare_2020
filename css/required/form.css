@@ -11,10 +11,15 @@ form:not(.inline){
 form div.row {
   display:flex;
 }
-form div.row span.libelle {
+form:not(.inline) div.row span.libelle {
   width:200px;
   margin-top:4px;
 }
+form.inline div.row span.libelle {display:none}
+form.inline div.buttons,
+form.inline div.row
+ {display: inline}
+
 form div.row span.value {
   display:inline-block;
   flex-grow:2;
@@ -35,15 +40,18 @@ form div.row span.value > *:not(select):not(input[type="checkbox"]) {
   width:100%;
 }
 
-form:not(.inline) div.buttons input[type="submit"] {
+form div.buttons input[type="submit"] {
   border:1px solid;
-  padding:9px 40px;
   color:rgb(27, 106, 227);
   background-color:white;
   font-size:inherit;
   font-family:Arial,Helvetica,Geneva;
   border-radius:0.3em;
 }
+form:not(.inline) {
+  padding:9px 40px;
+}
+
 form div.buttons input[type="submit"]:hover {
   background-color:rgb(27, 106, 227);
   color:white;

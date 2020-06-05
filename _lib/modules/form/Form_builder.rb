@@ -152,6 +152,12 @@ class Form
     dfield.merge!(:id => dfield[:name].gsub(/-/,'_'))
     dfield[:value] ||= dfield[:default] || param(dfield[:name].to_sym) || ''
     dfield.key?(:class) || dfield.merge!(class: '')
+    # - style -
+    dfield.merge!(style: []) unless dfield.key?(:style)
+    dfield[:style] << "width:#{dfield[:size]}px;" if dfield.key?(:size)
+    dfield[:style] << "height:#{dfield[:height]}px;" if dfield.key?(:height)
+    dfield[:style] = dfield[:style].join('')
+
     case dfield[:type].to_s
     when 'checkbox'.freeze
       dfield.merge!(checked: param(dfield[:name].to_sym) ? ' CHECKED' : '')

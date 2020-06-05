@@ -43,6 +43,7 @@ def all
 end #/ all
 # Méthode qui ajoute un watcher pour l'icarien, de type
 # +wtype+ avec les données +data+
+#   :params     Un hash de paramètres (qui sera jsonné)
 def add wtype, data
   now = Time.now.to_i
   dwatcher = {
@@ -51,6 +52,7 @@ def add wtype, data
     user_id:    owner.id,
     vu_admin:   user.admin?,
     vu_user:    !user.admin?,
+    params:     (data[:params].to_json if data[:params]),
     updated_at: now,
     created_at: now
   }

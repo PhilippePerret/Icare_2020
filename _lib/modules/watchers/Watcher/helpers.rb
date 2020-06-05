@@ -65,10 +65,10 @@ class Watcher < ContainerClass
     # détruire ou éditer le watcher
     if user.admin?
       btns = []
-      btns << Tag.lien(route:"#{route.to_s}?op=destroy&wid=#{id}", titre:'détruire', class:'small warning')
-      btns << Tag.lien(route:"#{route.to_s}?op=edit&wid=#{id}", titre:'éditer', class:'small')
-      btns = "<span class='fleft'>#{btns.join}</span>".freeze
-      b.sub!(/(class="buttons">)/, "\\1#{btns}")
+      btns << Tag.lien(route:"#{route.to_s}?op=destroy&wid=#{id}", titre:'détruire', class:'btn tiny warning')
+      btns << Tag.lien(route:"#{route.to_s}?op=edit&wid=#{id}", titre:'éditer', class:'btn tiny')
+      btns = "<div class='discret-tool small right mt1'>#{btns.join}</div>".freeze
+      b += btns
     end
     return b
   end #/ body

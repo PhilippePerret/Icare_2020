@@ -24,7 +24,7 @@ class << self
       salt:         salt,
       cpassword:    Digest::MD5.hexdigest("#{chuser.password}#{chuser.mail}#{salt}"),
       options:      options,
-      session_id:   session.id, # dossier de candidature
+      session_id:   session.id,
       created_at:   now,
       updated_at:   now
     }
@@ -51,7 +51,7 @@ class << self
 
     # Le watcher qui permettra à l'administrateur de valider l'inscription
     require_module('watchers')
-    newu.watchers.add(:validation_inscription, data: {session_id:session.id, modules:chuser.modules_ids}.to_json)
+    newu.watchers.add(:validation_inscription, {params: {folder:session.id, modules:chuser.modules_ids}})
     return newu
   rescue Exception => e
     log(e)

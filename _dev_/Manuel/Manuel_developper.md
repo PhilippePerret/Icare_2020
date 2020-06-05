@@ -397,6 +397,23 @@ Dans les `{options}`, on peut définir une `:class` supplémentaire ou un `:titl
 
 
 
+## Styles particuliers
+
+
+
+### Outils discrets
+
+Les outils discrets sont des boutons qui ont une faible opacité et qui s’affiche normalement lorsque l’on glisse la souris dessus. Ils sont obtenus à l’aide de la classe CSS `discret-tool`.
+
+~~~html
+<div class="boutons discret-tool tiny">
+  <button>Mon bouton</button>
+  <a href="#justeque">Pour voir</a>
+</div>
+~~~
+
+
+
 
 
 ---

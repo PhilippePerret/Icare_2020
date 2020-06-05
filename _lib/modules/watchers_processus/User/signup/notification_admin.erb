@@ -6,11 +6,23 @@ Candidature de <%= owner.pseudo %> #<%= owner.id %> à l'atelier. Merci de la va
   TODO Mettre ici un formulaire pour charger ses documents de présentation
 
 -->
-[TÉLÉCHARGEMENT DES DOCUMENTS DE PRÉSENTATION]
+<%
 
-<!--
+tag = Tag.lien(route:"#{route.to_s}?op=download_signup&uid=#{owner.id}&wid=#{self.id}", text:"Documents de présentation", class:'btn main small')
 
-  TODO Mettre ici un formulaire pour choisir ou confirmer son module
+# Formulaire pour choisir ou confirmer son module
+form = Form.new(id:'modules-form', class:'inline', route:route.to_s)
+MODNAME = '<span style="width:80px;overflow:hidden;text-overflow:ellipsis;">%s</span>' # inutile…
+values = AbsModule.collect do |absmodule|
+  coche   = selected_module?(absmodule) ? '📌 ' : ''
+  modname = MODNAME % [absmodule.name]
+  [absmodule.id, "#{coche}#{modname}"]
+end
+form.rows = {'Module' => {type: 'select', values: values, name:'module_id', size:160}}
+form.submit_button = "Attribuer ce module"
 
--->
-[MODULE CHOISI]
+%>
+<div>
+  <div class="fleft"><%= tag %></div>
+  <div class="right"><%= form.out %></div>
+</div>

@@ -6,14 +6,34 @@ div.buttons {
   margin-top:1em;
 }
 
-.btn,
-div.buttons a
+.btn:not(.small),
+div.buttons a:not(.small)
 {
-  padding:0.4em 1.1em 0.3em;
-  margin-left:4px;
   font-family:inherit;
   font-size:inherit;
 }
+.btn:not(.tiny):not(.small),
+div.buttons a:not(.tiny):not(.small)
+{
+  padding:0.4em 1.1em 0.3em;
+  margin-left:4px;
+}
+
+.btn.tiny,
+div.buttons a.tiny
+{
+  padding:0em 0.7em 0em;
+  margin-left:6px;
+}
+.btn.small,
+div.buttons a.small
+{
+  padding:0.1em 1em 0.2em;
+  margin-left:6px;
+}
+
+
+
 .btn:not(.main):not(.warning),
 div.buttons a:not(.main)
 {

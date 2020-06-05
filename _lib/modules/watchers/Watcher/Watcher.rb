@@ -101,6 +101,17 @@ end #/ vu?
 #
 # ---------------------------------------------------------------------
 
+# data des data
+def params
+  @params ||= begin
+    if data[:params]
+      h={};JSON.parse(data[:params]).each { |k,v| h.merge!(k.to_sym => v) };h
+    end
+  end
+end #/ params
+
+# Chemin relatif (dans watchers_processus) défini dans les données
+# absolues
 def relpath
   @relpath ||= absdata[:relpath]
 end #/ relpath
