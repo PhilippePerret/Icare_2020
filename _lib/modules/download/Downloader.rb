@@ -16,12 +16,21 @@ class << self
 
 end # /<< self
 
-attr_reader :original_paths, :zipfile_name
+attr_reader :original_paths, :zipfile_name, options
 # On initialise le downloader avec le chemin d'accès aux documents originaux
 # et un nom qui servira pour le fichier zip
-def initialize paths, zipfile_name = nil
+def initialize paths, zipfile_name = nil, options = nil
   paths = [paths] unless paths.is_a?(Array)
-  @original_paths = paths
+  finalpaths = []
+  paths.collect do |path|
+    if File.directory?(path)
+      finalpaths += Dir["#{path}/**/*.*"]
+    else
+      finalpaths << path
+    end
+  end
+  @original_paths = finalpaths
+  @options = options
   @zipfile_name   = zipfile_name || "download-#{Time.now.to_i}.zip"
   @zipfile_name << '.zip' unless @zipfile_name.end_with?('.zip')
 end #/ initialize
@@ -47,7 +56,7 @@ def download
   STDOUT.puts "Content-length: #{zipfile_size}"
   STDOUT.puts ""
   STDOUT.puts File.open( zip_path, 'rb'){ |f| f.read }
-  remove
+  remove unless options[:keep]
 end #/ download
 
 # Destruction du zip

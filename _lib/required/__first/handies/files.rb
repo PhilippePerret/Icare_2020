@@ -27,3 +27,8 @@ def first_is_older_than(file1, file2, default_if_not_exist)
   log("=== file2 = #{file2}")
   File.stat(file1).mtime < File.stat(file2).mtime
 end #/ fisrt_is_older_than
+
+def download(path, zipname = nil)
+  require_module('download')
+  Downloader.new(path,zipname).download
+end #/ download

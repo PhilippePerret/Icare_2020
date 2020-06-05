@@ -6,19 +6,6 @@
 =end
 class Watcher < ContainerClass
 class << self
-
-  # Retourne tous les watchers de l'icarien +icarien+
-  # {Array de Watcher}
-  def watchers_of icarien
-    icarien = User.get(icarien) if icarien.is_a?(Integer)
-    request = "SELECT * FROM #{table} WHERE user_id = #{icarien.id}"
-    db_exec(request).collect do |dwatcher|
-      watcher = new(dwatcher[:id])
-      watcher.data = dwatcher
-      watcher
-    end
-  end #/ watchers_of
-
   def table
     @table ||= 'watchers'
   end #/ table

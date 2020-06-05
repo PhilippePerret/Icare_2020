@@ -1024,6 +1024,24 @@ Pour les autres méthodes, cf. le module `./lib/required/__first/ContainerClass.
 
 Pour permettre le téléchargement, on utilise la classe `Downloader` qui permet de gérer très facilement ces téléchargements.
 
+Il suffit d’utiliser la méthode handy `download` :
+
+~~~ruby
+download("<path>"[, "<nom fichier zip>"[, <options>]])
+~~~
+
+Les options permettent de définir :
+
+~~~ruby
+options = {
+  keep: true, 		# ne détruit pas le dossier original à la fin
+}
+~~~
+
+
+
+Elle fait :
+
 ~~~ruby
 require_module('download')
 
