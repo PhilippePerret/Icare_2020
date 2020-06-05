@@ -2,7 +2,7 @@
 =begin
   Extension de la class MainWatchers pour les helper methods
 =end
-class MainWatchers
+class Watchers
   def listing
     log("-> listing")
     [

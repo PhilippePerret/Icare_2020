@@ -1,5 +1,4 @@
 # encoding: UTF-8
-require_module('form')
 class HTML
   def titre
     "#{RETOUR_ADMIN}🎮 Notifications".freeze
@@ -7,6 +6,8 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     admin_required
+    require_module('watchers')
+    require_module('form')
     if param(:wid)
       watcher = Watcher.get(param(:wid))
       watcher.send(param(:op).to_sym) # :run et :unrun principalement

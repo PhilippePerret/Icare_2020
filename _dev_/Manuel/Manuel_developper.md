@@ -1119,6 +1119,20 @@ Cf. le site [Smiley cool](https://smiley.cool/fr/emoji-list.php).
 
 
 
+## NOTES
+
+
+
+### [Note 001]
+
+
+
+
+
+
+
+
+
 [utilisateur courant]: #currentuser
 [dossier de route]: #dossierroute
 []: 
