@@ -26,6 +26,7 @@ def run
   self.send(processus.to_sym)
   if poursuivre
     send_mails
+    add_actualite
     destroy
     send(:onSuccess) if respond_to?(:onSuccess)
   end
@@ -131,12 +132,26 @@ def absdata
   @absdata ||= DATA_WATCHERS[wtype.to_sym]
 end #/ absdata
 
+def add_actualite
+  return unless File.exists?(path_actualite)
+  Actualite.add(owner.id, deserb(path_actualite, self))
+end #/ add_actualite
+
+# ---------------------------------------------------------------------
+#   PATHS
+#
+# ---------------------------------------------------------------------
+
 # Retourne le chemin d'accès au template de notification du watcher,
 # pour l'admin ou l'user suivant la valeur de +who+
 def path_notification(who)
   fname = "notification_#{who}.erb".freeze
   File.join(folder, fname)
 end #/ path_notification
+
+def path_actualite
+  File.join(folder, "actualite.erb".freeze)
+end #/ path_actualite
 
 def path_mail(who)
   fname = "mail_#{who}.erb"

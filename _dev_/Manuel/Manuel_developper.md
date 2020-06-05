@@ -708,6 +708,20 @@ Les watchers permettent de gérer toute l’activité, les actions, possible sur
 
 Les **données de tous les watchers** sont définies dans le fichier [_lib/modules/watchers/constants.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb).
 
+Le principe est le suivant :
+
+* Un watcher est créé (par exemple à l’inscription d’un candidat à l'atelier)
+* Ce watcher, s’il définit un fichier `notification_admin.erb`, produit une nouvelle notification sur le bureau de l’administrateur,
+* s’il définit un fichier `notification_user.erb`, produit une nouvelle notification sur le bureau de l’icarien·ne concerné·e,
+* Cette notification contient un bouton qui permet toujours de jouer (runner) ce watcher (ou de le « contre-runner »).
+* Runner le watcher crée les opérations nécessaires dans les données concernées.
+* Si le watcher définit un fichier `mail_admin.erb` alors ce mail est automatiquement envoyé à l’administrateur.
+* Si le watcher définit un fichier `mail_user.erb` alors ce mail est automatiquement envoyé à l’icarien·ne concerné·e.
+* Si le watcher définit un fichier `actualite.erb` alors cette actualité est ajoutée aux actualités du site.
+* Le watcher est détruit, ce qui retirera automatiquement les notifications des icariens et administrateur.
+
+
+
 ### Constitution des données de watchers
 
 Les données des watchers, enregistrées dans la table `watchers` définissent :
@@ -727,9 +741,13 @@ Les données des watchers, enregistrées dans la table `watchers` définissent 
 }
 ~~~
 
+
+
 ### Visualisation (vu_)
 
 Le données `vu_admin` et `vu_user` sont déterminées à la création du watcher en fonction du fait que c’est l’administrateur ou l’icarien qui génère (ou crée) le watcher. En fait, on pourrait aussi mettre ça dans les données absolues du watcher, mais ça fonctionne très bien comme ça (pour le moment) et ça simplifie la définition des données absolues.
+
+
 
 ### Ajout d’un watcher à un icarien
 
@@ -741,7 +759,33 @@ require_module('watchers') # requis
 icarien.watchers.add(<watcher type>, {<data>} )
 ~~~
 
-En général, on définit toujours `:objet_id` dans ces données.
+Les `types de watchers` sont définis dans le fichier [_lib/modules/watchers/constants.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb).
+
+Les données qui seront enregistrées dans la table `watchers` sont les suivantes, beaucoup sont automatiques ou semi-automatiques :
+
+~~~ruby
+data = {
+	objet_id:				Integer,		# toujours requis. C'est la donnée par exemple, qui 
+  														# définit l'objet à traiter.
+	triggered_at:		Integer,		# Si le watcher ne doit être déclenché qu'à un temps
+  														# donné, comme les paiements.
+  params:					Hash/String	# Un Hash (table) de données à transmettre. Il sera
+  														# jsonné pour être gardé dans la table.
+  # = SEMI-AUTOMATIQUE =
+  vu_admin:				Boolean,		# Automatique (en fonction du créateur du watcher) mais peut
+  														# être défini explicitement lorsqu'un watcher n'a pas à être
+  														# vu par l'administrateur
+  vu_user:				Boolean,		# Automatique (en fonction du créateur du watcher) mais peut
+  														# être défini explicitement lorsqu'un watcher n'a pas à être
+  														# vu par l'user
+	
+  # = AUTOMATIQUE = 	
+  user_id:				Integer,		# Définit automatiquement (possesseur du watcher)
+	wtype:					String			# Pris du premier argument
+}
+~~~
+
+
 
 
 
@@ -786,6 +830,7 @@ owner				# {User} Propriétaire du watcher, l'icarien visé
 objet				# l'instance de l'objet visé, par exemple un IcModule d'icarien
 objet_id		# l'identifiant de l'objet visé
 processus		# Le "processus", donc la méthode
+params			# Les paramètres éventuellements transmis
 ~~~
 
 
@@ -799,6 +844,8 @@ Dans ./_lib/modules/watchers_processus/<objet>/<processu>/
 						notification_user.erb			# si l'icarien doit être notifié
 						mail_admin.erb						# si l'administrateur doit recevoir un mail à run
 						main_user.erb							# si l'icarien doit recevoir un mail au run
+						actualite.erb							# si une actualité doit être produite au moment où
+																			# le watcher est runné
 ~~~
 
 
@@ -899,7 +946,19 @@ C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’u
 
 
 
+### Construction de l'actualité
 
+L’actualité se définit dans le fichier `actualite.erb` du dossier du watcher. Ce fichier doit définir seulement un `span` qui contient le message d’actualité à enregistrer.
+
+Le watcher est bindé à ce fichier `ERB`.
+
+Par exemple :
+
+~~~erb
+<span>
+	<%= owner.pseudo %> produit une actualité avec <%= objet.ref %>.
+</span>
+~~~
 
 
 

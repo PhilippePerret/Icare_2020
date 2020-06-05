@@ -1,4 +1,8 @@
-#
+# Modifications à faire dans la base de données
+
+* Dans la table `watchers`, la colonne `data` doit être renommé `params`
+
+* Dans la table `actualites`, supprimer `data` et `status`.
 
 * Récupérer toutes les données SQL actuelles de l'atelier online
 
@@ -21,7 +25,7 @@
   ALTER TABLE icmodules CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
   ~~~
 
-* Ajouter les colonnes `vu` dans les tables :
+* Ajouter les colonnes `vu_admin` et `vu_user` dans les tables :
 
 * Modification complète de la table `watchers` (peut-êtr qu'il vaut mieux simplement la refaire complètement, mais en fait, il faudra de toutes façons changer les watchers "à la main")
   ~~~SQL

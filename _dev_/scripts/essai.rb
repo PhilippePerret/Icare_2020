@@ -2,10 +2,16 @@
 =begin
   Pour faire des essais ruby
 =end
-require 'json'
-h = {
-  folder:'1c840d8f28101d2bdd9932eaef3f9f3f',
-  modules:[2,4,6]
-}
+class MaClasse
+  attr_reader :x
+  def initialize x
+    @x = x
+  end #/ initialize x
+  def out
+    puts "Je suis #{x}"
+  end #/ out
+end #/MaClasse
 
-puts h.to_json.inspect
+l = [4,3,5,12]
+
+l.collect{|n|MaClasse.new(n)}.each(&:out)

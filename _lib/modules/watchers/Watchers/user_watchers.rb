@@ -46,12 +46,14 @@ end #/ all
 #   :params     Un hash de paramètres (qui sera jsonné)
 def add wtype, data
   now = Time.now.to_i
+  vu_admin  = data[:vu_admin].nil? ? user.admin? : data[:vu_admin]
+  vu_user   = data[:vu_user].nil? ? !user.admin? : data[:vu_user]
   dwatcher = {
     wtype:      wtype.to_s, # par exemple 'commande_module'
     objet_id:   data[:objet_id],
     user_id:    owner.id,
-    vu_admin:   user.admin?,
-    vu_user:    !user.admin?,
+    vu_admin:   vu_admin,
+    vu_user:    vu_user,
     params:     (data[:params].to_json if data[:params]),
     updated_at: now,
     created_at: now
