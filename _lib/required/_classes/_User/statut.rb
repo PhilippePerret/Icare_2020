@@ -64,7 +64,7 @@ end
 
 def statut
   case bit_options(16)
-  when 1 then :candidat
+  when 0, 1 then :candidat
   when 2 then check_actif
   when 3 then :en_pause
   when 4 then :inactif

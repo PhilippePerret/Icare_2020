@@ -10,7 +10,7 @@ class HTML
   def build_body
     # Construction du body
     @body = <<-HTML
-
+<p>Cette page vous permet de régler vos préférences.</p>
     HTML
   end
 end #/HTML
