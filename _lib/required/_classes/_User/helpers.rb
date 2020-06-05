@@ -15,7 +15,6 @@ class User
   def pastille_notifications_non_vues(options = nil)
     return '' unless user.icarien?
     nombre = unread_notifications_count
-    log("nombre : #{nombre}")
     return '' if nombre == 0
     Tag.pastille_nombre(nombre, options)
   end

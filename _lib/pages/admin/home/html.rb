@@ -9,6 +9,7 @@ class HTML
     "🎮 Tableau de bord administration"
   end #/ titre
   def exec
+    log('-> exec (home admin)')
     admin_required
   end
   def build_body

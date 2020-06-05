@@ -7,6 +7,7 @@ def icarien_required
 end
 
 def admin_required
+  log("-> admin_required (user:#{user.inspect})")
   raise IdentificationRequiredError.new() unless user.icarien?
   raise PrivilegesLevelError.new() unless user.admin?
 end

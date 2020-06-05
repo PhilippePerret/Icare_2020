@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "⚓ Aide de l’atelier".freeze
+    "🚨 Aide de l’atelier".freeze
   end
   def exec
     # Code à exécuter avant la construction de la page
@@ -16,5 +16,5 @@ class HTML
   def aide_tdm
     ''
   end #/ aide_tdm
-  
+
 end #/HTML

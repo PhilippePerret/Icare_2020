@@ -70,7 +70,6 @@ class << self
     if options && options[:linked]
       nombre = self.lien(route:"#{user.admin? ? 'admin' : 'bureau'}/notifications", text:nombre)
     end
-    log("[pastille_nombre] nombre : #{nombre}")
     pasti = TAG_PASTILLE % [nombre.to_s]
     return pasti
   end #/ pastille

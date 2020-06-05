@@ -47,8 +47,8 @@ end #/<< self
 #
 # ---------------------------------------------------------------------
 attr_reader :route, :route_init
-def initialize route
-  @route_init = route
+def initialize init_route
+  @route_init = init_route
 end
 
 def to_s

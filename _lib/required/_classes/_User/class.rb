@@ -17,22 +17,22 @@ class << self
   # Initialisation de l'utilisateur courant
   # Soit c'est l'utilisateur reconnu par la session, soit c'est un invité
   def init
-    unless session['user_id'].nil_if_empty.nil?
-      reconnect_user
-    end
+    log('-> User::init'.freeze)
+    log("session['user_id'] = #{session['user_id'].inspect}")
+    reconnect_user unless session['user_id'].nil_if_empty.nil?
     self.current ||= new(DATA_GUEST)
     # debug "OFFLINE: #{OFFLINE ? 'oui' : 'non'}"
   end
 
   # Reconnection d'un icarien reconnu en session
   def reconnect_user
-    return if session['user_id'].nil_if_empty.nil?
-    debug "session['user_id']: #{session['user_id'].inspect}"
+    log('-> reconnect_user'.freeze)
+    log "session['user_id']: #{session['user_id'].inspect}".freeze
     duser = db_get('users', {id: session['user_id'].to_i})
     duser || raise("Impossible de trouver un utilisateur d'identifiant #{session['user_id']}…")
     duser[:session_id] == session.id || raise("Ceci ressemble à une intrusion en force. Je ne peux pas vous laisser passer…")
     self.current = new(duser)
-    debug "User reconnecté : #{current.pseudo}"
+    log "User reconnecté : #{current.pseudo}"
   rescue Exception => e
     erreur e.message
     session.delete('user_id') # pour ne plus avoir le problème

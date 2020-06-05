@@ -29,9 +29,13 @@ class << self
 
   # Pour finir
   def finish
-    log("-> App::finish")
-    Route.last = route.to_s
+    log("-> App::finish".freeze)
+    Route.last = route.to_s.dup
     Session.finish
+    log("<- App::finish#{RC2}".freeze)
+  rescue Exception => e
+    log("ERREUR DANS finish: #{e.message}")
+    log(e)
   end
 
   # L'url courante, en fonction du fait qu'on est offline ou online

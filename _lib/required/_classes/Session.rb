@@ -28,20 +28,20 @@ end #/<< self
 # ---------------------------------------------------------------------
 
 def id
-  @id ||= session.session_id
+  @id ||= self.session.session_id
 end
 
 def []= key, value
-  session[key] = value
+  self.session[key] = value
 end
 alias :set :[]=
 
 def [] key
-  session[key]
+  self.session[key]
 end
 
 def delete key
-  session[key] = nil
+  self.session[key] = nil
 end
 alias :remove :delete
 

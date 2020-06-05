@@ -25,6 +25,12 @@ form div.row span.value > * {
   font-style:inherit;
 }
 
+form div.row span.value > input[type="text"],
+form div.row span.value > input[type="password"]
+{
+  width:95%;
+}
+
 form div.row span.value > *:not(select):not(input[type="checkbox"]) {
   width:100%;
 }
