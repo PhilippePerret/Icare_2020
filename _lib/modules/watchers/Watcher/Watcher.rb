@@ -25,8 +25,9 @@ def run
   require_folder_processus
   self.send(processus.to_sym)
   if poursuivre
-    send_mail
+    send_mails
     destroy
+    send(:onSuccess) if respond_to?(:onSuccess)
   end
 rescue Exception => e
   log(e)
@@ -36,8 +37,9 @@ end #/ run
 def unrun
   require_folder_processus
   self.send("contre_#{processus}".to_sym)
-  send_contre_mail
+  send_contre_mails
   destroy
+  send(:onSuccess) if respond_to?(:onSuccess)
 rescue Exception => e
   log(e)
   erreur(e.message)
@@ -155,11 +157,11 @@ end #/ folder
 private
 
   # Procédure d'envoi de mail si tout s'est bien passé
-  def send_mail
+  def send_mails
     send_mail_to(:admin) if File.exists?(path_mail(:admin))
     send_mail_to(:user) if File.exists?(path_mail(:user))
   end #/ send_mail
-  def contre_send_mail
+  def send_contre_mails
     send_contre_mail_to(:admin) if File.exists?(path_contre_mail(:admin))
     send_contre_mail_to(:user) if File.exists?(path_contre_mail(:user))
   end #/ contre_send_mail
@@ -179,7 +181,7 @@ private
     Mail.send(
       to: whouser.mail,
       from:otheruser.mail,
-      message: body
+      message: data[:body]
     )
   end #/ send_mail
 

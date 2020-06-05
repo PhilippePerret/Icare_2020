@@ -821,6 +821,31 @@ Dans ces fichiers, on doit utiliser un `div.buttons` pour placer les boutons pri
 </div>
 ~~~
 
+
+
+Si un formulaire doit être utilisé pour la notification — ce qui est souvent le cas — on doit utiliser cette tournure :
+
+~~~ruby
+<%
+  form = Form.new(..., class:'inline')
+	form.rows = {
+    '<watcher>' 	=> {type:'hidden', name:'wid', value:id},
+    '<operation>' => {type:'hidden', name:'ope', value:'run'}
+  	... les autres champs utiles ...
+  }
+	form.submit_button = "Activer ce watcher"
+	form.other_buttons = [
+    btn_unrun("Renoncer et détruire")
+  ]
+%>
+
+<%= form.out %>
+~~~
+
+
+
+#### Destruction ou édition d’un watcher
+
 Quand c’est une notification administrateur, les boutons pour forcer la destruction et éditer la notification sont automatiquement ajoutés à chaque notification.
 
 
@@ -851,12 +876,25 @@ contre_mail_user.erb  # mail à envoyer à l'icarien en cas de contre-processus
 											# je refuse d'attribuer ce module.
 ~~~
 
+C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’user concerné dans les messages, on peut utiliser :
+
+~~~erb
+<p>Bonjour <%= owner.pseudo %> !</p>
+~~~
+
 
 
 ### Méthodes d’helpers pour les mails
 
-~~~ruby
+> Note : toutes ces méthodes sont définies dans le fichier [_lib/modules/watchers/Watcher/helpers.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/Watcher/helpers.rb).
+
+~~~erb
 <%= votre_bureau %>      # insert un lien pour rejoindre son bureau depuis le mail
+
+<%= contacter_phil %>    # insert un "contacter Phil" dans le mail (avec le lien)
+
+<%= faq_de_latelier %>   	# insert "Foire Aux Questions de l'atelier" dans un mail (avec
+													# le lien)
 ~~~
 
 

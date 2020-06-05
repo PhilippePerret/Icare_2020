@@ -22,6 +22,15 @@ class Watcher < ContainerClass
     Tag.lien(route: "bureau/home", text:'votre bureau', full:true)
   end #/ votre_bureau
 
+  def faq_de_latelier
+    Tag.lien(route:"aide/home", text:"Foire Aux Questions de l’atelier", full:true)
+  end #/ faq_de_latelier
+
+  def contacter_phil
+    require './_lib/data/secret/smtp'
+    Tag.lien(route: "mailto:#{DATA_MAIL[:mail]}", text: 'contacter Phil')
+  end #/ contacter_phil
+
 # ---------------------------------------------------------------------
 #   Méthodes de construction du watcher sur le bureau
 # ---------------------------------------------------------------------

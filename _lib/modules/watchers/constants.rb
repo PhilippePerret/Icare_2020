@@ -23,8 +23,8 @@ DATA_WATCHERS = {
     relpath: 'User/signup'
   },
   # --- LES MODULES ---
-  module_starting:  {
-    titre:  'Démarrage de module',
+  start_module:  {
+    titre:  'Démarrage du module',
     relpath:'IcModule/start'
   },
   commande_module:    {

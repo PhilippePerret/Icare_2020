@@ -13,15 +13,14 @@ class << self
   #
   # Retourne l'icmodule créé.
   #
-  def create_new_for(data, owner)
+  def create_new_for(data)
     require_module('watchers') unless defined?(Watcher)
+    owner = data.delete(:user)
     data[:user_id] ||= owner.id
     # On crée l'enregistrement dans la table
     icmodule_id = create_in_db(data)
-    # Données pour le watcher
-    dwatcher = {objet_id: icmodule_id}
     # Quel que soit le module, un watcher de démarrage
-    owner.watchers.add(:module_starting, dwatcher)
+    owner.watchers.add(:start_module, {objet_id: icmodule_id})
     return icmodule_id
   end #/ create
 
