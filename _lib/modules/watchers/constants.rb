@@ -18,6 +18,10 @@
 
 DATA_WATCHERS = {
   # --- USER ---
+  validation_adresse_mail: {
+    titre: 'Validation de votre adresse mail'.freeze,
+    relpath: 'User/valid_mail'.freeze
+  },
   validation_inscription: {
     titre: 'Validation inscription',
     relpath: 'User/signup'

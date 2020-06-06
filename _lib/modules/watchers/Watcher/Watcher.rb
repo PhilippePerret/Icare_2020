@@ -22,7 +22,7 @@ end # /<< self
 
 # Méthode qui joue le watcher
 def run
-  require_folder_processus
+  require_folder_processus unless folder_processus_required?
   self.send(processus.to_sym)
   if poursuivre
     send_mails
@@ -36,7 +36,7 @@ rescue Exception => e
 end #/ run
 
 def unrun
-  require_folder_processus
+  require_folder_processus unless folder_processus_required?
   self.send("contre_#{processus}".to_sym)
   send_contre_mails
   destroy
@@ -76,8 +76,13 @@ def poursuivre= valeur
   @poursuivre = false
 end #/ poursuivre=
 
+def folder_processus_required?
+  @folder_processus_has_been_already_required === true
+end #/ folder_processus_required?
+
 def require_folder_processus
   require_module("watchers_processus/#{relpath}")
+  @folder_processus_has_been_already_required = true
 end #/ require_folder_processus
 
 # Retourne true si le watcher a été vu par l'icarien +who+

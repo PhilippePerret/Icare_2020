@@ -18,4 +18,4 @@ class Watcher < ContainerClass
   def contre_commande
     message "Je refuse la commande"
   end #/ contre_commande
-end #/AbsModule < ContainerClass
+end #/Watcher < ContainerClass

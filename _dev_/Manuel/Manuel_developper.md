@@ -795,6 +795,16 @@ Noter que le dossier [./_lib/modules/watchers_processus/xrequired](/Users/philip
 
 ### Création d’un nouveau watcher
 
+
+
+#### Assistant de création
+
+Le plus simple pour créer un nouveau type de watcher est d’utiliser **le script assistant** [\_dev_/CLI/script/create_watcher.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/CLI/script/create_watcher.rb).
+
+
+
+#### Détail de la création
+
 Il suffit de définir ses données dans le fichier `watcher/constants.rb` vu plus haut.
 
 Ensuite, on crée le dossier :
@@ -818,7 +828,20 @@ class Watcher < ContainerClass        class Watcher < ContainerClass
   def contre_<processus>								def contre_start
     ...																		...
   end																		end
+  
+  # Méthode propre au watcher
+  def ma_methode_personnelle
+  	message "Je joue ma méthode personnelle"
+  end
 end #/<objet>													end #/IcModule
+~~~
+
+
+
+Dans ce fichier peuvent être définies toutes les méthodes utiles aux mails et notifications. On les invoque en jouant :
+
+~~~erb
+<%= lien_operation('ma_methode_personnelle', 'Titre pour la jouer', {class:'btn'}) %>
 ~~~
 
 
@@ -888,6 +911,27 @@ Si un formulaire doit être utilisé pour la notification — ce qui est souven
 
 <%= form.out %>
 ~~~
+
+
+
+Pour faire appel à **une méthode propre au watcher** (par exemple définie dans `main.rb` ou n’importe quel autre fichier du dossier), on utilise l’helper :
+
+~~~erb
+<%= lien_operation("<methode>", "<titre lien>"[, {options tag}])
+~~~
+
+Par exemple, pour faire un bouton principal :
+
+~~~erb
+<p>
+  Cliquez sur le bouton ci-dessous.
+</p>
+<p class="center mt1">
+  <%= lien_operation('ma_methode', 'Cliquez ici', {class:'btn main'}) %>
+</p>
+~~~
+
+
 
 
 

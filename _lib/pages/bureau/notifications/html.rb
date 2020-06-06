@@ -9,7 +9,9 @@ class HTML
     icarien_required
     if param(:wid)
       watcher = Watcher.get(param(:wid))
-      watcher.send(param(:op).to_sym) # :run et :unrun principalement
+      method = param(:op).to_sym
+      watcher.require_folder_processus
+      watcher.send(method) # :run et :unrun principalement
     elsif param(:op)
       user.watchers.send(param(:op).to_sym)
     end

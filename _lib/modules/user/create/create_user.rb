@@ -49,9 +49,15 @@ class << self
     # Envoi d'un message pour confirmer l'inscription
     newu.send_mail_confirmation_inscription
 
-    # Le watcher qui permettra à l'administrateur de valider l'inscription
     require_module('watchers')
+    # Le watcher qui permettra à l'administrateur de valider l'inscription
     newu.watchers.add(:validation_inscription, {params: {folder:session.id, modules:chuser.modules_ids}})
+
+    # Le watcher qui rappellera au candidat qu'il doit valider son mail
+    newu.watchers.add(:validation_adresse_mail, {vu_admin: true})
+
+    # Une actualité pour mentionner l'inscription
+
     return newu
   rescue Exception => e
     log(e)
