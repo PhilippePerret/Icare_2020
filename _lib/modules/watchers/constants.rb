@@ -35,6 +35,7 @@ DATA_WATCHERS = {
   },
   commande_module:    {
     titre: 'Commande de module',
-    relpath:'AbsModule/commande'
+    relpath:'AbsModule/commande',
+    actu_id: nil
   }
 }
