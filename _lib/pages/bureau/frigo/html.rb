@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "#{RETOUR_BUREAU}🏠 Votre porte de frigo".freeze
+    "#{RETOUR_BUREAU}🌡️ Votre porte de frigo".freeze
   end
   def exec
     # Code à exécuter avant la construction de la page

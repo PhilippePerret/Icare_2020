@@ -2,16 +2,14 @@
 =begin
   Pour faire des essais ruby
 =end
-class MaClasse
-  attr_reader :x
-  def initialize x
-    @x = x
-  end #/ initialize x
+class MaClass
   def out
-    puts "Je suis #{x}"
+    puts "Oui, c'est la classe !"
+    true
   end #/ out
-end #/MaClasse
+end
 
-l = [4,3,5,12]
+watcher = nil
+watcher = MaClass.new
 
-l.collect{|n|MaClasse.new(n)}.each(&:out)
+watcher&.out || puts("Une erreur s'est produite")
