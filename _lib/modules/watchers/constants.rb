@@ -33,6 +33,16 @@ DATA_WATCHERS = {
     relpath:'IcModule/start',
     actu_id: 'STARTMOD'
   },
+  paiement_module: {
+    titre: 'Paiement du module'.freeze,
+    relpath: 'IcModule/paiement'.freeze,
+    actu_id: nil
+  },
+  send_work: {
+    titre: 'Envoi des documents de travail'.freeze,
+    relpath: 'IcEtape/send_work'.freeze,
+    actu_id: "SENDWORK"
+  },
   commande_module:    {
     titre: 'Commande de module',
     relpath:'AbsModule/commande',

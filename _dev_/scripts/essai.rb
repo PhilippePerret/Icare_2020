@@ -2,14 +2,12 @@
 =begin
   Pour faire des essais ruby
 =end
-class MaClass
-  def out
-    puts "Oui, c'est la classe !"
-    true
-  end #/ out
-end
+require_relative 'required'
 
-watcher = nil
-watcher = MaClass.new
+require_module('absmodules')
+require_module('icmodules')
 
-watcher&.out || puts("Une erreur s'est produite")
+mod = AbsModule.get(4)
+eta = mod&.get_absetape_by_numero(1)
+
+puts "Module #{mod&.name} / Nom étape : #{eta&.titre.inspect}"

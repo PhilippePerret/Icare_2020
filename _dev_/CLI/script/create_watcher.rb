@@ -3,21 +3,24 @@
   Script assistant pour créer un nouveau type de watcher
 =end
 
-ID_WATCHER = 'validation_adresse_mail'
+ID_WATCHER = 'send_work'
 DATA_WATCHER = {
-  titre: 'Validation de votre adresse mail', # pour la notification (user et admin)
-  objet_class:  'User',       # le dossier principal
-  processus:    'valid_mail', # le processus
+  titre: 'Envoi des documents de travail', # pour la notification (user et admin)
+  objet_class:  'IcEtape',       # le dossier principal
+  processus:    'send_work', # le processus
   # Notifications
   notif_user:   true,
   notif_admin:  false,
   # Mails
   mail_user:    false,
-  mail_admin:   false,
+  mail_admin:   true,
   # Actualité
-  actu_id: nil # mettre l'identifiant (majuscules) actualité, si actualité
-  actualite:    false
+  actu_id:      'SENDWORK', # mettre l'identifiant (majuscules) actualité, si actualité
+  actualite:    true
 }
+
+# Ne rien toucher en dessous de cette ligne
+# ---------------------------------------------------------------------
 
 if DATA_WATCHER[:actualite] && DATA_WATCHER[:actu_id].nil?
   raise "Il faut absolumemnt fournir l'ID actualité"
@@ -45,18 +48,20 @@ def build
   [:admin,:user].each do |who|
     # La notification
     key = "notif_#{who}".to_sym
-    data[key] || next
-    path = send("notification_#{who}_path".to_sym)
-    next if File.exists?(path)
-    code = "<p>Notification à afficher sur le bureau</p>"
-    File.open(path,'wb'){|f| f.write code}
+    if data[key]
+      path = send("notification_#{who}_path".to_sym)
+      next if File.exists?(path)
+      code = "<p>Notification à afficher sur le bureau</p>"
+      File.open(path,'wb'){|f| f.write code}
+    end
     # Le mail
     key = "mail_#{who}".to_sym
-    data[key] || next
-    path = send("#{key}_path".to_sym)
-    next if File.exists?(path)
-    code = "<p>Bonjour #{who == :admin ? 'Phil' : '<%= owner.pseudo %>'},</p>#{RC}<p>Message du mail</p>"
-    File.open(path,'wb'){|f| f.write code}
+    if data[key]
+      path = send("#{key}_path".to_sym)
+      next if File.exists?(path)
+      code = "<p>Bonjour #{who == :admin ? 'Phil' : '<%= owner.pseudo %>'},</p>\n\n<p>Message du mail</p>"
+      File.open(path,'wb'){|f| f.write code}
+    end
   end
 end #/ build
 

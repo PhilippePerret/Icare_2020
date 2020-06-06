@@ -42,7 +42,7 @@ def require_module modname
   elsif File.exists?(path) || File.exists?(pathrb)
     require path
   else
-    raise "Impossible de charger le module #{modname} (#{path})"
+    raise "Impossible de charger le module #{modname} (#{path})".freeze
   end
   # Ensuite on charge tous les dossiers xrequired dans la
   # hiérarchie

@@ -4,12 +4,17 @@
 =end
 class Watcher < ContainerClass
 
+  # Racourci pour les féminines
+  def fem(key)
+    owner.fem(key)
+  end #/ fem
+
   def lien_operation method, titre, options = nil
     options ||= {}
     options.merge!(route:"#{route.to_s}?wid=#{id}&op=#{method}", text:titre)
     Tag.lien(options)
   end #/ lien_operation
-  
+
   # Bouton pour jouer (runner) le watcher, c'est-à-dire jouer sa
   # commande 'run' (donc la méthode définie par objet_class#processus dans
   # le dossier des données du watcher)

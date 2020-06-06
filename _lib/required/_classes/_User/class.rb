@@ -5,14 +5,27 @@
   On ne doit mettre ici que les méthodes générales qui servent partout
 =end
 class User
+
+REQUEST_USER = <<-SQL
+SELECT u.id, u.pseudo, u.mail, u.sexe, u.options, u.icmodule_id
+  FROM users u
+  WHERE u.id = %{id}
+SQL
+
 class << self
   attr_accessor :current
 
   def get(uid)
     uid = uid.to_i
     @items ||= {}
-    @items[uid] ||= new(db_get('users', {id: uid}))
+    @items[uid] ||= get_in_db(uid)
   end #/ get
+
+
+  def get_in_db(id)
+    duser = db_exec(REQUEST_USER % {id: id})[0]
+    new(duser) unless duser.nil?
+  end #/ get_in_db
 
   # Initialisation de l'utilisateur courant
   # Soit c'est l'utilisateur reconnu par la session, soit c'est un invité

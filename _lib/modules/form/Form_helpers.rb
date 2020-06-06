@@ -51,7 +51,7 @@ class << self
     end.join('')
     id = "#{djour[:prefix_id]}-day"
     name = "#{djour[:prefix_id]}_day"
-    SELECT_TAG % {options:options, prefix:'day', id:id, name:name, class:djour[:class]}
+    SELECT_TAG % {options:options, prefix:'day', id:id, name:name, class:djour[:class], style:''}
   end #/ date_field_jour
 
   def date_field_mois dmois
@@ -64,7 +64,7 @@ class << self
     end.join('')
     id = "#{dmois[:prefix_id]}-month"
     name = "#{dmois[:prefix_id]}_month"
-    SELECT_TAG % {options:options, prefix:'month', id:id, name:name, class:dmois[:class]}
+    SELECT_TAG % {options:options, prefix:'month', id:id, name:name, class:dmois[:class], style:''}
   end #/ date_field_mois
 
 
@@ -80,7 +80,7 @@ class << self
     end.join('')
     id = "#{dannee[:prefix_id]}-year"
     name = "#{dannee[:prefix_id]}_year"
-    SELECT_TAG % {options:options, prefix:'year', id:id, name:name, class:dannee[:class]}
+    SELECT_TAG % {options:options, prefix:'year', id:id, name:name, class:dannee[:class], style:''}
   end #/ date_field_annee
 end # /<< self
 end #/Form

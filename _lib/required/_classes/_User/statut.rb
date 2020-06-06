@@ -15,7 +15,7 @@ def icarien?
 end
 
 def real?
-  @is_real_icarien = bit_options(24) > 1 if @is_real_icarien.nil? # TODO à vérifier
+  @is_real_icarien = bit_options(24) == 1 || admin? if @is_real_icarien.nil?
   @is_real_icarien
 end #/ real?
 
@@ -39,7 +39,8 @@ def super_admin?
 end
 
 def actif?
-  statut == :actif
+  @is_actif = !get(:icmodule_id).nil? if @is_actif.nil?
+  @is_actif
 end #/ actif?
 
 def grade
@@ -63,9 +64,9 @@ def frequence_mail_actu
 end
 
 def statut
+  return :actif if actif? # bit 16 ne sert plus pour actif
   case bit_options(16)
   when 0, 1 then :candidat
-  when 2 then check_actif
   when 3 then :en_pause
   when 4 then :inactif
   end
@@ -125,16 +126,5 @@ def set_option bit, value
 end #/ set_option
 
 private
-
-  # Méthode privée qui vérifie que l'icarien est bien actif.
-  def check_actif
-    if data[:icmodule_id]
-      :actif
-    else
-      set_option(16, 4)
-      :inactif
-    end
-  end #/ check_actif
-
 
 end

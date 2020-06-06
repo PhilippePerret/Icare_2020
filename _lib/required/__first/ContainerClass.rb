@@ -114,6 +114,7 @@ class ContainerClass
     # On peut affecter les nouvelles valeurs à l'instance
     new_data.each { |k, v| self.data[k] = v }
   end #/ save
+  alias :set :save # def set
 
   # Date formatée de démarrage
   def f_started_at

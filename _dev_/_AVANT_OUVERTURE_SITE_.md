@@ -1,5 +1,11 @@
 # Modifications à faire dans la base de données
 
+* Table `absetapes`, remplacer la colonne `module_id` par `absmodule_id`
+
+  ~~~SQL
+  ALTER TABLE absetapes CHANGE COLUMN `module_id` `absmodule_id` INT(2) NOT NULL
+  ~~~
+
 * Dans la table `watchers`, la colonne `data` doit être renommé `params`
 
 * Dans la table `actualites`, supprimer `data` et `status` et faire une colonne `type`.
@@ -16,6 +22,12 @@
   ~~~
 
 * Voir les colonnes qui ont été supprimées
+
+* Ajouter la colonne `created_at` dans `icetapes`
+
+  ~~~SQL
+  ALTER TABLE `icetapes` ADD COLUMN `created_at` INT(10) NOT NULL;
+  ~~~
 
 * Changer les colonnes `abs_module_id` et `abs_etape_id` de la table `icdocuments` et de la table `icmodules`
 
