@@ -1,1 +1,20 @@
-<p>Notification pour envoyer ses documents.</p>
+<script type="text/javascript">
+function AppliqueNom(field, idoc){
+  var btn   = document.querySelector(`#buttondocument${idoc}`);
+  var span  = document.querySelector(`#documentname${idoc}`);
+  btn.classList.remove('inline-block')
+  btn.classList.add('hidden')
+  span.classList.remove('hidden')
+  span.classList.add('inline-block')
+  span.innerHTML = field.value
+}
+</script>
+<p>Vous pouvez envoyer jusqu'à 5 documents</p>
+<form class="noborder nomargin" action="<%= route.to_s %>" method="POST" enctype="multipart/form-data">
+  <% (1..5).each do |idoc| %>
+    <%= row_document(idoc) %>
+  <% end %>
+  <div class="center mt2">
+    <%= Tag.submit_button("Transmettre les documents", class:'main') %>
+  </div>
+</form>

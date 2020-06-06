@@ -11,12 +11,19 @@ a.current {
   opacity:0.4;
 }
 
+.hidden {display:none}
+.inline {display:inline}
+.inline-block{display:inline-block}
+
+.invisible {visibility:hidden}
+
 .discret-tool {
   opacity:0.3;
 }
 .discret-tool:hover {
   opacity:1;
 }
+
 
 .red {color:red}
 .blue {color:blue}

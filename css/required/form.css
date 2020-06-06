@@ -1,4 +1,9 @@
 textarea {resize:none;}
+form input[type="file"] {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:none;
+}
 form {
   display:inline-block;
 }
@@ -12,8 +17,10 @@ form div.row {
   display:flex;
 }
 form:not(.inline) div.row span.libelle {
-  width:200px;
   margin-top:4px;
+}
+form:not(.inline) div.row span.libelle:not(.inline) {
+  width:200px;
 }
 form.inline div.row span.libelle {display:none}
 form.inline div.buttons,
