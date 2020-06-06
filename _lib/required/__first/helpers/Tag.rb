@@ -49,8 +49,15 @@ class << self
     (TAG_SPAN % params).freeze
   end #/ span
 
-  def submit_button params
-    params = {name: params} if params.is_a?(String)
+  def submit_button params, options = nil
+    options ||= {}
+    if params.is_a?(String)
+      params = options.merge({name: params})
+    end
+    params.merge!(options) unless options.nil?
+    css = [params[:class] || options[:class]].compact
+    css << 'btn'
+    params[:class] = css.join(' ')
     params = normalize_params(params, [:text, :class])
     (SUBMIT_BUTTON % params).freeze
   end #/ submit_button
@@ -115,7 +122,7 @@ TAG_PASTILLE  = '<span class="pastille">%s</span>'.freeze
 
 # Formulaires
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze
-SUBMIT_BUTTON = '<input type="submit" class="btn" value="%{name}" />'.freeze
+SUBMIT_BUTTON = '<input type="submit" class="%{class}" value="%{name}" />'.freeze
 
 RETOUR_LINK = "<a href='%{route}' class='small'><span style='vertical-align:sub;'>↩︎</span>&nbsp;%{titre}</a>&nbsp;".freeze
 

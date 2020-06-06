@@ -29,13 +29,14 @@
   ALTER TABLE `icetapes` ADD COLUMN `created_at` INT(10) NOT NULL;
   ~~~
 
-* Changer les colonnes `abs_module_id` et `abs_etape_id` de la table `icdocuments` et de la table `icmodules`
+* Changer les colonnes `abs_module_id` et `abs_etape_id` de la table `icdocuments` et de la table `icmodules`, `mini_faq`
 
   ~~~SQL
   ALTER TABLE `icdocuments` CHANGE `abs_module_id` `absmodule_id` INT(2) DEFAULT NULL;
   ALTER TABLE `icdocuments` CHANGE `abs_etape_id` `absetape_id` INT(11) DEFAULT NULL;
-
-  ALTER TABLE icmodules CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
+  ALTER TABLE `icmodules` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
+  ALTER TABLE `mini_faq` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
+  ALTER TABLE `mini_faq` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) NOT NULL;
   ~~~
 
 * Ajouter les colonnes `vu_admin` et `vu_user` dans les tables :

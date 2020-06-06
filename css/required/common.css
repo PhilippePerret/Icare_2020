@@ -51,6 +51,7 @@ a.current {
   width:49%!important;
 }
 
+.w100pct {width:100%;}
 
 .noborder {
   border:unset!important;

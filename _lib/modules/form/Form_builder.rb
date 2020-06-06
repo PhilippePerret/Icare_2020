@@ -5,8 +5,15 @@
 class Form
   attr_reader :data
   attr_accessor :rows
-  attr_accessor :submit_button
+  attr_reader :submit_button
   attr_accessor :other_buttons
+  attr_accessor :options
+
+  def submit_button=(name, options = nil)
+    self.options ||= {}
+    self.options.merge!(options) unless options.nil?
+    @submit_button = name
+  end #/ submit_button
 
   def initialize form_data = nil
     if form_data.nil?
@@ -35,11 +42,16 @@ class Form
   #{build_rows}
   <div class="buttons">
     #{build_other_buttons}
-    <input type="submit" value="#{submit_button}">
+    #{build_submit_button}
   </div>
 </form>
     HTML
   end
+
+  INPUT_SUBMIT_BUTTON = '<input type="submit" value="%{name}" class="%{class}">'
+  def build_submit_button
+    INPUT_SUBMIT_BUTTON % {name:submit_button, class:options[:submit_button_class]||''}
+  end #/ build_submit_button
 
   def enctype
     return unless files?

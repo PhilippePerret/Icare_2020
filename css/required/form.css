@@ -1,4 +1,4 @@
-
+textarea {resize:none;}
 form {
   display:inline-block;
 }
@@ -38,6 +38,9 @@ form div.row span.value > input[type="password"]
 
 form div.row span.value > *:not(select):not(input[type="checkbox"]) {
   width:100%;
+}
+form div.row span.value textarea {
+  width:95%;
 }
 
 form div.buttons input[type="submit"] {
@@ -79,7 +82,6 @@ span.date-fields.warning select {
 span.date-fields select,
 span.date-fields select option
 {
-  all:unset;
   font-family:inherit;
   font-size:inherit;
   font-style:inherit;

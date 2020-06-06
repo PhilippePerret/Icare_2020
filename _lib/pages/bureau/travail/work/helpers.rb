@@ -70,7 +70,7 @@ class IcEtape
     form = Form.new(id:'form-minifaq', route:'bureau/travail', libelle_size:100, class:'noborder nomargin')
     form.rows = {
       'ope-minifaq' => {name:'ope', type:'hidden', value: 'minifaq-add-question'},
-      'Question'    => {name:'minifaq_question', type:'textarea', height:160}
+      'Question'    => {name:'minifaq_question', type:'textarea', height:160, class:'w100pct'}
     }
     form.submit_button = "Poser cette question"
     form.out
@@ -78,8 +78,12 @@ class IcEtape
 
   def liste_reponses_minifaq
     # request = "SELECT * FROM mini_faq WHERE absetape_id = #{absetape_id}"
-    request = "SELECT * FROM mini_faq WHERE absetape_id = 2"
+    request = "SELECT * FROM mini_faq WHERE absetape_id = 2".freeze
     reponses = db_exec(request)
+    if MyDB.error
+      log(MyDB.error)
+      return erreur("Une erreur SQL est survenue. Consulter le journal de bord")
+    end
     if reponses.empty?
       Tag.div(text:'Aucune question pour cette étape.'.freeze, class:'italic small'.freeze)
     else
