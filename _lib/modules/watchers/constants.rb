@@ -24,12 +24,14 @@ DATA_WATCHERS = {
   },
   validation_inscription: {
     titre: 'Validation inscription',
-    relpath: 'User/signup'
+    relpath: 'User/signup',
+    actu_id: 'SIGNUP'
   },
   # --- LES MODULES ---
   start_module:  {
     titre:  'Démarrage du module',
-    relpath:'IcModule/start'
+    relpath:'IcModule/start',
+    actu_id: 'STARTMOD'
   },
   commande_module:    {
     titre: 'Commande de module',

@@ -15,8 +15,13 @@ DATA_WATCHER = {
   mail_user:    false,
   mail_admin:   false,
   # Actualité
+  actu_id: nil # mettre l'identifiant (majuscules) actualité, si actualité
   actualite:    false
 }
+
+if DATA_WATCHER[:actualite] && DATA_WATCHER[:actu_id].nil?
+  raise "Il faut absolumemnt fournir l'ID actualité"
+end
 
 class WatcherCreator
 class << self
@@ -127,7 +132,8 @@ unless code.include?("#{ID_WATCHER}:")
   puts <<-RUBY
     #{ID_WATCHER}: {
       titre: '#{DATA_WATCHER[:titre]}'.freeze,
-      relpath: '#{DATA_WATCHER[:objet_class]}/#{DATA_WATCHER[:processus]}'.freeze
+      relpath: '#{DATA_WATCHER[:objet_class]}/#{DATA_WATCHER[:processus]}'.freeze,
+      actu_id: #{DATA_WATCHER[:actu_id].inspect}
     },
   RUBY
 end

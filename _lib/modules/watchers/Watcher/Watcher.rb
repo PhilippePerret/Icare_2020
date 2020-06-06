@@ -139,7 +139,7 @@ end #/ absdata
 
 def add_actualite
   return unless File.exists?(path_actualite)
-  Actualite.add(owner.id, deserb(path_actualite, self))
+  Actualite.add(absdata[:actu_id], owner.id, deserb(path_actualite, self))
 end #/ add_actualite
 
 # ---------------------------------------------------------------------
