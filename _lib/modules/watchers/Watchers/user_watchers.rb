@@ -34,8 +34,10 @@ end #/ initialize
 # Retourne tous les watchers du propriétaire
 def all
   @all ||= begin
-    where = owner.admin? ? ''.freeze : " WHERE user_id = #{owner.id}".freeze
-    request = "SELECT * FROM watchers#{where}".freeze
+    where = "WHERE ( triggered_at IS NULL OR triggered_at < #{Time.now.to_i} )"
+    where << " AND user_id = #{owner.id}".freeze unless owner.admin?
+    request = "SELECT * FROM watchers #{where}".freeze
+    log("request : #{request.inspect}")
     db_exec(request).collect do |dwatcher|
       w = Watcher.new(dwatcher[:id]) ; w.data = dwatcher ; w
     end
@@ -57,6 +59,7 @@ def add wtype, data
     user_id:    owner.id,
     vu_admin:   vu_admin,
     vu_user:    vu_user,
+    triggered_at: data[:triggered_at],
     params:     (data[:params].to_json if data[:params]),
     updated_at: now,
     created_at: now
