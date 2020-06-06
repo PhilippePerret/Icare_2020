@@ -41,9 +41,12 @@ def all
     end
   end
 end #/ all
+
 # Méthode qui ajoute un watcher pour l'icarien, de type
 # +wtype+ avec les données +data+
 #   :params     Un hash de paramètres (qui sera jsonné)
+#
+# SI tout s'est bien passé, retourne l'ID du nouveau watcher
 def add wtype, data
   now = Time.now.to_i
   vu_admin  = data[:vu_admin].nil? ? user.admin? : data[:vu_admin]
@@ -67,6 +70,8 @@ def add wtype, data
   if MyDB.error
     log(MyDB.error)
     erreur("Une erreur est survenue… Consultez le journal de bord.")
+  else
+    return db_last_id
   end
 end #/ add
 

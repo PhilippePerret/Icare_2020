@@ -2,8 +2,8 @@
 class IdentificationRequiredError < StandardError; end
 class PrivilegesLevelError < StandardError; end
 
-def icarien_required
-  raise IdentificationRequiredError.new() if user.guest?
+def icarien_required(message = nil)
+  raise IdentificationRequiredError.new(message) if user.guest?
 end
 
 def admin_required

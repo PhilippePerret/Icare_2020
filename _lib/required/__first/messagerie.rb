@@ -1,6 +1,9 @@
 # encoding: UTF-8
 require_relative 'handies/messages'
 class Messager
+
+DIV_OUT = '<div class="%{css}"><span class="emoji">%{picto}</span>%{str}</div>'.freeze
+
 class << self
   def add msg
     @messages ||= []
@@ -8,7 +11,7 @@ class << self
   end
   def out
     return '' if no_messages?
-    "<div class=\"#{css_class}\">#{@messages.join(BR)}</div>"
+    DIV_OUT % {css:css_class, picto:picto, str: @messages.join(BR)}
   end
   # On met les messages dans une variable session pour une redirection
   def sessionnize
@@ -33,12 +36,15 @@ end
 
 class Debugger < Messager
   def self.css_class; 'debug' end
+  def self.picto ; '' end
 end #/Debug
 class Errorer < Messager
   def self.css_class;'errors' end
+  def self.picto ; '⚠️ ' end
 end #/Errorer
 class Noticer < Messager
   def self.css_class;'notices' end
+  def self.picto ; '🗣️ ' end
 end #/Errorer
 
 class Logger

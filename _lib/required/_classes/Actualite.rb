@@ -7,7 +7,7 @@
 class Actualite
 LASTS_COUNT = 20
 REQUEST_LASTS   = "SELECT * FROM actualites ORDER BY created_at LIMIT #{LASTS_COUNT}".freeze
-REQUEST_CREATE  = "INSERT INTO actualites (user_id, message, created_at, updated_at) VALUES (?, ?, ?, ?)".freeze
+REQUEST_CREATE  = "INSERT INTO actualites (type, user_id, message, created_at, updated_at) VALUES (?, ?, ?, ?, ?)".freeze
 DIV_ACTU = '<div class="actu"><span class="date">%{date}</span><span class="message">%{message}</span></div>'
 # ---------------------------------------------------------------------
 #
@@ -20,12 +20,17 @@ class << self
     lasts.collect(&:out).join
   end #/ out
 
-  # Pour ajouter une actualit
-  # +valeurs+ doit être absolument [user_id, message]
-  def add(user_id, message)
-    valeurs = [user_id, message, now = Time.now.to_i, now]
+  # Pour ajouter une actualité
+  # --------------------------
+  # +type+      String          Le type de l'actualité
+  # +user_id+   Integer|User    L'icarien ou son identifiant
+  # +message+   String          Le message à enregistrer
+  def add(type, user_id, message)
+    user_id = user_id.id if user_id.is_a?(User)
+    valeurs = [type, user_id, message, now = Time.now.to_i, now]
     db_exec(REQUEST_CREATE, valeurs)
   end #/ add
+  alias :create :add
 
   # Retourne les LASTS_COUNT dernières instances
   def lasts

@@ -677,7 +677,7 @@ Les « barrières de sécurité » permettent d’empêcher l’entrée dans cer
 Pour gérer ces accès, il suffit d’utiliser les méthodes suivantes, par exemple, dans la méthode `HTML#exec` que doit invoquer toute route, quelle qu’elle soit.
 
 ~~~ruby
-icarien_required			# L'user doit être identifié
+icarien_required[('<message>')]			# L'user doit être identifié
 admin_required 				# L'user doit être identifié et un administrateur
 super_admin_required	# L'user doit être identifié et un super administrateur
 ~~~
@@ -687,6 +687,7 @@ Exemple d’utilisation :
 ~~~ruby
 class HTML
   def exec
+    session['back_to'] = 'ma/route/retour?tik=12' # optionnel [1]
     icarien_required
     ... si l'user est identifié, on exécute ce code
 		... sinon on raise pour le conduire au formulaire d'identification
@@ -695,6 +696,10 @@ class HTML
   ...
 end #/HTML
 ~~~
+
+> [1] La définition de back_to ci-dessus est nécessaire uniquement si la route à rejoindre après identification doit être différente de celle demandée OU si des paramètres sont nécessaire (car à l'origine, back_to ne reprend que la route, pas le query-string — ce qui pourrait changer à l'avenir).
+
+
 
 
 
@@ -754,7 +759,7 @@ Pour ajouter un watcher à un icarien, il suffit d’appeler la méthode :
 ~~~ruby
 require_module('watchers') # requis
 
-icarien.watchers.add(<watcher type>, {<data>} )
+id_new_watcher = icarien.watchers.add(<watcher type>, {<data>} )
 ~~~
 
 Les `types de watchers` sont définis dans le fichier [_lib/modules/watchers/constants.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb).
@@ -975,7 +980,7 @@ C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’u
 
 
 
-### Méthodes d’helpers pour les mails
+#### Méthodes d’helpers pour les mails
 
 > Note : toutes ces méthodes sont définies dans le fichier [_lib/modules/watchers/Watcher/helpers.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/Watcher/helpers.rb).
 
@@ -987,6 +992,40 @@ C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’u
 <%= faq_de_latelier %>   	# insert "Foire Aux Questions de l'atelier" dans un mail (avec
 													# le lien)
 ~~~
+
+<a name="insertticketinmail"></a>
+
+#### Insertion d'un lien vers un ticket dans les mails
+
+On utilise la méthode d’helper `Ticket#lien(<titre>, <options>)`
+
+Dans options, on peut notamment définir `:route`  pour définir la section que doit rejoindre l’icarien après soumission du ticket.
+
+La procédure complète va donc ressembler à ça :
+
+**Création du ticket**
+
+~~~ruby
+# Dans la méthode d'un watcher par exemple
+
+def ma_methode_avec_ticket
+  ...
+	@ticket1 = Ticket.create(user_id: user.id, code:"run_watcher(12)")
+  ...
+end
+~~~
+
+
+
+~~~ruby
+# Dans la notification
+<p class="center">
+    @ticket1.lien("Envoyer le ticket", {route: "bureau/home"})
+</p>
+~~~
+
+
+
 
 
 
@@ -1005,6 +1044,71 @@ Par exemple :
 ~~~
 
 
+
+---
+
+<a name="lestickets"></a>
+
+## Les Tickets
+
+
+
+Les « tickets » permettent d’accomplir des actions depuis un mail ou une autre adresse.
+
+
+
+### Instanciation d’un ticket
+
+Pour instancier un ticket, on utilise la méthode `Ticket.create(<param>)`.
+
+
+
+### Ticket devant runner un watcher
+
+Mettre son code à :
+
+~~~ruby
+"run_watcher(<watcher id>)"
+
+# Donc : 
+require_module('ticket')
+ticket = Ticket.create(user_id: user.id, code:"run_watcher(#{watcher_id})".freeze)
+
+~~~
+
+
+
+### Insertion du ticket dans le mail
+
+cf. [ Insertion d'un lien vers un ticket dans les mails](#insertticketinmail).
+
+
+
+---
+
+
+
+<a name="actualites"></a>
+
+## Les Actualités
+
+
+
+### Instancier une nouvelle actualité
+
+~~~ruby
+Actualite.add(type: '<le type>', user: <user>, message: "<le message>")
+~~~
+
+> Note : `:user` peut être remplacé par `:user_id`.
+>
+> On peut aussi utiliser `Actualite.create`
+
+
+
+<a name="creeractualite"></a>
+
+### Créer un nouveau type d'actualité
 
 ---
 

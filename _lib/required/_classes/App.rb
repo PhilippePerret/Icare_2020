@@ -6,9 +6,13 @@ URL_OFFLINE = 'localhost/AlwaysData/Icare_2020'.freeze
 FULL_URL_ONLINE   = "http://#{URL_ONLINE}".freeze
 FULL_URL_OFFLINE  = "http://#{URL_OFFLINE}".freeze
 
+# L'url courante
+# @usage    App::URL
+URL = ONLINE ? FULL_URL_ONLINE : FULL_URL_OFFLINE
+
 class << self
 
-  # Main method
+  # = Main method =
   def run
     log("-> App::run")
     self.init

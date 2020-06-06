@@ -96,7 +96,7 @@ class << self
         params.merge!(prop => "") unless params.key?(prop)
       end
       if params.key?(:route) && params[:full]
-        params[:route] = "#{App::FULL_URL_ONLINE}/#{params[:route]}"
+        params[:route] = "#{App::URL}/#{params[:route]}"
       end
       params
     end #/ normalize_params

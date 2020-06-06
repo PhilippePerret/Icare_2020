@@ -60,7 +60,7 @@ def expect_a_valid_candidat_with(datainit)
 
   # Une actualité a dû être produite
   expect(TActualites.exists?(user_id:user_id, type:'SIGNUP', only_one: true)).to be(true),
-    "Il devrait y avoir une actualité annonçant l'inscription du candidat"
+    "Il devrait y avoir une et une seule actualité annonçant l'inscription du candidat (#{TActualites.error})"
 
 end #/ expect_a_valid_candidat_with
 

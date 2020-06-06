@@ -10,7 +10,11 @@ class TWatchers
     # +user_id+ contient +searched+
     def exists?(params)
       nombre_candidats = self.find(params).count
-      if params.key?(:only_one)
+      if nombre_candidats == 0
+        @error = "aucun watcher trouvé"
+        false
+      elsif params.key?(:only_one)
+        @error = "plusieurs watchers trouvés" if nombre_candidats > 1
         return nombre_candidats == 1
       else
         return nombre_candidats > 0
@@ -22,9 +26,7 @@ class TWatchers
     def find(params)
       pr = proc { |tmail| tmail }
       if params.key?(:wtype)
-        pr = pr >> proc {|tmail|
-          puts "tmail.wtype = #{tmail.inspect}"
-          tmail if tmail && tmail.wtype == params[:wtype]}
+        pr = pr >> proc {|tmail| tmail if tmail && tmail.wtype == params[:wtype]}
       end
       if params.key?(:after)
         params[:after] = Time.at(params[:after]) if params[:after].is_a?(Integer)

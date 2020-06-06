@@ -19,7 +19,7 @@ alias :error :erreur
 def notice(msg)
   Noticer.add(msg)
 end
-alias :message :notice
+alias :message :notice # def message <- pour le retrouver
 
 def log(msg)
   Logger.add(msg)

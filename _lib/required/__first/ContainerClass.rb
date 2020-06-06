@@ -85,6 +85,11 @@ class ContainerClass
     @data ||= db_get(self.class.table, {id: id})
   end #/ data
 
+  def exists?
+    @data != nil || db_count(self.class.table, {id: id}) == 1
+  end #/ exists?
+  alias :nil? :exists?
+
   # Pour certaines classes comme les travaux-type ou quand on utilise
   # les méthodes de classe collect ou each
   def data= values

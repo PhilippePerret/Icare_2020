@@ -6,7 +6,7 @@ class HTML
   def build_page
     add_css('./css/_variables.css')
     Page.load(route)
-    proceed_exec if self.respond_to?(:exec)
+    proceed_exec if self.respond_to?(:exec) # la route chargée
     build_body
     build_header
     build_head

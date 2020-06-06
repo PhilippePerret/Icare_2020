@@ -5,7 +5,8 @@
 class TMails
   class << self
     attr_reader :founds
-    
+    attr_reader :error
+
     # Retourne les mails transmis à +mail_destinataire+ qui contiennent
     # le message +searched+
     def find(mail_destinataire, searched, options = nil)
@@ -18,12 +19,20 @@ class TMails
     # +mail_destinataire+ contient +searched+
     def exists?(mail_destinataire, searched, options = nil)
       nombre_candidats = self.find(mail_destinataire, searched, options).count
-      if options && options[:only_one]
-        return nombre_candidats == 1
+      if nombre_candidats == 0
+        error = "aucun mail trouvé"
+      elsif options && options[:only_one]
+        return error= "plusieurs mails trouvés (cf. TMails.founds)" if nombre_candidats > 1
+        return true
       else
         return nombre_candidats > 0
       end
     end #/ exists?
+
+    def error= msg
+      @error = msg
+      return false
+    end #/ error
 
     def for(mail_destinataire, options = nil)
       options ||= {}

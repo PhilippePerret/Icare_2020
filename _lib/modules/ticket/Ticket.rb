@@ -6,8 +6,12 @@
 =end
 class Ticket
 class << self
+
+  # Retourne NIL si le ticket n'existe pas/plus
   def get tid
-    new(db_get('tickets', {id: tid.to_i}))
+    dticket = db_get('tickets', {id: tid.to_i})
+    return if dticket.nil?
+    new(dticket)
   end #/ get
 
   # Pour créer un ticket
@@ -35,7 +39,7 @@ def save
   valeurs = data.values
   columns = data.keys.join(VG)
   interro = Array.new(valeurs.count,'?').join(VG)
-  request = "INSERT INTO tickets (#{columns}) VALUES (#{interro})"
+  request = "INSERT INTO tickets (#{columns}) VALUES (#{interro})".freeze
   db_exec(request, valeurs)
   @data.merge!(id: db_last_id)
 end #/ save
@@ -43,6 +47,11 @@ end #/ save
 def owner
   @owner ||= User.get(data[:user_id])
 end #/ owner
+
+# Retourne TRUE si le ticket appartient à l'utilisateur +u+
+def belongs_to?(u)
+  return u.id === owner.id
+end #/ belongs_to?
 
 def run
   begin

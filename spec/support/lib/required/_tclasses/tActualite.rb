@@ -5,18 +5,26 @@
 class TActualites
   class << self
     attr_reader :founds
+    attr_reader :error
 
     # Retourne TRUE si un message au moins parmi les messages transmis à
     # +user_id+ contient +searched+
     def exists?(params)
       nombre_candidats = self.find(params).count
-      if params.key?(:only_one)
-        return nombre_candidats == 1
+      if nombre_candidats == 0
+        error= "aucun actualité trouvé"
+      elsif params.key?(:only_one)
+        return error= "il y a #{nombre_candidats} actualités" if nombre_candidats > 1
+        return true
       else
         return nombre_candidats > 0
       end
     end #/ exists?
 
+    def error= msg
+      @error = msg
+      return false
+    end #/ error=
     # Retourne les mails transmis à +user_id+ qui contiennent
     # le message +searched+
     def find(params)
