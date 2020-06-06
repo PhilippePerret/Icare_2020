@@ -6,7 +6,7 @@
 
 MAIN_LINKS = {
   home:     '<a href="home">ATELIER ICARE</a>'.freeze,
-  overview: '<a href="overview">👀 en savoir plus</a>'.freeze,
+  overview: '<a href="overview"><span class="emoji">👀</span> <span>en savoir plus</span></a>'.freeze,
   signup:   '<a id="signup-btn" href="user/signup" class="main">📋 s’inscrire</a>'.freeze,
   login:    '<a href="user/login">🔓 s’identifier</a>'.freeze,
   logout:   '<a href="user/logout">🔒 se déconnecter</a>'.freeze,
@@ -17,10 +17,10 @@ MAIN_LINKS = {
   admin_notifications:  '<a href="admin/notifications">Notifications%{non_vus}</a>'.freeze,
   frigo:    '<a href="bureau/frigo">Porte de frigo%{non_vus}'.freeze,
   # DIVERS
-  aide:     '<a href="aide/home">🚨 aide</a>'.freeze,
-  contact:  '<a href="contact">📧 contact</a>'.freeze,
-  plan:     '<a href="plan" class="btn small">📍 PLAN</a>'.freeze,
-  qdd:      '<a href="qdd/home">🗄️ Quai Des Docs</a>'.freeze
+  aide:     '<a href="aide/home"><span class="emoji">🚨</span>aide</a>'.freeze,
+  contact:  '<a href="contact"><span class="emoji">📧</span> contact</a>'.freeze,
+  plan:     '<a href="plan" class="btn small"><span class="emoji">📍</span>PLAN</a>'.freeze,
+  qdd:      '<a href="qdd/home"><span class="emoji">🗄</span>️Quai Des Docs</a>'.freeze
 }
 
 

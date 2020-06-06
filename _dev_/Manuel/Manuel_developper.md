@@ -199,6 +199,10 @@ ERRORS = {
 
 
 
+> Note : on peut créer les dossiers et fichier des nouvelles routes de façon assistée grâce au script `_dev_/CLI/scripts/_create_route.rb`.
+
+
+
 ### Titre de la page
 
 Le titre de la page est défini par la méthode `HTML#titre`.
@@ -704,6 +708,8 @@ end #/HTML
 
 
 
+### Principe de fonctionnement
+
 Les watchers permettent de gérer toute l’activité, les actions, possible sur l’atelier. Ils permettent de produire les notifications qui doivent être données à l’administrateur ou à l’icarien/utilisateur.
 
 Les **données de tous les watchers** sont définies dans le fichier [_lib/modules/watchers/constants.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb).
@@ -724,30 +730,22 @@ Le principe est le suivant :
 
 ### Constitution des données de watchers
 
-Les données des watchers, enregistrées dans la table `watchers` définissent :
+Les données des watchers, enregistrées dans la table `watchers`. 
 
-~~~ruby
-{
-	wtype:  'commande_module',# Le type du watcher. Ce type permet de retrouver ses données
-  													# absolues dans DATA_WATCHERS
-  objet_id:	12,							# Identifiant de l'objet. On utilise donc 
-  													# objet.get(objet_id) pour obtenir l'objet. Ici un module
-  user_id: 2								# Identifiant de l'icarien visé par le watcher
-  vu_admin: true						# Pour définir si l'administrateur a vu ce watcher
-  vu_user:  false						# Pour déterminer si le user a vu ce watcher
-  triggered_at: nil,				# Permet de définir la date où le watcher doit être activé, 
-  													# c'est-à-dire où il doit produire une notification.
-  data: nil,								# Éventuellement un Hash jsonné contenant les données utiles.
-}
-~~~
+Cf. ci-dessous dans la partie [Ajouter un watcher à un icarien](#addwatcher).
 
 
 
-### Visualisation (vu_)
 
-Le données `vu_admin` et `vu_user` sont déterminées à la création du watcher en fonction du fait que c’est l’administrateur ou l’icarien qui génère (ou crée) le watcher. En fait, on pourrait aussi mettre ça dans les données absolues du watcher, mais ça fonctionne très bien comme ça (pour le moment) et ça simplifie la définition des données absolues.
+### Visualisation (`vu_<who>`)
+
+Le données `vu_admin` et `vu_user` permettent de définir les dernières notifications non lues/vues par l’utilisateur icarien ou administrateurs.
+
+Elle sont déterminées à la création du watcher en fonction du fait que c’est l’administrateur ou l’icarien qui génère (ou crée) le watcher.
 
 
+
+<a name="addwatcher"></a>
 
 ### Ajout d’un watcher à un icarien
 
@@ -822,6 +820,8 @@ class Watcher < ContainerClass        class Watcher < ContainerClass
   end																		end
 end #/<objet>													end #/IcModule
 ~~~
+
+
 
 Dans ces méthodes, on a accès à toutes les propriétés du watcher, à commencer par :
 
