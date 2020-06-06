@@ -39,10 +39,12 @@ def expect_a_valid_candidat_with(datainit)
   user_id = infos[:user_id]
   user_mail = infos[:mail]
 
-  # Un watcher doit lui permettre de valider la candidature
-  watcher = db_get('watchers', {user_id: user_id})
-  watcher || raise("Impossible de trouver un watcher pour user ##{user_id}")
-  expect(watcher[:wtype]).to eq('validation_inscription')
+  # Un watcher doit lui rappeler de valider son mail
+  expect(TWatchers.exists?(user_id:user_id, wtype:'validation_inscription')).to be(true),
+    "Un watcher devrait permettre de valider l'inscription"
+
+  expect(TWatchers.exists?(user_id:user_id, wtype:'validation_adresse_mail')).to be(true),
+    "Un watcher devrait permettre de valider l'adresse mail"
 
   # Un ticket doit permettre de valider le mail
   ticket = db_get('tickets', {user_id: user_id})
@@ -55,6 +57,10 @@ def expect_a_valid_candidat_with(datainit)
   # Un mail pour confirmer l'inscription
   expect(TMails.exists?(data[:mail], "Votre candidature à l’atelier Icare a bien été enregistrée".freeze)).to be(true),
     "Le message de confirmation de l'enregistrement de la candidature n'a pas été transmis.".freeze
+
+  # Une actualité a dû être produite
+  expect(TActualites.exists?(user_id:user_id, type:'SIGNUP', only_one: true)).to be(true),
+    "Il devrait y avoir une actualité annonçant l'inscription du candidat"
 
 end #/ expect_a_valid_candidat_with
 
@@ -117,7 +123,7 @@ feature 'Inscription à l’atelier Icare' do
 
   end #/test d'un bon candidat
 
-  scenario 'des données valides permettent de créer une candidate' do
+  scenario 'des données valides permettent de créer une candidate', only: true do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire

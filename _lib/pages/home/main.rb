@@ -16,6 +16,9 @@ class HTML
 <div id="legende">
   (*) aussi bien dans la forme (roman, scénario, BD, etc.) que dans le fond (pitch, résumé, synopsis, scénario, etc.).
 </div>
+<div id="actualites">
+  #{Actualite.out}
+</div>
     HTML
   end
 

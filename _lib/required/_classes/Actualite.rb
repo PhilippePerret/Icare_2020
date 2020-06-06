@@ -28,7 +28,7 @@ class << self
   end #/ add
 
   # Retourne les LASTS_COUNT dernières instances
-  def lasts(nombre)
+  def lasts
     db_exec(REQUEST_LASTS).collect { |dactu| new(dactu) }
   end #/ lasts
 end # /<< self

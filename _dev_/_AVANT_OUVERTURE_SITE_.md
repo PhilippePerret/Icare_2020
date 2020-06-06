@@ -2,7 +2,8 @@
 
 * Dans la table `watchers`, la colonne `data` doit être renommé `params`
 
-* Dans la table `actualites`, supprimer `data` et `status`.
+* Dans la table `actualites`, supprimer `data` et `status` et faire une colonne `type`.
+  Voir les types pour les affecter aux données courantes
 
 * Récupérer toutes les données SQL actuelles de l'atelier online
 

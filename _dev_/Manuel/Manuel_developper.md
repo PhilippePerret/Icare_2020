@@ -1162,11 +1162,42 @@ La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` 
 
 
 
+### Tester les watchers
+
+Forme canonique :
+
+~~~ruby
+expect(TWatchers.exists?({params})).to be(true), "Le watcher tatata devrait exister"
+~~~
+
+En paramètres `{params}`, on peut trouver :
+
+~~~ruby
+params = {
+  user_id: 		Integer,  # l'icarien concerné par le watcher
+  only_one:  	Boolean		# si true, on ne devra trouver qu'une fois ce watcher
+  wtype:			String		# le watcher doit avoir ce type
+  after:			Time/Integer	# le watcher doit avoir été créé après ce temps
+  before:			Time/Integer	# Le watcher doit avoir été créé avant ce temps
+  }
+~~~
+
+On peut récupérer toutes les instances filtrées dans :
+
+~~~ruby
+TWatchers.founds
+# => Array des instances TWatcher trouvées
+~~~
+
+
+
 ### Tester les mails
 
 
 
 #### Vider le dossier mail
+
+Pour commencer un test à partir de rien, on peut vouloir supprimer tous les mails actuels. On peut le faire grâce à la méthode :
 
 ~~~ruby
 vide_dossier_mails
@@ -1221,6 +1252,35 @@ options = {
   after:	Time,										# le mail doit avoir été envoyé après ce temps
   before:	Time,										# le mail doit avoir été envoyé avant ce temps
 }
+~~~
+
+
+
+### Tester les actualités
+
+Forme canonique :
+
+~~~ruby
+expect(TActualites.exists?({params})).to be(true), "L'actualité tatata devrait exister"
+~~~
+
+En paramètres `{params}`, on peut trouver :
+
+~~~ruby
+params = {
+  user_id: 		Integer,  		# l'icarien concerné par l'actualité
+  only_one:  	Boolean				# si true, on ne devra en trouver qu'une seule
+  type:				String				# le type de l'actualité
+  after:			Time/Integer	# l'actualité doit avoir été créé après ce temps
+  before:			Time/Integer	# L'actualité doit avoir été créé avant ce temps
+  }
+~~~
+
+On peut récupérer toutes les instances filtrées dans :
+
+~~~ruby
+TActualites.founds
+# => Array des instances TActualite trouvées
 ~~~
 
 
