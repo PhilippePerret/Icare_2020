@@ -13,20 +13,27 @@ div.buttons a:not(.small)
   font-size:inherit;
 }
 .btn:not(.tiny):not(.small),
-div.buttons a:not(.tiny):not(.small)
+div.buttons a:not(.tiny):not(.small),
+div.buttons input[type="submit"]:not(.tiny):not(.small),
+div.buttons input[type="button"]:not(.tiny):not(.small)
 {
   padding:0.4em 1.1em 0.3em;
   margin-left:4px;
 }
 
 .btn.tiny,
-div.buttons a.tiny
+div.buttons a.tiny,
+div.buttons input[type="submit"].tiny,
+div.buttons input[type="button"].tiny
 {
   padding:0em 0.7em 0em;
   margin-left:6px;
 }
+
 .btn.small,
-div.buttons a.small
+div.buttons a.small,
+div.buttons input[type="submit"].small,
+div.buttons input[type="button"].small
 {
   padding:0.1em 1em 0.2em;
   margin-left:6px;
@@ -40,11 +47,13 @@ div.buttons a:not(.main)
   color:steelblue;
   background-color:white;
 }
+
 .btn.warning,
 div.buttons a.warning
 {
   color:red;
 }
+
 .btn.warning:hover,
 div.buttons a.warning:hover
 {
@@ -64,14 +73,19 @@ div.buttons a:not(.main):not(.warning):hover
   background-color:steelblue;
   color:white;
 }
+
 .btn.main,
-div.buttons a.main
+div.buttons a.main,
+div.buttons input[type="submit"].main,
+div.buttons input[type="button"].main
 {
   background-color:steelblue;
   color:white;
 }
 .btn.main:hover,
-div.buttons a.main:hover
+div.buttons a.main:hover,
+div.buttons input[type="submit"].main:hover,
+div.buttons input[type="button"].main:hover
 {
   color:steelblue;
   background-color:white;
