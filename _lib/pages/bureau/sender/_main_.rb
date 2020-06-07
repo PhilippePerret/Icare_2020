@@ -44,6 +44,21 @@ class HTML
   end #/ traite_document
 end #/HTML
 
+# Le temps approximatif pour commenter une page de document
+NOMBRE_JOURS_PER_PAGE = 1.55
+
+MOTS_PER_PAGE = 450
+
+JOUR = 3600 * 24
+
+RATIO_MOTS_PER_DOCTYPE = {
+  '.odt'  => 0.097,
+  '.rtf'  => 0.107,
+  '.doc'  => 0.02,
+  '.docx' => 0.162,
+  'any'   => 0.097
+}
+
 class SentDocument
 def check
   debug "Je dois checker le document"
@@ -66,11 +81,38 @@ def init_icdocument
     created_at: now,
     updated_at: now
   }
+  log(" ---- data_doc: #{data_doc.inspect}")
   db_compose_insert('icdocuments', data)
   request = "INSERT INTO icdocuments (#{columns}) VALUES (#{interro})"
   db_exec(request, valeurs)
   return db_last_id
 end #/ init_icdocument
+
+# Méthode qui calcule le temps qui sera nécessaire pour corriger
+# ce document.
+def duree_commentaire
+  size = docfile.size
+  extension = File.extname(original_filename)
+  ratio = RATIO_MOTS_PER_DOCTYPE[extension]
+  if ratio.nil?
+    if ['.md','.txt','.text','.mmd'].include?(extension)
+      # On lit le nombre de mots tels quels
+      nombre_mots = content.split(' ').count
+    else
+      # Sinon, on prend la taille est on estime en moyenne des autres
+      ratio = RATIO_MOTS_PER_DOCTYPE['any']
+      nombre_mots = size * ratio
+    end
+  else
+    # Le ratio est connu
+    nombre_mots = size * ratio
+  end
+
+  nombre_pages = (nombre_mots.to_f / MOTS_PER_PAGE).round(2)
+
+  return (nombre_pages * NOMBRE_JOURS_PER_PAGE * JOUR)
+end #/ duree_commentaire
+
 end #/SentDocument
 
 
@@ -78,18 +120,29 @@ class User
   # Enregistrement des documents transmis et initialisation d'un watcher pour
   # pouvoir suivre leur parcours.
   # Note : les documents ont déjà été placés dans le dossier de l'user
+  duree_totale_commentaire = 1.5 * JOUR
+
   def enregistre_documents_travail(sentdocs)
-    # On instancie autant d'icdocument qu'il y a de document
-    # TODO
-    # On crée un watcher pour chacun d'entre eux (mais attention, si on
-    # fait ça, on retombe dans le problème d'avoir autant de watchers que de
-    # document. Ça simplifie la programmation, mais ça complique les
-    # manipulations)
-    # Il vaudrait mieux travailler au niveau de l'étape :
-    # Un seul watcher de chargement des documents. On distinguera des watchers
-    # peut-être seulement au moment au dépôt sur le quai des docs
+
+    # On instancie autant d'icdocument qu'il y a de documents
     sentdocs.each do |sentdoc|
       icdocument = sentdoc.init_icdocument
+      duree_totale_commentaire += icdocument.duree_commentaire
     end
+
+    # Les nouvelles data pour l'étape
+    log("--- Enregistrement data de l'étape")
+    data_etape = {
+      expected_comments: Time.now.to_i + duree_totale_commentaire
+    }
+    icetape.set(data_etape)
+    log("--- Commentaires attendus pour : #{formate_date(data_etape[:expected_comments])}")
+
+    # Le watcher pour l'étape
+    log("--- Watcher pour l'étape")
+    dwatcher_etape = {objet_id: icetape.id, expected_at: data_etape[:expected_comments]}
+    watchers.add('getting_work', dwatcher_etape)
+
+    # Note : on n'enregistre plus les documents dans l'étape
   end #/ enregistre_documents_travail
 end #/User

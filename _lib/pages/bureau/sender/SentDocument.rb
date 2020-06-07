@@ -4,6 +4,7 @@
   ------------------
   Pour gérer les documents envoyés
 =end
+
 class SentDocument
 # ---------------------------------------------------------------------
 #
@@ -31,8 +32,13 @@ def traite
   if respond_to?(:check)
     return unless self.check
   end
-  File.open(path,'wb'){|f| f.write docfile.read }
+  File.open(path,'wb'){|f| f.write content }
 end #/ traite
+
+# Contenu du fichier
+def content
+  @content ||= docfile.read
+end #/ content
 
 def original_filename
   @original_filename ||= docfile.original_filename
