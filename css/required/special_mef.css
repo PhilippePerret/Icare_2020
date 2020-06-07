@@ -131,6 +131,55 @@ div.float-tdm legend {
   font-size:0.93em;
 }
 
+/*
+  --- INFOS-BULLE ---
+  Note : on les obtient par Tag.info_bulle("message")
+  ou Tag.info_bulle("Message d'aide", {text:"le picto à voir"})
+*/
+span.info-bulle {
+  position:relative;
+}
+span.info-bulle.picto {
+
+}
+span.info-bulle.texte span.info-bulle-clip {
+  border-bottom:1px dashed var(--contre-color-normal);
+}
+span.info-bulle.texte span.info-bulle-clip:after {
+  content: '💬';
+  font-size:0.85em;
+  margin-left:4px;
+}
+span.info-bulle.picto span.info-bulle-clip {
+  opacity:0.5;
+}
+span.info-bulle span.info-bulle-clip + span.info-bulle-aide {
+  position:absolute;
+  display:block;
+  width:200px;
+  opacity:0;
+  background-color:var(--contre-color-normal);
+  color:white;
+  left:0px;
+  top:20px;
+  text-align:left;
+  padding:12px;
+  border-radius:12px;
+  font-size:0.85em;
+}
+span.info-bulle span.info-bulle-clip:hover {
+  opacity:1;
+  z-index:100;
+}
+span.info-bulle span.info-bulle-clip:hover + span.info-bulle-aide {
+  opacity:1;
+  transition: 0.35s;
+  z-index:100;
+}
+
+/*
+  --- LIGNES À CASES ---
+*/
 div.cases-line {
   display:inline-block;
   width:auto;

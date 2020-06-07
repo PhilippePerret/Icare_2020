@@ -20,8 +20,9 @@ HTML
     <button id="buttondocument#{idoc}" type="button" class="inline-block" style="width:280px;" onclick="document.querySelector('#document#{idoc}').click()">Choisir le document #{idoc}…</button>
     <span id="documentname#{idoc}" class="docname hidden" style="width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
     <input type="file" name="document#{idoc}" id="document#{idoc}" onchange="AppliqueNom(this,#{idoc})" />
-    <span class="libelle inline">Note : </span>
+    <span class="libelle inline">Note estimative : </span>
     #{SELECT_NOTE % {idoc: idoc}}
+    #{Tag.info_bulle('C’est la note que vous donneriez vous-même à votre document') if idoc == 1} 
   </span>
 </div>
     HTML

@@ -347,6 +347,46 @@ Avec la méthode divGoto :
 div = divGoto('<inner>', exergue: true)
 ~~~
 
+<a name="infosbulles"></a>
+
+#### Les info-bulles
+
+Les « info-bulles » permettent de faire apparaitre du texte d’aide au survol d’un élément, en général un point d’interrogation grisé.
+
+On les obtient à l’aide de :
+
+~~~ruby
+Tag.info_bulle("Le message à faire apparaitre.")
+~~~
+
+
+
+| Mouse out                     | Mouse over                     |
+| ----------------------------- | ------------------------------ |
+| ![](info-bulle-mouse-out.jpg) | ![](info-bulle-mouse-over.jpg) |
+
+
+
+On peut également mettre un message bulle sur un texte à l’aide du code suivant :
+
+~~~erb
+C'est du texte avec un mot qui porte <%= Tag.info_bulle("Le message à faire apparaitre en survolant le mot", {text: "une info-bulle"}) %> qui devrait apparaitre au survol de la souris et disparaitre ensuite.
+~~~
+
+Les données peuvent être fournies « à l’envers »  (pour une lecture plus facile) :
+
+~~~erb
+C'est du texte avec un mot qui porte <%= Tag.info_bulle("une info-bulle", {aide: "Le message à faire apparaitre en survolant le mot"}) %> qui devrait apparaitre au survol de la souris et disparaitre ensuite.
+~~~
+
+
+
+Ce qui va produire :
+
+![info bulle text mouse out](info-bulle-text-mouse-out.jpg)
+
+![info bulle texte mouse over](info-bulle-text-mouse-over.jpg)
+
 
 
 #### Les « listes d'état » (StateList)

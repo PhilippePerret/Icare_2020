@@ -1,4 +1,14 @@
 /*
+  Généralité
+*/
+input[type="submit"],
+input[type="button"]
+{
+  cursor:pointer;
+}
+
+
+/*
   Les "div boutons"
 */
 div.buttons {

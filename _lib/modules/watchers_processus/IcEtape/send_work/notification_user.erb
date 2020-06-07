@@ -9,8 +9,9 @@ function AppliqueNom(field, idoc){
   span.innerHTML = field.value
 }
 </script>
-<p>Vous pouvez envoyer jusqu'à 5 documents</p>
-<form class="noborder nomargin" action="<%= route.to_s %>" method="POST" enctype="multipart/form-data">
+<p>Vous pouvez envoyer jusqu'à 5 documents pour votre étape de travail « <%= objet.absetape.numero %>. <%= objet.absetape.titre %> ».</p>
+<form class="noborder nomargin" method="POST" enctype="multipart/form-data">
+  <input type="hidden" name="route" value="<%= route.to_s %>">
   <% (1..5).each do |idoc| %>
     <%= row_document(idoc) %>
   <% end %>
@@ -18,3 +19,7 @@ function AppliqueNom(field, idoc){
     <%= Tag.submit_button("Transmettre les documents", class:'main') %>
   </div>
 </form>
+
+<div style="margin-top:200px;">
+  C'est du texte avec un mot qui porte une <%= Tag.info_bulle('info-bulle', {aide:"Le message à faire apparaitre en survolant le mot."}) %> qui devrait apparaitre au survol de la souris et disparaitre ensuite.
+</div>

@@ -31,6 +31,19 @@ class << self
     (TAG_DIV % params).freeze
   end #/ div
 
+  def info_bulle(message, options = nil)
+    options ||= {}
+    if options.key?(:text)
+      options.merge!(class: 'texte')
+    elsif options.key?(:aide)
+      options.merge!(class:'texte', text: message)
+    else
+      options.merge!(class: 'picto', text:'(?)')
+    end
+    options.merge!(aide: message) unless options.key?(:aide)
+    (TAG_INFO_BULLE % options).freeze
+  end #/ info_bulle
+
   def li params
     params = {text: params} if params.is_a?(String)
     params = normalize_params(params, [:id, :text, :class, :style])
@@ -114,6 +127,7 @@ end #/Tag
 # Note : d'autres sont définis dans ./_lib/modules/forms/constants.rb qui
 # sera chargé avec 'require_module('form')'
 TAG_SPAN  = '<span class="%{class}" style="%{style}" title="%{title}">%{text}</span>'.freeze
+TAG_INFO_BULLE  = '<span class="info-bulle %{class}"><span class="info-bulle-clip">%{text}</span><span class="info-bulle-aide">%{aide}</span><span>'.freeze
 TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{target}" style="%{style}">%{titre}</a>'.freeze
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
 TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze

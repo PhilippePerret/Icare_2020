@@ -2,7 +2,6 @@
 =begin
   Watcher IcModule.start
 =end
-require_module('absmodules')
 require_module('icmodules')
 class Watcher < ContainerClass
   def start

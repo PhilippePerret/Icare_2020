@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require_module('absmodules')
 class IcModule < ContainerClass
 class << self
 
