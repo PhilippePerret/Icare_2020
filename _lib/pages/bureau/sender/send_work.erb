@@ -1,10 +1,12 @@
 <p>Vous pouvez envoyer jusqu'à 5 documents pour votre étape de travail « <%= user.absetape.numero %>. <%= user.absetape.titre %> ».</p>
 <form class="noborder nomargin" method="POST" enctype="multipart/form-data">
-  <input type="hidden" name="route" value="<%= route.to_s %>">
+  <input type="hidden" name="form_id" value="send-work-form" />
+  <input type="hidden" name="route" value="<%= route.to_s %>" />
+  <input type="hidden" name="rid" value="<%= param(:rid) %>" />
   <% (1..5).each do |idoc| %>
     <%= row_document(idoc) %>
   <% end %>
   <div class="center mt2">
-    <%= Tag.submit_button("Transmettre les documents", class:'main') %>
+    <%= Tag.submit_button("Transmettre les documents", class:'main hidden btn-send-work') %>
   </div>
 </form>

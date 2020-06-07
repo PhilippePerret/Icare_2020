@@ -78,10 +78,6 @@ span.date-fields {
   white-space:nowrap;
   border:1px solid transparent;
 }
-span.date-fields.warning {
-  border-color:rgb(226, 53, 53);
-  background-color:rgb(226, 53, 53);
-}
 span.date-fields.warning select {
   border-color:red;
 }

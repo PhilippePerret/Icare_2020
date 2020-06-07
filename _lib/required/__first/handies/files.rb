@@ -3,6 +3,12 @@
   Ce module contient des méthodes pratiques pour les codes helpers récurrents.
 =end
 
+# Permet de créer le path +dirpath+ si le dossier n'existe pas
+def mkdir dirpath
+  `mkdir -p "#{dirpath}"` unless File.exists?(dirpath)
+  dirpath
+end #/ mkdir
+
 def full_path(relpath)
   fromCaller(relpath, Kernel.caller)
 end #/ full_path

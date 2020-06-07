@@ -1,0 +1,17 @@
+button.btn-choose {
+  display: inline-block;
+}
+
+span.doc-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align:text-bottom;
+}
+
+span.doc-name,
+button.btn-choose
+{
+  display: inline-block;
+  width:300px;
+}

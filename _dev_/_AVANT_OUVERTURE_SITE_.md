@@ -11,6 +11,13 @@
 * Dans la table `actualites`, supprimer `data` et `status` et faire une colonne `type`.
   Voir les types pour les affecter aux données courantes
 
+* Dans la table `icdocuments`, supprimer ces colonnes :
+
+  ~~~SQL
+  ALTER TABLE `icdocuments` DROP COLUMN `absmodule_id`;
+  ALTER TABLE `icdocuments` DROP COLUMN `absetape_id`;
+  ALTER TABLE `icdocuments` DROP COLUMN `icmodule_id`;
+  ~~~
 * Récupérer toutes les données SQL actuelles de l'atelier online
 
 * Modifier ces données, en transformant par exemple `abs_module_id` et `abs_etape_id` en `absmodule_id` et `absetape_id`

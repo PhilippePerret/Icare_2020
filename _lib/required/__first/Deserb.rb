@@ -13,8 +13,11 @@ class << self
     if File.exists?(path)
       return ERB.new(File.read(path).force_encoding('utf-8')).result(owner && owner.bind)
     else
-      return "IMPOSSIBLE DE TROUVER #{path} (avec '#{relpath}' et '#{dossier}')"
+      return "IMPOSSIBLE DE TROUVER #{path} (avec '#{relpath}' et '#{dossier}')".freeze
     end
+  rescue Exception => e
+    log(e)
+    return Tag.div(text: e.message, class:'warning')
   end
 
 end #/<< self

@@ -1,6 +1,26 @@
 # encoding: UTF-8
 # require 'mysql'
 
+REQUEST_INSERT = 'INSERT INTO %{table} (%{columns}) VALUES (%{interro})'.freeze
+REQUEST_UPDATE = 'UPDATE %{table} SET (%{columns}) WHERE id = ?'.freeze
+
+def db_compose_insert table, data
+  data.merge!(created_at:Time.now.to_i, updated_at:Time.now.to_i)
+  valeurs = data.values
+  columns = data.keys.join(VG)
+  interro = Array.new(valeurs.count,'?').join(VG)
+  request = REQUEST_INSERT % {table:table, columns: columns, interro: interro}
+  db_exec(request, valeurs)
+end #/ db_compose_insert
+
+def db_compose_update table, id, data
+  data.merge!(updated_at: Time.now.to_i)
+  valeurs = data.values << id
+  columns = data.keys.collect{|c|"c = ?"}.join(VG)
+  request = REQUEST_UPDATE % {table:table, columns:columns}
+  db_exec(request, valeurs)
+end #/ db_compose_update
+
 # Handy methods
 def db_exec request, values = nil
   log("MyDB exécution de : '#{request}'")

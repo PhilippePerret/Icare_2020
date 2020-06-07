@@ -145,6 +145,88 @@ Ces modules doivent se trouve dans le dossier :
 
 
 
+---
+
+
+
+## Base de données
+
+
+
+Les requêtes sont toutes exécutées soit sur la base `icare` ou sur la base `icare_test` (en mode de test et sandbox).
+
+
+
+### Exécution d’une requête quelconque (`db_exec`)
+
+La méthode la plus « simple » d’utilisation est la méthode `db_exec` qui exécute la requête qui lui est fournie en premier argument :
+
+~~~ruby
+db_exec("SELECT * FROM icdocuments FROM user_id = 12 LIMIT 12 ORDER BY original_name")
+# => retourne la liste de toutes les données des documents de l'user #12, dans une
+#    limite de 12 documents, en les classant par le nom original.
+~~~
+
+
+
+### Nombre d’éléments d’une table (`db_count`)
+
+La méthode `db_count` retourne le nombre d’élément d’un table, en respectant ou non un filtre :
+
+~~~ruby
+db_count("<table>"[, {filtre}])
+# Retourne le nombre d'éléments de <table> qui respectent le filtre {filtre}
+~~~
+
+> Le `filtre` peut-être un string qui correspond à la clause WHERE (sans « where »).
+
+
+
+### Création simplifiée d’une nouvelle donnée (`db_compose_insert`)
+
+La méthode `db_compose_insert` permet de composer facilement une nouvelle données à créer.
+
+La commande :
+
+~~~ruby
+db_compose_insert('table', {<data>})
+~~~
+
+… va produire la même chose que :
+
+~~~ruby
+valeurs.merge!(updated_at: Time.now.to_i, created_at:Time.now.to_i)
+valeurs = data.values
+columns = data.keys.join(VG)
+interro = Array.new(valeurs.count,'?').join(VG)
+request = "INSERT INTO #{table} (#{columns}) VALUES (#{interro})"
+db_exec(request, valeurs)
+~~~
+
+
+
+### Actualisation simplifiée d’une donnée (`db_compose_update`)
+
+La méthode `db_compose_update` permet de composer facilement une donnée à actualiser.
+
+La commande :
+
+~~~ruby
+db_compose_update('<table>', <id>, <data>)
+~~~
+
+… va produire la même chose que :
+
+~~~ruby
+data.merge!(updated_at: Time.now.to_i)
+valeurs = data.values << id
+columns = data.keys.collect{|c|"c = ?"}.join(VG)
+request = "INSERT <table> SET #{columns} WHERE id = ?"
+db_exec(request, valeurs)
+~~~
+
+
+
 
 
 ---
@@ -1174,6 +1256,34 @@ maintenant = formate_date(Time.now, {mois: :long, duree: true})
 :duree		Ajouter la durée, "dans x jours" pour le future, "il y a x jours"
 					dans le passé, "aujourd’hui" pour aujourd'hui.
 ~~~
+
+
+
+### `mkdir("<path>")`
+
+Cette méthode permet de définir facilement une propriété dossier en le créant s’il n’existe pas.
+
+En d’autre terme, on utilise :
+
+~~~ruby
+def folder
+  @folder ||= mkdir(File.join('mon','beau','dossier'))
+end
+~~~
+
+… au lieu de :
+
+~~~ruby
+def folder
+  @folder ||= begin
+    folderpath = File.join('mon','beau','dossier')
+    `mkdir -p "#{folderpath}"`
+		folderpath
+  end
+end
+~~~
+
+
 
 
 

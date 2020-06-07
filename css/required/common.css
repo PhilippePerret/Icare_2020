@@ -11,7 +11,7 @@ a.current {
   opacity:0.4;
 }
 
-.hidden {display:none}
+.hidden {display:none!important}
 .inline {display:inline}
 .inline-block{display:inline-block}
 
@@ -22,6 +22,13 @@ a.current {
 }
 .discret-tool:hover {
   opacity:1;
+}
+
+div.warning, p.warning, span.warning {
+  border-color:rgb(226, 53, 53);
+  background-color:rgb(226, 53, 53);
+  color:white;
+  padding:1em;
 }
 
 

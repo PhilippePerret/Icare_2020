@@ -155,12 +155,13 @@ section#footer {
 }
 
 pre#debug {
-  margin:0;
   background-color:black;
   color:white;
   padding:1em;
   font-size:14.5pt;
   white-space:break-spaces;
+  margin:0;
+  margin-bottom:10em;
 }
 
 /*

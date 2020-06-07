@@ -8,5 +8,5 @@ MESSAGES.merge!({
   })
 
 ERRORS.merge!({
-
+  sent_documents_required: 'Il faut choisir le document à transmettre !'.freeze
   })
