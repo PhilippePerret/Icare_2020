@@ -25,6 +25,7 @@ class HTML
     <section id="footer">#{footer}</section>
     #{build_debug}
     #{Admin.section_essais if SHOW_DEVELOPPEMENT_TOOLS}
+    #{js_tags}
   </body>
 </html>
     HTML
