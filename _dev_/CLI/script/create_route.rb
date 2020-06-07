@@ -3,10 +3,10 @@
 
 NEW_ROUTE = nil # remettre à nil après pour éviter les erreurs
 DATA_PAGE = {
-  titre: "🚪 Candidater",
-  body_erb: true,          # si true, on crée le fichier body.erb
+  titre: "\#{RETOUR_BUREAU}🛄 🏹 📡 Transmission",
+  body_erb: false,          # si true, on crée le fichier body.erb
   form: true,              # si true, on requiert le module 'forms'
-  module_user: true,        # si true, on crée 'user.rb'
+  module_user: false,        # si true, on crée 'user.rb'
   icarien_required:false,    # true, une barrière sera "posée"
   admin_required: false,    # si true, une barrière sera posée
 }

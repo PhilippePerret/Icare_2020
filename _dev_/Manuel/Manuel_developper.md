@@ -1205,6 +1205,51 @@ Pour pouvoir récupérer une instance quelconque.
 
 
 
+### `<Classe>::instanciate(data_item)`
+
+Cette méthode permet d’instancier un objet avec ses données, lorsqu’on vient de le récupérer dans la base de données. 
+
+> À titre de rappel, normalement, dans les classes `ContainerClass`, c’est avec l’identifiant seulement qu’on instancie un objet, donc cette méthode épargne d’utiliser par exemple :
+>
+> ~~~ruby
+> db_exec(request).collect do |dobjet|
+>   objet = new(dobjet[:id])
+>   objet.data = dobjet
+>   objet # pour la collect
+> end
+> ~~~
+>
+> Ici, on peut faire juste
+>
+> ~~~ruby
+> db_exec(request).collect do |dobjet|
+>   Classe.instantiate(dobjet)
+> end
+> ~~~
+
+
+
+### `<Classe>::find({filtre}[, {options}])`
+
+Retourne la liste des instances de classe filtrée par `{filtre}` qui s’applique à toutes les propriétés enregistrées de l’objet.
+
+On peut en plus utiliser les filtres `:created_after`, `:created_before`, `updated_after` et `updated_before` pour faire des filtres sur les temps (TODO Pas encore implémenté).
+
+#### Options
+
+~~~ruby
+options = {
+  limit:	Integer,		# le nombre max d'éléments retourné
+  order:	String,			# l'ordre de tri ("DESC", "ASC")
+ }
+~~~
+
+
+
+Cf. aussi la méthode `::collect` ci-dessous qui fait un peut la même chose, mais permet d’agir immédiatement sur la liste récoltée.
+
+
+
 ### `<classe>::collect([filtre])`
 
 Permet de collecter sur tous les éléments (chargés de la base de données, donc consommateur).

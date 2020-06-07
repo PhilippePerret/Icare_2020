@@ -27,9 +27,28 @@ class Watchers
 # ---------------------------------------------------------------------
 attr_reader :owner
 def initialize owner
-  log("-> initialize (#{owner.inspect})")
   @owner = owner
 end #/ initialize
+
+# Retourne les watchers de l'user correspondant au filtre +filtre+ qui peut
+# porter sur toutes les données du watcher.
+# +options+
+#     Permet de définir d'autres chose comme la limite ou l'odre
+def find(filtre, options = nil)
+  valeurs = [owner.id]
+  where   = ["user_id = ?"]
+  filtre.each do |k,v|
+    where << "#{k} = ?"
+    valeurs << v
+  end
+  request = "SELECT * FROM watchers WHERE #{where.join(' AND ')}"
+  options ||= {}
+  request << " LIMIT #{options[:limit]}".freeze if options.key?(:limit)
+  request << " ORDER BY #{options[:order]}".freez if options.key?(:order)
+  db_exec(request.freeze, valeurs).collect do |dwatcher|
+    Watcher.instantiate(dwatcher)
+  end
+end #/ find
 
 # Retourne tous les watchers du propriétaire
 def all
@@ -38,9 +57,7 @@ def all
     where << " AND user_id = #{owner.id}".freeze unless owner.admin?
     request = "SELECT * FROM watchers #{where}".freeze
     log("request : #{request.inspect}")
-    db_exec(request).collect do |dwatcher|
-      w = Watcher.new(dwatcher[:id]) ; w.data = dwatcher ; w
-    end
+    db_exec(request).collect { |dwatcher| Watcher.instantiate(dwatcher) }
   end
 end #/ all
 

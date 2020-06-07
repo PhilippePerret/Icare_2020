@@ -21,13 +21,13 @@ class Watcher < ContainerClass
     icetape_id = IcEtape.create_for(objet, numero: 1)
     modul_data.merge!(icetape_id: icetape_id)
 
-    # Watcher de remise des documents
-    watcher_id = owner.watchers.add('send_work', objet_id: icetape_id)
-
     # On peut définir les nouvelles données de l'icmodule
     icmodule.set(modul_data)
     # On peut définir les nouvelles données de l'icarien
     owner.set(owner_data)
+
+    # Note : on ne crée plus de watcher pour envoyer les documents, ça n'est pas
+    # logique et ça compliquerait tout.
 
     message "Votre module a été démarré ! Vous pouvez voir le premier travail dans votre section « Travail courant » que vous trouverez à l'accueil de votre bureau.".freeze
   end #/ start

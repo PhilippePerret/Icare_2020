@@ -12,6 +12,7 @@
   <%= StateList.row('Commencé le', icetape.f_started_at, {css:'small'}) %>
   <hr>
   <%= StateList.row('À remettre le', echeance_field) %>
+  <%= StateList.row('<remettre>', Tag.lien(route:'bureau/sender?id=send_work', text:"Remettre le travail", class:'main btn'), {class:'right mt2'}) %>
 </div>
 
 <%

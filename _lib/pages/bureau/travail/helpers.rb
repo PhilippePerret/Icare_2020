@@ -1,10 +1,5 @@
 # encoding: UTF-8
-
 require_module('form')
-
-class IcModule < ContainerClass
-end #/IcModule
-
 class IcEtape < ContainerClass
 
   # Retourne la date de fin attendue, avec une alerte en

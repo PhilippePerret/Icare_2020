@@ -14,6 +14,14 @@ class ContainerClass
       @items[item_id]
     end #/ get
 
+    # Permet d'instancier un objet avec les données (entendu qu'avec les
+    # ContainerClass on les instancie avec l'identifiant seulement)
+    def instantiate data
+      obj = new(data[:id])
+      obj.data = data
+      return obj
+    end #/ instantiate
+
     # Charge tous les items en appliquant le filtre +filtre+ si défini
     # Les mets dans @items en réinitialisant la liste si +reset_items+ est
     # true et la renvoie.

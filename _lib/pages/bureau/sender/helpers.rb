@@ -2,7 +2,7 @@
 =begin
   Helpers de méthode pour faire le watcher
 =end
-class Watcher < ContainerClass
+class HTML
 
 SELECT_NOTE = <<-HTML
 <select class="" name="note-document%{idoc}" id="note-document%{idoc}">
@@ -28,4 +28,4 @@ HTML
     HTML
   end #/ row_document
 
-end #/Watcher < ContainerClass
+end #/HTML
