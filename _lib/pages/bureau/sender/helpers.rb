@@ -17,7 +17,7 @@ HTML
     <<-HTML
 <div class="row row-flex">
   <span class="value">
-    <button id="buttondocument#{idoc}" type="button" class="inline-block" style="width:280px;" onclick="document.querySelector('#document#{idoc}').click()">Choisir le document #{idoc}…</button>
+    <button id="buttondocument#{idoc}" class="btn-choose-doc" onclick="document.querySelector('#document#{idoc}').click()">Choisir le document #{idoc}…</button>
     <span id="documentname#{idoc}" class="docname hidden" style="width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
     <input type="file" name="document#{idoc}" id="document#{idoc}" onchange="AppliqueNom(this,#{idoc})" />
     <span class="libelle inline">Note estimative : </span>

@@ -1,4 +1,5 @@
 'use strict';
+
 function AppliqueNom(field, idoc){
   var btn  = document.querySelector(`#buttondocument${idoc}`);
   var span = document.querySelector(`#documentname${idoc}`);
@@ -8,3 +9,7 @@ function AppliqueNom(field, idoc){
   span.classList.add('inline-block')
   span.innerHTML = field.value
 }
+
+onReady().then(()=>{
+  console.log("Je suis prêt !")
+})
