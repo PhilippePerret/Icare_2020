@@ -3,11 +3,11 @@ class IdentificationRequiredError < StandardError; end
 class PrivilegesLevelError < StandardError; end
 
 def icarien_required(message = nil)
-  raise IdentificationRequiredError.new(message) if user.guest?
+  raise IdentificationRequiredError.new(message||MESSAGES[:ask_identify]) if user.guest?
 end
 
-def admin_required
-  raise IdentificationRequiredError.new() if user.guest?
+def admin_required(message = nil)
+  icarien_required(message)
   raise PrivilegesLevelError.new() unless user.admin?
 end
 

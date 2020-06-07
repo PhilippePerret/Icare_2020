@@ -14,7 +14,7 @@ class HTML
       # On le renvoie à l'identification et on met dans 'back_to'
       # la route qu'il voulait atteindre
       session['back_to'] = route.to_s if session['back_to'].nil?
-      erreur(e.message || MESSAGES[:ask_identify])
+      erreur(e.message)
       Route.redirect_to('user/login')
     rescue PrivilegesLevelError
       # L'user est identifié mais il n'a pas un niveau de privilèges
