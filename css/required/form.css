@@ -1,9 +1,4 @@
 textarea {resize:none;}
-form input[type="file"] {
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display:none;
-}
 form {
   display:inline-block;
 }
@@ -116,4 +111,28 @@ div.explication {
   margin-left:2em;
   text-align:justify;
   padding:8px;
+}
+
+/* Dans un "faux" champ de fichier, le bouton permettant d'annuler */
+form button.file-reset {
+  border:none;
+  background-color:transparent!important;
+  vertical-align:middle;
+  margin-right:1em;
+  font-size:0.4em;
+  opacity:0.3;
+}
+form button.file-reset:hover {
+  opacity:1;
+}
+form span.file-field {
+
+}
+form span.file-field input[type="file"] {
+  width:1px!important;
+  height:1px!important;
+}
+form span.file-name {
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
