@@ -40,18 +40,26 @@ class HTML
           sent_doc.traite
           sent_docs << sent_doc
         else
-          erreur ERRORS[:unable_document_treatment] % {name:sent_doc.original_filename, error:sent_doc.error}
+          erreur(ERRORS[:unable_document_treatment] % {name:sent_doc.original_filename, error:sent_doc.error})
+          return false
         end
       end
     end
 
     if sent_docs.count > 0
       log("#{sent_docs.count} documents sont ok, je les traite.")
+      # Pour le mail à l'administrateur
+      @documents_ids = sent_docs.collect{|doc| "##{doc.id}"}.join(VG)
       user.enregistre_documents_travail(sent_docs)
       Actualite.add('SENDWORK', user, MESSAGES[:actualite_send_work] % {pseudo:user.pseudo, numero:user.icetape.numero, module:user.icmodule.name})
+      Mail.send({
+        subject: 'Envoi de documents de travail',
+        from: user.mail,
+        message: deserb('mail_admin', self)
+      })
     else
       # Aucun document (valide) n'a été transmis, il faut redemander
-      erreur ERRORS[:sent_documents_required]
+      erreur(ERRORS[:sent_documents_required])
     end
   end #/ check_documents_and_save
 
@@ -95,11 +103,11 @@ def init_icdocument
   log(" ---- data_doc: #{data_doc.inspect}")
 
   # DEBUG
-  log("Je dois créer le document avec les données : ")
+  log("CREATION DOCUMENT AVEC DONNÉES : ")
   log(data_doc.inspect)
   # return
 
-  return db_compose_insert('icdocuments', data_doc) # => ID
+  @id = db_compose_insert('icdocuments', data_doc) # => ID
 end #/ init_icdocument
 
 # Méthode qui estime le temps qui sera nécessaire pour corriger
@@ -148,19 +156,17 @@ class User
       duree_totale_commentaire += sentdoc.duree_commentaire
     end
 
-    # DEBUG
-    log("La durée totale de commentaire serait : #{duree_totale_commentaire}")
-    log("Il faudrait donc les terminer pour : #{formate_date(Time.now.to_i + duree_totale_commentaire)}")
-    return
+    # # DEBUG
+    # log("La durée totale de commentaire serait : #{duree_totale_commentaire}")
+    # log("Il faudrait donc les terminer pour : #{formate_date(Time.now.to_i + duree_totale_commentaire)}")
 
     # Les nouvelles data pour l'étape
-    log("--- Enregistrement data de l'étape")
+    log("--- DATA ÉTAPE")
     data_etape = {
       expected_comments: Time.now.to_i + duree_totale_commentaire,
       status: 1
     }
     icetape.set(data_etape)
-    log("--- Commentaires attendus pour : #{formate_date(data_etape[:expected_comments])}")
 
   end #/ enregistre_documents_travail
 end #/User

@@ -32,7 +32,7 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
-attr_reader :data, :docfile, :idoc, :type, :owner
+attr_reader :id, :data, :docfile, :idoc, :type, :owner
 attr_accessor :error # l'erreur éventuelle que comporte le document
 def initialize(data)
   @owner    = data[:owner]
