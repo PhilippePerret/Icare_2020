@@ -7,10 +7,12 @@ require_module('citation')
 class HTML
   def build_body
     @body = <<-HTML
-<div id="main-cadre">
-  <img src="img/papillon-logo.png" id="papillon">
-  <div id="titre"><a href="plan">Atelier Icare</a></div>
-  <div id="sous-titre">L’écriture dans tous ses états (*) </div>
+<div id="bandeau">
+  <div id="main-cadre">
+    <img src="img/papillon-logo.png" id="papillon">
+    <div id="titre"><a href="plan">Atelier Icare</a></div>
+    <div id="sous-titre">L’écriture dans tous ses états (*) </div>
+  </div>
 </div>
 #{Citation.rand.out}
 <div id="legende">
