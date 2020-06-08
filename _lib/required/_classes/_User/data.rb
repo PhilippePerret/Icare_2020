@@ -30,14 +30,6 @@ class User
 
   def save(data2save)
     return if guest?
-    values  = data2save.values
-    columns = data2save.keys.collect{|c| "#{c} = ?"}.join(', ')
-    columns << ", updated_at = ?"
-    values << Time.now.to_i
-    values << id
-    request = "UPDATE users SET #{columns} WHERE id = ?"
-    debug "request save:#{request}"
-    debug "Values save: #{values.inspect}"
-    db_exec(request, values)
+    db_compose_update('users', id, data2save)
   end
 end #/User
