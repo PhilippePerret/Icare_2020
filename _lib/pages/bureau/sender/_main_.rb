@@ -49,19 +49,40 @@ class HTML
     if sent_docs.count > 0
       log("#{sent_docs.count} documents sont ok, je les traite.")
       # Pour le mail à l'administrateur
-      @documents_ids = sent_docs.collect{|doc| "##{doc.id}"}.join(VG)
       user.enregistre_documents_travail(sent_docs)
       Actualite.add('SENDWORK', user, MESSAGES[:actualite_send_work] % {pseudo:user.pseudo, numero:user.icetape.numero, module:user.icmodule.name})
-      Mail.send({
-        subject: 'Envoi de documents de travail',
-        from: user.mail,
-        message: deserb('mail_admin', self)
-      })
+      send_mails_annonce(sent_docs)
     else
       # Aucun document (valide) n'a été transmis, il faut redemander
       erreur(ERRORS[:sent_documents_required])
     end
   end #/ check_documents_and_save
+
+  # Méthode qui se charge de l'envoi des mails à l'administrateur et
+  # à l'icarien.
+  # +sent_docs+   Liste des {SentDocument}, instance des documents envoyés.
+  def send_mails_annonce sent_docs
+    @documents_ids = []
+    @documents_names = []
+    @date_commentaires = formate_date(user.icetape.expected_comments, duree: true)
+    sent_docs.each do |sdoc|
+      @documents_ids << "##{sdoc.id}"
+      @documents_names << sdoc.original_filename
+    end
+    @documents_ids    = @documents_ids.join(VG)
+    @documents_names  = @documents_names.join(VG)
+
+    Mail.send({
+      subject: 'Envoi de documents de travail',
+      from: user.mail,
+      message: deserb('mail_admin', self)
+    })
+    Mail.send({
+      subject: 'Nous avons bien reçu vos documents de travail',
+      to: user.mail,
+      message: deserb('mail_user', self)
+      })
+  end #/ send_mails_annonce
 
 end #/HTML
 
@@ -77,7 +98,6 @@ class SentDocument
 #
 # ---------------------------------------------------------------------
 def check
-  debug "Check propre du document : #{original_filename}"
   if (note = param("note-document#{idoc}".to_sym).nil_if_empty)
     pathnote = File.join(folder, "#{original_filename}-note.txt")
     File.open(pathnote,'wb'){|f| f.write note}
