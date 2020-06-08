@@ -11,6 +11,7 @@ def db_compose_insert table, data
   interro = Array.new(valeurs.count,'?').join(VG)
   request = REQUEST_INSERT % {table:table, columns: columns, interro: interro}
   db_exec(request, valeurs)
+  return db_last_id
 end #/ db_compose_insert
 
 def db_compose_update table, id, data
@@ -25,10 +26,12 @@ end #/ db_compose_update
 def db_exec request, values = nil
   log("MyDB exécution de : '#{request}'")
   begin
-    MyDB.db.execute(request, values)
-    # if MyDB.error && respond_to?(:erreur)
-    #   raise MyDB.error
-    # end
+    res = MyDB.db.execute(request, values)
+    if MyDB.error
+      log(MyDB.error)
+      erreur("ERREUR SQL : #{MyDB.error[:error]} (consulter la console pour le détail)")
+    end
+    return res
   rescue Exception => e
     MyDB.error = {error:e, request:request, values:values}
     if respond_to?(:erreur)

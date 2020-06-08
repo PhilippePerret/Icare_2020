@@ -22,7 +22,7 @@ class << self
 
   # Pour ajouter une actualité
   # --------------------------
-  # +type+      String          Le type de l'actualité
+  # +type+      String          Le type de l'actualité (pour le moment, aucune table ne le définit)
   # +user_id+   Integer|User    L'icarien ou son identifiant
   # +message+   String          Le message à enregistrer
   def add(type, user_id, message)

@@ -54,16 +54,9 @@ def absetape
   @absetape ||= AbsEtape.get(data[:absetape_id])
 end #/ absmodule
 
-# STATUT DE L'ÉTAPE (propriété status - avec un "s")
-# -----------------
-# 0 Normalement, n'est jamais affecté
-# 1 L'étape est démarrée, l'icarien travaille.
-# 2 L'icarien a remis ses documents, mais ils n'ont pas encore été reçus
-# 3 Réception (download) des documents par Phil
-# 4 Dépôt (upload) des commentaires par Phil
-# 5 Réception (download) des commentaires par l'icarien
-# 6 Dépôt (upload) des documents sur le QDD
-# 7 Définition du partage par l'icarien
-
+# Cf. le mode d'emploi pour le détail
+def status
+  @status ||= data[:status]
+end #/ status
 
 end #/IcEtape

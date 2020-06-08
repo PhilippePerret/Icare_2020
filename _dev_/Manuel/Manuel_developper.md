@@ -1628,6 +1628,63 @@ TActualites.founds
 
 
 
+---
+
+
+
+## Travail de l'icarien
+
+
+
+### Étapes de travail
+
+
+
+#### Statut de l'étape
+
+C’est la propriété `:status` qui définit l’état de l’étape de travail. La propriété porte le même nom.
+
+Les valeurs sont les suivantes :
+
+
+
+| Bit  | Statut                                                       |
+| ---- | ------------------------------------------------------------ |
+| 0    | Non utilisé, ne devrait pas arriver                          |
+| 1    | L’étape est en cours, l’icarien travaille dessus. <br />Note : ce statut provoque la création automatique du watcher `send-work`. |
+| 2    | L’icarien a transmis ses documents mais ils n’ont pas encore été downloadés par Phil.<br />Ce statut provoque la création automatique du watcher `download-work`. |
+| 3    | Phil a downloadé les documents de travail de l’icarien.<br />Ce statut provoque la création automatique du watcher `send-comments`. |
+| 4    | Phil a transmis les commentaires, mais l’icarien ne les a pas encore downloadés.<br />Ce statut provoque la création automatique du watcher `download-comments` |
+| 5    | L’icarien a downloadé ses commentaires.<br />Ce statut génère automatiquement le watcher qui permet à Phil de déposer les documents sur le Quai des docs (`depot-qdd`). |
+| 6    | Phil a déposé les documents de l’étape sur le Quai des docs.<br />Ce statut génère automatiquement le watcher qui permet à l’icarien de définir le partage de ses documents `qdd-define-sharing`. |
+| 7    | L’icarien a défini le partage de chacun de ses documents.    |
+
+
+
+### Documents icariens (`icdocuments`)
+
+Le travail au sein de l'atelier se fait sur la base de documents qui sont envoyés par l'icarien et commentés par Phil.
+
+#### Options des documents
+
+Les options de l'icdocument tiennent sur un mot de 16 bits qui peuvent prendre une valeur entre 0 et 9. Les 8 premiers bits concernent le document original (non commenté) les 8 bits suivant concernant le document commenté.
+
+| Bit  | Description de la valeur du bit             |
+| ---- | ------------------------------------------------------------ |
+| 0    | 1 => Le document original existe                 |
+| 1 | Définition du partage<br/>0: partage non défini, 1: partagé, 2: non partagé |
+| 2 | 1 => le document a été téléchargé par l'administrateur |
+| 3 | 1 => le document original a été déposé sur le Quai des docs |
+| 4 | 1 => le partage du document a été défini |
+| 5 | 1=> le document original a achevé son cycle complet |
+| 8    | 1=> Le document commentaires existe                       |
+| 9 | Définition du partage<br/>0: partage non défini, 1: partagé, 2: non partagé |
+| 10 | 1=> le document commenté a été téléchargé par l'auteur |
+| 11 | 1=> le document commentaire a été déposé sur le Quai des docs |
+| 12 | 1=> le partage du document commentaires a été défini |
+| 13 | 1=> le document commentaire a achevé son cycle complet |
+| ---- | ------------------------------------------------------------ |
+
 
 
 ---

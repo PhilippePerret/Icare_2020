@@ -7,17 +7,17 @@ require_module('citation')
 class HTML
   def build_body
     @body = <<-HTML
-<div id="bandeau">
+<div id="bandeau" class="nolimit">
   <div id="main-cadre">
     <img src="img/papillon-logo.png" id="papillon">
     <div id="titre"><a href="plan">Atelier Icare</a></div>
     <div id="sous-titre">L’écriture dans tous ses états (*) </div>
   </div>
 </div>
-#{Citation.rand.out}
-<div id="legende">
+<div id="legende" class="nolimit">
   (*) aussi bien dans la forme (roman, scénario, BD, etc.) que dans le fond (pitch, résumé, synopsis, scénario, etc.).
 </div>
+#{Citation.rand.out}
 <div id="actualites">
   #{Actualite.out}
 </div>

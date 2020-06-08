@@ -52,4 +52,8 @@ def absmodule
   @absmodule ||= AbsModule.get(data[:absmodule_id])
 end #/ absmodule
 
+def name
+  @name ||= absmodule.name
+end #/ name
+
 end #/IcModule

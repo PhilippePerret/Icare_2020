@@ -18,6 +18,7 @@
   ALTER TABLE `icdocuments` DROP COLUMN `absetape_id`;
   ALTER TABLE `icdocuments` DROP COLUMN `icmodule_id`;
   ALTER TABLE `icdocuments` DROP COLUMN `expected_comments`;
+  ALTER TABLE `icdocuments` DROP COLUMN `doc_affixe`;
   ~~~
 * Récupérer toutes les données SQL actuelles de l'atelier online
 
