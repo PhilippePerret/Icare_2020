@@ -11,6 +11,8 @@ MyDB.DBNAME = 'icare_test'
 def vide_db
   vide_users
   vide_icmodules
+  vide_icetapes
+  vide_documents
   vide_watchers
   vide_tickets
   vide_actualites
@@ -22,6 +24,12 @@ end #/ vide_users
 def vide_icmodules
   vide_table('icmodules')
 end #/ vide_icmodules
+def vide_icetapes
+  vide_table('icetapes')
+end #/ vide_icmodules
+def vide_documents
+  vide_table('icdocuments')
+end #/ vide_documents
 def vide_watchers
   vide_table('watchers')
 end #/ vide_watchers

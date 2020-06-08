@@ -3,20 +3,20 @@
   Script assistant pour créer un nouveau type de watcher
 =end
 
-ID_WATCHER = 'send_work'
+ID_WATCHER = 'download_work'
 DATA_WATCHER = {
-  titre: 'Envoi des documents de travail', # pour la notification (user et admin)
+  titre: 'Chargement des documents de travail', # pour la notification (user et admin)
   objet_class:  'IcEtape',       # le dossier principal
-  processus:    'send_work', # le processus
+  processus:    'download_work', # le processus (~ nom méthode)
   # Notifications
   notif_user:   true,
-  notif_admin:  false,
+  notif_admin:  true,
   # Mails
-  mail_user:    false,
-  mail_admin:   true,
+  mail_user:    true,
+  mail_admin:   false,
   # Actualité
-  actu_id:      'SENDWORK', # mettre l'identifiant (majuscules) actualité, si actualité
-  actualite:    true
+  actu_id:      nil, # mettre l'identifiant (majuscules) actualité, si actualité
+  actualite:    false
 }
 
 # Ne rien toucher en dessous de cette ligne

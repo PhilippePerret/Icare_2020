@@ -105,6 +105,12 @@ def params
   end
 end #/ params
 
+# Retourne true si c'est un watcher automatique (cf. mode d'emploi)
+def automatique?
+  @is_automatique = !!absdata[:automatique] if @is_automatique.nil?
+  @is_automatique
+end #/ automatique?
+
 # Chemin relatif (dans watchers_processus) défini dans les données
 # absolues
 def relpath

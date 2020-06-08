@@ -51,12 +51,12 @@ def find(filtre, options = nil)
 end #/ find
 
 # Retourne tous les watchers du propriétaire
+# Noter que cela comprend aussi les watchers automatiques
 def all
   @all ||= begin
     where = "WHERE ( triggered_at IS NULL OR triggered_at < #{Time.now.to_i} )"
     where << " AND user_id = #{owner.id}".freeze unless owner.admin?
     request = "SELECT * FROM watchers #{where}".freeze
-    log("request : #{request.inspect}")
     db_exec(request).collect { |dwatcher| Watcher.instantiate(dwatcher) }
   end
 end #/ all
@@ -111,7 +111,7 @@ def read
 end #/ read
 
 def unread
-  log("-> unread (@unread = #{@unread.inspect})")
+  # log("-> unread (@unread = #{@unread.inspect})")
   @unread ||= begin
     filter_key = user.admin? ? :admin : :user
     log("filter_key: #{filter_key.inspect}")

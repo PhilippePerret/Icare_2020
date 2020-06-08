@@ -1,0 +1,14 @@
+<%
+  icetape = objet
+  nombre_documents = icetape.documents.count
+  bouton_name = 'Télécharger ' << (nombre_documents > 1 ? 'les documents'.freeze : 'le document'.freeze)
+%>
+<pre>
+<code>
+Étape : <strong class="black"><%= icetape.numero %></strong>. <%= icetape.absetape.titre %>
+Documents IDs: <%= icetape.documents.collect{|doc| "##{doc.id}"}.join(VG) %>
+</code>
+</pre>
+<div class="buttons">
+  <%= button_run(bouton_name, class:'main') %>
+</div>

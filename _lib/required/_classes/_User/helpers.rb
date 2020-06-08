@@ -18,13 +18,4 @@ class User
     return '' if nombre == 0
     Tag.pastille_nombre(nombre, options)
   end
-  def unread_notifications_count
-    where = if user.admin?
-              "vu_admin = FALSE"
-            else
-              "user_id = #{id} AND vu_user = FALSE"
-            end
-    db_count('watchers', where)
-  end #/ unread_notifications_count
-
 end #/User

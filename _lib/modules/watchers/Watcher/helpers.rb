@@ -83,7 +83,7 @@ class Watcher < ContainerClass
     b = deserb(erbpath, self)
     # Si c'est l'administrateur qui visite, on ajoute un bouton pour
     # détruire ou éditer le watcher
-    if user.admin?
+    if user.admin? && !automatique?
       btns = []
       btns << Tag.lien(route:"#{route.to_s}?op=destroy&wid=#{id}", titre:'détruire', class:'btn tiny warning')
       btns << Tag.lien(route:"#{route.to_s}?op=edit&wid=#{id}", titre:'éditer', class:'btn tiny')

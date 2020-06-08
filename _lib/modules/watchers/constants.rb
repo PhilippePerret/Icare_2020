@@ -40,8 +40,15 @@ DATA_WATCHERS = {
   },
   send_work: {
     titre: 'Envoi des documents de travail'.freeze,
+    automatique: true,
     relpath: 'IcEtape/send_work'.freeze,
     actu_id: "SENDWORK"
+  },
+  download_work: {
+    titre: 'Chargement des documents de travail'.freeze,
+    automatique: true,
+    relpath: 'IcEtape/download_work'.freeze,
+    actu_id: nil
   },
   commande_module:    {
     titre: 'Commande de module',

@@ -13,7 +13,8 @@ class Watcher < ContainerClass
     owner_data = {icmodule_id: objet_id}
 
     # Watcher de paiement
-    dwatcher  = {objet_id: objet_id}
+    # -------------------
+    dwatcher  = {objet_id: objet_id, vu_admin:true}
     dwatcher.merge!(triggered_at: now+10.days) unless owner.real?
     watcher_id = owner.watchers.add('paiement_module', dwatcher)
 
@@ -26,8 +27,8 @@ class Watcher < ContainerClass
     # On peut définir les nouvelles données de l'icarien
     owner.set(owner_data)
 
-    # Note : on ne crée plus de watcher pour envoyer les documents, ça n'est pas
-    # logique et ça compliquerait tout.
+    # Watcher pour que je puisse télécharger les documents
+    owner.watchers.add(wtype:'download_work', objet_id:icetape_id)
 
     message "Votre module a été démarré ! Vous pouvez voir le premier travail dans votre section « Travail courant » que vous trouverez à l'accueil de votre bureau.".freeze
   end #/ start

@@ -685,9 +685,9 @@ explication		Une explication discrète pour un champ. Mettre un label unique mai
 
 ~~~ruby
 form.rows = {
-	  ...
-    'MonChoix' => {type:'select', name:'uchoix', values: [[1,"Un"], [2,"Deux"]]}
-  }
+	...
+  'MonChoix' => {type:'select', name:'uchoix', values: [[1,"Un"], [2,"Deux"]]}
+}
 ~~~
 
 En `values`, on peut aussi mettre une liste simple, quand les valeurs sont égales aux titres à afficher.
@@ -841,7 +841,7 @@ Les watchers permettent de gérer toute l’activité, les actions, possible sur
 
 Les **données de tous les watchers** sont définies dans le fichier [_lib/modules/watchers/constants.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb).
 
-Le principe est le suivant :
+Le principe est le suivant (sauf pour les [watchers automatiques](#leswatchersauto)) :
 
 * Un watcher est créé (par exemple à l’inscription d’un candidat à l'atelier)
 * Ce watcher, s’il définit un fichier `notification_admin.erb`, produit une nouvelle notification sur le bureau de l’administrateur,

@@ -32,4 +32,17 @@ class User
     return if guest?
     db_compose_update('users', id, data2save)
   end
+
+  # Retourne le nombre de notifications non vues
+  def unread_notifications_count
+    return 0 if user.guest?
+    where = if user.admin?
+              "vu_admin = FALSE"
+            else
+              "user_id = #{id} AND vu_user = FALSE"
+            end
+    where << " AND ( triggered_at IS NULL OR triggered_at < #{Time.now.to_i})"
+    return db_count('watchers', where)
+  end #/ unread_notifications_count
+
 end #/User
