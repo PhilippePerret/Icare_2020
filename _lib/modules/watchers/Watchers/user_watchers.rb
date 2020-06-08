@@ -66,12 +66,17 @@ end #/ all
 #   :params     Un hash de paramètres (qui sera jsonné)
 #
 # SI tout s'est bien passé, retourne l'ID du nouveau watcher
-def add wtype, data
+def add wtype, data = nil
+  if wtype.is_a?(Hash)
+    data = wtype
+  else
+    data.merge!(wtype: wtype.to_s)
+  end
   now = Time.now.to_i
   vu_admin  = data[:vu_admin].nil? ? user.admin? : data[:vu_admin]
   vu_user   = data[:vu_user].nil? ? !user.admin? : data[:vu_user]
   dwatcher = {
-    wtype:      wtype.to_s, # par exemple 'commande_module'
+    wtype:      data[:wtype], # par exemple 'commande_module'
     objet_id:   data[:objet_id],
     user_id:    owner.id,
     vu_admin:   vu_admin,
