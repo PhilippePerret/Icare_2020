@@ -85,8 +85,8 @@ class ContainerClass
   end #/ bind
 
   def method_missing method_name, *args, &block
-    log("-> method_missing(#{method_name.inspect})")
-    log("   data : #{data.inspect}")
+    # log("-> method_missing(#{method_name.inspect})")
+    # log("   data : #{data.inspect}")
     return data[method_name] if data.key?(method_name)
     if self.respond_to?(:absdata) && method_name.to_s == objet_class&.downcase
       @objet = Object.const_get(objet_class).get(data[:objet_id])

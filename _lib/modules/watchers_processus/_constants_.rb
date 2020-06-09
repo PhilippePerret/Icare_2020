@@ -57,6 +57,12 @@ DATA_WATCHERS = {
     next: 'download_comments'.freeze,
     actu_id: "COMMENTS"
   },
+  download_comments: {
+    titre: 'Chargement des commentaires'.freeze,
+    relpath: 'IcEtape/download_comments'.freeze,
+    actu_id: nil,
+    next: 'depot_qdd'.freeze
+  },
   # --- Modules ---
   commande_module:    {
     titre: 'Commande de module',

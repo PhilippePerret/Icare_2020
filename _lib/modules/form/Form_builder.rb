@@ -26,6 +26,7 @@ class Form
       # <= Il y a des données de formulaire
       # => C'est une CRÉATION de formulaire
       @data = form_data
+      @data[:watcher_id] = @data[:watcher] if @data.key?(:watcher)
     end
   end
 
@@ -39,6 +40,7 @@ class Form
   <input type="hidden" name="form_token" value="#{token}">
   <input type="hidden" name="form_id" value="#{data[:id]}">
   <input type="hidden" name="route" value="#{data[:action]||data[:route]}">
+  #{champs_watchers if data[:watcher_id]}
   #{build_rows}
   <div class="buttons">
     #{build_other_buttons}
@@ -49,9 +51,16 @@ class Form
   end
 
   INPUT_SUBMIT_BUTTON = '<input type="submit" value="%{name}" class="%{class}">'
+
   def build_submit_button
     INPUT_SUBMIT_BUTTON % {name:submit_button, class:options[:submit_button_class]||''}
   end #/ build_submit_button
+
+  WATCHER_HIDDEN_FIELDS = '<input type="hidden" name="op" value="run" /><input type="hidden" name="wid" value="%{wid}" />'.freeze
+  # Les deux champs :wid et :ope qui permettent de soumettre le watcher
+  def champs_watchers
+    WATCHER_HIDDEN_FIELDS % {wid: data[:watcher_id]}
+  end #/ champs_watchers
 
   def enctype
     return unless files?
@@ -143,7 +152,7 @@ class Form
         <<-HTML
 <div class="row">
   <span class="libelle"#{libelle_style}>#{label}</span>
-  <span class="value">
+  <span class="value#{" file" if dfield[:type] == 'file'}">
     #{value_field_for(dfield)}
   </span>
 </div>

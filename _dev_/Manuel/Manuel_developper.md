@@ -37,22 +37,22 @@ Créer dans ce *dossier de la route*  un fichier `html.rb` (ou autre nom, peu im
 
 ~~~ruby
 class HTML
-  
+
   def titre
     "Le titre de la page"
   end
-  
+
   def exec
     ... code à exécuter avant la construction de la page ...
   end
-  
+
   # Construction du body (section#content)
   def build_body
 	  # Mettre ici le code de construction du body de la page
     @body = <<-HTML
 			... body de la page ...
 		HTML
-	end	
+	end
 end
 ~~~
 
@@ -147,7 +147,7 @@ param(:<key>, <new value>)								param(:op, "nouvelle-operation")
 > param(:op, "nouvelle opération")
 > ~~~
 >
-> 
+>
 
 ---
 
@@ -524,7 +524,7 @@ Génère une rangée de type « Statelist » comme on peut en trouver sur la pag
 
 ~~~erb
 <div class="state-list vert">
-  <%= StateList.row("Mon libellé", "Ma valeur", {class:'small'})	
+  <%= StateList.row("Mon libellé", "Ma valeur", {class:'small'})
 </div>
 ~~~
 
@@ -699,7 +699,7 @@ class HTML
       end
     end
   end #/exec
-  
+
 end #/HTML
 ~~~
 
@@ -752,7 +752,7 @@ Pour récupérer la nouvelle date, il suffira de faire :
 ~~~ruby
 require_module('form')
 
-newDate = Form.date_field_value('pref') 
+newDate = Form.date_field_value('pref')
 # => instance Time
 
 message("Le nouveau temps est #{formate_date(newDate)}")
@@ -865,7 +865,7 @@ class HTML
     ... si l'user est identifié, on exécute ce code
 		... sinon on raise pour le conduire au formulaire d'identification
   end
-  
+
   ...
 end #/HTML
 ~~~
@@ -918,10 +918,10 @@ Un watcher se définit à l'aide de ces données absolues :
 ~~~ruby
 <ID_WATCHER>: {
   titre:					'<titre>',						# p.e. "Démarrage du module d'apprentissage"
-  																			# C'est le titre qui apparaitre en chapeau de 
+  																			# C'est le titre qui apparaitre en chapeau de
   																			# la notification
  	relpath:				'<classe>/<method>',	# p.e. 'IcModule/start'
-  																			# C'est le chemin d'accès au dossier du watcher 
+  																			# C'est le chemin d'accès au dossier du watcher
   																			# qui définit également la classe (IcModule) et
   																			# la méthode principale d'exécution.
   actu_id:			'<ACTU ID>'|nil,				# p.e. 'STARTMODULE'
@@ -938,7 +938,7 @@ La propriété `:next` permet de définir automatiquement le watcher suivant à 
 
 ### Constitution des données de watchers
 
-Les données des watchers, enregistrées dans la table `watchers`. 
+Les données des watchers, enregistrées dans la table `watchers`.
 
 Cf. ci-dessous dans la partie [Ajouter un watcher à un icarien](#addwatcher).
 
@@ -971,7 +971,7 @@ Les données qui seront enregistrées dans la table `watchers` sont les suivant
 
 ~~~ruby
 data = {
-	objet_id:				Integer,		# toujours requis. C'est la donnée par exemple, qui 
+	objet_id:				Integer,		# toujours requis. C'est la donnée par exemple, qui
   														# définit l'objet à traiter.
 	triggered_at:		Integer,		# Si le watcher ne doit être déclenché qu'à un temps
   														# donné, comme les paiements.
@@ -984,7 +984,7 @@ data = {
   vu_user:				Boolean,		# Automatique (en fonction du créateur du watcher) mais peut
   														# être défini explicitement lorsqu'un watcher n'a pas à être
   														# vu par l'user
-	
+
   # = AUTOMATIQUE = 	
   user_id:				Integer,		# Définit automatiquement (possesseur du watcher)
 	wtype:					String			# Pris du premier argument
@@ -1027,7 +1027,7 @@ Ensuite, on crée le dossier :
 _lib/modules/watchers_processus/<objet-class>/<processus>/
 ~~~
 
-… et on met dedans tous les fichiers utiles. 
+… et on met dedans tous les fichiers utiles.
 
 À commencer par le fichier `main.rb` qui doit définir :
 
@@ -1037,12 +1037,12 @@ class Watcher < ContainerClass        class Watcher < ContainerClass
   def <processus>												def start
     ...																		...
   end 																	end
-  
+
   # Méthode optionnelle appelée quand on refuse le watcher
   def contre_<processus>								def contre_start
     ...																		...
   end																		end
-  
+
   # Méthode propre au watcher
   def ma_methode_personnelle
   	message "Je joue ma méthode personnelle"
@@ -1111,11 +1111,9 @@ Si un formulaire doit être utilisé pour la notification — ce qui est souven
 
 ~~~ruby
 <%
-  form = Form.new(..., class:'inline')
+  form = Form.new(..., class:'inline', watcher:id) # NOTER ICI watcher: id
 	form.rows = {
-    '<watcher>' 	=> {type:'hidden', name:'wid', value:id},
-    '<operation>' => {type:'hidden', name:'ope', value:'run'}
-  	... les autres champs utiles ...
+  	... les champs utiles ...
   }
 	form.submit_button = "Activer ce watcher"
 	form.other_buttons = [
@@ -1172,7 +1170,7 @@ Quand c’est une notification administrateur, les boutons pour forcer la destru
 Les mails sont des fichiers `ERB` adressés à l’administration ou à l’icarien. Noter qu’ils sont envoyés APRÈS avoir joué le processus avec succès. Comme pour les notifications, c’est la présence ou non de ces fichiers qui détermine s’il faut envoyer ou non un mail après exécution du watcher.
 
 ~~~
-mail_admin.erb			# mail à envoyer à l'administrateur 
+mail_admin.erb			# mail à envoyer à l'administrateur
 mail_user.erb				# mail à envoyer à l'icarien
 
 contre_mail_admin.erb # mail à envoyer à l'administrateur en cas de renoncer (bouton contraire)
@@ -1279,7 +1277,7 @@ Mettre son code à :
 ~~~ruby
 "run_watcher(<watcher id>)"
 
-# Donc : 
+# Donc :
 require_module('ticket')
 ticket = Ticket.create(user_id: user.id, code:"run_watcher(#{watcher_id})".freeze)
 
@@ -1414,7 +1412,7 @@ Pour pouvoir récupérer une instance quelconque.
 
 ### `<Classe>::instanciate(data_item)`
 
-Cette méthode permet d’instancier un objet avec ses données, lorsqu’on vient de le récupérer dans la base de données. 
+Cette méthode permet d’instancier un objet avec ses données, lorsqu’on vient de le récupérer dans la base de données.
 
 > À titre de rappel, normalement, dans les classes `ContainerClass`, c’est avec l’identifiant seulement qu’on instancie un objet, donc cette méthode épargne d’utiliser par exemple :
 >
@@ -1508,7 +1506,7 @@ Permet de charger tout ou partie des données, en les mettant dans la variable `
 
 Cette méthode est à utiliser lorsqu’on sait qu’il va y avoir un grand nombre d’instance à instances.
 
-Si on met en second argument `true`, alors la variable `@items` est remise à rien et on peut ensuite utiliser `<classe>::each_item` pour boucler sur tous les items retenus. 
+Si on met en second argument `true`, alors la variable `@items` est remise à rien et on peut ensuite utiliser `<classe>::each_item` pour boucler sur tous les items retenus.
 
 Par exemple, pour afficher tous les modules suivis par un icarien, on peut faire :
 
@@ -1824,9 +1822,9 @@ Cf. le site [Smiley cool](https://smiley.cool/fr/emoji-list.php).
 
 [utilisateur courant]: #currentuser
 [dossier de route]: #dossierroute
-[]: 
+[]:
 [formate_date]: #formate_date
 [principe des xrequired]: #principexrequired
 
-[_lib/modules/watchers/constants.rb]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb
-[données absolues des watchers]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb
+[_lib/modules/watchers_processus/_constants_.rb]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/_constants_.rb
+[données absolues des watchers]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/_constants_.rb

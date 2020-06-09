@@ -3,16 +3,16 @@
   Script assistant pour créer un nouveau type de watcher
 =end
 
-ID_WATCHER = 'send_comments'
+ID_WATCHER = 'download_comments'
 DATA_WATCHER = {
   titre: 'Chargement des commentaires', # pour la notification (user et admin)
   objet_class:  'IcEtape',       # le dossier principal
-  processus:    'send_comments', # le processus (~ nom méthode)
+  processus:    'download_comments', # le processus (~ nom méthode)
   # L'ID-Watcher suivant SI ET SEULEMENT SI l'objet_class reste la même
   # NOTE : il s'agit d' ID_WATCHER, pas du processus (dans ce cas, il vaut mieux
   # que les deux soient identiques, si c'est possible — en général, c'est
   # toujours possible).
-  next:         'download_comments',
+  next:         'depot_qdd',
   # Notifications
   notif_user:   true,
   notif_admin:  false,
@@ -20,8 +20,8 @@ DATA_WATCHER = {
   mail_user:    true,
   mail_admin:   false,
   # Actualité
-  actu_id:      'COMMENTS', # mettre l'identifiant (majuscules) actualité, si actualité
-  actualite:    true
+  actu_id:      nil, # mettre l'identifiant (majuscules) actualité, si actualité
+  actualite:    false
 }
 
 # Ne rien toucher en dessous de cette ligne
@@ -134,7 +134,7 @@ end #/WatcherCreator
 
 creator = WatcherCreator.new(ID_WATCHER, DATA_WATCHER)
 creator.build
-path_data = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb"
+path_data = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/_constants_.rb"
 code = File.read(path_data).force_encoding('utf-8')
 unless code.include?("#{ID_WATCHER}:")
   `open -a Atom #{path_data}`

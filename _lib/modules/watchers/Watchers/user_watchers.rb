@@ -128,15 +128,10 @@ def unread
   # log("-> unread (@unread = #{@unread.inspect})")
   @unread ||= begin
     filter_key = user.admin? ? :admin : :user
-    log("filter_key: #{filter_key.inspect}")
-    log("all: #{all.inspect}")
     ur = all.select do |watcher|
-      log("watcher:#{watcher.inspect}")
-      log("watcher.vu_par?(filter_key): #{watcher.vu_par?(filter_key).inspect}")
       next false if watcher.vu_par?(filter_key)
       watcher
     end
-    log("Unread : #{ur} (key: #{filter_key.inspect})")
     ur
   end
 end #/ read

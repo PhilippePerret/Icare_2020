@@ -2,9 +2,15 @@
 require_module('icmodules')
 class Watcher < ContainerClass
   def send_comments
-    if param(:form_id) == 'send-comments-forms'
-      form = form.new
-      proceed_sending_comments if form.valid?
+    log('-> send_comments')
+    log("param(:form_id): #{param(:form_id).inspect}")
+    if param(:form_id) == 'send-comments-form'
+      form = Form.new
+      if form.conform?
+        proceed_sending_comments
+        # TODO WARNING ATTENTION, S'IL Y A UN PROBLÈME, IL NE FAUT PAS
+        POURSUIVRE LE WATCHER
+      end
     end
   end # / send_comments
   def contre_send_comments
@@ -17,8 +23,31 @@ class Watcher < ContainerClass
   #   - les mettre dans un dossier de 'sent-comments/user-<user id>'
   #   - le reste (actualité, watcher suivant, se fait automatiquement)
   def proceed_sending_comments
+    path_dossier = File.join(DOWNLOAD_FOLDER,'sent-comments',"user-#{owner.id}-#{icetape.id}")
+    nombre_commentaires = 0
+    # Boucler sur chaque document de l'étape
     icetape.documents.each_with_index do |document, idx|
       # Ce document a-t-il un commentaire ?
+      docfile_comments = param("document-#{document.id}-comments".to_sym)
+      next if docfile_comments.nil?
+      docfile_name = docfile_comments.original_filename
+      if docfile_comments.size == 0
+        return erreur "Le fichier #{docfile_name}” est vide…"
+      end
+      # On l'enregistre dans le dossier
+      path_file = File.join(path_dossier, docfile_name)
+      file.open(path_file,'wb'){|f|f.write docfile_comments.read}
+      nombre_commentaires += 1
     end
+
+    unless nombre_commentaires > 0
+      erreur "Il faut transmettre au moins un document !".freeze
+    end
+
+    # On fait passer l'étape au statut suivant ()
+    icetape.set(status: 4)
+    # Le reste se fait automatiquement (mail à l'user, actualité, prochain
+    # watcher)
+    message "Le documents ont bien été enregistrés et #{owner.pseudo} a été averti#{fem(:e)}."
   end #/ proceed_sending_comments
 end # /Watcher < ContainerClass

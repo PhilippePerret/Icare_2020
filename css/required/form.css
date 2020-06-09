@@ -5,6 +5,7 @@ div.watcher form {
 }
 form {
   display:inline-block;
+  background-color:#F7F7F7;
 }
 form:not(.inline){
   min-width:50%;
@@ -29,6 +30,9 @@ form.inline div.row
 form div.row span.value {
   display:inline-block;
   flex-grow:2;
+}
+form div.row span.value.file {
+  height:32px;
 }
 form div.row span.value > * {
   font-family:inherit;

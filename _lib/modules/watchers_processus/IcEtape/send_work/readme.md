@@ -1,0 +1,1 @@
+Noter que ce watcher est un peu spécial. Il ne traite pas automatiquement ses fichiers comme les autres. Il est inutile par exemple de mettre des mails ou des actualités, ils ne seront pas traités de cette manière.
