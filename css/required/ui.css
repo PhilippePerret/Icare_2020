@@ -12,6 +12,10 @@ h2, h3, h4, h5 {
   max-width: var(--text-max-width);
 }
 
+pre {
+  white-space:break-spaces;
+}
+
 span.emoji {
   vertical-align:bottom;
   margin-right:0px;
