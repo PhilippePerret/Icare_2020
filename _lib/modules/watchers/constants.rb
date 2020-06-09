@@ -52,7 +52,7 @@ DATA_WATCHERS = {
     actu_id: nil
   },
   send_comments: {
-    titre: 'Chargement des commentaires'.freeze,
+    titre: 'Travail à l’étude'.freeze,
     relpath: 'IcEtape/send_comments'.freeze,
     next: 'download_comments'.freeze,
     actu_id: "COMMENTS"

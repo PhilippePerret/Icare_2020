@@ -7,7 +7,7 @@ class HTML
 SELECT_NOTE = <<-HTML
 <select class="" name="note-document%{idoc}" id="note-document%{idoc}">
   <option value="">---</option>
-  #{(1..20).collect{|i|"<option value=\"#{i}\">#{i}</option>"}.join}
+  #{(1..20).to_a.reverse.collect{|i|"<option value=\"#{i}\">#{i}</option>"}.join}
 </select>
 HTML
 

@@ -9,7 +9,7 @@ MAIN_LINKS = {
   overview: '<a href="overview"><span class="emoji">👀</span> <span>en savoir plus</span></a>'.freeze,
   signup:   '<a id="signup-btn" href="user/signup" class="main">📋 s’inscrire</a>'.freeze,
   login:    '<a href="user/login">🔓 s’identifier</a>'.freeze,
-  logout:   '<a href="user/logout">🔒 se déconnecter</a>'.freeze,
+  logout:   '<a class="btn-logout" href="user/logout">🔒 se déconnecter</a>'.freeze,
   # BUREAU
   bureau:   '<a href="bureau/home">bureau</a>'.freeze,
   work:     '<a href="bureau/travail">Travail courant</a>'.freeze,

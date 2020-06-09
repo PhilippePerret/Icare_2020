@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require_module('icmodules')
 class Watcher < ContainerClass
   def send_comments
     message "Je dois jouer le processus IcEtape/send_comments"

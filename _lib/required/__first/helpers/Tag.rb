@@ -128,7 +128,7 @@ end #/Tag
 # sera chargé avec 'require_module('form')'
 TAG_SPAN  = '<span class="%{class}" style="%{style}" title="%{title}">%{text}</span>'.freeze
 TAG_INFO_BULLE  = '<span class="info-bulle %{class}"><span class="info-bulle-clip">%{text}</span><span class="info-bulle-aide">%{aide}</span><span>'.freeze
-TAG_LIEN  = '<a href="%{route}" class="%{class}" title="%{title}" target="%{target}" style="%{style}">%{titre}</a>'.freeze
+TAG_LIEN  = '<a href="%{route}" id="%{id}" class="%{class}" title="%{title}" target="%{target}" style="%{style}">%{titre}</a>'.freeze
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
 TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze
 TAG_ANCHOR    = '<a name="%s"></a>'.freeze

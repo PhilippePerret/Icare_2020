@@ -9,7 +9,8 @@
 
 =end
 module SpecModuleNavigation
+  URL_OFFLINE = 'http://localhost/AlwaysData/Icare_2020'
   def goto_home
-    visit 'http://localhost/AlwaysData/Icare_2020'
+    visit URL_OFFLINE
   end #/ goto_home
 end
