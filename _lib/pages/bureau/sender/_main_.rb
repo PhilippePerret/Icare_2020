@@ -53,6 +53,7 @@ class HTML
       user.enregistre_documents_travail(sent_docs)
       Actualite.add('SENDWORK', user, MESSAGES[:actualite_send_work] % {pseudo:user.pseudo, numero:user.icetape.numero, module:user.icmodule.name})
       send_mails_annonce(sent_docs)
+      remove_and_create_watchers
       param(:rid, 'sent_work_confirmation')
     else
       # Aucun document (valide) n'a été transmis, il faut redemander
@@ -60,6 +61,14 @@ class HTML
     end
   end #/ check_documents_and_save
 
+  # Ce module particulier ne fonctionnant pas entièrement avec un watcher,
+  # il faut les gérer "à la main", c'est-à-dire supprimer le watcher 'send_work'
+  # et créer un nouveau watcher 'download_work'
+  def remove_and_create_watchers
+    user.watchers.remove(wtype:'send_work')
+    user.watchers.add(wtype: 'download_work', objet_id:user.icetape.id)
+  end #/ remove_and_create_watchers
+  
   # Méthode qui se charge de l'envoi des mails à l'administrateur et
   # à l'icarien.
   # +sent_docs+   Liste des {SentDocument}, instance des documents envoyés.

@@ -100,6 +100,15 @@ def add wtype, data = nil
   end
 end #/ add
 
+# Détruit tous les watchers de l'user correspondant aux données +data+ (qui
+# seront envoyées à `find`)
+def remove data
+  ids = find(data).collect do |watcher| watcher.id end
+  request = "DELETE FROM `watchers` WHERE id "
+  request << ((ids.count == 1) ? "= #{ids.first}" : "IN (#{ids.join(VG)})")
+  db_exec(request)
+end #/ remove
+
 def count
   all.count
 end #/ count

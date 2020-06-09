@@ -2,7 +2,7 @@
 require_module('icmodules')
 class Watcher < ContainerClass
   def download_work
-    message "Téléchargement des document (à implémenter)"
+    message "Téléchargement des documents (à implémenter)"
   end # / download_work
 end # /Watcher < ContainerClass
 
