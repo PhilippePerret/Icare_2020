@@ -1,0 +1,7 @@
+<%
+plusieurs = @plusieurs
+s = plusieurs ? 's' : ''
+%>
+<p> <%= plusieurs ? 'Vos' : 'Votre' %> document<%= s %> <%= plusieurs ? 'ont' : 'a' %> bien été pris en compte.</p>
+<p>Date estimée des retours (*) : <strong><%= @date_commentaires %></strong>.</p>
+<p class="explication small">(*) en fonction de la longueur de ce<%= s %> document<%= s %>.</p>

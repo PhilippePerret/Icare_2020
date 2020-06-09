@@ -44,8 +44,8 @@ class URL
     end
 
     # Raccourci
-    def param(key)
-      current.param(key)
+    def param(key, value = nil)
+      current.param(key, value)
     end
   end #/<< self
 
@@ -54,8 +54,16 @@ class URL
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
-def param(key)
-  params[key]
+
+# Obtenir ou redéfinir un paramètre
+# Note pour affecter la valeur nil, il faut utiliser :null
+def param(key, value = nil)
+  if value.nil?
+    params[key]
+  else
+    value = nil if value == :null
+    params[key] = value
+  end
 end
 
 def params

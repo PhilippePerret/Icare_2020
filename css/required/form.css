@@ -133,6 +133,10 @@ form span.file-field input[type="file"] {
   height:1px!important;
 }
 form span.file-name {
+  display:inline-block;
+  width:360px;
   overflow:hidden;
   text-overflow:ellipsis;
+  font-size:0.8em;
+  vertical-align:middle;
 }

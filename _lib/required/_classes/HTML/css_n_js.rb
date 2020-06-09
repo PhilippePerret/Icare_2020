@@ -29,6 +29,7 @@ class HTML
 
   # Pour ajouter des feuilles de style à la volée
   def add_js path, before = false
+    log("-> add_js(#{path})")
     @all_js ||= []
     path = path.sub(/#{APP_FOLDER}/,'.')
     if before

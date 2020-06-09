@@ -29,16 +29,9 @@ class IcEtape < ContainerClass
       })
     end #/ create_for
 
-    # Crée l'icetape et retourne l'identifiant
+    # Crée l'icetape et retourne le nouvel identifiant
     def create_in_db(data)
-      now = Time.now.to_i
-      data.merge!(created_at:now, updated_at:now)
-      valeurs = data.values
-      interro = Array.new(valeurs.count, '?').join(VG)
-      columns = data.keys.join(VG)
-      request = "INSERT INTO icetapes (#{columns}) VALUES (#{interro})".freeze
-      db_exec(request, valeurs)
-      return db_last_id
+      return db_compose_insert('icetapes'.freeze, data)
     end #/ create_in_db
 
   end # /<< self
@@ -49,6 +42,11 @@ class IcEtape < ContainerClass
 #     INSTANCE
 #
 # ---------------------------------------------------------------------
+
+# Raccourcis (d'absetape)
+def titre
+  @titre ||= absetape.titre
+end #/ titre
 
 def absetape
   @absetape ||= AbsEtape.get(data[:absetape_id])

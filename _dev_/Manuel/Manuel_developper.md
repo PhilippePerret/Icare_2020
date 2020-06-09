@@ -114,6 +114,45 @@ Cela, on le comprend, permet donc de partager des méthodes et des modules dans 
 
 
 
+## Paramètres URL
+
+
+
+#### Obtenir la valeur d’un paramètre
+
+Pour obtenir un paramètre passé par l'URL, on utilise la méthode :
+
+~~~ruby
+param(:<key>)							param(:op)
+# => valeur de :<key>			# => retourne la valeur de &op=...
+~~~
+
+
+#### (Re)définir la valeur d'un paramètre
+
+On peut définir ou redéfinir ce paramètre à la volée en cours de programme, à l’aide d’un second argument :
+
+~~~ruby
+param(:<key>, <new value>)								param(:op, "nouvelle-operation")
+# Met la valeur de :<key> à <new value>		# Met :op à "nouvelle-operation"
+
+# Si la clé est inexistante, cela la crée, ce qui permet de passer des valeurs à
+# travers tout le programme.
+~~~
+
+> Noter que ce changement est « définitif ». La valeur initiale sera supprimée. Mais on peut définir un nouveau paramètres en prenant garde des collisions de nom :
+>
+> ~~~ruby
+> param(:old_op, param(:op))
+> param(:op, "nouvelle opération")
+> ~~~
+>
+> 
+
+---
+
+
+
 ## Requérir des modules à la volée
 
 Requérir des modules à la volée permet de ne charger que le code nécessaire à une section. C’est un principe fondateur du nouvel atelier.

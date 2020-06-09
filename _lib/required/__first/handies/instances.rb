@@ -9,8 +9,8 @@ def user
   User.current
 end
 
-def param key
-  URL.param(key)
+def param key, value = nil
+  URL.param(key, value)
 end
 
 def html

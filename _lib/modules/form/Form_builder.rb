@@ -104,8 +104,12 @@ class Form
   end
 
   # Retourne true si le formulaire contient des champs pour des fichiers
+  # En plus, la méthode ajoute le module ./js/modules/form_with_files.js
   def files?
-    @has_files = searchforrowfile if @has_files.nil?
+    if @has_files.nil?
+      @has_files = searchforrowfile
+      html.add_js('./js/modules/form_with_files.js') if @has_files
+    end
     @has_files
   end #/ files?
   def searchforrowfile

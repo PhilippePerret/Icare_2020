@@ -19,5 +19,8 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
+def name
+  @name ||= data[:original_name]
+end #/ name
 
 end #/IcDocument < ContainerClass

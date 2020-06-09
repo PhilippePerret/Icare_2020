@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require_module('form')
 require_module('user/modules')
+html.add_js('./js/modules/form_with_files.js')
 
 class HTML
   def titre
@@ -47,11 +48,12 @@ class HTML
     end
 
     if sent_docs.count > 0
-      log("#{sent_docs.count} documents sont ok, je les traite.")
+      log("#{sent_docs.count} documents ok => Traitement")
       # Pour le mail à l'administrateur
       user.enregistre_documents_travail(sent_docs)
       Actualite.add('SENDWORK', user, MESSAGES[:actualite_send_work] % {pseudo:user.pseudo, numero:user.icetape.numero, module:user.icmodule.name})
       send_mails_annonce(sent_docs)
+      param(:rid, 'sent_work_confirmation')
     else
       # Aucun document (valide) n'a été transmis, il faut redemander
       erreur(ERRORS[:sent_documents_required])
@@ -62,23 +64,29 @@ class HTML
   # à l'icarien.
   # +sent_docs+   Liste des {SentDocument}, instance des documents envoyés.
   def send_mails_annonce sent_docs
+    @plusieurs = sent_docs.count > 1
+    require_module('mail')
     @documents_ids = []
     @documents_names = []
+    @documents_ids_n_names = []
     @date_commentaires = formate_date(user.icetape.expected_comments, duree: true)
     sent_docs.each do |sdoc|
       @documents_ids << "##{sdoc.id}"
+      @documents_ids_n_names << "#{sdoc.original_filename} (##{sdoc.id})"
       @documents_names << sdoc.original_filename
     end
     @documents_ids    = @documents_ids.join(VG)
     @documents_names  = @documents_names.join(VG)
+    @documents_ids_n_names = @documents_ids_n_names.join(VG)
 
     Mail.send({
       subject: 'Envoi de documents de travail',
       from: user.mail,
       message: deserb('mail_admin', self)
     })
+    s = @plusieurs ? 's' : ''
     Mail.send({
-      subject: 'Nous avons bien reçu vos documents de travail',
+      subject: "Document#{s} de travail bien reçu#{s}".freeze,
       to: user.mail,
       message: deserb('mail_user', self)
       })

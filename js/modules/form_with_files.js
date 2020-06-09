@@ -1,5 +1,8 @@
 'use strict';
-
+/*
+  Quand un formulaire contient des files, il faut charger ce module.
+  Cela est fait automatiquement si on passe par un Form.new
+*/
 class RowDocument {
   constructor(obj, name){
     this.obj  = obj
@@ -10,11 +13,15 @@ class RowDocument {
     this.realFileButton.click()
   }
   // Appelé quand on clique sur la croix pour annuler le document
+  // Si le module propre définit la méthode `afterOnRemove` elle est
+  // appelée à la fin (pour ajouter des opérations après la suppression
+  // du fichier)
   onRemove(ev){
     this.show(this.fakeButton)
     this.hide(this.nameSpan)
     this.hide(this.resetButton)
     this.realFileButton.value = '';
+    if ( 'function' == typeof this.afterOnRemove) this.afterOnRemove.call(this)
   }
   // Méthode appelée quand on a choisi le fichier
   onChooseFile(){

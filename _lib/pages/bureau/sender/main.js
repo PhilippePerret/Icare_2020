@@ -1,14 +1,21 @@
 'use strict';
+/*
+  Extension de la classe RowDocument pour les documents d'étape
+  Les différences fondamentales sont :
+    - la gestion du bouton général (doit apparaitre dès qu'un document
+      est choisi)
+    - la gestion des champs permettant de définir les notes à affecter.
+*/
 const MAIN_BUTTON = 'btn-send-work'
 
 RowDocument.prototype.afterChooseFile = function(){
-  console.log("-> afterChooseFile")
   this.showNoteSpan()
   this.show(this.mainButton)
   this.show(this.docNameSpan)
 }
 RowDocument.prototype.showNoteSpan = function(){this.show(this.spanNote)}
 RowDocument.prototype.hideNoteSpan = function(){this.hide(this.spanNote)}
+RowDocument.prototype.afterOnRemove = function(){this.hideNoteSpan()}
 
 Object.defineProperties(RowDocument.prototype, {
   'docNameSpan':{
