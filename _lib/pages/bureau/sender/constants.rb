@@ -3,8 +3,10 @@
   Constantes pour la partie bureau/sender
 =end
 MESSAGES.merge!({
+  # Pour les titres de page possible
   titre_:           'Transmission de documents non définie'.freeze,
-  titre_send_work:  'Envoi des documents de travail'.freeze,
+  titre_send_work_form:  'Envoi des documents de travail'.freeze,
+  titre_sent_work_confirmation: 'Bonne réception des documents'.freeze,
   actualite_send_work: '<span><strong>%{pseudo}</strong> transmet ses documents pour l’étape %{numero} de son module “%{module}”</span>'.freeze
 })
 
