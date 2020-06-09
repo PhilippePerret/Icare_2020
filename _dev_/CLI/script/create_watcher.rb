@@ -3,20 +3,25 @@
   Script assistant pour créer un nouveau type de watcher
 =end
 
-ID_WATCHER = 'download_work'
+ID_WATCHER = 'send_comments'
 DATA_WATCHER = {
-  titre: 'Chargement des documents de travail', # pour la notification (user et admin)
+  titre: 'Chargement des commentaires', # pour la notification (user et admin)
   objet_class:  'IcEtape',       # le dossier principal
-  processus:    'download_work', # le processus (~ nom méthode)
+  processus:    'send_comments', # le processus (~ nom méthode)
+  # L'ID-Watcher suivant SI ET SEULEMENT SI l'objet_class reste la même
+  # NOTE : il s'agit d' ID_WATCHER, pas du processus (dans ce cas, il vaut mieux
+  # que les deux soient identiques, si c'est possible — en général, c'est
+  # toujours possible).
+  next:         'download_comments',
   # Notifications
   notif_user:   true,
-  notif_admin:  true,
+  notif_admin:  false,
   # Mails
   mail_user:    true,
   mail_admin:   false,
   # Actualité
-  actu_id:      nil, # mettre l'identifiant (majuscules) actualité, si actualité
-  actualite:    false
+  actu_id:      'COMMENTS', # mettre l'identifiant (majuscules) actualité, si actualité
+  actualite:    true
 }
 
 # Ne rien toucher en dessous de cette ligne
@@ -138,7 +143,8 @@ unless code.include?("#{ID_WATCHER}:")
     #{ID_WATCHER}: {
       titre: '#{DATA_WATCHER[:titre]}'.freeze,
       relpath: '#{DATA_WATCHER[:objet_class]}/#{DATA_WATCHER[:processus]}'.freeze,
-      actu_id: #{DATA_WATCHER[:actu_id].inspect}
+      actu_id: #{DATA_WATCHER[:actu_id].inspect},
+      next: #{DATA_WATCHER[:next] ? "'#{DATA_WATCHER[:next]}'.freeze" : 'nil'}
     },
   RUBY
 end

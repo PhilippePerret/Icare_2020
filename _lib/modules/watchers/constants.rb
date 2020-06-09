@@ -38,18 +38,26 @@ DATA_WATCHERS = {
     relpath: 'IcModule/paiement'.freeze,
     actu_id: nil
   },
+  # --- Parcours des documents d'une icétape ---
   send_work: {
     titre: 'Envoi des documents de travail'.freeze,
-    automatique: true,
     relpath: 'IcEtape/send_work'.freeze,
-    actu_id: "SENDWORK"
+    actu_id: "SENDWORK",
+    next: 'download_work'
   },
   download_work: {
     titre: 'Chargement des documents de travail'.freeze,
-    automatique: true,
     relpath: 'IcEtape/download_work'.freeze,
+    next: 'send_comments',
     actu_id: nil
   },
+  send_comments: {
+    titre: 'Chargement des commentaires'.freeze,
+    relpath: 'IcEtape/send_comments'.freeze,
+    next: 'download_comments'.freeze,
+    actu_id: "COMMENTS"
+  },
+  # --- Modules ---
   commande_module:    {
     titre: 'Commande de module',
     relpath:'AbsModule/commande',

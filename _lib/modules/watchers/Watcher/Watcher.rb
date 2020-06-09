@@ -27,6 +27,7 @@ def run
   if poursuivre
     send_mails
     add_actualite
+    next_watcher if absdata[:next]
     destroy
     send(:onSuccess) if respond_to?(:onSuccess)
   end
@@ -45,6 +46,18 @@ rescue Exception => e
   log(e)
   erreur(e.message)
 end #/ unrun
+
+# Génération du watcher suivant (automatique)
+# SI ET SEULEMENT SI :
+#   + la propriété :next du watcher est définie dans ses données absolues
+#   + :object_class est la même entre celui-ci et le suivant
+def next_watcher
+  unless absdata[:next].nil?
+    owner.watchers.add(wtype:absdata[:next], objet_id:objet_id)
+  else
+    erreur "ERREUR SYSTÉMIQUE : la propriété :next du watcher n'est pas définie. impossible d'utiliser next_watcher.".freeze
+  end
+end #/ next_watcher
 
 # Destruction du watcher
 def destroy
@@ -104,12 +117,6 @@ def params
     end
   end
 end #/ params
-
-# Retourne true si c'est un watcher automatique (cf. mode d'emploi)
-def automatique?
-  @is_automatique = !!absdata[:automatique] if @is_automatique.nil?
-  @is_automatique
-end #/ automatique?
 
 # Chemin relatif (dans watchers_processus) défini dans les données
 # absolues

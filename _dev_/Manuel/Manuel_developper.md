@@ -890,9 +890,9 @@ end #/HTML
 
 Les watchers permettent de gérer toute l’activité, les actions, possible sur l’atelier. Ils permettent de produire les notifications qui doivent être données à l’administrateur ou à l’icarien/utilisateur.
 
-Les **données de tous les watchers** sont définies dans le fichier [_lib/modules/watchers/constants.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb).
+Les **données absolues de tous les watchers** sont définies dans le fichier [données absolues des watchers][].
 
-Le principe est le suivant (sauf pour les [watchers automatiques](#leswatchersauto)) :
+Le principe est le suivant :
 
 * Un watcher est créé (par exemple à l’inscription d’un candidat à l'atelier)
 * Ce watcher, s’il définit un fichier `notification_admin.erb`, produit une nouvelle notification sur le bureau de l’administrateur,
@@ -902,9 +902,39 @@ Le principe est le suivant (sauf pour les [watchers automatiques](#leswatchersau
 * Si le watcher définit un fichier `mail_admin.erb` alors ce mail est automatiquement envoyé à l’administrateur.
 * Si le watcher définit un fichier `mail_user.erb` alors ce mail est automatiquement envoyé à l’icarien·ne concerné·e.
 * Si le watcher définit un fichier `actualite.erb` alors cette actualité est ajoutée aux actualités du site.
+* Si les données absolues du watcher définissent `:next`, alors le watcher suivant est automatiquement généré, sans avoir rien à faire.
 * Le watcher est détruit, ce qui retirera automatiquement les notifications des icariens et administrateur.
 
 
+
+<a name="absdatawatcher"></a>
+
+### Données absolues de tous les watchers
+
+Dans cette nouvelle version, toutes les données absolues des watchers sont définies dans le fichier unique des [données absolues des watchers][].
+
+Un watcher se définit à l'aide de ces données absolues :
+
+~~~ruby
+<ID_WATCHER>: {
+  titre:					'<titre>',						# p.e. "Démarrage du module d'apprentissage"
+  																			# C'est le titre qui apparaitre en chapeau de 
+  																			# la notification
+ 	relpath:				'<classe>/<method>',	# p.e. 'IcModule/start'
+  																			# C'est le chemin d'accès au dossier du watcher 
+  																			# qui définit également la classe (IcModule) et
+  																			# la méthode principale d'exécution.
+  actu_id:			'<ACTU ID>'|nil,				# p.e. 'STARTMODULE'
+  next:					'id-next-watcher'|nil		# p.e. 'stop' (ce n'est pas vrai)
+}
+~~~
+
+
+
+La propriété `:next` permet de définir automatiquement le watcher suivant à la destruction du watcher courant. Elle ne peut être définie que **si et seulement si le watcher suivant possède le même `:objet_class`**, et seulement dans ce cas (j'insiste.
+
+
+<a name='constitutionwatchers'></a>
 
 ### Constitution des données de watchers
 
@@ -935,7 +965,7 @@ require_module('watchers') # requis
 id_new_watcher = icarien.watchers.add(<watcher type>, {<data>} )
 ~~~
 
-Les `types de watchers` sont définis dans le fichier [_lib/modules/watchers/constants.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb).
+Les `types de watchers` sont définis dans le fichier des [données absolues des watchers][].
 
 Les données qui seront enregistrées dans la table `watchers` sont les suivantes, beaucoup sont automatiques ou semi-automatiques :
 
@@ -962,6 +992,12 @@ data = {
 ~~~
 
 
+
+#### Ajout automatique du watcher
+
+Si les données absolues du watcher définissent la propriété `:next` (avec comme valeur l'id-watcher du watcher suivant), alors ce watcher est automatiquement créé avant la destruction du watcher courant.
+
+> Notez bien que comme le stipulent les [données absolues du watcher](#absdatawatcher) pour utiliser la génération automatique, il faut que les deux watchers partagent le même `:objet_class`. Dans le cas contraire, il faut explicitement instancier le watcher avec `<owner>.watchers.add(wtype:..., objet_id:...)
 
 
 
@@ -1791,3 +1827,6 @@ Cf. le site [Smiley cool](https://smiley.cool/fr/emoji-list.php).
 []: 
 [formate_date]: #formate_date
 [principe des xrequired]: #principexrequired
+
+[_lib/modules/watchers/constants.rb]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb
+[données absolues des watchers]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/constants.rb

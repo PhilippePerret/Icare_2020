@@ -2,7 +2,15 @@
 require_module('icmodules')
 class Watcher < ContainerClass
   def download_work
-    message "Téléchargement des documents (à implémenter)"
+    # Procéder au téléchargement des documents de travail de l'user
+    path_folder = File.join(DOWNLOAD_FOLDER,'sent-work',"user-#{owner.id}")
+    if File.exists?(path_folder)
+      download(path_folder)
+    else
+      erreur "Désolé, mais le dossier #{path_folder} est introuvable.".freeze
+    end
+    owner.icetape.set(status:3)
+    # Note : le watcher suivant est automatiquement créé
   end # / download_work
 end # /Watcher < ContainerClass
 
