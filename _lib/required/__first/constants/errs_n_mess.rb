@@ -5,7 +5,9 @@
 
 ERRORS = {
   no_data_modified: 'Aucune donnée n’a été modifiée…'.freeze,
-  unfound_data: 'Données introuvables (avec %{with})'.freeze
+  unfound_data: 'Données introuvables (avec %{with})'.freeze,
+  file_unfound: 'Fichier introuvable : %s'.freeze,
+  mark_unfound_file: '[FICHIER MANQUANT : `%s`]'.freeze
 }
 
 MESSAGES = {

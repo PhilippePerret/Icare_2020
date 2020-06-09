@@ -784,6 +784,18 @@ Comme `user` — donc l’[utilisateur courant][] — est envoyé en second ar
 
 
 
+#### Texte sûr (`safe(str)`)
+
+Avant de passer du texte à `ERB.new`, il est bon de le faire passer d’abord par la méthode `safe` qui va forcer l’encodage.
+
+~~~ruby
+
+ERB.new(safe("mon texte pas sûr")).result
+
+~~~
+
+
+
 <a name="currentuser"></a>
 
 ## L'Utilisateur courant
@@ -1281,6 +1293,16 @@ def folder
 		folderpath
   end
 end
+~~~
+
+
+
+#### `file_read(<path>)`
+
+Pour pouvoir lire un texte de façon sûre, en retournant un code bien encodé.
+
+~~~ruby
+code = file_read('/chemin/vers/mon/fichier')
 ~~~
 
 

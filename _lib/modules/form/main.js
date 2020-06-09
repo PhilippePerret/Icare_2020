@@ -4,7 +4,6 @@ class RowDocument {
   constructor(obj, name){
     this.obj  = obj
     this.name = name
-    this.idoc = Number(obj.getAttribute('data-document-id')) ;
   }
   // Appelé quand on clique sur le fakeButton pour choisir le document
   onClick(ev) {
@@ -19,6 +18,7 @@ class RowDocument {
   }
   // Méthode appelée quand on a choisi le fichier
   onChooseFile(){
+    console.log("-> onChooseFile")
     this.hide(this.fakeButton)
     this.show(this.nameSpan)
     this.show(this.resetButton)
@@ -27,6 +27,7 @@ class RowDocument {
     docpath = docpath.split('\\');
     docpath = docpath[docpath.length - 1];
     this.nameSpan.innerHTML = docpath ;
+    if ( 'function' == typeof(this.afterChooseFile) ) {this.afterChooseFile.call(this)}
   }
   observe(){
     this.fakeButton.addEventListener('click', this.onClick.bind(this));
@@ -57,7 +58,6 @@ function observeDocuments(){
     const name = row.getAttribute('data-name')
     const rowDoc = new RowDocument(row, name)
     rowDoc.observe()
-    console.log("Document observé :", rowDoc)
   })
 }
 

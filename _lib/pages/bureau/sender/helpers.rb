@@ -16,13 +16,13 @@ HTML
   def row_document(idoc)
     <<-HTML
 <div class="row mt1">
-  <span class="value doc-field" data-document-id="#{idoc}">
-    <button id="buttondocument#{idoc}" type="button" class="btn-choose">Choisir le document #{idoc}…</button>
+  <span class="value file-field" data-name="#{idoc}">
+    <button id="buttondocument#{idoc}" type="button" class="file-choose">Choisir le document #{idoc}…</button>
     <span class="doc-name-span hidden">
-      <button type="button" class="btn-remove noborder">❌</button>
-      <span id="documentname#{idoc}" class="doc-name"></span>
+      <button type="button" class="file-reset">❌</button>
+      <span class="file-name"><!-- nom du document --></span>
     </span>
-    <input type="file" name="document#{idoc}" id="document#{idoc}" />
+    <input type="file" name="document#{idoc}" id="document-#{idoc}" />
     <span class="hidden span-note">
       <span class="libelle inline">Note estimative : </span>
       #{SELECT_NOTE % {idoc: idoc}}

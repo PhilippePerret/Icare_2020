@@ -35,12 +35,12 @@ class IcEtape
       wtype = TravailType.get(rubrique, fichier)
       wtype.travail
     }
-    ERB.new(w).result()
+    ERB.new(safe(w)).result()
   end #/ section_etape_travail
 
   def travail_propre_formated
     if travail_propre
-      ERB.new(travail_propre).result()
+      ERB.new(safe(travail_propre)).result()
     else
       Tag.div(text:"Aucun travail propre pour cette étape", class:'italic small')
     end
@@ -48,7 +48,7 @@ class IcEtape
 
   def etape_liens
     if has_liens?
-      liens.collect { |lien| lien.out }.join
+      liens.collect { |lien| lien.out }.join.force_encoding(Encoding::UTF_8)
     else
       Tag.div(text:'Aucun lien utile pour cette étape.'.freeze, class:'italic small'.freeze)
     end
@@ -101,10 +101,27 @@ class IcEtape
 
   # Retourne la liste complète des documents, formatée
   def nombre_documents_qdd_et_lien
-    nombre = db_count('icdocuments', "absetape_id = #{absetape_id} AND ( options LIKE '2%' OR options LIKE '_________2%' )")
-    if nombre == 0
+    # La logique pour récupérer le nombre :
+    # Il faut trouver le nombre d'icetapes qui ont pour étapes absolues absetape_id
+    # Et récolter tous les documents de ces étapes
+    request = <<-SQL
+SELECT COUNT(id)
+  FROM icetapes ice
+  INNER JOIN absetapes abe ON abe.id = ice.absetape_id
+  INNER JOIN icdocuments doc ON doc.icetape_id = abe.id
+  WHERE
+    ice.absetape_id = #{absetape_id}
+    SQL
+    # -- AND doc.options LIKE '2%' OR doc.options LIKE '_________2%'
+    # Ajouter la ligne ci-dessus si on veut exclure les documents
+    # non partagés (mais normalement, lorsque l'on est sur une étape, on peut
+    # voir tous les documents, même les documents non partagés, à partir du
+    # moment où ils sont sur le QdD).
+    nombre = db_exec(request)
+    if nombre.nil?
       Tag.div(text:"Il n'y a aucun document partagé pour cette étape.", class:'small italic')
     else
+      nombre = nombre[0][:"COUNT(id)"]
       s = nombre > 1 ? 's' : ''
       Tag.div(text:"Les icarien·ne·s ont déjà produit et partagé <strong>#{nombre} document#{s} pour cette étape</strong>.<div class=\"center\"><a href=\"qdd/list?aet=#{absetape_id}\" class=\"btn\">Voir/lire les documents</a></div>")
     end
@@ -174,7 +191,7 @@ LienEtape = Struct.new(:dataline) do
       case target
       when 'livre'
         'livre'
-      when 'narration', 'page'
+      when 'narration', 'page', 'collection'
         'page'
       else
         raise "Cible inconnue : #{target}"

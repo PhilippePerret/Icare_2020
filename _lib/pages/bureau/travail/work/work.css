@@ -68,3 +68,7 @@ section#section_etape_mini_faq div.mf_qr div.mf_reponse {
   padding:12px;
   border-left:1px solid;
 }
+
+fieldset#fs-liens li {
+  list-style:none;
+}

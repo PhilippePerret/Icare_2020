@@ -27,8 +27,9 @@ class Watcher < ContainerClass
     # On peut définir les nouvelles données de l'icarien
     owner.set(owner_data)
 
-    # Watcher pour que je puisse télécharger les documents
-    owner.watchers.add(wtype:'download_work', objet_id:icetape_id)
+    # Watcher pour dire à l'icarien de rejoindre sa partie travail et
+    # d'utiliser le bouton "Remettre son travail" pour le remettre
+    owner.watchers.add(wtype:'send_work', objet_id:icetape_id)
 
     message "Votre module a été démarré ! Vous pouvez voir le premier travail dans votre section « Travail courant » que vous trouverez à l'accueil de votre bureau.".freeze
   end #/ start

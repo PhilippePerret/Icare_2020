@@ -9,6 +9,20 @@ def mkdir dirpath
   dirpath
 end #/ mkdir
 
+def file_read(path)
+  if File.exists?(path)
+    begin
+      File.open(path,'rb'){|f|safe(f.read)}
+    rescue Exception => e
+      log("PROBLÈME AVEC LE FICHIER: #{path}")
+      return ""
+    end
+  else
+    erreur ERRORS[:file_unfound] % [path]
+    return ERRORS[:mark_unfound_file] % [path]
+  end
+end #/ file_read
+
 def full_path(relpath)
   fromCaller(relpath, Kernel.caller)
 end #/ full_path

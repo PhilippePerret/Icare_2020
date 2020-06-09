@@ -10,11 +10,7 @@ class << self
       path = File.join(dossier, path)
     end
     path << '.erb' unless File.exists?(path)
-    if File.exists?(path)
-      return ERB.new(File.read(path).force_encoding('utf-8')).result(owner && owner.bind)
-    else
-      return "IMPOSSIBLE DE TROUVER #{path} (avec '#{relpath}' et '#{dossier}')".freeze
-    end
+    return ERB.new(file_read(path)).result(owner && owner.bind)
   rescue Exception => e
     log(e)
     return Tag.div(text: e.message, class:'warning')
