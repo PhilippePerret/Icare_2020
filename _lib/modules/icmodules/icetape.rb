@@ -43,6 +43,18 @@ class IcEtape < ContainerClass
 #
 # ---------------------------------------------------------------------
 
+def ref
+  @ref ||= "étape “#{numero}. #{titre}” <span class='small'>(##{id})</span> du #{icmodule.ref}".freeze
+end #/ ref
+
+# Retourne la liste des instances IcDocuments de l'étape
+def documents
+  @documents ||= begin
+    request = "SELECT * FROM icdocuments WHERE icetape_id = #{id}".freeze
+    db_exec(request).collect { |ddoc| IcDocument.instantiate(ddoc) }
+  end
+end #/ documents
+
 # Raccourcis (d'absetape)
 def titre
   @titre ||= absetape.titre
@@ -51,6 +63,10 @@ end #/ titre
 def absetape
   @absetape ||= AbsEtape.get(data[:absetape_id])
 end #/ absmodule
+
+def icmodule
+  @icmodule ||= IcModule.get(data[:icmodule_id])
+end #/ icmodule
 
 # Cf. le mode d'emploi pour le détail
 def status

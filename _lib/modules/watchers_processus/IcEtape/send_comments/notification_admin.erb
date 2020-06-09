@@ -1,0 +1,11 @@
+<%
+  form = Form.new(id:'send-comments-forms', route:route.to_s, libelle_size:140, class:'noborder')
+  rows = {}
+  icetape.documents.each_with_index do |document, idx|
+    rows.merge!( "#{document.original_name}" => {name: "document-#{idx+1}-comments", type:'file'})
+  end
+  form.rows = rows
+  form.submit_button = "Envoyer les commentaires"
+%>
+<p>Envoyer les commentaires des documents concernant<br><strong><%= icetape.ref.titleize %></strong>.</p>
+<%= form.out %>

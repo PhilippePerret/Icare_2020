@@ -3,6 +3,11 @@
   Module User pour les helpers methods
 =end
 class User
+
+  def ref
+    @ref ||= "#{pseudo} <span class='small'>(##{id})</span>".freeze
+  end #/ ref
+  
   # Retourne le visage de l'utilisateur, en fonction du fait que c'est
   # un homme ou une femme
   def visage

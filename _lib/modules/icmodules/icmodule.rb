@@ -47,6 +47,9 @@ end # /<< self
 #     INSTANCE
 #
 # ---------------------------------------------------------------------
+def ref
+  @ref ||= "module “#{name}” <span class='small'>(##{id})</span>"
+end #/ ref
 
 def absmodule
   @absmodule ||= AbsModule.get(data[:absmodule_id])

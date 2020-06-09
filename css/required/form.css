@@ -1,4 +1,8 @@
 textarea {resize:none;}
+
+div.watcher form {
+  margin:0;
+}
 form {
   display:inline-block;
 }

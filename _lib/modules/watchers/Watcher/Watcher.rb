@@ -9,6 +9,7 @@ class << self
   def table
     @table ||= 'watchers'
   end #/ table
+
 end # /<< self
 # ---------------------------------------------------------------------
 #
