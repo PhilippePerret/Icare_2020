@@ -53,7 +53,6 @@ end #/ initialize
 def degel_or_gel(force = false, &block)
   remove if force || ENV['GEL_FORCE']
   if exists?
-    puts "Je dégèle “#{name}”"
     degel
   else
     or_gel(&block)
@@ -85,7 +84,7 @@ def gel
   # Faire une duplication des dossiers
   WORKING_FOLDERS.each do |dossier|
     next unless File.exists?(dossier)
-    puts "Je place le dossier #{dossier.inspect} dans le dossier #{folder.inspect}"
+    # puts "Je place le dossier #{dossier.inspect} dans le dossier #{folder.inspect}"
     FileUtils.cp_r(dossier, folder)
   end
 end #/ gel
@@ -98,6 +97,7 @@ def degel
     # Si le gel n'existe pas
     return self # pour pouvoir utiliser la tournure degel('nom').or_gel
   end
+  puts "Dégel de #{name}…"
   # Vider la base de données
   # Utile ?
   # Charger les données dans la base de données
@@ -110,7 +110,7 @@ def degel
     dossier_name = File.basename(dossier)
     src_folder = File.join(folder, dossier_name)
     dst_folder = File.dirname(dossier)
-    puts "Je REPLACE le dossier #{src_folder.inspect} dans le dossier #{dst_folder.inspect}"
+    # puts "Je REPLACE le dossier #{src_folder.inspect} dans le dossier #{dst_folder.inspect}"
     FileUtils.cp_r(src_folder, dst_folder)
   end
   return true

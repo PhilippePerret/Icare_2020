@@ -8,8 +8,8 @@ class Watcher < ContainerClass
     # Procéder au téléchargement des documents de travail de l'user
     path_folder = File.join(DOWNLOAD_FOLDER,'sent-work',"user-#{owner.id}")
     if File.exists?(path_folder)
-      THREADS << Thread.new { download(path_folder)   }
       THREADS << Thread.new { redirect_to(route.to_s) }
+      THREADS << Thread.new { download(path_folder)   }
     else
       erreur "Désolé, mais le dossier #{path_folder} est introuvable.".freeze
     end

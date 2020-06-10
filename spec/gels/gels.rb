@@ -63,11 +63,18 @@ def envoi_travail
     goto_login_form
     login_icarien(1)
     goto 'bureau/sender?rid=send_work_form'
-    path_doc_work = File.join(SPEC_FOLDER_DOCUMENTS,'extrait.odt')
+    path_doc_work   = File.join(SPEC_FOLDER_DOCUMENTS,'extrait.odt')
+    path_doc_work2  = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.rtf')
     within("form#send-work-form") do
+      # Le premier document
       attach_file('document-1', path_doc_work)
       sleep 1
       select("12", from: 'note-document1')
+      # Le second document
+      attach_file('document-3', path_doc_work2)
+      sleep 1
+      select("15", from: 'note-document3')
+      # Soumettre le formulaire
       click_on(class: 'btn-send-work')
     end
     save_and_open_page
@@ -80,7 +87,7 @@ def recupere_travail
     goto_login_form
     login_admin
     goto('admin/notifications')
-    click_on('Télécharger le document') # Il n'y en a qu'un seul pour le moment
+    click_on('Télécharger les documents') # Il n'y en a qu'un seul pour le moment
     sleep 10
   end
 end #/ recupere_travail

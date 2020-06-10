@@ -46,7 +46,7 @@ DATA_WATCHERS = {
     next: 'download_work'
   },
   download_work: {
-    titre: 'Chargement des documents de travail'.freeze,
+    titre: 'Chargement du travail de l’étape'.freeze,
     relpath: 'IcEtape/download_work'.freeze,
     next: 'send_comments',
     actu_id: nil

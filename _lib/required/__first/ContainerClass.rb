@@ -95,6 +95,10 @@ class ContainerClass
     end
   end #/ method_missing
 
+  def f_id
+    @f_id ||= "<span class='small'>(##{id})</span>".freeze
+  end #/ f_id
+
   def data
     @data ||= db_get(self.class.table, {id: id})
   end #/ data

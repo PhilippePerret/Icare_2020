@@ -53,6 +53,9 @@ class HTML
       user.enregistre_documents_travail(sent_docs)
       Actualite.add('SENDWORK', user, MESSAGES[:actualite_send_work] % {pseudo:user.pseudo, numero:user.icetape.numero, module:user.icmodule.name})
       send_mails_annonce(sent_docs)
+      # On enregistre son fichier d'information qui contient la note
+      # et la date estimée de remise du travail
+      sent_docs.each do |sentdoc| sentdoc.save_infos end
       remove_and_create_watchers
       param(:rid, 'sent_work_confirmation')
     else
@@ -68,7 +71,7 @@ class HTML
     user.watchers.remove(wtype:'send_work')
     user.watchers.add(wtype: 'download_work', objet_id:user.icetape.id)
   end #/ remove_and_create_watchers
-  
+
   # Méthode qui se charge de l'envoi des mails à l'administrateur et
   # à l'icarien.
   # +sent_docs+   Liste des {SentDocument}, instance des documents envoyés.
@@ -114,10 +117,17 @@ class SentDocument
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
+def save_infos
+  note = param("note-document#{idoc}".to_sym)
+  pathinfos = File.join(folder, "#{original_filename}-infos.json")
+  docdata = {
+    note: note,
+    expected_comments: formate_date(user.icetape.expected_comments)
+  }
+  File.open(pathinfos,'wb'){|f| f.write docdata.to_json}
+end #/ save_infos
 def check
   if (note = param("note-document#{idoc}".to_sym).nil_if_empty)
-    pathnote = File.join(folder, "#{original_filename}-note.txt")
-    File.open(pathnote,'wb'){|f| f.write note}
     return true
   else
     # Si la note n'est pas définie, le document n'est pas valide

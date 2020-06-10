@@ -5,8 +5,8 @@
 %>
 <pre>
 <code>
-Étape : <strong class="black"><%= icetape.numero %></strong>. <%= icetape.absetape.titre %>
-Documents IDs: <%= icetape.documents.collect{|doc| "##{doc.id}"}.join(VG) %>
+Étape : <%= icetape.f_id %> <%= icetape.numero %>. <%= icetape.absetape.titre %>
+Documents IDs: <%= icetape.documents.collect{|doc| "#{doc.name} #{doc.f_id}"}.join(VG) %>
 </code>
 </pre>
 <div class="buttons">
