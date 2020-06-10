@@ -59,10 +59,12 @@ RSpec.configure do |config|
     # À EXÉCUTER AVANT LES TESTS
     vide_all_dossiers
     vide_db
+    File.open('./TESTS_ON','wb'){|f|f.write(Time.now.to_i.to_s)}
   end
   config.after :suite do
     # À EXÉCUTER APRÈS LES TESTS
     # puts "Je finis la suite de tests"
+    File.unlink('./TESTS_ON') if File.exists?('./TESTS_ON')
   end
 
 
@@ -72,7 +74,7 @@ RSpec.configure do |config|
   def require_data(relpath)
     require File.join(FOLDER_DATA, relpath)
   end #/ require_data
-  
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin

@@ -18,7 +18,14 @@ class Watcher < ContainerClass
     # Procéder au téléchargement des documents de travail de l'user
     path_folder = File.join(DOWNLOAD_FOLDER,'sent-work',"user-#{owner.id}")
     if File.exists?(path_folder)
-      download_from_watcher(path_folder)
+      unless TESTS
+        download_from_watcher(path_folder)
+      else
+        # Quand on est en mode test
+        # TODO NOTE il faudra peut-être détuire le dossier "à la main"
+        # comme le ferait le download suivant.
+        redirect_to(route.to_s)
+      end
     else
       erreur "Désolé, mais le dossier #{path_folder} est introuvable.".freeze
     end

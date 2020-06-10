@@ -16,4 +16,7 @@ Dir["#{LIB_FOLDER}/required/__first/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/_classes/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/then/**/*.rb"].each{|m|require m}
 
+TESTS = File.exists?('./TESTS_ON') # réglé par spec_helper.rb
+log("TESTS : #{TESTS.inspect}")
+
 log("ROUTE : #{route.to_s}")

@@ -1,9 +1,7 @@
 # encoding: UTF-8
 =begin
   Fichier de configuration de l'atelier Icare
-
   Note : ce fichier est appelé APRÈS le fichier des constantes.
-
 =end
 
 # Conservation du log

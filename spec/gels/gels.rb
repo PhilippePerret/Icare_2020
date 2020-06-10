@@ -5,7 +5,7 @@
 Dir['./spec/support/Gel/**/*.rb'].each{|m|require m}
 
 def inscription_marion
-  gel('inscription_marion').degel_or_gel do
+  degel_or_gel('inscription_marion') do
     def clic_signup_button
       find('#signup-btn').click
     end #/ clic_signup_button
@@ -21,7 +21,8 @@ def inscription_marion
 end #/ inscription_marion
 
 def validation_mail
-  gel('validation_mail').degel_or_gel do
+  degel_or_gel('validation_mail') do
+    inscription_marion
     require_data('signup_data')
     data = DATA_SPEC_SIGNUP_VALID[1]
     user_mail = data[:mail][:value]
@@ -35,7 +36,8 @@ def validation_mail
 end #/ validation_mail
 
 def validation_inscription
-  gel('validation_inscription').degel_or_gel do
+  degel_or_gel('validation_inscription') do
+    validation_mail
     goto_login_form
     login_admin
     goto 'admin/notifications'
@@ -48,7 +50,8 @@ def validation_inscription
 end #/ admin_valide_inscription
 
 def demarrage_module
-  gel('demarrage_module').degel_or_gel do
+  degel_or_gel('demarrage_module') do
+    validation_inscription
     goto_login_form
     login_icarien(1)
     goto 'bureau/notifications'
@@ -59,7 +62,8 @@ def demarrage_module
 end #/ marion_demarre_module
 
 def envoi_travail
-  gel('envoi_travail').degel_or_gel do
+  degel_or_gel('envoi_travail') do
+    demarrage_module
     goto_login_form
     login_icarien(1)
     goto 'bureau/sender?rid=send_work_form'
@@ -83,11 +87,33 @@ def envoi_travail
 end #/ marion_envoie_ses_documents
 
 def recupere_travail
-  degel('recupere_travail').or_gel do
+  degel_or_gel('recupere_travail') do
+    envoi_travail
     goto_login_form
     login_admin
     goto('admin/notifications')
-    click_on('Télécharger les documents') # Il n'y en a qu'un seul pour le moment
-    sleep 10
+    click_on('Télécharger les documents')
+    save_and_open_page
+    logout
   end
 end #/ recupere_travail
+
+def envoi_comments
+  degel_or_gel('envoi_comments') do
+    recupere_travail
+    goto_login_form
+    login_admin
+    goto('admin/notifications')
+    # On doit donner les documents commentés
+    path_doc_comments  = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail_comsPhil.rtf')
+    within("form#send-comments-form") do
+      # Le premier document
+      # attach_file('input[type="file"]', path_doc_comments)
+      first('input[type="file"]').set(path_doc_comments)
+      # Soumettre le formulaire
+      click_on('Envoyer les commentaires')
+    end
+    save_and_open_page
+    logout
+  end
+end #/ envoi_comments

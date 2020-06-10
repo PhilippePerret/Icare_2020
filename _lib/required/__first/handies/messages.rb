@@ -13,6 +13,7 @@ end
 
 def erreur(msg)
   Errorer.add(msg)
+  return false
 end
 alias :error :erreur
 

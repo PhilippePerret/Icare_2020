@@ -9,7 +9,7 @@ class Watcher < ContainerClass
       # Si le formulaire est conforme, on procède à l'upload des
       # document et on s'interromp en cas d'erreur
       if form.conform?
-        proceed_sending_comments || raise(WatcherInterruption.new)
+        proceed_sending_comments || raise(WatcherInterruption.new(nil))
       end
     end
   end # / send_comments
@@ -35,16 +35,17 @@ class Watcher < ContainerClass
       next if docfile_comments.nil?
       docfile_name = docfile_comments.original_filename
       if docfile_comments.size == 0
-        return erreur "Le fichier #{docfile_name}” est vide…"
+        return erreur("Le fichier #{docfile_name}” est vide…".freeze)
       end
       # On l'enregistre dans le dossier
+      FileUtils.mkdir_p(path_dossier)
       path_file = File.join(path_dossier, docfile_name)
-      file.open(path_file,'wb'){|f|f.write docfile_comments.read}
+      File.open(path_file,'wb'){|f|f.write docfile_comments.read}
       nombre_commentaires += 1
     end
 
     unless nombre_commentaires > 0
-      return erreur "Il faut transmettre au moins un document !".freeze
+      return erreur("Il faut transmettre au moins un document !".freeze)
     end
 
     # On fait passer l'étape au statut suivant ()

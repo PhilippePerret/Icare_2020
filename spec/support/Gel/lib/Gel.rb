@@ -19,10 +19,14 @@ def gel(name)
   Gel.get(name)
 end #/ gel
 
-# Pour pouvoir utiliser `degel('nom-gel').or_gel do ...`
+# Pour procéder à un dégel
 def degel(name)
   Gel.get(name).degel
 end #/ degel
+
+def degel_or_gel(name, force = false, &block)
+  Gel.get(name).degel_or_gel(force, &block)
+end #/ degel_or_gel
 
 class Gel
 # ---------------------------------------------------------------------
@@ -55,7 +59,7 @@ def degel_or_gel(force = false, &block)
   if exists?
     degel
   else
-    or_gel(&block)
+    proceed_gel(&block)
   end
 end #/ degel_or_gel
 
@@ -63,12 +67,7 @@ end #/ degel_or_gel
 
 # Joue le code et procède au gel
 #
-# NOTE Ne surtout pas modifier le nom bizarre de cete méthode. Il permet
-# d'utiliser la formule :
-#       degel('nom-du-gel').or_gel do
-#         ...
-#       end
-def or_gel(&block)
+def proceed_gel(&block)
   puts "Je joue et je gèle “#{name}”"
   yield if block_given?
   gel
@@ -95,7 +94,8 @@ def degel
   remove if ENV['GEL_FORCE']
   unless exists?
     # Si le gel n'existe pas
-    return self # pour pouvoir utiliser la tournure degel('nom').or_gel
+    proceed_gel
+    return self
   end
   puts "Dégel de #{name}…"
   # Vider la base de données

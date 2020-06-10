@@ -31,6 +31,8 @@ def run
   destroy
   send(:onSuccess) if respond_to?(:onSuccess)
 rescue WatcherInterruption => e
+  log("L'erreur (e) dans WatcherInterruption est :")
+  log(e)
   erreur(e.message) if e.message
 rescue Exception => e
   log(e)
