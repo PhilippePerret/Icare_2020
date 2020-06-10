@@ -25,13 +25,13 @@ end # /<< self
 def run
   require_folder_processus unless folder_processus_required?
   self.send(processus.to_sym)
-  if poursuivre
-    send_mails
-    add_actualite
-    next_watcher if absdata[:next]
-    destroy
-    send(:onSuccess) if respond_to?(:onSuccess)
-  end
+  send_mails
+  add_actualite
+  next_watcher if absdata[:next]
+  destroy
+  send(:onSuccess) if respond_to?(:onSuccess)
+rescue WatcherInterruption => e
+  erreur(e.message) if e.message
 rescue Exception => e
   log(e)
   erreur(e.message)
@@ -72,23 +72,8 @@ def edit
   message "Je dois éditer le watcher ##{id}"
 end #/ edit
 
-# Pour interrompre le processus joué par le watcher et ne pas le détruire
-# ni n'envoyer les mails
-def stop_process
-  self.poursuivre = false
-end #/ stop
-
 # / Fin méthodes publiques
 # ---------------------------------------------------------------------
-
-def poursuivre
-  @poursuivre = true if @poursuivre.nil?
-  @poursuivre
-end #/ poursuivre
-
-def poursuivre= valeur
-  @poursuivre = false
-end #/ poursuivre=
 
 def folder_processus_required?
   @folder_processus_has_been_already_required === true

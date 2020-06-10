@@ -6,10 +6,10 @@ class Watcher < ContainerClass
     log("param(:form_id): #{param(:form_id).inspect}")
     if param(:form_id) == 'send-comments-form'
       form = Form.new
+      # Si le formulaire est conforme, on procède à l'upload des
+      # document et on s'interromp en cas d'erreur
       if form.conform?
-        proceed_sending_comments
-        # TODO WARNING ATTENTION, S'IL Y A UN PROBLÈME, IL NE FAUT PAS
-        POURSUIVRE LE WATCHER
+        proceed_sending_comments || raise(WatcherInterruption.new)
       end
     end
   end # / send_comments
@@ -22,6 +22,9 @@ class Watcher < ContainerClass
   #   - récupérer les documents envoyés (associés aux documents enregistrés)
   #   - les mettre dans un dossier de 'sent-comments/user-<user id>'
   #   - le reste (actualité, watcher suivant, se fait automatiquement)
+  #
+  # +return+  TRUE en cas de succès, NIL otherwise pour interrompre le
+  #           watchter
   def proceed_sending_comments
     path_dossier = File.join(DOWNLOAD_FOLDER,'sent-comments',"user-#{owner.id}-#{icetape.id}")
     nombre_commentaires = 0
@@ -41,7 +44,7 @@ class Watcher < ContainerClass
     end
 
     unless nombre_commentaires > 0
-      erreur "Il faut transmettre au moins un document !".freeze
+      return erreur "Il faut transmettre au moins un document !".freeze
     end
 
     # On fait passer l'étape au statut suivant ()
@@ -49,5 +52,7 @@ class Watcher < ContainerClass
     # Le reste se fait automatiquement (mail à l'user, actualité, prochain
     # watcher)
     message "Le documents ont bien été enregistrés et #{owner.pseudo} a été averti#{fem(:e)}."
+    return true
   end #/ proceed_sending_comments
+
 end # /Watcher < ContainerClass

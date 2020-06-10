@@ -938,7 +938,7 @@ La propriété `:next` permet de définir automatiquement le watcher suivant à 
 
 ### Constitution des données de watchers
 
-Les données des watchers, enregistrées dans la table `watchers`.
+Les données des watchers, enregistrées dans la table `icare.watchers`.
 
 Cf. ci-dessous dans la partie [Ajouter un watcher à un icarien](#addwatcher).
 
@@ -955,17 +955,8 @@ Elle sont déterminées à la création du watcher en fonction du fait que c’e
 
 <a name="addwatcher"></a>
 
-### Ajout d’un watcher à un icarien
+### Données icarien d'un nouveau watcher
 
-Pour ajouter un watcher à un icarien, il suffit d’appeler la méthode :
-
-~~~ruby
-require_module('watchers') # requis
-
-id_new_watcher = icarien.watchers.add(<watcher type>, {<data>} )
-~~~
-
-Les `types de watchers` sont définis dans le fichier des [données absolues des watchers][].
 
 Les données qui seront enregistrées dans la table `watchers` sont les suivantes, beaucoup sont automatiques ou semi-automatiques :
 
@@ -993,25 +984,78 @@ data = {
 
 
 
-#### Ajout automatique du watcher
 
-Si les données absolues du watcher définissent la propriété `:next` (avec comme valeur l'id-watcher du watcher suivant), alors ce watcher est automatiquement créé avant la destruction du watcher courant.
+### Cycle de vie du watcher
+
+#### Instancier un nouveau watcher
+
+Instancier un nouveau watcher se fait en l'ajouter à son propriétaire, toujours (?) un icarien.
+
+Il suffit d’appeler la méthode :
+
+~~~ruby
+id_new_watcher = icarien.watchers.add(<watcher type>, {<data>} )
+~~~
+
+> Noter que le module « watchers  » est requis dont le programme doit définir
+> ~~~ruby
+> require_module('watchers') # requis
+> ~~~
+>
+
+Les `types de watchers` sont définis dans le fichier des [données absolues des watchers][].
+
+Pour voir les données enregistrées dans la base de donnée, [voir ici](#addwatcher).
+
+
+
+**Instanciation  automatique du prochain watcher**
+
+Si les données absolues du watcher définissent la propriété `:next` (avec comme valeur l'id-watcher du watcher suivant), alors le watcher suivant est automatiquement créé avant la destruction du watcher courant.
 
 > Notez bien que comme le stipulent les [données absolues du watcher](#absdatawatcher) pour utiliser la génération automatique, il faut que les deux watchers partagent le même `:objet_class`. Dans le cas contraire, il faut explicitement instancier le watcher avec `<owner>.watchers.add(wtype:..., objet_id:...)
 
 
 
-### Lancement d’un watcher
+##### Requierements d’un watcher
 
 Noter que le dossier [./_lib/modules/watchers_processus/xrequired](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/xrequired), conformément au [principe des xrequired](#principexrequired), est automatiquement chargé dès qu’un watcher est actionné.
 
 
 
+#### Interruption du watcher
+
+À l’intérieur du programme, un watcher peut être interrompu à n’importe quel moment à l’aide de :
+
+~~~ruby
+raise WatcherInterruption.new
+~~~
+
+Si le watcher appelle le processus `proceed_mon_operation`, on peut utiliser par exemple :
+
+~~~ruby
+class Watcher < ContainerClass
+  def mon_processus
+    proceed_mon_operation || raise(WatcherInterruption.new("J'ai interrompu"))
+    # => Interromp le watcher et affiche le message d'erreur
+  end
+  ...
+  def proceed_mon_operation
+    ...
+    if une_erreur
+	    return false
+    end
+    ...
+    return true
+  end
+end # /Watcher < ContainerClass
+~~~
+
+
+
+<a name="creationwatcher"></a>
+
 ### Création d’un nouveau watcher
-
-
-
-#### Assistant de création
 
 Le plus simple pour créer un nouveau type de watcher est d’utiliser **le script assistant** [\_dev_/CLI/script/create_watcher.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/CLI/script/create_watcher.rb).
 
@@ -1098,7 +1142,7 @@ notification_user.erb			# pour l'icarien
 
 Dans ces fichiers, on doit utiliser un `div.buttons` pour placer les boutons principaux.
 
-~~~erb
+​~~~erb
 <div class="buttons">
   <%= button_unrun("Renoncer") %>
   <%= button_run("Jouer la notification") %>

@@ -1,5 +1,8 @@
 # encoding: UTF-8
 
+# Erreur qui permet d'interrompre un watcher n'importe quand
+class WatcherInterruption < 
+
 PROCESSUS_WATCHERS_FOLDER = File.join(MODULES_FOLDER,'watchers_processus')
 
 # Les constantes des processus de watchers

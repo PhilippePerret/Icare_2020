@@ -1,7 +1,4 @@
 # encoding: UTF-8
-class IdentificationRequiredError < StandardError; end
-class PrivilegesLevelError < StandardError; end
-
 def icarien_required(message = nil)
   raise IdentificationRequiredError.new(message||MESSAGES[:ask_identify]) if user.guest?
 end
