@@ -1,1 +1,8 @@
-<p>Nouvelle route</p>
+<p>
+  Le <strong>Quai des docs</strong> est un lieu unique en son genre qui rassemble tous les documents produits au sein de l'Atelier (plus de 1000 aujourd'hui, en juin 2020).
+</p>
+<% if user.guest? %>
+  <p>Une icarienne ou un icarien peut consulter ici tous ces documents, pour s'en inspirer ou s'en écarter dans les travaux qui lui sont demandés.</p>
+<% else %>
+  <p>En tant qu'icarien<%= user.fem(:ne) %>, vous retrouverez bientôt ici un formulaire vous permettez de les télécharger.</p>
+<% end %>

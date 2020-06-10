@@ -19,8 +19,8 @@ class << self
     (1..5).each do |ivar|
       @params.merge!(ivar => ARGV[ivar])
     end
-    @delim = '-*40'
-    puts "\n"+delim
+    @delim = '-'*40
+    puts "\n#{delim}"
     puts "Command: #{command.inspect}"
     puts "Params : #{params.inspect}"
   end #/ analyse_command

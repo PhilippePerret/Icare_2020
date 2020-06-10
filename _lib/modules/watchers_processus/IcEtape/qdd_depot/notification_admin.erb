@@ -1,1 +1,14 @@
-<p>Formulaire pour déposer le travail sur le quai des docs</p>
+<%
+  form = Form.new(id:'qdd-depot-form', route:route.to_s, watcher:id)
+  rows = {}
+  # On doit proposer des formulaires en fonction des documents
+  icetape.documents.each do |document|
+    rows.merge!("#{document.name}" => {type:'file', name:"document-#{document.id}-original"})
+    if document.has_comments?
+      rows.merge!("(commentaires ##{document.id})" => {type:'file', name:"document-#{document.id}-comments"})
+    end
+  end
+  form.rows = rows
+  form.submit_button = "Déposer ces documents".freeze
+%>
+<%= form.out %>

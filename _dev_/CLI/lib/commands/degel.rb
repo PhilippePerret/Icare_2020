@@ -11,6 +11,7 @@ class << self
       liste_gels = Dir["#{folder_gels}/*"].collect{|p|File.basename(p)}
       Q.select("Dégeler…") do |q|
         q.choices liste_gels
+        q.per_page liste_gels.count
       end
     end
     File.exists?(File.join(folder_gels,gel_name)) || raise("Le gel '#{gel_name}' est inconnu.")

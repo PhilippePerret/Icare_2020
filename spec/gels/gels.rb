@@ -117,3 +117,16 @@ def envoi_comments
     logout
   end
 end #/ envoi_comments
+
+def recupere_comments
+  degel_or_gel('recupere_comments') do
+    envoi_comments
+    goto_login_form
+    login_icarien(1)
+    goto('bureau/home')
+    click_on('Notifications')
+    click_on('Télécharger les commentaires')
+    save_and_open_page
+    logout
+  end
+end #/ recupere_comments

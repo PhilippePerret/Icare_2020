@@ -39,4 +39,8 @@ feature 'Préparation en live' do
     envoi_comments
   end
 
+  scenario 'jusqu’à la récupération des commentaires par l’icarien', recupere_comments:true do
+    recupere_comments
+  end
+
 end

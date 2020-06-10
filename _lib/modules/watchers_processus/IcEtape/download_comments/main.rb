@@ -10,7 +10,14 @@ class Watcher < ContainerClass
   def download_comments
     path_dossier = File.join(DOWNLOAD_FOLDER,'sent-comments',"user-#{owner.id}-#{icetape.id}")
     if File.exists?(path_dossier)
-      download_from_watcher(path_dossier)
+      unless TESTS
+        # En mode normal
+        download_from_watcher(path_dossier)
+      else
+        # En mode test, on n'affiche pas
+        # TODO NOTE Il faudra supprimer le dossier, comme le ferait download
+        redirect_to(route.to_s)
+      end
     else
       erreur ERRORS[:unfound_folder_comments]
     end
