@@ -28,12 +28,12 @@ feature 'Préparation en live' do
     inscription_marion
   end #/test d'une bonne candidate
 
-  scenario 'Jusqu’à la validation du mail', mail_validated: true do
+  scenario 'Jusqu’à la validation du mail', validation_mail: true do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
     inscription_marion
-    validation_du_mail
+    validation_mail
   end #/test d'une bonne candidate
 
   scenario 'Jusqu’à la validation de l’inscription pas l’administration', validation_inscription: true do
@@ -41,8 +41,8 @@ feature 'Préparation en live' do
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
     inscription_marion
-    validation_du_mail
-    admin_valide_inscription
+    validation_mail
+    validation_inscription
   end #/test d'une bonne candidate
 
   scenario 'Jusqu’au démarrage du module', demarrage_module: true do
@@ -50,19 +50,29 @@ feature 'Préparation en live' do
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
     inscription_marion
-    validation_du_mail
-    admin_valide_inscription
-    marion_demarre_module
+    validation_mail
+    validation_inscription
+    demarrage_module
   end #/test d'une bonne candidate
 
-  scenario 'Jusqu’à l’envoi des documents de travail', send_work: true do
-    # Les méthodes utiles
+  scenario 'Jusqu’à l’envoi des documents de travail', envoi_travail: true do
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
     inscription_marion
-    validation_du_mail
-    admin_valide_inscription
-    marion_demarre_module
-    marion_envoie_ses_documents
+    validation_mail
+    validation_inscription
+    demarrage_module
+    envoi_travail
   end #/test d'une bonne candidate
+
+  scenario 'jusqu’à la récupération du travail par Phil', recupere_travail: true do
+    extend SpecModuleNavigation
+    extend SpecModuleFormulaire
+    inscription_marion
+    validation_mail
+    validation_inscription
+    demarrage_module
+    envoi_travail
+    recupere_travail
+  end
 end

@@ -21,6 +21,7 @@ end #/ login
 
 # Pour identifier une icarienne par son index dans les bonnes données
 def login_icarien(nth)
+  require_data('signup_data')
   data = DATA_SPEC_SIGNUP_VALID[nth]
   login(mail: data[:mail][:value], password:data[:password][:value])
 end #/ login_icarien

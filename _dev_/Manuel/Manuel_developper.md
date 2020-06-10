@@ -1707,23 +1707,43 @@ On produit ensuite le gel en lançant la commande
 rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
 ~~~
 
-#### Forcer la re-création d'un gel
+#### Forcer la re-création de tous les gels jusqu’à…
 
 Pour forcer la re-création d'un gel, il suffit d'ajouter la variable d'environnement `GEL_FORCE` à true :
 
 ~~~bash
-ENV['GEL_FORCE']=true rspec spec/gels -t mon_premier_gel 
+GEL_FORCE=true rspec spec/gels -t mon_premier_gel  # Réinitialise TOUS LES GELS
+~~~
+
+> Noter que la commande ci-dessus va refaire TOUS LES GELS. Pour ne traiter qu’un seul gel, utiliser la commande ci-dessous.
+
+
+
+**Pour forcer seulement le dernier gel**
+
+~~~bash
+rspec spec/gels -t mon_premier_gel --force
 ~~~
 
 
 
 #### Revenir à un gel précédent (`degel`)
 
-Il suffit de jouer la même commande que pour produire le gel :
+On peut jouer la même commande que pour produire le gel :
 
 ~~~bash
 rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
 ~~~
+
+L’inconvénient de cette méthode est qu’on passera forcément par tous les gels précédents.
+
+Il est largement préférable d’utiliser la commande CLI `icare` avec :
+
+~~~bash
+icare degel[ <nom_du_gel>]
+~~~
+
+> Si on n’indique pas de nom de dégel, la liste des tous les gels est présentée pour un choix facile et rapide.
 
 
 
@@ -1932,6 +1952,18 @@ log("params: #{URL.current.params.inspect}")
 ### Émojis
 
 Cf. le site [Smiley cool](https://smiley.cool/fr/emoji-list.php).
+
+
+
+### Icare en ligne de commande
+
+La commande `icare` permet de gérer l’atelier en ligne de commande. Jouer simplement :
+
+~~~bash
+> icare
+~~~
+
+… pour obtenir de l’aide sur toutes les commandes.
 
 
 

@@ -18,6 +18,11 @@ def gel(name)
   Gel.get(name)
 end #/ gel
 
+# Pour pouvoir utiliser `degel('nom-gel').or_gel do ...`
+def degel(name)
+  Gel.get(name)
+end #/ degel
+
 class Gel
 # ---------------------------------------------------------------------
 #
@@ -50,22 +55,36 @@ def degel_or_gel(force = false, &block)
     puts "Je dégèle “#{name}”"
     degel
   else
-    puts "Je joue et je gèle “#{name}”"
-    yield if block_given?
-    gel
+    or_gel(&block)
   end
 end #/ degel_or_gel
 
 # = main =
+
+# Joue le code et procède au gel
+#
+# NOTE Ne surtout pas modifier le nom bizarre de cete méthode. Il permet
+# d'utiliser la formule :
+#       degel('nom-du-gel').or_gel do
+#         ...
+#       end
+def or_gel(&block)
+  puts "Je joue et je gèle “#{name}”"
+  yield if block_given?
+  gel
+end #/ run_and_gel
+
 # Procède au gel du gel
 def gel
   # Créer le dossier du gel
   FileUtils.mkdir_p(folder)
   # Faire un dump de la base de données
   `mysqldump -u root icare_test > "#{folder}/icare_test.sql"`
+  supfolder = File.dirname(folder)
   # Faire une duplication des dossiers
   WORKING_FOLDERS.each do |dossier|
     next unless File.exists?(dossier)
+    puts "Je place le dossier #{dossier.inspect} dans le dossier #{folder.inspect}"
     FileUtils.cp_r(dossier, folder)
   end
 end #/ gel
@@ -73,6 +92,11 @@ end #/ gel
 # = main =
 # Procède au dégel du gel
 def degel
+  remove if ENV['GEL_FORCE']
+  unless exists?
+    # Si le gel n'existe pas
+    return self # pour pouvoir utiliser la tournure degel('nom').or_gel
+  end
   # Vider la base de données
   # Utile ?
   # Charger les données dans la base de données
@@ -83,8 +107,12 @@ def degel
   WORKING_FOLDERS.each do |dossier|
     next unless File.exists?(dossier)
     dossier_name = File.basename(dossier)
-    FileUtils.cp_r(File.join(folder, dossier_name), dossier)
+    src_folder = File.join(folder, dossier_name)
+    dst_folder = File.dirname(dossier)
+    puts "Je REPLACE le dossier #{src_folder.inspect} dans le dossier #{dst_folder.inspect}"
+    FileUtils.cp_r(src_folder, dst_folder)
   end
+  return true
 end #/ degel
 
 # Force la destruction du gel

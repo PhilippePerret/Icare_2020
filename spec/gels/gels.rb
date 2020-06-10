@@ -11,8 +11,6 @@ def inscription_marion
     end #/ clic_signup_button
     # Les données à tester
     require_data('signup_data')
-    # On boucle sur toutes les données à tester
-    # Pour tester deux nouveaux candidats
     data = DATA_SPEC_SIGNUP_VALID[1]
     goto_home
     clic_signup_button
@@ -22,8 +20,8 @@ def inscription_marion
   end
 end #/ inscription_marion
 
-def validation_du_mail
-  get('validation_du_mail').degel_if_exists || begin
+def validation_mail
+  gel('validation_mail').degel_or_gel do
     require_data('signup_data')
     data = DATA_SPEC_SIGNUP_VALID[1]
     user_mail = data[:mail][:value]
@@ -34,10 +32,10 @@ def validation_du_mail
     save_and_open_page
     logout # pour laisser la place à l'administrateur
   end
-end #/ validation_du_mail
+end #/ validation_mail
 
-def admin_valide_inscription
-  gel('admin_valide_inscription').degel_if_exists || begin
+def validation_inscription
+  gel('validation_inscription').degel_or_gel do
     goto_login_form
     login_admin
     goto 'admin/notifications'
@@ -49,26 +47,40 @@ def admin_valide_inscription
   end
 end #/ admin_valide_inscription
 
-def marion_demarre_module
-  goto_login_form
-  login_icarien(1)
-  goto 'bureau/notifications'
-  click_on('run-button-icmodule-start')
-  save_and_open_page
-  logout
+def demarrage_module
+  gel('demarrage_module').degel_or_gel do
+    goto_login_form
+    login_icarien(1)
+    goto 'bureau/notifications'
+    click_on('run-button-icmodule-start')
+    save_and_open_page
+    logout
+  end
 end #/ marion_demarre_module
 
-def marion_envoie_ses_documents
-  goto_login_form
-  login_icarien(1)
-  goto 'bureau/sender?rid=send_work_form'
-  path_doc_work = File.join(SPEC_FOLDER_DOCUMENTS,'extrait.odt')
-  within("form#send-work-form") do
-    attach_file('document-1', path_doc_work)
-    sleep 1
-    select("12", from: 'note-document1')
-    click_on(class: 'btn-send-work')
+def envoi_travail
+  gel('envoi_travail').degel_or_gel do
+    goto_login_form
+    login_icarien(1)
+    goto 'bureau/sender?rid=send_work_form'
+    path_doc_work = File.join(SPEC_FOLDER_DOCUMENTS,'extrait.odt')
+    within("form#send-work-form") do
+      attach_file('document-1', path_doc_work)
+      sleep 1
+      select("12", from: 'note-document1')
+      click_on(class: 'btn-send-work')
+    end
+    save_and_open_page
+    logout
   end
-  save_and_open_page
-  logout
 end #/ marion_envoie_ses_documents
+
+def recupere_travail
+  degel('recupere_travail').or_gel do
+    goto_login_form
+    login_admin
+    goto('admin/notifications')
+    click_on('Télécharger le document') # Il n'y en a qu'un seul pour le moment
+    sleep 10
+  end
+end #/ recupere_travail

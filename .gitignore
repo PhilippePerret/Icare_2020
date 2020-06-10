@@ -6,3 +6,5 @@ _lib/data/qdd/
 
 tmp/
 tmp/forms/
+
+spec/support/Gel/gels/
