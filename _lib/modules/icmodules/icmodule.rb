@@ -48,7 +48,7 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 def ref
-  @ref ||= "module “#{name}” <span class='small'>(##{id})</span>"
+  @ref ||= "module “#{name}”#{f_id}"
 end #/ ref
 
 def absmodule

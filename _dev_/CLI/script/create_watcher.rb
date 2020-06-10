@@ -3,25 +3,25 @@
   Script assistant pour créer un nouveau type de watcher
 =end
 
-ID_WATCHER = 'download_comments'
+ID_WATCHER = 'qdd_depot'
 DATA_WATCHER = {
-  titre: 'Chargement des commentaires', # pour la notification (user et admin)
+  titre: 'Dépôt sur le Quai des docs', # pour la notification (user et admin)
   objet_class:  'IcEtape',       # le dossier principal
-  processus:    'download_comments', # le processus (~ nom méthode)
+  processus:    'qdd_depot', # le processus (~ nom méthode)
   # L'ID-Watcher suivant SI ET SEULEMENT SI l'objet_class reste la même
   # NOTE : il s'agit d' ID_WATCHER, pas du processus (dans ce cas, il vaut mieux
   # que les deux soient identiques, si c'est possible — en général, c'est
   # toujours possible).
-  next:         'depot_qdd',
+  next:         'qdd_sharing',
   # Notifications
-  notif_user:   true,
-  notif_admin:  false,
+  notif_user:   false,
+  notif_admin:  true,
   # Mails
   mail_user:    true,
   mail_admin:   false,
   # Actualité
-  actu_id:      nil, # mettre l'identifiant (majuscules) actualité, si actualité
-  actualite:    false
+  actu_id:      'QDDDEPOT', # mettre l'identifiant (majuscules) actualité, si actualité
+  actualite:    true
 }
 
 # Ne rien toucher en dessous de cette ligne
@@ -50,6 +50,7 @@ def build
   valid? || raise("Je dois renoncer")
   build_folder unless File.exists?(folder)
   build_main_file unless File.exists?(main_file)
+  build_actualite_file if DATA_WATCHER[:actualite] && !File.exists?(self.actualite_path)
   [:admin,:user].each do |who|
     # La notification
     key = "notif_#{who}".to_sym
@@ -64,7 +65,7 @@ def build
     if data[key]
       path = send("#{key}_path".to_sym)
       next if File.exists?(path)
-      code = "<p>Bonjour #{who == :admin ? 'Phil' : '<%= owner.pseudo %>'},</p>\n\n<p>Message du mail</p>"
+      code = "<p>Bonjour #{who == :admin ? 'Phil' : '<%= owner.pseudo %>'},</p>\n\n<p>Message du mail</p>\n\n<p><%= Le_Bot %></p>"
       File.open(path,'wb'){|f| f.write code}
     end
   end
@@ -88,6 +89,12 @@ end # /Watcher < ContainerClass
   RUBY
   File.open(main_file,'wb'){|f| f.write code}
 end #/ build_main_file
+
+def build_actualite_file
+  File.open(actualite_path,'wb'){|f| f.write <<-HTML }
+<span>TEXTE DE L'ACTUALITÉ POUR <strong><%= owner.pseudo %></strong></span>
+  HTML
+end #/ build_actualite_file
 # ---------------------------------------------------------------------
 #   Vérification
 # ---------------------------------------------------------------------
@@ -97,6 +104,9 @@ end #/ valid?
 # ---------------------------------------------------------------------
 #   Paths
 # ---------------------------------------------------------------------
+def actualite_path
+  @actualite_path ||= File.join(folder,'actualite.erb')
+end #/ actualite_path
 def mail_admin_path
   @mail_admin_path ||= mail_path_for(:admin)
 end #/ mail_admin_path

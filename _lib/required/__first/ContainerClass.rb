@@ -96,7 +96,7 @@ class ContainerClass
   end #/ method_missing
 
   def f_id
-    @f_id ||= "<span class='small'>(##{id})</span>".freeze
+    @f_id ||= user.admin? ? "<span class='small'>(##{id})</span>".freeze : EMPTY_STRING
   end #/ f_id
 
   def data

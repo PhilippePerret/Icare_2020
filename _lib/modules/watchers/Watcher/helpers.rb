@@ -19,7 +19,13 @@ class Watcher < ContainerClass
   # commande 'run' (donc la méthode définie par objet_class#processus dans
   # le dossier des données du watcher)
   def button_run(titre, options = nil)
-    Tag.lien(route:"#{route.to_s}?op=run&wid=#{id}", titre: titre, class:'main', id:"run-button-#{objet_class.downcase}-#{processus.downcase}")
+    css = if options && options.key?(:class)
+            options[:class]
+          else
+            ['btn','main']
+          end
+    # On construit le lien et on le renvoie
+    Tag.lien(route:"#{route.to_s}?op=run&wid=#{id}", titre: titre, class:'btn main', id:"run-button-#{objet_class.downcase}-#{processus.downcase}")
   end #/ button_run
 
   # Bouton pour contre-jouer (unrunner) le watcher, c'est-à-dire pour
