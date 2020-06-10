@@ -20,6 +20,12 @@ class HTML
     end.join(RC)
   end
 
+  # Pour ajouter du code JS brut dans la page
+  def raw_js_add code
+    @raw_js ||= ""
+    @raw_js << code + RC
+  end #/ raw_js_add
+
   # Pour ajouter des feuilles de style à la volée
   def add_css path
     @all_css ||= []

@@ -1,5 +1,5 @@
 <%
-  form = Form.new(id:'send-comments-form', route:route.to_s, libelle_size:140, watcher:id)
+  form = Form.new(id:'send-comments-form', route:route.to_s, libelle_size:180, watcher:id)
   rows = {}
   icetape.documents.each_with_index do |document, idx|
     rows.merge!( "#{document.original_name}" => {name: "document-#{document.id}-comments", type:'file'})

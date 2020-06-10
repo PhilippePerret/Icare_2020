@@ -1606,6 +1606,23 @@ Pour les autres méthodes, cf. le module `./lib/required/__first/ContainerClass.
 
 ## Téléchargement
 
+
+
+### Téléchargement depuis un watcher (`download_from_watcher`)
+
+Le téléchargement depuis une notification pose un problème particulier : si on utilise la méthode `download` simple comme ci-dessous, la page n’est pas actualisée et le watcher reste donc en place, n’indiquant pas de modification (ce qui peut être gênant pour l’icarien.)
+
+Donc, depuis un watcher, au lieu de `download(path)`, on doit utiliser la méthode `download_from_watcher(path)` qui va offrir un comportement particulier :
+
+* elle va créer un [ticket](#lestickets) dont le code est un appel à la méthode download normale,
+* elle redirige vers la page actuelle, ce qui aura pour effet de l’actualiser, et en ajoutant le paramètre `tikd` avec l’identifiant du ticket précédent,
+* la page principale, voyant ce paramètre `tikd`, ajoute dans le code de la page un script javascript qui va changer la location courante. Noter, avant de poursuivre, qu’à ce stade, la page est actualisée, le watcher précédent a disparu et a été remplacé par le nouveau, le suivant en général,
+* la relocation est invoquée, avec cette fois un paramètre `tik` qui va avoir pour effet de lancer la méthode `download`, ce qui proposera le zip à télécharger sans aucun changement de la page courante.
+
+### Téléchargement simple
+
+
+
 Pour permettre le téléchargement, on utilise la classe `Downloader` qui permet de gérer très facilement ces téléchargements.
 
 Il suffit d’utiliser la méthode handy `download` :
@@ -1634,6 +1651,8 @@ downLoader.download
 ~~~
 
 That’s it! Les documents seront proposés au téléchargement.
+
+
 
 **Fonctionnement**
 

@@ -4,7 +4,7 @@
 =end
 
 def redirect_to(route, options = nil)
-  Retour.redirect_to(route, options)
+  Route.redirect_to(route, options)
 end
 
 # Joue (run) le watcher d'identifiant +watcher_id+

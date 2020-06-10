@@ -66,6 +66,17 @@ def destroy
   db_exec(request)
 end #/ destroy
 
+# Cf. le mode d'emploi pour le détail de cette procédure (dans la section
+# des téléchargements, pas des watchers)
+# NOTE Attention, dans le code ci-dessous, il s'agit bien de `user` (le
+# visiteur actuel) et non pas le `owner` de ce watcher. Un watcher appartient
+# à un icarien et ça peut être moi qui télécharge des fichiers.
+def download_from_watcher(path_folder)
+  require_module('ticket')
+  ticket = Ticket.create(user_id:user.id, code:"download('#{path_folder}')")
+  redirect_to("#{route.to_s}?tikd=#{ticket.id}")
+end #/ download_from_watcher
+
 # Édition du watcher
 def edit
   admin_required # protection supplémentaire

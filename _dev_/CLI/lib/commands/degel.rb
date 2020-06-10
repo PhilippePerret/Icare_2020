@@ -14,7 +14,6 @@ class << self
       end
     end
     File.exists?(File.join(folder_gels,gel_name)) || raise("Le gel '#{gel_name}' est inconnu.")
-    puts "Dégel de '#{gel_name}'…"
     require_folder(File.join(APP_FOLDER,'spec','support','Gel','lib'))
     degel(gel_name)
     puts "Dégel opéré avec succès".vert

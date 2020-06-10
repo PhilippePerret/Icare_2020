@@ -18,6 +18,8 @@ form div.row {
 }
 form:not(.inline) div.row span.libelle {
   margin-top:4px;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 form:not(.inline) div.row span.libelle:not(.inline) {
   width:200px;

@@ -26,10 +26,19 @@ class HTML
     #{build_debug}
     #{Admin.section_essais if SHOW_DEVELOPPEMENT_TOOLS}
     #{js_tags}
+    #{relocation_if_download}
   </body>
 </html>
     HTML
   end
+
+  # Méthode qui est appelée si les paramètres contiennent 'tikd' qui est un
+  # ticket de download de document. Cf. le mode d'emploi pour l'explication.
+  def relocation_if_download
+    return '' unless param(:tikd)
+    # "<script type=\"text/javascript\">setTimeout(()=>{window.location='#{route.to_s}?tik=#{param(:tikd)}'},1000);</script>"
+    "<script type=\"text/javascript\">window.location='#{route.to_s}?tik=#{param(:tikd)}';</script>"
+  end #/ relocation_if_download
 
   def build_head
     @head = <<-HTML
@@ -39,6 +48,7 @@ class HTML
   <base href="http://localhost/AlwaysData/Icare_2020/">
   <title>Atelier Icare</title>
   #{css_tags}
+  <script type="text/javascript">#{@raw_js}</script>
 </head>
     HTML
   end
