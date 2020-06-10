@@ -5,6 +5,7 @@
   Gestion des gels
 =end
 require 'fileutils'
+require_relative '../../lib/required' # pour quand appelé depuis IcareCLI
 
 # Tous les dossiers à conserver dans un gel
 WORKING_FOLDERS = []
@@ -20,7 +21,7 @@ end #/ gel
 
 # Pour pouvoir utiliser `degel('nom-gel').or_gel do ...`
 def degel(name)
-  Gel.get(name)
+  Gel.get(name).degel
 end #/ degel
 
 class Gel

@@ -27,28 +27,12 @@ class << self
 
 
   def run
-    return help if command.nil?
-    send(command)
+    @command = 'help' if command.nil?
+    command_path = File.join(COMMANDS_FOLDER,"#{command}")
+    raise "Commande introuvable" unless File.exists?("#{command_path}.rb")
+    require(command_path)
+    send("proceed_#{command}".to_sym)
   end #/ run
 
-
-  def degel
-    main_folder_gel = File.join(APP_FOLDER,'spec','support','Gel')
-    folder_gels = File.join(main_folder_gel, 'gels')
-    gel_name = params[1]
-    gel_name ||= begin
-      liste_gels = Dir["#{folder_gels}/*"].collect{|p|File.basename(p)}
-      Q.select("Dégeler…") do |q|
-        q.choices liste_gels
-      end
-    end
-    File.exists?(File.join(folder_gels,gel_name)) || raise("Le gel '#{gel_name}' est inconnu.")
-    puts "Je vais dégeler '#{gel_name}'"
-  end #/ degel
-
-  def help
-    require_relative '../help'
-    puts AIDE
-  end #/ help
 end # /<< self
 end #/IcareCLI

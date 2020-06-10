@@ -1207,6 +1207,11 @@ Quand c’est une notification administrateur, les boutons pour forcer la destru
 	# => bouton secondaire pour "contre-jouer" le watcher (refuser)
 ~~~
 
+Il existe d’autres helpers ici :
+
+* [Helpers spécialisés de watchers](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/xrequired/helpers.rb),
+* [Helpers généraux]
+
 
 
 ### Construction des mails
