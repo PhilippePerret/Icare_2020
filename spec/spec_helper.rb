@@ -65,6 +65,14 @@ RSpec.configure do |config|
     # puts "Je finis la suite de tests"
   end
 
+
+  # Pour requérir un module dans le dossier './spec/support/data'
+  FOLDER_SUPPORT = File.join('.','spec','support')
+  FOLDER_DATA = File.join(FOLDER_SUPPORT,'data')
+  def require_data(relpath)
+    require File.join(FOLDER_DATA, relpath)
+  end #/ require_data
+  
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin

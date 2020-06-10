@@ -81,7 +81,7 @@ feature 'Inscription à l’atelier Icare' do
     end #/ clic_signup_button
 
     # Les données à tester
-    require_relative 'signup_data'
+    require_data('signup_data')
 
     # On boucle sur toutes les données à tester
     DATA_SPEC_SIGNUP_INVALID.each do |data|
@@ -107,7 +107,7 @@ feature 'Inscription à l’atelier Icare' do
     end #/ clic_signup_button
 
     # Les données à tester
-    require_relative 'signup_data'
+    require_data('signup_data')
 
     # On boucle sur toutes les données à tester
     # Pour tester deux nouveaux candidats
@@ -133,7 +133,7 @@ feature 'Inscription à l’atelier Icare' do
     end #/ clic_signup_button
 
     # Les données à tester
-    require_relative 'signup_data'
+    require_data('signup_data')
 
     # On boucle sur toutes les données à tester
     # Pour tester deux nouveaux candidats

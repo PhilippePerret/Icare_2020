@@ -1142,7 +1142,7 @@ notification_user.erb			# pour l'icarien
 
 Dans ces fichiers, on doit utiliser un `div.buttons` pour placer les boutons principaux.
 
-​~~~erb
+~~~erb
 <div class="buttons">
   <%= button_unrun("Renoncer") %>
   <%= button_run("Jouer la notification") %>
@@ -1172,7 +1172,7 @@ Si un formulaire doit être utilisé pour la notification — ce qui est souven
 
 Pour faire appel à **une méthode propre au watcher** (par exemple définie dans `main.rb` ou n’importe quel autre fichier du dossier), on utilise l’helper :
 
-~~~erb
+​~~~erb
 <%= lien_operation("<methode>", "<titre lien>"[, {options tag}])
 ~~~
 
@@ -1643,6 +1643,91 @@ La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` 
 ## Test de l'application
 
 
+
+### Introduction
+
+L’application est testée à l’aide de `RSpec`.
+
+
+
+### Les gels
+
+Les tests, en plus de… tester l’application, permettent aussi de revenir à certains états afin de faciliter le développement à l’aide des « gels ». Un « gel » est comme une photographie de l’atelier, au niveau de sa base de données (`icare_test` seulement) et de ses principaux dossiers temporaires utiles : ``./tmp/downloads/`, `tmp/mails/`, `./tmp/signups/`.
+
+Ces gels sont consignés dans `./spec/support/gels/`. Un gel possède un nom qui correspond au nom de son dossier dans ce dossier des gels. Ce nom permet aussi de lancer ce gel (de revenir à cet état) avec RSpec.
+
+Tous les gels sont définis dans le fichier [./spec/gels/gels.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/gels/gels.rb).
+
+[fichier des gels]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/gels/gels.rb
+
+
+
+#### Produire un gel (`gel`)
+
+Soit un gel de nom `mon_premier_gel`, on le produit :
+
+**En créant son scenario de test**
+
+Ce scénario se crée dans le fichier [./spec/gels/gels_spec.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/gels/gels_spec.rb).
+
+~~~ruby
+feature "Tous les scénarios" do
+  # ... tous les autres scénarios
+  scenario "Pour faire mon premier gel", mon_premier_gel: true do
+    processus_precedent # créé comme un gel
+    processus_ensuite   # idem
+    mon_premier_gel     # cf. ci-dessous
+  end
+end
+~~~
+
+> Noter le tag ci-dessus `mon_premier_gel: true`, c’est lui qui va permettre de lancer et créer le gel.
+
+
+
+On crée ensuite la méthode qui va produire l’exécution propre à ce gel, dans le [fichier des gels][].
+
+~~~ruby
+...
+def	mon_premier_gel
+  gel('mon_premier_gel').degel_or_gel do
+    # ... le "test" à produire pour arriver dans
+    # ... l'état désiré
+  end
+end #/mon_premier_gel
+~~~
+
+> S’inspirer des autres gels du fichier pour produire cette méthode.
+
+
+
+On produit ensuite le gel en lançant la commande
+
+~~~bash
+rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
+~~~
+
+#### Forcer la re-création d'un gel
+
+Pour forcer la re-création d'un gel, il suffit d'ajouter la variable d'environnement `GEL_FORCE` à true :
+
+~~~bash
+ENV['GEL_FORCE']=true rspec spec/gels -t mon_premier_gel 
+~~~
+
+
+
+#### Revenir à un gel précédent (`degel`)
+
+Il suffit de jouer la même commande que pour produire le gel :
+
+~~~bash
+rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
+~~~
+
+
+
+<a name="testerwatcher"></a>
 
 ### Tester les watchers
 

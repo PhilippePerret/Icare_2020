@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 # Erreur qui permet d'interrompre un watcher n'importe quand
-class WatcherInterruption < 
+class WatcherInterruption < StandardError; end
 
 PROCESSUS_WATCHERS_FOLDER = File.join(MODULES_FOLDER,'watchers_processus')
 

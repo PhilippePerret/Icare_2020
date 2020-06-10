@@ -6,7 +6,7 @@
 
   tag                 Stade
   ------------------------------------------
-  up_to_signup              On se retrouve avec Marion qui vient de s'inscrire
+  inscription_marion        On se retrouve avec Marion qui vient de s'inscrire
                             sur le site (elle est la seule icarienne)
 
   mail_validated            Marion a validé son mail
@@ -18,12 +18,13 @@
   send_work                 Marion envoi ses documents de travail
 
 =end
+require_relative 'gels'
+
 feature 'Préparation en live' do
-  scenario 'Jusqu’à la fin de l’inscription', up_to_signup: true do
+  scenario 'Jusqu’à la fin de l’inscription', inscription_marion: true do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
-    require_relative 'lib'
     inscription_marion
   end #/test d'une bonne candidate
 
@@ -31,7 +32,6 @@ feature 'Préparation en live' do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
-    require_relative 'lib'
     inscription_marion
     validation_du_mail
   end #/test d'une bonne candidate
@@ -40,7 +40,6 @@ feature 'Préparation en live' do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
-    require_relative 'lib'
     inscription_marion
     validation_du_mail
     admin_valide_inscription
@@ -50,7 +49,6 @@ feature 'Préparation en live' do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
-    require_relative 'lib'
     inscription_marion
     validation_du_mail
     admin_valide_inscription
@@ -61,12 +59,10 @@ feature 'Préparation en live' do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
-    require_relative 'lib'
     inscription_marion
     validation_du_mail
     admin_valide_inscription
     marion_demarre_module
     marion_envoie_ses_documents
   end #/test d'une bonne candidate
-
 end
