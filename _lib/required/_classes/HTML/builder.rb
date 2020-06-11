@@ -13,15 +13,16 @@ class HTML
     build_footer
     build_messages
     build_titre
+    css = route.home? ? 'home' : ''
     @page = <<-HTML
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   #{head}
-  <body>
-    <section id="header" class="#{route.to_s}">#{header}</section>
+  <body class="#{css}">
+    <section id="header" class="#{css}">#{header}</section>
     #{@titre}
     <section id="messages">#{messages}</section>
-    <section id="body">#{body}</section>
+    <section id="body" class="#{css}">#{body}</section>
     <section id="footer">#{footer}</section>
     #{build_debug}
     #{Admin.section_essais if SHOW_DEVELOPPEMENT_TOOLS}
@@ -82,10 +83,12 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
 
   def build_footer
     @footer = <<-HTML
+
 #{MAIN_LINKS[:home]}
-#{MAIN_LINKS[:overview]}
-#{MAIN_LINKS[:aide]}
-#{MAIN_LINKS[:contact]}
+#{MAIN_LINKS[:overview_s]}
+#{MAIN_LINKS[:aide_s]}
+#{MAIN_LINKS[:contact_s]}
+#{Tag.lien(text:'politique de confidentialité', route:'overview/policy')}
     HTML
   end
 

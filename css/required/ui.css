@@ -1,9 +1,11 @@
 body {
   font-family:Avenir;
   font-size:16pt;
-  max-width: 1200px;
   margin:0;
   padding:0;
+}
+body:not(.home) {
+  max-width: 1200px;
 }
 
 h2, h3, h4, h5 {
@@ -137,11 +139,13 @@ section#header div.notification-tool {
 
 section#body {
   min-height:280px;
-  margin-top:2em;
   margin-bottom: 10em;
 }
+section#body:not(.home) {
+  margin-top:2em;
+}
 
-section#body > * {
+section#body > *:not(.nolimit) {
   max-width: var(--text-max-width);
 }
 section#body > fieldset {
@@ -154,8 +158,14 @@ section#footer {
   background-color:var(--dark-color-normal);
   color:white;
   margin-top:4em;
-  padding:.5em 1em;
+  padding:.2em 1em;
   margin-bottom:0;
+
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+
 }
 
 pre#debug {

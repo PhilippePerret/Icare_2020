@@ -78,6 +78,8 @@ div.warning, p.warning, span.warning {
 }
 .nooverflow {overflow:hidden}
 
+.nolimit {max-width:auto;}
+
 .vmiddle {
   vertical-align:middle;
 }

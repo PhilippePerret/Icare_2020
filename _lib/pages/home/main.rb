@@ -9,14 +9,14 @@ class HTML
     @body = <<-HTML
 <div id="bandeau" class="nolimit">
   <div id="main-cadre">
-    <img src="img/papillon-logo.png" id="papillon">
     <div id="titre"><a href="plan">Atelier Icare</a></div>
-    <div id="sous-titre">L’écriture dans tous ses états (*) </div>
+    <div id="sous-titre"><span class="nowrap">L’écriture dans</span> <span class="nowrap">tous ses états (*)</span></div>
   </div>
 </div>
 <div id="legende" class="nolimit">
   (*) aussi bien dans la forme (roman, scénario, BD, etc.) que dans le fond (pitch, résumé, synopsis, scénario, etc.).
 </div>
+<div id="air-sous-bandeau">&nbsp;</div>
 #{Citation.rand.out}
 <div id="actualites">
   #{Actualite.out}
@@ -26,12 +26,13 @@ class HTML
 
   def build_header
     @header = []
-    @header << MAIN_LINKS[:overview]
-    @header << MAIN_LINKS[user.guest? ? :login : :logout]
+    @header << MAIN_LINKS[:overview_s]
     if user.guest?
-      @header << MAIN_LINKS[:signup]
+      @header << MAIN_LINKS[:login_s]
+      @header << MAIN_LINKS[:signup_s]
     else
-      @header << Tag.lien_bureau #MAIN_LINKS[:bureau]
+      @header << MAIN_LINKS[:logout_s]
+      @header << MAIN_LINKS[:bureau_s]
     end
     @header = @header.join(' ')
   end
