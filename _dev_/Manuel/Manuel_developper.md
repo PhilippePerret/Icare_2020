@@ -652,7 +652,11 @@ Le nom du **bouton de soumission** du formulaire se définit par :
 
 ~~~ruby
 form.submit_button = "<nom du bouton>".freeze
+# On peut aussi définir sa classe : (il est juste 'btn' par défaut)
+form.submit_button_class = 'main'
 ~~~
+
+
 
 D’**autres boutons**, à gauche de ce bouton, peuvent être définis par :
 
@@ -662,6 +666,8 @@ form.other_buttons = [
   ...
   ]
 ~~~
+
+
 
 #### Dimensions des libellés et champs de valeur
 
@@ -1191,7 +1197,7 @@ Pour faire appel à **une méthode propre au watcher** (par exemple définie dan
 
 Par exemple, pour faire un bouton principal :
 
-​~~~erb
+~~~erb
 <p>
   Cliquez sur le bouton ci-dessous.
 </p>
@@ -1212,7 +1218,7 @@ Quand c’est une notification administrateur, les boutons pour forcer la destru
 
 ### Méthodes d’helpers pour les notifications
 
-~~~erb
+​~~~erb
 <%= button_run('Titre bouton') %>
   # => bouton principal pour jouer le watcher
 

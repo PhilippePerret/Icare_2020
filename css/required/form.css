@@ -154,4 +154,5 @@ form span.file-name {
   text-overflow:ellipsis;
   font-size:0.8em;
   vertical-align:middle;
+  white-space: nowrap;
 }

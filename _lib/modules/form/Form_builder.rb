@@ -6,12 +6,11 @@ class Form
   attr_reader :data
   attr_accessor :rows
   attr_reader :submit_button
+  attr_accessor :submit_button_class
   attr_accessor :other_buttons
   attr_accessor :options
 
-  def submit_button=(name, options = nil)
-    self.options ||= {}
-    self.options.merge!(options) unless options.nil?
+  def submit_button= name
     @submit_button = name
   end #/ submit_button
 
@@ -53,7 +52,7 @@ class Form
   INPUT_SUBMIT_BUTTON = '<input type="submit" value="%{name}" class="%{class}">'
 
   def build_submit_button
-    INPUT_SUBMIT_BUTTON % {name:submit_button, class:options[:submit_button_class]||''}
+    INPUT_SUBMIT_BUTTON % {name:submit_button, class:submit_button_class||''}
   end #/ build_submit_button
 
   WATCHER_HIDDEN_FIELDS = '<input type="hidden" name="op" value="run" /><input type="hidden" name="wid" value="%{wid}" />'.freeze
