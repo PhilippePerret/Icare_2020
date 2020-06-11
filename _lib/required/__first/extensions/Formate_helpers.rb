@@ -21,7 +21,9 @@ def formate_date(time, options = nil)
   options.key?(:mois) || options.merge!(mois: :long)
   time = Time.at(time) unless time.is_a?(Time)
   mois = MOIS[time.month][options[:mois]]
-  d = time.strftime("%-d #{mois} %Y")
+  temp = "%-d #{mois} %Y"
+  temp << " %H:%M".freeze if options[:time] || options[:hour]
+  d = time.strftime(temp)
   if options[:duree]
     now = Time.now
     mot = now > time ? 'il y a' : 'dans' ;

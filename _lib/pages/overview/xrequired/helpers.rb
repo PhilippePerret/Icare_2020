@@ -14,7 +14,9 @@ class HTML
       {route:'overview/home'.freeze, titre: 'Description de l’atelier'.freeze},
       {route:'overview/reussites'.freeze, titre: 'Les belles réussites'.freeze},
       {route:'overview/parcours'.freeze, titre: 'Parcours fictif de 3 icarien·ne·s'.freeze},
-      {route:'overview/raisons'.freeze, titre: 'Les dix bonnes raisons de choisir l’atelier Icare'.freeze}
+      {route:'overview/raisons'.freeze, titre: 'Les dix bonnes raisons de choisir l’atelier Icare'.freeze},
+      {route:'overview/policy'.freeze, titre:'Politique de confidentialité des données'.freeze},
+      {route:'overview/activity'.freeze, titre:'Activité au jour le jour'.freeze}
     ]
     FloatTdm.new(liens, right:true).out
   end #/ tdm

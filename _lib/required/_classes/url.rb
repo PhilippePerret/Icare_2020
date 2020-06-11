@@ -6,8 +6,8 @@
 
 MAIN_LINKS = {
   home:       '<a href="home">atelier icare</a>'.freeze,
-  overview:   '<a href="overview"><span class="emoji">👀</span> <span>en savoir plus</span></a>'.freeze,
-  overview_s: '<a href="overview">en savoir plus</a>'.freeze,
+  overview:   '<a href="overview/home"><span class="emoji">👀</span> <span>en savoir plus</span></a>'.freeze,
+  overview_s: '<a href="overview/home">en savoir plus</a>'.freeze,
   signup:     '<a id="signup-btn" href="user/signup" class="main">📋 s’inscrire</a>'.freeze,
   signup_s:   '<a id="signup-btn" href="user/signup" class="main">s’inscrire</a>'.freeze,
   login:      '<a href="user/login">🔓 s’identifier</a>'.freeze,

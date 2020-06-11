@@ -43,6 +43,7 @@ div#main-cadre div#sous-titre {
 
 div.citation {
   margin-bottom:2em;
+  color:#555555;
 }
 
 div#legende {
@@ -69,8 +70,40 @@ section#header a:hover {
 }
 
 div#actualites {
-  margin-top:100px;
+  margin-top:140px;
+  padding:1em;
+  border:1px solid var(--dark-color-normal);
+  font-size:0.65 !important;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  color:#999999;
+  max-width:360px !important;
 }
+div#actualites strong, div#actualites b {
+  color:#333333 !important;
+  font-weight: normal;
+}
+div#actualites div.titre {
+  color:#777777 !important;
+  font-variant: small-caps;
+  font-size: 1.1em;
+  margin-bottom: 1.3em;
+  font-weight: bold;
+}
+div#actualites div.actu {
+  line-height:12pt;
+  margin-bottom:12pt;
+}
+div#actualites div.actu span.date {
+  font-family:Georgia;
+  font-size:10pt;
+  color:var(--dark-color-normal);
+  display:block;
+}
+div#actualites div.actu span.message {
+  margin-left:1em;
+  font-size:11pt;
+}
+
 
 @media only screen and (min-width: 768px) {
   /* Écran large */

@@ -2,11 +2,11 @@
 
 class HTML
   def titre
-    "👮‍♀️ Politique de confidentialité des données".freeze
+    "Activité de l'atelier Icare".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
-
+    
   end
   # Fabrication du body
   def build_body

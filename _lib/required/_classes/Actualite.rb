@@ -16,7 +16,13 @@ DIV_ACTU = '<div class="actu"><span class="date">%{date}</span><span class="mess
 # ---------------------------------------------------------------------
 class << self
   # Sort la liste des LASTS_COUNT actualités formatées
-  def out
+  def out(from = nil, to = nil)
+    if from == :lasts
+      liste = lasts
+    else
+      # TODO il faut filtrer depuis la date from
+      liste = all
+    end
     lasts.collect(&:out).join
   end #/ out
 
@@ -50,6 +56,6 @@ def out
   DIV_ACTU % {message: data[:message], date:date}
 end #/ out
 def date
-  @date ||= formate_date(data[:created_at])
+  @date ||= formate_date(data[:created_at], {time:true})
 end #/ date
 end #/Actualite

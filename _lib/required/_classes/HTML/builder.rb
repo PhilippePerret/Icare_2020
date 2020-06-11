@@ -88,7 +88,7 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
 #{MAIN_LINKS[:overview_s]}
 #{MAIN_LINKS[:aide_s]}
 #{MAIN_LINKS[:contact_s]}
-#{Tag.lien(text:'politique de confidentialité', route:'overview/policy')}
+#{Tag.lien(text:'<span class="nowrap">politique de confidentialité</span>', route:'overview/policy')}
     HTML
   end
 

@@ -19,7 +19,8 @@ class HTML
 <div id="air-sous-bandeau">&nbsp;</div>
 #{Citation.rand.out}
 <div id="actualites">
-  #{Actualite.out}
+  <div class="titre">dernières activités</div>
+  #{Actualite.out(:lasts)}
 </div>
     HTML
   end
