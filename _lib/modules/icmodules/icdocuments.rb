@@ -11,7 +11,9 @@ class IcDocument < ContainerClass
 #
 # ---------------------------------------------------------------------
 class << self
-
+  def table
+    @table ||= 'icdocuments'.freeze
+  end #/ table
 end # /<< self
 
 # ---------------------------------------------------------------------

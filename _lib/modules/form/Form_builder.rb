@@ -197,6 +197,8 @@ class Form
         end.join)
       end
       dfield.merge!(prefix: ''.freeze) unless dfield.key?(:prefix)
+    when 'file'.freeze
+      dfield[:button_name] ||= 'Choisir le fichier…'.freeze
     end
     return dfield
   end #/ default_values_for

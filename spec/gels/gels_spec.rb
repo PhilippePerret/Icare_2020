@@ -24,22 +24,27 @@ feature 'Préparation en live' do
   end #/test d'une bonne candidate
 
   scenario 'Jusqu’au démarrage du module', demarrage_module: true do
+    Gel.remove('demarrage_module') if ENV['GEL_REMOVE_LAST']
     demarrage_module
   end #/test d'une bonne candidate
 
   scenario 'Jusqu’à l’envoi des documents de travail', envoi_travail: true do
+    Gel.remove('envoi_travail') if ENV['GEL_REMOVE_LAST']
     envoi_travail
   end #/test d'une bonne candidate
 
   scenario 'jusqu’à la récupération du travail par Phil', recupere_travail: true do
+    Gel.remove('recupere_travail') if ENV['GEL_REMOVE_LAST']
     recupere_travail
   end
 
   scenario 'jusqu’à l’envoi des commentaires', envoi_comments: true do
+    Gel.remove('envoi_comments') if ENV['GEL_REMOVE_LAST']
     envoi_comments
   end
 
   scenario 'jusqu’à la récupération des commentaires par l’icarien', recupere_comments:true do
+    Gel.remove('recupere_comments') if ENV['GEL_REMOVE_LAST']
     recupere_comments
   end
 

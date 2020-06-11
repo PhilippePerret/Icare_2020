@@ -1172,13 +1172,13 @@ Si un formulaire doit être utilisé pour la notification — ce qui est souven
 
 Pour faire appel à **une méthode propre au watcher** (par exemple définie dans `main.rb` ou n’importe quel autre fichier du dossier), on utilise l’helper :
 
-​~~~erb
+~~~erb
 <%= lien_operation("<methode>", "<titre lien>"[, {options tag}])
 ~~~
 
 Par exemple, pour faire un bouton principal :
 
-~~~erb
+​~~~erb
 <p>
   Cliquez sur le bouton ci-dessous.
 </p>
@@ -1746,7 +1746,16 @@ GEL_FORCE=true rspec spec/gels -t mon_premier_gel  # Réinitialise TOUS LES GELS
 **Pour forcer seulement le dernier gel**
 
 ~~~bash
-rspec spec/gels -t mon_premier_gel --force
+GEL_REMOVE_LAST=true rspec spec/gels -t mon_premier_gel
+~~~
+
+Mais pour que ça fonctionne, il ne faut pas oublier la ligne marquée `[*]` ci-dessous :
+
+~~~ruby
+scenario 'L’étape qui est travaillée', mon_etape_courante:true do
+	Gel.remove('mon_etape_courante') if ENV['GEL_REMOVE_LAST'] # [*]
+	mon_etape_courante
+end
 ~~~
 
 

@@ -12,6 +12,6 @@ end # /Watcher < ContainerClass
 class IcDocument < ContainerClass
   # La méthode retourne true si le document a des commentaires
   def has_comments?
-    true
+    get_option(8) == 1
   end #/ has_comments?
 end #/IcModule < ContainerClass

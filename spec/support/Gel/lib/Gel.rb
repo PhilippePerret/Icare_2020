@@ -39,6 +39,12 @@ class << self
     @gels ||= {}
     @gels[gel_name] ||= new(gel_name)
   end #/ initiate
+
+  # Pour détruire un gel particulier
+  def remove(gel_name)
+    get(gel_name)&.remove
+  end #/ remove
+
 end # /<< self
 
 # ---------------------------------------------------------------------

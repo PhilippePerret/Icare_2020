@@ -17,10 +17,16 @@ class Watcher < ContainerClass
     message "Je dois jouer le contre processus IcEtape/contre_send_comments"
   end # / contre_send_comments
 
-  # Méthode qui procède à l'envoi des commentaires.
+  # Méthode qui procède à l'envoi des commentaires
+  # ----------------------------------------------
+  # L'"envoi des commentaires" signifie qu'on récupère les fichiers fournis
+  # dans le formulaire et qu'on les enregistre dans un dossier pour télécharge-
+  # ment ultérieur par l'icarien.
+  #
   # Cela consiste à :
   #   - récupérer les documents envoyés (associés aux documents enregistrés)
   #   - les mettre dans un dossier de 'sent-comments/user-<user id>'
+  #   - définir que le commentaire du document existe
   #   - le reste (actualité, watcher suivant, se fait automatiquement)
   #
   # +return+  TRUE en cas de succès, NIL otherwise pour interrompre le
@@ -37,10 +43,12 @@ class Watcher < ContainerClass
       if docfile_comments.size == 0
         return erreur("Le fichier #{docfile_name}” est vide…".freeze)
       end
+      # Un commentaire existe bien
       # On l'enregistre dans le dossier
       FileUtils.mkdir_p(path_dossier)
       path_file = File.join(path_dossier, docfile_name)
       File.open(path_file,'wb'){|f|f.write docfile_comments.read}
+      document.set_option(8, 1, true)
       nombre_commentaires += 1
     end
 

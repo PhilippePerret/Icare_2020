@@ -17,7 +17,7 @@ CHECKBOX_TAG = '<input type="checkbox" id="%{id}" name="%{name}"%{checked}><labe
 
 # FILE_TAG = '<input type="file" name="%{name}" id="%{id}" />'.freeze
 
-FILE_TAG = '<span id="container-file-%{id}" data-name="%{name}" class="file-field vmiddle"><button type="button" class="file-reset hidden">❌</button><input type="file" name="%{name}" id="document-%{name}" /><button type="button" class="file-choose btn small">Choisir le fichier…</button><span class="file-name"></span></span>'.freeze
+FILE_TAG = '<span id="container-file-%{id}" data-name="%{name}" class="file-field vmiddle"><button type="button" class="file-reset hidden">❌</button><input type="file" name="%{name}" id="document-%{name}" /><button type="button" class="file-choose btn small">%{button_name}</button><span class="file-name"></span></span>'.freeze
 
 RAW_TAG = '<div style="%{style}">%{name}</div>'.freeze
 

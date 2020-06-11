@@ -149,13 +149,13 @@ class ContainerClass
 
   # Retourne {Integer} la valeur du bit +bit+ des options
   def option(bit)
-    options[bit].to_i
+    data[:options][bit].to_i
   end #/ option
   alias :get_option :option # pour être cohérent avec :set_option
 
   # Définit la valeur de bit de l'option et l'enregistre si nécessaire
   def set_option(bit, value, saving = false)
-    options[bit] = value.to_s
-    save if saving
+    data[:options][bit] = value.to_s
+    save(options: data[:options]) if saving
   end #/ set_option
 end #/ContainerClass
