@@ -143,4 +143,19 @@ class ContainerClass
   def f_ended_at
     @f_ended_at ||= formate_date(data[:ended_at])
   end #/ f_started_at
+
+  # Les objets ont souvent des options, on leur offre des méthodes qui
+  # permettent de les gérer
+
+  # Retourne {Integer} la valeur du bit +bit+ des options
+  def option(bit)
+    options[bit].to_i
+  end #/ option
+  alias :get_option :option # pour être cohérent avec :set_option
+
+  # Définit la valeur de bit de l'option et l'enregistre si nécessaire
+  def set_option(bit, value, saving = false)
+    options[bit] = value.to_s
+    save if saving
+  end #/ set_option
 end #/ContainerClass
