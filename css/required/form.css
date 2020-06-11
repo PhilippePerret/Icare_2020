@@ -14,25 +14,30 @@ form:not(.inline){
   padding:2em;
 }
 form div.row {
-  display:flex;
+  display:grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: auto;
 }
+
+form.inline div.buttons,
+form.inline div.row {display: inline}
+
+form div.row span.libelle {
+  grid-columns:1;
+  grid-row:1;
+}
+form div.row span.value {
+  grid-columns:2;
+  grid-row:1
+}
+
 form:not(.inline) div.row span.libelle {
   margin-top:4px;
   overflow:hidden;
   text-overflow:ellipsis;
 }
-form:not(.inline) div.row span.libelle:not(.inline) {
-  width:200px;
-}
 form.inline div.row span.libelle {display:none}
-form.inline div.buttons,
-form.inline div.row
- {display: inline}
 
-form div.row span.value {
-  display:inline-block;
-  flex-grow:2;
-}
 form div.row span.value.file {
   height:32px;
 }

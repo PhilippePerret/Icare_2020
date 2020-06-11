@@ -1,11 +1,12 @@
 <%
   form = Form.new(id:'qdd-depot-form', route:route.to_s, watcher:id)
+  form.libelle_size = 180
   rows = {}
   # On doit proposer des formulaires en fonction des documents
   icetape.documents.each do |document|
     rows.merge!("#{document.name}" => {type:'file', name:"document-#{document.id}-original", button_name:'Choisir le fichier original…'.freeze})
     if document.has_comments?
-      rows.merge!("(commentaires ##{document.id})" => {type:'file', name:"document-#{document.id}-comments", button_name:'Choisir le fichier commentaires…'.freeze})
+      rows.merge!("<commentaires ##{document.id})>" => {type:'file', name:"document-#{document.id}-comments", button_name:'Choisir le fichier commentaires…'.freeze})
     end
   end
   form.rows = rows

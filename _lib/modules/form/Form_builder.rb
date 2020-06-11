@@ -75,11 +75,23 @@ class Form
     end
   end #/ form_style
 
+  def libelle_size
+    @libelle_size # si défini explicitement
+  end #/ libelle_size
+  def libelle_size= value
+    @libelle_size = value.is_a?(Integer) ? "#{value}px" : value
+  end #/ libelle_size
+  def value_size
+    @value_size # si défini explicitement
+  end #/ value_size
+  def value_size= value
+    @value_size = value.is_a?(Integer) ? "#{value}px" : value
+  end #/ value_size=
+
   # Pour voir s'il faut ajouter du style au .libelle
   def libelle_style
     @libelle_style ||= begin
       sty = []
-      sty << "width:#{data[:libelle_size]}px;" if data.key?(:libelle_size)
       sty.empty? ? '' : " style=\"#{sty.join(';')}\""
     end
   end #/ libelle_style
@@ -92,6 +104,7 @@ class Form
       c.join(' ')
     end
   end #/ css
+
   # Retourne un token unique pour ce formulaire
   def token
     @token ||= Time.now.to_i.to_s
@@ -121,6 +134,7 @@ class Form
     end
     @has_files
   end #/ files?
+
   def searchforrowfile
     rows.each do |label,dfield|
       return true if dfield[:type].to_s == 'file'
@@ -150,7 +164,7 @@ class Form
       else
         #
         <<-HTML
-<div class="row">
+<div class="row"#{row_style}>
   <span class="libelle"#{libelle_style}>#{label}</span>
   <span class="value#{" file" if dfield[:type] == 'file'}">
     #{value_field_for(dfield)}
@@ -161,6 +175,16 @@ class Form
     end.join(RC)
   end
 
+  # Maintenant que le div.row est un display:grid, on peut définir la largeur
+  # des libellés et des champs value par libelle_size et value_size, mais ils
+  # affecteront la propriété :grid-template-columns du row
+  def row_style
+    sty = []
+    if libelle_size || value_size
+      sty << "grid-template-columns:#{libelle_size||'auto'} #{value_size||'auto'};"
+    end
+    sty.empty? ? EMPTY_STRING : " style=\"#{sty.join('')}\""
+  end #/ row_style
 
   def value_field_for dfield
     dfield = default_values_for(dfield)

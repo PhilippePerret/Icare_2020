@@ -617,7 +617,6 @@ form = Form.new(id:'login-form', route:'user/login', size: 300)
 ~~~ruby
 {
   size: 800, 					# largeur totale du formulaire
-  libelle_size: 100, 	# largeur des libellés (pour les réduire, souvent)
 	class: 'classCSS'		# Class CSS du formulaire  
   										# Par exemple 'noborder' pour retirer le cadre du formulaire
 }
@@ -663,6 +662,20 @@ form.other_buttons = [
   ...
   ]
 ~~~
+
+#### Dimensions des libellés et champs de valeur
+
+On définit la taille des libellés (`200px` par défaut) et des champs de valeur (`auto`par défaut) en définissant `form#libelle_size` et/ou `form#value_size` avec un nombre de pixels (ou le nombre avec son unité).
+
+Par exemple :
+
+~~~ruby
+form = Form.new(id:'mon-form-variable', ...)
+form.libelle_size = 230
+form.value_size = '100pt' # ou 'auto', etc.
+...
+~~~
+
 
 ### Insertion du formulaire
 
