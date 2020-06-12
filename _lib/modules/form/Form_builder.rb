@@ -69,19 +69,40 @@ class Form
   def form_style
     @form_style ||= begin
       sty = []
-      sty << "width:#{data[:size]}px;" if data.key?(:size)
+      sty << "width:#{form_size};" unless form_size.nil?
       sty.empty? ? '' : " style=\"#{sty.join(';')}\""
     end
   end #/ form_style
 
+  # La dimension du formulaire
+  # Elle sera calculée en fonction de la définition ou non des libelle_size,
+  # et :value_size ou de sa définition explicite
+  DEFAULT_LIBELLE_WIDTH = '200px'
+  def form_size
+    @form_size ||= begin
+      if data.key?(:size)
+        "#{data[:size]}px"
+      elsif libelle_size || value_size
+        "calc(#{libelle_size||DEFAULT_LIBELLE_WIDTH} + #{value_size||'auto'})"
+      else
+        nil
+      end
+    end
+  end #/ form_size
   def libelle_size
-    @libelle_size # si défini explicitement
+    @libelle_size ||= begin
+      # Quand défini dans les arguments d'instanciation (data)
+      "#{data[:libelle_size]}px" unless data[:libelle_size].nil? # si défini explicitement
+    end
   end #/ libelle_size
   def libelle_size= value
     @libelle_size = value.is_a?(Integer) ? "#{value}px" : value
   end #/ libelle_size
   def value_size
-    @value_size # si défini explicitement
+    @value_size ||= begin
+      # Quand défini dans les arguments d'instanciation (data)
+      "#{data[:value_size]}px" unless data[:value_size].nil? # si défini explicitement
+    end
   end #/ value_size
   def value_size= value
     @value_size = value.is_a?(Integer) ? "#{value}px" : value
