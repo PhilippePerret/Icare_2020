@@ -1,27 +1,33 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
+=begin
+  On peut utiliser maintenant `icare create route`
+=end
 
-NEW_ROUTE = nil # remettre à nil après pour éviter les erreurs
-DATA_PAGE = {
-  titre: "Activité de l'atelier Icare",
-  body_erb: true,          # si true, on crée le fichier body.erb
-  form: false,              # si true, on requiert le module 'forms'
-  module_user: false,        # si true, on crée 'user.rb'
-  icarien_required:false,    # true, une barrière sera "posée"
-  admin_required: false,    # si true, une barrière sera posée
-  fichier_constantes: false ,  # si true, crée le fichier 'constants.rb' qui
-                              # permet notamment de tester plus facilement les
-                              # messages
-}
+unless defined?(DATA_PAGE)
+  NEW_ROUTE = nil # remettre à nil après pour éviter les erreurs
+  DATA_PAGE = {
+    titre: "Activité de l'atelier Icare",
+    body_erb: true,          # si true, on crée le fichier body.erb
+    form: false,              # si true, on requiert le module 'forms'
+    module_user: false,        # si true, on crée 'user.rb'
+    icarien_required:false,    # true, une barrière sera "posée"
+    admin_required: false,    # si true, une barrière sera posée
+    fichier_constantes: false ,  # si true, crée le fichier 'constants.rb' qui
+                                # permet notamment de tester plus facilement les
+                                # messages
+  }
+  RC = "\n"
+  RC2 = RC * 2
+else
+  NEW_ROUTE = DATA_PAGE[:route]
+end
 
 raise "Il faut définir la route" if NEW_ROUTE.nil?
 
-RC = "\n"
-RC2 = RC * 2
-
 def create_route
-  require './_lib/required/_first/constants/paths'
-  folder = File.join(PAGES_FOLDER,NEW_ROUTE)
+  require './_lib/required/__first/constants/paths'
+  folder = File.join(PAGES_FOLDER ,NEW_ROUTE)
   raise "La route #{folder} existe déjà." if File.exists?(folder)
   `mkdir -p "#{folder}"`
   path = File.join(folder,'html.rb')
@@ -29,7 +35,7 @@ def create_route
   create_module_user(folder)    if DATA_PAGE[:module_user]
   create_body_erb(folder)       if DATA_PAGE[:body_erb]
   create_constants_file(folder) if DATA_PAGE[:fichier_constantes]
-  puts "La route a été créée avec succès."
+  puts "La route a été créée avec succès.".bleu
 end
 
 def create_body_erb(folder)

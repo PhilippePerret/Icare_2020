@@ -3,6 +3,7 @@
   Extension de IcareCLI pour les créations
 =end
 WATCHERS_FOLDER = File.expand_path('./_lib/_watchers_processus_')
+PAGES_FOLDER = File.expand_path('./_lib/pages')
 
 MESSAGES = {
   question_creer: 'Que souhaitez-vous créer ?'.freeze,
@@ -17,13 +18,24 @@ MESSAGES = {
   ask_for_mail_user: 'Un mail à l’icarien après avoir joué ce watcher ?'.freeze,
   ask_for_actualite: 'Une actualité devra-t-elle être produite ?'.freeze,
   ask_for_actu_id: 'Identifiant de l’actualité (p.e. "QDDDEPOT")'.freeze,
-  confirm_watcher: 'Confirmez-vous la création de ce watcher ?'.freeze
+  confirm_watcher: 'Confirmez-vous la création de ce watcher ?'.freeze,
+  ask_for_route: 'Nouvelle route à créer : (dossier/sousdossier)'.freeze,
+  titre_route: 'Titre qu’affichera la page de cette route'.freeze,
+  ask_if_body_erb: 'Faut-il une page body.erb pour construire la page ?'.freeze,
+  ask_if_fichiers_contants: 'Y a-t-il un fichier de contants (pour les messages par exemple) ?'.freeze,
+  ask_if_module_user: 'Y a-t-il besoin d’une extension User (user.rb) ?'.freeze,
+  ask_if_form: 'Y aura-t-il besoin d’un formulaire ?'.freeze,
+  ask_if_icarien_required: 'L’accès est-il réservé à un icarien ?'.freeze,
+  ask_if_admin_required: 'L’accès est-il réservé à un administrateur ?'.freeze,
+  confirm_route: 'Confirmez-vous la création de cette nouvelle route ?'.freeze
 }
 ERRORS = {
   id_watcher_exists: 'Cet identifiant de watcher existe déjà !'.freeze,
   titre_watcher_exists: 'Ce titre de watcher existe déjà'.freeze,
   relpath_watcher_exists: 'Le processus %s existe déjà !'.freeze,
-  actu_id_exists: "Cet identifiant actualité existe déjà !".freeze
+  actu_id_exists: "Cet identifiant actualité existe déjà !".freeze,
+  route_exists: 'Cette route existe déjà !'.freeze,
+  route_invalid: 'Le nom de cette route est invalide'.freeze,
 }
 
 DATA_CREATE = [
@@ -44,10 +56,24 @@ NEW_WATCHER = {
   notif_user:false, notif_admin:false, mail_user:false, mail_admin:false,
   actu_id:nil, actualite:false
 }
+
+# Pour une nouvelle page
+DATA_PAGE = {
+  id: nil, titre:nil, body_erb:false, form:false, module_user:false,
+  icarien_required:false, admin_required: false,
+  fichier_constantes: false
+}
 class IcareCLI
 class << self
   def proceed_create
-    what = Q.select(MESSAGES[:question_creer]) do |q|
+    what = params[1]
+    if what
+      unless respond_to?("create_#{what}".to_sym)
+        puts "Je ne sais pas créer la chose '#{what}'. Choisissez-la.".rouge
+        what = nil
+      end
+    end
+    what ||= Q.select(MESSAGES[:question_creer]) do |q|
       q.choices DATA_CREATE
       q.per_page DATA_CREATE.count
     end || return
@@ -130,7 +156,47 @@ class << self
   end #/ create_watcher
 
   def create_route
-    raise "La création d'une nouvelle route n'est pas encore implémentée"
+    clear
+    DATA_PAGE[:route] = Q.ask(MESSAGES[:ask_for_route]) do |q|
+      q.validate do |input|
+        path = File.join(PAGES_FOLDER,input)
+        if input.gsub(/[a-z0-9_\/]/,'') != ''
+          q.messages[:valid?] = ERRORS[:route_invalid]
+          false
+        elsif File.exists?(path)
+          q.messages[:valid?] = ERRORS[:route_exists]
+          false
+        else
+          true
+        end
+      end
+    end
+    DATA_PAGE[:titre] = Q.ask(MESSAGES[:titre_route])
+    [
+      :body_erb, :form, :module_user, :icarien_required, :admin_required, :fichiers_contants
+    ].each do |key|
+      NEW_WATCHER[key] = Q.select(MESSAGES["ask_if_#{key}".to_sym]) do |q|
+        q.choices [{name:'oui', value:true}, {name:'non', value:false}]
+      end
+    end
+
+    # Un petit récapitulatif avec création
+    clear
+    puts "Merci de confirmer ce choix :\n\n"
+    DATA_PAGE.each do |k, v|
+      msg = "\t#{"#{k}:".ljust(15)}#{v.inspect}"
+      if v === true
+        msg = msg.vert
+      elsif v === false
+        msg = msg.rouge
+      end
+      puts msg
+    end
+
+    puts "\n\n"
+    Q.yes?(MESSAGES[:confirm_route]) || return
+    require './_dev_/CLI/script/create_route.rb'
+
   end #/ create_route
 
 end # /<< self
