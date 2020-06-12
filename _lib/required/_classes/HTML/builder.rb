@@ -23,6 +23,7 @@ class HTML
     #{@titre}
     <section id="messages">#{messages}</section>
     <section id="body" class="#{css}">#{body}</section>
+    <div style="clear:both"></div>
     #{top_page_button}
     <section id="footer">#{footer}</section>
     #{build_debug}

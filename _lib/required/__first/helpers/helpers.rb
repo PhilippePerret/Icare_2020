@@ -12,8 +12,12 @@ def quai_des_docs(titre = nil)
   @quai_des_docs ||= Tag.lien(route:'qdd/home', text:titre||'Quai des docs').freeze
 end #/ Quai_des_docs
 
+def hall_of_fame(titre = nil)
+  @hall_of_fame ||= Tag.lien(route:'overview/reussites', text:titre||'Hall of Fame').freeze
+end #/ Quai_des_docs
+
 def politique_confidentialite(titre = nil)
-  Tag.lien(text:titre||'Politique de confidentialité des données'.freeze, route:'overview/policy', target:true)
+  Tag.lien(text:titre||'politique de confidentialité des données'.freeze, route:'overview/policy', target:true)
 end #/ politique_confientialite
 
 # Signature pour les mails
