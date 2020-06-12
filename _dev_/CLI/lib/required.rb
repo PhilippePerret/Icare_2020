@@ -11,6 +11,5 @@ CLI_FOLDER = File.dirname(File.dirname(__FILE__))
 APP_FOLDER = File.dirname(File.dirname(CLI_FOLDER))
 REQUIRED_FOLDER = File.join(CLI_FOLDER,'lib','required')
 COMMANDS_FOLDER = File.join(CLI_FOLDER,'lib','commands')
-# puts "APP_FOLDER: #{APP_FOLDER}"
 
 Dir["#{REQUIRED_FOLDER}/**/*.rb"].each { |m| require m }

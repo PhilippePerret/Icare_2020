@@ -15,11 +15,11 @@ class << self
 
   # Retourne l'instance Form pour le formulaire d'identification
   def login_form
-    @form = Form.new({id:'user-login', action:'user/login'})
+    @form = Form.new({id:'user-login', action:'user/login', value_size:300})
     @form.rows = {
-      'Votre mail'          => {name:'user_mail',     type:'text'},
-      'Votre mot de passe'  => {name:'user_password', type:'password'},
-      'back_to'             => {name:'back_to',       type:'hidden', value: session['back_to']}
+      'Mail'          => {name:'user_mail',     type:'text'},
+      'Mot de passe'  => {name:'user_password', type:'password'},
+      'back_to'       => {name:'back_to',       type:'hidden', value: session['back_to']}
     }
     @form.submit_button = 'S’identifier'
     @form.other_buttons = [

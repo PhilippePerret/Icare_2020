@@ -3,26 +3,31 @@
   Script assistant pour créer un nouveau type de watcher
 =end
 
-ID_WATCHER = 'qdd_depot'
-DATA_WATCHER = {
-  titre: 'Dépôt sur le Quai des docs', # pour la notification (user et admin)
-  objet_class:  'IcEtape',       # le dossier principal
-  processus:    'qdd_depot', # le processus (~ nom méthode)
-  # L'ID-Watcher suivant SI ET SEULEMENT SI l'objet_class reste la même
-  # NOTE : il s'agit d' ID_WATCHER, pas du processus (dans ce cas, il vaut mieux
-  # que les deux soient identiques, si c'est possible — en général, c'est
-  # toujours possible).
-  next:         'qdd_sharing',
-  # Notifications
-  notif_user:   false,
-  notif_admin:  true,
-  # Mails
-  mail_user:    true,
-  mail_admin:   false,
-  # Actualité
-  actu_id:      'QDDDEPOT', # mettre l'identifiant (majuscules) actualité, si actualité
-  actualite:    true
-}
+unless defined?(NEW_WATCHER)
+  ID_WATCHER = 'qdd_sharing'
+  DATA_WATCHER = {
+    titre: 'Définition du partage des documents', # pour la notification (user et admin)
+    objet_class:  'IcEtape',       # le dossier principal
+    processus:    'qdd_sharing', # le processus (~ nom méthode)
+    # L'ID-Watcher suivant SI ET SEULEMENT SI l'objet_class reste la même
+    # NOTE : il s'agit d' ID_WATCHER, pas du processus (dans ce cas, il vaut mieux
+    # que les deux soient identiques, si c'est possible — en général, c'est
+    # toujours possible).
+    next:         nil,
+    # Notifications
+    notif_user:   true,
+    notif_admin:  false,
+    # Mails
+    mail_user:    false,
+    mail_admin:   true,
+    # Actualité
+    actu_id:      '', # mettre l'identifiant (majuscules) actualité, si actualité
+    actualite:    false
+  }
+else
+  ID_WATCHER    = NEW_WATCHER[:id]
+  DATA_WATCHER  = NEW_WATCHER
+end
 
 # Ne rien toucher en dessous de cette ligne
 # ---------------------------------------------------------------------
@@ -147,8 +152,7 @@ creator.build
 path_data = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_watchers_processus_/_constants_.rb"
 code = File.read(path_data).force_encoding('utf-8')
 unless code.include?("#{ID_WATCHER}:")
-  `open -a Atom #{path_data}`
-  puts "Il faut ajouter le code suivant au fichier que je vais ouvrir :"
+  puts "\n\nIl faut ajouter le code suivant au fichier que je vais ouvrir dans Atom :\n\n"
   puts <<-RUBY
     #{ID_WATCHER}: {
       titre: '#{DATA_WATCHER[:titre]}'.freeze,
@@ -157,5 +161,7 @@ unless code.include?("#{ID_WATCHER}:")
       next: #{DATA_WATCHER[:next] ? "'#{DATA_WATCHER[:next]}'.freeze" : 'nil'}
     },
   RUBY
+  sleep 4
+  `open -a Atom #{path_data}`
 end
 puts "\n\nWatcher créé avec succès"

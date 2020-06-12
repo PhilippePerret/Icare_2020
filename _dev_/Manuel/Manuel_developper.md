@@ -723,11 +723,18 @@ On définit la taille des libellés (`200px` par défaut) et des champs de valeu
 Par exemple :
 
 ~~~ruby
+form = Form.new(id:'mon-form-variable', ..., libelle_size:230, value_size:'100pt')
+
+# OU
+
 form = Form.new(id:'mon-form-variable', ...)
 form.libelle_size = 230
 form.value_size = '100pt' # ou 'auto', etc.
 ...
 ~~~
+
+> Noter que la taille générale du formulaire est automatiquement ajustée lorsque la taille du libellé ou la taille du champ de valeur est modifiée.
+
 
 
 ### Insertion du formulaire
@@ -1296,7 +1303,7 @@ contre_mail_user.erb  # mail à envoyer à l'icarien en cas de contre-processus
 
 C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’user concerné dans les messages, on peut utiliser :
 
-​~~~erb
+~~~erb
 <p>Bonjour <%= owner.pseudo %> !</p>
 ~~~
 
@@ -1306,7 +1313,7 @@ C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’u
 
 > Note : toutes ces méthodes sont définies dans le fichier [_lib/modules/watchers/Watcher/helpers.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/Watcher/helpers.rb).
 
-~~~erb
+​~~~erb
 <%= votre_bureau %>      # insert un lien pour rejoindre son bureau depuis le mail
 
 <%= contacter_phil %>    # insert un "contacter Phil" dans le mail (avec le lien)

@@ -64,11 +64,17 @@ DATA_WATCHERS = {
     next: 'qdd_depot'.freeze
   },
   qdd_depot: {
-      titre: 'Dépôt sur le Quai des docs'.freeze,
-      relpath: 'IcEtape/qdd_depot'.freeze,
-      actu_id: "QDDDEPOT",
-      next: 'qdd_sharing'.freeze
-    },
+    titre: 'Dépôt sur le Quai des docs'.freeze,
+    relpath: 'IcEtape/qdd_depot'.freeze,
+    actu_id: "QDDDEPOT",
+    next: 'qdd_sharing'.freeze
+  },
+  qdd_sharing: {
+    titre: 'Définition du partage des documents'.freeze,
+    relpath: 'IcEtape/qdd_sharing'.freeze,
+    actu_id: "",
+    next: nil
+  },
   # --- Modules ---
   commande_module:    {
     titre: 'Commande de module',

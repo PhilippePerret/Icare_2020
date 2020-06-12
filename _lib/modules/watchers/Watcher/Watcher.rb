@@ -91,7 +91,8 @@ def folder_processus_required?
 end #/ folder_processus_required?
 
 def require_folder_processus
-  require_folder(File.join(PROCESSUS_WATCHERS_FOLDER,relpath))
+  relpath || raise("Impossible de requérir le dossier processus voulu.")
+  require_folder(File.join(PROCESSUS_WATCHERS_FOLDER, relpath))
   @folder_processus_has_been_already_required = true
 end #/ require_folder_processus
 
@@ -115,10 +116,14 @@ def params
   end
 end #/ params
 
-# Chemin relatif (dans watchers_processus) défini dans les données
+# Chemin relatif (dans _watchers_processus_) défini dans les données
 # absolues
 def relpath
-  @relpath ||= absdata[:relpath]
+  @relpath ||=  if absdata.nil?
+                  erreur("Impossible de trouver le relpath du watcher de wtype #{wtype.inspect} défini par les paramètres #{params.inspect}.".freeze)
+                else
+                  absdata[:relpath]
+                end
 end #/ relpath
 
 # Instance concernée, calculée d'après le objet_class et objet_id

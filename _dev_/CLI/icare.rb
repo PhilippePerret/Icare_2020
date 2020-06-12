@@ -9,6 +9,6 @@ begin
   IcareCLI.analyse_command
   IcareCLI.run
 rescue Exception => e
-  puts "ERREUR: #{e.message}"
+  puts "ERREUR: #{e.message}".rouge
   # puts e.backtrace.join("\n")
 end

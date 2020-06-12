@@ -1,4 +1,5 @@
 # encoding: UTF-8
+liste_commandes = Dir["#{COMMANDS_FOLDER}/*.rb"].collect{|m|File.basename(m,File.extname(m))}
 AIDE = <<-BASH
 
 =======================================================================
@@ -12,6 +13,10 @@ AIDE = <<-BASH
 
       Pour dégeler un gel (un état de l'atelier particulier)
       Ne pas mettre d'argument pour voir la liste de tous les gels.
+
+  LISTE DES COMMANDES
+  -------------------
+  - #{liste_commandes.join("\n  - ")}
 
 =======================================================================
 

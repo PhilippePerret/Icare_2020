@@ -20,9 +20,10 @@ class << self
       @params.merge!(ivar => ARGV[ivar])
     end
     @delim = '-'*40
-    puts "\n#{delim}"
-    puts "Command: #{command.inspect}"
-    puts "Params : #{params.inspect}"
+    puts "\n#{delim}".bleu
+    puts "Command: #{command.inspect}".bleu
+    puts "Params : #{params.inspect}".bleu
+    puts delim.bleu
   end #/ analyse_command
 
 
