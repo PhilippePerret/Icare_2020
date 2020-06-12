@@ -8,14 +8,14 @@ class HTML
   def titre
     if param(:aid)
       unless Aide::DATA_TDM[param(:aid).to_i].nil?
-        Aide::DATA_TDM[param(:aid).to_i][:hname]
+        "#{RETOUR_AIDE}<span class='emoji'>🚨</span>"
       else
         erreur(ERRORS[:aid_unfound])
-        'Aide introuvable'.freeze
+        "#{RETOUR_AIDE}Aide introuvable".freeze
       end
     else
       erreur(ERRORS[:aid_undefined])
-      "Aide indéfinie".freeze
+      "#{RETOUR_AIDE}Aide indéfinie".freeze
     end
   end
   # Code à exécuter avant la construction de la page

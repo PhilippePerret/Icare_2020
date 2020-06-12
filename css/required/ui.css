@@ -5,6 +5,7 @@ html {
 body {
   font-family:Avenir;
   font-size:16pt;
+  color:#555555;
   margin:0;
   padding:0;
 }
@@ -68,7 +69,6 @@ ul {
 
 strong, b {
   color: var(--dark-color-normal);
-  font-weight:900;
 }
 
 fieldset {
