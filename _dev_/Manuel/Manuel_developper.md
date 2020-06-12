@@ -72,6 +72,16 @@ Contient tous les modules propres qui permettent la gestion ponctuelle d'éléme
 
 Commencer par lire les [principes fondateurs](#principes) du nouveau site.
 
+Le plus simple est d’utiliser la ligne de commande :
+
+~~~bash
+> icare create route
+~~~
+
+> Note : la suite est assistée.
+
+Pour voir **comment écrire la page** (son texte, son contenu), rejoindre la section [Construction des pages](#constructionpages).
+
 <a name="dossierroute"></a>
 
 Créer le dossier de la nouvelle route dans `./lib/pages/`. Par exemple, si la route est `user/pourvoir`,  on doit créer le dossier `./lib/pages/user/pourvoir/`. Ce dossier sera  appelé **dossier de la route** dans la suite.
@@ -105,7 +115,7 @@ end
 
 Ajouter dans ce dossier les `.css` et les `.js` qui lui sont nécessaires et qui lui sont propres.
 
-Ajouter les vues `ERB` qui peuvent servir à construire l’intégralité du body ou une partie seulement. Cf. [Utilisation des vues ERB](#useerbviews)
+Ajouter les vues `ERB` qui peuvent servir à construire l’intégralité du body ou une partie seulement. Cf. [Utilisation des vues ERB](#useerbviews).
 
 ### Méthode `exec` à appeler
 
@@ -363,11 +373,15 @@ ERRORS = {
 
 ---
 
+<a name="constructionpages"></a>
+
 ## Construction des pages, helpers
 
 
-
-> Note : on peut créer les dossiers et fichier des nouvelles routes de façon assistée grâce au script `_dev_/CLI/scripts/_create_route.rb`.
+> Note : on peut créer les dossiers et fichier des nouvelles routes de façon assistée grâce
+> ~~~bash
+> > icare create route
+> ~~~
 
 
 
@@ -390,6 +404,35 @@ end #/HTML
 
 
 
+
+
+### Constantes LIENS fréquents
+
+
+
+#### Liens de retour (pour revenir à une partir principale)
+
+~~~ruby
+RETOUR_BUREAU		# Pour retourner au bureau (avec le signe ↩︎ devant)
+RETOUR_PROFIL		# Pour retourner au profil (avec le signe ↩︎ devant)
+~~~
+
+
+
+### Contenu de la page
+
+Le plus simple est d’écrire le contenu, le texte, dans le fichier `body.erb` qui peut se trouver à la racine du dossier, et être appelé par `@body = deserb('body', self)` par le module principal de la route (`main.rb`).
+
+De nombreux helpers aident ensuite à rédiger les pages avec plus de facilités.
+
+On peut citer notamment ces méthodes et classes indispensables.
+
+* La classe **Tag** qui permet de produire toutes les balises nécessaires (cf. ci-dessous).
+* La méthode générique **Tag.lien(…)** qui permet de produire facilement un lien.
+* La méthode **Tag.aide(id)** qui permet de générer un lien vers un fichier d’aide (voir [Aide](#laide).
+* La méthode **Tag.info_bulle(...)** qui permet de mettre une info-bulle sur un mot.
+* La méthode **formate_date(time)** qui permet de mettre en forme une date.
+
 ### `Tag`, builder de balises
 
 La classe `Tag`, définies dans [./_lib/required/__first/helpers/Tags.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tags.rb), permet de créer très facilement des liens à l’aide de la méthode :
@@ -405,19 +448,6 @@ lien = Tag.link({route:"ma/route", titre:"Suivre ma route", class:'class-du-lien
 ~~~
 
 Voir dans le fichier ci-dessus toutes les méthodes utilisables.
-
-
-
-### Constantes LIENS fréquents
-
-
-
-#### Liens de retour (pour revenir à une partir principale)
-
-~~~ruby
-RETOUR_BUREAU		# Pour retourner au bureau (avec le signe ↩︎ devant)
-RETOUR_PROFIL		# Pour retourner au profil (avec le signe ↩︎ devant)
-~~~
 
 
 
@@ -1282,8 +1312,8 @@ Quand c’est une notification administrateur, les boutons pour forcer la destru
 
 Il existe d’autres helpers ici :
 
-* [Helpers spécialisés de watchers](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_watchers_processus_/xrequired/helpers.rb),
-* [Helpers généraux]
+* [Helpers généraux](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/helpers.rb),
+* [Helpers spécialisés de watchers]
 
 
 
@@ -1313,7 +1343,7 @@ C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’u
 
 > Note : toutes ces méthodes sont définies dans le fichier [_lib/modules/watchers/Watcher/helpers.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers/Watcher/helpers.rb).
 
-​~~~erb
+~~~erb
 <%= votre_bureau %>      # insert un lien pour rejoindre son bureau depuis le mail
 
 <%= contacter_phil %>    # insert un "contacter Phil" dans le mail (avec le lien)
@@ -1346,7 +1376,7 @@ end
 
 
 
-~~~ruby
+​~~~ruby
 # Dans la notification
 <p class="center">
     @ticket1.lien("Envoyer le ticket", {route: "bureau/home"})
@@ -1438,6 +1468,38 @@ Actualite.add(type: '<le type>', user: <user>, message: "<le message>")
 <a name="creeractualite"></a>
 
 ### Créer un nouveau type d'actualité
+
+
+
+---
+
+<a name="#laide"></a>
+
+## Aide du site
+
+L'aide du site est située dans le dossier/route `./_lib/pages/aide/`. Toutes les pages d'aide sont dans le dossier `./_lib/pages/aide/data/`.
+
+### Lien vers un fichier d'aide
+
+~~~ruby
+Tag.aide(<id>)
+
+# OU
+
+Tag.aide(id: <id>, titre: "<titre>", class:"<css>")
+~~~
+
+Avec `<id>` est le nombre défini dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb), qui sert aussi de début de nom au fichier.
+
+
+
+### Création d’un nouveau fichier d'aide
+
+* Lui attribuer un numéro/id unique dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb),
+* ajouter son titre et ce numéro/id dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb),
+* créer son fichier dans le dossier `data` de l’aide, avec un nom commençant par son identifiant unique (la suite du nom importe peu) au format `md`, `erb` ou `html`.
+
+
 
 ---
 

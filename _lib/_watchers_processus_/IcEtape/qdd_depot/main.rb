@@ -14,17 +14,10 @@ class Watcher < ContainerClass
 
     # Finir le cycle de l'étape
     # TODO
-    
+
     # Les tickets qui doivent servir à l'user, dans son mail,
     # pour valider ses documents
     # TODO
     #
   end #/ proceder_au_depot_des_documents
 end # /Watcher < ContainerClass
-
-class IcDocument < ContainerClass
-  # La méthode retourne true si le document a des commentaires
-  def has_comments?
-    get_option(8) == 1
-  end #/ has_comments?
-end #/IcModule < ContainerClass

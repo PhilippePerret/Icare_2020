@@ -1,1 +1,28 @@
-<p>Formulaire pour définir le partage de ses documents</p>
+
+<%
+SHARING_VALUES = [
+  [1, "Partager ce document"],
+  [0, "Non, ne pas le partager…"]
+]
+rows = {}
+icetape.documents.each do |document|
+  rows.merge!("Partage de “#{document.name}”" => {type:'titre'})
+  rows.merge!("Document original <!-- #{document.id} -->" =>
+    {name:"partage-#{document.id}-original", type:'select', values:SHARING_VALUES})
+  if document.has_comments?
+    rows.merge!("Document commenté <!-- #{document.id} -->" =>
+    {name:"partage-#{document.id}-comments", type:'select', values:SHARING_VALUES})
+  end
+end
+
+form = Form.new(id: "sharing-form-etape-#{icetape.id}", route:route.to_s, libelle_size:300)
+form.rows = rows
+form.submit_button = "Appliquer ce partage"
+%>
+
+<p><%= icetape.ref.titleize %></p>
+
+<%= form.out %>
+
+<p class="explication">Pour savoir ce qu’implique un partage des documents, vous pouvez relire la <%= politique_confidentialite %> appliquée par l’atelier Icare.</p>
+<p class="explication">Pour savoir ce que vous avez à gagner en partageant votre travail, vous pouvez <%= Tag.aide(id:30, titre:'consulter l’aide') %>.</p>

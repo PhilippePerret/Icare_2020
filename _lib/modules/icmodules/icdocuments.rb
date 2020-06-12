@@ -25,4 +25,9 @@ def name
   @name ||= data[:original_name]
 end #/ name
 
+# Return TRUE si le document possède un fichier commentaire
+def has_comments?
+  get_option(8) == 1
+end #/ has_comments?
+
 end #/IcDocument < ContainerClass

@@ -6,6 +6,17 @@
 class Tag
 class << self
 
+  # Un lien vers une aide
+  #
+  # Usage :     `Tag.aide(id: '<mon-id-aide>'[, titre:, class: ...])`
+  # +<nom-id-aide>+ correspond au numéro ou au nom du fichier d'aide à afficher
+  def aide params
+    if params.is_a?(String) || params.is_a?(Integer)
+      params = {id: params.to_s}
+    end
+    Tag.lien(titre:params[:titre]||'aide', route:"aide/fiche?aid=#{params[:id]}")
+  end #/ aide
+
   # Un lien quelconque
   #
   # Si params[:new], on met le target à _blank

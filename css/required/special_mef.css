@@ -18,7 +18,6 @@ span.libelle {
   color:#555555;
   font-size:0.9em;
   font-style:italic;
-  text-align:right;
 }
 /*
   Pour un div contenant un message qui doit se trouver tout seul (ou presque)

@@ -9,6 +9,12 @@ function onReady() {
 }
 
 onReady().then(()=>{
+  // Pour faire apparaitre le bouton "haut de page" quand on scroll
+  window.onscroll = function(ev) {
+   document.getElementById("to-top-button").className = (window.pageYOffset > 100) ? "visible" : "hidden";
+ };
+ // Pour surveiller le bouton haut de page
+ document.querySelector('#to-top-button').addEventListener('click', window.scrollTo.bind(window,0,0))
 })
 .catch(err => {
   console.error(err)

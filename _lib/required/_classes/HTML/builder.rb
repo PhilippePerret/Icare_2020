@@ -18,11 +18,12 @@ class HTML
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   #{head}
-  <body class="#{css}">
+  <body class="#{css}" id="top">
     <section id="header" class="#{css}">#{header}</section>
     #{@titre}
     <section id="messages">#{messages}</section>
     <section id="body" class="#{css}">#{body}</section>
+    #{top_page_button}
     <section id="footer">#{footer}</section>
     #{build_debug}
     #{Admin.section_essais if SHOW_DEVELOPPEMENT_TOOLS}
@@ -32,6 +33,12 @@ class HTML
 </html>
     HTML
   end
+
+
+  # Retourne le bouton pour remonter en haut de la page
+  def top_page_button
+    '<div id="to-top-button-div"><button class="hidden" id="to-top-button">^</a></div>'.freeze
+  end #/ top_page_button
 
   # Méthode qui est appelée si les paramètres contiennent 'tikd' qui est un
   # ticket de download de document. Cf. le mode d'emploi pour l'explication.

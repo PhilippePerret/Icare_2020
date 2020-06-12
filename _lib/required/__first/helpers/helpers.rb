@@ -12,6 +12,10 @@ def quai_des_docs(titre = nil)
   @quai_des_docs ||= Tag.lien(route:'qdd/home', text:titre||'Quai des docs').freeze
 end #/ Quai_des_docs
 
+def politique_confidentialite(titre = nil)
+  Tag.lien(text:titre||'Politique de confidentialité des données'.freeze, route:'overview/policy', target:true)
+end #/ politique_confientialite
+
 # Signature pour les mails
 def Le_Bot
   @LeBot ||= '🤖 Le Bot de l’atelier Icare'.freeze

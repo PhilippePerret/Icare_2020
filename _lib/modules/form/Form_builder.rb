@@ -217,9 +217,12 @@ class Form
 
   # Appliquer les valeurs par défaut manquantes et les retourne
   def default_values_for(dfield)
-    dfield.key?(:name) || raise("Il faut définir le paramètre :name")
-    dfield.merge!(:id => dfield[:name].gsub(/-/,'_'))
-    dfield[:value] ||= dfield[:default] || param(dfield[:name].to_sym) || ''
+    is_type_sans_champ = ['titre','explication','raw'].include?(dfield[:type])
+    dfield.key?(:name) || is_type_sans_champ || raise("Il faut définir le paramètre :name")
+    unless is_type_sans_champ
+      dfield.merge!(:id => dfield[:name].gsub(/-/,'_'))
+      dfield[:value] ||= dfield[:default] || param(dfield[:name].to_sym) || ''
+    end
     dfield.key?(:class) || dfield.merge!(class: '')
     # - style -
     dfield.merge!(style: []) unless dfield.key?(:style)
