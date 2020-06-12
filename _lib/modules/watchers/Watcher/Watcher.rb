@@ -91,7 +91,7 @@ def folder_processus_required?
 end #/ folder_processus_required?
 
 def require_folder_processus
-  require_module("watchers_processus/#{relpath}")
+  require_folder(File.join(PROCESSUS_WATCHERS_FOLDER,relpath))
   @folder_processus_has_been_already_required = true
 end #/ require_folder_processus
 

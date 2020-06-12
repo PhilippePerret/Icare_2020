@@ -34,7 +34,7 @@ end
 class WatcherCreator
 class << self
   def folder
-    @folder ||= File.expand_path(File.join('.','_lib','modules','watchers_processus'))
+    @folder ||= File.expand_path(File.join('.','_lib','_watchers_processus_'))
   end #/ folder
 end # /<< self
 attr_reader :id, :data, :objet_class, :processus
@@ -144,7 +144,7 @@ end #/WatcherCreator
 
 creator = WatcherCreator.new(ID_WATCHER, DATA_WATCHER)
 creator.build
-path_data = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/_constants_.rb"
+path_data = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_watchers_processus_/_constants_.rb"
 code = File.read(path_data).force_encoding('utf-8')
 unless code.include?("#{ID_WATCHER}:")
   `open -a Atom #{path_data}`

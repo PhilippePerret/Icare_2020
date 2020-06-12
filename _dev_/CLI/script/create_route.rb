@@ -20,7 +20,7 @@ RC = "\n"
 RC2 = RC * 2
 
 def create_route
-  require './_lib/constants'
+  require './_lib/required/_first/constants/paths'
   folder = File.join(PAGES_FOLDER,NEW_ROUTE)
   raise "La route #{folder} existe déjà." if File.exists?(folder)
   `mkdir -p "#{folder}"`

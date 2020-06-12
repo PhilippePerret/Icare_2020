@@ -6,8 +6,9 @@ require 'mysql2'
 require 'erb'
 require 'yaml'
 
+LIB_FOLDER      = File.dirname(__FILE__)
 
-require_relative 'constants'
+require_relative 'required/__first/constants/paths'
 
 # Le fichier de configuration
 require './config'

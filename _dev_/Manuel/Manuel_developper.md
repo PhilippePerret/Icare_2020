@@ -21,6 +21,53 @@ Il s’agit ici de la version produite en 2020 de l’Atelier Icare. Elle vise �
 
 
 
+---
+
+
+
+## Les trois dossiers principaux
+
+
+
+Les trois dossiers où il faut chercher les choses sont :
+
+### _lib/pages
+
+C’est là où sont définies toutes les routes. Si on appelle l’url `bureau/home`, c’est le dossier `./lib/pages/bureau/home/` qu’on chargera et qui contiendra tous les éléments (HTML, CSS et Javascript) propres à cette route.
+
+### _lib/required
+
+Contient tous les codes chargés chaque fois. 
+
+Définit notamment les grandes classes que sont `User` (pour gérer l’utilisateur) ou `HTML` pour la construction de la page à afficher.
+
+Définit aussi toutes les extensions de classe.
+
+Les éléments notables de ce dossier :
+
+* **`constants/`**. Dossier qui définit les constantes générales, String, Path, etc.
+* **`Tag.rb`** qui permet de construire facilement toutes les balises (tags) HTML. 
+
+### \_lib/\_watchers_processus\_
+
+Contient la définition de tous les watchers, tous les processus de watcher.
+
+Noter que ce n’est pas dans ce dossier que se trouve la définition des classes `Watcher` et `Watchers` dans dans le dossier des modules.
+
+### \_lib/modules
+
+Contient tous les modules propres qui permettent la gestion ponctuelle d'éléments. Ces modules sont pensés pour ne pas avoir à tout charger chaque fois. Par exemple, on ne charge le module `absmodules` — qui permet de travailler avec les modules d'apprentissage absolus — que lorsqu'on en a besoin, pour le bureau de travail de l'icarien par exemple.
+
+> Note : on charge n'importe quel dossier de ce dossier grâce à la méthode pratique `require_module(<nom du dossier>)`.
+
+
+
+---
+
+
+
+
+
 ## Création d’une nouvelle route/page
 
 Commencer par lire les [principes fondateurs](#principes) du nouveau site.
@@ -1038,7 +1085,7 @@ Si les données absolues du watcher définissent la propriété `:next` (avec co
 
 ##### Requierements d’un watcher
 
-Noter que le dossier [./_lib/modules/watchers_processus/xrequired](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/xrequired), conformément au [principe des xrequired](#principexrequired), est automatiquement chargé dès qu’un watcher est actionné.
+Noter que le dossier [./_lib/_watchers_processus_/xrequired](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/xrequired), conformément au [principe des xrequired](#principexrequired), est automatiquement chargé dès qu’un watcher est actionné.
 
 
 
@@ -1087,7 +1134,7 @@ Il suffit de définir ses données dans le fichier `watcher/constants.rb` vu plu
 Ensuite, on crée le dossier :
 
 ~~~
-_lib/modules/watchers_processus/<objet-class>/<processus>/
+_lib/_watchers_processus_/<objet-class>/<processus>/
 ~~~
 
 … et on met dedans tous les fichiers utiles.
@@ -1138,7 +1185,7 @@ params			# Les paramètres éventuellements transmis
 Il faut ensuite faire ses notifications, en fonction de ce qui doit être affiché à l’administrateur et l’user.
 
 ~~~
-Dans ./_lib/modules/watchers_processus/<objet>/<processu>/
+Dans ./_lib/_watchers_processus_/<objet>/<processu>/
 						main.rb  									# cf. ci-dessus
 						notification_admin.erb		# si l'administrateur doit être notifié
 						notification_user.erb			# si l'icarien doit être notifié
@@ -1218,7 +1265,7 @@ Quand c’est une notification administrateur, les boutons pour forcer la destru
 
 ### Méthodes d’helpers pour les notifications
 
-​~~~erb
+~~~erb
 <%= button_run('Titre bouton') %>
   # => bouton principal pour jouer le watcher
 
@@ -1228,7 +1275,7 @@ Quand c’est une notification administrateur, les boutons pour forcer la destru
 
 Il existe d’autres helpers ici :
 
-* [Helpers spécialisés de watchers](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/xrequired/helpers.rb),
+* [Helpers spécialisés de watchers](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_watchers_processus_/xrequired/helpers.rb),
 * [Helpers généraux]
 
 
@@ -1249,7 +1296,7 @@ contre_mail_user.erb  # mail à envoyer à l'icarien en cas de contre-processus
 
 C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’user concerné dans les messages, on peut utiliser :
 
-~~~erb
+​~~~erb
 <p>Bonjour <%= owner.pseudo %> !</p>
 ~~~
 
@@ -2039,5 +2086,5 @@ La commande `icare` permet de gérer l’atelier en ligne de commande. Jouer sim
 [formate_date]: #formate_date
 [principe des xrequired]: #principexrequired
 
-[_lib/modules/watchers_processus/_constants_.rb]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/_constants_.rb
-[données absolues des watchers]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/_constants_.rb
+[_lib/_watchers_processus_/_constants_.rb]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/watchers_processus/_constants_.rb
+[données absolues des watchers]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_watchers_processus_/_constants_.rb

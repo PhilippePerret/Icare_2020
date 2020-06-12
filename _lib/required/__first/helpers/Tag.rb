@@ -98,8 +98,7 @@ class << self
   # ou un icarien qui visite
   def lien_bureau
     home_bureau = user.admin? ? 'admin/home' : 'bureau/home'
-    logo_bureau = user.admin? ? '🎮' : '🏠'
-    "<a href=\"#{home_bureau}\">#{logo_bureau} Bureau</a>".freeze
+    "<a href=\"#{home_bureau}\">Bureau</a>".freeze
   end #/ bureau
 
   def aname(ancre)
