@@ -11,10 +11,10 @@ OFFLINE = !ONLINE
 DB_NAME       = 'icare'
 DB_TEST_NAME  = 'icare_test'
 
-APP_FOLDER      = File.dirname(LIB_FOLDER)
-PAGES_FOLDER    = File.join(LIB_FOLDER,'pages')
+APP_FOLDER      = File.dirname(LIB_FOLDER) unless defined?(APP_FOLDER)
+PAGES_FOLDER    = File.join(LIB_FOLDER,'pages') unless defined?(PAGES_FOLDER)
 PROCESSUS_WATCHERS_FOLDER = File.join(LIB_FOLDER,'_watchers_processus_')
-DATA_FOLDER     = File.join(LIB_FOLDER,'data')
+DATA_FOLDER     = File.join(LIB_FOLDER,'data') unless defined?(DATA_FOLDER)
 MODULES_FOLDER  = File.join(LIB_FOLDER,'modules')
 TEMP_FOLDER     = File.join(APP_FOLDER,'tmp')
 FORMS_FOLDER    = File.join(TEMP_FOLDER,'forms')

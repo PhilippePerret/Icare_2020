@@ -175,7 +175,7 @@ class << self
     [
       :body_erb, :form, :module_user, :icarien_required, :admin_required, :fichiers_contants
     ].each do |key|
-      NEW_WATCHER[key] = Q.select(MESSAGES["ask_if_#{key}".to_sym]) do |q|
+      DATA_PAGE[key] = Q.select(MESSAGES["ask_if_#{key}".to_sym]) do |q|
         q.choices [{name:'oui', value:true}, {name:'non', value:false}]
       end
     end
