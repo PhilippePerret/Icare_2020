@@ -2,9 +2,7 @@ section#body.home {
   padding:0;
 }
 section#header {
-  /* background-color:var(--dark-color-normal);
-  opacity:0.4; */
-  background:rgb(70, 130, 180,0.4);
+  background: linear-gradient(to right, #ffffff 25%, rgb(70, 130, 180,0.4));
 }
 section#header:hover {opacity:1;}
 
