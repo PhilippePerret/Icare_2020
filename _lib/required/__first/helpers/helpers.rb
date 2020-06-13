@@ -20,6 +20,14 @@ def politique_confidentialite(titre = nil)
   Tag.lien(text:titre||'politique de confidentialité des données'.freeze, route:'overview/policy', target:true)
 end #/ politique_confientialite
 
+def profil(titre = nil)
+  Tag.lien(text:titre||'profil'.freeze, route:'user/profil')
+end #/ profil
+
+def section_preferences(titre = nil)
+  Tag.lien(text:titre||'section Préférences'.freeze, route:'bureau/preferences')
+end #/ section_preferences
+
 # Signature pour les mails
 def le_bot
   @le_bot ||= '🤖 Le Bot de l’atelier Icare'.freeze

@@ -454,8 +454,6 @@ class HTML
 end #/HTML
 ~~~
 
-
-
 De nombreux helpers aident ensuite à rédiger les pages avec plus de facilités.
 
 On peut citer notamment ces méthodes et classes indispensables.
@@ -1595,7 +1593,7 @@ Cette méthode permet de définir facilement une propriété dossier en le créa
 
 En d’autre terme, on utilise :
 
-​~~~ruby
+~~~ruby
 def folder
   @folder ||= mkdir(File.join('mon','beau','dossier'))
 end
@@ -1603,7 +1601,7 @@ end
 
 … au lieu de :
 
-~~~ruby
+​~~~ruby
 def folder
   @folder ||= begin
     folderpath = File.join('mon','beau','dossier')

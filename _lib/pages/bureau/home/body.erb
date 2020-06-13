@@ -18,6 +18,6 @@
   <%= femme? ? '👩🏻‍💻' : '👨🏻‍💻' %> <a href="user/profil">Profil</a>
 </div>
 
-<div class="goto">
-  ⚙️ <a href="bureau/preferences">Préférences</a>
-</div>
+<%= divGoto('<a href="bureau/preferences">⚙️ Préférences</a>') %>
+
+<%= divGoto('<a href="bureau/historique">📆 Historique</a>'.freeze) %>

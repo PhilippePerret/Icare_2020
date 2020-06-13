@@ -16,9 +16,10 @@ MOIS = {
   12 => {court: 'déc', long: 'décembre'}
 }
 
-def formate_date(time, options = nil)
+def formate_date(time = nil, options = nil)
   options ||= {}
   options.key?(:mois) || options.merge!(mois: :long)
+  time ||= Time.now
   time = Time.at(time) unless time.is_a?(Time)
   mois = MOIS[time.month][options[:mois]]
   temp = "%-d #{mois} %Y"

@@ -1,14 +1,16 @@
 # encoding: UTF-8
+
 class HTML
   def titre
-    "#{RETOUR_BUREAU}🏠 Vos préférences".freeze
+    "Historique du travail".freeze
   end
+  # Code à exécuter avant la construction de la page
   def exec
-    # Code à exécuter avant la construction de la page
     icarien_required
+
   end
+  # Fabrication du body
   def build_body
-    # Construction du body
     @body = deserb('body', self)
   end
 end #/HTML

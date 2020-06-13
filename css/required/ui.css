@@ -52,7 +52,7 @@ h2.page-title {
   color:var(--dark-color-normal);
 }
 
-p, .p, ul.p li {
+p, .p, ul.p li, ul:not(.nojustify) li {
   text-align: justify;
   /* max-width: var(--text-max-width); */
   opacity:0.8;
