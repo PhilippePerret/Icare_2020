@@ -14,7 +14,9 @@ class << self
         q.per_page liste_gels.count
       end
     end
-    File.exists?(File.join(folder_gels,gel_name)) || raise("Le gel '#{gel_name}' est inconnu.")
+    File.exists?(File.join(folder_gels,gel_name)) || begin
+      raise("Le gel '#{gel_name}' est inconnu. Pour le créer :\n* définir son 'test' dans gels_spec\n* jouer ce test (`GEL_REMOVE_LAST=true rspec spec/gels -t <tag>`)")
+    end
     require_folder(File.join(APP_FOLDER,'spec','support','Gel','lib'))
     degel(gel_name)
     puts "Dégel opéré avec succès".vert

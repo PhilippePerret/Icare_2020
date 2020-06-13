@@ -3,6 +3,7 @@
   Utilitaire pour construire les formulaires
 =end
 class Form
+  attr_reader :id
   attr_reader :data
   attr_accessor :rows
   attr_reader :submit_button

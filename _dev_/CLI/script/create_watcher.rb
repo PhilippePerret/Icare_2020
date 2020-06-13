@@ -70,7 +70,7 @@ def build
     if data[key]
       path = send("#{key}_path".to_sym)
       next if File.exists?(path)
-      code = "<p>Bonjour #{who == :admin ? 'Phil' : '<%= owner.pseudo %>'},</p>\n\n<p>Message du mail</p>\n\n<p><%= Le_Bot %></p>"
+      code = "<p>Bonjour #{who == :admin ? 'Phil' : '<%= owner.pseudo %>'},</p>\n\n<p>Message du mail</p>\n\n<p><%= le_bot %></p>"
       File.open(path,'wb'){|f| f.write code}
     end
   end

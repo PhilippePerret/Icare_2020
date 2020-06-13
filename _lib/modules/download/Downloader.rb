@@ -2,7 +2,13 @@
 =begin
   Class Downloader
   ----------------
-  Pour procéder au téléchargement d'un document
+  Pour procéder au téléchargement d'un document. Ce que j'appelle "téléchargement"
+  ici, c'est le fait de cliquer sur un lien dans la page et d'obtenir une
+  fenêtre qui propose d'enregistrer sur son ordinateur le fichier relié à ce
+  lien. Ce téléchargement n'est pas à confondre avec le fait de mettre un
+  document dans un formulaire (attacher un fichier) et de l'enregistrer ensuite
+  sur l'atelier, pour "téléchargement" ultérieur. Pour ça, voir le module
+  'upload'.
 
   Les trois utilisations principales
   - télécharger un travail d'icarien (admin)

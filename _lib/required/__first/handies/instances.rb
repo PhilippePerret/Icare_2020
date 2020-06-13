@@ -10,7 +10,7 @@ def user
 end
 
 def param key, value = nil
-  URL.param(key, value)
+  URL.param(key.to_sym, value)
 end
 
 def html

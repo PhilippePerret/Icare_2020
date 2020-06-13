@@ -21,6 +21,6 @@ def politique_confidentialite(titre = nil)
 end #/ politique_confientialite
 
 # Signature pour les mails
-def Le_Bot
-  @LeBot ||= '🤖 Le Bot de l’atelier Icare'.freeze
+def le_bot
+  @le_bot ||= '🤖 Le Bot de l’atelier Icare'.freeze
 end #/ Le_bot

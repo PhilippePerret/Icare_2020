@@ -1164,6 +1164,13 @@ Le plus simple pour créer un nouveau type de watcher est d’utiliser **le scri
 
 
 
+#### Erreurs courantes à la création d’un watcher
+
+* Oublier le `watcher: id` dans la [définition du formulaire](#forminnotification) utilisé dans la notification.
+* Oublier le `route: route.to_s` dans la [définition du formulaire](#forminnotification) utilisé dans la notification.
+
+
+
 #### Détail de la création
 
 Il suffit de définir ses données dans le fichier `watcher/constants.rb` vu plus haut.
@@ -1252,7 +1259,9 @@ Dans ces fichiers, on doit utiliser un `div.buttons` pour placer les boutons pri
 </div>
 ~~~
 
+<a name="forminnotification"></a>
 
+#### Formulaire dans une notification de watcher
 
 Si un formulaire doit être utilisé pour la notification — ce qui est souvent le cas — on doit utiliser cette tournure :
 
@@ -1376,14 +1385,14 @@ end
 
 
 
-​~~~ruby
+~~~ruby
 # Dans la notification
 <p class="center">
     @ticket1.lien("Envoyer le ticket", {route: "bureau/home"})
 </p>
 ~~~
 
-
+> Note  : si aucune route n'est spécifiée, c'est 'bureau/home' qui est toujours choisi.
 
 
 
@@ -1426,7 +1435,7 @@ Pour instancier un ticket, on utilise la méthode `Ticket.create(<param>)`.
 
 Mettre son code à :
 
-~~~ruby
+​~~~ruby
 "run_watcher(<watcher id>)"
 
 # Donc :
@@ -2070,6 +2079,7 @@ Les valeurs sont les suivantes :
 | 5    | L’icarien a downloadé ses commentaires.<br />Ce statut génère automatiquement le watcher qui permet à Phil de déposer les documents sur le Quai des docs (`depot-qdd`). |
 | 6    | Phil a déposé les documents de l’étape sur le Quai des docs.<br />Ce statut génère automatiquement le watcher qui permet à l’icarien de définir le partage de ses documents `qdd-define-sharing`. |
 | 7    | L’icarien a défini le partage de chacun de ses documents.    |
+| 8    | Fin de cycle de l'étape                                      |
 
 
 

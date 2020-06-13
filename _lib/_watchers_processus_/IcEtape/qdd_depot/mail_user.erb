@@ -4,4 +4,21 @@
 
 <p>Il vous reste à définir leur niveau de partage.</p>
 
-<p><%=Le_Bot%></p>
+<ul style="list-style:square;">
+  <li><%= @ticket_share_all.lien("Partager documents et commentaires") %></li>
+  <li><%= @ticket_share_nothing.lien("Ne partager aucun documents et aucun des commentaires") %></li>
+</ul>
+
+<p>Ou procéder document par document :</p>
+<ul style="list-style:square;">
+<% @tickets.each do |docid, ddoc| %>
+  <li><%= ddoc[:share].lien("Partager document original et commentaires de “#{ddoc[:name]}”") %></li>
+  <li><%= ddoc[:unshare].lien("Ne partager ni document original ni commentaires de “#{ddoc[:name]}”") %></li>
+<% end %>
+</ul>
+
+<p>Vous pouvez définir plus finement encore vos partages en regagnant <%= votre_bureau %> sur le site de l’atelier, et plus précisément votre <%= Tag.lien(route:'bureau/documents', full:true, text:"section “Document”") %>.</p>
+
+<p>Merci d’avance à vous.</p>
+
+<p><%=le_bot%></p>

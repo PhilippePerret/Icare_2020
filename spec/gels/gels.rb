@@ -3,6 +3,10 @@
   Procédures de gels
 =end
 Dir['./spec/support/Gel/**/*.rb'].each{|m|require m}
+require_data('signup_data') # => DATA_SPEC_SIGNUP_VALID
+
+include SpecModuleNavigation
+include SpecModuleFormulaire
 
 def inscription_marion
   degel_or_gel('inscription_marion') do
@@ -10,7 +14,6 @@ def inscription_marion
       find('#signup-btn').click
     end #/ clic_signup_button
     # Les données à tester
-    require_data('signup_data')
     data = DATA_SPEC_SIGNUP_VALID[1]
     goto_home
     clic_signup_button
@@ -23,7 +26,6 @@ end #/ inscription_marion
 def validation_mail
   degel_or_gel('validation_mail') do
     inscription_marion
-    require_data('signup_data')
     data = DATA_SPEC_SIGNUP_VALID[1]
     user_mail = data[:mail][:value]
     candidat = db_get('users', {mail: user_mail})
@@ -126,7 +128,54 @@ def recupere_comments
     goto('bureau/home')
     click_on('Notifications')
     click_on('Télécharger les commentaires')
-    save_and_open_page
+    save_and_open_page('recupere-comments')
     logout
   end
 end #/ recupere_comments
+
+def get_icetape_user(idx)
+  db_get('icetapes', get_icmodule_user(idx)[:icetape_id])
+end #/ get_icetape_user
+def get_icmodule_user(idx)
+  db_get('icmodules', get_user_by_index(idx)[:icmodule_id])
+end #/ get_icmodule_user
+
+def get_user_by_index(idx)
+  data = DATA_SPEC_SIGNUP_VALID[idx]
+  user_mail = data[:mail][:value]
+  db_get('users', {mail: user_mail})
+end #/ get_user_by_index
+
+def depot_qdd
+  degel_or_gel('depot_qdd') do
+    recupere_travail
+    goto_login_form
+    login_admin
+    goto('admin/notifications')
+    # On doit donner les documents commentés
+    path_doc1_original = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.pdf')
+    path_doc1_comments = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail_comsPhil.pdf')
+    path_doc2_original = File.join(SPEC_FOLDER_DOCUMENTS, 'autre_doc.pdf')
+    sleep 30
+    within("form#sharing-form-etape-#{get_icetape_user(1)[:id]}") do
+      attach_file("partage_1_original", path_doc1_original)
+      attach_file("partage_1_comments", path_doc1_comments)
+      attach_file("partage_2_original", path_doc2_original)
+      click_on('Déposer ces documents'.freeze)
+    end
+    save_and_open_page('depot-qdd')
+    logout
+  end
+end #/ depot_qdd
+
+def define_sharing
+  degel_or_gel('define_sharing') do
+    depot_qdd
+    goto_login_form
+    login_icarien(1)
+    goto('bureau/notifications')
+
+    save_and_open_page('define-sharing')
+    logout
+  end
+end #/ define_sharing
