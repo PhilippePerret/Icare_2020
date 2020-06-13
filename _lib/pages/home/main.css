@@ -1,9 +1,6 @@
 section#body.home {
   padding:0;
 }
-section#header {
-  background: linear-gradient(to right, #ffffff 25%, rgb(70, 130, 180,0.4));
-}
 section#header:hover {opacity:1;}
 
 /* Le cadre dans lequel se trouve le titre */
@@ -104,16 +101,30 @@ div#actualites div.actu span.message {
 
 
 @media only screen and (min-width: 768px) {
-  /* Écran large */
+  /*
+    --- Écran large ---
+  */
+
+  section#header {
+    background: linear-gradient(to right, #ffffff 25%, rgb(70, 130, 180,0.4));
+  }
+
   div#air-sous-bandeau {
     height:100px;
   }
   div#actualites {
-    margin-left:6em;
+    margin-left: 60%;
   }
+
 }
 @media only screen and (max-width: 768px) {
-  /* Smartphone */
+  /*
+    --- Smartphone ---
+  */
+  section#header {
+    background: rgb(70, 130, 180,0.4);
+  }
+
   div#air-sous-bandeau {
     height:40px;
   }
