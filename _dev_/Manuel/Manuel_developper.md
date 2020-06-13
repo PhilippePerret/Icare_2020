@@ -383,7 +383,16 @@ ERRORS = {
 > > icare create route
 > ~~~
 
+### Format des fichiers des pages
 
+Construire une page consiste à définir la variable `html#body` (`@body`) qui va être insérée dans la page, aisni que le titre.
+
+Une page peut être au format `ERB` ou au format `Markdown` (étendu). Les deux formats permettent l'utilisation des variables :
+
+* `<%= variable %>` pour le format `ERB`,
+* `#{variable}` pour le format `Markdown`.
+
+Si un code compliqué (if, etc.) doit être utilisé dans le format `Markdown`, il doit impérativement être mis sur une seule ligne. Sinon, privilégier le format `ERB`.
 
 ### Titre de la page
 
@@ -421,7 +430,31 @@ RETOUR_PROFIL		# Pour retourner au profil (avec le signe ↩︎ devant)
 
 ### Contenu de la page
 
-Le plus simple est d’écrire le contenu, le texte, dans le fichier `body.erb` qui peut se trouver à la racine du dossier, et être appelé par `@body = deserb('body', self)` par le module principal de la route (`main.rb`).
+Le plus simple est d’écrire le contenu, le texte, dans le fichier `body.erb` ou `body.md` qui peut se trouver à la racine du dossier, et sera  appelé par :
+
+~~~ruby
+# Format ERB
+class HTML
+	...
+	def body
+		@body = deserb('body', <owner>)
+	end
+	...
+end #/HTML
+~~~
+
+~~~ruby
+# Format Markdown
+class HTML
+	...
+	def body
+		@body = kramdown('body', <owner>)
+	end
+	...
+end #/HTML
+~~~
+
+
 
 De nombreux helpers aident ensuite à rédiger les pages avec plus de facilités.
 
@@ -1509,7 +1542,7 @@ L'aide du site est située dans le dossier/route `./_lib/pages/aide/`. Toutes le
 
 ### Lien vers un fichier d'aide
 
-​~~~ruby
+~~~ruby
 Tag.aide(<id>)
 
 # OU
@@ -1562,7 +1595,7 @@ Cette méthode permet de définir facilement une propriété dossier en le créa
 
 En d’autre terme, on utilise :
 
-~~~ruby
+​~~~ruby
 def folder
   @folder ||= mkdir(File.join('mon','beau','dossier'))
 end
