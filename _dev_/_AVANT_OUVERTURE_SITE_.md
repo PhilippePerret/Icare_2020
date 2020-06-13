@@ -1,5 +1,8 @@
 # Modifications à faire dans la base de données
 
+* Faire l'user 3 qui sera l'user "anonyme", lorsqu'un user détruit son profil.
+  MAIS AVANT il faut mettre #3 et #4 autre part et modifier dans toutes les tables (user_id = 3 et user_id = 4)
+
 * Table `absetapes`, remplacer la colonne `module_id` par `absmodule_id`
 
   ~~~SQL

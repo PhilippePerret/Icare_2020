@@ -67,7 +67,12 @@ div.goto:hover {
   border-color:rgb(42, 127, 168);
   transition:0.3s;
 }
-div.goto a {color:white}
+div.goto a {
+  color:white;
+  font-family:Geneva, Helvetica, Arial;
+  letter-spacing:0.2px;
+  font-size:0.9em;
+}
 div.goto:hover a {
   color:rgb(42, 127, 168);
   transition:0.3s;

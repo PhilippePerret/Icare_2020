@@ -17,7 +17,7 @@ def hall_of_fame(titre = nil)
 end #/ Quai_des_docs
 
 def politique_confidentialite(titre = nil)
-  Tag.lien(text:titre||'politique de confidentialité des données'.freeze, route:'overview/policy', target:true)
+  Tag.lien(text:titre||'politique de confidentialité'.freeze, route:'overview/policy', target:true)
 end #/ politique_confientialite
 
 def profil(titre = nil)
