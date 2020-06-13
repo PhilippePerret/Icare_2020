@@ -14,29 +14,29 @@ class User
   # enregistre un fichier d'information dans son dossier de candidature
   def check_signup_and_record
     chuser = check_signup
-    save_record(chuser) unless chuser.nil? # en cas d'erreur
+    # save_record(chuser) unless chuser.nil? # en cas d'erreur
   end #/ check_signup_and_record
 
   # Méthode qui vérifie que l'inscription est bonne
   def check_signup
     self.errors = []
     @errors_fields = []
-    chuser = CheckedUser.new(user)
-
-    # --- VALIDATION DE TOUTES LES PROPRIÉTÉS ---
-
-    chuser.valid?(:pseudo)
-    chuser.valid?(:patronyme)
-    chuser.valid?(:mail)
-    chuser.valid?(:naissance)
-    chuser.valid?(:sexe)
-    chuser.valid?(:password)
-    chuser.valid?(:cgu)
-    chuser.valid?(:modules)
-    chuser.valid?(:documents)
+    chuser = CheckedUser.new(user).tap do |u|
+      # --- VALIDATION DE TOUTES LES PROPRIÉTÉS ---
+      u.valid?(:pseudo)
+      u.valid?(:patronyme)
+      u.valid?(:mail)
+      u.valid?(:naissance)
+      u.valid?(:sexe)
+      u.valid?(:password)
+      u.valid?(:cgu)
+      u.valid?(:rgpd)
+      u.valid?(:modules)
+      u.valid?(:documents)
+    end
 
     if chuser.errors.count > 0
-      erreur chuser.errors.collect{|m|Tag.li(m)}.join
+      erreur(chuser.errors.collect{|m|Tag.li(m)}.join)
       return nil
     else
       # Les données sont valides, on doit créer le nouvel icarien
@@ -91,7 +91,7 @@ REG_PASSWORD = /^[a-zA-Z0-9\!\?\;\:\.\…]+$/
 PROPERTIES = [
   :pseudo, :patronyme, :mail, :naissance, :sexe, :mail_conf, :password, :password_conf,
   :presentation, :motivation, :extrait,
-  :cgu
+  :cgu, :rgpd
 ]
 
 attr_accessor :errors
@@ -197,10 +197,12 @@ def password_valid?
 end #/ password_valid?
 
 def cgu_valid?
-  if cgu.nil?
-    errors << ERRORS[:cgu_required]
-  end
+  errors << ERRORS[:cgu_required] if cgu.nil?
 end #/ cgu_valid?
+
+def rgpd_valid?
+  errors << ERRORS[:rgpd_required] if rgpd.nil?
+end #/ rgpd_valid?
 
 def modules_valid?
   modules_ids = []

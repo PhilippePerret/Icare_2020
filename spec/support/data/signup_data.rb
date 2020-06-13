@@ -80,6 +80,13 @@ DATA_SPEC_SIGNUP_INVALID = [
   {
     cgu: {value: true, have_not:ERRORS[:cgu_required], type:'checkbox'}
   },
+  # Sans cocher les rgpd
+  {
+    rgpd: {value: false,     have:ERRORS[:rgpd_required], type:'checkbox'}
+  },
+  {
+    rgpd: {value: true, have_not:ERRORS[:rgpd_required], type:'checkbox'}
+  },
   # Documents de présentation
   {
     presentation: {type:'file', value:'', have:ERRORS[:presentation_required]},
@@ -129,11 +136,12 @@ DATA_SPEC_SIGNUP_VALID = [
     presentation:   {value:'presentation.md', type:'file'},
     motivation:     {value:'motivation.md',   type:'file'},
     cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
     module_2:       {value:true, type:'checkbox'},
     module_4:       {value:true, type:'checkbox'},
     module_6:       {value:true, type:'checkbox'}
   },
-  # UNE seconde candidate valide
+  # UNE seconde candidate valide (index 1 - et rester index 1 pour les gels)
   {
     pseudo:     {value:'Marion'},
     patronyme:  {value:'Marion Michel'},
@@ -146,6 +154,7 @@ DATA_SPEC_SIGNUP_VALID = [
     presentation:   {value:'presentation.md', type:'file'},
     motivation:     {value:'motivation.md',   type:'file'},
     cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
     module_3:       {value:true, type:'checkbox'}
   }
 ]

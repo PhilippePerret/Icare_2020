@@ -4,7 +4,7 @@
 =end
 class HTML
   def signup_form
-    form = Form.new(id:'signup-form', route:'user/signup')
+    form = Form.new(id:'signup-form', route:'user/signup', libelle_size:250)
     form.rows = rows
     form.submit_button = "Candidater"
     form.out
@@ -67,9 +67,10 @@ class HTML
       ['🔐 Contact et accès au site', 'titre'],
       ['Mail*', 'text'],
       ['Confirmer mail*', 'text', 'umail_conf'],
-      ['Mot de passe (MdP)*', 'password', 'upassword'],
+      ['Mot de passe<span class="small"> (MdP)</span>*', 'password', 'upassword'],
       ['Confirmer MdP*', 'password', 'upassword_conf'],
-      ['<CGU/>*', 'checkbox', 'ucgu', '<span class="small">J’accepte les <a href="http://www.atelier-icare.net/CGU_Atelier_ICARE.pdf" target="_blank">Conditions Générales d’Utilisation</a> de l’atelier Icare</span>'.freeze],
+      ['CGU*', 'checkbox', 'ucgu', '<span class="small">J’accepte les <a href="http://www.atelier-icare.net/CGU_Atelier_ICARE.pdf" target="_blank">Conditions Générales d’Utilisation</a> de l’atelier Icare.</span>'.freeze],
+      ['RGPD*', 'checkbox', 'urgpd', '<span class="small">En cochant cette case vous approuvez la <a href="overview/policy" target="_blank">Politique de confidentialité</a> de l’atelier en matière de protection et d’utilisation des données.</span>'.freeze],
       ['📃 Documents de présentation', 'titre'],
       ary_presentation,
       ary_motivation,

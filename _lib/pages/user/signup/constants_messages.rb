@@ -17,7 +17,8 @@ ERRORS.merge!({
   password_invalid: 'Votre mot de passe ne doit contenir que des lettres, des chiffres et des ponctuations'.freeze,
   conf_password_doesnt_match: 'La confirmation de votre mot de passe ne correspond pas'.freeze,
   # CGU
-  cgu_required: 'Vous devez approuver les Conditions Générales d’Utilisation de l’atelier.'.freeze,
+  cgu_required: 'Vous devez approuver les <a href="http://www.atelier-icare.net/CGU_Atelier_ICARE.pdf" target="_blank">Conditions Générales d’Utilisation</a> de l’atelier Icare.'.freeze,
+  rgpd_required: 'Vous devez approuver la <a href="overview/policy" target="_blank">politique de confidentialité</a> de l’atelier Icare.'.freeze,
   # DOCUMENTS
   presentation_required: 'Le document de votre présentation est requis'.freeze,
   presentation_format_invalid: 'Le document de présentation doit être dans un format valide (PDF, .odt, .docx, Markdown ou RTF)'.freeze,
