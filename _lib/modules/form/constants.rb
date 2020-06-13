@@ -1,5 +1,10 @@
 # encoding: UTF-8
 
+DEFAULT_LIBELLE_WIDTH = '200px'
+DEFAULT_VALUE_WIDTH   = '400px'
+
+INPUT_SUBMIT_BUTTON = '<input type="submit" value="%{name}" class="%{class}">'
+WATCHER_HIDDEN_FIELDS = '<input type="hidden" name="op" value="run" /><input type="hidden" name="wid" value="%{wid}" />'.freeze
 
 SPAN_DATE_FIELDS = '<span id="%{prefix_id}-date-fields" class="%{class}">%{select_day}%{select_month}%{select_year}</span>'
 OPTION_TAG = '<option value="%{value}">%{titre}</option>'.freeze
@@ -17,7 +22,7 @@ CHECKBOX_TAG = '<input type="checkbox" id="%{id}" name="%{name}"%{checked}><labe
 
 # FILE_TAG = '<input type="file" name="%{name}" id="%{id}" />'.freeze
 
-FILE_TAG = '<span id="container-file-%{id}" data-name="%{name}" class="file-field vmiddle"><button type="button" class="file-reset hidden">❌</button><input type="file" name="%{name}" id="document-%{name}" /><button type="button" class="file-choose btn small">%{button_name}</button><span class="file-name"></span></span>'.freeze
+FILE_TAG = '<span id="container-file-%{id}" data-name="%{name}" class="file-field vmiddle"><button type="button" class="file-reset hidden">❌</button><input type="file" name="%{name}" id="%{name}" /><button type="button" class="file-choose btn small">%{button_name}</button><span class="file-name"></span></span>'.freeze
 
 RAW_TAG = '<div style="%{style}">%{name}</div>'.freeze
 

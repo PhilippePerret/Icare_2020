@@ -54,7 +54,7 @@ class Watcher < ContainerClass
       docid = doc.id
       @tickets.merge!(docid => {
         name: docid.name,
-        share: Ticket.create(user_id:owner.id, code:"require_module('icdocuments');IcDocument.share(#{docid})")}),
+        share: Ticket.create(user_id:owner.id, code:"require_module('icdocuments');IcDocument.share(#{docid})"),
         unshare: Ticket.create(user_id:owner.id, code:"require_module('icdocuments');IcDocument.unshare(#{docid})")
       })
     end

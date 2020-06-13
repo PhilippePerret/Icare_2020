@@ -50,13 +50,10 @@ class Form
     HTML
   end
 
-  INPUT_SUBMIT_BUTTON = '<input type="submit" value="%{name}" class="%{class}">'
-
   def build_submit_button
     INPUT_SUBMIT_BUTTON % {name:submit_button, class:submit_button_class||''}
   end #/ build_submit_button
 
-  WATCHER_HIDDEN_FIELDS = '<input type="hidden" name="op" value="run" /><input type="hidden" name="wid" value="%{wid}" />'.freeze
   # Les deux champs :wid et :ope qui permettent de soumettre le watcher
   def champs_watchers
     WATCHER_HIDDEN_FIELDS % {wid: data[:watcher_id]}
@@ -78,7 +75,6 @@ class Form
   # La dimension du formulaire
   # Elle sera calculée en fonction de la définition ou non des libelle_size,
   # et :value_size ou de sa définition explicite
-  DEFAULT_LIBELLE_WIDTH = '200px'
   def form_size
     @form_size ||= begin
       if data.key?(:size)
@@ -101,8 +97,12 @@ class Form
   end #/ libelle_size
   def value_size
     @value_size ||= begin
-      # Quand défini dans les arguments d'instanciation (data)
-      "#{data[:value_size]}px" unless data[:value_size].nil? # si défini explicitement
+      if data[:value_size].nil?
+        DEFAULT_VALUE_WIDTH
+      else
+        # Quand défini dans les arguments d'instanciation (data)
+        "#{data[:value_size]}px"
+      end
     end
   end #/ value_size
   def value_size= value
@@ -221,7 +221,7 @@ class Form
     is_type_sans_champ = ['titre','explication','raw'].include?(dfield[:type])
     dfield.key?(:name) || is_type_sans_champ || raise("Il faut définir le paramètre :name")
     unless is_type_sans_champ
-      dfield.merge!(:id => dfield[:name].gsub(/-/,'_'))
+      dfield.key?(:id) || dfield.merge!(id: dfield[:name])
       dfield[:value] ||= dfield[:default] || param(dfield[:name].to_sym) || ''
     end
     dfield.key?(:class) || dfield.merge!(class: '')

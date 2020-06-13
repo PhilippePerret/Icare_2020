@@ -19,7 +19,7 @@ def inscription_marion
     clic_signup_button
     fill_formulaire_with('#signup-form', data)
     submit_formulaire('#signup-form')
-    save_and_open_page
+    save_screenshot('inscription_marion.htm')
   end
 end #/ inscription_marion
 
@@ -32,7 +32,7 @@ def validation_mail
     dticket = db_get('tickets', {user_id: candidat[:id]})
     visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
     login(mail: user_mail, password:data[:password][:value])
-    save_and_open_page
+    save_screenshot('validation_mail.html')
     logout # pour laisser la place à l'administrateur
   end
 end #/ validation_mail
@@ -46,7 +46,7 @@ def validation_inscription
     within("#validation-candidature-form".freeze) do
       click_on('Attribuer ce module'.freeze)
     end
-    save_and_open_page
+    save_screenshot('validation_inscription.html')
     logout
   end
 end #/ admin_valide_inscription
@@ -58,7 +58,7 @@ def demarrage_module
     login_icarien(1)
     goto 'bureau/notifications'
     click_on('run-button-icmodule-start')
-    save_and_open_page
+    save_screenshot('demarrage_module.html')
     logout
   end
 end #/ marion_demarre_module
@@ -83,7 +83,7 @@ def envoi_travail
       # Soumettre le formulaire
       click_on(class: 'btn-send-work')
     end
-    save_and_open_page
+    save_screenshot('envoi_travail.html')
     logout
   end
 end #/ marion_envoie_ses_documents
@@ -95,7 +95,7 @@ def recupere_travail
     login_admin
     goto('admin/notifications')
     click_on('Télécharger les documents')
-    save_and_open_page
+    save_screenshot('recupere_travail.html')
     logout
   end
 end #/ recupere_travail
@@ -109,13 +109,10 @@ def envoi_comments
     # On doit donner les documents commentés
     path_doc_comments  = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail_comsPhil.rtf')
     within("form#send-comments-form") do
-      # Le premier document
-      # attach_file('input[type="file"]', path_doc_comments)
-      first('input[type="file"]').set(path_doc_comments)
-      # Soumettre le formulaire
+      attach_file('document-1-comments', path_doc_comments)
       click_on('Envoyer les commentaires')
     end
-    save_and_open_page
+    save_screenshot('envoi_comments.html')
     logout
   end
 end #/ envoi_comments
@@ -128,27 +125,14 @@ def recupere_comments
     goto('bureau/home')
     click_on('Notifications')
     click_on('Télécharger les commentaires')
-    save_and_open_page('recupere-comments')
+    save_screenshot('recupere-comments.html')
     logout
   end
 end #/ recupere_comments
 
-def get_icetape_user(idx)
-  db_get('icetapes', get_icmodule_user(idx)[:icetape_id])
-end #/ get_icetape_user
-def get_icmodule_user(idx)
-  db_get('icmodules', get_user_by_index(idx)[:icmodule_id])
-end #/ get_icmodule_user
-
-def get_user_by_index(idx)
-  data = DATA_SPEC_SIGNUP_VALID[idx]
-  user_mail = data[:mail][:value]
-  db_get('users', {mail: user_mail})
-end #/ get_user_by_index
-
 def depot_qdd
   degel_or_gel('depot_qdd') do
-    recupere_travail
+    recupere_comments
     goto_login_form
     login_admin
     goto('admin/notifications')
@@ -156,14 +140,13 @@ def depot_qdd
     path_doc1_original = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.pdf')
     path_doc1_comments = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail_comsPhil.pdf')
     path_doc2_original = File.join(SPEC_FOLDER_DOCUMENTS, 'autre_doc.pdf')
-    sleep 30
-    within("form#sharing-form-etape-#{get_icetape_user(1)[:id]}") do
-      attach_file("partage_1_original", path_doc1_original)
-      attach_file("partage_1_comments", path_doc1_comments)
-      attach_file("partage_2_original", path_doc2_original)
+    within("form#qdd-depot-form-etape-#{get_icetape_user(1)[:id]}") do
+      attach_file("document-1-original", path_doc1_original)
+      attach_file("document-1-comments", path_doc1_comments)
+      attach_file("document-2-original", path_doc2_original)
       click_on('Déposer ces documents'.freeze)
     end
-    save_and_open_page('depot-qdd')
+    save_screenshot('depot-qdd.html')
     logout
   end
 end #/ depot_qdd
@@ -174,8 +157,13 @@ def define_sharing
     goto_login_form
     login_icarien(1)
     goto('bureau/notifications')
-
-    save_and_open_page('define-sharing')
+    whithin("sharing-form-etape-1") do
+      choose("1", from: "partage-1-original")
+      choose("2", from: "partage-1-comments")
+      choose("2", from: "partage-2-original")
+      click_on('Appliquer ce partage'.freeze)
+    end
+    save_screenshot('define-sharing.html')
     logout
   end
 end #/ define_sharing
