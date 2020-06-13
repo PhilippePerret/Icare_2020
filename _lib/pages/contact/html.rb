@@ -2,7 +2,7 @@
 require_module('form')
 class HTML
   def titre
-    "📧#{SPACE}Contact".freeze
+    "📧#{ISPACE}Contact".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

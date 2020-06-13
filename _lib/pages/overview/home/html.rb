@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "🌎#{SPACE}Description de l’atelier".freeze
+    "🌎#{ISPACE}Description de l’atelier".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

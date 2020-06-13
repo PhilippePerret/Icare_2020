@@ -13,7 +13,8 @@ VG = ', '.freeze # VG pour VirGule
 
 PV = ';'.freeze # PV pour Point Virgule
 
-SPACE = '&nbsp;'
+SPACE = ' '
+ISPACE = '&nbsp;'
 EMPTY_STRING = ''.freeze
 
 RETOUR = '<span style="vertical-align:sub;">↩︎</span>'.freeze

@@ -517,6 +517,25 @@ Ils sont toujours formatés en respectant les règles suivantes :
 * traitent tous les liens `<a>` comme des boutons (class `btn`),
 * traitent tous les liens `<a class="main">` comme des boutons principaux.
 
+
+
+#### Les "divRow"
+
+La méthode d'helper `divRow(...)` permet de construire une rangée avec un élément à gauche — en général le libellé, en premier argument — et un élément à droite — en général la valeur, en deuxième argument. Le troisième argument permet de passer des options qui permettent d'affiner l'affichage.
+
+~~~ruby
+divRow("mon libellé à gauche", "Ma valeur à droite"[, {<options>}])
+# => Produit un div.row-flex
+~~~
+
+~~~ruby
+options = {
+	libelle_size:		Integer, 	# largeur en pixel du libellé
+	value_size:			Integer, 	# largeur en pixel du span valeur
+	class:					String		# la class CSS à ajouter au div principal
+}
+~~~
+
 <a name="blocgoto"></a>
 
 #### Les blocs « GoTo »
@@ -1435,7 +1454,7 @@ Pour instancier un ticket, on utilise la méthode `Ticket.create(<param>)`.
 
 Mettre son code à :
 
-​~~~ruby
+~~~ruby
 "run_watcher(<watcher id>)"
 
 # Donc :
@@ -1490,7 +1509,7 @@ L'aide du site est située dans le dossier/route `./_lib/pages/aide/`. Toutes le
 
 ### Lien vers un fichier d'aide
 
-~~~ruby
+​~~~ruby
 Tag.aide(<id>)
 
 # OU

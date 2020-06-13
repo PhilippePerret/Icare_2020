@@ -5,7 +5,7 @@
 require_module('form')
 class HTML
 def titre
-  "🔐#{SPACE}Identification"
+  "🔐#{ISPACE}Identification"
 end
 def exec
   if URL.param(:form_id) == 'user-login'

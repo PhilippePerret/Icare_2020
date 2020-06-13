@@ -4,7 +4,7 @@
 =end
 class HTML
   def titre
-    "⚡#{SPACE}Accès interdit"
+    "⚡#{ISPACE}Accès interdit"
   end #/ titre
   def build_body
     @body = <<-HTML

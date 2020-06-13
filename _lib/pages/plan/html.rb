@@ -29,6 +29,9 @@ class HTML
 
 #{divGoto('<a href="contact">📧 Contact</a>'.freeze)}
 
+#{divGoto('<a href="qdd/home">📚 Quai de docs</a>'.freeze)}
+
+
 #{divGoto(MAIN_LINKS[:aide])}
 
 #{divGoto('<a href="overview/temoignages">🖼 Témoignages</a>'.freeze)}

@@ -21,8 +21,15 @@ end #/ divRow
 
 DivRow = Struct.new(:libelle, :value, :options) do
   def out
-    Tag.div(text: spanLib + spanVal, class:'row-flex')
+    Tag.div(text: spanLib + spanVal, class:css)
   end #/ out
+  def css
+    @css ||= begin
+      c = ['row-flex']
+      c << options[:class] if options.key?(:class)
+      c.join(SPACE)
+    end
+  end #/ css
   # Span pour le libellé
   def spanLib
     Tag.span(text:libelle,  class:'libelle'.freeze, style: styleLib)
@@ -43,8 +50,8 @@ DivRow = Struct.new(:libelle, :value, :options) do
   end #/ spanVal
   def styleVal
     sty = []
-    if options.key?(:libelle_size)
-      sty << "width:#{options[:libelle_size]}px"
+    if options.key?(:value_size)
+      sty << "width:#{options[:value_size]}px"
     else
       sty << "flex:2"
     end
