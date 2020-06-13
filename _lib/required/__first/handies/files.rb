@@ -32,8 +32,12 @@ def fromCaller(relpath, from)
 end #/ fromCaller
 
 def deserb relpath, owner = nil
-  Deserb.deserb(relpath, owner, Kernel.caller[0].split(':')[0])
+  Deserb.deserb(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
 end
+
+def kramdown relpath, owner = nil
+  AIKramdown.kramdown(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
+end #/ kramdown
 
 def deyaml relpath
   MyYAML.my_load(relpath, Kernel.caller[0].split(':')[0])

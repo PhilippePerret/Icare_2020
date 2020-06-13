@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "👮‍♀️ Politique de confidentialité des données".freeze
+    "👮‍♀️ Politique de confidentialité".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -10,6 +10,7 @@ class HTML
   end
   # Fabrication du body
   def build_body
-    @body = deserb('body', self)
+    # @body = deserb('body', self)
+    @body = kramdown('body', self)
   end
 end #/HTML

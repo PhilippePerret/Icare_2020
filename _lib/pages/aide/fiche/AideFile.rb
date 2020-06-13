@@ -22,11 +22,7 @@ def out
   # inspect
   case fextension
   when '.md'
-    require 'kramdown'
-    kramdown_options = {
-      header_offset:    0, # pour que '#' fasse un chapter
-    }
-    Kramdown::Document.new(file_read(fpath), kramdown_options).send(:to_html)
+    AIKramdown.kramdown(fpath)
   when '.erb'
     deserb(fpath)
   else
