@@ -25,7 +25,7 @@ class << self
       # TODO il faut filtrer depuis la date from
       liste = all
     end
-    lasts.collect(&:out).join
+    lasts.reverse.collect(&:out).join
   end #/ out
 
   # Pour ajouter une actualité
