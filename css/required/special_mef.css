@@ -56,10 +56,10 @@ div.goto {
   border:1px solid;
 }
 div.goto:not(.exergue) {
-  background-color:var(--fond-inner-object);
+  background:linear-gradient(to right, var(--fond-inner-object), rgb(126, 196, 229));
 }
 div.goto.exergue {
-  background-color:var(--fond-exergue-inner-object);
+  background:linear-gradient(to right,#74babc,#397d7f);
 }
 
 div.goto:hover {
@@ -74,7 +74,8 @@ div.goto a {
   font-size:0.9em;
 }
 div.goto:hover a {
-  color:rgb(42, 127, 168);
+  /* color:rgb(42, 127, 168); */
+  color:rgb(33, 223, 243);
   transition:0.3s;
 }
 
