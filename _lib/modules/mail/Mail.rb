@@ -88,7 +88,7 @@ end #/ formated_message
 
 def formated_subject
   @formated_subject ||= begin
-    data[:subject]
+    "🦋ICARE | #{data[:subject]}".freeze
   end
 end #/ formated_subject
 
