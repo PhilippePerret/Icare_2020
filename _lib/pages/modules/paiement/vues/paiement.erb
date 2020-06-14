@@ -1,3 +1,26 @@
-<p>LE FORMULAIRE DE PAIEMENT</p>
+<%
+# Formulaire de paiement
 
-<p>Vous pouvez également régler par virement. <a href="<%= route.to_s %>?op=downloadiban">Télécharger l'IBAN de Phil</a> pour procéder à un virement.</p>
+require_module('icmodules')
+require_module('user/modules')
+
+description = "Paiement de #{user.icmodule.montant_humain} pour le #{user.icmodule.ref}"
+
+%>
+<div id="cadre_form_paiement">
+  <p>Cliquez sur le bouton ci-dessous pour rejoindre PayPal et procéder en toute sécurité au paiement de votre <%= user.icmodule.ref %> (<strong><%= user.icmodule.montant_humain %></strong>).</p>
+  <form id="form_paiement" class="center noborder nomargin" action="<%= AIPaiement::URL_PAYPAL %>" onclick="this.submit()" method="POST" accept-charset="utf-8">
+
+    <input type="hidden" name="cmd" value="_express-checkout" />
+    <input type="hidden" name="token" value="<%= paiement.token %>" />
+    <input type="hidden" name="useraction" value="commit" />
+    <input type="hidden" name="description" value="<%= description %>">
+    <button type="submit" name="" value="">
+      <p class="center mt2 mb2"><strong>PAIEMENT DE <%= user.icmodule.montant_humain %></strong></p>
+      <img src="img/logos/paypal.png" />
+    </button>
+  </form>
+</div>
+
+
+<p>Vous pouvez également régler par virement. <a href="<%= route.to_s %>?op=downloadiban">Télécharger l'IBAN de Phil</a> pour l’enregistrer comme bénéficiaire sur votre compte et procédez à un virement ponctuel de <%= user.icmodule.montant_humain %>.</p>

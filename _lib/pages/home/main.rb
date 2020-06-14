@@ -9,6 +9,7 @@ class HTML
     @body = <<-HTML
 <div id="bandeau" class="nolimit">
   <div id="main-cadre">
+    <div id="papillon">🦋</div>
     <div id="titre"><a href="plan">Atelier Icare</a></div>
     <div id="sous-titre"><span class="nowrap">L’écriture dans</span> <span class="nowrap">tous ses états (*)</span></div>
   </div>

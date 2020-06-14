@@ -2,7 +2,9 @@
   Généralité
 */
 input[type="submit"],
-input[type="button"]
+button[type="submit"],
+input[type="button"],
+button[type="button"]
 {
   cursor:pointer;
 }

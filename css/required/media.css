@@ -3,10 +3,14 @@
     padding:0 4em;
   }
 
+  section#body.home div#bandeau {
+    padding:2em 8em;
+  }
   section#body.home div#main-cadre {
     top:9%;
-    left:58%;
+    right:10%;
     background:rgba(255, 255, 255, 0.1);
+    width:400px;
   }
 
   section#messages {max-width:50%;}
@@ -39,15 +43,20 @@
   section#body .libelle {
     text-align:left!important;
   }
+
+  section#body.home div#bandeau {
+    padding:0;
+  }
+
   section#body form {
     padding:2px!important;
     margin:unset!important;
   }
-  section#body div#main-cadre {
+  section#body.home div#main-cadre {
     background:rgba(255, 255, 255, 0.6);
     top:2em;
-    left:4em;
-    right:4em;
+    width:80%;
+    margin:auto 3%;
   }
 
   div.citation {

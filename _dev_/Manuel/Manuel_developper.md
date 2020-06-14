@@ -1601,7 +1601,7 @@ end
 
 … au lieu de :
 
-​~~~ruby
+~~~ruby
 def folder
   @folder ||= begin
     folderpath = File.join('mon','beau','dossier')
@@ -1617,7 +1617,7 @@ end
 
 Pour pouvoir lire un texte de façon sûre, en retournant un code bien encodé.
 
-~~~ruby
+​~~~ruby
 code = file_read('/chemin/vers/mon/fichier')
 ~~~
 
@@ -1851,6 +1851,33 @@ That’s it! Les documents seront proposés au téléchargement.
 **Fonctionnement**
 
 La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` . Ce fichier zip est détruit tout de suite après le téléchargement du zip.
+
+
+
+---
+
+
+
+## Paiement
+
+
+
+### Synopsis du paiement
+
+
+
+~~~
+
+- Arrivée sur la page de paiement, par exemple en arrivant d'un watcher (modules/paiement)
+	- la méthode AIEtape::init_paiement est appelée
+		- elle crée une instance AIPaiement => current
+		- elle appelle sa méthode current#init
+			- #init crée une requête express-checkout et l'envoie par cUrl
+			- si tout se passe bien, elle reçoit les données du paiement initié
+				(et notamment le token)
+~~~
+
+
 
 
 

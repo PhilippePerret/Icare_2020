@@ -2,7 +2,7 @@
 require_relative 'handies/messages'
 class Messager
 
-DIV_OUT = '<div class="%{css}"><span class="emoji">%{picto}</span>%{str}</div>'.freeze
+DIV_OUT = '<div class="%{css}"><span class="emoji fleft">%{picto}</span>%{str}</div>'.freeze
 
 class << self
   def add msg
@@ -11,7 +11,7 @@ class << self
   end
   def out
     return '' if no_messages?
-    DIV_OUT % {css:css_class, picto:picto, str: @messages.join(BR)}
+    DIV_OUT % {css:css_class, picto:picto, str: @messages.join(BR).gsub(/#</,'#&lt;')}
   end
   # On met les messages dans une variable session pour une redirection
   def sessionnize
