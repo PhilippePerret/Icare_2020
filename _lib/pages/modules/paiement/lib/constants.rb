@@ -8,5 +8,5 @@ MESSAGES.merge!({
 })
 
 ERRORS.merge!({
-  express_checkout_failure: 'Un problème est malheureusement survenu.'.freeze
+  express_checkout_failure: 'Un problème est malheureusement survenu (%{short} : %{long}).'.freeze
 })

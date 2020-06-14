@@ -1,0 +1,16 @@
+@media only screen and (min-width: 768px) {
+
+  div#paypal-button-container {
+    width:50%;
+    margin-left:25%;
+  }
+
+}
+
+@media only screen and (max-width: 767px) {
+
+}
+
+div#paypal-button-container {
+  margin-top:2em;
+}
