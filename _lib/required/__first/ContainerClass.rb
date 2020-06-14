@@ -22,6 +22,15 @@ class ContainerClass
       return obj
     end #/ instantiate
 
+    # Création d'une nouvelle donnée avec les données fournies
+    # Retourne l'instance créée.
+    def create_with_data(data)
+      now = Time.now.to_i
+      data.merge!({created_at:now, updated_at:now})
+      new_id = db_compose_insert(table, data)
+      return get(new_id)
+    end #/ create_with_data
+
     # Charge tous les items en appliquant le filtre +filtre+ si défini
     # Les mets dans @items en réinitialisant la liste si +reset_items+ est
     # true et la renvoie.

@@ -32,12 +32,8 @@ class << self
       created_at: now,
       updated_at: now
     )
-    valeurs = data.values
-    columns = data.keys.join(VG)
-    interro = Array.new(valeurs.count,'?').join(VG)
-    request = "INSERT INTO `icmodules` (#{columns}) VALUES (#{interro})"
-    db_exec(request, valeurs)
-    return db_last_id
+    new_id = db_compose_insert('icmodules', data)
+    return new_id
   end #/ create_in_db
 
 end # /<< self
@@ -50,6 +46,10 @@ end # /<< self
 def ref
   @ref ||= "module “#{name}”#{f_id}"
 end #/ ref
+
+def suivi?
+  absmodule.suivi?
+end #/ suivi?
 
 def absmodule
   @absmodule ||= AbsModule.get(data[:absmodule_id])

@@ -8,9 +8,10 @@ class User
     'options': '001090000000000011090009'
   }
 
-  def id      ; @id       || get(:id)       end
-  def pseudo  ; @pseudo   ||= get(:pseudo)  end
-  def mail    ; @mail     ||= get(:mail)    end
+  def id        ; @id         ||= get(:id)        end
+  def pseudo    ; @pseudo     ||= get(:pseudo)    end
+  def mail      ; @mail       ||= get(:mail)      end
+  def patronyme ; @patronyme  ||= get(:patronyme) end
 
   def get key
     @data ||= db_get('users', {id: id})

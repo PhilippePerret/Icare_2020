@@ -118,13 +118,11 @@ def bit_options(bit)
   @options[bit].to_i
 end
 
-def set_option bit, value
+def set_option bit, value, saving = true
   @options ||= get(:options)
   @options.ljust(bit,'0')
   @options[bit] = value.to_s
-  save(options: @options)
+  save(options: @options) if saving
 end #/ set_option
-
-private
 
 end

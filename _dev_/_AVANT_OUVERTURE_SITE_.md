@@ -1,5 +1,11 @@
 # Modifications à faire dans la base de données
 
+* Modifier la table des `paiements`
+
+  ~~~SQL
+  ALTER TABLE `paiements` CHANGE COLUMN `facture` `facture_id` VARCHAR(30) NOT NULL;
+  ~~~
+
 * Faire l'user 3 qui sera l'user "anonyme", lorsqu'un user détruit son profil.
   MAIS AVANT il faut mettre #3 et #4 autre part et modifier dans toutes les tables (user_id = 3 et user_id = 4)
 
@@ -47,6 +53,8 @@
 * Changer les colonnes `abs_module_id` et `abs_etape_id` de la table `icdocuments` et de la table `icmodules`, `mini_faq`
 
   ~~~SQL
+  ALTER TABLE `icmodules` DROP COLUMN `paiements`;
+  ALTER TABLE `icmodules` CHANGE COLUMN `next_paiement` `next_paiement_at` INT(10) DEFAULT NULL;
   ALTER TABLE `icmodules` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
   ALTER TABLE `mini_faq` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
   ALTER TABLE `mini_faq` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) NOT NULL;

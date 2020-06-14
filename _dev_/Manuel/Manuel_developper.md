@@ -245,6 +245,69 @@ Ces modules doivent se trouve dans le dossier :
 
 
 
+##  Les icariens
+
+Les icariens et les icariennes sont des `User`s. 
+
+Le visiteur courant est toujours accessible dans le programme par `user`.
+
+> Note : il ne faut donc jamais utiliser ce nom comme variable. Préférer `_user` ou même `icarien`.
+
+Quand c'est l'icarien d'une autre classe, on emploie la propriété `owner` pour le désigner.
+
+> Note : il ne faut donc jamais utiliser ce nom comme variable.
+
+Un visiteur non identifié répond positivement à `user.guest?`. 
+
+### Options ces icariens
+
+| Bit (0-start) | Description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| 0             | > 0 => administrateur du site.  <br />> 1 => super administrateur (moi) |
+| 1             | Bit de grade                                                 |
+| 2             | 1: le mail a été confirmé                                    |
+| 3             | 1 si l’icarien a été détruit. Note : toutes ses « productions » sur le site devient anonymes (`user_id` = 9). |
+| 4             | Bit de fréquence de mail<br />0: quotidien, 1:hebdomadaire, 9: aucun mail |
+| 5             |                                                              |
+| 6             |                                                              |
+| 7             |                                                              |
+| 8             |                                                              |
+| 9             |                                                              |
+| 10            |                                                              |
+| 11            |                                                              |
+| 12            |                                                              |
+| 13            |                                                              |
+| 14            |                                                              |
+| 15            |                                                              |
+| 16            | **Bit de statut** (ou d’activité)<br />0, 1: invité (visiteur non identifié), 3: en pause, 4: inactif |
+| 17            | **Bit de non contact par mail**<br />Si 1, l’icarien ne veut pas être contacté. |
+| 18            | **Bit de redirection**<br />Détermine la section à rejoindre après l’identification. |
+| 19            | **Bit de contact**<br />Détermine comment l’icarien veut pouvoir être  contacté.<br />9: strictement aucun contact. |
+| 20            | **Bit d'entête**<br />1: l’entête du site doit être cachée (inusité dans la version actuelle) |
+| 21            | **Bit d’historique partagé**<br />Si 1, l’icarien partage avec les autres icariens son historique de travail. |
+| 22            | **Bit de notification de message**<br />Si 1, l’icarien est averti par mail lorsque quelqu’un lui laisse un message sur son frigo. |
+| 23            | **Bit de contact avec le monde** (toute personne hors atelier)<br />9: aucun contact |
+| 24            | **Bit de « réalité »**. Il est à 1 si c’est un « vrai » icarien, c’est-à-dire si c’est un icarien qui a déjà effectué un paiement. |
+| 25            |                                                              |
+| 26            |                                                              |
+| 27            |                                                              |
+| 28            |                                                              |
+| 29            |                                                              |
+| 30            |                                                              |
+| 31            |                                                              |
+
+
+
+### Envoi d'un mail à un icarien
+
+~~~ruby
+<user>.send_mail(subject:"Le sujet", message:"<p>le message HTML</p>")
+~~~
+
+---
+
+
+
 ## Base de données
 
 
@@ -1617,7 +1680,7 @@ end
 
 Pour pouvoir lire un texte de façon sûre, en retournant un code bien encodé.
 
-​~~~ruby
+~~~ruby
 code = file_read('/chemin/vers/mon/fichier')
 ~~~
 
@@ -1720,7 +1783,7 @@ Même chose que pour `collect` ci-dessus, mais sans retourner de résultat.
 
 Par exemple :
 
-~~~ruby
+​~~~ruby
 Watcher.each("user_id = 1") do |watcher|
   puts watcher.out
 end
@@ -1861,23 +1924,9 @@ La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` 
 ## Paiement
 
 
+À présent le paiement est extrêmement facilité, il suffit de poser un bouton et un script pour que tout se fasse en coulisse.
 
-### Synopsis du paiement
-
-
-
-~~~
-
-- Arrivée sur la page de paiement, par exemple en arrivant d'un watcher (modules/paiement)
-	- la méthode AIEtape::init_paiement est appelée
-		- elle crée une instance AIPaiement => current
-		- elle appelle sa méthode current#init
-			- #init crée une requête express-checkout et l'envoie par cUrl
-			- si tout se passe bien, elle reçoit les données du paiement initié
-				(et notamment le token)
-~~~
-
-
+Voir le [dossier contenant le fichier principal dans module/paiment](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb) et la classe [AIPaiement](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/AIPaiement.rb) (attention, cette classe se trouve dans le dossier `modules/paiement`, pas dans un dossier module — qui serait un peu superfétatoire).
 
 
 

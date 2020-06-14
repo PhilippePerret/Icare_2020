@@ -1,0 +1,9 @@
+<%
+# Note : c'est l'AIPaiement qui est bindé à ce mail
+%>
+<p><%= owner.pseudo %>,</p>
+<p>Veuillez trouver ci-dessous la facture pour le réglement de votre module <%= icmodule.ref %>.</p>
+<%= facture_mail %>
+<p style="font-style:italic;font-size:0.85em;">Vous pouvez consulter la <%= politique_confidentialite %> appliquée à l'atelier Icare en matière de conservation des données.</p>
+<p>Merci de votre confiance,</p>
+<p><%= le_bot %></p>

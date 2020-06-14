@@ -16,6 +16,7 @@ def vide_db
   vide_watchers
   vide_tickets
   vide_actualites
+  vide_paiements
 end #/ vide_db
 
 def vide_users
@@ -39,6 +40,9 @@ end #/ vide_tickets
 def vide_actualites
   vide_table('actualites')
 end #/ vide_actualites
+def vide_paiements
+  vide_table('paiements')
+end #/ vide_paiements
 
 def vide_table dbtable, from_id = nil, reset_auto_incremente = true
   request = "DELETE FROM icare_test.#{dbtable}"

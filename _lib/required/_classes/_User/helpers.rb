@@ -7,7 +7,16 @@ class User
   def ref
     @ref ||= "#{pseudo} <span class='small'>(##{id})</span>".freeze
   end #/ ref
-  
+
+  # Permet d'envoyer un message mail à l'icarien
+  # +dmail+
+  #   subject: Le sujet
+  #   message: Le message au format HTML
+  def send_mail(dmail)
+    require_module('mail')
+    Mail.send(dmail.merge!(to: mail))
+  end #/ send_mail
+
   # Retourne le visage de l'utilisateur, en fonction du fait que c'est
   # un homme ou une femme
   def visage

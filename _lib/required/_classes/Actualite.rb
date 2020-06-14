@@ -5,10 +5,12 @@
   Gestion des actualités de l'atelier
 =end
 class Actualite
+
 LASTS_COUNT = 20
 REQUEST_LASTS   = "SELECT * FROM actualites ORDER BY created_at LIMIT #{LASTS_COUNT}".freeze
 REQUEST_CREATE  = "INSERT INTO actualites (type, user_id, message, created_at, updated_at) VALUES (?, ?, ?, ?, ?)".freeze
-DIV_ACTU = '<div class="actu"><span class="date">%{date}</span><span class="message">%{message}</span></div>'
+DIV_ACTU = '<div class="actu"><span class="date">%{date}</span><span class="message">%{message}</span></div>'.freeze
+
 # ---------------------------------------------------------------------
 #
 #   CLASSE

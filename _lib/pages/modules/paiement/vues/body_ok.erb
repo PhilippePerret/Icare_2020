@@ -1,2 +1,12 @@
-<p>Votre paiement a bien été enregistré ! 👏</p>
+<%
+date_next_paiement = paiement.date_next_paiement
+%>
+<p>Votre paiement a bien été enregistré.</p>
 <p>Merci de votre confiance et bonne continuation sur l'atelier Icare ! <span class="big">🦋</span></p>
+<%= facture %>
+<% if date_next_paiement %>
+  <p>Merci de noter que votre prochain paiement se fera le <%= date_next_paiement %>.</p>
+<% else %>
+  <p class="explication">Vous n'aurez pas d'autres paiements concernant ce module d’apprentissage.</p>
+<% end %>
+<p class="explication">Vous pouvez consulter la <%= politique_confidentialite %> pour tout savoir sur la protection et l’utilisation de vos données au sein de l’atelier Icare.</p>
