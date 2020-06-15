@@ -24,7 +24,7 @@ CHECKBOX_TAG = '<input type="checkbox" id="%{id}" name="%{name}"%{checked}><labe
 
 FILE_TAG = '<span id="container-file-%{id}" data-name="%{name}" class="file-field vmiddle"><button type="button" class="file-reset hidden">❌</button><input type="file" name="%{name}" id="%{name}" /><button type="button" class="file-choose btn small">%{button_name}</button><span class="file-name"></span></span>'.freeze
 
-RAW_TAG = '<div style="%{style}">%{name}</div>'.freeze
+RAW_TAG = '<div style="%{style}">%{content}</div>'.freeze
 
 TAGS_TYPES = {
   text:         INPUT_TEXT_TAG,

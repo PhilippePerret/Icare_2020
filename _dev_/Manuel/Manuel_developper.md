@@ -832,9 +832,30 @@ form.rows = {
   }
 ~~~
 
-> Note 1 : la propriété `:name` et `:type` sont absolument requises.
+> Note 1 : la propriété `:name` est absolument requise.
 >
-> Note 2 : la propriété `:value` peut être remplacée par `:default`.
+> Ntoe 2 : la propriété `type` est 'text' par défaut.
+>
+> Note 3 : la propriété `:value` peut être remplacée par `:default`.
+
+
+
+
+### Types de champ
+
+~~~
+text					Pour un input text simple
+textarea			Pour un champ textarea
+password			Pour un mot de passe
+select				Pour un menu select. Les valeurs doivent être fournies par :values
+checkbox			Une case à cocher
+file					Pour choisir un fichier
+raw						Pour un code qui sera inséré tel quel (par exemple une liste de cbs). On 
+							renseigne alors la propriété :content, :value ou :name avec le contenu.
+titre					Un titre (le label est le titre)
+explication		Une explication discrète pour un champ. Mettre un label unique mais quelconque
+
+~~~
 
 
 
@@ -919,22 +940,6 @@ class HTML
 end #/HTML
 ~~~
 
-
-
-### Types de champ
-
-~~~
-text					Pour un input text simple
-textarea			Pour un champ textarea
-password			Pour un mot de passe
-select				Pour un menu select. Les valeurs doivent être fournies par :values
-checkbox			Une case à cocher
-file					Pour choisir un fichier
-raw						Pour un code qui sera inséré tel quel (par exemple une liste de cbs)
-titre					Un titre (le label est le titre)
-explication		Une explication discrète pour un champ. Mettre un label unique mais quelconque
-
-~~~
 
 #### Définition d'un menu
 
@@ -1798,7 +1803,7 @@ Même chose que pour `each` ci-dessus, mais avec l'index en deuxième paramètre
 
 Par exemple :
 
-​~~~ruby
+~~~ruby
 AbsModule.each_with_index("user_id = 1") do |mod, idx|
   puts "Module d'index #{idx}"
 end
@@ -1832,7 +1837,7 @@ end
 
 Pour atteindre les données enregistrées dans la base de données. Toutes les valeurs étant enregistrées avec des `Symbol`s, on utilise :
 
-~~~ruby
+​~~~ruby
 valeur = instance.data[:key_data]
 ~~~
 

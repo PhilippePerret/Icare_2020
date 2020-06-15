@@ -218,6 +218,7 @@ class Form
 
   # Appliquer les valeurs par défaut manquantes et les retourne
   def default_values_for(dfield)
+    dfield.merge!(type:'text') unless dfield.key?(:type)
     is_type_sans_champ = ['titre','explication','raw'].include?(dfield[:type])
     dfield.key?(:name) || is_type_sans_champ || raise("Il faut définir le paramètre :name")
     unless is_type_sans_champ
@@ -226,12 +227,18 @@ class Form
     end
     dfield.key?(:class) || dfield.merge!(class: '')
     # - style -
-    dfield.merge!(style: []) unless dfield.key?(:style)
+    if dfield.key?(:style)
+      dfield[:style] = [dfield[:style]]
+    else
+      dfield.merge!(style: [])
+    end
     dfield[:style] << "width:#{dfield[:size]}px;" if dfield.key?(:size)
     dfield[:style] << "height:#{dfield[:height]}px;" if dfield.key?(:height)
     dfield[:style] = dfield[:style].join('')
 
     case dfield[:type].to_s
+    when 'raw'.freeze
+      dfield.merge!(content: dfield[:content]||dfield[:value]||[dfield[:name]])
     when 'checkbox'.freeze
       dfield.merge!(checked: param(dfield[:name].to_sym) ? ' CHECKED' : '')
     when 'textarea'.freeze

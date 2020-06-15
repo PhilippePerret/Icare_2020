@@ -65,7 +65,7 @@ class Watcher < ContainerClass
     icetape.set(status: 4)
     # Ajouter un watcher pour le changement d'étape
     # de l'utilisateur
-    owner.watchers.add('changement_etape', {vu_user:true, vu_admin:false, objet_id:})
-  end #/ extra_operation
+    owner.watchers.add('changement_etape', {vu_user:true, vu_admin:false, objet_id:objet_id})
+  end #/ post_operation
 
 end # /Watcher < ContainerClass

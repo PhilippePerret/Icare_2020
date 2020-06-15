@@ -32,7 +32,7 @@ def validation_mail
     dticket = db_get('tickets', {user_id: candidat[:id]})
     visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
     login(mail: user_mail, password:data[:password][:value])
-    save_screenshot('validation_mail.html')
+    save_screenshot('validation_mail.png')
     logout # pour laisser la place à l'administrateur
   end
 end #/ validation_mail
@@ -46,7 +46,7 @@ def validation_inscription
     within("#validation-candidature-form".freeze) do
       click_on('Attribuer ce module'.freeze)
     end
-    save_screenshot('validation_inscription.html')
+    save_screenshot('validation_inscription.png')
     logout
   end
 end #/ admin_valide_inscription
@@ -58,7 +58,7 @@ def demarrage_module
     login_icarien(1)
     goto 'bureau/notifications'
     click_on('run-button-icmodule-start')
-    save_screenshot('demarrage_module.html')
+    save_screenshot('demarrage_module.png')
     logout
   end
 end #/ marion_demarre_module
@@ -83,7 +83,7 @@ def envoi_travail
       # Soumettre le formulaire
       click_on(class: 'btn-send-work')
     end
-    save_screenshot('envoi_travail.html')
+    save_screenshot('envoi_travail.png')
     logout
   end
 end #/ marion_envoie_ses_documents
@@ -95,7 +95,7 @@ def recupere_travail
     login_admin
     goto('admin/notifications')
     click_on('Télécharger les documents')
-    save_screenshot('recupere_travail.html')
+    save_screenshot('recupere_travail.png')
     logout
   end
 end #/ recupere_travail
@@ -112,7 +112,7 @@ def envoi_comments
       attach_file('document-1-comments', path_doc_comments)
       click_on('Envoyer les commentaires')
     end
-    save_screenshot('envoi_comments.html')
+    save_screenshot('envoi_comments.png')
     logout
   end
 end #/ envoi_comments
@@ -125,14 +125,26 @@ def recupere_comments
     goto('bureau/home')
     click_on('Notifications')
     click_on('Télécharger les commentaires')
-    save_screenshot('recupere-comments.html')
+    save_screenshot('recupere-comments.png')
     logout
   end
 end #/ recupere_comments
 
+def change_etape
+  degel_or_gel('change_etape') do
+    recupere_comments
+    goto_login_form
+    login_admin
+    goto('admin/notifications')
+    click_on('Changer l’étape'.freeze)
+    save_screenshot('change-etape.png')
+    logout
+  end
+end #/ change_etape
+
 def depot_qdd
   degel_or_gel('depot_qdd') do
-    recupere_comments
+    change_etape
     goto_login_form
     login_admin
     goto('admin/notifications')
@@ -146,7 +158,7 @@ def depot_qdd
       attach_file("document-2-original", path_doc2_original)
       click_on('Déposer ces documents'.freeze)
     end
-    save_screenshot('depot-qdd.html')
+    save_screenshot('depot-qdd.png')
     logout
   end
 end #/ depot_qdd
@@ -163,7 +175,7 @@ def define_sharing
       choose("2", from: "partage-2-original")
       click_on('Appliquer ce partage'.freeze)
     end
-    save_screenshot('define-sharing.html')
+    save_screenshot('define-sharing.png')
     logout
   end
 end #/ define_sharing

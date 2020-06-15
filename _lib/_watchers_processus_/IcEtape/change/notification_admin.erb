@@ -1,1 +1,10 @@
-<p>Notification pour faire changer l'étape de l'icarien</p>
+<%
+form = Form.new(id:"change-etape-form-user-#{owner.id}", watcher:id, route:route.to_s)
+form.rows = {
+  'Nouvelle étape' => {name:'new-etape', type:'raw', value: menu_etapes},
+  ' Ou par numéro' => {name:'force_etape_id', style:'width:40px;'}
+}
+form.submit_button = 'Changer l’étape'
+form.submit_button_class = 'main'
+%>
+<%= form.out %>

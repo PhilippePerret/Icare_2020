@@ -28,6 +28,7 @@ def run
   send_mails
   add_actualite
   next_watcher if absdata[:next]
+  post_operation if respond_to?(:post_operation)
   destroy
   send(:onSuccess) if respond_to?(:onSuccess)
 rescue WatcherInterruption => e

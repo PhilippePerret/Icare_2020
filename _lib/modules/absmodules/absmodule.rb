@@ -16,6 +16,17 @@ def suivi?
   nombre_jours.nil?
 end #/ suivi?
 
+# Retourne la liste ordonnée des étapes (instances AbsEtape) du module
+def etapes
+  @etapes ||= begin
+    request = "SELECT * FROM absetapes WHERE absmodule_id = #{id} ORDER BY numero".freeze
+    db_exec(request).collect do |detape|
+      AbsEtape.instantiate(detape)
+    end
+  end
+end #/ etapes
+
+
 # Retourne l'absetape du module correspondant au numéro +numero+
 def get_absetape_by_numero(numero)
   detape = db_get('absetapes', {absmodule_id:id, numero:numero}, {columns:[:id]})
