@@ -7,7 +7,7 @@ class HTML
   attr_reader :absmodule
 
   def titre
-    "Étapes des modules".freeze
+    "#{RETOUR_MODULE unless param(:op).nil?}Étapes des modules".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -19,7 +19,7 @@ class HTML
     when 'edit-etape'
       message "Je dois éditer l'étape #{param(:eid)}"
     when 'save-etape'
-      message "Je dois enregistrer l'étape #{param(:etape_id)}"
+      AbsEtape.get(param(:etape_id)).check_and_save
     end
   end
   # Fabrication du body

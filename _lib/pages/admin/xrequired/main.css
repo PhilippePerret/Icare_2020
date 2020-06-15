@@ -5,6 +5,7 @@ div.toolbox {
   border:1px solid;
   border-radius:8px;
   padding:1em;
+  text-align:center;
 }
 div.toolbox:before {
   content:'ToolBox';
@@ -15,4 +16,13 @@ div.toolbox:before {
   position:absolute;
   top:-1em;
   left:1em;
+}
+
+div.toolbox button,
+div.toolbox a
+{
+  display:block;
+  font-family:inherit;
+  font-size:inherit;
+  width:100%;
 }
