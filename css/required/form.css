@@ -1,5 +1,21 @@
 textarea {resize:none;}
 
+form {
+  font-size:inherit;
+  font-family:inherit;
+  font-style:inherit;
+}
+form input[type="text"],
+form input[type="password"],
+form textarea,
+form select,
+form select option
+{
+  font-size:inherit;
+  font-family:inherit;
+  font-style:inherit;
+}
+
 div.watcher form {
   margin:0;
   max-width:89%!important;

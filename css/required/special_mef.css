@@ -21,6 +21,8 @@ div.row-flex span.value {
 */
 span.libelle {
   display:inline-block;
+}
+.libelle {
   padding:0 12px;
   color:#555555;
   font-size:0.86em;

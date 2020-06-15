@@ -128,6 +128,9 @@ class ContainerClass
       User.get(user_id) if data.key?(:user_id)
     end
   end #/ owner
+  def owner= u
+    @owner = u
+  end #/ owner=
 
   def get(key)
     return data[key.to_sym]

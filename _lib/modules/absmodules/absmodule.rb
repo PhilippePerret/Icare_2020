@@ -25,6 +25,7 @@ def etapes
     end
   end
 end #/ etapes
+alias :absetapes :etapes
 
 
 # Retourne l'absetape du module correspondant au numéro +numero+

@@ -1,0 +1,35 @@
+<%
+# ---------------------------------------------------------------------
+#
+#   BOITE D'OUTILS
+#
+# ---------------------------------------------------------------------
+%>
+<div id="edit-etape-toolbox" class="toolbox">
+  <button type="button" class="btn" onclick="document.querySelector('form#form-edit-etape').submit()">Enregistrer l'étape</button>
+</div>
+<%
+# ---------------------------------------------------------------------
+#
+#   FORMULAIRE
+#
+# ---------------------------------------------------------------------
+%>
+<form id="form-edit-etape" class="noborder nomargin" action="" method="POST">
+  <input type="hidden" name="route" value="<%= route.to_s %>">
+  <input type="hidden" name="op" value="save-etape">
+  # <input type="text" name="etape_id" id="etape-<%= id %>-id" style="width:40px;" value="<%= id %>">
+  N°<input type="text" name="etape_numero" id="etape-<%= id %>-numero" style="width:40px;" value="<%= numero %>">
+  <input type="text" name="etape_titre" id="etape-<%= id %>-titre" placeholder="Titre de l'étape" style="width:400px;" value="<%= titre %>">
+  <div class="libelle">Objectif de l'étape</div>
+  <input type="text" name="etape_objectif" id="etape-<%= id %>-objectif" class="w100pct" placeholder="Objectif de l'étape" value="<%= objectif %>">
+  <div class="libelle">Travail de l'étape</div>
+  <textarea name="etape_travail" id="etape-<%= id %>-travail" rows="40" class="w100pct" placeholder="Travail de l'étape"><%= travail %></textarea>
+  <div class="libelle">Méthode de l'étape</div>
+  <textarea name="etape_methode" id="etape-<%= id %>-methode" rows="20" class="w100pct" placeholder="Méthode optionnelle pour l'étape"><%= methode %></textarea>
+  <div class="libelle">Liens de l'étape</div>
+  <textarea name="etape_liens" id="etape-<%= id %>-liens" rows="4" class="w100pct" placeholder="Liens utiles à l'étape"><%= liens %></textarea>
+  <div class="buttons">
+    <button type="submit">Enregistrer</button>
+  </div>
+</form>

@@ -1,0 +1,31 @@
+<%
+form = Form.new(id:'absmodule-form')
+form.rows = {
+  "Module"  => {name:'absmodule_id', type:'raw', content: 'MENU MODULES'},
+  "Étape"   => {name:'absetape_id', type:'raw', content: 'MENU ÉTAPES'}
+}
+form.submit_button = "Voir"
+
+%>
+<form method="POST" class="noborder nomargin">
+  <input type="hidden" name="op" value="show">
+  <input type="hidden" name="route" value="<%= route.to_s %>">
+  <select name="absmodule_id" onchange="this.form.submit()"><%= menus_absmodule %></select>
+</form>
+
+<%
+etapes = []
+etapes = absmodule.absetapes if absmodule
+require_folder('./_lib/pages/bureau/travail/work')
+%>
+
+<% etapes.each do |absetape| %>
+  <p class="titre-etape" data-id="<%= absetape.id %>">
+    <%= absetape.numero %>. <%= absetape.titre %>
+  </p>
+  <div id="content-etape-<%= absetape.id %>" class="hidden">
+    <%= bouton_edit_etape(absetape) %>
+    <%= work_of(absetape) %>
+    <%= bouton_edit_etape(absetape) %>
+  </div>
+<% end %>

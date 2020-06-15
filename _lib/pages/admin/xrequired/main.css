@@ -1,0 +1,18 @@
+div.toolbox {
+  position:fixed;
+  right:200px;
+  top:200px;
+  border:1px solid;
+  border-radius:8px;
+  padding:1em;
+}
+div.toolbox:before {
+  content:'ToolBox';
+  font-size:0.7em;
+  font-style:italic;
+  color:#999999;
+  opacity:0.4em;
+  position:absolute;
+  top:-1em;
+  left:1em;
+}
