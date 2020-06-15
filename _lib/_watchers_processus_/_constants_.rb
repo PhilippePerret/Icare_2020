@@ -57,6 +57,12 @@ DATA_WATCHERS = {
     next: 'download_comments'.freeze,
     actu_id: "COMMENTS"
   },
+  changement_etape: {
+    titre: 'Changement d’étape'.freeze,
+    relpath: 'IcEtape/change'.freeze,
+    actu_id: "CHGETAPE",
+    next: nil
+  },
   download_comments: {
     titre: 'Chargement des commentaires'.freeze,
     relpath: 'IcEtape/download_comments'.freeze,

@@ -7,7 +7,8 @@ class Watcher < ContainerClass
     if param(:form_id) == 'send-comments-form'
       form = Form.new
       # Si le formulaire est conforme, on procède à l'upload des
-      # document et on s'interromp en cas d'erreur
+      # document et on s'interrompt en cas d'erreur
+      # On exécute aussi les extra-opérations de façon automatique
       if form.conform?
         proceed_sending_comments || raise(WatcherInterruption.new(nil))
       end
@@ -53,12 +54,18 @@ class Watcher < ContainerClass
       return erreur("Il faut transmettre au moins un document !".freeze)
     end
 
-    # On fait passer l'étape au statut suivant ()
-    icetape.set(status: 4)
     # Le reste se fait automatiquement (mail à l'user, actualité, prochain
     # watcher)
     message "Le documents ont bien été enregistrés et #{owner.pseudo} a été averti#{fem(:e)}."
     return true
   end #/ proceed_sending_comments
+
+  def post_operation
+    # On fait passer l'étape au statut suivant
+    icetape.set(status: 4)
+    # Ajouter un watcher pour le changement d'étape
+    # de l'utilisateur
+    owner.watchers.add('changement_etape', {vu_user:true, vu_admin:false, objet_id:})
+  end #/ extra_operation
 
 end # /Watcher < ContainerClass

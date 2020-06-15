@@ -1118,6 +1118,7 @@ Le principe est le suivant :
 * Si le watcher définit un fichier `mail_admin.erb` alors ce mail est automatiquement envoyé à l’administrateur.
 * Si le watcher définit un fichier `mail_user.erb` alors ce mail est automatiquement envoyé à l’icarien·ne concerné·e.
 * Si le watcher définit un fichier `actualite.erb` alors cette actualité est ajoutée aux actualités du site.
+* Si le watcher définit une méthode `post_operation`,  c’est méthode est appelée à la fin des opérations.
 * Si les données absolues du watcher définissent `:next`, alors le watcher suivant est automatiquement généré, sans avoir rien à faire.
 * Le watcher est détruit, ce qui retirera automatiquement les notifications des icariens et administrateur.
 
@@ -1239,7 +1240,7 @@ Noter que le dossier [./_lib/_watchers_processus_/xrequired](/Users/philippeperr
 
 
 
-#### Interruption du watcher
+#### Interruption volontaire du watcher
 
 À l’intérieur du programme, un watcher peut être interrompu à n’importe quel moment à l’aide de :
 
@@ -1783,7 +1784,7 @@ Même chose que pour `collect` ci-dessus, mais sans retourner de résultat.
 
 Par exemple :
 
-​~~~ruby
+~~~ruby
 Watcher.each("user_id = 1") do |watcher|
   puts watcher.out
 end
@@ -1797,7 +1798,7 @@ Même chose que pour `each` ci-dessus, mais avec l'index en deuxième paramètre
 
 Par exemple :
 
-~~~ruby
+​~~~ruby
 AbsModule.each_with_index("user_id = 1") do |mod, idx|
   puts "Module d'index #{idx}"
 end
