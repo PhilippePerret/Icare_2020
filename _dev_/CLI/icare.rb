@@ -6,8 +6,10 @@
 =end
 require_relative 'lib/required'
 begin
-  IcareCLI.analyse_command
-  IcareCLI.run
+  Dir.chdir(APP_FOLDER) do
+    IcareCLI.analyse_command
+    IcareCLI.run
+  end
 rescue Exception => e
   puts "ERREUR: #{e.message}".rouge
   # puts e.backtrace.join("\n")

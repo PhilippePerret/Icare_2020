@@ -140,7 +140,7 @@ class << self
 
     # Un petit récapitulatif avec création
     clear
-    puts "Merci de confirmer ce choix :\n\n"
+    puts "Merci de confirmer ce choix :\n\n".freeze
     NEW_WATCHER.each do |k, v|
       msg = "\t#{"#{k}:".ljust(15)}#{v.inspect}"
       if v === true
@@ -182,7 +182,7 @@ class << self
 
     # Un petit récapitulatif avec création
     clear
-    puts "Merci de confirmer ce choix :\n\n"
+    puts "Merci de confirmer ce choix :\n\n".freeze
     DATA_PAGE.each do |k, v|
       msg = "\t#{"#{k}:".ljust(15)}#{v.inspect}"
       if v === true

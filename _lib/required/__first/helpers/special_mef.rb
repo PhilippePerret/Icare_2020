@@ -8,6 +8,7 @@
 def divGoto(inner, options = {})
   css = ['goto']
   css << 'exergue' if options[:exergue]
+  css << options[:class] if options.key?(:class)
   <<-HTML
 <div class="#{css.join(' ')}">
   #{inner}

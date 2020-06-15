@@ -52,14 +52,19 @@ div.goto {
   text-align:center;
   margin-top:1em;
   margin-right:12px;
-  color:white;
   border:1px solid;
 }
-div.goto:not(.exergue) {
+div.goto:not(.exergue):not(.simple) {
   background:linear-gradient(to right, var(--fond-inner-object), rgb(126, 196, 229));
 }
+
 div.goto.exergue {
   background:linear-gradient(to right,#74babc,#397d7f);
+}
+
+div.goto.simple {
+  background:transparent;
+  color:#555555;
 }
 
 div.goto:hover {
@@ -67,17 +72,27 @@ div.goto:hover {
   border-color:rgb(42, 127, 168);
   transition:0.3s;
 }
+
 div.goto a {
-  color:white;
   font-family:Geneva, Helvetica, Arial;
   letter-spacing:0.2px;
   font-size:0.9em;
 }
 div.goto:hover a {
   /* color:rgb(42, 127, 168); */
-  color:rgb(33, 223, 243);
   transition:0.3s;
 }
+
+div.goto:not(.simple) a {
+  color:white;
+}
+div.goto:not(.simple) a:hover {
+  color:rgb(33, 223, 243);
+}
+div.goto.simple a:hover {
+  color:var(--fond-inner-object);
+}
+div.goto.empty {visibility:hidden;}
 
 
 span.pastille {
