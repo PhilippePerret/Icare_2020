@@ -137,10 +137,7 @@ class ContainerClass
   end #/ get
 
   def save(new_data)
-    columns = new_data.keys.collect{|c| "#{c} = ?"}.join(VG)
-    values  = new_data.values << id
-    request = "UPDATE #{self.class.table} SET #{columns} WHERE id = ?"
-    db_exec(request, values)
+    db_compose_update(self.class.table, id, new_data)
     # On peut affecter les nouvelles valeurs à l'instance
     new_data.each { |k, v| self.data[k] = v }
   end #/ save

@@ -5,3 +5,23 @@ p.titre-etape:hover {
   background-color:black;
   color:white;
 }
+
+form#form-edit-etape {
+
+}
+form#form-edit-etape div.libelle {
+  margin-top:12px;
+}
+form#form-edit-etape textarea,
+form#form-edit-etape input[type="text"]
+{
+  border:1px solid #F5F5F5;
+}
+form#form-edit-etape textarea:focus,
+form#form-edit-etape input[type="text"]:focus
+{
+  border:unset!important;
+  outline-width:2px;
+  outline-style:outset;
+  outline-color:rgb(200,255,200,0.9);
+}

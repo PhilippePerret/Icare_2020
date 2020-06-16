@@ -9,6 +9,10 @@ class String
     end
   end
 
+  def sanitize
+    self.gsub(/\r\n/, "\n")
+  end #/ sanitize
+
   def titleize
     str = self.downcase
     str[0] = str[0].upcase

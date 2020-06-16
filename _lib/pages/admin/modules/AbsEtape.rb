@@ -19,6 +19,8 @@ class AbsEtape
   def check_and_save
     get_values
     check_new_values || return
+    save(new_data)
+    message "Étape “#{titre}” enregistrée avec succès."
   end #/ check_and_save
 
   def get_values
@@ -27,7 +29,7 @@ class AbsEtape
       value = param("etape_#{prop}")
       case dprop[:type]
       when 'integer'  then value = value.to_i
-      when 'longtext' then value = value&.gsub(/\r\n/, "\n")
+      when 'longtext' then value = value&.sanitize
       end
       @new_data.merge!(prop => value)
     end

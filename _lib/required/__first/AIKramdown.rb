@@ -9,10 +9,17 @@ require 'kramdown'
 class AIKramdown
 class << self
 
+  # +fpath+
+  #   {String}  Le chemin relatif au fichier Markdown, dans +folder+
+  #   {String}  OU le code à évaluer.
   def kramdown(fpath, owner = nil, folder = nil)
-    fpath << '.md' unless fpath.end_with?('.md') || fpath.end_with?('.mmd')
-    fpath = File.join(folder, fpath) unless folder.nil?
-    code = file_read(fpath)
+    if fpath.match?(/\n/)
+      code = fpath
+    else
+      fpath << '.md' unless fpath.end_with?('.md') || fpath.end_with?('.mmd')
+      fpath = File.join(folder, fpath) unless folder.nil?
+      code = file_read(fpath)
+    end
     code = evaluate(code, owner) unless owner.nil?
     code = Kramdown::Document.new(code, kramdown_options).send(:to_html)
     # code = evaluate(code, owner) unless owner.nil?

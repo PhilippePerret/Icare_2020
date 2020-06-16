@@ -42,7 +42,12 @@ class AbsEtape
       wtype = TravailType.get(rubrique, fichier)
       wtype.travail
     }
-    ERB.new(safe(w)).result()
+    w = safe(w)
+    if w.start_with?('<%')
+      deserb(w, self)
+    else
+      kramdown(w, self)
+    end
   end #/ section_etape_travail
 
   def travail_propre_formated

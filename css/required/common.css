@@ -68,8 +68,14 @@ div.warning, p.warning, span.warning {
 
 .w100pct {width:100%;}
 
+/*
+  Les sélecteurs "no"
+*/
 .noborder {
   border:unset!important;
+}
+.nobackground, .nobgd {
+  background:unset!important;
 }
 .nomargin {
   margin:unset!important;

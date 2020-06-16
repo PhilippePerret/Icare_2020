@@ -12,12 +12,12 @@ Il s’agit ici de la version produite en 2020 de l’Atelier Icare. Elle vise �
 
 # Principes fondateurs
 
-* Tout ce qui est après le `/` du domaine et avant le `?` du query-string est appelé `route`. La route brute s’obtient par `Route.current.route`. La seule modification faite est de transformer une chaine vide en `home`.
-* Quand une route est définie (par exemple `user/login`) la première chose que fait le programme de construction de la page est de voir si le dossier `./lib/pages/user/login` existe. Si c’est le cas, on le charge, ce qui charge tout ce qui est utile pour l’identification de l’utilisateur, ici. C’est donc dans `lib/pages` principalement qu’on va trouver la définition des pages et c’est vraiment dans ce dossier qu’il faut s’arranger pour tout mettre.
+* Tout ce qui est après le `/` du domaine et avant le `?` du query-string est appelé `route`. La route brute s’obtient par `Route.current.route`. On l’obtient grâce à `route.to_s` (qui retourne par exemple `bureau/home`. La seule modification faite est de transformer une chaine vide en `home`.
+* Quand une route est définie (par exemple `section/page`) la première chose que fait le programme de construction de la page est de voir si le dossier `./_lib/pages/section/page` existe. Si c’est le cas, on le charge entièrement, c’est-à-dire le ruby, le css et le javascript. C’est donc dans `_lib/pages/` principalement qu’on va trouver la définition des pages et c’est vraiment dans ce dossier qu’il faut s’arranger pour tout mettre.
 * Si un module ruby de la page ci-dessus définit la méthode `HTML#exec`, cette méthode est appelée avant la fabrication de la page. Cela permet par exemple de traiter les formulaires.
-* Les pages ci-dessus surclassent les méthodes générale `HTML#build_header` etc. et principalement la méthode générale `HTML#build_body` qui construit le corps de la page.
+* Les pages ci-dessus surclassent les méthodes générale `HTML#build_header` etc. et en tout premier lieu la méthode générale **`HTML#build_body`** qui construit le corps de la page.
 * Dès qu’un dossier contient des fichiers `.css` ou `.js`, ils sont automatiquement chargés par la méthode générale `require_module`. « Chargés » signifie que leur balise est insérée dans la page.
-* Charger vraiment le minimum de code pour toute section. Donc utilisation intensive de la méthode `require_module` qui va charger à la volée des modules depuis le dossier `./lib/modules`.
+* Charger vraiment le minimum de code pour toute section. Donc utilisation intensive de la méthode `require_module` qui va charger à la volée des modules depuis le dossier `./_lib/modules/`.
 
 
 
@@ -25,17 +25,17 @@ Il s’agit ici de la version produite en 2020 de l’Atelier Icare. Elle vise �
 
 
 
-## Les trois dossiers principaux
+## Les quatre dossiers principaux
 
 
 
 Les trois dossiers où il faut chercher les choses sont :
 
-### _lib/pages
+### _lib/pages/
 
 C’est là où sont définies toutes les routes. Si on appelle l’url `bureau/home`, c’est le dossier `./lib/pages/bureau/home/` qu’on chargera et qui contiendra tous les éléments (HTML, CSS et Javascript) propres à cette route.
 
-### _lib/required
+### _lib/required/
 
 Contient tous les codes chargés chaque fois. 
 
@@ -48,13 +48,13 @@ Les éléments notables de ce dossier :
 * **`constants/`**. Dossier qui définit les constantes générales, String, Path, etc.
 * **`Tag.rb`** qui permet de construire facilement toutes les balises (tags) HTML. 
 
-### \_lib/\_watchers_processus\_
+### \_lib/\_watchers_processus\_/
 
 Contient la définition de tous les watchers, tous les processus de watcher.
 
 Noter que ce n’est pas dans ce dossier que se trouve la définition des classes `Watcher` et `Watchers` dans dans le dossier des modules.
 
-### \_lib/modules
+### \_lib/modules/
 
 Contient tous les modules propres qui permettent la gestion ponctuelle d'éléments. Ces modules sont pensés pour ne pas avoir à tout charger chaque fois. Par exemple, on ne charge le module `absmodules` — qui permet de travailler avec les modules d'apprentissage absolus — que lorsqu'on en a besoin, pour le bureau de travail de l'icarien par exemple.
 
@@ -84,11 +84,9 @@ Pour voir **comment écrire la page** (son texte, son contenu), rejoindre la sec
 
 <a name="dossierroute"></a>
 
-Créer le dossier de la nouvelle route dans `./lib/pages/`. Par exemple, si la route est `user/pourvoir`,  on doit créer le dossier `./lib/pages/user/pourvoir/`. Ce dossier sera  appelé **dossier de la route** dans la suite.
+Grâce à l’assistant en ligne de commande `> icare create route`, on va pouvoir créer le dossier de la nouvelle route dans `./_lib/pages/`. Par exemple, si la route est `user/pourvoir`,  on doit créer le dossier `./_lib/pages/user/pourvoir/`. Ce dossier sera  appelé **dossier de la route** dans la suite.
 
-> Il existe un script pratique, à `./_dev_/CLI/scrip/create_route.rb` qui permet de créer une route très facilement et efficacement.
-
-**Attention** : une route ne doit pas être créée dans une autre, puisque tout le dossier d’une route est entièrement chargé, ruby, css, javascript quand elle est appelée (donc le dossier de l’autre route à l’intérieur serait lui chargé…).
+**Attention** : une route ne doit pas être créée dans une autre, puisque tout le dossier d’une route est entièrement chargé, ruby, css, javascript quand elle est appelée (donc le dossier de l’autre route à l’intérieur serait lui aussi chargé…).
 
 Créer dans ce *dossier de la route*  un fichier `html.rb` (ou autre nom, peu importe) qui contienne :
 
@@ -115,7 +113,7 @@ end
 
 Ajouter dans ce dossier les `.css` et les `.js` qui lui sont nécessaires et qui lui sont propres.
 
-Ajouter les vues `ERB` qui peuvent servir à construire l’intégralité du body ou une partie seulement. Cf. [Utilisation des vues ERB](#useerbviews).
+Ajouter les vues `ERB` ou `Markdown` qui peuvent servir à construire l’intégralité du body ou une partie seulement. Cf. [Utilisation des vues ERB](#useerbviews).
 
 ### Méthode `exec` à appeler
 
@@ -150,15 +148,17 @@ Le « principe des xrequired » signifie que lorsqu’on charge un dossier (à l
 Par exemple, si la route à atteindre est `admin/icariens/outils`, cela fait appel à un dossier se trouvant dans :
 
 ~~~
-./lib/pages/admin/icariens/outils/
+LIB/pages/admin/icariens/outils/
 ~~~
+
+> Pour la suite, le dossier `lib` étant amené à changer de nom, j’utiliserai `LIB` pour le désigner.
 
 En appelant cette route, l’application cherche donc à charger les dossiers suivants :
 
 ~~~
-./lib/pages/admin/icariens/outils/xrequired
-./lib/pages/admin/icariens/xrequired
-./lib/pages/admin/xrequired
+LIB/pages/admin/icariens/outils/xrequired
+LIB/pages/admin/icariens/xrequired
+LIB/pages/admin/xrequired
 ~~~
 
 Cela, on le comprend, permet donc de partager des méthodes et des modules dans un même lieu.
@@ -183,6 +183,9 @@ Pour obtenir un paramètre passé par l'URL, on utilise la méthode :
 param(:<key>)							param(:op)
 # => valeur de :<key>			# => retourne la valeur de &op=...
 ~~~
+
+> Note : on peut utiliser indifféremment un String ou un Symbol comme clé, mais elle sera toujours transformée en `Symbol` dans les paramètres.
+
 
 
 #### (Re)définir la valeur d'un paramètre
@@ -233,10 +236,10 @@ Requérir un module signifie :
 
 
 
-Ces modules doivent se trouve dans le dossier :
+Ces modules doivent se trouver dans le dossier :
 
 ~~~bash
-./_lib/modules/
+LIB/modules/
 ~~~
 
 
@@ -259,7 +262,7 @@ Quand c'est l'icarien d'une autre classe, on emploie la propriété `owner` pour
 
 Un visiteur non identifié répond positivement à `user.guest?`. 
 
-### Options ces icariens
+### Options des icariens
 
 | Bit (0-start) | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
@@ -1837,7 +1840,7 @@ end
 
 Pour atteindre les données enregistrées dans la base de données. Toutes les valeurs étant enregistrées avec des `Symbol`s, on utilise :
 
-​~~~ruby
+~~~ruby
 valeur = instance.data[:key_data]
 ~~~
 
@@ -1890,7 +1893,7 @@ Pour permettre le téléchargement, on utilise la classe `Downloader` qui permet
 
 Il suffit d’utiliser la méthode handy `download` :
 
-~~~ruby
+​~~~ruby
 download("<path>"[, "<nom fichier zip>"[, <options>]])
 ~~~
 
