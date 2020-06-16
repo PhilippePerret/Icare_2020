@@ -31,10 +31,13 @@ def fromCaller(relpath, from)
   File.join(File.dirname(from[0].split(':')[0]), relpath.to_s)
 end #/ fromCaller
 
+# Déserbe le fichier de chemin relatif +relpath+ (par rapport à dossier courant)
 def deserb relpath, owner = nil
   Deserb.deserb(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
 end
 
+# Demarkdownise le fichier de chemin relatif +relpath+ (par rapport au dossier
+# courant)
 def kramdown relpath, owner = nil
   AIKramdown.kramdown(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
 end #/ kramdown

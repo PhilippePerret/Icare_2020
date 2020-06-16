@@ -4,7 +4,12 @@
   --------------------
   La classe abstraite des Icmodules, AbsModules, IcEtapes, etc.
 =end
+require_relative 'helpers/string_helpers_module' # => StringHelpersMethods
 class ContainerClass
+
+  # Les méthodes d'helpers
+  include StringHelpersMethods
+  
   class << self
     def get item_id
       item_id || raise("Il faut fournir l'ID".freeze)

@@ -435,6 +435,17 @@ ERRORS = {
 
 
 
+### Envoi des erreurs à l'administration
+
+Pour pouvoir signaler (par mail) des erreurs à l'administration, on utilise la méthode :
+
+~~~ruby
+
+send_error("<message d'erreur>"[, {<data>}])
+# => Produit un mail qui m'est envoyé
+
+~~~
+
 
 
 ---
@@ -455,10 +466,37 @@ Construire une page consiste à définir la variable `html#body` (`@body`) qui v
 
 Une page peut être au format `ERB` ou au format `Markdown` (étendu). Les deux formats permettent l'utilisation des variables :
 
-* `<%= variable %>` pour le format `ERB`,
-* `#{variable}` pour le format `Markdown`.
+* `<%= variable|méthode %>` pour le format `ERB`,
+* `#{variable|méthode}` pour le format `Markdown`.
 
 Si un code compliqué (if, etc.) doit être utilisé dans le format `Markdown`, il doit impérativement être mis sur une seule ligne. Sinon, privilégier le format `ERB`.
+
+Noter qu’on peut se servir des méthodes pour mettre en forme. Par exemple, dans un fichier Markdown, on peut utiliser la méthode d'helper générale `par` pour centrer un paragraphe :
+
+~~~markdown
+
+#{par("Ceci est un paragraphe centré", :center)}
+
+<!-- version DIV -->
+
+#{div("Ceci est un div centré", :center)}
+~~~
+
+
+
+### Traitement en fonction du format
+
+On peut traiter un code indifféremment en ERB ou en MARKDOWN grâce à la méthode :
+
+~~~ruby
+
+deserb_or_markdown("<code erb ou markdown>"[, objet_a_binder])
+
+~~~
+
+> Noter que le code est "safé" dans la méthode, donc il est inutile de forcer son encodage avant.
+
+
 
 ### Titre de la page
 
@@ -475,6 +513,23 @@ class HTML
   end
   ...
 end #/HTML
+~~~
+
+
+
+### Méthodes d'helpers générales
+
+Le module `LIB/required/__start/helpers/string_helpers_module.rb` qui définit le module `StringHelpersMethods` permet d'ajouter les méthodes d'helpers générales à toutes les classes qui en ont besoin.
+
+Noter qu'une classe héritant de `ContainerClass` hérite aussi de ces méthodes.
+
+cf. le [module des strings helpers](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/string_helpers_module.rb).
+
+Extraits de méthodes :
+
+~~~
+mot(mot_id, le_mot)			Produit un lien vers un mot du scénodico
+page(page_id, titre)		Produit un lien vers une page de la collection narration
 ~~~
 
 
@@ -1893,7 +1948,7 @@ Pour permettre le téléchargement, on utilise la classe `Downloader` qui permet
 
 Il suffit d’utiliser la méthode handy `download` :
 
-​~~~ruby
+~~~ruby
 download("<path>"[, "<nom fichier zip>"[, <options>]])
 ~~~
 
@@ -1990,7 +2045,7 @@ end
 
 On crée ensuite la méthode qui va produire l’exécution propre à ce gel, dans le [fichier des gels][].
 
-~~~ruby
+​~~~ruby
 ...
 def	mon_premier_gel
   gel('mon_premier_gel').degel_or_gel do

@@ -28,9 +28,10 @@ class << self
 
   def evaluate(code, owner)
     code.gsub!(/#\{(.*?)\}/) do
-      log("Évaluation de #{$1}")
+      # log("Évaluation de #{$1}")
       owner.bind.eval($1)
     end
+    return code
   end #/ evaluate
 
   def kramdown_options

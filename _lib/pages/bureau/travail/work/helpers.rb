@@ -42,17 +42,12 @@ class AbsEtape
       wtype = TravailType.get(rubrique, fichier)
       wtype.travail
     }
-    w = safe(w)
-    if w.start_with?('<%')
-      deserb(w, self)
-    else
-      kramdown(w, self)
-    end
+    deserb_or_markdown(w, self)
   end #/ section_etape_travail
 
   def travail_propre_formated
     if !user.admin? && user.icetape.travail_propre
-      ERB.new(safe(user.icetape.travail_propre)).result()
+      deserb_or_markdown(user.icetape.travail_propre, self)
     else
       Tag.div(text:"Aucun travail propre pour cette étape", class:'italic small')
     end
@@ -60,15 +55,15 @@ class AbsEtape
 
   def etape_liens
     if has_liens?
-      instances_liens.collect { |lien| lien.out }.join.force_encoding(Encoding::UTF_8)
+      safe(instances_liens.collect { |lien| lien.out }.join)
     else
       Tag.div(text:'Aucun lien utile pour cette étape.'.freeze, class:'italic small'.freeze)
     end
   end #/ section_etape_liens
 
   def etape_methode
-    if methode
-      ERB.new(methode).result()
+    unless methode.nil?
+      deserb_or_markdown(methode, self)
     else
       Tag.div(text:'Aucun élément de méthode pour cette étape.'.freeze, class:'italic small'.freeze)
     end
@@ -150,7 +145,7 @@ SELECT COUNT(id)
     # Return TRUE si l'étape possède des liens, soit par l'étape absolue,
     # soit par les travaux types
     def has_liens?
-      liens&.count || 0 > 0
+      instances_liens.count > 0
     end #/ has_liens?
 
     # Liste de tous les liens.
@@ -161,8 +156,8 @@ SELECT COUNT(id)
     # travaux type)
     def instances_liens
       @instances_liens ||= begin
-        lks = (liens||'').force_encoding('utf-8').split(RC)
-        travaux_type.each{|wt| lks += wt.liens.split(RC) }
+        lks = safe(liens||'').split(RC)
+        travaux_type.each{|wt| lks += wt.liens.split(RC) unless wt.liens.nil?}
         lks.collect { |dlien| LienEtape.new(dlien) }
       end
     end #/ instances_liens

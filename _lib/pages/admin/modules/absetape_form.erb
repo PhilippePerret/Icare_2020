@@ -8,6 +8,10 @@
 <div id="edit-etape-toolbox" class="toolbox">
   <button type="button" class="btn" onclick="document.querySelector('form#form-edit-etape').submit()">Enregistrer l'étape</button>
   <button type="button" onclick="insertBaliseERB()">Insérer &lt;%= ... %&gt;</button>
+  <button type="button"onclick="setSelectionTo('Pour voir')">Insertion</button>
+  <button type="button" onclick="balisesErbToMarkdown()">Balises ERB -> MARKDOWN</button>
+  <button type="button" onclick="remplaceBaliseMot('erb')">Remplace balises MOT (ERB)</button>
+  <button type="button" onclick="remplaceBaliseMot('md')">Remplace balises MOT (MD)</button>
 </div>
 <%
 # ---------------------------------------------------------------------

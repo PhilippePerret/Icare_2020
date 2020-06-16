@@ -5,8 +5,8 @@ class << self
   # +relpath+
   #   {String}  Le chemin relatif au fichier ERB, dans +dossier+
   #   {String}  Ou le code à évaluer, s'il contient '<%='
-  def deserb(relpath, owner, dossier)
-    if relpath.match?(/<%=/)
+  def deserb(relpath, owner, dossier = nil)
+    if relpath.include?('<%')
       code = relpath
     else
       relpath || raise("Il faut fournir le chemin relatif à la vue !".freeze)
