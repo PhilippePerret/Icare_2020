@@ -24,6 +24,7 @@ class HTML
   end
   # Fabrication du body
   def build_body
+    add_css(File.join(PAGES_FOLDER,'bureau','xrequired','mef.css'))
     @body = if param(:op) == 'edit-etape' || param(:op) == 'save-etape'
               deserb('absetape_form', AbsEtape.get(param(:eid)||param(:etape_id)))
             else

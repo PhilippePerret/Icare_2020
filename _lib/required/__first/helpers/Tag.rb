@@ -121,6 +121,11 @@ class << self
     lien(data.merge!(route: URL_MOT_SCENODICO % [data[:id]]))
   end #/ mot
 
+  def film(data)
+    data[:class] = ((data.key?(:class) ? [ data[:class] ] : []) << 'filmodico').join(SPACE)
+    lien(data.merge!(route: URL_FILM_FILMODICO % [data[:id]]))
+  end #/ mot
+
   private
 
     # @private
@@ -158,4 +163,5 @@ RETOUR_LINK = "<a href='%{route}' class='small'><span style='vertical-align:sub;
 RETOUR_BUREAU = Tag.retour(route:'bureau/home'.freeze, titre:'Bureau'.freeze)
 RETOUR_PROFIL = Tag.retour(route:'user/profil'.freeze, titre:'Profil'.freeze)
 
-URL_MOT_SCENODICO = 'http://www.scenariopole.fr/scenodico/mot/%i'.freeze
+URL_MOT_SCENODICO   = 'http://www.scenariopole.fr/scenodico/mot/%i'.freeze
+URL_FILM_FILMODICO  = 'http://www.scenariopole.fr/BOA/filmodico/%i/show'.freeze

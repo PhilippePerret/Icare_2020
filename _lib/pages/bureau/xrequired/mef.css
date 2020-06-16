@@ -1,0 +1,23 @@
+.filmodico {
+  font-variant:small-caps;
+  font-size:1.1em;
+}
+
+/*
+  --- DOCUMENT ---
+*/
+div.document {
+  font-size:12.5pt;
+  background-color:#EDF3F9;
+  padding: 2em 3em;
+}
+
+div.document h1 {
+  font-size:1.6em;
+}
+div.document h2 {
+  font-size:1.4em;
+}
+div.document h3 {
+  font-size:1.2em;
+}

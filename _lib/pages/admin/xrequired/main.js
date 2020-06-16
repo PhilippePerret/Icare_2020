@@ -2,17 +2,27 @@
 /*
 Méthodes communes pour l'administration
 */
-
-function setSelectionTo(container, remplacement){
-  const start = container.selectionStart;
-  const end   = container.selectionEnd;
-  const before = container.value.slice(0, start);
-  const after  = container.value.slice(end)
-  container.value = before + remplacement + after;
+class CurrentField {
+static setCurrent(obj){
+  this.current = new CurrentField(obj) ;
 }
-function getSelectionOf(container){
-  const start = container.selectionStart;
-  const end   = container.selectionEnd;
-  const selection = container.value.slice(start, end);
-  return selection;
+static unsetCurrent(obj){
+  this.current = null ;
 }
+constructor(obj) {
+  this.obj = obj
+}
+insert(text){return this.setSelectionTo(text)}
+setSelectionTo(remplacement) {
+  const start = this.obj.selectionStart;
+  const end   = this.obj.selectionEnd;
+  const before = this.obj.value.slice(0, start);
+  const after  = this.obj.value.slice(end)
+  this.obj.value = before + remplacement + after;
+}
+getSelection(){
+  const start = this.obj.selectionStart;
+  const end   = this.obj.selectionEnd;
+  return this.obj.value.slice(start, end);
+}
+}//Class CurrentField

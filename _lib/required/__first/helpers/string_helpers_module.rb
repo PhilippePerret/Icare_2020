@@ -13,6 +13,12 @@ def mot(mot_id, mot_mot, options = nil)
   Tag.mot(options)
 end #/ mot
 
+def film(film_id, film_titre = nil, options = nil)
+  options ||= {}
+  options.merge!(text: film_titre, id:film_id)
+  Tag.film(options)
+end #/ film
+
 
 # ---------------------------------------------------------------------
 #
