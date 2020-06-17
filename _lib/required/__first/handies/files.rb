@@ -32,14 +32,18 @@ def fromCaller(relpath, from)
 end #/ fromCaller
 
 # Déserbe le fichier de chemin relatif +relpath+ (par rapport à dossier courant)
-def deserb relpath, owner = nil
-  Deserb.deserb(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
+def deserb relpath, owner = nil, options = nil
+  str = Deserb.deserb(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
+  return str if options && options[:formate] === false
+  str&.special_formating!
 end
 
 # Demarkdownise le fichier de chemin relatif +relpath+ (par rapport au dossier
 # courant)
-def kramdown relpath, owner = nil
-  AIKramdown.kramdown(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
+def kramdown relpath, owner = nil, options = nil
+  str = AIKramdown.kramdown(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
+  return str if options && options[:formate] === false
+  str&.special_formating!
 end #/ kramdown
 
 def deyaml relpath

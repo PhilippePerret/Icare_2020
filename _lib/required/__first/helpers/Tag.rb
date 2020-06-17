@@ -144,6 +144,13 @@ end # /<< self
 end #/Tag
 
 # Constantes tags
+# ---------------
+
+# Pour un bouton modifié (utilisé pour le moment dans les StateLists)
+TAG_BUTTON_MODIFY = '<a href="%{route}" class="%{class}" title="%{title}">✏️</a>'.freeze
+
+DIV_AIR = '<div class="mt1">&nbsp;</div>'.freeze
+
 # Note : d'autres sont définis dans ./_lib/modules/forms/constants.rb qui
 # sera chargé avec 'require_module('form')'
 TAG_SPAN  = '<span class="%{class}" style="%{style}" title="%{title}">%{text}</span>'.freeze

@@ -414,10 +414,6 @@ class String
     checked.to_i == 0 ? nil : checked
   end
 
-  def deserb bindee = nil
-    ERB.new(self).result(bindee)
-  end
-
   ##
   # Transforme une path absolue en path relative
   #

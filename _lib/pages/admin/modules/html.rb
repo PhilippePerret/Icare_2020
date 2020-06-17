@@ -1,6 +1,5 @@
 # encoding: UTF-8
-require_module('form')
-require_module('absmodules')
+require_modules(['form', 'absmodules'])
 class HTML
 
   # Le module d'apprentissage courant
@@ -26,8 +25,11 @@ class HTML
   def build_body
     add_css(File.join(PAGES_FOLDER,'bureau','xrequired','mef.css'))
     @body = if param(:op) == 'edit-etape' || param(:op) == 'save-etape'
-              deserb('absetape_form', AbsEtape.get(param(:eid)||param(:etape_id)))
+              deserb('absetape_form', AbsEtape.get(param(:eid)||param(:etape_id)), {formate:false})
             else
+              # str = deserb('body', self)
+              # log("--- str obtenu : #{str.inspect}")
+              # str
               deserb('body', self)
             end
   end
@@ -43,8 +45,11 @@ class HTML
 
   # Retourne le code HTML pour une étape telle qu'elle s'affiche
   # pour l'icarien
+  #
+  # [1] Ici, on ne fait pas le formatage spécial (special_formating) parce
+  #     qu'il sera exécuté plus tard avec l'évalution de la page complète.
   def work_of(absetape)
-    deserb('./_lib/pages/bureau/travail/work/work.erb', absetape)
+    deserb('./_lib/pages/bureau/travail/work/work.erb', absetape, {formate:false}) # [1]
   end #/ work_of
 
   # Formulaire d'édition de l'étape +absetape+

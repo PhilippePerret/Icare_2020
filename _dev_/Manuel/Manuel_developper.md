@@ -66,8 +66,6 @@ Contient tous les modules propres qui permettent la gestion ponctuelle d'éléme
 
 
 
-
-
 ## Création d’une nouvelle route/page
 
 Commencer par lire les [principes fondateurs](#principes) du nouveau site.
@@ -115,6 +113,8 @@ Ajouter dans ce dossier les `.css` et les `.js` qui lui sont nécessaires et qui
 
 Ajouter les vues `ERB` ou `Markdown` qui peuvent servir à construire l’intégralité du body ou une partie seulement. Cf. [Utilisation des vues ERB](#useerbviews).
 
+
+
 ### Méthode `exec` à appeler
 
 Comme on peut le voir ci-dessus, la méthode `html#exec` permet d’exécuter un code avant de construire la page. C’est ici, par exemple, qu’on vérifie les valeurs d’identification et qu’on authentifie — ou non — l’utilisateur, etc.
@@ -131,7 +131,9 @@ end
 
 ### Les dossiers `xrequired`
 
-Le chargement des routes respecte le [principe des xrequired][]
+Le chargement des routes respecte le [principe des xrequired][].
+
+
 
 ---
 
@@ -495,6 +497,43 @@ deserb_or_markdown("<code erb ou markdown>"[, objet_a_binder])
 ~~~
 
 > Noter que le code est "safé" dans la méthode, donc il est inutile de forcer son encodage avant.
+
+
+
+### Traitement spécial / Mises en forme spéciales
+
+La méthode [`String#special_formating`](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/extensions/String_special_formating.rb) permet d’exécuter les dernières mises en forme sur les textes propres à l’atelier Icare.
+
+Cette méthode est appliquée à la fin des méthodes `deserb`, `kramdown` et `deserb_or_kramdown`. Pour ne pas l’appliquer — c’est nécessaire parfois, lorsqu’on doit éditer du code, par exemple, comme les étapes de modules —, il faut mettre dans le troisième argument — les options — la propriété `formate: false` :
+
+~~~ruby
+str = deserb_or_kramdown('# Mon code', <binder>, {formate: false})
+# => produit un code sans formatage spécial.
+~~~
+
+
+
+#### Mises en forme spéciales
+
+Les mises en forme traitées, principalement utilisées dans les pages d’étape, sont :
+
+Toutes ces mises en forme commencent par `<!`. Si elles encadrent du texte, elles terminent par `<!/` avec la même suite. Par exemple `<!div.mondivspécial>` et `<!/div.mondivspécial>`.
+
+
+
+**Illustration de document**
+
+~~~
+<!div.document>
+...
+... une illustration de document
+... traitée comme du code markdown
+... le premier niveau de titre commence à #
+...
+<!/div.document>
+~~~
+
+
 
 
 
@@ -2045,7 +2084,7 @@ end
 
 On crée ensuite la méthode qui va produire l’exécution propre à ce gel, dans le [fichier des gels][].
 
-​~~~ruby
+~~~ruby
 ...
 def	mon_premier_gel
   gel('mon_premier_gel').degel_or_gel do
@@ -2061,7 +2100,7 @@ end #/mon_premier_gel
 
 On produit ensuite le gel en lançant la commande
 
-~~~bash
+​~~~bash
 rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
 ~~~
 
