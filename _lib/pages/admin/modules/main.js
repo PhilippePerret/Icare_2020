@@ -54,9 +54,9 @@ const REG_BALISE_ERB = /<%=?([^%]+)%>/g
 function replBalErb(tout, code){
   return `#{${code.trim()}}`
 }
-function balisesErbToMarkdown(){
-  if (undefined === CurrentField.current) { return alert("Il faut mettre le curseur dans le champ concerné !")}
-  const textarea = CurrentField.current.obj;
-  if ( !confirm("Je vais remplacer '<%= ... %>' par '#{...}' dans tout le texte.") ) return
+function balisesErbToMarkdown(container){
+  container = container || CurrentField.current
+  if (undefined === container) { return alert("Il faut mettre le curseur dans le champ concerné !")}
+  const textarea = container.obj;
   textarea.value = textarea.value.replace(REG_BALISE_ERB, window.replBalErb.bind(window))
 }
