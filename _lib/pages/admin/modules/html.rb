@@ -19,6 +19,10 @@ class HTML
       message "Je dois éditer l'étape #{param(:eid)}"
     when 'save-etape'
       AbsEtape.get(param(:etape_id)).check_and_save
+    when 'edit-twork'
+      message "Je dois éditer le travail #{param(:dos)}/#{param(:w)}"
+    when 'save-twork'
+      message "Je dois enregistrer le travail-type"
     end
   end
   # Fabrication du body
@@ -26,6 +30,8 @@ class HTML
     add_css(File.join(PAGES_FOLDER,'bureau','xrequired','mef.css'))
     @body = if param(:op) == 'edit-etape' || param(:op) == 'save-etape'
               deserb('absetape_form', AbsEtape.get(param(:eid)||param(:etape_id)), {formate:false})
+            elsif param(:op) == 'edit-twork' || param(:op) == 'save-twork'
+              deserb('typework_form', TypeWork.get(param(:twdos), param(:tw)))
             else
               # str = deserb('body', self)
               # log("--- str obtenu : #{str.inspect}")

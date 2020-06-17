@@ -25,6 +25,18 @@ function afterReady(){
   AbsModule.observe()
 }
 
+function editTravailType(){
+  var container = CurrentField.current
+  container || raise("Il faut sélectionner le travail type à éditer")
+  var wtype = container.getSelection()
+  wtype.includes('travail_type') || raise("Il faut sélectionner le code du travail-type (depuis '<%=' jusqu'à '%>')")
+  var res = wtype.match(/travail_type\(? ?'(.+)', ?'(.+)' ?\)?/);
+  console.log("res, type", res, typeof(res))
+  var [tout, dossier, travail]  = res
+  console.log("dossier=%s, travail=%s", dossier, travail)
+  window.open(`admin/modules?op=edit-twork&twdos=${dossier}&tw=${travail}`,"_blank")
+}
+
 function replBalMot(format, tout, mot_id, mot_mot){
   var r = format == 'erb' ? '<%= ' : '#{' ;
   r += `mot(${mot_id},"${mot_mot}")`

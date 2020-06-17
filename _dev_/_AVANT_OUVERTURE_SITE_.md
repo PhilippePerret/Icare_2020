@@ -1,5 +1,11 @@
 # Modifications à faire dans la base de données
 
+* Renommer la table `abs_travaux_type` en `abstravauxtypes`
+
+  ~~~SQL
+  ALTER TABLE `abs_travaux_type` RENAME `abstravauxtypes`;
+  ~~~
+  
 * Modifier la table des `paiements`
 
   ~~~SQL
