@@ -25,6 +25,12 @@ div.document h1 {
   margin-top:2em;
   margin-bottom:1em;
 }
+div.document > h1:nth-child(2),
+div.document > h2:nth-child(2)
+{
+  margin-top:0;
+}
+
 div.document h2 {
   font-size:1.6em;
 }
