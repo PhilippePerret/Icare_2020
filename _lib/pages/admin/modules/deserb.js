@@ -27,7 +27,7 @@ function erbToMarkdown(container){
   str = str.replace(REG_TITRE, transformeTitre)
   // On efface les dernières balises "<p>" qui peuvent rester
   // Ça va laisser un retour charriot qu'on pourra retirer "à la main"
-  str = str.replace(/<\/?p>/, '')
+  str = str.replace(/<\/?p>/g, '');
   // --------
   container.obj.value = str
 
