@@ -4,6 +4,41 @@
 }
 
 /*
+  --- LE TRAVAIL ---
+*/
+/* La section contenant le travail */
+section.etape_work {
+
+}
+section.etape_work h1,
+section.etape_work h2,
+section.etape_work h3,
+section.etape_work h4,
+section.etape_work h5
+{
+  /* all:unset; */
+  font-weight:normal;
+  font-variant:all-small-caps;
+  margin-top:2em;
+  margin-bottom:1.1em;
+}
+section.etape_work h1 {
+  font-size: 2em;
+}
+section.etape_work h2 {
+  font-size: 1.5em;
+}
+section.etape_work h3 {
+  font-size: 1.2em;
+}
+section.etape_work h4 {
+  font-size: 1em;
+}
+section.etape_work h5 {
+  font-size: 0.8em;
+}
+
+/*
   --- DOCUMENT ---
 */
 div.document {
