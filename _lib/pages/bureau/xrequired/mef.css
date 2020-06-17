@@ -12,11 +12,21 @@ div.document {
   padding: 2em 3em;
 }
 
+div.document h1,
+div.document h2,
+div.document h3
+{
+  color:inherit;
+  font-variant:all-small-caps;
+  font-weight:normal;
+}
 div.document h1 {
-  font-size:1.6em;
+  font-size:2.1em;
+  margin-top:2em;
+  margin-bottom:1em;
 }
 div.document h2 {
-  font-size:1.4em;
+  font-size:1.6em;
 }
 div.document h3 {
   font-size:1.2em;
