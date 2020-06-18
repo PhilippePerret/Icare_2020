@@ -10,8 +10,8 @@
 class String
   def special_formating
     self
-      .gsub(/&lt;\!div.document&gt;/,'<div class="document">')
-      .gsub(/&lt;\!\/div.document&gt;/,'</div><!-- /div.document -->')
+      .gsub(/&lt;\!(div\.)?document&gt;/,'<div class="document">')
+      .gsub(/&lt;\!\/(div\.)?document&gt;/,'</div><!-- /div.document -->')
   end #/ special_formating
 
   # Méthode in-place

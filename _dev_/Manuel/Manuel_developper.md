@@ -2100,7 +2100,7 @@ end #/mon_premier_gel
 
 On produit ensuite le gel en lançant la commande
 
-​~~~bash
+~~~bash
 rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
 ~~~
 
@@ -2118,7 +2118,7 @@ GEL_FORCE=true rspec spec/gels -t mon_premier_gel  # Réinitialise TOUS LES GELS
 
 **Pour forcer seulement le dernier gel**
 
-~~~bash
+​~~~bash
 GEL_REMOVE_LAST=true rspec spec/gels -t mon_premier_gel
 ~~~
 
@@ -2309,6 +2309,56 @@ Les valeurs sont les suivantes :
 | 6    | Phil a déposé les documents de l’étape sur le Quai des docs.<br />Ce statut génère automatiquement le watcher qui permet à l’icarien de définir le partage de ses documents `qdd-define-sharing`. |
 | 7    | L’icarien a défini le partage de chacun de ses documents.    |
 | 8    | Fin de cycle de l'étape                                      |
+
+
+
+### Helpers pour les étapes de travail
+
+Avant tout, précisons que les étapes se définissent dans la section « Modules » de l'administration. Il suffit de choisir un module, d'afficher l'étape voulue et de cliquer sur le bouton “Éditer” pour éditer l'étape en question.
+
+
+
+#### Méthodes d'helper
+
+Toutes les méthodes du module [./_lib/required/__first/helpers/string_helpers_module.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/string_helpers_module.rb) sont accessible depuis les travaux et les méthodes des étapes.
+
+> Rappel : cela tient simplement au fait que toute classe qui hérite de `ContainerClass` hérite aussi de ces méthodes.
+
+
+
+#### Section document
+
+Une “section document” dans le travail d'une étape de travail permet d'illustrer ce travail par un exemple de document ou un modèle. On définit cet exemple ainsi :
+
+~~~markdown
+
+<!document>
+
+... ici le document ...
+
+<!/document>
+~~~
+
+À l'intérieur de ce document, les titres commencent à un seul dièse :
+
+~~~markdown
+
+<!document>
+
+# Un grand titre de page
+
+## Titre dans le document
+
+[Contenu]
+
+## Autre titre du document
+
+[Contenu]
+
+<!/document>
+~~~
+
+
 
 
 
