@@ -248,7 +248,7 @@ class Form
         # Il faut construire les options d'après les values
         dfield.merge!(:options => dfield[:values].collect do |paire|
           paire = [paire, paire] unless paire.is_a?(Array)
-          OPTION_TAG % {value:paire[0], titre:(paire[1]||paire[0])}
+          TAG_OPTION % {value:paire[0], titre:(paire[1]||paire[0])}
         end.join)
       end
       dfield.merge!(prefix: ''.freeze) unless dfield.key?(:prefix)

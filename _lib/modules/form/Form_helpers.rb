@@ -46,12 +46,12 @@ class << self
       if ijour == djour[:default_day]
         OPTION_SELECTED_TAG
       else
-        OPTION_TAG
+        TAG_OPTION
       end % {value:ijour, titre: ijour.to_s.rjust(2,'0')}
     end.join('')
     id = "#{djour[:prefix_id]}-day"
     name = "#{djour[:prefix_id]}_day"
-    SELECT_TAG % {options:options, prefix:'day', id:id, name:name, class:djour[:class], style:''}
+    TAG_SELECT % {options:options, prefix:'day', id:id, name:name, class:djour[:class], style:''}
   end #/ date_field_jour
 
   def date_field_mois dmois
@@ -59,12 +59,12 @@ class << self
       if imois == dmois[:default_month]
         OPTION_SELECTED_TAG
       else
-        OPTION_TAG
+        TAG_OPTION
       end % {value:imois, titre:MOIS[imois][dmois[:format_mois]]}
     end.join('')
     id = "#{dmois[:prefix_id]}-month"
     name = "#{dmois[:prefix_id]}_month"
-    SELECT_TAG % {options:options, prefix:'month', id:id, name:name, class:dmois[:class], style:''}
+    TAG_SELECT % {options:options, prefix:'month', id:id, name:name, class:dmois[:class], style:''}
   end #/ date_field_mois
 
 
@@ -75,12 +75,12 @@ class << self
       if annee == dannee[:default_year]
         OPTION_SELECTED_TAG
       else
-        OPTION_TAG
+        TAG_OPTION
       end % {value:annee, titre:annee}
     end.join('')
     id = "#{dannee[:prefix_id]}-year"
     name = "#{dannee[:prefix_id]}_year"
-    SELECT_TAG % {options:options, prefix:'year', id:id, name:name, class:dannee[:class], style:''}
+    TAG_SELECT % {options:options, prefix:'year', id:id, name:name, class:dannee[:class], style:''}
   end #/ date_field_annee
 end # /<< self
 end #/Form

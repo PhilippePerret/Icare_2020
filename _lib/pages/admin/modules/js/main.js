@@ -23,6 +23,7 @@ class AbsModule {
 }
 function afterReady(){
   AbsModule.observe()
+  Filmodico.observe()
 }
 
 function editTravailType(){

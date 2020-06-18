@@ -87,4 +87,15 @@ class HTML
     deserb('partiels/toolbox', binder)
   end #/ toolbox
 
+  def menu_films
+    @menu_films ||= begin
+      MyDB.DBNAME = 'scenariopole_biblio'
+      films_options = db_exec("SELECT id AS value, titre FROM filmodico").collect do |dfilm|
+        dfilm[:titre] = safe(dfilm[:titre])
+        TAG_OPTION % dfilm
+      end.join
+      MyDB.DBNAME = nil
+      TAG_SELECT_SIMPLE % {id:'films-filmodico', name:'film_id', class:'filmodico', options:'<option>Choisir le film…</option>'+films_options}
+    end
+  end #/ menu_films
 end #/HTML

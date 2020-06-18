@@ -7,9 +7,7 @@ INPUT_SUBMIT_BUTTON = '<input type="submit" value="%{name}" class="%{class}">'
 WATCHER_HIDDEN_FIELDS = '<input type="hidden" name="op" value="run" /><input type="hidden" name="wid" value="%{wid}" />'.freeze
 
 SPAN_DATE_FIELDS = '<span id="%{prefix_id}-date-fields" class="%{class}">%{select_day}%{select_month}%{select_year}</span>'
-OPTION_TAG = '<option value="%{value}">%{titre}</option>'.freeze
 OPTION_SELECTED_TAG = '<option value="%{value}" selected>%{titre}</option>'.freeze
-SELECT_TAG = '<select id="%{id}" name="%{name}" class="select-%{prefix} %{class}" style="%{style}">%{options}</select>'.freeze
 
 INPUT_TEXT_TAG = '<input type="text" id="%{id}" name="%{name}" value="%{value}" class="%{class}" style="%{style}" />'.freeze
 PASSWORD_TAG = '<input type="password" id="%{id}" name="%{name}" value="%{value}" class="%{class}" style="%{style}" />'.freeze
@@ -31,7 +29,7 @@ TAGS_TYPES = {
   password:     PASSWORD_TAG,
   hidden:       HIDDEN_FIELD,
   textarea:     TEXTAREA_TAG,
-  select:       SELECT_TAG,
+  select:       TAG_SELECT,
   titre:        TITRE_TAG,
   checkbox:     CHECKBOX_TAG,
   explication:  EXPLICATION_TAG,

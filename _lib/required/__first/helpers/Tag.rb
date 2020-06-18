@@ -161,6 +161,10 @@ TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.free
 TAG_ANCHOR    = '<a name="%s"></a>'.freeze
 TAG_PASTILLE  = '<span class="pastille">%s</span>'.freeze
 
+TAG_SELECT = '<select id="%{id}" name="%{name}" class="select-%{prefix} %{class}" style="%{style}">%{options}</select>'.freeze
+TAG_SELECT_SIMPLE = '<select id="%{id}" name="%{name}" class="%{class}">%{options}</select>'.freeze
+TAG_OPTION = '<option value="%{value}">%{titre}</option>'.freeze
+
 # Formulaires
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze
 SUBMIT_BUTTON = '<input type="submit" class="%{class}" value="%{name}" />'.freeze
