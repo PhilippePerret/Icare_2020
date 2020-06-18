@@ -1,0 +1,11 @@
+<p>Phil,</p>
+<p>Je t'informe qu'un nouveau témoignage vient d'être enregistré. Il demande à être validé pour apparaitre dans la section correspondante.</p>
+<p>Tu peux le faire en cliquant le bouton ci-dessous (sinon, un lien plus bas permet d’éditer ce témoignage pour le corriger) :</p>
+<center>
+  <%= ticket_validation.lien('Valider directement ce témoignage'.freeze) %>
+</center>
+<p>Le témoignage :</p>
+<pre><%= content %></div>
+<p>
+  <%= Tag.lien(route:"admin/temoignages?temid=#{id}", full:true, text:"L'éditer pour le corriger") %>
+</p>

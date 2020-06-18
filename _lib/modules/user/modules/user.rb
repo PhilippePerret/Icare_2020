@@ -1,6 +1,12 @@
 # encoding: UTF-8
 require_module('icmodules')
 class User
+
+  # Retourne true si l'icare a un module en cours
+  def has_module?
+    !data[:icmodule_id].nil?
+  end #/ has_module?
+
   def icmodule
     @icmodule ||= data[:icmodule_id] && IcModule.get(data[:icmodule_id])
   end #/ icmodule

@@ -53,6 +53,7 @@ MAIN_LINKS = {
   aide_s:     '<a href="aide/home">aide</a>'.freeze,
   contact:    '<a href="contact"><span class="emoji">📧</span><span>contact</span></a>'.freeze,
   contact_s:  '<a href="contact">contact</a>'.freeze,
-  plan:     '<a href="plan" class="btn small"><span class="emoji">📍</span>PLAN</a>'.freeze,
-  qdd:      '<a href="qdd/home"><span class="emoji">🗄</span>️Quai Des Docs</a>'.freeze
+  plan:       '<a href="plan" class="btn small"><span class="emoji">📍</span>PLAN</a>'.freeze,
+  plan_s:     '<a href="plan">plan</a>'.freeze,
+  qdd:        '<a href="qdd/home"><span class="emoji">🗄</span>️Quai Des Docs</a>'.freeze
 }

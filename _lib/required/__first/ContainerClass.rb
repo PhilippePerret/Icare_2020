@@ -38,34 +38,41 @@ class ContainerClass
 
     # Charge tous les items en appliquant le filtre +filtre+ si défini
     # Les mets dans @items en réinitialisant la liste si +reset_items+ est
-    # true et la renvoie.
+    # true et la renvoie. La méthode a un alias : find
     def get_all(filtre = nil, reset_items = false)
       @items = {} if reset_items
       @items ||= {}
-      filtre = " WHERE #{filtre}".freeze unless filtre.nil?
-      db_exec("SELECT * FROM #{table}#{filtre}".freeze).each do |ditem|
+      where = where_clausize(filtre)
+      db_exec("SELECT * FROM #{table}#{where}".freeze).each do |ditem|
         item = new(ditem[:id])
         item.data = ditem
         @items.merge!(item.id => item)
       end
       return @items
     end #/ get_all
+    alias :find :get_all
 
     # Pour pouvoir utiliser la méthode <classe>.collect qui va boucler
     # sur tous les éléments. Noter que cette méthode instancie TOUS les
     # éléments de la base de données, donc il faut y aller mollo.
     def collect(filtre = nil)
-      filtre = " WHERE #{filtre}".freeze unless filtre.nil?
-      db_exec("SELECT * FROM #{table}#{filtre}".freeze).collect do |ditem|
+      where = where_clausize(filtre)
+      db_exec("SELECT * FROM #{table}#{where}".freeze).collect do |ditem|
         item = new(ditem[:id])
         item.data = ditem
         yield item
       end
     end #/ collect
 
+    # Retourne le nombre d'éléments répondant au filtre +filtre+. Si +filtre+
+    # est nil, retourne le nombre total d'éléments.
+    def count(filtre = nil)
+      return db_count(table, filtre)
+    end #/ count
+
     def each(filtre = nil)
-      filtre = " WHERE #{filtre}".freeze unless filtre.nil?
-      db_exec("SELECT * FROM #{table}#{filtre}".freeze).each do |ditem|
+      where = where_clausize(filtre)
+      db_exec("SELECT * FROM #{table}#{where}".freeze).each do |ditem|
         item = new(ditem[:id])
         item.data = ditem
         yield item
@@ -73,13 +80,23 @@ class ContainerClass
     end #/ each
 
     def each_with_index(filtre = nil)
-      filtre = " WHERE #{filtre}".freeze unless filtre.nil?
-      db_exec("SELECT * FROM #{table}#{filtre}".freeze).each_with_index do |ditem, idx|
+      where = where_clausize(filtre)
+      db_exec("SELECT * FROM #{table}#{where}".freeze).each_with_index do |ditem, idx|
         item = new(ditem[:id])
         item.data = ditem
         yield item, idx
       end
     end #/ each
+
+    private
+
+      def where_clausize filtre
+        return '' if filtre.nil?
+        if filtre.is_a?(Hash)
+          filtre = filtre.collect{|k,v| "#{k} = #{v.inspect}"}.join(' AND ').freeze
+        end
+        return " WHERE #{filtre}".freeze
+      end #/ where_clausize
 
   end # /<< self
 
@@ -110,7 +127,7 @@ class ContainerClass
   end #/ method_missing
 
   def f_id
-    @f_id ||= user.admin? ? "<span class='small'>(##{id})</span>".freeze : EMPTY_STRING
+    @f_id ||= user.admin? ? "#{ISPACE}<span class='small'>(##{id})</span>".freeze : EMPTY_STRING
   end #/ f_id
 
   def data

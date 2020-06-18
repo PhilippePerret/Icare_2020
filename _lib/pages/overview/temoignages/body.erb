@@ -1,6 +1,6 @@
 <%= tdm %>
 
-<% Temoignage.each do |tem| %>
+<% Temoignage.each(confirmed: true) do |tem| %>
   <%= tem.out %>
 <% end %>
 

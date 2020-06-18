@@ -23,6 +23,15 @@ class HTML
       # Édition du travail param(:twdos)/param(:tw)
     when 'save-twork'
       TravailType.get(param(:twork_id)).check_and_save
+    when 'create-temoignage'
+      # La dernière étape affiche toujours le formulaire de témoignage,
+      # on passe ici si on l'essaie
+      if ONLINE
+        erreur "Sur le site distant, on ne peut pas enregistrer de témoignage de cette façon".freeze
+      else
+        message "Sur le site local (et le site local seulement), on peut enregister un témoignage par l'édition des modules.".freeze
+        require_module('temoignages')
+      end
     end
   end
   # Fabrication du body
