@@ -6,19 +6,19 @@ p.titre-etape:hover {
   color:white;
 }
 
-form#form-edit-etape {
+form.edit-form {
 
 }
-form#form-edit-etape div.libelle {
+form.edit-form div.libelle {
   margin-top:12px;
 }
-form#form-edit-etape textarea,
-form#form-edit-etape input[type="text"]
+form.edit-form textarea,
+form.edit-form input[type="text"]
 {
   border:1px solid #F5F5F5;
 }
-form#form-edit-etape textarea:focus,
-form#form-edit-etape input[type="text"]:focus
+form.edit-form textarea:focus,
+form.edit-form input[type="text"]:focus
 {
   border:unset!important;
   outline-width:2px;

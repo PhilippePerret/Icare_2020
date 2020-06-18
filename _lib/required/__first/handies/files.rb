@@ -35,7 +35,7 @@ end #/ fromCaller
 def deserb relpath, owner = nil, options = nil
   str = Deserb.deserb(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
   return str if options && options[:formate] === false
-  str&.special_formating!
+  str&.special_formating
 end
 
 # Demarkdownise le fichier de chemin relatif +relpath+ (par rapport au dossier
@@ -43,7 +43,7 @@ end
 def kramdown relpath, owner = nil, options = nil
   str = AIKramdown.kramdown(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
   return str if options && options[:formate] === false
-  str&.special_formating!
+  str&.special_formating
 end #/ kramdown
 
 def deyaml relpath

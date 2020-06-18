@@ -1,0 +1,33 @@
+div.temoignage {
+  text-align:justify;
+  margin-bottom:3em;
+  padding-bottom:2em;
+  border-bottom:1px solid #CCCCCC;
+}
+
+div.temoignage .infos {
+  font-size:0.9em;
+}
+div.temoignage div.content {
+  font-size:1.11em;
+  margin: 0.5em 0;
+  line-height:1.6em;
+  font-style:italic;
+}
+div.temoignage div.content:before,
+div.temoignage div.content:after
+{
+  font-size:2em;
+  vertical-align:-webkit-baseline-middle;
+  vertical-align:text-top;
+}
+div.temoignage div.content:before {
+  content:'“';
+}
+div.temoignage div.content:after {
+  content: '”';
+}
+
+div.clear {
+  clear:both;
+}

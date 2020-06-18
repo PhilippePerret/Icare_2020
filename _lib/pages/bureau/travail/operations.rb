@@ -37,8 +37,4 @@ class IcEtape < ContainerClass
     log(e)
   end #/ modify_echeance
 
-
-  private
-
-
 end #/IcEtape < ContainerClass

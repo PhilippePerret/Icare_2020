@@ -30,7 +30,7 @@ def travaux_type
     data[:travail].scan(REG_TRAVAIL_TYPE).to_a.collect do |match|
       match = match.first
       rubrique, fichier = match.strip.gsub(/[ ']/,'').split(',')
-      TravailType.get(rubrique, fichier)
+      TravailType.get_by_name(rubrique, fichier)
     end
   end
 end #/ travaux_type

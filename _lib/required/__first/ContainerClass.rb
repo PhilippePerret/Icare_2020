@@ -9,7 +9,7 @@ class ContainerClass
 
   # Les méthodes d'helpers
   include StringHelpersMethods
-  
+
   class << self
     def get item_id
       item_id || raise("Il faut fournir l'ID".freeze)
@@ -63,7 +63,7 @@ class ContainerClass
       end
     end #/ collect
 
-    def each(filtre)
+    def each(filtre = nil)
       filtre = " WHERE #{filtre}".freeze unless filtre.nil?
       db_exec("SELECT * FROM #{table}#{filtre}".freeze).each do |ditem|
         item = new(ditem[:id])
@@ -72,7 +72,7 @@ class ContainerClass
       end
     end #/ each
 
-    def each_with_index(filtre)
+    def each_with_index(filtre = nil)
       filtre = " WHERE #{filtre}".freeze unless filtre.nil?
       db_exec("SELECT * FROM #{table}#{filtre}".freeze).each_with_index do |ditem, idx|
         item = new(ditem[:id])

@@ -1,11 +1,30 @@
-<p>Formulaire d'édition du travail</p>
+
+<%
+# ---------------------------------------------------------------------
+#
+#   BOITE D'OUTILS
+#
+# ---------------------------------------------------------------------
+%>
+<%= html.toolbox(self) %>
+<%
+# ---------------------------------------------------------------------
+#
+#   FORMULAIRE
+#
+# ---------------------------------------------------------------------
+%>
+<form class="edit-form noborder nomargin nobackground" method="POST">
 
 <input type="hidden" name="op" value="save-twork">
 <input type="hidden" name="route" value="admin/modules">
 <input type="hidden" name="twdos" value="<%= param(:twdos) %>">
 <input type="hidden" name="tw" value="<%= param(:tw) %>">
 
-<input type="text" name="twork_titre" id="etape-<%= id %>-titre" placeholder="Titre du travail-type" style="width:560px;" value="<%= titre %>">
+# <input type="text" name="twork_id" id="twork-<%= id %>-id" style="width:40px;" value="<%= id %>">
+<input type="hidden" name="twork_rubrique" value="<%= rubrique %>">
+<input type="hidden" name="twork_name" value="<%= name %>">
+<input type="text" name="twork_titre" id="etape-<%= id %>-titre" placeholder="Titre du travail-type" class="bold" style="width:560px;" value="<%= titre %>">
 <div class="libelle">Objectif</div>
 <input type="text" name="twork_objectif" id="etape-<%= id %>-objectif" class="w100pct" placeholder="Objectif du travail-type" value="<%= objectif %>">
 <div class="libelle">Travail <span class="small">(format ERB ou Markdown)</span></div>
@@ -18,3 +37,4 @@
 <div class="buttons">
   <button type="submit">Enregistrer</button>
 </div>
+</form>

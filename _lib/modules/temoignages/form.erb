@@ -1,0 +1,14 @@
+<%
+require_module('form')
+form = Form.new(id:'temoignage-form', route:route.to_s, class:'noborder nomargin nopadding nobackground', libelle_size:20, value_size:500)
+form.rows = {
+  'operation' => {type:'hidden', name:'op', value:'save-temoignage'},
+  '<Temoignage/>' => {name:'temoignage-content', type:'textarea', height:400}
+}
+form.submit_button = "Enregistrer ce témoignage"
+%>
+<p class="explication">Ce témoignage étant public, je vous invite à le rédiger avec soin. Rédigez-le plutôt dans un document séparé puis copiez-collez-le dans le formulaire ci-dessous pour le soumettre. Merci d'avance à vous.</p>
+<p class="right">
+  <%= Tag.lien(route:'overview/temoignages'.freeze, text:'Lire les autres témoignages'.freeze, class:'small', target:true) %>
+</p>
+<%= form.out %>

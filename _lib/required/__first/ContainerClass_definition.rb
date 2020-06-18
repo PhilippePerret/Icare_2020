@@ -9,5 +9,6 @@ require_relative 'ContainerClass'
 
 class AbsEtape < ContainerClass; end
 class AbsModule < ContainerClass; end
+class TravailType < ContainerClass; end
 class IcEtape < ContainerClass; end
 class IcModule < ContainerClass; end

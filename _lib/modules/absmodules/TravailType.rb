@@ -2,13 +2,12 @@
 class TravailType < ContainerClass
 class << self
 
-  # Contrairement aux autre classes, on prend les travaux-type par leur
-  # rubrique-short_name
-  def get rubrique, short_name
-    @items ||= {}
-    @items["#{rubrique}-#{short_name}"] ||= begin
-      dttype = db_get('abs_travaux_type', {rubrique:rubrique, short_name:short_name})
-      dttype || raise(ERRORS[:unfound_data] % {with:"rubrique:#{rubrique}, short_name:#{short_name}"})
+  # On peut obtenir les travaux-type par leur rubrique-name
+  def get_by_name rubrique, name
+    @items_by_name ||= {}
+    @items_by_name["#{rubrique}-#{name}"] ||= begin
+      dttype = db_get('abstravauxtypes', {rubrique:rubrique, name:name})
+      dttype || raise(ERRORS[:unfound_data] % {with:"rubrique:#{rubrique}, name:#{name}"})
       inst = new(dttype[:id])
       inst.data = dttype
       inst
@@ -16,9 +15,13 @@ class << self
   end #/ get
 
   def table
-    @table ||= 'abs_travaux_type'
+    @table ||= 'abstravauxtypes'
   end #/ table
 
 end # /<< self
+
+# La méthode de sauvegarde des travaux types est différente car l'identifiant
+# se fait avec rubrique/name (ce qui est stupide… et si on profitait du chan
+# gement pour rectifier ça ?)
 
 end #/TravailType

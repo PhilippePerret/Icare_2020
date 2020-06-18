@@ -8,6 +8,7 @@ class AbsEtape
     id:       {type:'integer'},
     numero:   {type:'integer'},
     titre:    {type:'text'},
+    objectif: {type:'text'},
     travail:  {type:'longtext'},
     methode:  {type:'longtext'},
     liens:    {type:'longtext'}

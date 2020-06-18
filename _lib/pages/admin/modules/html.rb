@@ -11,34 +11,40 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     admin_required
-    @absmodule = AbsModule.get(param(:absmodule_id)) unless param(:absmodule_id).nil?
     case param(:op)
     when 'show'
-      # Rien à faire ici
+      # Affichage des étapes du module choisi
+      @absmodule = AbsModule.get(param(:absmodule_id)) unless param(:absmodule_id).nil?
     when 'edit-etape'
-      message "Je dois éditer l'étape #{param(:eid)}"
+      # Édition de l'étape param(:eid)"
     when 'save-etape'
       AbsEtape.get(param(:etape_id)).check_and_save
     when 'edit-twork'
-      message "Je dois éditer le travail #{param(:dos)}/#{param(:w)}"
+      # Édition du travail param(:twdos)/param(:tw)
     when 'save-twork'
-      message "Je dois enregistrer le travail-type"
+      TravailType.get(param(:twork_id)).check_and_save
     end
   end
   # Fabrication du body
   def build_body
     add_css(File.join(PAGES_FOLDER,'bureau','xrequired','mef.css'))
-    @body = if param(:op) == 'edit-etape' || param(:op) == 'save-etape'
-              deserb('absetape_form', AbsEtape.get(param(:eid)||param(:etape_id)), {formate:false})
-            elsif param(:op) == 'edit-twork' || param(:op) == 'save-twork'
-              deserb('typework_form', TypeWork.get(param(:twdos), param(:tw)))
-            else
-              # str = deserb('body', self)
-              # log("--- str obtenu : #{str.inspect}")
-              # str
-              deserb('body', self)
-            end
+    partiel, bindee, options = partiel_per_op
+    @body = deserb("partiels/#{partiel}", bindee, options)
   end
+
+  # Retourne le partiel, le bindee et les options de déserbage en
+  # fonction de l'opération demandée qui, dans ce module peut avoir
+  # de nombreuses valeurs.
+  def partiel_per_op
+    case param(:op)
+    when 'edit-etape', 'save-etape'
+      ['absetape_form', AbsEtape.get(param(:eid)||param(:etape_id)), {formate:false}]
+    when 'edit-twork',  'save-twork'
+      ['travail_type_form', TravailType.get_by_name(param(:twdos), param(:tw))]
+    else
+      ['body', self]
+    end
+  end #/ partiel_per_op
 
   # Retourne les OPTIONS pour le menu des modules
   def menus_absmodule
@@ -58,13 +64,18 @@ class HTML
     deserb('./_lib/pages/bureau/travail/work/work.erb', absetape, {formate:false}) # [1]
   end #/ work_of
 
-  # Formulaire d'édition de l'étape +absetape+
+  # Bouton, dans la liste des étapes du module, qui permet d'éditer
+  # l'étape. L'édition se fait toujours dans un autre onglet
   def bouton_edit_etape(absetape)
     <<-HTML
   <div class="buttons">
-    <a href="#{route.to_s}?op=edit-etape&eid=#{absetape.id}" class="small btn">Éditer</a>
+    #{Tag.lien(route:"#{route.to_s}?op=edit-etape&eid=#{absetape.id}", class:'small btn', text:'Éditer', target:true)}
   </div>
     HTML
   end #/ bouton_edit_etape
+
+  def toolbox(binder)
+    deserb('partiels/toolbox', binder)
+  end #/ toolbox
 
 end #/HTML

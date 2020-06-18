@@ -6,7 +6,11 @@ section.etape_work {
   margin-top:2em;
 }
 
-section.etape_work fieldset {
+section.etape_work * {
+  box-sizing:border-box;
+}
+
+section.etape_work > fieldset {
   max-width:var(--text-max-width);
 }
 

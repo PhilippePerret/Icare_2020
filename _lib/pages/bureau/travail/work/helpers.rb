@@ -39,8 +39,8 @@ class AbsEtape
   def travail_formated
     w = travail.gsub(AbsEtape::REG_TRAVAIL_TYPE){
       rubrique, fichier = $1.strip.gsub(/[ ']/,'').split(',')
-      wtype = TravailType.get(rubrique, fichier)
-      wtype.travail
+      wtype = TravailType.get_by_name(rubrique, fichier)
+      deserb_or_markdown(wtype.travail,self)
     }
     deserb_or_markdown(w, self)
   end #/ section_etape_travail
