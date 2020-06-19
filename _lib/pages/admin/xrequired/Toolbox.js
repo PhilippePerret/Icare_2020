@@ -2,12 +2,13 @@
 
 class ToolBox {
   static observe(){
+    if (!this.obj) return ;
     const ObsData= [
       // [buttonId, classe, method]
       ['#toolbox-btn-save', ToolBox, 'submitForm'],
       ['#toolbox-btn-insert-variable', CurrentField, 'insertBaliseVariable'],
       ['#toolbox-btn-edit-wtype', ToolBox, 'editTravailType']
-    ]
+    ];
     ObsData.forEach(tierce => {
       const [buttonId, classe, method] = tierce ;
       const btn = this.obj.querySelector(buttonId)
