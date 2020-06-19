@@ -1,5 +1,8 @@
 class AbsEtape < ContainerClass
-REG_TRAVAIL_TYPE = /<%= ?travail_type (.*?)%>/
+
+# Pour trouver les travaux type
+# Note : maintenant, ça ne sert plus qu'à récupérer les objectifs
+REG_TRAVAIL_TYPE = /travail_type\((.*?)\)/
 
 # ---------------------------------------------------------------------
 #

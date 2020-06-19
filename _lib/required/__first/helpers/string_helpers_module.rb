@@ -21,7 +21,8 @@ end #/ film
 
 # Pour insérer le travail type
 def travail_type(rubrique, name)
-  "Je retourne le travail type"
+  wtype = TravailType.get_by_name(rubrique, name)
+  deserb_or_markdown(wtype.travail, self)
 end #/ travail_type
 
 =begin

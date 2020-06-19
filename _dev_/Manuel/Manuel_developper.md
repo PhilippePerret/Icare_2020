@@ -2162,7 +2162,7 @@ L’inconvénient de cette méthode est qu’on passera forcément par tous les 
 
 Il est largement préférable d’utiliser la commande CLI `icare` avec :
 
-​~~~bash
+~~~bash
 icare degel[ <nom_du_gel>]
 ~~~
 
@@ -2194,7 +2194,7 @@ params = {
 
 On peut récupérer toutes les instances filtrées dans :
 
-~~~ruby
+​~~~ruby
 TWatchers.founds
 # => Array des instances TWatcher trouvées
 ~~~
@@ -2329,9 +2329,30 @@ Les valeurs sont les suivantes :
 
 
 
+### Édition d'une étape de travail de module d'apprentissage
+
+* Rejoindre la **section « Modules » de l'administration** (depuis le bureau/tableau de bord),
+* choisir le module d'apprentissage de la nouvelle étape,
+* cliquer sur le titre de l'étape à modifier,
+* cliquer sur le bouton "Éditer" de l'étape (en tenant le bouche ⌘ appuyée si on veut l'éditer dans une nouvelle fenêtre),
+* remplir le formulaire et le soumettre.
+
+
+
+
+### Création d'une nouvelle étape de travail
+
+* Rejoindre la **section « Modules » de l'administration** (depuis le bureau/tableau de bord),
+* choisir le module d'apprentissage de la nouvelle étape,
+* bien repérer le nouveau numéro à créer,
+* cliquer sur le bouton "Nouvelle étape",
+* remplir le formulaire et le soumettre.
+
+
+
 ### Helpers pour les étapes de travail
 
-Avant tout, précisons que les étapes se définissent dans la section « Modules » de l'administration. Il suffit de choisir un module, d'afficher l'étape voulue et de cliquer sur le bouton “Éditer” pour éditer l'étape en question.
+Avant tout, précisons que les étapes se définissent dans la **section « Modules » de l'administration**. Il suffit de choisir un module, d'afficher l'étape voulue et de cliquer sur le bouton “Éditer” pour éditer l'étape en question.
 
 
 
@@ -2376,6 +2397,18 @@ Une “section document” dans le travail d'une étape de travail permet d'illu
 ~~~
 
 
+
+### Travaux types
+
+On peut insérer les travaux-types dans une étape de travail grâce à :
+
+~~~
+
+#{travail_type('<rub>','<name>')}  <%= travail_type('<rub>','<name>') %>
+
+~~~
+
+> Noter que maintenant il est impératif de mettre les parenthèss dans les deux formats.
 
 
 

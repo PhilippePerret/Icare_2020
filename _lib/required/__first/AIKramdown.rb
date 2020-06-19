@@ -13,7 +13,7 @@ class << self
   #   {String}  Le chemin relatif au fichier Markdown, dans +folder+
   #   {String}  OU le code à évaluer.
   def kramdown(fpath, owner = nil, folder = nil)
-    if fpath.match?(/\n/)
+    if fpath.match?(/[\n ,']/)
       code = fpath
     else
       fpath << '.md' unless fpath.end_with?('.md') || fpath.end_with?('.mmd')
