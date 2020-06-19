@@ -95,6 +95,9 @@ div.warning, p.warning, span.warning {
   vertical-align:middle;
 }
 
+.short {width:100px}
+.very.short{width:50px}
+
 /*  Quand on utilise #{TIRET} comme tiret (pour être sûr de gérer
     le bon espace)
 */

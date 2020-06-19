@@ -13,16 +13,28 @@
 #
 # ---------------------------------------------------------------------
 %>
+<div class="libelle mb1">
+  Étape du module <b><%= AbsModule.get(param(:mid)||absmodule_id).name %></b>.
+</div>
 <form id="form-edit-etape" class="edit-form noborder nomargin nobackground" method="POST">
   <input type="hidden" name="route" value="<%= route.to_s %>">
-  <input type="hidden" name="op" value="save-etape">
-  # <input type="text" name="etape_id" id="etape-<%= id %>-id" style="width:40px;" value="<%= id %>">
+  <input type="hidden" name="op" value="save<%= id.nil? ? '-new' : '' %>-etape">
+  <input type="hidden" name="etape_absmodule_id" value="<%= param(:mid) || absmodule_id %>">
+  <% if id %>
+    # <input type="text" name="etape_id" id="etape-<%= id %>-id" style="width:40px;" value="<%= id %>">
+  <% else %>
+    <%# Quand c'est pour créer une nouvelle étape %>
+    <input type="hidden" name="etape_id" value="">
+    <input type="hidden" name="mid" value="<%= param(:mid) %>">
+  <% end %>
   N°<input type="text" name="etape_numero" id="etape-<%= id %>-numero" style="width:40px;" value="<%= numero %>">
-  <input type="text" name="etape_titre" id="etape-<%= id %>-titre" placeholder="Titre de l'étape" style="width:560px;" value="<%= safe(titre) %>">
+  <input type="text" name="etape_titre" id="etape-<%= id %>-titre" placeholder="Titre de l'étape" style="width:560px;" value="<%= titre && safe(titre) %>">
   <div class="libelle">Objectif</div>
   <input type="text" name="etape_objectif" id="etape-<%= id %>-objectif" class="w100pct" placeholder="Objectif de l'étape" value="<%= objectif && safe(objectif) %>">
+
+  <span class="libelle">Durée <span class="small">(en nombre de jours)</span></span> <input type="text" name="etape_duree" value="<%= duree %>" class="very short mr2" placeholder="Normale"><input type="text" name="etape_duree_max" value="<%= duree_max %>" class="very short" placeholder="Max.">
   <div class="libelle">Travail <span class="small">(format ERB ou Markdown)</span></div>
-  <textarea name="etape_travail" id="etape-<%= id %>-travail" rows="40" class="w100pct" placeholder="Travail de l'étape"><%= safe(travail&.sanitize) %></textarea>
+  <textarea name="etape_travail" id="etape-<%= id %>-travail" rows="40" class="w100pct" placeholder="Travail de l'étape"><%= travail && safe(travail&.sanitize) %></textarea>
   <div class="libelle">Méthode <span class="small">(format ERB ou Markdown)</span></div>
   <textarea name="etape_methode" id="etape-<%= id %>-methode" rows="20" class="w100pct" placeholder="Méthode optionnelle pour l'étape"><%= methode && safe(methode.sanitize) %></textarea>
   <div class="libelle">Liens <span class="small">(page_id::narration::titre)</span></div>

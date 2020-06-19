@@ -17,6 +17,10 @@ class HTML
       @absmodule = AbsModule.get(param(:absmodule_id)) unless param(:absmodule_id).nil?
     when 'edit-etape'
       # Édition de l'étape param(:eid)"
+    when 'save-new-etape'
+      # Note : seulement quand on vient du formulaire de création de la
+      # nouvelle étape
+      AbsEtape.create_new
     when 'save-etape'
       AbsEtape.get(param(:etape_id)).check_and_save
     when 'edit-twork'
@@ -46,8 +50,12 @@ class HTML
   # de nombreuses valeurs.
   def partiel_per_op
     case param(:op)
+    when 'create-etape'
+      ['absetape_form', AbsEtape.instantiate(AbsEtape::DEFAULT_DATA.merge(absmodule_id: param(:mid).to_i)), {formate:false}]
     when 'edit-etape', 'save-etape'
       ['absetape_form', AbsEtape.get(param(:eid)||param(:etape_id)), {formate:false}]
+    when 'create-twork'
+      ['travail_type_form', TravailType.instantiate(TravailType::DEFAULT_DATA)]
     when 'edit-twork',  'save-twork'
       ['travail_type_form', TravailType.get_by_name(param(:twdos), param(:tw))]
     else

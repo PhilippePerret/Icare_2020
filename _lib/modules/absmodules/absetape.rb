@@ -3,17 +3,16 @@ class AbsEtape < ContainerClass
 # Pour trouver les travaux type
 # Note : maintenant, ça ne sert plus qu'à récupérer les objectifs
 REG_TRAVAIL_TYPE = /travail_type\((.*?)\)/
-
 # ---------------------------------------------------------------------
 #
 #   CLASSE
 #
 # ---------------------------------------------------------------------
-
 class << self
   def table
     @table ||= 'absetapes'
   end #/ table
+
 end # /<< self
 
 # ---------------------------------------------------------------------

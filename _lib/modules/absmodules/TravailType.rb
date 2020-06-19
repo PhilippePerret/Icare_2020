@@ -1,5 +1,15 @@
 # encoding: UTF-8
 class TravailType < ContainerClass
+
+DEFAULT_DATA.merge!({
+  name:nil, rubrique:nil, titre:nil, objectif:nil, methode:nil, liens:nil
+})
+
+# ---------------------------------------------------------------------
+#
+#   CLASSE
+#
+# ---------------------------------------------------------------------
 class << self
 
   # On peut obtenir les travaux-type par leur rubrique-name
@@ -19,6 +29,12 @@ class << self
   end #/ table
 
 end # /<< self
+
+# ---------------------------------------------------------------------
+#
+#   INSTANCE
+#
+# ---------------------------------------------------------------------
 
 # La méthode de sauvegarde des travaux types est différente car l'identifiant
 # se fait avec rubrique/name (ce qui est stupide… et si on profitait du chan

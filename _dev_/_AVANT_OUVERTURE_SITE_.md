@@ -5,7 +5,7 @@
   ~~~SQL
   ALTER TABLE `abs_travaux_type` RENAME `abstravauxtypes`;
   ~~~
-  
+
 * Modifier la table des `paiements`
 
   ~~~SQL
@@ -19,6 +19,7 @@
 
   ~~~SQL
   ALTER TABLE `absetapes` CHANGE COLUMN `module_id` `absmodule_id` INT(2) NOT NULL
+  ALTER TABLE `absetapes` DROP COLUMN `travaux`;
   ~~~
 
 * Dans la table `watchers`, la colonne `data` doit être renommé `params`

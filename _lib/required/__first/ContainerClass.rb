@@ -10,6 +10,8 @@ class ContainerClass
   # Les méthodes d'helpers
   include StringHelpersMethods
 
+  DEFAULT_DATA = {id:nil}
+
   class << self
     def get item_id
       item_id || raise("Il faut fournir l'ID".freeze)

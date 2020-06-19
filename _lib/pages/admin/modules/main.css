@@ -15,13 +15,14 @@ form.edit-form div.libelle {
 form.edit-form textarea,
 form.edit-form input[type="text"]
 {
-  border:1px solid #F5F5F5;
+  border:none;
+  outline-width:2px;
+  outline-style:solid;
+  outline-color:#F5F5F5;
 }
 form.edit-form textarea:focus,
 form.edit-form input[type="text"]:focus
 {
   border:unset!important;
-  outline-width:2px;
-  outline-style:outset;
   outline-color:rgb(200,255,200,0.9);
 }
