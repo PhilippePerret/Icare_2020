@@ -90,3 +90,8 @@ div.warning, p.warning, span.warning {
 .vmiddle {
   vertical-align:middle;
 }
+
+/*  Quand on utilise #{TIRET} comme tiret (pour être sûr de gérer
+    le bon espace)
+*/
+span.tiret {margin-right:0.23em;}

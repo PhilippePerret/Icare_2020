@@ -573,6 +573,23 @@ page(page_id, titre)		Produit un lien vers une page de la collection narration
 
 
 
+### Caractères spéciaux
+
+#### Tiret de liste (« –␣ »)
+
+Pour obtenir un tiret de liste qui laisse vraiment le même espace entre le tiret et le texte malgré la justification, on utiliser `#{TIRET}Le texte`.
+
+~~~
+
+#{TIRET}C'est le premier item de liste.
+
+#{TIRET}C'est le deuxième item de liste. Ils devraient tous être
+plus long pour voir comment est réparti l'espace.
+
+#{TIRET}Un troisième item de liste.
+
+~~~
+
 
 
 ### Constantes LIENS fréquents
@@ -2118,7 +2135,7 @@ GEL_FORCE=true rspec spec/gels -t mon_premier_gel  # Réinitialise TOUS LES GELS
 
 **Pour forcer seulement le dernier gel**
 
-​~~~bash
+~~~bash
 GEL_REMOVE_LAST=true rspec spec/gels -t mon_premier_gel
 ~~~
 
@@ -2145,7 +2162,7 @@ L’inconvénient de cette méthode est qu’on passera forcément par tous les 
 
 Il est largement préférable d’utiliser la commande CLI `icare` avec :
 
-~~~bash
+​~~~bash
 icare degel[ <nom_du_gel>]
 ~~~
 
