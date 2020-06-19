@@ -20,7 +20,7 @@
   N°<input type="text" name="etape_numero" id="etape-<%= id %>-numero" style="width:40px;" value="<%= numero %>">
   <input type="text" name="etape_titre" id="etape-<%= id %>-titre" placeholder="Titre de l'étape" style="width:560px;" value="<%= safe(titre) %>">
   <div class="libelle">Objectif</div>
-  <input type="text" name="etape_objectif" id="etape-<%= id %>-objectif" class="w100pct" placeholder="Objectif de l'étape" value="<%= safe(objectif) %>">
+  <input type="text" name="etape_objectif" id="etape-<%= id %>-objectif" class="w100pct" placeholder="Objectif de l'étape" value="<%= objectif && safe(objectif) %>">
   <div class="libelle">Travail <span class="small">(format ERB ou Markdown)</span></div>
   <textarea name="etape_travail" id="etape-<%= id %>-travail" rows="40" class="w100pct" placeholder="Travail de l'étape"><%= safe(travail&.sanitize) %></textarea>
   <div class="libelle">Méthode <span class="small">(format ERB ou Markdown)</span></div>
