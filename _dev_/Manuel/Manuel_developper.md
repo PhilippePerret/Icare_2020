@@ -571,7 +571,26 @@ mot(mot_id, le_mot)			Produit un lien vers un mot du scénodico
 page(page_id, titre)		Produit un lien vers une page de la collection narration
 ~~~
 
+### Méthodes de formatage pratiques
 
+On trouve dans le module [\_lib/required/\_\_first/extensions/Formate\_helpers.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/extensions/Formate_helpers.rb) des méthodes pratiques comme la méthode `formate_date(...)` qui permet d'obtenir facilement une date humaine du moment présent (sans argument) ou d'un temps/date donné en argument.
+
+~~~ruby
+formate_date()
+# => Retourne le temps courant comme : "19 juin 2020"
+
+formate_date(time)
+# => Retourne le temps +time+ comme : "17 juillet 2020"
+
+formate_date(time, {mois: :court})
+# => "17 juil 2020"
+
+formate_date(time, {duree: true})
+# => "17 juillet 2020 (dans 29 jours)"
+
+formate_date(nil, {hour: true}) # ou time:true
+# => "19 juin 2020 10:37"
+~~~
 
 ### Caractères spéciaux
 
