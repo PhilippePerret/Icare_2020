@@ -19,6 +19,11 @@ def film(film_id, film_titre = nil, options = nil)
   Tag.film(options)
 end #/ film
 
+# Pour insérer le travail type
+def travail_type(rubrique, name)
+  "Je retourne le travail type"
+end #/ travail_type
+
 =begin
   Helpers pour rédiger les mails et les notifications
 =end

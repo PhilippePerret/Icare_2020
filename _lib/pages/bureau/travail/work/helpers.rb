@@ -47,9 +47,15 @@ class AbsEtape
 
   def travail_propre_formated
     if !user.admin? && user.icetape.travail_propre
-      deserb_or_markdown(user.icetape.travail_propre, self)
+      travail = deserb_or_markdown(user.icetape.travail_propre, self)
+      <<-HTML
+<fieldset class="noborder">
+  <legend>TRAVAIL PROPRE</legend>
+  #{travail}
+</fieldset>
+      HTML
     else
-      Tag.div(text:"Aucun travail propre pour cette étape", class:'italic small')
+      # On n'affiche rien, s'il n'y a pas de travail propre
     end
   end #/ section_etape_travail_propre
 
