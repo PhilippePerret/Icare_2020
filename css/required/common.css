@@ -35,7 +35,11 @@ div.warning, p.warning, span.warning {
 .red {color:red}
 .blue {color:blue}
 
-.small {font-size:0.75em;}
+.small {
+  font-size:0.75em;
+  display:inline-block;
+  line-height:1.2em;
+}
 .big {font-size:2.5em;}
 
 .center {text-align:center}
