@@ -42,10 +42,11 @@ class HTML
 
 #{aGoto('<a href="qdd/home">📚 Quai de docs</a>'.freeze)}
 
-
 #{divGoto(MAIN_LINKS[:aide])}
 
 #{divGoto('<a href="overview/temoignages">🖼 Témoignages</a>'.freeze)}
+
+#{divGoto('<a href="overview/activity">⏳ Activité</a>'.freeze)}
 
     HTML
   end

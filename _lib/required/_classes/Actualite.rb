@@ -4,7 +4,7 @@
   ---------------
   Gestion des actualités de l'atelier
 =end
-class Actualite
+class Actualite < ContainerClass
 
 LASTS_COUNT = 20
 REQUEST_LASTS   = "SELECT * FROM actualites ORDER BY created_at LIMIT #{LASTS_COUNT}".freeze

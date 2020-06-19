@@ -5,7 +5,7 @@
 =end
 class HTML
   def retour_base
-    @retour_base ||= RETOUR_LINK % {route:'overview/home', titre:'Aperçu'}
+    @retour_base ||= RETOUR_LINK % {route:'overview/home', titre:'L’Atelier'}
   end #/ retour_base
 
   def tdm(current_route = nil)
