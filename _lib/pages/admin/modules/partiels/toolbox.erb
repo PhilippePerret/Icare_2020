@@ -1,11 +1,13 @@
-<div id="edit-etape-toolbox" class="toolbox">
-  <button type="button" class="btn" onclick="document.querySelector('form.edit-form').submit()">Enregistrer l'élément</button>
-  <button type="button" onclick="CurrentField.current.insert.call(CurrentField.current,'<%= %>')">Insérer &lt;%= ... %&gt;</button>
-  <button type="button" onclick="editTravailType()">Éditer le travail type</button>
+<div id="edit-toolbox" class="toolbox">
+  <button id="toolbox-btn-save" type="button" class="btn mb2">Enregistrer</button>
+  <button id="toolbox-btn-insert-variable" type="button">-> Balise variable</button>
+  <button id="toolbox-btn-edit-wtype" type="button">Éditer le travail type</button>
+  <hr>
+  <%= html.menu_films %>
+  <%= html.menu_mots %>
   <hr>
   <legend class="libelle">Correction des textes</legend>
   <button type="button" onclick="erbToMarkdown()">Code ERB -> MARKDOWN</button>
   <button type="button" onclick="remplaceBaliseMot('md')">Balises MOT/FILM -> MD</button>
   <button type="button" onclick="remplaceBaliseMot('erb')">balises MOT/FILM -> ERB</button>
-  <%= html.menu_films %>
 </div>

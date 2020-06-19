@@ -1,0 +1,11 @@
+div.toolbox {
+
+}
+div.toolbox * {
+  box-sizing:border-box;
+}
+
+div.toolbox select {
+  display:block;
+  width:100%;
+}

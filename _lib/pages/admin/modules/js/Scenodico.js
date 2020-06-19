@@ -1,15 +1,15 @@
 'use strict';
-class Filmodico {
+class Scenodico {
   static observe(){
-    document.querySelectorAll('select.filmodico').forEach(select => {
-      select.addEventListener('change', this.onChooseFilm.bind(this, select))
+    document.querySelectorAll('select.scenodico').forEach(select => {
+      select.addEventListener('change', this.onChooseMot.bind(this, select))
     })
   }
 
-  static onChooseFilm(select, ev){
-    const film_id = select.value
+  static onChooseMot(select, ev){
+    const mot_id = select.value
     const titre = select.options[select.selectedIndex].text
-    const tag = `#{film(${film_id},"${titre}")}`;
+    const tag = `#{mot(${mot_id},"${titre}")}`;
     if (CurrentField.current){
       CurrentField.current.setSelectionTo(tag)
     } else {
