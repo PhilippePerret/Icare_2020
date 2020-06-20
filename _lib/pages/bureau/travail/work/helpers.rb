@@ -62,13 +62,13 @@ class AbsEtape
     end
   end #/ section_etape_liens
 
-  def etape_methode
+  def methode_formated
     unless methode.nil?
       deserb_or_markdown(methode, self)
     else
       Tag.div(text:'Aucun élément de méthode pour cette étape.'.freeze, class:'italic small'.freeze)
     end
-  end #/ section_etape_methode
+  end #/ section_methode_formated
 
   # ---------------------------------------------------------------------
   #   MÉTHODE DE LA PARTIE MINIFAQ

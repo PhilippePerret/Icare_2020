@@ -2,6 +2,7 @@
 class User
   FEMININES = {
     e:      ['e',     ''],
+    egve:   ['ève',   'ef'],
     la:     ['la',    'le'],
     ne:     ['ne',    'n'],
     elle:   ['elle',  'lui']

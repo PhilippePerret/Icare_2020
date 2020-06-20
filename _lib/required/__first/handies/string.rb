@@ -22,5 +22,5 @@ def deserb_or_markdown code, owner = nil, options = nil
           AIKramdown.kramdown(code, owner)
         end
   return str if options && options[:formate] === false
-  str&.special_formating!
+  str&.special_formating
 end #/ deserb_or_markdown

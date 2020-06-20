@@ -24,15 +24,15 @@
 # <input type="text" name="twork_id" id="twork-<%= id %>-id" style="width:40px;" value="<%= id %>">
 <input type="hidden" name="twork_rubrique" value="<%= rubrique %>">
 <input type="hidden" name="twork_name" value="<%= name %>">
-<input type="text" name="twork_titre" id="etape-<%= id %>-titre" placeholder="Titre du travail-type" class="bold" style="width:560px;" value="<%= titre %>">
+<input type="text" name="twork_titre" id="etape-<%= id %>-titre" placeholder="Titre du travail-type" class="bold" style="width:560px;" value="<%= safe(titre) %>">
 <div class="libelle">Objectif</div>
-<input type="text" name="twork_objectif" id="etape-<%= id %>-objectif" class="w100pct" placeholder="Objectif du travail-type" value="<%= objectif %>">
+<input type="text" name="twork_objectif" id="etape-<%= id %>-objectif" class="w100pct" placeholder="Objectif du travail-type" value="<%= safe(objectif) %>">
 <div class="libelle">Travail <span class="small">(format ERB ou Markdown)</span></div>
-<textarea name="twork_travail" id="etape-<%= id %>-travail" rows="40" class="w100pct" placeholder="Travail du travail-type"><%= travail&.sanitize %></textarea>
+<textarea name="twork_travail" id="etape-<%= id %>-travail" rows="40" class="w100pct" placeholder="Travail du travail-type"><%= travail && safe(travail&.sanitize) %></textarea>
 <div class="libelle">Méthode <span class="small">(format ERB ou Markdown)</span></div>
-<textarea name="twork_methode" id="etape-<%= id %>-methode" rows="20" class="w100pct" placeholder="Méthode optionnelle pour le travail type"><%= methode&.sanitize %></textarea>
+<textarea name="twork_methode" id="etape-<%= id %>-methode" rows="20" class="w100pct" placeholder="Méthode optionnelle pour le travail type"><%= methode && safe(methode&.sanitize) %></textarea>
 <div class="libelle">Liens <span class="small">(page_id::narration::titre)</span></div>
-<textarea name="twork_liens" id="etape-<%= id %>-liens" rows="4" class="w100pct" placeholder="Liens utiles au travail-type"><%= liens&.sanitize %></textarea>
+<textarea name="twork_liens" id="etape-<%= id %>-liens" rows="4" class="w100pct" placeholder="Liens utiles au travail-type"><%= liens && safe(liens&.sanitize) %></textarea>
 
 <div class="buttons">
   <button type="submit">Enregistrer</button>

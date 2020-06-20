@@ -6,6 +6,10 @@
 =end
 module StringHelpersMethods
 
+def fem(key)
+  user.fem(key)
+end #/ fem
+
 # Retourne un lien vers un mot du scénodico
 def mot(mot_id, mot_mot, options = nil)
   options ||= {}
