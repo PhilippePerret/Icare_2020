@@ -1,5 +1,7 @@
 # Modifications à faire dans la base de données
 
+* Il faut absolument prendre les données de `icare.absmodules` qui ont été affinées
+
 * Table `actualites`. Il ne faut prendre les données qu'à partir du 20 juin 2020 compris, et les transformer :
   * ajouter un `type` 'NOTDEF'
   * ajouter l'user_id à 9
