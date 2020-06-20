@@ -1,4 +1,14 @@
+/*
+  --- LES LISTES DE LIENS HORIZONTAUX ---
+*/
+.horizontal_links {
 
+}
+.horizontal_links a,
+.horizontal_links button
+{
+  margin-right:0.7em;
+}
 /*
   --- EXPLICATIONS ---
 */

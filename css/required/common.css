@@ -40,8 +40,17 @@ div.warning, p.warning, span.warning {
   display:inline-block;
   line-height:1.2em;
 }
+.small:not(.very){font-size:0.75em;}
+.very.small {font-size:0.65em;}
+
 .big {font-size:2.5em;}
 
+.center,
+.right
+{
+  width:100%;
+  box-sizing:border-box;
+}
 .center {text-align:center}
 .right {text-align:right}
 .left {text-align:left}

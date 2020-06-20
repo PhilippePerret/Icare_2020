@@ -1,5 +1,12 @@
 # Modifications à faire dans la base de données
 
+* Table `actualites`. Il ne faut prendre les données qu'à partir du 20 juin 2020 compris, et les transformer :
+  * ajouter un `type` 'NOTDEF'
+  * ajouter l'user_id à 9
+  * supprimer les colonnes `status` et `data`.
+
+  Les données locales peuvent être transmises online.
+
 * Renommer la table `abs_travaux_type` en `abstravauxtypes`
 
   ~~~SQL
