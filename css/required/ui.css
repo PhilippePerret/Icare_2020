@@ -110,7 +110,7 @@ section#header div#div-logo {
   color:var(--dark-color-normal);
 }
 section#header div#div-logo a {
-  color:var(--inverse-dark-color-normal);
+  color:var(--dark-color-normal);
 }
 section#header div#div-logo img#logo-papillon {
   width:40px;

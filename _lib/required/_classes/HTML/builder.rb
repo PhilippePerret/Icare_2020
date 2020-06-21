@@ -55,7 +55,7 @@ class HTML
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <base href="http://localhost/AlwaysData/Icare_2020/">
-  <title>Atelier Icare</title>
+  <title>Atelier Icare | #{@titre}</title>
   #{css_tags}
   <script type="text/javascript">#{@raw_js}</script>
 </head>
@@ -70,7 +70,7 @@ class HTML
   end
 
   def build_header
-    @header = deserb('vues/tools', self) + deserb('vues/logo')
+    @header = deserb('vues/header', self)
   end
 
   def build_messages
