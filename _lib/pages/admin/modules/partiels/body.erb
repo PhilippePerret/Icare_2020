@@ -12,10 +12,16 @@
     <a href="admin/modules?op=create-etape&mid=<%= absmodule.id %>" class="btn small">Nouvelle étape</a>
   </div>
   <% absmodule.absetapes.each do |absetape| %>
-    <p class="titre-etape" data-id="<%= absetape.id %>">
+    <p id="absetape-<%= absetape.id %>" class="titre-etape" data-id="<%= absetape.id %>">
       <%= absetape.numero %>. <%= absetape.titre %>
     </p>
-    <div id="content-etape-<%= absetape.id %>" class="hidden">
+    <%
+    # Si param(:eid) contient l'identifiant de l'étape, on l'ouvre
+    # automatiquement. On peut la rejoindre directement avec l'ancre
+    # #absetape-<id>
+    class_ae = param(:eid)&.to_i == absetape.id ? '' : 'hidden'
+    %>
+    <div id="content-etape-<%= absetape.id %>" class="<%= class_ae %>">
       <%= bouton_edit_etape(absetape) %>
       <%= work_of(absetape) %>
       <%= bouton_edit_etape(absetape) %>

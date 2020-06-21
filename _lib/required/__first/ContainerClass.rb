@@ -167,6 +167,11 @@ class ContainerClass
   end #/ save
   alias :set :save # def set
 
+  # Pour détruire la donnée dans la base de données
+  def destroy
+    db_exec("DELETE FROM `#{self.class.table}` WHERE id = #{id}".freeze)
+  end #/ destroy
+
   # Date formatée de démarrage
   def f_started_at
     @f_started_at ||= formate_date(data[:started_at])

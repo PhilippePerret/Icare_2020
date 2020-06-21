@@ -163,8 +163,8 @@ class Form
   end #/ searchforrowfile
 
   def conform?
-    File.exists?(token_path)  || raise("Le fichier token (#{token}) du formulaire est introuvable")
-    read_token == session.id  || raise("Les données du token ne matchent pas…")
+    File.exists?(token_path)  || raise(ERRORS[:token_file_unfound] % [token])
+    read_token == session.id  || raise(ERRORS[:token_data_dont_match])
     # read_token == 'un numéro'  || raise("Les données du token ne matchent pas…")
     File.unlink(token_path)
     return true
@@ -209,10 +209,10 @@ class Form
 
   def value_field_for dfield
     dfield = default_values_for(dfield)
-    dfield || raise("dfield doit être défini".freeze)
+    dfield || raise(ERRORS[:data_field_required])
     field = TAGS_TYPES[dfield[:type].to_sym]
     # log("field:#{field} / dfield:#{dfield}")
-    field || raise("Type de balise/field inconnu: #{dfield[:type]}")
+    field || raise(ERRORS[:unknown_tag_type] % dfield[:type])
     field % dfield
   end
 
@@ -220,7 +220,7 @@ class Form
   def default_values_for(dfield)
     dfield.merge!(type:'text') unless dfield.key?(:type)
     is_type_sans_champ = ['titre','explication','raw'].include?(dfield[:type])
-    dfield.key?(:name) || is_type_sans_champ || raise("Il faut définir le paramètre :name")
+    dfield.key?(:name) || is_type_sans_champ || raise(ERRORS[:name_param_required])
     unless is_type_sans_champ
       dfield.key?(:id) || dfield.merge!(id: dfield[:name])
       dfield[:value] ||= dfield[:default] || param(dfield[:name].to_sym) || ''
@@ -243,6 +243,9 @@ class Form
       dfield.merge!(checked: param(dfield[:name].to_sym) ? ' CHECKED' : '')
     when 'textarea'.freeze
       dfield.key?(:height) || dfield.merge!(height: 60)
+      dfield.key?(:placeholder) || dfield.merge!(placeholder:'')
+    when 'text'.freeze
+      dfield.key?(:placeholder) || dfield.merge!(placeholder:'')
     when 'select'.freeze
       if dfield.key?(:values) && !dfield.key?(:options)
         # Il faut construire les options d'après les values
@@ -269,7 +272,14 @@ class Form
   end
 
   def button dbutton
-    '<a class="btn small noborder" href="%{route}">%{text}</a>' % dbutton
+    case dbutton
+    when Hash
+      '<a class="btn small noborder" href="%{route}">%{text}</a>' % dbutton
+    when String
+      dbutton
+    else
+      raise ERRORS[:other_button_invalid]
+    end
   end
 
 

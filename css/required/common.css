@@ -40,8 +40,8 @@ div.warning, p.warning, span.warning {
   display:inline-block;
   line-height:1.2em;
 }
-.small:not(.very){font-size:0.75em;}
-.very.small {font-size:0.65em;}
+.small:not(.very){font-size:0.75em!important}
+.very.small {font-size:0.65em!important}
 
 .big {font-size:2.5em;}
 

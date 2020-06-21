@@ -23,4 +23,9 @@ class String
     self.split('_').collect{|m| m.titleize}.join('')
   end #/ camelize
 
+  # Supprime toutes les balises HTML (pour les textes donnés)
+  def safetize
+    self.gsub("<(.+?)>".freeze, EMPTY_STRING)
+  end #/ safetize
+
 end #/String

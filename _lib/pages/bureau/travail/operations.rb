@@ -10,8 +10,7 @@ class HTML
     when 'echeance'
       user.icetape.modify_echeance
     when 'minifaq-add-question'
-      # TODO
-      message("Je dois ajouter une question minifaq")
+      MiniFaq.add_question
     end
   end #/ exec_operation
 

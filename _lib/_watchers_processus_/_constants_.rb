@@ -86,5 +86,12 @@ DATA_WATCHERS = {
     titre: 'Commande de module',
     relpath:'AbsModule/commande',
     actu_id: nil
+  },
+  # --- Question mini-faq ---
+  question_faq: {
+    titre: 'Question mini-faq'.freeze,
+    relpath: 'MiniFaq/answer_question'.freeze,
+    actu_id: nil,
+    next: nil
   }
 }

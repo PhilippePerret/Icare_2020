@@ -9,6 +9,10 @@ def user
   User.current
 end
 
+def phil
+  @phil ||= User.get(1)
+end #/ phil
+
 def param key, value = nil
   URL.param(key.to_sym, value)
 end

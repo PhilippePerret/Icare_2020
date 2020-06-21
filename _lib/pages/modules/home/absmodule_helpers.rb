@@ -7,7 +7,7 @@ class AbsModule < ContainerClass
   def out(options = {})
     @options = options
     <<-HTML
-<div class="absmodule">
+<div class="absmodule" id="absmodule-#{id}">
   <H3 class="titre">#{formated_name(options)}</H3>
   <div class="description mg2 small">
     <div class="titre">Description courte</div>
@@ -18,6 +18,10 @@ class AbsModule < ContainerClass
     <div>#{long_description}</div>
     #{ancre_next_module}
     #{ligne_boutons}
+  </div>
+  <div class="minifaq">
+    <p class="explication">Vous voulez en savoir davantage#{ISPACE}? N'hésitez pas à lire les réponses ci-dessous.</p>
+    #{MiniFaq.full_block(:absmodule, id)}
   </div>
 </div>
     HTML

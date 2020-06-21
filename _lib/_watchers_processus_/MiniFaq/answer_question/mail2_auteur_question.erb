@@ -1,0 +1,19 @@
+<% minifaq = objet %>
+
+<p>Bonjour,</p>
+
+<p>Je vous informe que Phil vient de donner une réponse à votre question Mini-FAQ concernant <%= la_chose %>.</p>
+
+<p>Votre question :</p>
+<p>
+  <%= minifaq.question %>
+</p>
+
+<p>Réponse :</p>
+<%= kramdown(minifaq.reponse) %>
+
+<p>En vous remerciant de votre attention,</p>
+
+<p>Bien à vous,</p>
+
+<p><%= le_bot %></p>

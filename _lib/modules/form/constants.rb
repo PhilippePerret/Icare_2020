@@ -1,5 +1,14 @@
 # encoding: UTF-8
 
+ERRORS.merge!({
+  data_field_required: "Les données du champ doivent être définies".freeze,
+  name_param_required: 'Il faut définir le paramètre :name.'.freeze,
+  unknown_tag_type: "Type de balise/field inconnu: %s".freeze,
+  token_file_unfound: "Le fichier token (%s) du formulaire est introuvable".freeze,
+  token_data_dont_match: "Les données du token ne matchent pas…".freeze,
+  other_button_invalid: "Pour instancier un autre bouton de formulaire, il faut fournir soit le bouton lui-même (String), soit une table contenant {:text, :route}.".freeze,
+})
+
 DEFAULT_LIBELLE_WIDTH = '200px'
 DEFAULT_VALUE_WIDTH   = '400px'
 
@@ -9,9 +18,9 @@ WATCHER_HIDDEN_FIELDS = '<input type="hidden" name="op" value="run" /><input typ
 SPAN_DATE_FIELDS = '<span id="%{prefix_id}-date-fields" class="%{class}">%{select_day}%{select_month}%{select_year}</span>'
 OPTION_SELECTED_TAG = '<option value="%{value}" selected>%{titre}</option>'.freeze
 
-INPUT_TEXT_TAG = '<input type="text" id="%{id}" name="%{name}" value="%{value}" class="%{class}" style="%{style}" />'.freeze
+INPUT_TEXT_TAG = '<input type="text" id="%{id}" name="%{name}" value="%{value}" class="%{class}" placeholder="%{placeholder}" style="%{style}" />'.freeze
 PASSWORD_TAG = '<input type="password" id="%{id}" name="%{name}" value="%{value}" class="%{class}" style="%{style}" />'.freeze
-TEXTAREA_TAG = '<textarea id="%{id}" name="%{name}" class="%{class}" style="%{style}">%{value}</textarea>'.freeze
+TEXTAREA_TAG = '<textarea id="%{id}" name="%{name}" class="%{class}" style="%{style}" placeholder="%{placeholder}">%{value}</textarea>'.freeze
 
 TITRE_TAG = '<h4 style="%{style}">%{label}</h4>'.freeze
 EXPLICATION_TAG = '<div class="explication" style="%{style}">%{name}</div>'.freeze

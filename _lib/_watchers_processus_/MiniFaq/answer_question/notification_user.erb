@@ -1,0 +1,30 @@
+<%
+# Notification permettant d'entrer une réponse pour une question minifaq
+
+# Objet courant (bindé)
+#
+# L'objet +objet+, ici, dans ce watcher, c'est l'objet MiniFaq
+
+# Pour la désignation de l'objet visé
+#
+# +target+    Instance AbsEtape ou AbsModule en fonction du fait qu'il s'agit
+#             d'une question sur une étape de travail (posée par un icarien
+#             sur son bureau) ou d'une question sur un module (posée par un
+#             visiteur quelconque, ayant laissé son mail ou non, depuis le
+#             listing des modules)
+#
+foretape = objet.absmodule_id.nil?
+target = foretape ? AbsEtape.get(objet.absetape_id) : AbsModule.get(objet.absmodule_id)
+target_design = "</span>#{foretape ? 'Étape' : 'Module'} ##{objet.send(foretape ? :absetape_id : :absmodule_id)}"
+# La route pour visualiser l'étape ou le module
+target_route = foretape ? "admin/modules?op=show&absmodule_id=#{target.absmodule.id}&eid=#{target.id}#absetape-#{target.id}" : "modules/home#absmodule-#{target.id}"
+# Le nom qu'on donne à l'objet dans la notification
+target_design = Tag.lien(route:target_route, text: target_design)
+
+%>
+<p>Vous recevrez bientôt une réponse concernant votre question Mini-FAQ ci-dessous.</p>
+<div>
+  <div><span class="libelle">Objet : <%= target_design %></div>
+  <div><span class="libelle">Nom :</span><%= foretape ? target.titre : target.name %></div>
+</div>
+<div><span class="libelle">Questions :</span><%= objet.question %></div>

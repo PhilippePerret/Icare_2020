@@ -5,7 +5,10 @@ class HTML
   end
   # Code à exécuter avant la construction de la page
   def exec
-    require_module('absmodules')
+    require_modules(['absmodules', 'minifaq'])
+    case param(:ope)
+    when 'minifaq-add-question' then MiniFaq.add_question
+    end
   end
   def build_body
     # Construction du body

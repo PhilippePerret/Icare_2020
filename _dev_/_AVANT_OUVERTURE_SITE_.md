@@ -66,6 +66,16 @@
   ALTER TABLE icetapes DROP COLUMN `documents`;
   ~~~
 
+* Table `mini_faq`
+  * Note : si aucune nouvelle question n'est posée, on pourra se servir de
+    la table de la base `icare`.
+  * Renommée `minifaq`.
+  * Destruction de la colonne `content` (qui était une sorte de mise en forme de la question/réponse, donc un gros doublon des données).
+  * Destruction de la colonne `user_pseudo`.Et utiliser INNER JOIN users u ON u.id = mf.user_id, u.pseudo AS user_pseudo
+  * Destruction de la colonne `numero` (numéro de l'étape, dont on se fiche)
+  * Destruction de la colonne `options`
+  * Les colonnes `user_id`, `absmodule_id` et `absetape_id` peuvent être nulles.
+
 * Changer les colonnes `abs_module_id` et `abs_etape_id` de la table `icdocuments` et de la table `icmodules`, `mini_faq`
 
   ~~~SQL

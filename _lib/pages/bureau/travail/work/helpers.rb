@@ -74,32 +74,11 @@ class AbsEtape
   #   MÉTHODE DE LA PARTIE MINIFAQ
   # ---------------------------------------------------------------------
   def formulaire_minifaq
-    require_module('form')
-    form = Form.new(id:'form-minifaq', route:'bureau/travail', libelle_size:100, value_size: 500, class:'noborder nomargin')
-    form.rows = {
-      'ope-minifaq' => {name:'ope', type:'hidden', value: 'minifaq-add-question'},
-      'Question'    => {name:'minifaq_question', type:'textarea', height:160, class:'w100pct'}
-    }
-    form.submit_button = "Poser cette question"
-    form.out
+    MiniFaq.form(:absetape, id).out
   end #/ formulaire_minifaq
 
   def liste_reponses_minifaq
-    request = "SELECT * FROM mini_faq WHERE absetape_id = #{id}".freeze
-    reponses = db_exec(request)
-    if MyDB.error
-      log(MyDB.error)
-      return erreur("Une erreur SQL est survenue. Consulter le journal de bord")
-    end
-    if reponses.empty?
-      Tag.div(text:'Aucune question pour cette étape.'.freeze, class:'italic small'.freeze)
-    else
-      log("réponses minifaq: #{reponses.inspect}")
-      reponses.collect do |dreponse|
-        reponse = ReponseMinifaq.new(dreponse) # cf. en bas de ce module
-        reponse.out
-      end.join
-    end
+    MiniFaq.block_reponses(:absetape, id)
   end #/ liste_reponses_minifaq
 
   # ---------------------------------------------------------------------
@@ -206,22 +185,3 @@ LienEtape = Struct.new(:dataline) do
     end
   end #/ cible
 end
-
-class ReponseMinifaq
-  def initialize data
-    data.each { |k,v| self.instance_variable_set("@#{k}", v)}
-  end #/ initialize
-  def out
-    <<-HTML
-<div class="minifaq-qr">
-  <div class="minifaq-question">
-    <span class="fright">#{@pseudo}</span>
-    #{@question}
-  </div>
-  <div class="minifaq-reponse">
-    #{@reponse}
-  </div>
-</div>
-    HTML
-  end #/ out
-end #/ReponseMinifaq

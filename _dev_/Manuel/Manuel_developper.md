@@ -560,9 +560,23 @@ end #/HTML
 
 Le module `LIB/required/__start/helpers/string_helpers_module.rb` qui définit le module `StringHelpersMethods` permet d'ajouter les méthodes d'helpers générales à toutes les classes qui en ont besoin.
 
-Noter qu'une classe héritant de `ContainerClass` hérite aussi de ces méthodes.
+**Une classe héritant de `ContainerClass` hérite aussi de ces méthodes**. Il n’y a donc rien à faire.
 
 cf. le [module des strings helpers](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/string_helpers_module.rb).
+
+Pour pouvoir utiliser/avoir accès à ces méthodes n’importe où, on utilise :
+
+~~~ruby
+
+	StringHelper#<methode>
+
+	# Par exemple :
+
+	StringHelper.politique_confidentialite
+
+~~~
+
+
 
 Extraits de méthodes :
 
@@ -991,6 +1005,8 @@ explication		Une explication discrète pour un champ. Mettre un label unique mai
 ~~~
 
 
+
+### Définition des boutons du formulaire
 
 Le nom du **bouton de soumission** du formulaire se définit par :
 
@@ -2213,7 +2229,7 @@ params = {
 
 On peut récupérer toutes les instances filtrées dans :
 
-​~~~ruby
+~~~ruby
 TWatchers.founds
 # => Array des instances TWatcher trouvées
 ~~~
@@ -2239,7 +2255,7 @@ Cela vide le dossier `./tmp/mails` dans lequel sont enregistrés les codes html 
 
 #### Tester si un mail contenant un certain texte a été envoyé
 
-~~~ruby
+​~~~ruby
 TMails.exists?(<dest.>, <cherché>[,<options>])			TMails.exists?("phil@chez.moi", "Bonjour Phil !")
 ~~~
 

@@ -1,0 +1,11 @@
+div.minifaq-block {
+  margin-left:4em;
+}
+div.minifaq-block div.minifaq-qr {
+  border:1px solid #999999;
+  padding:1em;
+  font-size:0.85em;
+}
+div.minifaq-block div.minifaq-qr span.question {
+  font-style:italic
+}

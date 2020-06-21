@@ -7,7 +7,7 @@ Cette page présente la politique de confidentialité des données appliquée pa
 Lors de votre inscription, l’atelier ne récolte que les informations utiles au travail au sein de l’atelier et à la navigation sur le site.
 
 * Le **pseudo** est utilisé au sein de l’atelier pour identifier l’icarienne ou l’icarien, dans les documents, dans les actualités, etc. L’icarien ou l’icarienne est libre de le changer par simple demande.
-* Le **patronyme** — nom et prénom — est une information optionnelle. Il permet notamment d’identifier l’icarienne ou l’icarien sous son vrai nom, s’il ou elle le désire, dans le #{hall_of_fame}.
+* Le **patronyme** — nom et prénom — est une information optionnelle. Il permet notamment d’identifier l’icarienne ou l’icarien sous son vrai nom, s’il ou elle le désire, dans le #{StringHelper.hall_of_fame}.
 * Le **mail** est indispensable pour toute la communication entre l’icarien, Phil et l’administration. Ce mail ne sera cependant jamais divulgué ni utilisé à d’autres fins que celle du travail au sein de l’atelier Icare.
 * Le **sexe** est indispensable pour permettre l’affichage de messages “inclusifs” personnalisés et sexués sur les pages du site de l’atelier.
 * l’**âge** est une donnée importante qui permet à Phil d’estimer la maturité de l’auteure ou de l’auteur. On ne peut pas appliquer la même exigence à une jeune adulte de dix-sept ans qui n’a jamais écrit qu’à un homme mûr qui pratique l’écriture depuis 20 ans.
@@ -21,7 +21,7 @@ Lors de votre inscription, l’atelier ne récolte que les informations utiles a
 
 #### Durée de vie des informations personnelles
 
-Lorsque l’on est icarienne ou icarien, c’est pour la vie. L’icarienne et l’icarien peuvent profiter *ad eternam* des services de l’atelier, conserver leur bureau intacte, revoir leur travail, consulter les documents du #{quai_des_docs}, les nouveaux comme les anciens, etc.
+Lorsque l’on est icarienne ou icarien, c’est pour la vie. L’icarienne et l’icarien peuvent profiter *ad eternam* des services de l’atelier, conserver leur bureau intacte, revoir leur travail, consulter les documents du #{StringHelper.quai_des_docs}, les nouveaux comme les anciens, etc.
 
 Pour ce faire, leurs informations personnelles sont conservées *ad eternam* elles aussi. Tout icarien et toute icarienne a cependant la possibilité de détruire à tout moment son profil, sans requête, par simple confirmation sur sa #{user.guest? ? "page de profil" : profil("page de profil")}.
 
@@ -41,7 +41,7 @@ L'icarien ou l'icarien pourra toujours trouver cette information dans la #{user.
 
 ### Partage des documents
 
-Le #{quai_des_docs} est une ressource unique de l’atelier, qui joue un rôle intense et durable dans la pédagogie pratiquée et la vie de l’atelier. Il permet la consultation des milliers de documents produits au cours de la vie déjà longue de l’atelier (#{Time.now.year - 2008} ans aujourd’hui #{formate_date}).
+Le #{StringHelper.quai_des_docs} est une ressource unique de l’atelier, qui joue un rôle intense et durable dans la pédagogie pratiquée et la vie de l’atelier. Il permet la consultation des milliers de documents produits au cours de la vie déjà longue de l’atelier (#{Time.now.year - 2008} ans aujourd’hui #{formate_date}).
 
 Bien sûr, chaque auteure et chaque auteur reste propriétaire à vie de son travail et il ou elle décide de le partager ou non. Un formulaire permet de décider du partage à appliquer à chaque document, original et commenté, dans la #{user.guest? ? "section documents" : Tag.lien(route:"bureau/documents", text:"section documents")} du bureau.
 
@@ -74,6 +74,13 @@ Même lorsque le contact par mail est accepté, l'adresse mail de l'icarien·ne 
 L'auteur(e) peut définir ou modifier à tout moment toutes ces informations dans la #{user.guest? ? "section Préférences" : section_preferences} de son bureau.
 
 À noter qu'au sein de l'atelier Icare, cette communication est exclusivement *informative*. L'atelier revendiquant le fait de ne pas être une “épicerie”, il ne sera jamais émis de messages de promotion ou d'avantages de quelconque nature.
+
+### Mini-FAQ
+
+L'atelier met à la disposition de l'icarien·ne et de l'utilisateur quelconque deux mini Foires Aux Questions qui permettent de poser des questions et d'en obtenir les réponses. Ces réponses sont ensuite accessibles à tout autre visiteur (sauf pour les questions concernant les étapes de travail). L'identifiant de l'icarien·ne est conservé avec la question qu'il a posée. Ici aussi, la destruction du profil entraine l'anonymatisation de la question.
+
+Pour les questions concernant les modules d'apprentissage (#{StringHelper.section_modules}), il est demandé à l'utilisateur de fournir son adresse mail s'il veut être averti de la réponse faite à sa question. Cette adresse mail est conservée de façon provisoire et sera définitivement détruite, sans autre utilisation, dès l'avertissement envoyé par mail. L'utilisateur a également la possibilité de ne pas la soumettre, dans lequel cas il devra revisiter le site plus tard pour trouver une réponse à sa question.
+
 
 ### Durée de vie des autres informations
 

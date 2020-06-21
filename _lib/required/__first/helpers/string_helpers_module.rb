@@ -58,10 +58,15 @@ def section_preferences(titre = nil)
   Tag.lien(text:titre||'section Préférences'.freeze, route:'bureau/preferences')
 end #/ section_preferences
 
+def section_modules(titre = nil)
+  Tag.lien(text:titre||'section “Modules d’apprentissage”'.freeze, route:'modules/home')
+end #/ section_modules
+
 # Signature pour les mails
 def le_bot
   @le_bot ||= '🤖 Le Bot de l’atelier Icare'.freeze
 end #/ Le_bot
+
 
 # ---------------------------------------------------------------------
 #
@@ -80,4 +85,12 @@ end #/OldSite
 def site
   @site ||= OldSite.new
 end #/ site
+
+
+end #/module StringHelpersMethods
+
+# Pour obtenir l'accès à ces méthodes partout avec :
+#   StringHelper#<methode>
+class StringHelper
+  extend StringHelpersMethods
 end
