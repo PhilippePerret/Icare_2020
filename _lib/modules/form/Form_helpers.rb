@@ -1,6 +1,15 @@
 # encoding: UTF-8
 class Form
+# Retourne la date (Instance Date/Time) du formulaire de date de name
+# +field_name+.
+# Quand il a été produit avec un champ de type 'date' par exemple
+# En fait c'est un alias de `data_field_value`
+def get_date(field_name)
+  Form.date_field_value(field_name)
+end #/ get_date
+
 class << self
+
   # Retourne un "champ de date", c'est-à-dire trois menus qui
   # permettent de définir ou d'afficher une date
   #
@@ -49,8 +58,8 @@ class << self
         TAG_OPTION
       end % {value:ijour, titre: ijour.to_s.rjust(2,'0')}
     end.join('')
-    id = "#{djour[:prefix_id]}-day"
-    name = "#{djour[:prefix_id]}_day"
+    id    = "#{djour[:prefix_id]}-day"
+    name  = "#{djour[:prefix_id]}_day"
     TAG_SELECT % {options:options, prefix:'day', id:id, name:name, class:djour[:class], style:''}
   end #/ date_field_jour
 

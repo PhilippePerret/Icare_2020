@@ -997,6 +997,7 @@ password			Pour un mot de passe
 select				Pour un menu select. Les valeurs doivent être fournies par :values
 checkbox			Une case à cocher
 file					Pour choisir un fichier
+date					Pour obtenir trois menus qui permettent de définir une date
 raw						Pour un code qui sera inséré tel quel (par exemple une liste de cbs). On 
 							renseigne alors la propriété :content, :value ou :name avec le contenu.
 titre					Un titre (le label est le titre)
@@ -1107,9 +1108,30 @@ En `values`, on peut aussi mettre une liste simple, quand les valeurs sont égal
 
 Pour construire un champ avec trois menus pour choisir une date, on peut utiliser la méthode `Form.date_field({<params>})`.
 
-Noter qu’il faut requérir le module 'forms'.
+Noter qu’il faut requérir le module 'form' (`require_module('form')`.
 
-Exemple :
+Dans un formulaire, on peut utiliser très simplement le type de champ 'date' pour définir un champ de date.
+~~~ruby
+form.rows = {
+  ...
+  'Ma date' => {name:'la_date', type:'date'},
+  ...
+}
+~~~
+
+On peut récupérer ensuite la date (instance `{Date}`) grâce à la méthode `form.get_date('la_date')` où `form` est l'instance `{Form}` du formulaire récupéré :
+
+~~~ruby
+form = Form.new 		# pour récupérer le formulaire à la soumission
+ladate = form.get_date('<property name>')
+# => <#Date ...>
+
+# Ou l'alias 
+ladate = form.data_field_value('<name property>')
+~~~
+
+
+Si l'on préfère tout gérer soit même, on peut faire par exemple :
 
 ~~~ruby
 require_module('form')
@@ -2255,7 +2277,7 @@ Cela vide le dossier `./tmp/mails` dans lequel sont enregistrés les codes html 
 
 #### Tester si un mail contenant un certain texte a été envoyé
 
-​~~~ruby
+~~~ruby
 TMails.exists?(<dest.>, <cherché>[,<options>])			TMails.exists?("phil@chez.moi", "Bonjour Phil !")
 ~~~
 
@@ -2263,7 +2285,7 @@ TMails.exists?(<dest.>, <cherché>[,<options>])			TMails.exists?("phil@chez.moi"
 
 #### Récupérer tous les mails d’un certain utilisateur
 
-~~~ruby
+​~~~ruby
 TMails.for(<mail destinataire>[,<options>])							TMails.for("phil@chez.moi")
 # => Liste d'instance TMail
 ~~~

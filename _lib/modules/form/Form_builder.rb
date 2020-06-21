@@ -210,7 +210,12 @@ class Form
   def value_field_for dfield
     dfield = default_values_for(dfield)
     dfield || raise(ERRORS[:data_field_required])
-    field = TAGS_TYPES[dfield[:type].to_sym]
+    field = case dfield[:type].to_sym
+            when :date
+              Form.date_field(prefix_id:dfield[:name], default:dfield[:value]||dfield[:default]).freeze
+            else
+              TAGS_TYPES[dfield[:type].to_sym]
+            end
     # log("field:#{field} / dfield:#{dfield}")
     field || raise(ERRORS[:unknown_tag_type] % dfield[:type])
     field % dfield
