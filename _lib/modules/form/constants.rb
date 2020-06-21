@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require_relative 'Form_helpers'
 
 ERRORS.merge!({
   data_field_required: "Les données du champ doivent être définies".freeze,
@@ -43,5 +44,6 @@ TAGS_TYPES = {
   checkbox:     CHECKBOX_TAG,
   explication:  EXPLICATION_TAG,
   file:         FILE_TAG,
+  date:         nil, # sera renseigné en direct
   raw:          RAW_TAG
 }
