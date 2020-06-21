@@ -1,8 +1,42 @@
-<p>
-  Le <strong>Quai des docs</strong> est un lieu unique en son genre qui rassemble tous les documents produits au sein de l'Atelier (plus de 1000 aujourd'hui, en juin 2020).
-</p>
+<p class="explication">Le <strong>Quai des docs</strong> est un lieu unique en son genre qui rassemble tous les documents produits au sein de l'Atelier (plus de 1000 documents à ce jour — juin 2020).</p>
+<p class="warning"><%= MESSAGES[:warning_copyright] % {pseudo: user.pseudo} %></p>
 <% if user.guest? %>
   <p>Une icarienne ou un icarien peut consulter ici tous ces documents, pour s'en inspirer ou s'en écarter dans les travaux qui lui sont demandés.</p>
 <% else %>
-  <p>En tant qu'icarien<%= user.fem(:ne) %>, vous retrouverez bientôt ici un formulaire vous permettant de les consulter.</p>
-<% end %>
+  <%
+  if user.essai?
+    nb = user.nombre_lectures
+    reste = 5 - nb
+    reste = 'aucun'.freeze if reste == 0
+    %>
+    <p><%= MESSAGES[:warning_user_essai] % {ne:user.fem(:ne), e:user.fem(:e), nb:nb, s:nb > 1 ? 's' :'', reste:reste} %></p>
+  <% end %>
+
+
+  <%
+    # Le formulaire de recherche
+    # ---------------------------
+    # C'est ici que l'utilisateur définit les paramètres de filtrage
+    # des documents. Par module, par auteur et par date
+    sortkeys = [
+      ['name', 'Nom'],
+      ['created_at',    'Date'],
+      ['pertinence',    'Pertinence']
+    ]
+    require_module('form')
+    form = Form.new(id:'qdd-form', route:route.to_s)
+    form.rows = {
+      'Module' => {name:'qdd_module', type:'select', values:AbsModule.menus_absmodule(titre:'Documents du module…')},
+      'Auteur' => {name:'qdd_auteur', type:'select', values:User.menus_users(titre:'Documents de l’icarien·ne…')},
+      'Produit après'  => {name:'qdd_after', type:'date', value:Time.new(2008,1,1)},
+      'Produit avant' => {name:'qdd_before', type:'date', value:Time.now},
+      'Classés par'   => {name:'qdd_key_order', type:'select', values:sortkeys}
+    }
+    form.submit_button = 'Rechercher'.freeze
+  %>
+  <%= form.out %>
+
+  <%= listing %>
+<% end
+    #/fin de si c'est un icarien
+%>

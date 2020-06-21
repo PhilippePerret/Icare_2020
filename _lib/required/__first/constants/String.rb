@@ -17,6 +17,8 @@ SPACE = ' '
 ISPACE = '&nbsp;'
 EMPTY_STRING = ''.freeze
 
+SELECTED = ' SELECTED'.freeze
+
 TIRET = '<span class="tiret">–</span>'
 
 RETOUR = '<span style="vertical-align:sub;">↩︎</span>'.freeze

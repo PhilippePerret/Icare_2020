@@ -24,8 +24,7 @@ class Watcher < ContainerClass
     next_is_selected = false
     options = []
     owner.icmodule.absmodule.etapes.each do |etape|
-      tag = next_is_selected ? OPTION_SELECTED_TAG : TAG_OPTION
-      options << tag % {value:etape.id, titre:"#{etape.numero}. #{etape.titre}"}
+      options << TAG_OPTION % {value:etape.id, titre:"#{etape.numero}. #{etape.titre}", selected:(next_is_selected ? ' SELECTED' : '')}
       next_is_selected = etape.id == owner_etape_id
     end
     TAG_SELECT % {

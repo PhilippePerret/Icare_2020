@@ -11,11 +11,11 @@ class << self
     id = id.to_i
     @items ||= {}
     @items[id] ||= begin
-      new(db_get('absetapes', id, ['id', 'numero', 'titre', 'module_id']))
+      new(db_get('absetapes', id, ['id', 'numero', 'titre', 'absmodule_id']))
     end
   end #/ get
 end
-  attr_reader :id, :numero, :titre, :module_id
+  attr_reader :id, :numero, :titre, :absmodule_id
   def initialize data
     data.each {|k,v| self.instance_variable_set("@#{k}", v)}
   end #/ initialize
@@ -23,6 +23,6 @@ end
     @ref ||= "#{titre} (n°#{numero})"
   end #/ ref
   def module
-    @module ||= QddAbsModule.get(module_id)
+    @module ||= QddAbsModule.get(absmodule_id)
   end #/ absmodule
 end #/QddAbsEtape

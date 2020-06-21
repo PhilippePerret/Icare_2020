@@ -4,6 +4,39 @@ class << self
   def table
     @table ||= 'absmodules'
   end #/ table
+
+  # Pour obtenir un select complet
+  #
+  # +parameters+
+  #   :titre      Le texte du premier menu
+  #   :id         Identifiant optionnel
+  #   :name       Le name optionnel
+  #   :class      La class CSS optionnelle
+  #
+  def menu_select(parameters = nil)
+    parameters ||= {}
+    parameters.key?(:titre) || parameters.merge!(titre: 'Voir le module…'.freeze)
+    parameters.merge!(options: menus_modules(parameters))
+    [:class, :id, :name].each do |prop|
+      parameters.key?(prop) || parameters.merge!(prop => '')
+    end
+    TAG_SELECT_SIMPLE % parameters
+  end #/ select
+
+  # Retourne les OPTIONS à placer dans un select des modules
+  # +pms+
+  #   :titre    Pour définir le premier menu (par défaut : "Voir le module…")
+  #
+  # Note : le fait d'offrir juste les options permet de régler le name et l'id
+  # du select sans problème. On peut utiliser menu_select ci-dessus
+  def menus_absmodule(pms = {})
+    default_value = pms[:value] || pms[:default] || pms[:default_value]
+    self.collect do |absmod|
+      selected = (default_value == absmod.id) ? SELECTED : EMPTY_STRING
+      TAG_OPTION % {value:absmod.id, selected:selected, titre:absmod.name}
+    end.unshift(TAG_OPTION % {value:'', selected:'', titre:pms[:titre]||'Voir le module…'.freeze}).join
+  end #/ menus_absmodule
+
 end # /<< self
 # ---------------------------------------------------------------------
 #

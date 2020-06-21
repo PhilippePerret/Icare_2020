@@ -16,6 +16,7 @@ DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'
 attr_reader :id, :original_name, :user_id, :absetape_id, :options
 attr_reader :updated_at, :time_original, :time_comments
 def initialize data
+  log("init with data: #{data.inspect}")
   data.each {|k,v| self.instance_variable_set("@#{k}", v)}
 end #/ initialize
 
@@ -27,6 +28,7 @@ def cards
   ary << card(:comments) if shared?(:comments)
   return ary.join
 end #/ cards
+alias :out :cards
 
 # Retourne TRUE si le document de type dtype existe (normalement, c'est
 # seulement utile pour le document commentaire, mais on peut imaginer qu'un
@@ -57,13 +59,14 @@ end #/ shared_sharing
 
 # Retourne une 'carte du document'
 def card(dtype = :original)
-  suftype = dtype == :original ? '' : '-comments'
+  for_original = dtype == :original
+  suftype = for_original ? '' : '-comments'
   droute  = DOWNLOAD_ROUTE % [id, dtype]
   inner = ''
   inner << Tag.div(text:(LINK_DOWNLOAD_PDF % [droute, suftype]), class:'fleft')
+  inner << Tag.div(text: "#{original_name} <span class='small'>(#{dtype})</span>", class:'bold')
   inner << divRow(label_auteur, auteur.pseudo, {libelle_size:60})
-  inner << divRow('Module', etape.module.name, {libelle_size:60})
-  inner << divRow('Étape', etape.ref, {libelle_size:60})
+  inner << Tag.div(text: "Module “#{etape.module.name}”, #{etape.ref}")
   inner << divRow('Date', formated_date(dtype), {libelle_size:60})
   Tag.div(text:inner, class:'qdd-card')
 end #/ card

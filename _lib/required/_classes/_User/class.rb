@@ -15,6 +15,10 @@ SQL
 class << self
   attr_accessor :current
 
+  def table
+    @table ||= 'users'.freeze
+  end #/ table
+  
   def get(uid)
     uid = uid.to_i
     @items ||= {}

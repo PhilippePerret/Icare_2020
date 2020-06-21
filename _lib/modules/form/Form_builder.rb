@@ -253,11 +253,15 @@ class Form
       dfield.key?(:placeholder) || dfield.merge!(placeholder:'')
     when 'select'.freeze
       if dfield.key?(:values) && !dfield.key?(:options)
-        # Il faut construire les options d'après les values
-        dfield.merge!(:options => dfield[:values].collect do |paire|
-          paire = [paire, paire] unless paire.is_a?(Array)
-          TAG_OPTION % {value:paire[0], titre:(paire[1]||paire[0])}
-        end.join)
+        if dfield[:values].is_a?(String)
+          dfield.merge!(options: dfield[:values])
+        else
+          # Il faut construire les options d'après les values
+          dfield.merge!(:options => dfield[:values].collect do |paire|
+            paire = [paire, paire] unless paire.is_a?(Array)
+            TAG_OPTION % {value:paire[0], titre:(paire[1]||paire[0]), selected:''}
+          end.join)
+        end
       end
       dfield.merge!(prefix: ''.freeze) unless dfield.key?(:prefix)
     when 'file'.freeze

@@ -1,4 +1,5 @@
 textarea {resize:none;}
+select:not(.select-day):not(.select-month):not(.select-year):not(.short) {width:100%;}
 
 form {
   font-size:inherit;
@@ -28,12 +29,14 @@ form:not(.inline){
   min-width:50%;
   border:1px solid steelblue;
   border-radius:9px;
-  padding:2em;
+  padding-top:2em;
+  padding-bottom:2em;
 }
 form div.row {
   display:grid;
   grid-template-columns: 200px auto;
   grid-template-rows: auto;
+  margin-bottom:0.7em;
 }
 
 form.inline div.buttons,
@@ -86,7 +89,8 @@ form div.buttons input[type="submit"] {
   border-radius:0.3em;
 }
 form:not(.inline) {
-  padding:9px 40px;
+  padding-left:40px;
+  padding-right:40px;
 }
 
 form div.buttons input[type="submit"]:hover {

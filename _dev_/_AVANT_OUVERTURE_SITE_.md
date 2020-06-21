@@ -76,7 +76,7 @@
   * Destruction de la colonne `options`
   * Les colonnes `user_id`, `absmodule_id` et `absetape_id` peuvent être nulles.
 
-* Changer les colonnes `abs_module_id` et `abs_etape_id` de la table `icdocuments` et de la table `icmodules`, `mini_faq`
+* Changer les colonnes `abs_module_id` et `abs_etape_id` des tables `icmodules`, `mini_faq`
 
   ~~~SQL
   ALTER TABLE `icmodules` DROP COLUMN `paiements`;

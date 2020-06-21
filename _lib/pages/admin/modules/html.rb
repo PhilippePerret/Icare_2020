@@ -63,15 +63,6 @@ class HTML
     end
   end #/ partiel_per_op
 
-  # Retourne les OPTIONS pour le menu des modules
-  def menus_absmodule
-    tag = '<option value="%s"%s>%s</option>'
-    AbsModule.collect do |absmod|
-      selected = (absmodule && absmodule.id == absmod.id) ? ' SELECTED' : ''
-      tag % [absmod.id, selected, absmod.name]
-    end.unshift(tag % ['', '', 'Voir le module…']).join
-  end #/ menus_absmodule
-
   # Retourne le code HTML pour une étape telle qu'elle s'affiche
   # pour l'icarien
   #
@@ -100,7 +91,7 @@ class HTML
       MyDB.DBNAME = 'scenariopole_biblio'
       films_options = db_exec("SELECT id AS value, titre FROM filmodico ORDER BY titre").collect do |dfilm|
         dfilm[:titre] = safe(dfilm[:titre])
-        TAG_OPTION % dfilm
+        TAG_OPTION % dfilm.merge(selected:EMPTY_STRING)
       end.join
       MyDB.DBNAME = nil
       TAG_SELECT_SIMPLE % {id:'films-filmodico', name:'film_id', class:'filmodico', options:'<option>Choisir le film…</option>'+films_options}
@@ -112,7 +103,7 @@ class HTML
       MyDB.DBNAME = 'scenariopole_biblio'
       mots_options = db_exec("SELECT id AS value, mot AS titre FROM scenodico ORDER BY mot").collect do |dmot|
         dmot[:titre] = safe(dmot[:titre]).downcase
-        TAG_OPTION % dmot
+        TAG_OPTION % dmot.merge(selected:EMPTY_STRING)
       end.join
       MyDB.DBNAME = nil
       TAG_SELECT_SIMPLE % {id:'mots-scenodico', name:'mot_id', class:'scenodico', options:'<option>Choisir le mot…</option>'+mots_options}

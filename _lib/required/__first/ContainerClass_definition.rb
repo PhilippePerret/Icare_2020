@@ -7,6 +7,7 @@
 =end
 require_relative 'ContainerClass'
 
+class User < ContainerClass; end
 class AbsEtape < ContainerClass; end
 class AbsModule < ContainerClass; end
 class TravailType < ContainerClass; end

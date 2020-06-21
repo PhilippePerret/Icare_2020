@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require_module('user/modules', 'minifaq')
+require_modules(['user/modules', 'minifaq'])
 class HTML
   def titre
     "#{RETOUR_BUREAU}🏠 Votre travail".freeze
