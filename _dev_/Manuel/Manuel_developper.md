@@ -437,6 +437,18 @@ ERRORS = {
 
 
 
+### Envoi de mail
+
+Pour envoyer un mail à un destinataire quelconque, on utilise la méthode générique :
+
+~~~ruby
+Mail.send(to: "<email>", subject: "<sujet>", message: "<message>")
+~~~
+
+> Note : par défaut, le `:to` (destinataire) et le `:from` (expéditeur) sont mis à l'adresse du site. Donc quand on veut m'envoyer un message, il suffit de ne pas mettre de `:to`.
+
+
+
 ### Envoi des erreurs à l'administration
 
 Pour pouvoir signaler (par mail) des erreurs à l'administration, on utilise la méthode :
@@ -2285,16 +2297,19 @@ TMails.exists?(<dest.>, <cherché>[,<options>])			TMails.exists?("phil@chez.moi"
 
 #### Récupérer tous les mails d’un certain utilisateur
 
-​~~~ruby
+~~~ruby
 TMails.for(<mail destinataire>[,<options>])							TMails.for("phil@chez.moi")
 # => Liste d'instance TMail
+~~~
+
+# 
 ~~~
 
 <a name="classtmail"></a>
 
 Cette méthode retourne donc une liste d’instance `TMail` qui répond aux méthodes suivantes :
 
-~~~ruby
+​~~~ruby
 tmail.contains?(str)		# retourne true si contient le texte +str+
 tmail.content						# le contenu textuel du mail
 tmail.time							# Le temps de l'envoi

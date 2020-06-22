@@ -49,7 +49,7 @@ class HTML
     sortedkey = case param(:qdd_key_order)
     when 'name'       then 'doc.original_name'
     when 'created_at' then 'doc.created_at'
-    when 'pertinence' then 'lect.pertinence' # ne fait rien pour le moment
+    when 'pertinence' then 'pertinence'
     end
 
     MyDB.DBNAME = 'icare' if OFFLINE
@@ -61,24 +61,31 @@ SELECT
   doc.updated_at, doc.time_original, doc.time_comments,
   doc.icetape_id,
   abset.id AS absetape_id,
-  lect.cotes AS pertinence
+  lect.icdocument_id,
+  AVG(lect.cote_original) + AVG(lect.cote_comments) AS pertinence
   FROM icdocuments AS doc
   INNER JOIN icetapes AS icet ON doc.icetape_id = icet.id
   INNER JOIN absetapes AS abset ON abset.id = icet.absetape_id
   INNER JOIN absmodules AS absmod ON absmod.id = abset.absmodule_id
   INNER JOIN lectures_qdd AS lect ON lect.icdocument_id = doc.id
   WHERE #{wheres.join(' AND ')}
+  GROUP BY lect.icdocument_id
+  ORDER BY #{sortedkey}
     SQL
     log("+++ request: #{request}")
     founds = db_exec(request, values)
-    log("+++ founds: #{founds.inspect}")
-    message "Nombre de documents correspond à la recherche : #{founds&.count}"
-    @listing = founds.collect do |found|
-      # doc = IcDocument.instantiate(found)
-      doc = QddDoc.new(found)
-      doc.cards
-    end.join
-
+    if MyDB.error
+      log(MyDB.error)
+      erreur("ERREUR SQL: #{MyDB.error[:error]}")
+    else
+      log("+++ founds: #{founds.inspect}")
+      message "Nombre de documents correspond à la recherche : #{founds&.count}"
+      @listing = founds.collect do |found|
+        # doc = IcDocument.instantiate(found)
+        doc = QddDoc.new(found)
+        doc.cards
+      end.join
+    end
     MyDB.DBNAME = 'icare_test' if OFFLINE
 
   end #/ traite_formulaire_search

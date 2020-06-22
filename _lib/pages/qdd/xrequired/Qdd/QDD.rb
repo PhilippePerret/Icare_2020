@@ -39,12 +39,12 @@ def documents_filtred
   @documents_filtred ||= begin
     # On commence par faire une liste des documents qui sont partagés,
     # originaux ou commentaires.
-    where = ['( options LIKE \'2%\' OR options LIKE \'_________2%\' )'.freeze]
+    where ['( SUBSTRING(options,1,1) = "1" OR SUBSTRING(options,9,1) = "1")'.freeze]
     if filtre.key?(:absetape_id)
       where << "absetape_id = #{filtre[:absetape_id]}".freeze
     end
     where = where.join(' AND ')
-    request = "SELECT * FROM icdocuments WHERE #{where}"
+    request = "SELECT * FROM icdocuments WHERE #{where}".freeze
     candidats = db_exec(request)
     liste_qdocs_ok = []
     candidats.each do |ddoc|

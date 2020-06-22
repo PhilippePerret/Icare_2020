@@ -15,8 +15,10 @@ DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'
 # ---------------------------------------------------------------------
 attr_reader :id, :original_name, :user_id, :absetape_id, :options
 attr_reader :updated_at, :time_original, :time_comments
+attr_reader :data
 def initialize data
-  log("init with data: #{data.inspect}")
+  # log("init with data: #{data.inspect}")
+  @data = data
   data.each {|k,v| self.instance_variable_set("@#{k}", v)}
 end #/ initialize
 
@@ -27,6 +29,10 @@ def cards
   ary << card(:original) if shared?(:original)
   ary << card(:comments) if shared?(:comments)
   return ary.join
+rescue Exception => e # pour mode sans erreur
+  err_mess = "[QDD] Problème d'affichage avec le document ##{id} : #{e.message}".freeze
+  send_error(err_mess, self.data.merge(backtrace: e.backtrace.join(RC))) #rescue nil
+  "<div class='qdd-card'><div class='bold'>[#{err_mess}]</div></div>"
 end #/ cards
 alias :out :cards
 
