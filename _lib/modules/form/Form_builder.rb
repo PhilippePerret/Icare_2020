@@ -212,7 +212,11 @@ class Form
     dfield || raise(ERRORS[:data_field_required])
     field = case dfield[:type].to_sym
             when :date
-              Form.date_field(prefix_id:dfield[:name], default:dfield[:value]||dfield[:default]).freeze
+              Form.date_field({
+                prefix_id:dfield[:name],
+                default:dfield[:value]||dfield[:default],
+                from: dfield[:from], to: dfield[:to]
+              }).freeze
             else
               TAGS_TYPES[dfield[:type].to_sym]
             end

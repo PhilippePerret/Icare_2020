@@ -70,10 +70,9 @@ def card(dtype = :original)
   droute  = DOWNLOAD_ROUTE % [id, dtype]
   inner = ''
   inner << Tag.div(text:(LINK_DOWNLOAD_PDF % [droute, suftype]), class:'fleft')
-  inner << Tag.div(text: "#{original_name} <span class='small'>(#{dtype})</span>", class:'bold')
-  inner << divRow(label_auteur, auteur.pseudo, {libelle_size:60})
-  inner << Tag.div(text: "Module “#{etape.module.name}”, #{etape.ref}")
-  inner << divRow('Date', formated_date(dtype), {libelle_size:60})
+  inner << Tag.div(text: "#{original_name} <span class='small'>(#{for_original ? 'original' : 'commentaires'})</span>", class:'filename')
+  msg = "<label>par</label> #{auteur.pseudo.capitalize}, <label>module</label> “#{etape.module.name}” #{etape.ref}, <label>le</label> #{formated_date(dtype)}."
+  inner << Tag.div(text:msg)
   Tag.div(text:inner, class:'qdd-card')
 end #/ card
 

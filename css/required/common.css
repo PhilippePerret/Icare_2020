@@ -37,9 +37,9 @@ div.warning, p.warning, span.warning {
 
 .small {
   font-size:0.75em;
-  display:inline-block;
   line-height:1.2em;
 }
+:not(div).small {display:inline-block;}
 .small:not(.very){font-size:0.75em!important}
 .very.small {font-size:0.65em!important}
 

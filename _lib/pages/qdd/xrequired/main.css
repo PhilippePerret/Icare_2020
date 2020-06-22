@@ -1,6 +1,6 @@
 /* Liste contenant des documents (en cartes) */
 div.qdd-documents {
-  
+
 }
 div.qdd-card {
   display:inline-block;
@@ -10,10 +10,17 @@ div.qdd-card {
   border-radius:12px;
   font-size:0.9em;
   margin:4px;
+  background-color:#F2F6F6;
 }
 
 div.qdd-card div,
 div.qdd-card span
 {
   overflow:hidden;
+  font-size:0.85em;
+}
+
+div.qdd-card div.filename {
+  font-size:0.9em;
+  font-weight:bold;
 }
