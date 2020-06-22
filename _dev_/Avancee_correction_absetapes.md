@@ -5,11 +5,10 @@
 - [x] Module Dynamique narrative
 - [x] Module Personnages
 - [x] Module Scénario
-
-- [ ] Module Structure
-
+- [x] Module Structure
 
 - [ ] Module Suivi de projet (rythme intensif)
+
 - [ ] Module Suivi de projet (rythme normal)
 - [ ] Thèmes
 - [ ] Bible de série

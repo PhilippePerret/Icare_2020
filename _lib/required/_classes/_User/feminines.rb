@@ -3,9 +3,10 @@ class User
   FEMININES = {
     e:      ['e',     ''],
     egve:   ['ève',   'ef'],
+    elle:   ['elle',  'lui'],
     la:     ['la',    'le'],
     ne:     ['ne',    'n'],
-    elle:   ['elle',  'lui']
+    te:     ['te',    't'],
   }
   def fem(key)
     FEMININES[key][femme? ? 0 : 1]

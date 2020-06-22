@@ -1,7 +1,7 @@
 <form method="POST" class="noborder nomargin">
   <input type="hidden" name="op" value="show">
   <input type="hidden" name="route" value="<%= route.to_s %>">
-  <select name="absmodule_id" onchange="this.form.submit()"><%= menus_absmodule %></select>
+  <select name="absmodule_id" style="width:auto;" onchange="this.form.submit()"><%= AbsModule.menus_absmodule %></select>
 </form>
 
 <%
