@@ -11,19 +11,34 @@
 # Envoi une erreur produite à l'administration
 def send_error msg, data = nil
   require_module('mail')
-  msg = "<p style='color:red;font-size:1.1em;'>#{msg}</p>"
+  if msg.is_a?(String)
+    # <= C'est un simple message d'erreur
+    # => Il faut faire un backtrace pour le remonter
+    backtrace = Kernel.caller[0..4]
+  elsif msg.respond_to?(:message)
+    # <= C'est une erreur directement envoyée
+    # => Il faut en construire le texte
+    msg = msg.message
+    backtrace = msg.backtrace
+  end
+
+  # On trace cette erreur
+  trace(message:msg, backtrace:backtrace, data:data) rescue nil
+
+  msg = "<div style='color:red;font-size:1.1em;'>ERREUR : #{msg}</div>"
+  msg << "<div style='color:red;'>#{backtrace.join(BR)}</div>".freeze
+
+  # On ajoute les éventuelles données fournies
   unless data.nil?
-    msg << '<pre><code>'
+    msg << "<pre><code>#{RC2}"
     msg << data.collect do |k, v|
       v = v.inspect unless k == :backtrace
       "#{k} : #{v}"
     end.join(RC)
     msg << '</code></pre>'
   end
-  # Pour situer l'appel de la méthode
-  msg << '<pre><code>BACKTRACE'
-  msg << Kernel.caller[0..2].join(RC)
-  msg << '</code></pre>'
+
+  # On peut envoyer l'erreur
   Mail.send({
     subject: '🧨 Problème sur l’atelier Icare'.freeze,
     message: msg

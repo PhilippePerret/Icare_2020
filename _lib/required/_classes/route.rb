@@ -33,7 +33,7 @@ class << self
   end
 
   def redirect_to road, options = nil
-    log("-> Route::redirect_to(#{road})")
+    trace({message:"REDIRECTION", to:road, options:options})
     Errorer.sessionnize
     Noticer.sessionnize
     puts cgi.header('status'=>'REDIRECT', 'location' => "#{App.url}/#{road}")

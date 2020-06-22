@@ -48,7 +48,7 @@ end
 
 def params
   @params ||= begin
-    debug "Tous les paramètres: #{cgi.params.inspect}"
+    # debug "Tous les paramètres: #{cgi.params.inspect}"
     h = {}
     cgi.params.each do |key, value|
       value = value[0] if value.count == 1
@@ -56,5 +56,5 @@ def params
       h.merge!(key.to_sym => value)
     end;h
   end
-end
+end #/params
 end #/URL

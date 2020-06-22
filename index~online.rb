@@ -3,11 +3,9 @@
 begin
   require './_lib/required'
   App.run
-  # Note : Le programme ne passera en fait jamais par ici
+  # Note : Le programme ne passera jamais par ici
 rescue Exception => e
-  STDOUT.write "Content-type: text/html; charset: utf-8;\n\n"
-  STDOUT.write "<div style='padding:3em;font-size:15.2pt;color:red;'>"
-  STDOUT.write "<div style='margin-bottom:2em'>#{e.message}</div>"
-  STDOUT.write e.backtrace.collect{|m| "<div>#{m}</div>"}.join('')
-  STDOUT.write '</div>'
+  ERROR = e
+  send_error(e) rescue nil
+  require './_lib/pages/errors/systemique'
 end
