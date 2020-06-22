@@ -10,17 +10,24 @@
 
 # Envoi une erreur produite à l'administration
 def send_error msg, data = nil
+  require_module('mail')
   msg = "<p style='color:red;font-size:1.1em;'>#{msg}</p>"
   unless data.nil?
     msg << '<pre><code>'
-    msg << data.collect { |k, v| msg << "#{k} : #{v}"}.join(RC)
+    msg << data.collect do |k, v|
+      v = v.inspect unless k == :backtrace
+      "#{k} : #{v}"
+    end.join(RC)
     msg << '</code></pre>'
   end
   # Pour situer l'appel de la méthode
   msg << '<pre><code>BACKTRACE'
   msg << Kernel.caller[0..2].join(RC)
   msg << '</code></pre>'
-  dmail = {subject: '🧨 Problème sur l’atelier Icare'.freeze, message: msg}
+  Mail.send({
+    subject: '🧨 Problème sur l’atelier Icare'.freeze,
+    message: msg
+  }) rescue nil
 end #/ send_error
 
 def debug msg
