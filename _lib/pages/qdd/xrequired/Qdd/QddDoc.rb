@@ -19,7 +19,11 @@ attr_reader :data
 def initialize data
   # log("init with data: #{data.inspect}")
   @data = data
-  data.each {|k,v| self.instance_variable_set("@#{k}", v)}
+  unless data.nil?
+    data.each {|k,v| self.instance_variable_set("@#{k}", v)}
+  else
+    raise ERRORS[:no_initial_data_provided]
+  end
 end #/ initialize
 
 # Retourne les cartes, celle pour le commentaire, si existe et partagé

@@ -5,6 +5,7 @@
 
 ERRORS = {
   no_data_modified: 'Aucune donnée n’a été modifiée…'.freeze,
+  no_initial_data_provided: 'Aucune donnée d’initialisation fournie.'.freeze,
   unfound_data: 'Données introuvables (avec %{with})'.freeze,
   file_unfound: 'Fichier introuvable : %s'.freeze,
   mark_unfound_file: '[FICHIER MANQUANT : `%s`]'.freeze
