@@ -15,9 +15,13 @@ Lors de votre inscription, l’atelier ne récolte que les informations utiles a
 * La **date d’inscription** est conservée à des fins informatives et statistiques uniquement dans le cadre de l’atelier Icare.
 * Le **mot de passe** est conservé de façon cryptée dans la base de données, rendant impossible toute utilisation frauduleuse par un tiers.
 
+#### Suivi de l'adresse IP
+
+L’adresse IP de l’utilisateur est conservé de façon tout à fait anonyme — même lorsque l’icarien·ne est connecté·e — dans un fichier journal qui n’a pour but que le bon fonctionnement du site de l’atelier et le bon affichage des pages.
+
 #### Modification des informations personnelles
 
-À tout moment l'icarienne ou l'icarien a la possibilité, sur la page de #{user.guest? ? "son profil" : profil("son profil")}, de modifier ces informations ou d'obtenir un nouveau mot de passe.
+À tout moment l’icarienne ou l'icarien a la possibilité, sur la page de #{user.guest? ? "son profil" : profil("son profil")}, de modifier ces informations ou d'obtenir un nouveau mot de passe.
 
 #### Durée de vie des informations personnelles
 
