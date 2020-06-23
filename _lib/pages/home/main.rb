@@ -15,7 +15,7 @@ class HTML
   </div>
 </div>
 <div id="legende" class="nolimit">
-  (*) aussi bien dans la forme (roman, scénario, BD, etc.) que dans le fond (pitch, résumé, synopsis, scénario, etc.).
+  (*) Dans la forme (roman, scénario, BD, etc.) comme dans le fond (pitch, résumé, synopsis, scénario, etc.).
 </div>
 <div id="air-sous-bandeau">&nbsp;</div>
 #{Citation.rand.out}

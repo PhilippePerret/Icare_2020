@@ -23,6 +23,7 @@ div#main-cadre div#papillon {
   float:left;
   font-size:40pt;
   margin-top:3pt;
+  text-shadow:5px 5px 4px #777;
 }
 div#main-cadre div#titre {
   font-size:50pt;
