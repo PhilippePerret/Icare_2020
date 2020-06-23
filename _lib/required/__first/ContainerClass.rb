@@ -161,6 +161,7 @@ class ContainerClass
   end #/ get
 
   def save(new_data)
+    new_data = {new_data => get(new_data)} if new_data.is_a?(Symbol)
     db_compose_update(self.class.table, id, new_data)
     # On peut affecter les nouvelles valeurs à l'instance
     new_data.each { |k, v| self.data[k] = v }
@@ -191,8 +192,14 @@ class ContainerClass
   end #/ option
   alias :get_option :option # pour être cohérent avec :set_option
 
+  # Retourne true si le bit +bit+ est à 1 (et seulement à 1)
+  def option?(bit)
+    option(bit) === 1
+  end #/ option?
+
   # Définit la valeur de bit de l'option et l'enregistre si nécessaire
   def set_option(bit, value, saving = false)
+    data[:options] = data[:options].ljust(bit+1,'0') unless data[:options].length > bit
     data[:options][bit] = value.to_s
     save(options: data[:options]) if saving
   end #/ set_option

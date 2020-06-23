@@ -51,6 +51,13 @@ form div.row span.value {
   grid-row:1
 }
 
+form div.row span.value div.explication {
+  margin:0;
+  padding:4px;
+  opacity:0.5;
+}
+form div.row span.value div.explication:hover{opacity:1}
+
 form:not(.inline) div.row span.libelle {
   margin-top:4px;
   overflow:hidden;
@@ -61,7 +68,7 @@ form.inline div.row span.libelle {display:none}
 form div.row span.value.file {
   height:32px;
 }
-form div.row span.value > * {
+form div.row span.value > *:not(.explication) {
   font-family:inherit;
   font-size:inherit;
   font-style:inherit;

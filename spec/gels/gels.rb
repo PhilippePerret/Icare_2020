@@ -2,7 +2,7 @@
 =begin
   Procédures de gels
 =end
-Dir['./spec/support/Gel/**/*.rb'].each{|m|require m}
+require_gel
 require_data('signup_data') # => DATA_SPEC_SIGNUP_VALID
 
 include SpecModuleNavigation

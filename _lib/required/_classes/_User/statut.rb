@@ -5,17 +5,17 @@
 class User
 
 def guest?
-  @is_guest = bit_options(16) == 1 if @is_guest.nil?
+  @is_guest = option(16) == 1 if @is_guest.nil?
   @is_guest
 end
 
 def icarien?
-  @is_icarien = bit_options(16) > 1 if @is_icarien.nil?
+  @is_icarien = option(16) > 1 if @is_icarien.nil?
   @is_icarien
 end
 
 def real?
-  @is_real_icarien = bit_options(24) == 1 || admin? if @is_real_icarien.nil?
+  @is_real_icarien = option(24) == 1 || admin? if @is_real_icarien.nil?
   @is_real_icarien
 end #/ real?
 
@@ -24,7 +24,7 @@ def essai?
 end #/ essai?
 
 def admin?
-  @is_admin = bit_options(0) > 0 if @is_admin.nil?
+  @is_admin = option(0) > 0 if @is_admin.nil?
   @is_admin
 end
 
@@ -34,7 +34,7 @@ def femme?
 end
 
 def super_admin?
-  @is_superadmin = bit_options(0) > 1 if @is_superadmin.nil?
+  @is_superadmin = option(0) > 1 if @is_superadmin.nil?
   @is_superadmin
 end
 
@@ -44,19 +44,19 @@ def actif?
 end #/ actif?
 
 def grade
-  bit_options(1)
+  option(1)
 end
 
 def mail_confirmed?
-  bit_options(2) == 1
+  option(2) == 1
 end
 
 def destroyed?
-  bit_options(3) == 1
+  option(3) == 1
 end
 
 def frequence_mail_actu
-  case bit_options(4)
+  case option(4)
   when 0 then :day
   when 1 then :week
   when 9 then :none
@@ -65,7 +65,7 @@ end
 
 def statut
   return :actif if actif? # bit 16 ne sert plus pour actif
-  case bit_options(16)
+  case option(16)
   when 0, 1 then :candidat
   when 3 then :en_pause
   when 4 then :inactif
@@ -73,7 +73,7 @@ def statut
 end
 
 def no_mail?
-  bit_options(17) == 1
+  option(17) == 1
 end
 
 def route_after_login
@@ -81,48 +81,33 @@ def route_after_login
 end
 
 def bit_redirection
-  bit_options(18)
+  option(18)
 end #/ bit_redirection
 
-def type_contact_with_other
-  case bit_options[19]
-  when 9 then :none
-  else :undefined
-  end
-end
+# --- Type de contact ---
+# La valeur est un flag qui peut contenir :
+#   0:  aucun
+#   1:  mail      FLAG_MAIL
+#   2:  frigo     FLAG_FRIGO
+#   4:  direct    FLAG_DIRECT (quand présent sur le site)
+#
+# Donc on peut utiliser :
+#   if type_contact_admin & FLAG_MAIL
+#     # ce qu'on fait si l'icarien peut être contacté par mail
+#   end
+# 
+def type_contact_admin
+  bit_option(26)
+end #/ type_contact_admin
+def type_contact_icariens
+  bit_option(27)
+end #/ type_contact_icariens
+def type_contact_world
+  bit_option(28)
+end #/ type_contact_world
 
-def hide_header?
-  @hides_header = bit_options(20) == 1 if @hides_header.nil?
-  @hides_header
-end
+def hide_header?        ; option?(20)   end
+def share_historique?   ; option?(21)   end
+def notify_if_message?  ; option?(22)   end
 
-def share_historique?
-  @shares_historique = bit_options(21) == 1 if @shares_historique.nil?
-  @shares_historique
-end
-
-def notify_if_message?
-  @notify_if_message = bit_options(22) == 1 if @notify_if_message.nil?
-  @notify_if_message
-end
-
-def type_contact_with_world
-  case bit_options(23)
-  when 9 then :none
-  else :undefined
-  end
-end
-
-def bit_options(bit)
-  @options ||= get(:options)
-  @options[bit].to_i
-end
-
-def set_option bit, value, saving = true
-  @options ||= get(:options)
-  @options.ljust(bit,'0')
-  @options[bit] = value.to_s
-  save(options: @options) if saving
-end #/ set_option
-
-end
+end #/class User

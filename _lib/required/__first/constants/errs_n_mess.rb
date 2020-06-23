@@ -4,6 +4,8 @@
 =end
 
 ERRORS = {
+  unfound_user_with_id: "Impossible de trouver un utilisateur d'identifiant %s…".freeze,
+  alert_intrusion: "Ceci ressemble à une intrusion en force. Je ne peux pas vous laisser passer…".freeze,
   no_data_modified: 'Aucune donnée n’a été modifiée…'.freeze,
   no_initial_data_provided: 'Aucune donnée d’initialisation fournie.'.freeze,
   unfound_data: 'Données introuvables (avec %{with})'.freeze,

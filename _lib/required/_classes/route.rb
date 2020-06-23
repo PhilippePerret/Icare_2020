@@ -1,18 +1,5 @@
 # encoding: UTF-8
 class Route
-
-  REDIRECTIONS = {
-    # - SIMPLE ICARIEN -
-    0 => {hname: 'Bureau de travail',       route: :bureau},
-    1 => {hname: 'Accueil du site',         route: :home},
-    2 => {hname: 'Profil',                  route: :profil},
-    3 => {hname: 'Dernière page consultée', route: :last_page},
-    # - ADMINISTRATEUR -
-    7 => {hname: 'Tableau de bord', route: 'admin/home', admin: true},
-    8 => {hname: 'Console', route: 'admin/console', admin: true},
-    9 => {hname: 'Notifications', route: 'admin/notifications', admin: true}
-  }
-
 class << self
 
   # L'instance Route courante

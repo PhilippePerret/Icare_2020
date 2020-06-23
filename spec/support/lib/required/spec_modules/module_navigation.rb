@@ -13,4 +13,8 @@ module SpecModuleNavigation
   def goto_home
     visit URL_OFFLINE
   end #/ goto_home
+
+  def goto(route)
+    visit "#{URL_OFFLINE}/#{route}"
+  end #/ goto_route
 end

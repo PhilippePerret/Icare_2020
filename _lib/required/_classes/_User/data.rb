@@ -29,11 +29,6 @@ class User
     save(key)
   end
 
-  def save(data2save)
-    return if guest?
-    db_compose_update('users', id, data2save)
-  end
-
   # Retourne le nombre de notifications non vues
   def unread_notifications_count
     return 0 if user.guest?

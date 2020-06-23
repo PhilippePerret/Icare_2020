@@ -24,7 +24,7 @@ PASSWORD_TAG = '<input type="password" id="%{id}" name="%{name}" value="%{value}
 TEXTAREA_TAG = '<textarea id="%{id}" name="%{name}" class="%{class}" style="%{style}" placeholder="%{placeholder}">%{value}</textarea>'.freeze
 
 TITRE_TAG = '<h4 style="%{style}">%{label}</h4>'.freeze
-EXPLICATION_TAG = '<div class="explication" style="%{style}">%{name}</div>'.freeze
+EXPLICATION_TAG = '<div class="explication" style="%{style}">%{text}</div>'.freeze
 
 CHECKBOX_TAG = '<input type="checkbox" id="%{id}" name="%{name}"%{checked}><label for="%{id}">%{values}</label>'
 

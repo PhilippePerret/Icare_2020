@@ -189,12 +189,18 @@ class Form
   <span class="libelle"#{libelle_style}>#{label}</span>
   <span class="value#{" file" if dfield[:type] == 'file'}">
     #{value_field_for(dfield)}
+    #{explication_field(dfield) if dfield.key?(:explication)}
   </span>
 </div>
         HTML
       end
     end.join(RC)
   end
+
+  # Une explication du champ est peut-être donnée
+  def explication_field(dfield)
+    EXPLICATION_TAG % {text: dfield[:explication], style:''}
+  end #/ explication_field
 
   # Maintenant que le div.row est un display:grid, on peut définir la largeur
   # des libellés et des champs value par libelle_size et value_size, mais ils
@@ -270,6 +276,8 @@ class Form
       dfield.merge!(prefix: ''.freeze) unless dfield.key?(:prefix)
     when 'file'.freeze
       dfield[:button_name] ||= 'Choisir le fichier…'.freeze
+    when 'explication'.freeze
+      dfield[:text] ||= dfield[:value] || dfield[:name] || dfield[:content]
     end
     return dfield
   end #/ default_values_for

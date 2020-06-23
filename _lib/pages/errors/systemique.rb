@@ -29,7 +29,7 @@ STDOUT.write <<-HTML
       <div class="warning">#{ERROR.message.gsub(/</,'&lt;')}</div>
       #{backtrace}
     </div>
-    <div class="center mt2 big">👩‍🏭 👨‍🏭 👨‍🚒 👩‍🚒</div>
+    <div class="center mt2 big">👩‍🚒 👨‍🏭 👨‍🚒 👩‍🏭</div>
     <p class="explication red">Le problème a été signalé, il devrait être corrigé dans les plus brefs délais par nos technicien·ne·s. Merci de votre compréhension.</p>
     <p style="text-align:center"><a href="home">Retourner à l’accueil</p>
   </section>

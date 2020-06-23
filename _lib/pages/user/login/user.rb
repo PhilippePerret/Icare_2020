@@ -33,7 +33,6 @@ class << self
   # Si c'est le bon, il est authentifié (cf. plus bas)
   # Et on le redirige vers la page naturelle.
   def check_user
-    log("-> check_user")
     @user_mail     = URL.param(:user_mail)
     @user_mail      || raise(ERRORS[:mail_required])
     mail_exists?    || raise(ERRORS[:unkown_user])

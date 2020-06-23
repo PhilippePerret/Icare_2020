@@ -285,18 +285,18 @@ Un visiteur non identifié répond positivement à `user.guest?`.
 | 14            |                                                              |
 | 15            |                                                              |
 | 16            | **Bit de statut** (ou d’activité)<br />0, 1: invité (visiteur non identifié), 3: en pause, 4: inactif |
-| 17            | **Bit de non contact par mail**<br />Si 1, l’icarien ne veut pas être contacté. |
-| 18            | **Bit de redirection**<br />Détermine la section à rejoindre après l’identification. |
-| 19            | **Bit de contact**<br />Détermine comment l’icarien veut pouvoir être  contacté.<br />9: strictement aucun contact. |
+| 17            | **Bit de non contact par mail**<br />OBSOLÈTE. Cf. 26, 27 et 28 |
+| 18            | **Bit de redirection**<br />Détermine la section à rejoindre après l’identification. Cf. TODO |
+| 19            | **Bit de contact**<br />OBSOLÈTE. CF. bit 26                 |
 | 20            | **Bit d'entête**<br />1: l’entête du site doit être cachée (inusité dans la version actuelle) |
 | 21            | **Bit d’historique partagé**<br />Si 1, l’icarien partage avec les autres icariens son historique de travail. |
 | 22            | **Bit de notification de message**<br />Si 1, l’icarien est averti par mail lorsque quelqu’un lui laisse un message sur son frigo. |
-| 23            | **Bit de contact avec le monde** (toute personne hors atelier)<br />9: aucun contact |
+| 23            | **Bit de contact avec le monde**<br />OBSOLÈTE. Cf. bit 28   |
 | 24            | **Bit de « réalité »**. Il est à 1 si c’est un « vrai » icarien, c’est-à-dire si c’est un icarien qui a déjà effectué un paiement. |
 | 25            |                                                              |
-| 26            |                                                              |
-| 27            |                                                              |
-| 28            |                                                              |
+| 26            | **Bit de contact avec l'administration**<br />0: aucun, 1:mail, 2:frigo   (ce sont des bits qui s’ajoutent donc 1\|2 pour mail et frigo)<br />> Note : Ancien bit 19 |
+| 27            | **Bit de contact avec les autres icariens**<br />0: aucun, 1:mail, 2:frigo   (ce sont des bits qui s’ajoutent donc 1\|2 pour mail et frigo) |
+| 28            | **Bit de contact avec le reste du monde**<br />0: aucun, 1:mail, 2:frigo   (ce sont des bits qui s’ajoutent donc 1\|2 pour mail et frigo)<br />Note : ancien bit 23 |
 | 29            |                                                              |
 | 30            |                                                              |
 | 31            |                                                              |
@@ -1006,18 +1006,38 @@ form.rows = {
 text					Pour un input text simple
 textarea			Pour un champ textarea
 password			Pour un mot de passe
-select				Pour un menu select. Les valeurs doivent être fournies par :values
+select				Pour un menu select. Les valeurs doivent être fournies par 
+							:values
 checkbox			Une case à cocher
 file					Pour choisir un fichier
 date					Pour obtenir trois menus qui permettent de définir une date
-raw						Pour un code qui sera inséré tel quel (par exemple une liste de cbs). On 
-							renseigne alors la propriété :content, :value ou :name avec le contenu.
+raw						Pour un code qui sera inséré tel quel (par exemple une 
+							liste de cbs). On 
+							renseigne alors la propriété :content, :value ou :name avec 
+							le contenu.
 titre					Un titre (le label est le titre)
-explication		Une explication discrète pour un champ. Mettre un label unique mais quelconque
+explication		Une explication discrète pour un champ. Mettre un label 
+							unique mais quelconque. Note : il est préférable de régler 
+							la propriété :explication dans la définition du champ, ce
+							qui permettra d'avoir l'explication bien sous le champ.
 
 ~~~
 
 
+### Propriété des champs
+
+~~~
+:type					Le type (cf. ci-dessus)
+:name					NAME pour le formulaire. Cette propriété est obligatoire, 
+							sauf pour certains types comme 'raw'
+:id						IDentifiant éventuel pour le champ
+:value				Valeur à donner au champ, à sa construction
+:values				Pour un select, le Array des valeurs
+:options			Pour un select, les options, en String
+:explication	Texte de l'explication si le champ est expliqué. Tip : le 
+							mettre en message dans MESSAGES (celui propre à la section 
+							courante).
+~~~
 
 ### Définition des boutons du formulaire
 
@@ -2133,6 +2153,27 @@ L’application est testée à l’aide de `RSpec`.
 
 
 
+### Inclusion des modules utiles
+
+Plusieurs modules utiles sont définis dans les supports de test. On trouve notamment :
+
+* SpecModuleNavigation. Qui offre des méthode de navigation comme `goto(route)` ou `goto_home`,
+* `SpecModuleFormulaire` qui offre des méthodes pour les formulaires
+
+On charge ces modules de cette manière :
+
+~~~ruby
+feature "Mon test" do
+	scenario "Le scénario" do
+		extend <nom du module>
+		
+	end
+end
+~~~
+
+
+
+
 ### Les gels
 
 Les tests, en plus de… tester l’application, permettent aussi de revenir à certains états afin de faciliter le développement à l’aide des « gels ». Un « gel » est comme une photographie de l’atelier, au niveau de sa base de données (`icare_test` seulement) et de ses principaux dossiers temporaires utiles : ``./tmp/downloads/`, `tmp/mails/`, `./tmp/signups/`.
@@ -2144,6 +2185,27 @@ Tous les gels sont définis dans le fichier [./spec/gels/gels.rb](/Users/philipp
 [fichier des gels]: /Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/gels/gels.rb
 
 
+#### Utiliser un gel pour un test
+
+Pour utiliser un gel pour un test, il suffit de le *dégeler*.
+
+~~~ruby
+
+feature "mon test" do
+	scenario "mon scénario" do
+		degel('<nom-du-gel>')
+	end
+end
+
+feature "mon test" do
+	before(:all) do 
+		degel("<nom_du_gel>")
+	end
+	scenario "le scénario" do
+		...
+	end
+end
+~~~
 
 #### Produire un gel (`gel`)
 
@@ -2237,6 +2299,20 @@ icare degel[ <nom_du_gel>]
 
 > Si on n’indique pas de nom de dégel, la liste des tous les gels est présentée pour un choix facile et rapide.
 
+
+<a name="testerdb"></a>
+
+### Tester la base de données
+
+Pour récupérer des données dans la base, on utilise les méthodes normales du site. Par exemple :
+
+~~~ruby
+
+db_exec("SELECT * FROM users")
+# => données de tous les utilisateurs (de icare_test)
+~~~
+
+> Noter que c'est sur la table icare_test que s'appliquent toutes les requêtes.
 
 
 <a name="testerwatcher"></a>

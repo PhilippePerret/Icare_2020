@@ -2,6 +2,8 @@
 =begin
   Données de test pour l'inscription à l'atelier Icare
 =end
+ERRORS = {} unless defined?(ERRORS)
+
 DATA_SPEC_SIGNUP_INVALID = [
   {
     pseudo:     {value:'', have:ERRORS[:pseudo_required], have_not:nil},

@@ -75,6 +75,15 @@ RSpec.configure do |config|
     require File.join(FOLDER_DATA, relpath)
   end #/ require_data
 
+  def degel(gel_name)
+    require_gel unless defined?(Gel)
+    Gel.get(gel_name).degel
+  end #/ degel
+
+  def require_gel
+    Dir['./spec/support/Gel/**/*.rb'].each{|m|require m}
+  end #/ require_gel
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
