@@ -6,6 +6,9 @@ begin
   # Note : Le programme ne passera jamais par ici
 rescue Exception => e
   ERROR = e
+  File.open('./fatal_errors.log','a') do |f|
+    f.write("#{Time.now} --- FATAL ERROR:\n    #{e.message}\n    #{e.backtrace.join("\n    ")}")
+  end rescue nil
   send_error(e) rescue nil
   require './_lib/pages/errors/systemique'
 end

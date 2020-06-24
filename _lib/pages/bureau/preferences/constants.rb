@@ -24,6 +24,6 @@ DATA_PREFERENCES = {
   contact_admin:    {label:'Contacts administration'.freeze, type:SELECT, bit:26, values:VALUES_CONTACTS},
   contact_icarien:  {label:'Contacts icariens', type:SELECT, bit:27, values:VALUES_CONTACTS},
   contact_world:    {label: 'Contacts (monde)'.freeze, type:SELECT, bit:28, values:VALUES_CONTACTS},
-  share_histo:      {label: 'Partage historique'.freeze, bit:21, values:VALUES_SHARING},
-  project_name:     {label: "Titre projet".freeze, if: user.actif?, type:TEXT, value: user.project_name},
+  share_histo:      {label: 'Partager l’historique'.freeze, type:SELECT, bit:21, values:VALUES_SHARING},
+  project_name:     {label: "Titre du projet".freeze, if: user.actif?, type:TEXT, value: user.project_name},
 }

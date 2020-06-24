@@ -25,7 +25,7 @@ class User
 
   # Retourne le titre du projet s'il est défini
   def project_name
-    @project_name ||= icmodule.project_name
+    @project_name ||= icmodule&.project_name
   end #/ project_name
-  
+
 end #/User

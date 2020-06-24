@@ -14,6 +14,10 @@ class << self
     u.data = donnees
     return u
   end #/ instantiate
+
+  def get_user_by_mail(mail)
+    instantiate(db_get('users', {mail: mail}))
+  end #/ get_user_by_mail
 end # /<< self
 
 # ---------------------------------------------------------------------
@@ -28,6 +32,9 @@ end #/ initialize
 def data= values
   @data = values
 end #/ data= values
+def data
+  @data ||= db_get('users', id)
+end #/ data
 
 # ---------------------------------------------------------------------
 #

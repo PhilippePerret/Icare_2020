@@ -15,7 +15,14 @@ def get_icmodule_user(idx)
 end #/ get_icmodule_user
 
 def get_user_by_index(idx)
-  data = DATA_SPEC_SIGNUP_VALID[idx]
-  user_mail = data[:mail][:value]
+  user_mail = get_data_user_by_index(idx)[:mail]
   db_get('users', {mail: user_mail})
 end #/ get_user_by_index
+
+def get_data_user_by_index(idx)
+  data = {}
+  DATA_SPEC_SIGNUP_VALID[idx]&.each do |k,d|
+    data.merge!(k => d[:value])
+  end
+  return data
+end #/ get_data_user_by_index
