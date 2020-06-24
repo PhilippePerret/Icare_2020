@@ -259,17 +259,20 @@ class Form
     when 'textarea'.freeze
       dfield.key?(:height) || dfield.merge!(height: 60)
       dfield.key?(:placeholder) || dfield.merge!(placeholder:'')
-    when 'text'.freeze
+    when TEXT
       dfield.key?(:placeholder) || dfield.merge!(placeholder:'')
-    when 'select'.freeze
+    when SELECT
       if dfield.key?(:values) && !dfield.key?(:options)
         if dfield[:values].is_a?(String)
           dfield.merge!(options: dfield[:values])
         else
+          # Valeur
+          curvalue = dfield[:default] || dfield[:value]
           # Il faut construire les options d'après les values
           dfield.merge!(:options => dfield[:values].collect do |paire|
             paire = [paire, paire] unless paire.is_a?(Array)
-            TAG_OPTION % {value:paire[0], titre:(paire[1]||paire[0]), selected:''}
+            selected = paire[0].to_s == curvalue.to_s ? SELECTED : EMPTY_STRING
+            TAG_OPTION % {value:paire[0], titre:(paire[1]||paire[0]), selected:selected}
           end.join)
         end
       end
