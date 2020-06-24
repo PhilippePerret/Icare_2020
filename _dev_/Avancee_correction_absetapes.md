@@ -7,9 +7,10 @@
 - [x] Module Scénario
 - [x] Module Structure
 
-- [ ] Module Suivi de projet (rythme intensif)
-
 - [ ] Module Suivi de projet (rythme normal)
+      N°32 -- non traitée
+
+- [ ] Module Suivi de projet (rythme intensif)
 - [ ] Thèmes
 - [ ] Bible de série
 - [ ] Procédés

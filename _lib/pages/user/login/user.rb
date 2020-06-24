@@ -3,14 +3,13 @@
   Module pour identifier le user
 =end
 
-class User
-
-ERRORS = {
+ERRORS.merge!({
   unkown_user:    'Je ne vous reconnais pas. Merci de ré-essayer.'.freeze,
   mail_required:  'Pour vous identifier, il faut fournir votre mail.'.freeze,
   pwd_required:   'Pour vous identifier, votre mot de passe est requis (celui utilisé pour candidater à l’atelier).'.freeze
-}
+})
 
+class User
 class << self
 
   # Retourne l'instance Form pour le formulaire d'identification
@@ -73,7 +72,10 @@ class << self
 
   # Return TRUE si le mot de passe est valide, c'est-à-dire s'il correspond
   # au mail
-  def password_valid?
+  def password_valid?(data = nil)
+    @user_password  ||= data[:pwd]
+    @user_mail      ||= data[:owner].mail
+    @dbuser         ||= data[:owner].data
     User.encrypte_password(@user_password, @user_mail, @dbuser[:salt]) == @dbuser[:cpassword]
   end
 

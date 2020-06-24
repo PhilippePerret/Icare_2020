@@ -24,6 +24,9 @@ a.current {
   opacity:1;
 }
 
+.discret {opacity:0.3}
+.discret:hover {opacity:1}
+
 div.warning, p.warning, span.warning {
   border-color:rgb(226, 53, 53);
   background-color:rgb(226, 53, 53);
@@ -39,7 +42,7 @@ div.warning, p.warning, span.warning {
   font-size:0.75em;
   line-height:1.2em;
 }
-:not(div).small {display:inline-block;}
+:not(div):not(span).small {display:inline-block;}
 .small:not(.very){font-size:0.75em!important}
 .very.small {font-size:0.65em!important}
 
@@ -61,10 +64,10 @@ div.warning, p.warning, span.warning {
 .fleft {float:left}
 .fright {float:right}
 
-.mt1 {margin-top:1em}
-.mt2 {margin-top:2em}
-.mt3 {margin-top:3em}
-.mt4 {margin-top:4em}
+.mt1 {margin-top:1em!important;}
+.mt2 {margin-top:2em!important;}
+.mt3 {margin-top:3em!important;}
+.mt4 {margin-top:4em!important;}
 
 .mr1 {margin-right:8px}
 .mr2 {margin-right:16px}

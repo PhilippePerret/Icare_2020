@@ -60,11 +60,16 @@ RSpec.configure do |config|
     vide_all_dossiers
     vide_db
     File.open('./TESTS_ON','wb'){|f|f.write(Time.now.to_i.to_s)}
+
   end
   config.after :suite do
     # À EXÉCUTER APRÈS LES TESTS
     # puts "Je finis la suite de tests"
     File.unlink('./TESTS_ON') if File.exists?('./TESTS_ON')
+  end
+
+  config.before :each do
+    extend SpecModuleNavigation
   end
 
 

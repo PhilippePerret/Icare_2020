@@ -250,6 +250,22 @@ LIB/modules/
 
 
 
+## Redirection
+
+
+
+Pour rediriger le visiteur vers une page particulière, on peut utiliser la méthode :
+
+~~~ruby
+redirect_to('<route>')
+~~~
+
+
+
+---
+
+
+
 ##  Les icariens
 
 Les icariens et les icariennes sont des `User`s. 

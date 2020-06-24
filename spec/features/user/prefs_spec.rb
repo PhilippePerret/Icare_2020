@@ -25,7 +25,7 @@ feature "Préférences" do
     expect(page).to have_css('h2', text: 'Identification')
   end
 
-  scenario 'un visiteur identifié peut atteindre ses préférences', only:true do
+  scenario 'un visiteur identifié peut atteindre ses préférences' do
     goto_preferences_as_marion
     save_screenshot('icarien-can-reach-preferences.png')
     expect(page).to have_css('h2', text: 'Vos préférences')

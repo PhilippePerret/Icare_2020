@@ -21,7 +21,8 @@ div.buttons {
 .btn:not(.small),
 div.buttons a:not(.small)
 {
-  font-family:inherit;
+  font-family:Arial,Helvetica,Geneva;
+  letter-spacing:0.5px;
   font-size:inherit;
 }
 .btn:not(.tiny):not(.small),
@@ -63,14 +64,16 @@ div.buttons a:not(.main)
 .btn.warning,
 div.buttons a.warning
 {
-  color:red;
+  background-color:red!important;
+  color:white!important;
+  padding:0.4em 1.1em 0.5em!important;
 }
 
 .btn.warning:hover,
 div.buttons a.warning:hover
 {
-  background-color:red;
-  color:white;
+  background-color:white!important;
+  color:red!important;
 }
 
 .btn:not(.noborder),

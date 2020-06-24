@@ -1,5 +1,18 @@
 # Modifications à faire dans la base de données
 
+* Dans `frigos_messages`, `frigo_discussions` (et `frigos` détruite)
+  ~~~SQL
+  ALTER TABLE frigo_messages ADD COLUMN user_id INT(11) NOT NULL AFTER auteur_ref;
+  ALTER TABLE frigo_messages DROP COLUMN auteur_ref;
+
+  ALTER TABLE `frigo_discussions` DROP COLUMN `user_mail`;
+  ALTER TABLE `frigo_discussions` DROP COLUMN `user_pseudo`;
+  ALTER TABLE `frigo_discussions` DROP COLUMN `cpassword`;
+  ALTER TABLE `frigo_discussions` DROP COLUMN `options`;
+
+  DROP TABLE frigos;
+  SQL
+
 * Il faut absolument prendre les données de `icare.absmodules` qui ont été affinées
 
 * Table `actualites`. Il ne faut prendre les données qu'à partir du 20 juin 2020 compris, et les transformer :

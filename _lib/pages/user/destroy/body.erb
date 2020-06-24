@@ -1,0 +1,25 @@
+<% extend StringHelpersMethods %>
+<p>
+<%= "#{user.pseudo}, v" unless user.guest? %>ous rejoignez cette page parce que vous avez l'intention de détruire votre profil. Nous sommes évidemment déçus de vous voir partir. Mais avant de procéder à cette opération, laissez-moi vous rappeler les implications de cette destruction :
+</p>
+<ul>
+  <li>vous ne recevrez plus aucune information de la part de l'atelier <span class="small">(si c'est la raison de cette destruction, notez que vous pouvez modifier vos <%= section_preferences('préférences') %> pour ne plus recevoir ces messages)</span>,</li>
+  <li>votre bureau à l’atelier sera définitivement détruit, vous ne pourrez plus le rejoindre,</li>
+  <li>vous ne pourrez plus consulter votre historique de travail ni revoir les documents que vous avez produits à l'atelier <span class="small">(pour les conserver, avant de détruire votre profil, vous pouvez les télécharger depuis le <%= quai_des_docs %>)</span>,</li>
+  <li>vous ne pourrez plus consulter les documents des autres icarien·ne·s sur le Quai des docs,</li>
+  <li>toutes les informations vous concernant seront <em>anonymisées</em>.</li>
+</ul>
+<p>Vous pouvez savoir comment seront traitées toutes vos données en consultant la <%= politique_confidentialite %> de l'atelier Icare.</p>
+<p>Pour confirmer votre destruction définitive et irréversible, merci de cliquer sur le bouton ci-dessous.</p>
+<div class="buttons">
+<%
+form = Form.new(id:'destroy-user-form', route:route.to_s, class:'nomargin')
+form.rows = {
+  'Votre mot de passe' => {name:'user_password', type:'password'},
+  'operation' => {name:'op', type:'hidden', value:'destroy-user'}
+}
+form.submit_button = "Destruire définitivement mon profil"
+form.submit_button_class = "btn warning"
+%>
+<%= form.out %>
+</div>

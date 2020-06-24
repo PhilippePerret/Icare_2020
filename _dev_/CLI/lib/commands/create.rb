@@ -22,7 +22,7 @@ MESSAGES = {
   ask_for_route: 'Nouvelle route à créer : (dossier/sousdossier)'.freeze,
   titre_route: 'Titre qu’affichera la page de cette route'.freeze,
   ask_if_body_erb: 'Faut-il une page body.erb pour construire la page ?'.freeze,
-  ask_if_fichiers_contants: 'Y a-t-il un fichier de constantes (pour les messages par exemple) ?'.freeze,
+  ask_if_fichier_constantes: 'Y a-t-il un fichier de constantes (pour les messages par exemple) ?'.freeze,
   ask_if_module_user: 'Y a-t-il besoin d’une extension User (user.rb) ?'.freeze,
   ask_if_form: 'Y aura-t-il besoin d’un formulaire ?'.freeze,
   ask_if_icarien_required: 'L’accès est-il réservé à un icarien ?'.freeze,
@@ -173,7 +173,7 @@ class << self
     end
     DATA_PAGE[:titre] = Q.ask(MESSAGES[:titre_route])
     [
-      :body_erb, :form, :module_user, :icarien_required, :admin_required, :fichiers_contants
+      :body_erb, :form, :module_user, :icarien_required, :admin_required, :fichier_constantes
     ].each do |key|
       DATA_PAGE[key] = Q.select(MESSAGES["ask_if_#{key}".to_sym]) do |q|
         q.choices [{name:'oui', value:true}, {name:'non', value:false}]
