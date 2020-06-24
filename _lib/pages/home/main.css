@@ -16,11 +16,9 @@ div#main-cadre {
   text-align:center;
   border-radius:1em;
   line-height:2.2em;
-  padding:2em;
 }
 
 div#main-cadre div#papillon {
-  float:left;
   font-size:40pt;
   margin-top:3pt;
   text-shadow:5px 5px 4px #777;
@@ -71,6 +69,11 @@ section#header a:hover {
   transition:0.2s;
 }
 
+/* ---------------------------------------------------------------------
+
+                            EN FONCTION DU MÉDIA
+
+--------------------------------------------------------------------- */
 @media only screen and (min-width: 768px) {
   /*
     --- Écran large ---
@@ -83,6 +86,19 @@ section#header a:hover {
   div#air-sous-bandeau {
     height:100px;
   }
+
+  section#body.home div#main-cadre {
+    width:400px;
+    padding:2em;
+    top:9%;
+    right:10%;
+    background:rgba(255, 255, 255, 0.1);
+  }
+
+  section#body.home div#main-cadre div#papillon {
+    float:left;
+  }
+
 }
 @media only screen and (max-width: 768px) {
   /*
@@ -90,6 +106,16 @@ section#header a:hover {
   */
   section#header {
     background: rgb(70, 130, 180,0.4);
+  }
+
+  section#body.home div#bandeau {
+    padding:0;
+  }
+  section#body.home div#main-cadre {
+    background:rgba(255, 255, 255, 0.6);
+    top:2em;
+    margin:auto 3%;
+    padding:1em;
   }
 
   div#air-sous-bandeau {
