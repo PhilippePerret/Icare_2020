@@ -289,7 +289,7 @@ Un visiteur non identifié répond positivement à `user.guest?`.
 | 18            | **Bit de redirection**<br />Détermine la section à rejoindre après l’identification. Cf. TODO |
 | 19            | **Bit de contact**<br />OBSOLÈTE. CF. bit 26                 |
 | 20            | **Bit d'entête**<br />1: l’entête du site doit être cachée (inusité dans la version actuelle) |
-| 21            | **Bit d’historique partagé**<br />Si 1, l’icarien partage avec les autres icariens son historique de travail. |
+| 21            | **Bit d’historique partagé**<br />0: avec personne, 1: avec les icariens,  8: avec le monde (1 par défaut) |
 | 22            | **Bit de notification de message**<br />Si 1, l’icarien est averti par mail lorsque quelqu’un lui laisse un message sur son frigo. |
 | 23            | **Bit de contact avec le monde**<br />OBSOLÈTE. Cf. bit 28   |
 | 24            | **Bit de « réalité »**. Il est à 1 si c’est un « vrai » icarien, c’est-à-dire si c’est un icarien qui a déjà effectué un paiement. |
