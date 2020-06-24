@@ -1,26 +1,26 @@
 # encoding: UTF-8
 =begin
-  Constantes String pratiques
+  Constantes String pratiques (et freezées)
 =end
+BR = '<br/>'.freeze
+
+EMPTY_STRING = ''.freeze
+ESPACE_FINE = "<this />".freeze
+
+ISPACE = '&nbsp;'.freeze
+
+PV = ';'.freeze # PV pour Point Virgule
 
 RC = '
 '.freeze
 RC2 = (RC*2).freeze
+RETOUR    = '<span style="vertical-align:sub;">↩︎</span>'.freeze
 
-BR = '<br/>'.freeze
+SELECT    = 'select'.freeze
+SELECTED  = ' SELECTED'.freeze
+SPACE = ' '
+
+TEXT      = 'text'.freeze
+TIRET     = '<span class="tiret">–</span>'
 
 VG = ', '.freeze # VG pour VirGule
-
-PV = ';'.freeze # PV pour Point Virgule
-
-SPACE = ' '
-ISPACE = '&nbsp;'
-EMPTY_STRING = ''.freeze
-
-SELECTED = ' SELECTED'.freeze
-
-TIRET = '<span class="tiret">–</span>'
-
-RETOUR = '<span style="vertical-align:sub;">↩︎</span>'.freeze
-
-ESPACE_FINE = "<this />".freeze
