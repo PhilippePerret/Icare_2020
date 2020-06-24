@@ -7,12 +7,14 @@ DATA_PREFERENCES.each do |kpref, dpref|
   key_expli = "expli_#{kpref}".to_sym
   data_field = {name:"prefs-#{kpref}", type:dpref[:type], explication:MESSAGES[key_expli] && (MESSAGES[key_expli] % {e:user.fem(:e)})}
   case dpref[:type]
-  when 'text'
+  when TEXT
     defvalue = user.send(kpref.to_sym)
     rows.merge!(dpref[:label] => data_field.merge(value: defvalue))
-  when 'select'
+  when SELECT
     defvalue = user.option(dpref[:bit])
-    rows.merge!(dpref[:label] => data_field.merge(values: dpref[:values], value:defvalue))
+    rows.merge!(
+      dpref[:label] => data_field.merge(values: dpref[:values], value:defvalue)
+    )
   end
 end
 form.rows = rows

@@ -2,6 +2,9 @@
 =begin
   Messages et textes pour les préférences
 =end
+# Pour réquérir les flags
+require './_lib/required/__first/constants/flags'
+
 MESSAGES.merge!({
   confirm_titre_projet_saved: 'Le titre de votre projet courant a été enregistré.'.freeze,
   confirm_options_saved: 'Vos nouvelles options ont été enregistrées.'.freeze,
@@ -20,3 +23,22 @@ MESSAGES.merge!({
 ERRORS.merge!({
   no_module_no_titre_projet: 'Vous n’avez pas de module courant, vous ne pouvez pas définir de titre.'.freeze
 })
+
+DATA_FREQ_MAIL = {
+  0 => {name: 'Mail quotidien (si actualité)'},
+  1 => {name: 'Résumé hebdomadaire'},
+  9 => {name: 'Jamais'}
+}
+
+DATA_CONTACTS = {
+  FLAG_MAIL|FLAG_FRIGO => {name:'par Mail et sur le frigo'},
+  FLAG_MAIL => {name:'par Mail seulement'},
+  FLAG_FRIGO => {name:'sur le frigo seulement'},
+  0 => {name:'Aucun contact'}
+}
+
+DATA_SHARINGS = {
+  FLAG_ICARIENS => {name:'avec les icariens'},
+  FLAG_WORLD    => {name:'avec tout le monde'},
+  0             => {name:'avec personne'}
+}

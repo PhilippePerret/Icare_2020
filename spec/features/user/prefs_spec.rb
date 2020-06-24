@@ -67,17 +67,24 @@ feature "Préférences" do
     # Les options actuelles
     options = marion.options
     after_login     = marion.option(18)
-    freqs_actua     = marion.option(4)
+    freqs_actus     = marion.option(4)
     contact_admin   = marion.option(26)
     contact_icarien = marion.option(27)
     contact_wold    = marion.option(28)
+    share_histo     = marion.option(21)
+
 
 
     # Vérifications préliminaire
     # --------------------------
     # Les menus doivent être bien réglés
     within('form#preferences-form') do
-      expect(page).to have_select('prefs-after_login', selected: Route::REDIRECTIONS[after_login][:hname])
+      expect(page).to have_select('prefs-after_login',      selected: Route::REDIRECTIONS[after_login][:hname])
+      expect(page).to have_select('prefs-freqs_actus',      selected: DATA_FREQ_MAIL[freqs_actus][:name])
+      expect(page).to have_select('prefs-contact_admin',    selected: DATA_CONTACTS[contact_admin][:name])
+      expect(page).to have_select('prefs-contact_icarien',  selected: DATA_CONTACTS[contact_icarien][:name])
+      expect(page).to have_select('prefs-contact_world',    selected: DATA_CONTACTS[contact_world][:name])
+      expect(page).to have_select('prefs-share_histo',      selected: DATA_SHARINGS[share_histo][:name])
     end
 
     # Procéder au test
