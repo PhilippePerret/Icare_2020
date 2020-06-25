@@ -1,5 +1,10 @@
 textarea {resize:none;}
-select:not(.select-day):not(.select-month):not(.select-year):not(.short) {width:100%;}
+/*
+  Pour avoir un select qui prend toute la place, utiliser plutôt la
+  class w100pct. Sinon, plein de formulaire dépasseront, même avec un
+  box-sizing réglé à border-box
+*/
+/* select:not(.select-day):not(.select-month):not(.select-year):not(.short) {width:100%;} */
 
 form {
   font-size:inherit;
