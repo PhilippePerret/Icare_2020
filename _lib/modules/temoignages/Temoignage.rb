@@ -30,7 +30,6 @@ class << self
     require_module('mail')
     dtem = {
       user_id: user.id,
-      user_pseudo: user.pseudo,
       absmodule_id: user.actif? ? user.absmodule.id : nil,
       content: param(:temoignage_content)&.strip.nil_if_empty,
       confirmed: false
@@ -87,5 +86,9 @@ def validate
   set(confirmed: true)
   message "Le témoignage ##{id} a été validé. <a href='overview/temoignages' class='small'>Voir les témoignages</a>.".freeze
 end #/ validate
+
+def user_pseudo
+  @user_pseudo ||= db_get('users', {id: user_id}, ['pseudo'])[:pseudo]
+end #/ user_pseudo
 
 end #/Temoignage < ContainerClass

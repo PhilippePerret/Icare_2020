@@ -185,7 +185,7 @@ class Form
       else
         #
         <<-HTML
-<div class="row"#{row_style}>
+<div class="row"#{row_style(dfield)}>
   <span class="libelle"#{libelle_style}>#{label}</span>
   <span class="value#{" file" if dfield[:type] == 'file'}">
     #{value_field_for(dfield)}
@@ -205,9 +205,11 @@ class Form
   # Maintenant que le div.row est un display:grid, on peut définir la largeur
   # des libellés et des champs value par libelle_size et value_size, mais ils
   # affecteront la propriété :grid-template-columns du row
-  def row_style
+  def row_style(dfield)
     sty = []
-    if libelle_size || value_size
+    if dfield[:nogrid]
+      sty << 'grid-template-columns:auto;'
+    elsif libelle_size || value_size
       sty << "grid-template-columns:#{libelle_size||'auto'} #{value_size||'auto'};"
     end
     sty.empty? ? EMPTY_STRING : " style=\"#{sty.join('')}\""
@@ -253,7 +255,7 @@ class Form
 
     case dfield[:type].to_s
     when 'raw'.freeze
-      dfield.merge!(content: dfield[:content]||dfield[:value]||[dfield[:name]])
+      dfield.merge!(content: dfield[:content]||dfield[:value]||dfield[:name])
     when 'checkbox'.freeze
       dfield.merge!(checked: param(dfield[:name].to_sym) ? ' CHECKED' : '')
     when 'textarea'.freeze

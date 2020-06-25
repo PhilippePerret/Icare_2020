@@ -8,7 +8,7 @@ require_module('user/modules')
 class QddDoc
 
 LINK_DOWNLOAD_PDF = '<a href="%s" target="_blank" class="fleft"><img src="img/icones/pdf%s.jpg" class="vmiddle mr1" /></a>'.freeze
-DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'
+DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'.freeze
 
 # ---------------------------------------------------------------------
 #   INSTANCES

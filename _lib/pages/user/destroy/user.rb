@@ -4,31 +4,35 @@ class User
   # Méthode principale de destruction du l'utilisateur courant
   def destroy
     # On anonymise ses éléments (user#9)
-    # Dans les actualités
-    # TODO
-    # Dans les icdocuments
-    # TODO
-    # Dans les icetapes
-    # TODO
-    # Dans les icmodules
-    # TODO
-    # Dans les lectures du Quai des docs (lectures_qdd)
-    # TODO
-    # Dans la minifaq
-    # TODO
-    # Dans les témoignages
-    # TODO
-    # Dans les discussions de frigo (user_id et owner_id dans
-    # `frigos_messages` et `frigos_discussions`)
-    # TODO
+    tmp_request = "UPDATE `%{table}` SET user_id = 9 WHERE user_id = #{id}".freeze
+
+    [
+      'actualites', 'icdocuments', 'icetapes', 'icmodules',
+      'frigo_discussions', 'frigo_messages',
+      'lectures_qdd', 'minifaq', 'temoignages'
+    ].each do |table|
+      db_exec(tmp_request % {table: table})
+    end
+
+    # Destruction dans les discussions de frigo
+    request_owner = "UPDATE `frigo_discussions` SET user_id = 9 WHERE owner_id = #{id}".freeze
+    db_exec(request_owner)
 
     # On détruit les éventuels tickets en cours
-    # TODO
-    # On détruit ses éventuels watchers courants
-    # TODO
-    # On le détruit dans la base de données
-    # TODO
+    request_delete = "DELETE FROM %{table} WHERE user_id = #{id}".freeze
+    [
+      'tickets', 'watchers'
+    ].each do |table|
+      db_exec(request_delete % {table: table})
+    end
+
+    # Et enfin dans la table users, on le détruit
+    db_exec("DELETE FROM `users` WHERE id = #{id}".freeze)
+
+    # On le déconnecte complètement
     deconnexion
+
+    return true
   end #/ destroy
 
   # On ne laisse aucune trace dans la déconnextion de l'user

@@ -13,6 +13,7 @@ module SpecModuleFormulaire
   def fill_formulaire_with(form_id, data)
     within(form_id) do
       data.each do |prop, val|
+        next if val[:editable] === false
         name = "u#{prop}"
         value = val[:value]
         case val[:type]

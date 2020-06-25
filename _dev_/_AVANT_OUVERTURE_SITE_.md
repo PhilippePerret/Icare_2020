@@ -1,5 +1,19 @@
 # Modifications à faire dans la base de données
 
+* Dans `users`
+
+  ~~~SQL
+  ALTER TABLE `users` DROP COLUMN `adresse`;
+  ALTER TABLE `users` DROP COLUMN `telephone`;
+  ALTER TABLE `users` MODIFY COLUMN `naissance` SMALLINT(4) DEFAULT NULL;
+  ~~~
+
+* Dans `temoignages`
+  ~~~SQL
+  ALTER TABLE `temoignages` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) DEFAULT NULL;
+  ALTER TABLE `temoignages` DROP COLUMN `user_pseudo`;
+  SQL
+
 * Dans `frigos_messages`, `frigo_discussions` (et `frigos` détruite)
   ~~~SQL
   ALTER TABLE frigo_messages ADD COLUMN user_id INT(11) NOT NULL AFTER auteur_ref;
@@ -68,7 +82,12 @@
   ALTER TABLE tickets MODIFY COLUMN `id` INTEGER(11) AUTO_INCREMENT;
   ~~~
 
-* Voir les colonnes qui ont été supprimées
+* Table `updates`
+
+  ~~~SQL
+  DROP TABLE `updates`;
+  ~~~
+
 
 * Modificaitons de la table `icetapes`
 
@@ -77,6 +96,7 @@
   ALTER TABLE `icetapes` ADD COLUMN `created_at` INT(10) NOT NULL;
   -- Supprimer colonne 'documents'
   ALTER TABLE icetapes DROP COLUMN `documents`;
+  ALTER TABLE icetapes DROP COLUMN `numero`;
   ~~~
 
 * Table `mini_faq`
@@ -89,14 +109,32 @@
   * Destruction de la colonne `options`
   * Les colonnes `user_id`, `absmodule_id` et `absetape_id` peuvent être nulles.
 
-* Changer les colonnes `abs_module_id` et `abs_etape_id` des tables `icmodules`, `mini_faq`
+  ~~~SQL
+  ALTER TABLE `mini_faq` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
+  ALTER TABLE `mini_faq` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) NOT NULL;
+  ~~~
+
+* Table `page_comments`
+
+  ~~~SQL
+  DROP TABLE `page_comments`;
+  ~~~
+
+* Table `icmodules`
 
   ~~~SQL
   ALTER TABLE `icmodules` DROP COLUMN `paiements`;
   ALTER TABLE `icmodules` CHANGE COLUMN `next_paiement` `next_paiement_at` INT(10) DEFAULT NULL;
   ALTER TABLE `icmodules` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
-  ALTER TABLE `mini_faq` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
-  ALTER TABLE `mini_faq` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) NOT NULL;
+  ALTER TABLE `icmodules` DROP COLUMN `icetapes`;
+  ~~~
+
+* Table `lectures_qdd`
+
+  ~~~SQL
+  ALTER TABLE `lectures_qdd` ADD COLUMN `cote_comments` TINYINT(1) DEFAULT NULL AFTER `cotes`;
+  ALTER TABLE `lectures_qdd` ADD COLUMN `cote_original` TINYINT(1) DEFAULT NULL AFTER `cotes`;
+  ALTER TABLE `lectures_qdd` DROP COLUMN `cotes`;
   ~~~
 
 * Ajouter les colonnes `vu_admin` et `vu_user` dans les tables :

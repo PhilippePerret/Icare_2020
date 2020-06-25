@@ -22,5 +22,6 @@ feature "Destruction d'un icarien" do
     expect(page).to have_button('Détruire le profil')
     click_on 'Détruire le profil'
     expect(page).to have_selector('h2', text:'Destruction du profil')
+    # TODO CONTINUER DE TESTER JUSQU'À LA FIN
   end
 end

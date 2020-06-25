@@ -28,7 +28,6 @@ class IcEtape < ContainerClass
         icmodule_id:  icmodule.id,
         absetape_id:  absetape.id,
         user_id:      icmodule.owner.id,
-        numero:       absetape.numero,
         started_at:   now,
         expected_end: now + (absetape.duree).days,
         status: 1
@@ -70,9 +69,8 @@ def documents
 end #/ documents
 
 # Raccourcis (d'absetape)
-def titre
-  @titre ||= absetape.titre
-end #/ titre
+def titre   ; @titre  ||= absetape.titre    end
+def numero  ; @numero ||= absetape.numero   end
 
 def absetape
   @absetape ||= AbsEtape.get(data[:absetape_id])

@@ -155,7 +155,7 @@ DATA_SPEC_SIGNUP_VALID = [
     password_conf:  {value:'motdepasse'},
     presentation:   {value:'presentation.md', type:'file'},
     motivation:     {value:'motivation.md',   type:'file'},
-    options:        {value:"0"*32},
+    options:        {value:"0"*32, editable:false},
     cgu:            {value:true, type:'checkbox'},
     rgpd:           {value:true, type:'checkbox'},
     module_3:       {value:true, type:'checkbox'}
