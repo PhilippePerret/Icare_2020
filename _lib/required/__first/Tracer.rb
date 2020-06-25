@@ -40,7 +40,7 @@ class << self
   #   :data     Les données supplémentaires.
   def add(params)
     params[:data] ||= {}
-    ip = ip: ENV['X-Real-IP'] || ENV['REMOTE_ADDR']
+    ip = ENV['X-Real-IP'] || ENV['REMOTE_ADDR']
     file.write "#{Time.now.to_i}#{DEL}#{ip}::#{params[:id]}::#{params[:message]}::#{params[:data].to_json}#{RC}"
   end #/ add
 
