@@ -48,6 +48,8 @@ div.only-message {
   padding:4em;
   font-size:1.2em;
   text-align:center;
+  max-width:var(--text-max-width);
+  box-sizing:border-box;
 }
 
 /*

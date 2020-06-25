@@ -5,9 +5,12 @@ class << self
   # Charge la page de chemin relatif +relpath+ (dans lib/pages)
   def load(relpath)
     relpath = relpath.route if relpath.instance_of?(Route)
-    debug "-> Page::load(#{relpath.inspect})"
     page = self.new(relpath)
-    page.load() if page.exists?
+    unless page.exists?
+      param(:r, CGI.escape(relpath))
+      page = self.new("errors/404".freeze)
+    end
+    page.load()
   end
 end #/<< self
 

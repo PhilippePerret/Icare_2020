@@ -80,7 +80,8 @@ class HTML
     HTML
   end
 
-  # Normalement, toutes les pages doivent définir leur méthode `build_body`
+  # Toutes les pages doivent définir leur méthode `build_body` qui produira
+  # la propriété @body (html@body).
   # Donc, si on arrive ici, c'est que la méthode n'a pas été définie et il faut
   # le signaler
   def build_body
