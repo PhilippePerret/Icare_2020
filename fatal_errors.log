@@ -53,4 +53,15 @@ end #/Tracer
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:16:in `<top (required)>'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'2020-06-25 09:36:37 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/Tracer.rb:43: syntax error, unexpected ':', expecting end
+    ip = ip: ENV['X-Real-IP'] || ENV['REM...
+           ^
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:16:in `block in <top (required)>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:16:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:16:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'
