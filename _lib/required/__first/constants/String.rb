@@ -12,7 +12,7 @@ ISPACE = '&nbsp;'.freeze
 PV = ';'.freeze # PV pour Point Virgule
 
 RC = '
-'.freeze
+'.freeze unless defined?(RC)
 RC2 = (RC*2).freeze
 RETOUR    = '<span style="vertical-align:sub;">↩︎</span>'.freeze
 

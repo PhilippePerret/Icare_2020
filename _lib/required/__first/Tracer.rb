@@ -21,8 +21,10 @@
 =end
 require 'json'
 
+unless defined?(RC)
 RC = '
-' unless defined?(RC)
+'
+end
 
 def trace(data)
   Tracer.add(data)
