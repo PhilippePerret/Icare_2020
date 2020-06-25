@@ -23,7 +23,8 @@ def send_error msg, data = nil
   end
 
   # On trace cette erreur
-  trace(message:msg, backtrace:backtrace, data:data) rescue nil
+  data ||= {}
+  trace(id:'ERROR'.freeze, message:msg, data:data.merge(backtrace:backtrace)) rescue nil
 
   msg = "<div style='color:red;font-size:1.1em;'>ERREUR : #{msg}</div>"
   msg << "<div style='color:red;'>#{backtrace.join(BR)}</div>".freeze

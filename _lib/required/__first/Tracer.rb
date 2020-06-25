@@ -33,10 +33,15 @@ class Tracer
 DEL = '-:-:-:-'
 class << self
   # Pour ajouter des données tracées
-  def add(data)
-    data = {message: data} if data.is_a?(String)
-    data.merge!(ip: ENV['X-Real-IP'] || ENV['REMOTE_ADDR'])
-    file.write "#{Time.now.to_i}#{DEL}#{data.to_json}#{RC}"
+  # +param+
+  #   :id       ID de traceur (p.e. 'REDIRECTION')
+  #   :message  Le message, qui peut être un argument pour l'id (pe la route
+  #             de redirection)
+  #   :data     Les données supplémentaires.
+  def add(params)
+    params[:data] ||= {}
+    ip = ip: ENV['X-Real-IP'] || ENV['REMOTE_ADDR']
+    file.write "#{Time.now.to_i}#{DEL}#{ip}::#{params[:id]}::#{params[:message]}::#{params[:data].to_json}#{RC}"
   end #/ add
 
   # Pour lire le tracer depuis cette date

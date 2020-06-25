@@ -64,6 +64,26 @@ Contient tous les modules propres qui permettent la gestion ponctuelle d'éléme
 
 ---
 
+## Débuggage
+
+### Le Traceur
+
+Le traceur permet de suivre en direct ce qui se passe sur le site dans les grandes lignes (connexion, redirection, erreurs, etc.).
+
+#### Placement d'un traceur
+
+On place un traceur dans le code à l'aide de :
+
+~~~ruby
+trace(id: '<identifiant>', message:'<message>', data: {données})
+~~~
+
+#### Lancement du suivi du traceur
+
+Ce lancement est encore à définir, mais ce sera un démon qui appelera régulièrement le fichier `./temp/logs/traceur.log`.
+
+---
+
 
 
 ## Création d’une nouvelle route/page
