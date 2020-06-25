@@ -89,6 +89,12 @@ RSpec.configure do |config|
     Dir['./spec/support/Gel/**/*.rb'].each{|m|require m}
   end #/ require_gel
 
+
+  def screenshot(affixe)
+    @screenshot_index ||= 0
+    save_screenshot("#{@screenshot_index += 1}-#{affixe}.png")
+  end #/ screenshot
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
