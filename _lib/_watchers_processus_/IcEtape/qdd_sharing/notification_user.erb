@@ -1,9 +1,7 @@
 
 <%
-SHARING_VALUES = [
-  [1, "Partager ce document"],
-  [2, "Non, ne pas le partager…"]
-]
+SHARING_VALUES = DATA_SHARING.collect{|k,d|[k, d[:name]]}
+
 rows = {}
 icetape.documents.each do |document|
   rows.merge!("Partage de “#{document.name}”" => {type:'titre'})
