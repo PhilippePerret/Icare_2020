@@ -2,14 +2,17 @@ button.btn-choose {
   display: inline-block;
 }
 
-span.doc-name {
+/* span.doc-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align:text-bottom;
-}
+} */
 
-span.doc-name,
+span.doc-name-span span.file-name {
+  width: 250px;
+}
+/* span.doc-name, */
 button.btn-choose
 {
   display: inline-block;

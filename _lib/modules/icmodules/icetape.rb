@@ -1,4 +1,4 @@
-class IcEtape < ContainerClass
+class IcEtape
   class << self
     def table
       @table ||= 'icetapes'
@@ -57,6 +57,7 @@ class IcEtape < ContainerClass
 # ---------------------------------------------------------------------
 
 def ref
+  log("---data:#{data.inspect}")
   @ref ||= "étape “#{numero}. #{titre}”#{f_id}</span> du #{icmodule.ref}".freeze
 end #/ ref
 

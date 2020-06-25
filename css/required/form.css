@@ -32,7 +32,7 @@ form:not(.inline){
   padding-top:2em;
   padding-bottom:2em;
 }
-form div.row {
+form div.row:not(.nogrid) {
   display:grid;
   grid-template-columns: 200px auto;
   grid-template-rows: auto;
@@ -42,11 +42,11 @@ form div.row {
 form.inline div.buttons,
 form.inline div.row {display: inline}
 
-form div.row span.libelle {
+form div.row:not(.nogrid) span.libelle {
   grid-columns:1;
   grid-row:1;
 }
-form div.row span.value {
+form div.row:not(.nogrid) span.value {
   grid-columns:2;
   grid-row:1
 }

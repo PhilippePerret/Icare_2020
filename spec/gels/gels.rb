@@ -31,7 +31,7 @@ def validation_mail
     candidat = db_get('users', {mail: user_mail})
     dticket = db_get('tickets', {user_id: candidat[:id]})
     visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
-    login(mail: user_mail, password:data[:password][:value])
+    login_in_form(mail: user_mail, password:data[:password][:value])
     save_screenshot('validation_mail.png')
     logout # pour laisser la place à l'administrateur
   end

@@ -5,9 +5,9 @@
 class HTML
 
 SELECT_NOTE = <<-HTML
-<select class="" name="note-document%{idoc}" id="note-document%{idoc}">
+<select class="short small" name="note-document%{idoc}" id="note-document%{idoc}">
   <option value="">---</option>
-  #{(1..20).to_a.reverse.collect{|i|"<option value=\"#{i}\">#{i}</option>"}.join}
+  #{(1..20).to_a.reverse.collect{|i|"<option value=\"#{i}\">#{i}/20</option>"}.join}
 </select>
 HTML
 
@@ -15,7 +15,7 @@ HTML
   # Méthode pour construire et retourner une rangée d'envoi d'un document
   def row_document(idoc)
     <<-HTML
-<div class="row mt1">
+<div class="row mt1 nogrid">
   <span class="value file-field" data-name="#{idoc}">
     <button id="buttondocument#{idoc}" type="button" class="file-choose">Choisir le document #{idoc}…</button>
     <span class="doc-name-span hidden">
@@ -24,7 +24,7 @@ HTML
     </span>
     <input type="file" name="document#{idoc}" id="document-#{idoc}" />
     <span class="hidden span-note">
-      <span class="libelle inline">Note estimative : </span>
+      <span class="libelle inline">Estimation </span>
       #{SELECT_NOTE % {idoc: idoc}}
       #{Tag.info_bulle('C’est la note que vous donneriez vous-même à votre document') if idoc == 1} 
     </span>

@@ -12,7 +12,7 @@ a.current {
 }
 
 .hidden {display:none!important}
-.inline {display:inline}
+.inline {display:inline!important}
 .inline-block{display:inline-block}
 
 .invisible {visibility:hidden}

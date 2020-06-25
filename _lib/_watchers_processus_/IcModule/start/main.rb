@@ -19,8 +19,11 @@ class Watcher < ContainerClass
     watcher_id = owner.watchers.add('paiement_module', dwatcher)
 
     # Création de la première étape (avec watcher de dépôt de travail)
-    icetape_id = IcEtape.create_for(objet, numero: 1)
-    modul_data.merge!(icetape_id: icetape_id)
+    icetape = IcEtape.create_for(objet, numero: 1)
+    unless icetape.is_a?(IcEtape) && icetape.id > 0
+      raise "Impossible de créer une IcEtape valide, désolé…".freeze
+    end
+    modul_data.merge!(icetape_id: icetape.id)
 
     # On peut définir les nouvelles données de l'icmodule
     icmodule.set(modul_data)
