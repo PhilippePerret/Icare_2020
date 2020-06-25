@@ -152,7 +152,7 @@ def depot_qdd
     path_doc1_original = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.pdf')
     path_doc1_comments = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail_comsPhil.pdf')
     path_doc2_original = File.join(SPEC_FOLDER_DOCUMENTS, 'autre_doc.pdf')
-    within("form#qdd-depot-form-etape-#{get_icetape_user(1)[:id]}") do
+    within("form#qdd-depot-form-etape-1") do
       attach_file("document-1-original", path_doc1_original)
       attach_file("document-1-comments", path_doc1_comments)
       attach_file("document-2-original", path_doc2_original)
@@ -165,17 +165,18 @@ end #/ depot_qdd
 
 def define_sharing
   degel_or_gel('define_sharing') do
+    require './_lib/_watchers_processus_/IcEtape/qdd_sharing/constants.rb'
     depot_qdd
     goto_login_form
     login_icarien(1)
     goto('bureau/notifications')
-    whithin("sharing-form-etape-1") do
-      choose("1", from: "partage-1-original")
-      choose("2", from: "partage-1-comments")
-      choose("2", from: "partage-2-original")
+    within("form#sharing-form-etape-1") do
+      select(DATA_SHARING[1][:name], from: "partage-1-original")
+      select(DATA_SHARING[2][:name], from: "partage-1-comments")
+      select(DATA_SHARING[2][:name], from: "partage-2-original")
       click_on('Appliquer ce partage'.freeze)
     end
-    save_screenshot('define-sharing.png')
+    save_screenshot('marion-define-sharing-etape-1.png')
     logout
   end
 end #/ define_sharing
