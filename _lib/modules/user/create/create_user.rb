@@ -14,7 +14,6 @@ class << self
   def create_new(chuser)
     now  = Time.now.to_i
     salt = now.to_s
-    options = "0"*32
     newdata = {
       pseudo:       chuser.pseudo,
       patronyme:    chuser.patronyme,
@@ -23,22 +22,17 @@ class << self
       mail:         chuser.mail,
       salt:         salt,
       cpassword:    Digest::MD5.hexdigest("#{chuser.password}#{chuser.mail}#{salt}"),
-      options:      options,
+      options:      options_new_icarien,
       session_id:   session.id,
       created_at:   now,
       updated_at:   now
     }
-    valeurs = newdata.values
-    columns = newdata.keys.join(VG)
-    interro = Array.new(valeurs.count, '?').join(VG)
-    request = "INSERT INTO users (#{columns}) VALUES (#{interro})"
-    db_exec(request, valeurs)
+    db_compose_insert('users', newdata)
     if MyDB.error
       log("MyDB.error: #{MyDB.error.inspect}")
       raise "Une erreur SQL est malheureusement survenue…"
     end
     newid = db_last_id
-    log("last id : #{newid.inspect}")
     newu = User.get(newid)
 
     # === WATCHERS ===
@@ -66,6 +60,19 @@ class << self
     erreur e.message
     return nil
   end
+
+  # Retourne les options pour un nouvel icarien. On détaille ici les
+  # choix, pour référence.
+  def options_new_icarien
+    o = "0"*32
+    o[4]  = '1' # Mail quotidien
+    o[18] = '0' # Après l'identification, l'icarien rejoint son bureau
+    o[22] = '1' # l'icarien est averti par mail en cas de message frigo
+    o[26] = '1' # Contact par mail avec l'administration
+    o[27] = '1' # Contact par mail avec les autres icariens
+    o[28] = '0' # Aucun contact avec le reste du monde
+    return o
+  end #/ options_new_icarien
 end # /<< self
 # ---------------------------------------------------------------------
 #

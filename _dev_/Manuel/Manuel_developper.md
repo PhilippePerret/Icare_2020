@@ -339,6 +339,25 @@ Un visiteur non identifié répond positivement à `user.guest?`.
 
 
 
+#### Redirection après login de l'icarien
+
+Note : c’est le bit 18 des options ci-dessus.
+
+| Valeur | Redirection                                                  |
+| ------ | ------------------------------------------------------------ |
+| 0      | Vers le bureau de travail (table de bord pour l'administrateur) |
+| 1      | Accueil du site (vraiment la toute première page)            |
+| 2      | Page de profil de l'icarien                                  |
+| 3      | Dernière page consultée                                      |
+| 4      | Section des notifications du bureau                          |
+| 5      | Section du travail en cours                                  |
+|        |                                                              |
+| 7      | Tableau de bord pour l’administrateur seulement              |
+| 8      | Console d'administration                                     |
+| 9      | Panneau des notifications                                    |
+
+
+
 ### Envoi d'un mail à un icarien
 
 ~~~ruby
