@@ -46,7 +46,8 @@ div.warning, p.warning, span.warning {
 .small:not(.very){font-size:0.75em!important}
 .very.small {font-size:0.65em!important}
 
-.big {font-size:2.5em;}
+.big {font-size:1.4em;}
+.very.big {font-size:1.8em;}
 
 .center,
 .right
@@ -68,6 +69,11 @@ div.warning, p.warning, span.warning {
 .mt2 {margin-top:2em!important;}
 .mt3 {margin-top:3em!important;}
 .mt4 {margin-top:4em!important;}
+
+.ml1 {margin-left:1em!important;}
+.ml2 {margin-left:2em!important;}
+.ml3 {margin-left:3em!important;}
+.ml4 {margin-left:4em!important;}
 
 .mr1 {margin-right:8px}
 .mr2 {margin-right:16px}

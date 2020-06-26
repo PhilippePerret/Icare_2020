@@ -38,6 +38,10 @@ def collection_narration(titre = nil)
   Tag.lien(text:titre||'Collection Narration', route:'http://www.scenariopole.fr/narration', target:true)
 end #/ collection_narration
 
+def scenariopole(titre = nil)
+  Tag.lien(text:titre||'Scénariopole', route:'http://www.scenariopole.fr')
+end #/ scenariopole
+
 def quai_des_docs(titre = nil)
   @quai_des_docs ||= Tag.lien(route:'qdd/home', text:titre||'Quai des docs').freeze
 end #/ Quai_des_docs
@@ -67,6 +71,13 @@ def le_bot
   @le_bot ||= '🤖 Le Bot de l’atelier Icare'.freeze
 end #/ Le_bot
 
+def srps(titre=nil)
+  Tag.lien(text:titre||'Savoir rédiger et présenter son scénario', route:'http://encresdesiagne.fr/index.php?id_product=32&id_product_attribute=0&rewrite=savoir-rediger-et-presenter-son-scenario&controller=product', class:'livre')
+end #/ srps
+
+def contact(titre=nil)
+  Tag.lien(text:titre||'formulaire de contact', route:'contact')
+end #/ contact
 
 # ---------------------------------------------------------------------
 #

@@ -27,7 +27,7 @@ class HTML
 
 #{aGoto('<a href="user/profil">'+user.visage+' Profil</a>'.freeze) unless user.guest?}
 
-#{aGoto('<a href="overview/home">🌎 Aperçu</a>'.freeze)}
+#{aGoto('<a href="overview/home">🌎 L’ATELIER</a>'.freeze)}
 
 #{aGoto('<a href="overview/reussites">👍 Belles réussites</a>'.freeze)}
 
