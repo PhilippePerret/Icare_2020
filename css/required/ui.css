@@ -146,6 +146,7 @@ section#header div.notification-tool {
 
 section#body {
   min-height:280px;
+  margin-bottom:15em;
 }
 section#body:not(.home) {
   margin-top:2em;
