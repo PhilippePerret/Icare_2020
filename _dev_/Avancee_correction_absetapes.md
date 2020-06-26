@@ -7,7 +7,7 @@
 - [x] Module Structure
 
 - [ ] Module Suivi de projet (rythme normal)
-      N°240 -- non traitée
+      N° 390 -- non traitée
 
 - [ ] Module Suivi de projet (rythme intensif)
 - [ ] Thèmes

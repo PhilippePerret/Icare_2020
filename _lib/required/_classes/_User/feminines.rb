@@ -7,6 +7,7 @@ class User
     la:     ['la',    'le'],
     ne:     ['ne',    'n'],
     te:     ['te',    't'],
+    x:      ['se',    'x'],
   }
   def fem(key)
     FEMININES[key][femme? ? 0 : 1]
