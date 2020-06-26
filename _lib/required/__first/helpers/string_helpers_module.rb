@@ -70,6 +70,10 @@ def section_modules(titre = nil)
   Tag.lien(text:titre||'section “Modules d’apprentissage”'.freeze, route:'modules/home')
 end #/ section_modules
 
+def salle_des_icariens(titre = nil)
+  Tag.lien(text:titre||'salle des Icarien·ne·s', route:'overview/icariens')
+end #/ salle_des_icariens
+
 # ---------------------------------------------------------------------
 #
 #   LIEUX HORS ATELIER

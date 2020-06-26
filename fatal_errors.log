@@ -64,4 +64,11 @@ end #/Tracer
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:16:in `<top (required)>'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
-    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'2020-06-26 10:44:34 +0200 --- FATAL ERROR:
+    Le message de votre discussion est requis.
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:24:in `start_discussion_with_phil'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

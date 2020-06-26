@@ -1,3 +1,19 @@
-<div class="only-message">
-  Bientôt, ici, votre porte de frigo<br>et ses messages
-</div>
+<p class="explication">Cette page présente votre <em>porte de frigo</em> qui vous permet d’entretenir des conversations avec les autres icariens.</p>
+<% if user.has_discussions? %>
+  <p>[ICI VOS DISCUSSIONS]</p>
+<% else %>
+  <p>Vous n’avez pas de discussions en cours. Pour commencer une discussion, contactez une icarienne ou un icarien depuis la <%= salle_des_icariens %>.</p>
+<% end %>
+<% if user.admin? %>
+  <p>En tant qu’administrateur, vous pouvez lancer un appel à discussion à tous les icariens et icariennes [à implémenter].</p>
+<% else %>
+  <p>Lancer une discussion avec Phil :</p>
+  <%
+    formphil = Form.new(id:'discussion-phil-form', route:route.to_s, class:'noborder nomargin', libelle_size:0, value_size:600)
+    formphil.rows = {
+      'Message' => {name:'discussion_message', type:'textarea', height:200}
+    }
+    formphil.submit_button = "Lancer la discussion avec Phil"
+  %>
+  <%= formphil.out %>
+<% end %>

@@ -19,13 +19,25 @@
 
 * Dans `frigos_messages`, `frigo_discussions` (et `frigos` détruite)
   ~~~SQL
-  ALTER TABLE frigo_messages ADD COLUMN user_id INT(11) NOT NULL AFTER auteur_ref;
-  ALTER TABLE frigo_messages DROP COLUMN auteur_ref;
+  ALTER TABLE frigo_messages ADD COLUMN `user_id` INT(11) NOT NULL AFTER auteur_ref;
+  ALTER TABLE frigo_messages DROP COLUMN `auteur_ref`;
 
   ALTER TABLE `frigo_discussions` DROP COLUMN `user_mail`;
   ALTER TABLE `frigo_discussions` DROP COLUMN `user_pseudo`;
   ALTER TABLE `frigo_discussions` DROP COLUMN `cpassword`;
   ALTER TABLE `frigo_discussions` DROP COLUMN `options`;
+  ALTER TABLE `frigo_discussions` DROP COLUMN `owner_id`;
+
+  ALTER TABLE `frigo_discussions` ADD COLUMN `last_message_id` INT(11) DEFAULT NULL AFTER `user_id`;
+
+  CREATE TABLE `frigo_users` (
+    id INT(11) AUTO_INCREMENT,
+    discussion_id INT(11) NOT NULL,
+    user_id INT(11) NOT NULL,
+    last_message_id INT(11) DEFAULT NULL,
+    created_at INT(10) NOT NULL,
+    updated_at INT(10) NOT NULL
+  );
 
   DROP TABLE frigos;
   SQL
