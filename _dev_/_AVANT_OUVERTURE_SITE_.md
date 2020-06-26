@@ -1,3 +1,4 @@
+
 # Modifications à faire dans la base de données
 
 * Une fois que toutes les tables sont prêtes, lancer le script `scripts/new_site/user_anonyme.rb` pour faire de l'utilisateur `#9` un utilisateur anonyme. Note : le script a été vérifié, donc il devrait marcher sans problème.
