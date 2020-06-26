@@ -35,8 +35,8 @@ class Watcher < ContainerClass
     Tag.lien(route:"#{route.to_s}?op=unrun&wid=#{id}", titre: titre, id:"unrun-button-#{objet_class}-#{processus}")
   end #/ button_unrun
 
-  def votre_bureau
-    Tag.lien(route: "bureau/home", text:'votre bureau', full:true)
+  def votre_bureau(titre = nil)
+    Tag.lien(route: "bureau/home", text:titre||'votre bureau', full:true)
   end #/ votre_bureau
 
   def faq_de_latelier

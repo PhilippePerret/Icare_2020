@@ -123,7 +123,7 @@ feature 'Inscription à l’atelier Icare' do
 
   end #/test d'un bon candidat
 
-  scenario 'des données valides permettent de créer une candidate' do
+  scenario 'des données valides permettent de créer une candidate', only:true do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire

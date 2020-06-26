@@ -1,4 +1,5 @@
 <%
+extend StringHelpersMethods
 def femme?
   @is_femme = param(:usexe) == 'F'
 end #/ femme?
@@ -6,7 +7,8 @@ end #/ femme?
 <p>Bravo <%= param(:upseudo) %> !</p>
 <p>Votre candidature vient d’être enregistrée.</p>
 <p>N’oubliez pas de <strong>confirmer votre mail</strong> à l'aide du message qui vous a été envoyé à l’adresse <%= param(:umail) %>.</p>
-<p>En attendant la réponse que vous devriez recevoir très prochainement, vous pouvez visiter la <%= Tag.route(:aide, 'section Aide') %> du site afin de vous familiariser avec le fonctionnement de l'atelier.</p>
+<p>En attendant la réponse que vous devriez recevoir très prochainement, vous pouvez visiter <%= bureau('votre bureau') %> pour régler par exemple <%= section_preferences('vos préférences générales') %>.</p>
+<p>Vous pouvez aussi visiter la <%= section_aide %> afin de vous familiariser avec le fonctionnement de l'atelier.</p>
 <p>Vous pouvez également <%= Tag.route(:parcours_fictifs, 'suivre le parcours fictifs de 3 icarien·ne·s') %> pour voir très concrètement comment les choses se passent avec <%= Tag.route(:phil, 'Philippe Perret, alias « Phil »') %>, le romancier-scénariste pédagogue de l’atelier.</p>
 <p>En espérant vous compter très bientôt parmi les icarien<%= 'ne' if femme? %>s de l’atelier.</p>
 <p>Merci de votre marque de confiance.</p>

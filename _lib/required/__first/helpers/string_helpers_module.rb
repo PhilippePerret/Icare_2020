@@ -36,14 +36,15 @@ end #/ travail_type
   Helpers pour rédiger les mails et les notifications
 =end
 
-# Pour placer un lien absolu vers la collection Narration
-def collection_narration(titre = nil)
-  Tag.lien(text:titre||'Collection Narration', route:'http://www.scenariopole.fr/narration', target:true)
-end #/ collection_narration
+# ---------------------------------------------------------------------
+#
+#   SECTIONS DU SITE
+#
+# ---------------------------------------------------------------------
 
-def scenariopole(titre = nil)
-  Tag.lien(text:titre||'Scénariopole', route:'http://www.scenariopole.fr')
-end #/ scenariopole
+def bureau(titre = nil)
+  Tag.lien(route: "bureau/home", text:titre||'bureau de travail')
+end #/ votre_bureau
 
 def quai_des_docs(titre = nil)
   @quai_des_docs ||= Tag.lien(route:'qdd/home', text:titre||'Quai des docs').freeze
@@ -53,13 +54,13 @@ def hall_of_fame(titre = nil)
   @hall_of_fame ||= Tag.lien(route:'overview/reussites', text:titre||'Hall of Fame').freeze
 end #/ Quai_des_docs
 
-def politique_confidentialite(titre = nil)
-  Tag.lien(text:titre||'politique de confidentialité'.freeze, route:'overview/policy', target:true)
-end #/ politique_confientialite
-
 def profil(titre = nil)
   Tag.lien(text:titre||'profil'.freeze, route:'user/profil')
 end #/ profil
+
+def section_aide(titre = nil)
+  Tag.route(:aide, titre||'section Aide')
+end #/ section_aide
 
 def section_preferences(titre = nil)
   Tag.lien(text:titre||'section Préférences'.freeze, route:'bureau/preferences')
@@ -68,6 +69,33 @@ end #/ section_preferences
 def section_modules(titre = nil)
   Tag.lien(text:titre||'section “Modules d’apprentissage”'.freeze, route:'modules/home')
 end #/ section_modules
+
+# ---------------------------------------------------------------------
+#
+#   LIEUX HORS ATELIER
+#
+# ---------------------------------------------------------------------
+
+# Pour placer un lien absolu vers la collection Narration
+def collection_narration(titre = nil)
+  Tag.lien(text:titre||'Collection Narration', route:'http://www.scenariopole.fr/narration', target:true)
+end #/ collection_narration
+
+def scenariopole(titre = nil)
+  Tag.lien(text:titre||'Scénariopole', route:'http://www.scenariopole.fr')
+end #/ scenariopole
+
+
+def politique_confidentialite(titre = nil)
+  Tag.lien(text:titre||'politique de confidentialité'.freeze, route:'overview/policy', target:true)
+end #/ politique_confientialite
+
+# ---------------------------------------------------------------------
+#
+#   TEXTES DIVERS
+#
+# ---------------------------------------------------------------------
+
 
 # Signature pour les mails
 def le_bot
