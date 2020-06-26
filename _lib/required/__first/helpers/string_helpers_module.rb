@@ -25,7 +25,11 @@ end #/ film
 
 # Pour insérer le travail type
 def travail_type(rubrique, name)
-  TravailType.get_by_name(rubrique, name).travail
+  wt = TravailType.get_by_name(rubrique, name).travail
+  # Dans ce travail type, il ne faut qu'évaluer les #{}. Il ne faut surtout
+  # pas faire une correction complète, sinon il y aurait une correction d'une
+  # correction avec tous les désagréments que l'on connait.
+  AIKramdown.evaluate(wt, self)
 end #/ travail_type
 
 =begin

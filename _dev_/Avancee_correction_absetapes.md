@@ -5,11 +5,11 @@
 - [x] Module Personnages
 - [x] Module Scénario
 - [x] Module Structure
-
-- [ ] Module Suivi de projet (rythme normal)
-      N° 390 -- non traitée
+- [x] Module Suivi de projet (rythme normal)
 
 - [ ] Module Suivi de projet (rythme intensif)
+
+
 - [ ] Thèmes
 - [ ] Bible de série
 - [ ] Procédés
