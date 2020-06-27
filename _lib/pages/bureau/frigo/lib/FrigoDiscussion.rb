@@ -29,8 +29,12 @@ class << self
       # On crée la rangée dans frigo_users pour faire le lien entre la
       # discussion et l'icarien (ou l'admin). On indiquant que son
       # dernier message est nil.
-      db_compose_insert(table_users, {discussion_id: discussion_id, user_id: other.id, last_message_id: nil})
+      db_compose_insert(table_users, {discussion_id: discussion_id, user_id: other.id, last_checked_at: Time.now.to_i - 100})
     end
+    # On ajoute aussi ce message pour celui qui a initié la discussion
+    db_compose_insert(table_users, {discussion_id:discussion_id, user_id:user.id, last_checked_at:Time.now.to_i + 10})
+
+    # Message de confirmation
     il_devrait = others.count > 2 ? 'Ils devraient' : 'Il devrait'
     message("La discussion avec #{pseudo_others.join(VG)} est initiée. Il devrait vous répondre très prochainement.")
   end #/ create

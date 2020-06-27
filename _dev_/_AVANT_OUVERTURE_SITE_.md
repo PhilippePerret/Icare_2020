@@ -34,7 +34,7 @@
     id INT(11) AUTO_INCREMENT,
     discussion_id INT(11) NOT NULL,
     user_id INT(11) NOT NULL,
-    last_message_id INT(11) DEFAULT NULL,
+    last_checked_at INT(10) NOT NULL,
     created_at INT(10) NOT NULL,
     updated_at INT(10) NOT NULL
   );

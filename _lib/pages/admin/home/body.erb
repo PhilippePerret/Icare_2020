@@ -13,4 +13,6 @@
 
 <%= divGoto('<a href="admin/modules">🧰 Modules</a>'.freeze) %>
 
-<%= divGoto('<a href="bureau/frigo">🌡️ Frigo</a>'.freeze) %>
+<div class="goto">
+  <%= MAIN_LINKS[:frigo] % {non_vus: pastille_messages_frigo_non_vus} %>
+</div>
