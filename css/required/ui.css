@@ -15,7 +15,8 @@ body:not(.home) {
 
 h2, h3, h4, h5 {
   font-weight: normal;
-  color: var(--dark-color-normal);
+  /* color: var(--dark-color-normal); */
+  color:#333333;
   max-width: var(--text-max-width);
 }
 
@@ -40,7 +41,7 @@ H4 {
 
 h2.page-title {
   font-weight:normal;
-  color:var(--dark-color-normal);
+  /* color:var(--dark-color-normal); */
   font-size:1.7em;
   margin:0;
   margin-left:1em;
