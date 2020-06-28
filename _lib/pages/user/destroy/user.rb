@@ -39,6 +39,6 @@ class User
   def deconnexion
     session['user_id'] = nil
     session.delete('user_id')
-    User.current = User.new(DATA_GUEST)
+    User.current = User.instantiate(DATA_GUEST)
   end #/ deconnexion
 end #/User

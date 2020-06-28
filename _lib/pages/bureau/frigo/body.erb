@@ -1,9 +1,40 @@
-<p class="explication">Cette page présente votre <em>porte de frigo</em> qui vous permet d’entretenir des conversations avec les autres icariens.</p>
-<% if user.has_discussions? %>
-  <p>[ICI VOS DISCUSSIONS]</p>
-<% else %>
-  <p>Vous n’avez pas de discussions en cours. Pour commencer une discussion, contactez une icarienne ou un icarien depuis la <%= salle_des_icariens %>.</p>
-<% end %>
+<p class="explication">Cette page présente votre <em>porte de frigo</em> qui vous permet d’entretenir des conversations avec <%= salle_des_icariens('les autres icarien·ne·s') %>.</p>
+
+<%
+# ---------------------------------------------------------------------
+#
+#   PREMIÈRE PARTIE : LISTE DES DISCUSSIONS (FLOTTANT À DROITE)
+#
+# ---------------------------------------------------------------------
+%>
+<div id="discussions-list" class="float-tdm">
+  <% if user.has_discussions? %>
+    <%= FrigoDiscussion.discussions_of(user.id) %>
+  <% else %>
+    <p>Vous n’avez pas de discussions en cours. Pour commencer une discussion, contactez une icarienne ou un icarien depuis la <%= salle_des_icariens %>.</p>
+  <% end %>
+</div>
+
+<%
+# ---------------------------------------------------------------------
+#
+#   DEUXIÈME PARTIE : LA DISCUSSION CHOISIE (IF ANY)
+#
+# ---------------------------------------------------------------------
+if param(:disid)
+%>
+  <%= FrigoDiscussion.new(param(:disid)).out %>
+<%
+end #/ fi param(:disid)
+%>
+
+<%
+# ---------------------------------------------------------------------
+#
+#   TROISIÈME PARTIE : POUR ME LANCER SUR UNE DISCUSSION
+#
+# ---------------------------------------------------------------------
+%>
 <% if user.admin? %>
   <p>En tant qu’administrateur, vous pouvez lancer un appel à discussion à tous les icariens et icariennes [à implémenter].</p>
 <% else %>

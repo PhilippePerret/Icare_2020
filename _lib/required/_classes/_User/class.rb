@@ -24,7 +24,7 @@ class << self
   def init
     log("session['user_id'] = #{session['user_id'].inspect}")
     reconnect_user unless session['user_id'].nil_if_empty.nil?
-    self.current ||= new(DATA_GUEST)
+    self.current ||= User.instantiate(DATA_GUEST)
   end
 
   # Reconnection d'un icarien reconnu en session
@@ -32,7 +32,7 @@ class << self
     duser = db_get('users', {id: session['user_id'].to_i})
     duser || raise(ERRORS[:unfound_user_with_id] % [session['user_id']])
     duser[:session_id] == session.id || raise(ERRORS[:alert_intrusion])
-    self.current = new(duser)
+    self.current = self.get(duser[:id])
     log "USER RECONNECTED : #{current.pseudo} (##{current.id})"
   rescue Exception => e
     erreur e.message

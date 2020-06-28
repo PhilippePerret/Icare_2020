@@ -15,9 +15,9 @@ def exec
     User.check_user
   end
 end # exec
+
 def build_body
-  @body = <<-HTML
-  #{User.login_form.out}
-  HTML
-end # exec
+  @body = User.login_form.out
+end # /build_body
+
 end #HTML

@@ -17,6 +17,7 @@ def vide_db
   vide_tickets
   vide_actualites
   vide_paiements
+  vide_frigos
 end #/ vide_db
 
 def vide_users
@@ -42,6 +43,11 @@ def vide_actualites
 end #/ vide_actualites
 def vide_paiements
   vide_table('paiements')
+end #/ vide_paiements
+def vide_frigos
+  vide_table('frigo_users')
+  vide_table('frigo_discussions')
+  vide_table('frigo_messages')
 end #/ vide_paiements
 
 def vide_table dbtable, from_id = nil, reset_auto_incremente = true

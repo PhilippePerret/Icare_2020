@@ -20,7 +20,7 @@ class User
     ndata = {session_id: 'NULL'}
     user.set(ndata)
     set_last_connexion(user)
-    User.current = User.new(DATA_GUEST)
+    User.current = User.instantiate(DATA_GUEST)
   end
 
   def set_last_connexion(user)

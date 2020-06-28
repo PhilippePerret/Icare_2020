@@ -27,7 +27,7 @@ class User
   # Noter qu'ici la méthode est accessible partout sans charger
   # le module 'watchers'
   def pastille_notifications_non_vues(options = nil)
-    return '' if user.guest?
+    return '' if self.guest?
     nombre = unread_notifications_count
     return '' if nombre == 0
     Tag.pastille_nombre(nombre, options)

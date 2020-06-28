@@ -8,6 +8,7 @@ require_data('signup_data') # => DATA_SPEC_SIGNUP_VALID
 include SpecModuleNavigation
 include SpecModuleFormulaire
 
+
 def inscription_marion
   degel_or_gel('inscription_marion') do
     def clic_signup_button
@@ -19,7 +20,7 @@ def inscription_marion
     clic_signup_button
     fill_formulaire_with('#signup-form', data)
     submit_formulaire('#signup-form')
-    save_screenshot('inscription_marion.htm')
+    screenshot('inscription_marion')
   end
 end #/ inscription_marion
 
@@ -32,7 +33,7 @@ def validation_mail
     dticket = db_get('tickets', {user_id: candidat[:id]})
     visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
     login_in_form(mail: user_mail, password:data[:password][:value])
-    save_screenshot('validation_mail.png')
+    screenshot('marion-valide-mail')
     logout # pour laisser la place à l'administrateur
   end
 end #/ validation_mail
@@ -43,10 +44,10 @@ def validation_inscription
     goto_login_form
     login_admin
     goto 'admin/notifications'
-    within("#validation-candidature-form".freeze) do
+    within("#validation-candidature-10-form".freeze) do
       click_on('Attribuer ce module'.freeze)
     end
-    save_screenshot('validation_inscription.png')
+    screenshot('validation_inscription')
     logout
   end
 end #/ admin_valide_inscription
@@ -58,7 +59,7 @@ def demarrage_module
     login_icarien(1)
     goto 'bureau/notifications'
     click_on('run-button-icmodule-start')
-    save_screenshot('demarrage_module.png')
+    screenshot('demarrage_module')
     logout
   end
 end #/ marion_demarre_module
@@ -83,7 +84,7 @@ def envoi_travail
       # Soumettre le formulaire
       click_on(class: 'btn-send-work')
     end
-    save_screenshot('envoi_travail.png')
+    screenshot('envoi_travail')
     logout
   end
 end #/ marion_envoie_ses_documents
@@ -95,7 +96,7 @@ def recupere_travail
     login_admin
     goto('admin/notifications')
     click_on('Télécharger les documents')
-    save_screenshot('recupere_travail.png')
+    screenshot('recupere_travail')
     logout
   end
 end #/ recupere_travail
@@ -112,7 +113,7 @@ def envoi_comments
       attach_file('document-1-comments', path_doc_comments)
       click_on('Envoyer les commentaires')
     end
-    save_screenshot('envoi_comments.png')
+    screenshot('envoi_comments')
     logout
   end
 end #/ envoi_comments
@@ -125,7 +126,7 @@ def recupere_comments
     goto('bureau/home')
     click_on('Notifications')
     click_on('Télécharger les commentaires')
-    save_screenshot('recupere-comments.png')
+    screenshot('recupere-comments')
     logout
   end
 end #/ recupere_comments
@@ -137,7 +138,7 @@ def change_etape
     login_admin
     goto('admin/notifications')
     click_on('Changer l’étape'.freeze)
-    save_screenshot('change-etape.png')
+    screenshot('change-etape')
     logout
   end
 end #/ change_etape
@@ -158,7 +159,7 @@ def depot_qdd
       attach_file("document-2-original", path_doc2_original)
       click_on('Déposer ces documents'.freeze)
     end
-    save_screenshot('depot-qdd.png')
+    screenshot('depot-qdd')
     logout
   end
 end #/ depot_qdd
@@ -176,7 +177,110 @@ def define_sharing
       select(DATA_SHARING[2][:name], from: "partage-2-original")
       click_on('Appliquer ce partage'.freeze)
     end
-    save_screenshot('marion-define-sharing-etape-1.png')
+    screenshot('marion-define-sharing-etape-1')
     logout
   end
 end #/ define_sharing
+
+def inscription_benoit
+  degel_or_gel('inscription_benoit') do
+    define_sharing
+    Capybara.reset_sessions!
+    def clic_signup_button
+      find('#signup-btn').click
+    end #/ clic_signup_button
+    # Les données à tester
+    data = DATA_SPEC_SIGNUP_VALID[2]
+    goto_home
+    clic_signup_button
+    fill_formulaire_with('#signup-form', data)
+    submit_formulaire('#signup-form')
+    screenshot('inscription-benoit')
+  end
+end #/ inscription_benoit
+
+def inscription_elie
+  degel_or_gel('inscription_elie') do
+    inscription_benoit
+    Capybara.reset_sessions!
+    def clic_signup_button
+      find('#signup-btn').click
+    end #/ clic_signup_button
+    # Les données à tester
+    data = DATA_SPEC_SIGNUP_VALID[3]
+    goto_home
+    clic_signup_button
+    fill_formulaire_with('#signup-form', data)
+    submit_formulaire('#signup-form')
+    screenshot('inscription_elie')
+  end
+end #/ inscription_benoit
+
+def benoit_valide_son_mail
+  degel_or_gel('benoit_valide_son_mail') do
+    inscription_elie
+    Capybara.reset_sessions!
+    data = DATA_SPEC_SIGNUP_VALID[2]
+    user_mail = data[:mail][:value]
+    candidat  = db_get('users', {mail: user_mail})
+    dticket   = db_get('tickets', {user_id: candidat[:id]})
+    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
+    login_in_form(mail: user_mail, password:data[:password][:value])
+    screenshot('benoit-valide-son-mail')
+    logout # pour laisser la place à l'administrateur
+  end
+end #/ benoit_valide_son_mail
+
+def elie_valide_son_mail
+  degel_or_gel('elie_valide_son_mail') do
+    benoit_valide_son_mail
+    Capybara.reset_sessions!
+    data = DATA_SPEC_SIGNUP_VALID[3]
+    user_mail = data[:mail][:value]
+    candidat  = db_get('users', {mail: user_mail})
+    dticket   = db_get('tickets', {user_id: candidat[:id]})
+    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
+    login_in_form(mail: user_mail, password:data[:password][:value])
+    screenshot('elie-valide-son-mail')
+    logout # pour laisser la place à l'administrateur
+  end
+end #/ elie_valide_son_mail
+
+def validation_deux_inscriptions
+  degel_or_gel('validation_deux_inscriptions') do
+    elie_valide_son_mail
+    Capybara.reset_sessions!
+    goto_login_form
+    login_admin
+    goto 'admin/notifications'
+    within("#validation-candidature-12-form".freeze) do
+      select('Suivi de projet (intensif)'.freeze, from: 'module_id-12')
+      click_on('Attribuer ce module'.freeze)
+    end
+    within("#validation-candidature-11-form".freeze) do
+      select('Personnages'.freeze, from: 'module_id-11')
+      click_on('Attribuer ce module'.freeze)
+    end
+    screenshot('valide-signup-elie-benoit')
+    logout
+  end
+end #/validation_deux_inscriptions
+
+def benoit_frigote_phil_et_elie
+  degel_or_gel('benoit_frigote_phil_et_elie') do
+    validation_deux_inscriptions
+    Capybara.reset_sessions!
+    goto_login_form
+    login_icarien(2)
+    click_on("Bureau")
+    click_on("Porte de frigo")
+    click_on("les autres icarien·ne·s")
+    
+    # Benoit, sur son bureau, section frigo, initie une conversation
+    # avec Phil.
+    sleep 20
+
+    logout # pour laisser la place à l'administrateur
+
+  end
+end #/ benoit_frigote_phil_et_elie

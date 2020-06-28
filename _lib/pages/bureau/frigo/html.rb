@@ -19,7 +19,6 @@ class HTML
     @body = deserb('body', user)
   end
 
-
   def start_discussion_with_phil
     mes = safe(param(:discussion_message)) || raise(ERRORS[:message_required])
     FrigoDiscussion.create([phil], mes)

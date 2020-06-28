@@ -13,12 +13,12 @@ bouton_load_presentation = Tag.lien(route:"#{route.to_s}?op=download_signup&uid=
 bouton_refus = Tag.div(text: Tag.lien(route:"mailto:#{owner.mail}", text:'Notifier le refus par mail'), class: 'center mt1')
 
 # Formulaire pour choisir ou confirmer son module
-form = Form.new(id:'validation-candidature-form', class:'inline', route:route.to_s)
+form = Form.new(id:"validation-candidature-#{owner.id}-form", class:'inline', route:route.to_s)
 values = AbsModule.collect do |absmodule|
   [absmodule.id, "#{selected_module?(absmodule) ? '📌 ' : '  '}#{absmodule.name}"]
 end
 form.rows = {
-  'Module' => {type: 'select', values: values, name:'module_id', size:160},
+  'Module' => {type: 'select', values: values, name:'module_id', id:"module_id-#{owner.id}", size:160},
   '<watcher>' => {type:'hidden', name:'wid', value:id},
   '<operation>' => {type:'hidden', name:'op', value:'run'}
 }

@@ -47,7 +47,7 @@ class ContainerClass
       where = where_clausize(filtre)
       db_exec("SELECT * FROM #{table}#{where}".freeze).each do |ditem|
         item = new(ditem[:id])
-        item.data = ditem
+        item.data= ditem
         @items.merge!(item.id => item)
       end
       return @items
@@ -136,15 +136,16 @@ class ContainerClass
     @data ||= db_get(self.class.table, {id: id})
   end #/ data
 
-  def exists?
-    @data != nil || db_count(self.class.table, {id: id}) == 1
-  end #/ exists?
-
   # Pour certaines classes comme les travaux-type ou quand on utilise
   # les méthodes de classe collect ou each
   def data= values
     @data = values
   end #/ data=
+
+
+  def exists?
+    @data != nil || db_count(self.class.table, {id: id}) == 1
+  end #/ exists?
 
   # Retourne le propriétaire ({User}) si user_id est défini
   def owner
@@ -188,6 +189,11 @@ class ContainerClass
 
   # Retourne {Integer} la valeur du bit +bit+ des options
   def option(bit)
+    data || begin
+      erreur("Les data ne sont pas définies pour User##{id}, je renvoie 0 mais il faudra résoudre ce problème.")
+      return 0
+    end
+    data[:options] ||= '0'.ljust(bit,'0')
     data[:options][bit].to_i
   end #/ option
   alias :get_option :option # pour être cohérent avec :set_option

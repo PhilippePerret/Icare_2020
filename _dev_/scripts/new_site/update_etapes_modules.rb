@@ -1,21 +1,27 @@
 # encoding: UTF-8
 =begin
-  Ce script doit permettre de récupérer les étapes de modules les plus
-  à jour pour former une table valide à placer sur le site.
+  Ce script permet de récupérer les étapes de modules les plus
+  à jour pour former une table valide à placer sur le site qui sera enregistrée
+  dans le dossier `xbackup/Goods_for_2020/`
 
   Les trois tables de références sont :
 
-    icare.absetapes
+    icare.absetapes               # La bonne à la fin
     icare_test.absetapes
     icare.current_absetapes       # version online de absetapes
 
   AVANT DE LANCER CE SCRIPT :
     - récupérer les données ONLINE de la table icare_modules.absetapes en
-      donnant à la table le nom current_absetapes (avec drop if exists)
-    - injecter ces données dans icare local
-    - lancer le script
+      donnant à la table le nom current_absetapes (avec drop if exists) dans
+      le dossier cd ~/Sites/AlwaysData/xbackups/Version_current_online/
+    - injecter ces données dans `icare` local (pas `icare_test`)
+        $> cd ~/Sites/AlwaysData/xbackups/Version_current_online/
+        $> mysql -u root icare < current_absetapes.sql
+    - lancer ce script
+
+
 =end
-require_relative 'required'
+require_relative '../required'
 MyDB.DBNAME = 'icare'
 REQUEST = "SELECT id, updated_at, titre FROM `%s` ORDER BY `id`".freeze
 cur_absetapes = db_exec(REQUEST % 'current_absetapes')
@@ -129,4 +135,7 @@ else
     puts "Nombre d'actualisations : #{goods_update.count}"
   end
   # puts goods_update.inspect
+
+  # On crée un export de la table absetapes.sql tout à fait à jour
+  `mysqldump -u root icare absetapes > "#{FOLDER_SQL_GOODS_FOR_2020}/absetapes.sql"`
 end

@@ -1,1 +1,7 @@
-<p class="explication">Bientôt ici la liste de tous les icarien·ne·s.</p>
+<p class="explication">Cette salle des icarien·ne·s présente tous les auteur·e·s en activité à l'atelier ou l’ayant été.</p>
+<h2>Icariennes et icariens en activité</h2>
+<%= User.actifs.collect{|u|u.out}.join %>
+<h2>Anciennes icariennes et anciens icariens</h2>
+<%= User.anciens.collect{|u|u.out}.join %>
+<h2>Candidats et candidates</h2>
+<%= User.candidats.collect{|u|u.out}.join %>

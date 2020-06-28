@@ -95,15 +95,15 @@ end #/ bit_redirection
 #   if type_contact_admin & FLAG_MAIL
 #     # ce qu'on fait si l'icarien peut être contacté par mail
 #   end
-# 
+#
 def type_contact_admin
-  bit_option(26)
+  option(26)
 end #/ type_contact_admin
 def type_contact_icariens
-  bit_option(27)
+  option(27)
 end #/ type_contact_icariens
 def type_contact_world
-  bit_option(28)
+  option(28)
 end #/ type_contact_world
 
 def hide_header?        ; option?(20)   end

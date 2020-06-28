@@ -86,4 +86,111 @@ end #/Tracer
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:44:36 +0200 --- FATAL ERROR:
+    undefined method `merge!' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/data.rb:24:in `set'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:44:44 +0200 --- FATAL ERROR:
+    undefined method `merge!' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/data.rb:24:in `set'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:46:52 +0200 --- FATAL ERROR:
+    undefined method `[]=' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:46:54 +0200 --- FATAL ERROR:
+    undefined method `[]=' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:46:56 +0200 --- FATAL ERROR:
+    undefined method `[]=' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:46:57 +0200 --- FATAL ERROR:
+    undefined method `[]=' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:48:54 +0200 --- FATAL ERROR:
+    undefined method `[]=' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:48:54 +0200 --- FATAL ERROR:
+    undefined method `[]=' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 16:48:55 +0200 --- FATAL ERROR:
+    undefined method `[]=' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:168:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:21:in `deconnecte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/logout/html.rb:5:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 17:09:38 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:161:in `get'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:32:in `femme?'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/helpers.rb:23:in `visage'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/plan/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-28 17:16:10 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/login/html.rb:20: syntax error, unexpected tSTRING_DEND, expecting end
+  @body = User.login_form.out}
+                             ^
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

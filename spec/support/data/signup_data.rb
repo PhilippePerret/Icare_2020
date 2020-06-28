@@ -159,5 +159,43 @@ DATA_SPEC_SIGNUP_VALID = [
     cgu:            {value:true, type:'checkbox'},
     rgpd:           {value:true, type:'checkbox'},
     module_3:       {value:true, type:'checkbox'}
+  },
+  # Candidate valide pour Benoi (index 1 - et rester index 1 pour les gels)
+  {
+    pseudo:         {value:'Benoit'},
+    patronyme:      {value:'Benoit Ackerman'},
+    naissance:      {value:'1982', type:'select'},
+    sexe:           {value:'un homme', type:'select'},
+    mail:           {value:'benoit.ackerman@yahoo.fr'},
+    mail_conf:      {value:'benoit.ackerman@yahoo.fr'},
+    password:       {value:'unmotdepasse'},
+    password_conf:  {value:'unmotdepasse'},
+    presentation:   {value:'presentation.md', type:'file'},
+    motivation:     {value:'motivation.md',   type:'file'},
+    options:        {value:"0"*32, editable:false},
+    cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
+    module_1:       {value:true, type:'checkbox'},
+    module_2:       {value:true, type:'checkbox'},
+    module_4:       {value:true, type:'checkbox'}
+  },
+  # Candidate valide pour Benoi (index 1 - et rester index 1 pour les gels)
+  {
+    pseudo:         {value:'Élie'},
+    patronyme:      {value:'Élie Perret'},
+    naissance:      {value:'1998', type:'select'},
+    sexe:           {value:'un homme', type:'select'},
+    mail:           {value:'elieperret@gmail.com'},
+    mail_conf:      {value:'elieperret@gmail.com'},
+    password:       {value:'lemotdepasse'},
+    password_conf:  {value:'lemotdepasse'},
+    presentation:   {value:'presentation.md', type:'file'},
+    motivation:     {value:'motivation.md',   type:'file'},
+    extrait:        {value:'extrait.odt',     type:'file'},
+    options:        {value:"0"*32, editable:false},
+    cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
+    module_6:       {value:true, type:'checkbox'},
+    module_7:       {value:true, type:'checkbox'}
   }
 ]

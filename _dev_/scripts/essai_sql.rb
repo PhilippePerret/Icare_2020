@@ -52,33 +52,44 @@ MyDB.DBNAME = 'icare_test'
 #   ORDER BY #{sortedkey}
 # SQL
 
-# Pour relever le nombre de messages non lu par l'user
-# user_id = 10
-# req = <<-SQL
-# SELECT
-#     COUNT(mes.id)
-#     -- mes.id
-#   FROM `frigo_messages` AS mes
-#     INNER JOIN `frigo_discussions` AS dis ON mes.discussion_id = dis.id
-#     INNER JOIN `frigo_users` AS fu ON fu.discussion_id = dis.id
-#   -- On prend les messages dont la date est supérieure à la date de
-#   -- dernier check de l'icarien
-#   WHERE mes.created_at > fu.last_checked_at
-#   -- Mais seulement dans les discussions qu'il suit
-#     AND fu.user_id = #{user_id}
-#   GROUP BY fu.user_id
-# SQL
-
+# Pour relever les discussions
 user_id = 1
 req = <<-SQL
 SELECT
-    COUNT(mes.id)
-  FROM `frigo_messages` AS mes
-  INNER JOIN `frigo_users` AS fu ON fu.discussion_id = mes.discussion_id
-  WHERE
-    fu.user_id = #{user_id}
-    AND mes.created_at > fu.last_checked_at
+  *
+  FROM `frigo_users` AS fu
+  INNER JOIN `frigo_discussions` AS dis ON dis.id = fu.discussion_id
+  INNER JOIN `users` AS u ON fu.user_id = u.id
+  WHERE fu.user_id = %i
+  ORDER BY dis.created_at DESC
 SQL
+req = req % [user_id]
+puts "REQUEST: #{req}"
+
+# # Pour relever tous les participants à une discussion
+# discussion_id = 3
+# req = <<-SQL
+# SELECT
+#   dis.id AS discussion_id, u.pseudo AS owner_pseudo
+#   FROM `frigo_discussions` AS dis
+#   INNER JOIN `frigo_users` AS fu ON dis.id = fu.discussion_id
+#   INNER JOIN `users` AS u ON dis.user_id = u.id
+#   WHERE dis.id = %i
+#   ORDER BY dis.created_at DESC
+# SQL
+# req = req % [discussion_id]
+# puts "REQUEST: #{req}"
+
+# user_id = 1
+# req = <<-SQL
+# SELECT
+#     COUNT(mes.id)
+#   FROM `frigo_messages` AS mes
+#   INNER JOIN `frigo_users` AS fu ON fu.discussion_id = mes.discussion_id
+#   WHERE
+#     fu.user_id = #{user_id}
+#     AND mes.created_at > fu.last_checked_at
+# SQL
 
 res = db_exec(req)
 # puts "db_exec(req): #{res.inspect}"
