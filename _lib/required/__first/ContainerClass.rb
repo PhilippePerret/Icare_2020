@@ -190,10 +190,15 @@ class ContainerClass
   # Retourne {Integer} la valeur du bit +bit+ des options
   def option(bit)
     data || begin
-      erreur("Les data ne sont pas définies pour User##{id}, je renvoie 0 mais il faudra résoudre ce problème.")
+      erreur("Les data ne sont pas définies pour #{self.class}##{id}, je renvoie 0 mais il faudra résoudre ce problème.")
+      # TODO Envoyer un mail d'erreur à l'administrateur
       return 0
     end
-    data[:options] ||= '0'.ljust(bit,'0')
+    data[:options] ||= begin
+      erreur("Les options sont indéfinies pour #{self.class}##{id}. Je les mets à 0 mais le problème est à résoudre.")
+      # TODO Envoyer un mail d'erreur à l'administrateur
+      '0'.ljust(bit,'0')
+    end
     data[:options][bit].to_i
   end #/ option
   alias :get_option :option # pour être cohérent avec :set_option
