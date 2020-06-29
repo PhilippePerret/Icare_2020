@@ -27,8 +27,9 @@ class HTML
   end
 
   def start_discussion_with_phil
-    mes = safe(param(:discussion_message)) || raise(ERRORS[:message_required])
-    FrigoDiscussion.create([phil], mes)
+    tit = safe(param(:frigo_titre).nil_if_empty) || raise(ERRORS[:titre_discussion_required])
+    msg = safe(param(:frigo_message).nil_if_empty) || raise(ERRORS[:message_discussion_required])
+    FrigoDiscussion.create([phil], tit, msg)
   rescue Exception => e
     erreur e.message
   end #/ start_discussion_with_phil

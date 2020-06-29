@@ -6,8 +6,8 @@ class User
     elle:   ['elle',  'lui'],
     Elle:   ['Elle',  'Il'],  # noter la différence avec :elle, complément
     la:     ['la',    'le'],
-    ne:     ['ne',    'n'],
-    te:     ['te',    't'],
+    ne:     ['ne',    ''],
+    te:     ['te',    ''],
     x:      ['se',    'x'],
   }
   def fem(key)

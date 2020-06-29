@@ -11,6 +11,7 @@ include SpecModuleFormulaire
 
 def inscription_marion
   degel_or_gel('inscription_marion') do
+    puts "Fabrication du gel 'inscription_marion'".vert
     def clic_signup_button
       find('#signup-btn').click
     end #/ clic_signup_button
@@ -27,6 +28,7 @@ end #/ inscription_marion
 def validation_mail
   degel_or_gel('validation_mail') do
     inscription_marion
+    puts "Fabrication du gel 'validation_mail'".vert
     data = DATA_SPEC_SIGNUP_VALID[1]
     user_mail = data[:mail][:value]
     candidat = db_get('users', {mail: user_mail})
@@ -41,6 +43,7 @@ end #/ validation_mail
 def validation_inscription
   degel_or_gel('validation_inscription') do
     validation_mail
+    puts "Fabrication du gel 'validation_inscription'".vert
     goto_login_form
     login_admin
     goto 'admin/notifications'
@@ -55,6 +58,7 @@ end #/ admin_valide_inscription
 def demarrage_module
   degel_or_gel('demarrage_module') do
     validation_inscription
+    puts "Fabrication du gel 'demarrage_module'".vert
     goto_login_form
     login_icarien(1)
     goto 'bureau/notifications'
@@ -67,6 +71,7 @@ end #/ marion_demarre_module
 def envoi_travail
   degel_or_gel('envoi_travail') do
     demarrage_module
+    puts "Fabrication du gel 'envoi_travail'".vert
     goto_login_form
     login_icarien(1)
     goto 'bureau/sender?rid=send_work_form'
@@ -92,6 +97,7 @@ end #/ marion_envoie_ses_documents
 def recupere_travail
   degel_or_gel('recupere_travail') do
     envoi_travail
+    puts "Fabrication du gel 'recupere_travail'".vert
     goto_login_form
     login_admin
     goto('admin/notifications')
@@ -104,6 +110,7 @@ end #/ recupere_travail
 def envoi_comments
   degel_or_gel('envoi_comments') do
     recupere_travail
+    puts "Fabrication du gel 'envoi_comments'".vert
     goto_login_form
     login_admin
     goto('admin/notifications')
@@ -121,6 +128,7 @@ end #/ envoi_comments
 def recupere_comments
   degel_or_gel('recupere_comments') do
     envoi_comments
+    puts "Fabrication du gel 'recupere_comments'".vert
     goto_login_form
     login_icarien(1)
     goto('bureau/home')
@@ -134,6 +142,7 @@ end #/ recupere_comments
 def change_etape
   degel_or_gel('change_etape') do
     recupere_comments
+    puts "Fabrication du gel 'change_etape'".vert
     goto_login_form
     login_admin
     goto('admin/notifications')
@@ -146,6 +155,7 @@ end #/ change_etape
 def depot_qdd
   degel_or_gel('depot_qdd') do
     change_etape
+    puts "Fabrication du gel 'depot_qdd'".vert
     goto_login_form
     login_admin
     goto('admin/notifications')
@@ -168,6 +178,7 @@ def define_sharing
   degel_or_gel('define_sharing') do
     require './_lib/_watchers_processus_/IcEtape/qdd_sharing/constants.rb'
     depot_qdd
+    puts "Fabrication du gel 'define_sharing'".vert
     goto_login_form
     login_icarien(1)
     goto('bureau/notifications')
@@ -185,6 +196,7 @@ end #/ define_sharing
 def inscription_benoit
   degel_or_gel('inscription_benoit') do
     define_sharing
+    puts "Fabrication du gel 'inscription_benoit'".vert
     Capybara.reset_sessions!
     def clic_signup_button
       find('#signup-btn').click
@@ -202,6 +214,7 @@ end #/ inscription_benoit
 def inscription_elie
   degel_or_gel('inscription_elie') do
     inscription_benoit
+    puts "Fabrication du gel 'inscription_elie'".vert
     Capybara.reset_sessions!
     def clic_signup_button
       find('#signup-btn').click
@@ -219,6 +232,7 @@ end #/ inscription_benoit
 def benoit_valide_son_mail
   degel_or_gel('benoit_valide_son_mail') do
     inscription_elie
+    puts "Fabrication du gel 'benoit_valide_son_mail'".vert
     Capybara.reset_sessions!
     data = DATA_SPEC_SIGNUP_VALID[2]
     user_mail = data[:mail][:value]
@@ -234,6 +248,7 @@ end #/ benoit_valide_son_mail
 def elie_valide_son_mail
   degel_or_gel('elie_valide_son_mail') do
     benoit_valide_son_mail
+    puts "Fabrication du gel 'elie_valide_son_mail'".vert
     Capybara.reset_sessions!
     data = DATA_SPEC_SIGNUP_VALID[3]
     user_mail = data[:mail][:value]
@@ -249,6 +264,7 @@ end #/ elie_valide_son_mail
 def validation_deux_inscriptions
   degel_or_gel('validation_deux_inscriptions') do
     elie_valide_son_mail
+    puts "Fabrication du gel 'validation_deux_inscriptions'".vert
     Capybara.reset_sessions!
     goto_login_form
     login_admin
@@ -266,29 +282,57 @@ def validation_deux_inscriptions
   end
 end #/validation_deux_inscriptions
 
-def benoit_frigote_phil_et_elie
-  degel_or_gel('benoit_frigote_phil_et_elie') do
+def benoit_frigote_phil_marion_et_elie
+  degel_or_gel('benoit_frigote_phil_marion_et_elie') do
     validation_deux_inscriptions
+    puts "Fabrication du gel 'benoit_frigote_phil_marion_et_elie'".vert
     Capybara.reset_sessions!
     goto_login_form
     login_icarien(2)
     click_on("Bureau")
     click_on("Porte de frigo")
     click_on("les autres icarien·ne·s")
-    sleep 4
-    within("icarien-10") do
+    within("#icarien-10") do
       click_on('message sur son frigo')
     end
-    sleep 4
+    within('#frigo-discussion-form') do
+      fill_in('frigo_titre', with: "Titre discussion avec Marion".freeze)
+      fill_in('frigo_message', with: "Hello Marion, est-ce qu'on peut parler ?".freeze)
+      click_on("Poser ce message sur le frigo de Marion")
+    end
+    click_on('Votre frigo') # pour revenir sur le frigo
     click_on("les autres icarien·ne·s")
-    within("icarien-12") do
+    within("#icarien-12") do
       click_on('message sur son frigo')
     end
+    within('#frigo-discussion-form') do
+      fill_in('frigo_titre', with: "Titre discussion avec Élie".freeze)
+      fill_in('frigo_message', with: "Hello Élie, est-ce qu'on peut parler ?".freeze)
+      click_on("Poser ce message sur le frigo de Élie")
+    end
+    click_on('Votre frigo') # pour revenir sur le frigo
     # Benoit, sur son bureau, section frigo, initie une conversation
     # avec Phil.
-    sleep 20
-
-    logout # pour laisser la place à l'administrateur
-
+    within('#discussion-phil-form') do
+      fill_in('frigo_titre', with: "Titre discussion avec Phil".freeze)
+      fill_in('frigo_message', with: "Hello Phil, est-ce qu'on peut parler ?".freeze)
+      click_on("Lancer la discussion avec Phil")
+    end
+    logout # pour laisser la place
   end
-end #/ benoit_frigote_phil_et_elie
+end #/ benoit_frigote_phil_marion_et_elie
+
+# Démarrage des modules pour Élie et Benoit
+# TODO
+
+# Réponse de 2 icariens aux messages frigo
+# TODO
+
+# Invitation d'un icarien à rejoindre une discussion
+# TODO
+
+# Paiement d'un module (par PayPal)
+# TODO
+
+# Paiement d'un module (par IBAN
+# TODO)

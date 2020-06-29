@@ -21,7 +21,6 @@ class << self
 
   # Retourne le formulaire pour créer une nouvelle discussion
   def create_form(destinataire = nil)
-    log("-> FrigoDiscussion::create_form")
     form = Form.new(id:'frigo-discussion-form', route:route.to_s, value_size:600, libelle_size:0, class:'nopadding nomargin')
     rows = {
       'Titre'     => {name:'frigo_titre', type:'text', placeholder:'Titre de la discussion'.freeze},
@@ -32,14 +31,12 @@ class << self
     form.rows = rows
     toic = destinataire.nil? ? EMPTY_STRING : " de #{destinataire.pseudo}".freeze
     form.submit_button = "Poser ce message sur le frigo#{toic}"
-    log("form:#{form.inspect}")
     return form
   end #/ create_form
 
   # Initier une nouvelle discussion (par l'user courant), avec +others+, liste
   # des autres icariens et le message +message+
   def create(others, titre, message, options = nil)
-    log("-> FrigoDiscussion::create")
     pseudo_others =  others.collect{|u| u.pseudo}
     # On crée la discussion
     discussion_id = db_compose_insert(table, {user_id:user.id, titre:titre})
@@ -57,7 +54,7 @@ class << self
     db_compose_insert(table_users, {discussion_id:discussion_id, user_id:user.id, last_checked_at:Time.now.to_i + 10})
 
     # Message de confirmation
-    unless options[:no_message]
+    unless options && options[:no_message]
       il_devrait = others.count > 2 ? 'Ils devraient' : 'Il devrait'
       message("La discussion avec #{pseudo_others.join(VG)} est initiée. Il devrait vous répondre très prochainement.")
     end

@@ -42,7 +42,8 @@ end #/ fi param(:disid)
   <%
     formphil = Form.new(id:'discussion-phil-form', route:route.to_s, class:'noborder nomargin', libelle_size:0, value_size:600)
     formphil.rows = {
-      'Message' => {name:'discussion_message', type:'textarea', height:200}
+      'Titre'   => {name:'frigo_titre', type:'text', placeholder:'Titre de la discussion'.freeze},
+      'Message' => {name:'frigo_message', type:'textarea', height:200, placeholder:"Premier message de la discussion".freeze}
     }
     formphil.submit_button = "Lancer la discussion avec Phil"
   %>

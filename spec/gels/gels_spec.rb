@@ -87,9 +87,9 @@ feature 'Préparation en live' do
     validation_deux_inscriptions
   end
 
-  scenario 'jusqu’au contact frigo de Benoit', benoit_frigote_phil_et_elie: true do
-    Gel.remove('benoit_frigote_phil_et_elie')  if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
-    benoit_frigote_phil_et_elie
+  scenario 'jusqu’au contact frigo de Benoit', benoit_frigote_phil_marion_et_elie: true do
+    Gel.remove('benoit_frigote_phil_marion_et_elie')  if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    benoit_frigote_phil_marion_et_elie
   end
 
 end

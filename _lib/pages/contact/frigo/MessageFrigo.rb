@@ -44,8 +44,8 @@ class MessageFrigo
   # Retourne TRUE si le message est valide
   def ok?
     html.destinataire_contactable? || raise(ERRORS[:icarien_not_contactable])
-    frigo_message || raise(ERRORS[:frigo_message_required])
-    titre_discussion || raise(ERRORS[:frigo_titre_discussion_required])
+    frigo_message || raise(ERRORS[:message_discussion_required])
+    titre_discussion || raise(ERRORS[:titre_discussion_required])
     if user.guest?
       guest_mail || raise(ERRORS[:mail_required_for_guest])
       conf_mail = param(:guest_mail_conf).nil_if_empty
