@@ -111,7 +111,7 @@ def srps(titre=nil)
 end #/ srps
 
 def contact(titre=nil)
-  Tag.lien(text:titre||'formulaire de contact', route:'contact')
+  Tag.lien(text:titre||'formulaire de contact', route:'contact/mail')
 end #/ contact
 
 # ---------------------------------------------------------------------

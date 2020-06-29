@@ -6,6 +6,7 @@
 # Avant de passer un string à ERB.new, il est bon de le passer par ici
 def safe(str)
   # log("transformation de #{str.inspect}")
+  return nil if str.nil?
   str.force_encoding(Encoding::ASCII_8BIT).force_encoding(Encoding::UTF_8)
 end #/ safe
 

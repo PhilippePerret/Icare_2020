@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require_modules(['form'])
+require_modules(['form','frigo'])
 class HTML
   def titre
     "#{RETOUR_BUREAU}🌡️ Votre porte de frigo".freeze
@@ -16,7 +16,14 @@ class HTML
   end
   def build_body
     # Construction du body
-    @body = deserb('body', user)
+    vue = case param(:op)
+          when 'contact'.freeze # on ne s'en sert plus
+            'contact'.freeze
+          else
+            'body'.freeze
+          end
+    # On construit le body
+    @body = deserb("vues/#{vue}", user)
   end
 
   def start_discussion_with_phil

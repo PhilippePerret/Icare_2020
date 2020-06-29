@@ -17,7 +17,7 @@ class HTML
 
   # Construit et retourne le formulaire
   def formulaire
-    form = Form.new(id:'contact-form', size:700, route:'contact')
+    form = Form.new(id:'contact-form', size:700, route:route.to_s, libelle_size:100, value_size:600)
     rows = {
       'Titre'   => {name:'envoi_titre', type:'text'},
       'Message' => {name:'envoi_message', type:'textarea', height:260}

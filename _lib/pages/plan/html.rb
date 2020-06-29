@@ -38,7 +38,7 @@ class HTML
 
 #{aGoto('<a href="overview/icariens">👩‍🦰🧑🏻👨🏾‍🦱🧕🏽👨🏼‍🦳👽👩🏻‍🌾🧔🏻</a>'.freeze)}
 
-#{aGoto('<a href="contact">📧 Contact</a>'.freeze)}
+#{aGoto('<a href="contact/mail">📧 Contact</a>'.freeze)}
 
 #{aGoto('<a href="qdd/home">📚 Quai de docs</a>'.freeze)}
 

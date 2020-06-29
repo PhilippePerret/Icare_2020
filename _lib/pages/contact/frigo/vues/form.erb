@@ -1,0 +1,20 @@
+<p class="explication">Cette section permet de déposer un message sur le frigo des icarien·ne·s.</p>
+<%
+log("discussion_creation_form:#{discussion_creation_form.inspect}")
+form = discussion_creation_form
+# Si le visiteur n'est pas un icarien, il faut absolument qu'il fournisse son
+# adresse mail.
+if user.guest?
+  form.rows.merge!({
+    'Votre mail' => {name:'guest_mail', placeholder:'Votre mail', explication:"Sans ce mail, l’icarien#{destinataire.fem(:ne)} ne pourra pas vous répondre."},
+    'Confirmation' => {name:'guest_mail_conf', placeholder:'Confirmation de votre mail'}
+  })
+end
+%>
+<%= retour_frigo_if_icarien %>
+
+<%= form.out %>
+
+<% if user.guest? %>
+  <p class="explication">Vous pouvez lire la <%= politique_confidentialite %> appliquée à l'atelier.</p>
+<% end %>

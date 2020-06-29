@@ -4,8 +4,6 @@
 
 =end
 class FrigoDiscussion < ContainerClass
-  TABLE_USERS = 'frigo_users'.freeze
-  TABLE_DISCUSSIONS = 'frigo_discussions'.freeze
 
   # Requête pour obtenir toutes les discussion de l'user
   # TODO Pour le moment, elles sont classées par ordre de création inverse
@@ -21,15 +19,6 @@ class FrigoDiscussion < ContainerClass
     ORDER BY dis.created_at DESC
   SQL
 class << self
-  def table
-    @table ||= TABLE_DISCUSSIONS
-  end #/ table
-  def table_messages
-    @table_messages ||= 'frigo_messages'
-  end #/ table_messages
-  def table_users
-    @table_users ||= TABLE_USERS
-  end #/ table_users
 
   # Retourne la liste (formatée) des discussions de l'icarien (ou moi)
   # d'identifiant +user_id+
@@ -40,30 +29,6 @@ class << self
       Tag.lien(route:"bureau/frigo?disid=#{ddis[:discussion_id]}", text:"Discussion ##{ddis[:discussion_id]} de #{ddis[:owner_pseudo]}", class:'adiscussion')
     end.join
   end #/ discussions_of
-
-  # Initier une nouvelle discussion (par l'user courant), avec +others+, liste
-  # des autres icariens et le message +message+
-  def create(others, message, options = nil)
-    pseudo_others =  others.collect{|u| u.pseudo}
-    # On crée la discussion
-    discussion_id = db_compose_insert(table, {user_id:user.id})
-    # On crée le message
-    message_id = db_compose_insert(table_messages, {discussion_id:discussion_id, user_id: user.id, content:message})
-    # On indique l'ID du dernier message de la discussion
-    db_compose_update(table, discussion_id, {last_message_id: message_id})
-    others.each do |other|
-      # On crée la rangée dans frigo_users pour faire le lien entre la
-      # discussion et l'icarien (ou l'admin). On indiquant que son
-      # dernier message est nil.
-      other.add_discussion(discussion_id)
-    end
-    # On ajoute aussi ce message pour celui qui a initié la discussion
-    db_compose_insert(table_users, {discussion_id:discussion_id, user_id:user.id, last_checked_at:Time.now.to_i + 10})
-
-    # Message de confirmation
-    il_devrait = others.count > 2 ? 'Ils devraient' : 'Il devrait'
-    message("La discussion avec #{pseudo_others.join(VG)} est initiée. Il devrait vous répondre très prochainement.")
-  end #/ create
 
 end # /<< self
 # ---------------------------------------------------------------------

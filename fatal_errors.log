@@ -193,4 +193,106 @@ end #/Tracer
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 08:31:39 +0200 --- FATAL ERROR:
+    undefined method `form' for #<HTML:0x00007fdeb99a47d8 @all_css=["./css/_variables.css"]>
+Did you mean?  for
+               fork
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:11:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:09:44 +0200 --- FATAL ERROR:
+    undefined method `le_bot' for StringHelpersMethods:Module
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/constants.rb:15:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:10:28 +0200 --- FATAL ERROR:
+    undefined local variable or method `destinataire' for #<MessageFrigo:0x00007fc82605dca0>
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:22:in `pose'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:22:in `exec_operation'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:12:45 +0200 --- FATAL ERROR:
+    undefined method `force_encoding' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:9:in `safe'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:8:in `message'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:26:in `pose'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:22:in `exec_operation'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:14:09 +0200 --- FATAL ERROR:
+    undefined method `force_encoding' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:9:in `safe'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:8:in `message'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:26:in `pose'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:22:in `exec_operation'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:16:39 +0200 --- FATAL ERROR:
+    undefined method `force_encoding' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:9:in `safe'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:8:in `frigo_message'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:26:in `pose'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:22:in `exec_operation'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:18:00 +0200 --- FATAL ERROR:
+    undefined method `force_encoding' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:9:in `safe'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:8:in `frigo_message'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:26:in `pose'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:22:in `exec_operation'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:20:45 +0200 --- FATAL ERROR:
+    undefined method `force_encoding' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:9:in `safe'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:8:in `frigo_message'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:26:in `pose'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:22:in `exec_operation'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:21:50 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007ff6299eda78>#add_discussion
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:127:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/frigo/FrigoDiscussion.rb:36:in `block in create'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/frigo/FrigoDiscussion.rb:32:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/frigo/FrigoDiscussion.rb:32:in `create'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:26:in `pose'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:22:in `exec_operation'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-29 09:23:15 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007fa410921b28>#add_discussion
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:127:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/frigo/FrigoDiscussion.rb:36:in `block in create'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/frigo/FrigoDiscussion.rb:32:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/frigo/FrigoDiscussion.rb:32:in `create'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/MessageFrigo.rb:26:in `pose'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:22:in `exec_operation'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

@@ -51,8 +51,8 @@ MAIN_LINKS = {
   # DIVERS
   aide:       '<a href="aide/home"><span class="emoji">🚨</span><span>aide</span></a>'.freeze,
   aide_s:     '<a href="aide/home">aide</a>'.freeze,
-  contact:    '<a href="contact"><span class="emoji">📧</span><span>contact</span></a>'.freeze,
-  contact_s:  '<a href="contact">contact</a>'.freeze,
+  contact:    '<a href="contact/mail"><span class="emoji">📧</span><span>contact</span></a>'.freeze,
+  contact_s:  '<a href="contact/mail">contact</a>'.freeze,
   plan:       '<a href="plan" class="btn small"><span class="emoji">📍</span>PLAN</a>'.freeze,
   plan_s:     '<a href="plan">plan</a>'.freeze,
   qdd:        '<a href="qdd/home"><span class="emoji">🗄</span>️Quai Des Docs</a>'.freeze

@@ -6,7 +6,7 @@ html.build_header rescue nil
 html.build_head rescue nil
 html.build_footer rescue nil
 begin
-  backtrace = if user.admin?
+  backtrace = if user.admin? || OFFLINE
                 ERROR.backtrace.collect{|m| "<div>#{m.gsub(/</,'&lt;')}</div>"}.join('')
               else
                 # On doit envoyer l'erreur par mail et l'enregistrer

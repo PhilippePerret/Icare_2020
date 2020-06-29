@@ -47,7 +47,7 @@ class HTML
   end #/ lien_signup
 
   def lien_contact(titre = 'contact')
-    Tag.lien(route:'contact', titre: titre)
+    Tag.lien(route:'contact/mail', titre: titre)
   end #/ lien_signup
 
   def lien_narration
