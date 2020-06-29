@@ -1,0 +1,12 @@
+div.icarien {
+  box-sizing:border-box;
+  box-shadow: 1px 4px 10px 2px #DDDDDD;
+  padding:1em;
+}
+div.icarien div.tools {
+  margin-top:0.7em;
+  text-align: right;
+}
+div.icarien div.tools a {
+  margin-left:1em;
+}

@@ -275,7 +275,15 @@ def benoit_frigote_phil_et_elie
     click_on("Bureau")
     click_on("Porte de frigo")
     click_on("les autres icarien·ne·s")
-    
+    sleep 4
+    within("icarien-10") do
+      click_on('message sur son frigo')
+    end
+    sleep 4
+    click_on("les autres icarien·ne·s")
+    within("icarien-12") do
+      click_on('message sur son frigo')
+    end
     # Benoit, sur son bureau, section frigo, initie une conversation
     # avec Phil.
     sleep 20

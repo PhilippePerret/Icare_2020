@@ -66,11 +66,12 @@ class << self
   def options_new_icarien
     o = "0"*32
     o[4]  = '1' # Mail quotidien
+    o[16] = '2' # Statut candidat quotidien
     o[18] = '0' # Après l'identification, l'icarien rejoint son bureau
     o[22] = '1' # l'icarien est averti par mail en cas de message frigo
-    o[26] = '1' # Contact par mail avec l'administration
-    o[27] = '1' # Contact par mail avec les autres icariens
-    o[28] = '0' # Aucun contact avec le reste du monde
+    o[26] = '3' # Contact par mail+frigo avec l'administration
+    o[27] = '3' # Contact par mail+frigo avec les autres icariens
+    o[28] = '0' # Contact par frigo avec le reste du monde
     return o
   end #/ options_new_icarien
 end # /<< self

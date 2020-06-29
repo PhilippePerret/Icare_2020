@@ -3,10 +3,23 @@ require_modules(['user/modules'])
 class User
 
   SPAN_PSEUDO   = '<span class="pseudo">%s %s</span>'.freeze
-  SPAN_CURRENT_MODULE = '<span class="module">Module “%s”</span>'.freeze
-  SPAN_SINCE    = '<span class="since-date">à l’atelier depuis le %s</span>'.freeze
-  BOUTON_FRIGO  = '<span class="tool"><a href="bureau/frigo?op=send&toid=%i">message sur son frigo</a></span>'.freeze
-  BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i">lui écrire</a></span>'.freeze
+  SPAN_CURRENT_MODULE = '<span class="module">“%s”</span>'.freeze
+  SPAN_SINCE    = '<span class="since-date">, à l’atelier depuis le %s</span>'.freeze
+  BOUTON_FRIGO  = '<span class="tool"><a href="bureau/frigo?op=send&toid=%i" class="small btn discret">message sur son frigo</a></span>'.freeze
+  BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i" class="small btn discret">lui écrire</a></span>'.freeze
+
+  SPAN_A_SUIVI = '<span>a suivi </span>'.freeze
+  SPAN_SUIT    = '<span>, suit le module </span>'.freeze
+  SPAN_EST_CANDIDAT = '<span>, est candidat%s</span>'.freeze
+  SPAN_POINT   = '<span>.</span>'.freeze
+
+  # Requête simple pour obtenir les noms des modules suivis par l'icarien
+  REQUEST_MODULES_SUIVIS = <<-SQL
+SELECT icm.id, abs.name
+FROM icmodules AS icm
+INNER JOIN absmodules AS abs ON icm.absmodule_id = abs.id
+WHERE icm.user_id = %{id}
+  SQL
 
   # = main =
   #
@@ -14,10 +27,14 @@ class User
   def out
     div = []
     div << SPAN_PSEUDO % [visage, pseudo]
+    div << SPAN_SINCE % formate_date(created_at)
     if actif?
-      div << SPAN_CURRENT_MODULE % absmodule.name
+      div << SPAN_SUIT + (SPAN_CURRENT_MODULE % absmodule.name)
+    elsif candidat?
+      div << SPAN_EST_CANDIDAT % fem(:e)
     end
-    div << SPAN_SINCE % formate_date(created_at, {duree: true})
+    div << span_modules_suivis # n'écrit quelque chose que s'il y en a
+    div << SPAN_POINT
     divcontact = []
     if frigo_enabled
       divcontact << BOUTON_FRIGO % id
@@ -25,20 +42,43 @@ class User
     if mail_enabled
       divcontact << BOUTON_MAIL % id
     end
-    div << Tag.div(text:divcontact.join, class:'contact')
+
+    if user.admin?
+      # Si c'est l'administrateur qui visite, on peut ajouter
+      # d'autres boutons. Par exemple pour voir le détail du profil
+      # de l'icarien.
+
+    end
+    div << Tag.div(text:divcontact.join, class:'tools')
     Tag.div(text: div.join, class:'icarien', id:"icarien-#{id}")
   end #/ out
 
+  # Retourne le texte du type "Marion a suivi les modules ...". Ce texte
+  # s'applique à un ancien icarien comme à un nouveau.
+  def span_modules_suivis
+    return '' if modules_suivis.count > 0
+    plus = modules_suivis.count > 1
+    s = plus ? 's' : ''
+    "#{pseudo} #{SPAN_A_SUIVI} le#{s} module#{s} #{modules_suivi.collect{|m|m[:name]}.join(VG)}".freeze
+  end #/ span_modules_suivis
+
+  # Retourne la liste des modules suivis
+  def modules_suivis
+    @modules_suivis ||= db_exec(REQUEST_MODULES_SUIVIS % {id: id})
+  end #/ modules_suivis
+
   # Retourne TRUE si le contact est possible avec l'icarien
   def frigo_enabled
+    return false if user.id == id
     return true if user.admin? && (type_contact_admin & 2 > 0)
-    return true if user.icarien? && (type_contact_icarien & 2 > 0)
+    return true if user.icarien? && (type_contact_icariens & 2 > 0)
     return (type_contact_world & 2) > 0
   end #/ frigo_enabled
 
   def mail_enabled
+    return false if user.id == id
     return true if user.admin? && (type_contact_admin & 1 > 0)
-    return true if user.icarien? && (type_contact_icarien & 1 > 0)
+    return true if user.icarien? && (type_contact_icariens & 1 > 0)
     return (type_contact_world & 1) > 0
   end #/ mail_enabled
 

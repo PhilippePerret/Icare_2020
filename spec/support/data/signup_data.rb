@@ -4,6 +4,103 @@
 =end
 ERRORS = {} unless defined?(ERRORS)
 
+# # Retourne les options pour un nouvel icarien. On détaille ici les
+# # choix, pour référence.
+# def options_for_new_icarien
+#   o = "0"*32
+#   o[4]  = '1' # Mail quotidien
+#   o[18] = '0' # Après l'identification, l'icarien rejoint son bureau
+#   o[22] = '1' # l'icarien est averti par mail en cas de message frigo
+#   o[26] = '3' # Contact par mail+frigo avec l'administration
+#   o[27] = '3' # Contact par mail+frigo avec les autres icariens
+#   o[28] = '0' # Contact par frigo avec le reste du monde
+#   return o
+# end #/ options_new_icarien
+# OPTIONS_NEW_ICARIEN = options_for_new_icarien
+
+# ---------------------------------------------------------------------
+#
+#   Test d'une inscription valide
+#
+# ---------------------------------------------------------------------
+
+DATA_SPEC_SIGNUP_VALID = [
+
+  # UN premier candidat valide
+  {
+    pseudo:     {value:'Philippe'},
+    patronyme:  {value:'Philippe Perret'},
+    naissance:  {value:'1964', type:'select'},
+    sexe:       {value:'un homme', type:'select'},
+    mail:       {value:'icareedi@gmail.com'},
+    mail_conf:  {value:'icareedi@gmail.com'},
+    password:   {value:'motdepasse'},
+    password_conf:  {value:'motdepasse'},
+    presentation:   {value:'presentation.md', type:'file'},
+    motivation:     {value:'motivation.md',   type:'file'},
+    cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
+    module_2:       {value:true, type:'checkbox'},
+    module_4:       {value:true, type:'checkbox'},
+    module_6:       {value:true, type:'checkbox'}
+  },
+  # UNE seconde candidate valide (index 1 - et rester index 1 pour les gels)
+  {
+    pseudo:         {value:'Marion'},
+    patronyme:      {value:'Marion Michel'},
+    naissance:      {value:'1992', type:'select'},
+    sexe:           {value:'une femme', type:'select'},
+    mail:           {value:'marion.michel31@gmail.com'},
+    mail_conf:      {value:'marion.michel31@gmail.com'},
+    password:       {value:'motdepasse'},
+    password_conf:  {value:'motdepasse'},
+    presentation:   {value:'presentation.md', type:'file'},
+    motivation:     {value:'motivation.md',   type:'file'},
+    # options:        {value:OPTIONS_NEW_ICARIEN, editable:false},
+    cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
+    module_3:       {value:true, type:'checkbox'}
+  },
+  # Candidate valide pour Benoi (index 1 - et rester index 1 pour les gels)
+  {
+    pseudo:         {value:'Benoit'},
+    patronyme:      {value:'Benoit Ackerman'},
+    naissance:      {value:'1982', type:'select'},
+    sexe:           {value:'un homme', type:'select'},
+    mail:           {value:'benoit.ackerman@yahoo.fr'},
+    mail_conf:      {value:'benoit.ackerman@yahoo.fr'},
+    password:       {value:'unmotdepasse'},
+    password_conf:  {value:'unmotdepasse'},
+    presentation:   {value:'presentation.md', type:'file'},
+    motivation:     {value:'motivation.md',   type:'file'},
+    # options:        {value:OPTIONS_NEW_ICARIEN, editable:false},
+    cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
+    module_1:       {value:true, type:'checkbox'},
+    module_2:       {value:true, type:'checkbox'},
+    module_4:       {value:true, type:'checkbox'}
+  },
+  # Candidate valide pour Benoi (index 1 - et rester index 1 pour les gels)
+  {
+    pseudo:         {value:'Élie'},
+    patronyme:      {value:'Élie Perret'},
+    naissance:      {value:'1998', type:'select'},
+    sexe:           {value:'un homme', type:'select'},
+    mail:           {value:'elieperret@gmail.com'},
+    mail_conf:      {value:'elieperret@gmail.com'},
+    password:       {value:'lemotdepasse'},
+    password_conf:  {value:'lemotdepasse'},
+    presentation:   {value:'presentation.md', type:'file'},
+    motivation:     {value:'motivation.md',   type:'file'},
+    extrait:        {value:'extrait.odt',     type:'file'},
+    # options:        {value:OPTIONS_NEW_ICARIEN, editable:false},
+    cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
+    module_6:       {value:true, type:'checkbox'},
+    module_7:       {value:true, type:'checkbox'}
+  }
+]
+
 DATA_SPEC_SIGNUP_INVALID = [
   {
     pseudo:     {value:'', have:ERRORS[:pseudo_required], have_not:nil},
@@ -114,88 +211,5 @@ DATA_SPEC_SIGNUP_INVALID = [
     module_1: {type:'checkbox', value:true},
     module_2: {type:'checkbox', value:true},
     module_6: {type:'checkbox', value:true, have_not:ERRORS[:modules_required]}
-  }
-]
-
-# ---------------------------------------------------------------------
-#
-#   Test d'une inscription valide
-#
-# ---------------------------------------------------------------------
-
-DATA_SPEC_SIGNUP_VALID = [
-
-  # UN premier candidat valide
-  {
-    pseudo:     {value:'Philippe'},
-    patronyme:  {value:'Philippe Perret'},
-    naissance:  {value:'1964', type:'select'},
-    sexe:       {value:'un homme', type:'select'},
-    mail:       {value:'icareedi@gmail.com'},
-    mail_conf:  {value:'icareedi@gmail.com'},
-    password:   {value:'motdepasse'},
-    password_conf:  {value:'motdepasse'},
-    presentation:   {value:'presentation.md', type:'file'},
-    motivation:     {value:'motivation.md',   type:'file'},
-    cgu:            {value:true, type:'checkbox'},
-    rgpd:           {value:true, type:'checkbox'},
-    module_2:       {value:true, type:'checkbox'},
-    module_4:       {value:true, type:'checkbox'},
-    module_6:       {value:true, type:'checkbox'}
-  },
-  # UNE seconde candidate valide (index 1 - et rester index 1 pour les gels)
-  {
-    pseudo:         {value:'Marion'},
-    patronyme:      {value:'Marion Michel'},
-    naissance:      {value:'1992', type:'select'},
-    sexe:           {value:'une femme', type:'select'},
-    mail:           {value:'marion.michel31@gmail.com'},
-    mail_conf:      {value:'marion.michel31@gmail.com'},
-    password:       {value:'motdepasse'},
-    password_conf:  {value:'motdepasse'},
-    presentation:   {value:'presentation.md', type:'file'},
-    motivation:     {value:'motivation.md',   type:'file'},
-    options:        {value:"0"*32, editable:false},
-    cgu:            {value:true, type:'checkbox'},
-    rgpd:           {value:true, type:'checkbox'},
-    module_3:       {value:true, type:'checkbox'}
-  },
-  # Candidate valide pour Benoi (index 1 - et rester index 1 pour les gels)
-  {
-    pseudo:         {value:'Benoit'},
-    patronyme:      {value:'Benoit Ackerman'},
-    naissance:      {value:'1982', type:'select'},
-    sexe:           {value:'un homme', type:'select'},
-    mail:           {value:'benoit.ackerman@yahoo.fr'},
-    mail_conf:      {value:'benoit.ackerman@yahoo.fr'},
-    password:       {value:'unmotdepasse'},
-    password_conf:  {value:'unmotdepasse'},
-    presentation:   {value:'presentation.md', type:'file'},
-    motivation:     {value:'motivation.md',   type:'file'},
-    options:        {value:"0"*32, editable:false},
-    cgu:            {value:true, type:'checkbox'},
-    rgpd:           {value:true, type:'checkbox'},
-    module_1:       {value:true, type:'checkbox'},
-    module_2:       {value:true, type:'checkbox'},
-    module_4:       {value:true, type:'checkbox'}
-  },
-  # Candidate valide pour Benoi (index 1 - et rester index 1 pour les gels)
-  {
-    pseudo:         {value:'Élie'},
-    patronyme:      {value:'Élie Perret'},
-    naissance:      {value:'1998', type:'select'},
-    sexe:           {value:'un homme', type:'select'},
-    mail:           {value:'elieperret@gmail.com'},
-    mail_conf:      {value:'elieperret@gmail.com'},
-    password:       {value:'lemotdepasse'},
-    password_conf:  {value:'lemotdepasse'},
-    presentation:   {value:'presentation.md', type:'file'},
-    motivation:     {value:'motivation.md',   type:'file'},
-    extrait:        {value:'extrait.odt',     type:'file'},
-    options:        {value:"0"*32, editable:false},
-    cgu:            {value:true, type:'checkbox'},
-    rgpd:           {value:true, type:'checkbox'},
-    module_6:       {value:true, type:'checkbox'},
-    module_7:       {value:true, type:'checkbox'}
   }
 ]

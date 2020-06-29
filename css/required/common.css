@@ -24,7 +24,8 @@ a.current {
   opacity:1;
 }
 
-.discret {opacity:0.3}
+.discret {opacity:0.5}
+.tres.discret, .very.discret {opacity:0.3}
 .discret:hover {opacity:1}
 
 div.warning, p.warning, span.warning {

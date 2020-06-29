@@ -20,7 +20,7 @@ def real?
 end #/ real?
 
 def essai?
-  !real?
+  icarien? && !real?
 end #/ essai?
 
 def admin?
@@ -42,6 +42,15 @@ def actif?
   @is_actif = !get(:icmodule_id).nil? if @is_actif.nil?
   @is_actif
 end #/ actif?
+
+def inactif?
+  @is_inactif = real? && !actif? if @is_inactif.nil?
+  @is_inactif
+end #/ inactif?
+
+def candidat?
+  statut == :candidat
+end #/ candidat?
 
 def grade
   option(1)
@@ -66,9 +75,12 @@ end
 def statut
   return :actif if actif? # bit 16 ne sert plus pour actif
   case option(16)
-  when 0, 1 then :candidat
-  when 3 then :en_pause
-  when 4 then :inactif
+  when 0 then :undefined
+  when 1 then :guest
+  when 2 then :candidat
+  when 3 then :actif
+  when 4 then :en_pause
+  when 5 then :inactif
   end
 end
 

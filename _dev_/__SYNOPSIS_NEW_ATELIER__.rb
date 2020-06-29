@@ -48,8 +48,12 @@
 # UPLOADER LE DOSSIER ./js
 # UPLOADER LE DOSSIER ./img (mais en gardant l'autre car des images sont utiles ailleurs)
 
+
 # FAIRE QUELQUES TESTS
 # TODO
+
+# PAGE DES ICARIENS
+# Voir si la liste des anciens icariens présente bien la liste des modules suivis.
 
 # DÉBLOQUER LA PAGE DE TRAVAUX
 # TODO
