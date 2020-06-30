@@ -29,6 +29,7 @@ end #/ add_discussion
 
 # Pour quitter la discussion d'ID discussion_id
 def quit_discussion(discussion_id)
+  discussion = FrigoDiscussion.get(discussion_id)
   req = <<-SQL.freeze
 DELETE FROM `#{FrigoDiscussion::TABLE_USERS}`
   WHERE user_id = ? AND discussion_id = ?
@@ -36,7 +37,6 @@ DELETE FROM `#{FrigoDiscussion::TABLE_USERS}`
   db_exec(req, [self.id, discussion_id.to_i])
   message(MESSAGES[:confirmation_quit_discussion] % discussion.titre)
   # On avertit le propriétaire de la discussion
-  discussion = FrigoDiscussion.get(discussion_id)
   if discussion.owner.id != self.id
     # <= L'auteur courant n'est pas le créateur de la discussion
     # => On peut envoyer un mail d'information
