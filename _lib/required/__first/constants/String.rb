@@ -7,6 +7,8 @@ BR = '<br/>'.freeze
 EMPTY_STRING = ''.freeze
 ESPACE_FINE = "<this />".freeze
 
+ET = ' et '.freeze
+
 ISPACE = '&nbsp;'.freeze
 
 PV = ';'.freeze # PV pour Point Virgule
