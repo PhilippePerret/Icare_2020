@@ -43,6 +43,17 @@ def last_check_discussion(discussion_id)
   db_get(FrigoDiscussion::TABLE_USERS, {discussion_id:discussion_id.to_i, user_id:self.id}, ['last_checked_at'])[:last_checked_at]
 end #/ last_check_discussion
 
+# Marquer une discussion entièrement lue
+def marquer_discussion_lue(discussion_id)
+  req = <<-SQL.freeze
+  UPDATE `#{FrigoDiscussion::TABLE_USERS}`
+    SET last_checked_at = ?
+    WHERE discussion_id = ? AND user_id = ?
+  SQL
+  db_exec(req, [Time.now.to_i, discussion_id.to_i, self.id])
+  message(MESSAGES[:discussion_marquee_lue])
+end #/ marquer_discussion_lue
+
 =begin
   Méthode permettant de savoir si l'user a déjà été prévenu pour un nouveau
   message dans la discussion +discussion+.

@@ -7,6 +7,14 @@ class HTML
   def exec
     # Code à exécuter avant la construction de la page
     icarien_required
+    case param(:op)
+    when 'marquer_lus'
+      # On passe par ici que l'user cliquer sur le bouton pour marquer une
+      # discussion "à jour" c'est-à-dire qu'il a lu tous les nouveaux messages
+      # cela change la date de son last_checked_at dans frigo_users
+      param(:disid) || raise(ERRORS[:discussion_required]) # passage en force
+      user.marquer_discussion_lue(param(:disid))
+    end
     if param(:form_id)
       form = Form.new
       if form.conform?
@@ -19,6 +27,8 @@ class HTML
       end #/fin de si le formulaire est conforme
     end
   end
+
+  # Construction du corps de la page
   def build_body
     # Construction du body
     vue = if param(:disid) # une discussion choisie
