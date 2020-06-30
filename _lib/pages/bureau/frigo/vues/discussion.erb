@@ -9,7 +9,7 @@
 # ---------------------------------------------------------------------
 if param(:disid)
 %>
-  <%= FrigoDiscussion.new(param(:disid)).out %>
+  <%= FrigoDiscussion.new(param(:disid)).out(for: user, last_check: user.last_check_discussion(param(:disid))) %>
 <% else %>
   <p>Vous devez choisir la discussion à afficher !</p>
 <%

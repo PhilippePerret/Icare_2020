@@ -99,12 +99,15 @@ end #/ participants
 # Affichage de la discussion
 #
 # +options+
+#   :for        {User} L'user pour lequel on doit afficher la discussion. Par
+#               défaut c'est utilisateur courant.
 #   :ordre      :inverse/:chrono    Affichage inverse (dernier message au-dessus) ou chronologique
 #   :from       Time. Seulement depuis ce temps
 #   :new_from   {Time} Les nouveaux seront signalés à partir de cette date
 #               Note : c'est le `last_checked_at` de l'user sur la discussion.
 def out(options = nil)
   options ||= {}
+  options[:for] ||= user
   content = Tag.div(text:titre, class:'titre-discussion') + liste_messages_formated(options)
   Tag.div(text: content, class:'discussion')
 end #/ out

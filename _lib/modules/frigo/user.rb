@@ -37,6 +37,11 @@ def discussions
   end
 end #/ discussions
 
+# Retourne la date de dernier check de l'icarien pour la discussion d'ID
+# discussion_id
+def last_check_discussion(discussion_id)
+  db_get(FrigoDiscussion::TABLE_USERS, {discussion_id:discussion_id.to_i, user_id:self.id}, ['last_checked_at'])[:last_checked_at]
+end #/ last_check_discussion
 
 =begin
   Méthode permettant de savoir si l'user a déjà été prévenu pour un nouveau
