@@ -9,10 +9,10 @@ class HTML
     proceed_exec if self.respond_to?(:exec) # la route chargée
     build_body
     build_header
+    build_titre
     build_head
     build_footer
     build_messages
-    build_titre
     css = route.home? ? 'home' : ''
     @page = <<-HTML
 <!DOCTYPE html>
@@ -55,7 +55,7 @@ class HTML
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <base href="http://localhost/AlwaysData/Icare_2020/">
-  <title>Atelier Icare | #{@titre}</title>
+  <title>Atelier Icare#{@raw_titre ? " | #{@raw_titre}" : ""}</title>
   #{css_tags}
   <script type="text/javascript">#{@raw_js}</script>
 </head>
@@ -66,6 +66,7 @@ class HTML
   def build_titre
     return '' if route.home?
     t = respond_to?(:titre) ? titre : "Titre page manquant"
+    @raw_titre = t.dup.safetize
     @titre = "<h2 class=\"page-title\">#{t}</h2>"
   end
 

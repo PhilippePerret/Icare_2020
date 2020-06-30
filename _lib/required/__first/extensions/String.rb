@@ -25,7 +25,7 @@ class String
 
   # Supprime toutes les balises HTML (pour les textes donnés)
   def safetize
-    self.gsub("<(.+?)>".freeze, EMPTY_STRING)
+    self.gsub(/<(.+?)>/, EMPTY_STRING)
   end #/ safetize
 
 end #/String
