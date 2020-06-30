@@ -27,6 +27,23 @@ def add_discussion(discussion_id)
   db_compose_insert(FrigoDiscussion::TABLE_USERS, {discussion_id: discussion_id, user_id: id, last_checked_at: Time.now.to_i - 100})
 end #/ add_discussion
 
+# Pour quitter la discussion d'ID discussion_id
+def quit_discussion(discussion_id)
+  req = <<-SQL.freeze
+DELETE FROM `#{FrigoDiscussion::TABLE_USERS}`
+  WHERE user_id = ? AND discussion_id = ?
+  SQL
+  db_exec(req, [self.id, discussion_id.to_i])
+  message(MESSAGES[:confirmation_quit_discussion] % discussion.titre)
+  # On avertit le propriétaire de la discussion
+  discussion = FrigoDiscussion.get(discussion_id)
+  if discussion.owner.id != self.id
+    # <= L'auteur courant n'est pas le créateur de la discussion
+    # => On peut envoyer un mail d'information
+    discussion.owner.send_mail(subject:MESSAGES[:subject_depart_discussion], message:(MESSAGES[:message_depart_discussion] % {owner:discussion.owner.pseudo, pseudo: self.pseudo, titre:discussion.titre}))
+  end
+end #/ quit_discussion
+
 # Retourne la liste des discussions courantes de l'icarien
 # NOTE : Celles qu'il a initiées seulement
 def discussions

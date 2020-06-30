@@ -90,8 +90,8 @@ div.warning, p.warning, span.warning {
   width:49%!important;
 }
 
-.w100pct {width:100%;}
-
+.w100pct {width:100%}
+.w50pct {width:50%}
 /*
   Les sélecteurs "no"
 */

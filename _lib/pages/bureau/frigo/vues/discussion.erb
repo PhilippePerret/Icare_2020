@@ -2,6 +2,49 @@
   discussion = FrigoDiscussion.new(param(:disid))
   listing_messages = discussion.out(for: user, last_check: user.last_check_discussion(param(:disid)))
 %>
+
+<%
+# ---------------------------------------------------------------------
+#
+#   PARTIE INVITATION
+#
+# ---------------------------------------------------------------------
+
+# Pour inviter des icariens à rejoindre une discussion
+# Principe : on affiche une liste des icariens pour pouvoir les choisir
+if param(:op) == 'inviter'
+%>
+<div class="mb2">
+<form class="noborder" action="<%= route.to_s %>" method="POST">
+  <input type="hidden" name="op" value="send_invitations">
+  <input type="hidden" name="route" value="bureau/frigo">
+  <input type="hidden" name="disid" value="<%= param(:disid) %>">
+  <p>Sélectionner dans la liste ci-dessous les icarien·ne·s à inviter <span class="small">(utiliser les touches ⌘ / Ctrl, ⇧ pour sélectionner plusieurs noms)</span>.</p>
+  <select name="icariens" MULTIPLE size="10" class="small" style="width:100%;">
+    <% User.each('id != 9 AND SUBSTRING(options,4,1) != "1"'.freeze) do |user| %>
+      <option value="<%= user.id %>"><%= user.pseudo %></option>
+    <% end %>
+  </select>
+  <div class="buttons">
+    <input type="submit" name="" value="Inviter">
+  </div>
+</form>
+</div>
+
+<%
+# ---------------------------------------------------------------------
+#
+#   /Fin PARTIE INVITATION
+#
+# ---------------------------------------------------------------------
+  end
+# ---------------------------------------------------------------------
+#
+#   DISCUSSION (listing des messages)
+#
+# ---------------------------------------------------------------------
+
+%>
 <div class="right">
   <div class="fleft">
     <span class="small<%= discussion.nombre_non_lus > 0 ? ' red' : '' %>">
@@ -42,5 +85,13 @@ form.rows = {
 }
 form.submit_button = "Ajouter"
 form.submit_button_class = 'inline'
+other_buttons = []
+if discussion.user_id == user.id
+  other_buttons << {text:'Inviter des icarien·ne·s à rejoindre la discussion'.freeze, route:"bureau/frigo?op=inviter&disid=#{param(:disid)}".freeze}
+else
+  other_buttons << {text:'Quitter cette discussion'.freeze, route:"bureau/frigo?op=quitter_discussion&did=#{param(:disid)}".freeze}
+end
+
+form.other_buttons = other_buttons
 %>
 <%= form.out %>

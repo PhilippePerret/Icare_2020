@@ -8,12 +8,33 @@ class HTML
     # Code à exécuter avant la construction de la page
     icarien_required
     case param(:op)
+    when 'decliner_invitation'
+      # Méthode appelée depuis un mail pour décliner une invitation à
+      # participer à une discussion
+      param(:did) || raise(ERRORS[:discussion_required]) # passage en force
+      user.quit_discussion(param(:did))
+      return
+    when 'quitter_discussion'
+      # Méthode appelée quand l'user clique sur le bouton pour quitter la
+      # discussion sur laquelle il se trouve
+      param(:did) || raise(ERRORS[:discussion_required]) # passage en force
+      user.quit_discussion(param(:did))
+      return
     when 'marquer_lus'
-      # On passe par ici que l'user cliquer sur le bouton pour marquer une
+      # On passe par ici quand l'user clique sur le bouton pour marquer une
       # discussion "à jour" c'est-à-dire qu'il a lu tous les nouveaux messages
       # cela change la date de son last_checked_at dans frigo_users
       param(:disid) || raise(ERRORS[:discussion_required]) # passage en force
       user.marquer_discussion_lue(param(:disid))
+      return
+    when 'send_invitations'
+      # On passe par ici quand l'user a demandé à afficher la liste des
+      # icarien (et administrateurs) pour les inviter à rejoindre une conversa
+      # tion. L'icarien a choisi les icariens et on va leur envoyer une
+      # invitation
+      param(:disid) || raise(ERRORS[:discussion_required]) # passage en force
+      FrigoDiscussion.get(param(:disid)).send_invitations_to(param(:icariens))
+      return
     end
     if param(:form_id)
       form = Form.new

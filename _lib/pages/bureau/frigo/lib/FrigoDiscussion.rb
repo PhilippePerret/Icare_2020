@@ -9,7 +9,7 @@ class FrigoDiscussion < ContainerClass
   # TODO Pour le moment, elles sont classées par ordre de création inverse
   # (les plus récentes en premier), plus tard, on pourra mettre en premier
   # celles qui ont reçu le dernier message.
-  REQUEST_DISCUSSIONS_USER = <<-SQL
+  REQUEST_DISCUSSIONS_USER = <<-SQL.freeze
   SELECT
     dis.titre AS titre, dis.id AS discussion_id, u.pseudo AS owner_pseudo
     FROM `frigo_users` AS fu
@@ -65,13 +65,13 @@ rescue Exception => e
 end #/ add_message
 
 SUBJECT_NEW_MESSAGE = 'Nouveau message de %s sur votre frigo'.freeze
-MESSAGE_NEW_MESSAGE = "
+MESSAGE_NEW_MESSAGE = <<-HTML.freeze
 <p>Bonjour %{pseudo},</p>
 <p>Je vous informe que %{from} vient de laisser un message sur votre frigo concernant la discussion “%{titre}”.</p>
 <p>Vous pouvez #{Tag.lien(route:'bureau/frigo?disid=%{disid}', full:true, text:'rejoindre cette discussion')}  sur votre frigo.</p>
 <p>Bien à vous,</p>
 <p>Le Bot de l'Atelier Icare</p>
-".freeze
+HTML
 # Pour notifier les participants à cette discussion qu'un nouveau message
 # a été envoyé
 # +params+
@@ -91,6 +91,37 @@ def notify_followers(params)
     message(MESSAGES[:follower_warned_for_new_message] % part.pseudo)
   end
 end #/ notify_followers
+
+SUBJECT_INVITATION = "Invitation à rejoindre une discussion"
+MESSAGE_INVITATION = <<-HTML.freeze
+<p>Bonjour %{pseudo},</p>
+<p>Excusez-moi de vous déranger, mais %{owner} vous invite à rejoindre sa discussion “%{titre}”.</p>
+<p>Pour participer à cette discussion, cliquer sur le bouton ci-dessous :</p>
+<p style="text-align:center;">%{lien_participer}</p>
+<p>Pour décliner cette invitation, il suffit de cliquer le bouton ci-dessous</p>
+<p style="text-align:center">%{lien_decliner}</p>
+<p>Bien à vous,</p>
+<p>🤖 Le Bot de l’Atelier Icare 🦋</p>
+HTML
+# Pour envoyer des invitations à rejoindre une discussion
+# En fait, cela revient à les ajouter à la discussion et leur envoyer un
+# message d'invitation.
+def send_invitations_to(icariens)
+  nombre_icariens = icariens.count
+  return if nombre_icariens == 0
+  nombre_hommes = 0
+  lien_participer = Tag.lien(route:"bureau/frigo?disid=#{self.id}", full:true, text:'Lire la discussion'.freeze)
+  lien_decliner   = Tag.lien(route:"bureau/frigo?op=decliner_invitation&did=#{self.id}", full:true, text:'Décliner cette invitation'.freeze)
+  icariens.each do |iid|
+    ica = User.get(iid.to_i)
+    nombre_hommes += 1 unless ica.femme?
+    ica.send_mail(subject:SUBJECT_INVITATION, message:(MESSAGE_INVITATION % {pseudo:ica.pseudo, owner:user.pseudo, titre:self.titre, disid:self.id, lien_participer:lien_participer, lien_decliner:lien_decliner}))
+  end
+
+  s = nombre_icariens > 1 ? 's' : ''
+  es = nombre_icariens > 1 ? (nombre_hommes > 0 ? 's' : 'es') : ''
+  message("#{nombre_icariens} icarien·ne·#{s} ont été invité#{es} à rejoindre la discussion “#{titre}”.".freeze)
+end #/ send_invitations_to
 
 # Retourne la liste des participants à cette discussion (Array de User(s))
 def participants
