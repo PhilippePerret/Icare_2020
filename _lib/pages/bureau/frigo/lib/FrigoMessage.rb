@@ -14,6 +14,11 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 
+# Instance discussion du message, qui est stipulé explicitement pour le
+# moment (on pourrait aussi utiliser FrigoDiscussion.get(discussion_id) mais
+# je ne suis pas certain que les autres méthodes obtiennent la même instance…)
+attr_accessor :discussion
+
 # Retourne le div du message formaté.
 # +options+
 #   :for    {User} Le follower pour lequel on doit afficher le message.
@@ -26,6 +31,8 @@ def out(options)
   css << (user_auteur? ? 'mright' : 'mleft')
   if !user_auteur? && created_at > options[:last_check]
     css << 'exergue'.freeze
+    # Incrémenter le nombre de messages non lu
+    discussion.nombre_non_lus += 1
   end
   Tag.div(text:content_formated, class:css.join(SPACE))
 end #/ out

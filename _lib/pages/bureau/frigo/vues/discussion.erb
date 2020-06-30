@@ -1,5 +1,17 @@
+<%
+  discussion = FrigoDiscussion.new(param(:disid))
+  listing_messages = discussion.out(for: user, last_check: user.last_check_discussion(param(:disid)))
+%>
 <div class="right">
-  <a href="bureau/frigo" class="small">Liste des discussions</a>
+  <div class="fleft">
+    <span class="small<%= discussion.nombre_non_lus > 0 ? ' red' : '' %>">
+      <%= MESSAGES[:nombre_messages_non_lus] % discussion.nombre_non_lus %>
+    </span>
+    <% if discussion.nombre_non_lus > 0 %>
+    <%= MESSAGES[:bouton_tout_marquer_lu] % param(:disid) %>
+    <% end %>
+  </div>
+  <a href="bureau/frigo" class="small">LISTE DES DISCUSSIONS</a>
 </div>
 <%
 # ---------------------------------------------------------------------
@@ -9,7 +21,7 @@
 # ---------------------------------------------------------------------
 if param(:disid)
 %>
-  <%= FrigoDiscussion.new(param(:disid)).out(for: user, last_check: user.last_check_discussion(param(:disid))) %>
+  <%= listing_messages %>
 <% else %>
   <p>Vous devez choisir la discussion à afficher !</p>
 <%

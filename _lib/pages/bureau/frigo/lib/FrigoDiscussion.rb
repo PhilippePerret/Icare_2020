@@ -37,6 +37,12 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 
+# Nombre de messages non lus
+# Bien comprendre, ici, qu'il s'agit d'un nombre qui dépend directement
+# de l'icarien (ou l'admin) pour lequel on affiche la liste. Cet icarien est
+# indiqué dans la propriét :for des +options+ envoyées à la méthode `out`
+attr_accessor :nombre_non_lus
+
 # Pour ajouter un message
 # +params+
 #   :auteur   {User} Instance de l'user qui envoie le message
@@ -108,6 +114,7 @@ end #/ participants
 def out(options = nil)
   options ||= {}
   options[:for] ||= user
+  self.nombre_non_lus = 0
   content = Tag.div(text:titre, class:'titre-discussion') + liste_messages_formated(options)
   Tag.div(text: content, class:'discussion')
 end #/ out
@@ -124,7 +131,9 @@ REQUEST_GET_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i 
 def messages
   @messages ||= begin
     db_exec(REQUEST_GET_MESSAGES % [id]).collect do |dmes|
-      FrigoMessage.instantiate(dmes)
+      fmsg = FrigoMessage.instantiate(dmes)
+      fmsg.discussion = self # sert à incrémenter le nombre de messages non lus
+      fmsg
     end
   end
 end #/ messages

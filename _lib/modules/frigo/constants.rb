@@ -9,4 +9,6 @@ ERRORS.merge!({
 
 MESSAGES.merge!({
   follower_warned_for_new_message: "J'ai averti %s de ce nouveau message.".freeze,
+  nombre_messages_non_lus: "Nombre de nouveaux messages : %i".freeze,
+  bouton_tout_marquer_lu: '<span class="small ml2"><a href="bureau/frigo?disid=%s&op=mark_lu">Tout marquer lu</a></span>'.freeze,
 })
