@@ -44,7 +44,6 @@ def validation_inscription
   degel_or_gel('validation_inscription') do
     validation_mail
     puts "Fabrication du gel 'validation_inscription'".vert
-    goto_login_form
     login_admin
     goto 'admin/notifications'
     within("#validation-candidature-10-form".freeze) do
@@ -59,8 +58,7 @@ def demarrage_module
   degel_or_gel('demarrage_module') do
     validation_inscription
     puts "Fabrication du gel 'demarrage_module'".vert
-    goto_login_form
-    login_icarien(1)
+    login_marion
     goto 'bureau/notifications'
     click_on('run-button-icmodule-start')
     screenshot('demarrage_module')
@@ -72,8 +70,7 @@ def envoi_travail
   degel_or_gel('envoi_travail') do
     demarrage_module
     puts "Fabrication du gel 'envoi_travail'".vert
-    goto_login_form
-    login_icarien(1)
+    login_marion
     goto 'bureau/sender?rid=send_work_form'
     path_doc_work   = File.join(SPEC_FOLDER_DOCUMENTS,'extrait.odt')
     path_doc_work2  = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.rtf')
@@ -98,7 +95,6 @@ def recupere_travail
   degel_or_gel('recupere_travail') do
     envoi_travail
     puts "Fabrication du gel 'recupere_travail'".vert
-    goto_login_form
     login_admin
     goto('admin/notifications')
     click_on('Télécharger les documents')
@@ -111,7 +107,6 @@ def envoi_comments
   degel_or_gel('envoi_comments') do
     recupere_travail
     puts "Fabrication du gel 'envoi_comments'".vert
-    goto_login_form
     login_admin
     goto('admin/notifications')
     # On doit donner les documents commentés
@@ -143,7 +138,6 @@ def change_etape
   degel_or_gel('change_etape') do
     recupere_comments
     puts "Fabrication du gel 'change_etape'".vert
-    goto_login_form
     login_admin
     goto('admin/notifications')
     click_on('Changer l’étape'.freeze)
@@ -156,7 +150,6 @@ def depot_qdd
   degel_or_gel('depot_qdd') do
     change_etape
     puts "Fabrication du gel 'depot_qdd'".vert
-    goto_login_form
     login_admin
     goto('admin/notifications')
     # On doit donner les documents commentés
@@ -179,8 +172,7 @@ def define_sharing
     require './_lib/_watchers_processus_/IcEtape/qdd_sharing/constants.rb'
     depot_qdd
     puts "Fabrication du gel 'define_sharing'".vert
-    goto_login_form
-    login_icarien(1)
+    login_marion
     goto('bureau/notifications')
     within("form#sharing-form-etape-1") do
       select(DATA_SHARING[1][:name], from: "partage-1-original")
@@ -266,7 +258,6 @@ def validation_deux_inscriptions
     elie_valide_son_mail
     puts "Fabrication du gel 'validation_deux_inscriptions'".vert
     Capybara.reset_sessions!
-    goto_login_form
     login_admin
     goto 'admin/notifications'
     within("#validation-candidature-12-form".freeze) do
@@ -321,6 +312,66 @@ def benoit_frigote_phil_marion_et_elie
     logout # pour laisser la place
   end
 end #/ benoit_frigote_phil_marion_et_elie
+
+
+def phil_marion_elie_repondent_benoit
+  # Après ce test, Benoit a trois réponses à ses trois discussions
+  degel_or_gel('phil_marion_elie_repondent_benoit') do
+    benoit_frigote_phil_marion_et_elie
+    puts "Fabrication du gel 'phil_marion_elie_repondent_benoit'".vert
+    require './_lib/modules/frigo/constants' # (messages et erreurs)
+    # Phil répond au message
+    Capybara.reset_sessions!
+    # Phil répond au message
+    login_admin
+    click_on('Bureau')
+    click_on('Porte de frigo')
+    click_on('Titre discussion avec Phil #3')
+    within('form#discussion-form') do
+      fill_in('frigo_message', with: "La réponse de Phil au message de Benoit.")
+      click_on("Ajouter")
+    end
+    screenshot('phil-repond-message-benoit')
+    logout
+
+    # Marion répond au message
+    Capybara.reset_sessions!
+    login_marion
+    click_on('Bureau')
+    click_on('Porte de frigo')
+    click_on('Titre discussion avec Marion #1')
+    within('form#discussion-form') do
+      fill_in('frigo_message', with: "Marion répond qu'elle veut bien discuter.")
+      click_on("Ajouter")
+    end
+    screenshot('marion-repond-message-benoit')
+    logout
+
+    # Élie répond au message (note : il va laisser deux messages)
+    Capybara.reset_sessions!
+    login_elie
+    click_on('Bureau')
+    click_on('Porte de frigo')
+    click_on('Titre discussion avec Élie #2')
+    within('form#discussion-form') do
+      fill_in('frigo_message', with: "Réponse d’Élie à Benoit.")
+      click_on("Ajouter")
+    end
+    message_benoit = MESSAGES[:follower_warned_for_new_message] % 'Benoit'
+    screenshot('elie-premier-message-benoit')
+    expect(page).to have_content(message_benoit)
+
+    # Élie laisse un second message
+    within('form#discussion-form') do
+      fill_in('frigo_message', with: "Une autre réponse d’Élie à Benoit.")
+      click_on("Ajouter")
+    end
+    screenshot('elie-second-message-benoit')
+    expect(page).not_to have_content(message_benoit)
+
+    logout
+  end
+end #/ phil_marion_elie_repondent_benoit
 
 # Démarrage des modules pour Élie et Benoit
 # TODO

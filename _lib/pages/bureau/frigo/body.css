@@ -1,0 +1,46 @@
+div.discussion {
+  padding:1em;
+  border:1px solid;
+  border-radius:2px;
+}
+
+div.discussion div.titre-discussion {
+  font-variant:all-small-caps;
+  font-size:1.1em;
+  margin-bottom:2em;
+}
+
+div.discussion div.messages-discussion {
+
+}
+
+div.discussion div.messages-discussion span.auteur {
+  font-style:italic;
+  font-size: 0.8em;
+}
+div.discussion div.messages-discussion div.fmessage {
+  margin-bottom: 1em;
+}
+div.discussion div.messages-discussion div.fmessage.mright div.infos {
+  text-align: right;
+}
+
+@media only screen and (min-width: 768px) {
+  div.discussion div.messages-discussion div.fmessage {
+    width: 50%;
+  }
+  div.discussion div.messages-discussion div.fmessage.mright {
+    width: 50%;
+    margin-left:50%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  div.discussion div.messages-discussion div.fmessage {
+    margin-top:2em;
+  }
+}
+
+form#discussion-form {
+  position:fixed!important;
+  bottom:40px;
+}

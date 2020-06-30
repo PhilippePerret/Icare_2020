@@ -8,17 +8,21 @@ class HTML
     # Code à exécuter avant la construction de la page
     icarien_required
     if param(:form_id)
-      if param(:form_id) == 'discussion-phil-form'
-        form = Form.new
-        start_discussion_with_phil if form.conform?
-      end
+      form = Form.new
+      if form.conform?
+        case param(:form_id)
+        when 'discussion-phil-form'
+          start_discussion_with_phil
+        when 'discussion-form'
+          add_message_to_discussion
+        end
+      end #/fin de si le formulaire est conforme
     end
   end
   def build_body
     # Construction du body
-    vue = case param(:op)
-          when 'contact'.freeze # on ne s'en sert plus
-            'contact'.freeze
+    vue = if param(:disid) # une discussion choisie
+            'discussion'.freeze
           else
             'body'.freeze
           end
@@ -33,4 +37,11 @@ class HTML
   rescue Exception => e
     erreur e.message
   end #/ start_discussion_with_phil
+
+  # Pour ajouter un message à la discussion courante.
+  # - L'ID de la discussion est contenu dans param(:disid)
+  # - Le message est contenu dans param(:frigo_message)
+  def add_message_to_discussion
+    FrigoDiscussion.get(param(:disid))&.add_message({auteur:user, message:param(:frigo_message)})
+  end #/ add_message_to_discussion
 end #/HTML

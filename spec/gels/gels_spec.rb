@@ -88,8 +88,13 @@ feature 'Préparation en live' do
   end
 
   scenario 'jusqu’au contact frigo de Benoit', benoit_frigote_phil_marion_et_elie: true do
-    Gel.remove('benoit_frigote_phil_marion_et_elie')  if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    Gel.remove('benoit_frigote_phil_marion_et_elie') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
     benoit_frigote_phil_marion_et_elie
+  end
+
+  scenario 'Phil, Marion et Elie répondent au message de Benoit', phil_marion_elie_repondent_benoit:true do
+    Gel.remove('phil_marion_elie_repondent_benoit') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    phil_marion_elie_repondent_benoit
   end
 
 end

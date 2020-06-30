@@ -14,6 +14,7 @@ a.current {
 .hidden {display:none!important}
 .inline {display:inline!important}
 .inline-block{display:inline-block}
+.block {display:block}
 
 .invisible {visibility:hidden}
 
@@ -97,6 +98,7 @@ div.warning, p.warning, span.warning {
 .noborder {
   border:unset!important;
 }
+.nopadding {padding:unset!important;}
 .nobackground, .nobgd {
   background:unset!important;
 }

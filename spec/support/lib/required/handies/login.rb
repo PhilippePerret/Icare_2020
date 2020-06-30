@@ -3,6 +3,25 @@
   Méthodes utiles pour les gels
 =end
 
+# Raccourcis
+def login_marion
+  goto_login_form
+  login_icarien(1)
+end #/ login_marion
+def login_benoit
+  goto_login_form
+  login_icarien(2)
+end #/ login_benoit
+def login_elie
+  goto_login_form
+  login_icarien(3)
+end #/ login_elie
+
+def login_admin
+  require './_lib/data/secret/phil'
+  goto_login_form
+  login_in_form(mail: PHIL_MAIL, password:PHIL_PASSWORD)
+end #/ login_admin
 
 # Pour s'identifier sur la page de login
 def goto_login_form
@@ -25,11 +44,6 @@ def login_icarien(nth)
   login_in_form(mail: data[:mail][:value], password:data[:password][:value])
 end #/ login_icarien
 # Pour identifier l'administrateur
-
-def login_admin
-  require './_lib/data/secret/phil'
-  login_in_form(mail: PHIL_MAIL, password:PHIL_PASSWORD)
-end #/ login_admin
 
 # Pour se déconnecter
 def logout

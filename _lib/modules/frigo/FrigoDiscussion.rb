@@ -36,12 +36,12 @@ class << self
 
   # Initier une nouvelle discussion (par l'user courant), avec +others+, liste
   # des autres icariens et le message +message+
-  def create(others, titre, message, options = nil)
+  def create(others, titre, msg, options = nil)
     pseudo_others =  others.collect{|u| u.pseudo}
     # On crée la discussion
     discussion_id = db_compose_insert(table, {user_id:user.id, titre:titre})
     # On crée le message
-    message_id = db_compose_insert(table_messages, {discussion_id:discussion_id, user_id: user.id, content:message})
+    message_id = db_compose_insert(table_messages, {discussion_id:discussion_id, user_id: user.id, content:msg})
     # On indique l'ID du dernier message de la discussion
     db_compose_update(table, discussion_id, {last_message_id: message_id})
     others.each do |other|

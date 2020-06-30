@@ -1,4 +1,4 @@
-<p class="explication">Cette page présente votre <em>porte de frigo</em> qui vous permet d’entretenir des conversations avec <%= salle_des_icariens('les autres icarien·ne·s') %>.</p>
+<p class="explication">Votre <em>porte de frigo</em> qui vous permet d’entretenir des conversations avec <%= salle_des_icariens('les autres icarien·ne·s') %>.</p>
 
 <%
 # ---------------------------------------------------------------------
@@ -7,26 +7,13 @@
 #
 # ---------------------------------------------------------------------
 %>
-<div id="discussions-list" class="float-tdm">
-  <% if user.has_discussions? %>
-    <%= FrigoDiscussion.discussions_of(user.id) %>
-  <% else %>
-    <p>Vous n’avez pas de discussions en cours. Pour commencer une discussion, contactez une icarienne ou un icarien depuis la <%= salle_des_icariens %>.</p>
-  <% end %>
-</div>
+<h3>Vos discussions courantes</h3>
+<% if user.has_discussions? %>
+  <%= FrigoDiscussion.discussions_of(user.id) %>
+<% else %>
+  <p>Vous n’avez pas de discussions en cours. Pour commencer une discussion, contactez une icarienne ou un icarien depuis la <%= salle_des_icariens %>.</p>
+<% end %>
 
-<%
-# ---------------------------------------------------------------------
-#
-#   DEUXIÈME PARTIE : LA DISCUSSION CHOISIE (IF ANY)
-#
-# ---------------------------------------------------------------------
-if param(:disid)
-%>
-  <%= FrigoDiscussion.new(param(:disid)).out %>
-<%
-end #/ fi param(:disid)
-%>
 
 <%
 # ---------------------------------------------------------------------
@@ -35,10 +22,11 @@ end #/ fi param(:disid)
 #
 # ---------------------------------------------------------------------
 %>
+<div style="clear:both"></div>
 <% if user.admin? %>
   <p>En tant qu’administrateur, vous pouvez lancer un appel à discussion à tous les icariens et icariennes [à implémenter].</p>
 <% else %>
-  <p>Lancer une discussion avec Phil :</p>
+  <h4>Lancer une discussion avec Phil</h4>
   <%
     formphil = Form.new(id:'discussion-phil-form', route:route.to_s, class:'noborder nomargin', libelle_size:0, value_size:600)
     formphil.rows = {

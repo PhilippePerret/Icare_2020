@@ -52,19 +52,19 @@ MyDB.DBNAME = 'icare_test'
 #   ORDER BY #{sortedkey}
 # SQL
 
-# Pour relever les discussions
-user_id = 1
-req = <<-SQL
-SELECT
-  *
-  FROM `frigo_users` AS fu
-  INNER JOIN `frigo_discussions` AS dis ON dis.id = fu.discussion_id
-  INNER JOIN `users` AS u ON fu.user_id = u.id
-  WHERE fu.user_id = %i
-  ORDER BY dis.created_at DESC
-SQL
-req = req % [user_id]
-puts "REQUEST: #{req}"
+# # Pour relever les discussions
+# user_id = 1
+# req = <<-SQL
+# SELECT
+#   *
+#   FROM `frigo_users` AS fu
+#   INNER JOIN `frigo_discussions` AS dis ON dis.id = fu.discussion_id
+#   INNER JOIN `users` AS u ON fu.user_id = u.id
+#   WHERE fu.user_id = %i
+#   ORDER BY dis.created_at DESC
+# SQL
+# req = req % [user_id]
+# puts "REQUEST: #{req}"
 
 # # Pour relever tous les participants à une discussion
 # discussion_id = 3
@@ -90,6 +90,21 @@ puts "REQUEST: #{req}"
 #     fu.user_id = #{user_id}
 #     AND mes.created_at > fu.last_checked_at
 # SQL
+
+uid = 11 # Élie
+disid = 2
+req = <<-SQL.freeze
+SELECT COUNT(fm.id)
+  FROM `frigo_messages` AS fm
+  INNER JOIN `frigo_users` AS fu  ON fu.user_id = fm.user_id
+  INNER JOIN `frigo_users` AS fdu ON fdu.discussion_id = fm.discussion_id
+  INNER JOIN `frigo_discussions` AS fd ON fm.discussion_id = fd.id
+  WHERE fm.discussion_id = #{disid}
+    -- Le message doit être plus vieux que le dernier check de l'user
+    AND fm.created_at > fu.last_checked_at
+    -- Le message ne doit pas être le dernier message de la discussion
+    AND fm.id != fd.last_message_id
+SQL
 
 res = db_exec(req)
 # puts "db_exec(req): #{res.inspect}"

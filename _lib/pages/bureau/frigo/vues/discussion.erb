@@ -1,0 +1,34 @@
+<div class="right">
+  <a href="bureau/frigo" class="small">Liste des discussions</a>
+</div>
+<%
+# ---------------------------------------------------------------------
+#
+#   AFFICHAGE DE LA DISCUSSION CHOISIE
+#
+# ---------------------------------------------------------------------
+if param(:disid)
+%>
+  <%= FrigoDiscussion.new(param(:disid)).out %>
+<% else %>
+  <p>Vous devez choisir la discussion à afficher !</p>
+<%
+end #/ fi param(:disid)
+%>
+
+<%
+# ---------------------------------------------------------------------
+#
+#   FORMULAIRE EN BAS DE PAGE
+#
+# ---------------------------------------------------------------------
+form = Form.new(id:'discussion-form', route:route.to_s, class:'noborder w100pct nopadding nomargin', value_size:740, libelle_size:0)
+form.rows = {
+  '<message/>'    => {name:'frigo_message', type:'textarea', height:120, value:param(:frigo_message), placeholder:'Votre réponse'.freeze},
+  '<op/>'         => {name:'op', type:'hidden', value:'add'},
+  '<discussion/>' => {name:'disid', type:'hidden', value: param(:disid)}
+}
+form.submit_button = "Ajouter"
+form.submit_button_class = 'inline'
+%>
+<%= form.out %>
