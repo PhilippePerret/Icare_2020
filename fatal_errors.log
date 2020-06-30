@@ -350,4 +350,67 @@ Did you mean?  for
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:69:in `build_titre'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:12:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-30 11:42:43 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/home/html.rb:18: syntax error, unexpected unless (modifier), expecting '}'
+... DIV_ITEM_AIDE % {aid: k unless is_titre, css: 'titre' if is...
+...                         ^~~~~~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/home/html.rb:18: syntax error, unexpected ',', expecting end
+...itre, css: 'titre' if is_titre, titre: daide[:hname]}
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/home/html.rb:18: syntax error, unexpected '}', expecting end
+...is_titre, titre: daide[:hname]}
+...                              ^
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-30 11:54:51 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:60: syntax error, unexpected tSTRING_BEG, expecting '}'
+    'divers'  => {hname: 'Divers',...
+    ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:60: syntax error, unexpected =>, expecting end
+    'divers'  => {hname: 'Divers', titre: tru...
+              ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:60: syntax error, unexpected ',', expecting end
+...{hname: 'Divers', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:61: syntax error, unexpected ',', expecting end
+...vre des Lois de la Narration'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:62: syntax error, unexpected ',', expecting end
+...ption visiteur pour le frigo'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:63: syntax error, unexpected ',', expecting end
+... module ou de l’échéance'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:65: syntax error, unexpected '}', expecting end
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:40:in `load_xrequired'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:28:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-06-30 11:58:42 +0200 --- FATAL ERROR:
+    uninitialized constant HTML::StringsHelpersMethods
+Did you mean?  StringHelpersMethods
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:8:in `<class:HTML>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:7:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

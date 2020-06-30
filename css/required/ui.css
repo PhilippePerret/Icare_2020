@@ -49,7 +49,8 @@ h2.page-title {
 
 /* Les titres en général */
 .titre {
-  color:var(--dark-color-normal);
+  /* color:var(--dark-color-normal); */
+  color:#555555;
 }
 
 p, .p, ul.p li, ul:not(.nojustify) li {

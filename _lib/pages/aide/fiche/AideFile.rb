@@ -4,6 +4,8 @@ ERRORS.merge!({
 })
 
 class AideFile
+include StringHelpersMethods
+
 class << self
   def folder
     @folder ||= File.join(PAGES_FOLDER,'aide','data')
@@ -24,11 +26,15 @@ def out
   when '.md'
     AIKramdown.kramdown(fpath)
   when '.erb'
-    deserb(fpath)
+    deserb(fpath, self)
   else
     file_read(fpath)
   end
 end
+
+def bind
+  binding()
+end #/ bind
 
 # Retourne le nom du fichier d'aide, en le recherchant dans le
 # dossier data par son id-nom

@@ -8,16 +8,19 @@ class Aide
 
   DATA_TDM = {
     # ---------------------------------------------------------------------
-    'site'              => { hname:'Le Site de l’atelier', titre:true},
+    'site' => { hname:'Le Site de l’atelier', titre:true},
     1       => { hname: 'Où aller après l’identification'},
     4       => { hname: 'Fréquence des mails d’activité'},
     # ---------------------------------------------------------------------
 
-    'inscription'       => {hname: 'Inscription', titre: true},
+    'inscription' => {hname: 'Inscription', titre: true},
     20      => {hname: 'Poser sa candidature'},
     100     => {hname: 'Documents de présentation'},
 
-    'interface'          => { hname:"L'Interface", titre:true},
+    'interface' => { hname:"L'Interface", titre:true},
+    '11.bis'    => {hname: 'Constitution du bureau de travail', id: 11},
+    12          => {hname:'Navigation sur le site'.freeze},
+
 
     # ---------------------------------------------------------------------
     # Tout ce qui concerne le travail sur un module
@@ -48,7 +51,8 @@ class Aide
     # ---------------------------------------------------------------------
     'quaidesdocs'   => {hname: 'le Quai des docs', titre: true},
     600 => {hname: 'Qu’est-ce que le Quai des docs ?'},
-    605 => {hname: 'Cotage des documents'},
+    605 => {hname: 'Cotage des documents'.freeze},
+    602 => {hname: 'Déposer ses documents'.freeze},
     # ---------------------------------------------------------------------
 
 

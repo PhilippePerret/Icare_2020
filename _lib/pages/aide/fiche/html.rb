@@ -5,6 +5,7 @@ ERRORS.merge!({
 })
 
 class HTML
+
   def titre
     if param(:aid)
       unless Aide::DATA_TDM[param(:aid).to_i].nil?

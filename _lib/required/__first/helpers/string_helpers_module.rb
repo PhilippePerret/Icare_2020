@@ -3,6 +3,18 @@
   Méthodes d'helpers générales qui permettent de traiter tous les textes
 
   Note : toutes les classes héritant de ContainerClass héritent de ces méthodes
+          donc rien à faire pour les utiliser.
+
+  ## Pour l'utiliser dans une autre classe :
+
+      class MaClasse
+        include StringHelpersMethods
+      end
+
+  ## Pour l'utiliser ailleurs sans charger tout le module
+
+      StringHelpersMethods::ma_constante_du_module
+
 =end
 module StringHelpersMethods
 
