@@ -56,6 +56,10 @@ if param(:op) == 'inviter'
   </div>
   <a href="bureau/frigo" class="small">LISTE DES DISCUSSIONS</a>
 </div>
+<div class="infos small">
+  <span>Nombre de participants : <%= discussion.participants.count %></span>
+  <span class="ml1"> (<%= discussion.participants.collect{|u|u.pseudo}.pretty_join %>)</span>
+</div>
 <%
 # ---------------------------------------------------------------------
 #

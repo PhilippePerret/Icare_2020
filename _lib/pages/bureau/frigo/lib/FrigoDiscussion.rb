@@ -103,6 +103,17 @@ MESSAGE_INVITATION = <<-HTML.freeze
 <p>Bien à vous,</p>
 <p>🤖 Le Bot de l’Atelier Icare 🦋</p>
 HTML
+
+# La requête pour créer un nouveau lien entre un user et une discussion (donc
+# pour ajouter l'icarien/admin à la discussion) en vérifiant que ce lien
+# n'existe pas déjà.
+REQUEST_ADD_TO_DISCUSSION = <<-SQL.freeze
+  INSERT INTO `#{FrigoDiscussion::TABLE_USERS}`
+    (user_id, discussion_id, last_checked_at, created_at, updated_at)
+  VALUES (?, ?, ?, ?, ?)
+  ON DUPLICATE KEY UPDATE user_id = user_id -- peu importe
+SQL
+
 # Pour envoyer des invitations à rejoindre une discussion
 # En fait, cela revient à les ajouter à la discussion et leur envoyer un
 # message d'invitation.
@@ -112,15 +123,22 @@ def send_invitations_to(icariens)
   nombre_hommes = 0
   lien_participer = Tag.lien(route:"bureau/frigo?disid=#{self.id}", full:true, text:'Lire la discussion'.freeze)
   lien_decliner   = Tag.lien(route:"bureau/frigo?op=decliner_invitation&did=#{self.id}", full:true, text:'Décliner cette invitation'.freeze)
+  ary_values = []
+  pseudos = []
+  now = Time.now.to_i
   icariens.each do |iid|
     ica = User.get(iid.to_i)
     nombre_hommes += 1 unless ica.femme?
     ica.send_mail(subject:SUBJECT_INVITATION, message:(MESSAGE_INVITATION % {pseudo:ica.pseudo, owner:user.pseudo, titre:self.titre, disid:self.id, lien_participer:lien_participer, lien_decliner:lien_decliner}))
+    ary_values << [ica.id, self.id, now - 100, now, now]
+    pseudos << ica.pseudo
   end
+  # On envoie toutes les requêtes pour créer les données
+  db_exec(REQUEST_ADD_TO_DISCUSSION, ary_values)
 
   s = nombre_icariens > 1 ? 's' : ''
   es = nombre_icariens > 1 ? (nombre_hommes > 0 ? 's' : 'es') : ''
-  message("#{nombre_icariens} icarien·ne·#{s} ont été invité#{es} à rejoindre la discussion “#{titre}”.".freeze)
+  message("#{nombre_icariens} icarien·ne·#{s} ont été invité#{es} à rejoindre la discussion “#{titre}” : #{pseudos.pretty_join}.".freeze)
 end #/ send_invitations_to
 
 # Retourne la liste des participants à cette discussion (Array de User(s))
