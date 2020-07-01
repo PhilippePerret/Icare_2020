@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 class HTML
+  include StringHelpersMethods
   def titre
     "👮‍♀️ Politique de confidentialité".freeze
   end

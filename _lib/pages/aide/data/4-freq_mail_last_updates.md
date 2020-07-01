@@ -1,3 +1,5 @@
+<!-- NON CORRIGÉ -->
+
 ### Fréquence des mails de dernières actualités
 
 Un mail peut vous être envoyé vous annonçant les derniers travaux effectués au sein de l'atelier par les autres icariennes ou icariens, ainsi que les dernières actualités concernant le site.

@@ -1,22 +1,15 @@
+<!-- corrigé -->
+
 ### Constitution du bureau
 
-Trouvez sur cette page l'explication des différents éléments de votre bureau de travail à l'atelier Icare.
+Trouvez sur cette page l'explication des différents éléments #{user.guest? ? 'd’un bureau de travail' : "de [votre bureau de travail](bureau/home)"} à l'atelier Icare.
 
-Ce bureau est constitué des parties suivantes :
+Ce bureau est constitué des sections suivantes :
 
-* un bloc de statut vous indiquant si vous êtes en activité, en pause, en fin de module, etc. ;
-* un bloc de notifications vous permettant de suivre votre travail au jour le jour ;
-* un bloc vous donnant toutes les informations sur votre module courant — si vous en suivez un - avec son titre, l'étape courante, le nombre de jours de puis le début, la date d'échéance de vos documents, etc.
-* une partie, sous ces informations, vous indiquant le travail à accomplir dans votre étape courante.
-
-#### Constitution du travail de l'étape courante
-
-L'étape courante est constituée de ces parties, les unes au-dessus des autres :
-
-* le titre de l'étape,
-* les objectifs que visent cette étape, c'est-à-dire les compétences qui seront développées au cours du travail,
-* l'intitulé complet du travail,
-* éventuellement, des éléments de méthode vous guidant dans la réalisation du travail demandé,
-* des liens renvoyant à des pages d'information utiles, à commencer par des liens vers les pages de la collection Narration en rapport avec le travail de l'étape,
-* une “mini-faq” permettant de demander des précisions sur le travail à faire et de lire les précisions données suite à des questions d'autres icariennes ou icariens.
-* et enfin, la partie du “Quai des docs” qui affiche les documents réalisés par d'autres icariennes et icariens sur la même étape courante.
+* la section du #{user.guest? ? "travail courant" : "[travail courant](bureau/travail)"} qui présente le travail de votre étape en cours si vous êtes en activité ;
+* la section des #{user.guest? ? "notifications" : "[notifications](bureau/notifications)"} avec vos messages en cours ;
+* la #{user.guest? ? "section des documents" : "[section des documents](bureau/documents)"} présentant le listing de tous vos documents produits à l'atelier ;
+* votre #{user.guest? ? 'porte de frigo' : "[porte de frigo](bureau/frigo)"} sur laquelle vous pouvez avoir des dicussions avec Phil ou les autres icariennes et icariens ;
+* votre #{user.guest? ? 'profil' : "[profil](user/profil)"} avec vos informations personnelles ;
+* votre  #{user.guest? ? 'section préférences' : "[section Préférences](bureau/preferences)"} vous permettant d'effectuer vos réglages pour l'utilisation de l'atelier ;
+* votre #{user.guest? ? 'historique de travail' : "[historique de travail](bureau/historique)"} qui affiche le suivi de votre travail à l'atelier, qu'il vous est possible de partager.

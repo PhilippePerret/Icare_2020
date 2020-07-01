@@ -413,4 +413,96 @@ Did you mean?  StringHelpersMethods
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 13:27:28 +0200 --- FATAL ERROR:
+    undefined method `glob' for #<AideFile:0x00007f93a08c56c8 @id="1">
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:53:in `find'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:45:in `fextension'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:25:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 13:27:46 +0200 --- FATAL ERROR:
+    no implicit conversion of String into Integer
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:53:in `glob'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:53:in `find'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:45:in `fextension'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:25:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 13:29:27 +0200 --- FATAL ERROR:
+    wrong number of arguments (given 3, expected 1..2)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:53:in `glob'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:53:in `find'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:45:in `fextension'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:25:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 13:53:00 +0200 --- FATAL ERROR:
+    undefined method `safetize' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:69:in `build_titre'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:12:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 14:18:52 +0200 --- FATAL ERROR:
+    undefined method `profil' for #<HTML:0x00007fa269094738 @all_css=["./css/_variables.css"]>
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/current.rb:9:in `bind'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/files.rb:44:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/policy/html.rb:14:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 14:56:32 +0200 --- FATAL ERROR:
+    undefined local variable or method `travail_courant' for #<AideFile:0x00007fe8718637e0>
+Did you mean?  travail_type
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:36:in `bind'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:27:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 15:17:56 +0200 --- FATAL ERROR:
+    wrong number of arguments (given 2, expected 1)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tag.rb:13:in `aide'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:36:in `bind'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:27:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 15:44:04 +0200 --- FATAL ERROR:
+    undefined local variable or method `lien' for #<AideFile:0x00007fceaf157478>
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:36:in `bind'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:27:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 15:46:40 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:36: syntax error, unexpected end-of-input, expecting ')'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:27:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

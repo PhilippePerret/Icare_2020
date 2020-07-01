@@ -1,3 +1,5 @@
+<!-- NON CORRIGÉ -->
+
 ### Comment numéroter ses versions de document ?
 
 
@@ -28,8 +30,8 @@ On peut appliquer quelques règles simples pour appliquer de « bons » numéros
 
 * Un numéro absent vaut toujours 1. Donc si on abrège la version « v1 ». Il s’agira en fait de la version « 1.1.1 ». Si on abrège « 12.4 », il s’agira de « 12.4.1. ». Noter que c’est utile seulement lorsque l’on numérotera la version ou sous-version suivante.
 * **On change de version majeure lors de changements importants**. Lorsque, par exemple, une nouvelle rédaction complète a été terminée. Lorsqu’un élément important de l’histoire, comme la `QDF` a été modifiée. Lorsqu’un nouveau personnage important a été introduit. Et tout autre changement « majeur ».
-* **On change de version mineure lors de changements moindres**. Lorsque l’histoire — ou le document — ne change pas de façon radicale, on peut changer seulement la version mineure. Par exemple lors d’une nouvelle rédaction qui n’a pas modifié en profondeur l’ancien texte et l’histoire. 
-* **On change le numéro de patch pour tout changement mineur**. On peut changer de numéro de patch pour tout changement, même le plus infime, une simple et unique correction orthographique, un changement de photo, la correction de deux coquilles. 
+* **On change de version mineure lors de changements moindres**. Lorsque l’histoire — ou le document — ne change pas de façon radicale, on peut changer seulement la version mineure. Par exemple lors d’une nouvelle rédaction qui n’a pas modifié en profondeur l’ancien texte et l’histoire.
+* **On change le numéro de patch pour tout changement mineur**. On peut changer de numéro de patch pour tout changement, même le plus infime, une simple et unique correction orthographique, un changement de photo, la correction de deux coquilles.
   C’est particulièrement intéressant et utile lorsque l’on transmet son document à quelqu’un. Souvent — trop souvent… — on s’aperçoit en relisant le texte, qu’une faute a été laissée dans la version « 12.4.13 ». Dans ce cas, on corrige la faute et on renomme la version « 12.4.14 ».
 
 
@@ -73,12 +75,12 @@ Version 3
 	-Pitch : v2.3
 	-Synopsis : v2.1.123
 	Scénario: v3.45.8
-	
+
 Version 2
 	Pitch : v2.3
 	Synopsis : v2.1.123
 	Scénario : v2.67.2
-	
+
 Version 1
 	Pitch : v1.4.12
 	Synopsis : v1.8
@@ -117,7 +119,7 @@ Imaginons que j’aie achevé mon manuscrit de roman et qu’il porte le numéro
 
   ~~~
   DERNIÈRES VERSION
-  
+
   Scénario : 5.2
   ~~~
 
@@ -140,7 +142,7 @@ Imaginons que j’aie achevé mon manuscrit de roman et qu’il porte le numéro
 
   ~~~
   DERNIÈRES VERSIONS
-  
+
   Scénario : 5.2.2
   ~~~
 
@@ -167,7 +169,7 @@ Imaginons que j’aie achevé mon manuscrit de roman et qu’il porte le numéro
 
   ~~~
   DERNIÈRES VERSIONS
-  
+
   Scénario : 5.2.3
   ~~~
 

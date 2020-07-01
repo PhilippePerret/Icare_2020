@@ -6,6 +6,7 @@
 =end
 class HTML
   def titre
+    @raw_titre = "Plan"
     nil # @titre ||= 'Plan de l’atelier'.freeze
   end #/ titre
   def aGoto content, options = nil

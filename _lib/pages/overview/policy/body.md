@@ -2,7 +2,7 @@
 
 Cette page présente la politique de confidentialité des données appliquée par l’atelier Icare.
 
-### Les Informations personnelles
+### Informations personnelles
 
 Lors de votre inscription, l’atelier ne récolte que les informations utiles au travail au sein de l’atelier et à la navigation sur le site.
 

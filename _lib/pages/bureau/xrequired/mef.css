@@ -37,38 +37,3 @@ section.etape_work h4 {
 section.etape_work h5 {
   font-size: 0.8em;
 }
-
-/*
-  --- DOCUMENT ---
-*/
-div.document {
-  font-size:12.5pt;
-  background-color:#EDF3F9;
-  padding: 2em 3em;
-}
-
-div.document h1,
-div.document h2,
-div.document h3
-{
-  color:inherit;
-  font-variant:all-small-caps;
-  font-weight:normal;
-}
-div.document h1 {
-  font-size:2.1em;
-  margin-top:2em;
-  margin-bottom:1em;
-}
-div.document > h1:nth-child(2),
-div.document > h2:nth-child(2)
-{
-  margin-top:0;
-}
-
-div.document h2 {
-  font-size:1.6em;
-}
-div.document h3 {
-  font-size:1.2em;
-}

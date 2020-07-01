@@ -1,3 +1,5 @@
+<!-- NON CORRIGÉ -->
+
 <h3>Abréviations utilisées dans les commentaires</h3>
 <p class="small italic">
   Dans les commentaires sur les documents de travail, on peut trouver les abréviations courantes suivantes. Elles sont classées dans l’ordre alphabétique.
@@ -26,7 +28,7 @@ table#abreviations thead tr th {
     </tr>
   </thead>
   <tbody>
-<% 
+<%
   tempNarration = "<a href=\"http://www.scenariopole.fr/narration/page/%d\">In Narration</a>"
 
   [
@@ -42,9 +44,9 @@ table#abreviations thead tr th {
   <td><%= definition %></td>
   <td><%= tempNarration % [page_id] %></td>
 </tr>
-<% 
+<%
   end # each abréviation
 %>
-    
+
   </tbody>
 </table>

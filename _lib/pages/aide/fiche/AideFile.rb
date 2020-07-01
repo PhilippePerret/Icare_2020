@@ -23,10 +23,11 @@ end #/ initialize
 def out
   # inspect
   case fextension
-  when '.md'
-    AIKramdown.kramdown(fpath)
-  when '.erb'
-    deserb(fpath, self)
+  when '.md', '.erb'
+    deserb_or_markdown(fpath, self)
+    # AIKramdown.kramdown(fpath, self)
+  # when '.erb'
+  #   deserb(fpath, self)
   else
     file_read(fpath)
   end
@@ -50,17 +51,21 @@ end #/ fpath
 
 # Méthode qui recherche le fichier d'aide d'après son id
 def find
-  Dir["#{self.class.folder}/*.{md,erb,html,htm}"].each do |path|
-    afx = File.basename(path, File.extname(path))
-    if afx == id || afx.start_with?(id)
-      @fname = File.basename(path)
-      @fextension = File.extname(path)
-      @fpath = path
-      break
-    end
-  end
+  @fname = Dir.glob("#{id}-*\.{md,erb}", base:self.class.folder).first
   @fname || raise(ERRORS[:unfound_aide_file])
+  @fpath = File.join(self.class.folder, @fname)
+  @fextension = File.extname(@fname)
   {fname: @fname, fpath: @fpath, fextension: @fextension}
+
+  # Dir["#{}/*.{md,erb}"].each do |path|
+  #   afx = File.basename(path, File.extname(path))
+  #   if afx == id || afx.start_with?(id)
+  #     @fname = File.basename(path)
+  #     @fextension = File.extname(path)
+  #     @fpath = path
+  #     break
+  #   end
+  # end
 end #/ find
 
 end #/AideFile

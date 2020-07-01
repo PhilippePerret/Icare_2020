@@ -66,7 +66,7 @@ class HTML
   def build_titre
     return '' if route.home?
     t = respond_to?(:titre) ? titre : "Titre page manquant"
-    @raw_titre = t.dup.safetize
+    @raw_titre ||= t.dup&.safetize
     @titre = "<h2 class=\"page-title\">#{t}</h2>"
   end
 

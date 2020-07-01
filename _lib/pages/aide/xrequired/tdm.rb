@@ -44,7 +44,7 @@ class Aide
     35  => {hname: 'Ajout de documents'},
     30  => {hname: 'Pourquoi partager ses documents ?'},
     36  => {hname: 'Comment recharger ses commentaires ?'},
-    10  => { hname: 'Auto-estimation de ses documents'},
+    10  => {hname: 'Auto-estimation de ses documents'},
     34  => {hname: 'Types de documents'},
     # ---------------------------------------------------------------------
 

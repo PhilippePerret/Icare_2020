@@ -1,23 +1,19 @@
+<!-- Corrigé -->
+
 ### Où aller après l’identification
 
-Si vous êtes [inscrit](user/signup) ou [abonné](user/signup?user[subscribe]=on) au site, vous pouvez régler dans votre profil la *route* à emprunter juste après votre identification.
-
-    NOTE : Vous pouvez rejoindre votre PROFIL, après votre
-           identification, en cliquant sur “AUTEUR” dans la
-           marge gauche.
-
-Dans votre profil, section “Préférences”, il suffit de choisir la valeur du menu “Après l'identification rejoindre…”.
+#{user.guest? ? 'Lorsque' : 'Puisque'} vous êtes [inscrit#{fem(:e)}](user/signup) à l'atelier Icare, vous pouvez définir dans [vos préférences](bureau/preferences) la section à rejoindre tout de suite après votre identification.
+Il suffit de choisir la valeur de l'item “Après identification”.
 
 Les valeurs possibles sont les suivantes, suivies de l'indication de l'endroit du site que vous rejoindrez juste après vous être identifié :
 
-* **votre profil**. -> La page principale de votre profil ;
-* **dernière page consultée**. -> La dernière page que vous avez visitée lors de votre dernière visite ;
-* **votre programme ÉCRIRE UN FILM/ROMAN EN UN AN**. Si vous suivez [le programme ÉCRIRE UN FILM/UN ROMAN EN UN AN](unan/home), vous pouvez rejoindre directement votre bureau de travail ;
-* **l'accueil du site**. -> la “[home page](site/home)”, où se trouvent par exemple un aperçu des dernières actualités ;
-* **la collection Narration**. -> Page d'accueil de la [collection Narration](cnarration/home) ;
-* **le forum**. -> Page principale du [Forum d'écriture](forum/home) ;
-* **les analyses de film**. -> Liste des [analyses de film](analyse/list).
+* **Bureau de travail**. Rejoint l'[accueil](bureau/home) de votre bureau de travail d'où vous pouvez rejoindre toutes les autres parties.
+* **Notifications**. Rejoint la [section des notifications](bureau/notifications) qui affiche tous vos messages courants.
+* **Travail en cours**. Rejoint la section de [votre travail en cours](bureau/travail) qui affiche l'énoncé de votre travail, si vous êtes en activité#{user.actif? ? " (et vous êtes en activité)" : ""}.
+* **Profil**. Rejoint la page [votre profil](user/profil) qui vous permet de voir les informations que vous partagez ainsi que certaines données utiles.
+* **Dernière page consultée**. Rejoint la dernière page que vous avez visitée lors de votre dernière visite.
+* **Accueil du site**. Rejoint l'[accueil du site](plan) qui présente le plan du site de l'atelier.
 
-Faites votre choix puis cliquez sur le bouton “Enregistrer” pour prendre en compte le changement.
+Faites votre choix dans le menu “Après identification” de [vos préférences](bureau/preferences) puis cliquez sur le bouton “Enregistrer” pour prendre en compte le changement.
 
 À votre prochaine visite, après identification, tous vos souhaits seront exhaussés !

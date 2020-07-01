@@ -10,9 +10,16 @@ class << self
   #
   # Usage :     `Tag.aide(id: '<mon-id-aide>'[, titre:, class: ...])`
   # +<nom-id-aide>+ correspond au numéro ou au nom du fichier d'aide à afficher
-  def aide params
+  def aide params, titre = nil
     if params.is_a?(String) || params.is_a?(Integer)
       params = {id: params.to_s}
+    end
+    if titre
+      if titre.is_a?(String)
+        params.merge!(titre: titre)
+      elsif titre.is_a?(Hash)
+        params.merge!(titre)
+      end
     end
     Tag.lien(titre:params[:titre]||'aide', route:"aide/fiche?aid=#{params[:id]}")
   end #/ aide
