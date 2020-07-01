@@ -1,4 +1,13 @@
 textarea {resize:none;}
+select
+{
+  all:unset;
+  border: 1px solid;
+  border-radius: 4px;
+  padding:4px 1em;
+  position:relative;
+}
+
 /*
   Pour avoir un select qui prend toute la place, utiliser plutôt la
   class w100pct. Sinon, plein de formulaire dépasseront, même avec un
@@ -145,7 +154,7 @@ span.date-fields select:not(.warning){
 select,
 select option
 {
-  font-size:1.2em!important;
+  font-size:1.2em; /* ne pas mettre !important*/
 }
 
 input[type="checkbox"] + label {
