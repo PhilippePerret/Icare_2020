@@ -8,6 +8,8 @@ class User
     la:     ['la',    'le'],
     ne:     ['ne',    ''],
     te:     ['te',    ''],
+    trice:  ['trice', 'teur'],
+    ve:     ['ve',    'f'],
     x:      ['se',    'x'],
   }
   def fem(key)

@@ -40,7 +40,6 @@ function erbToMarkdown(container){
 
 function transformeTitre(tout, level, titre){
   level = Number(level) - 2 ; // 3 -> 1
-  console.log("level = (typeof)", level, typeof level);
   var dieses = '#'.padStart(level,'#');
   return `${dieses} ${titre}`
 }

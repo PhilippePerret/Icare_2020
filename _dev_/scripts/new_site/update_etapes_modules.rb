@@ -138,4 +138,7 @@ else
 
   # On crée un export de la table absetapes.sql tout à fait à jour
   `mysqldump -u root icare absetapes > "#{FOLDER_SQL_GOODS_FOR_2020}/absetapes.sql"`
+  puts "Le fichier absetapes.sql a été actualisé pour updater les étapes en online"
+  puts "Cf. dans #{FOLDER_SQL_GOODS_FOR_2020} ouvert sur le bureau"
+  `open -a Finder "#{FOLDER_SQL_GOODS_FOR_2020}"`
 end

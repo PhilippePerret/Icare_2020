@@ -30,7 +30,7 @@ class << self
   # Note : le fait d'offrir juste les options permet de régler le name et l'id
   # du select sans problème. On peut utiliser menu_select ci-dessus
   def menus_absmodule(pms = {})
-    default_value = pms[:value] || pms[:default] || pms[:default_value]
+    default_value = (pms[:value] || pms[:default] || pms[:default_value]).to_i
     self.collect do |absmod|
       selected = (default_value == absmod.id) ? SELECTED : EMPTY_STRING
       TAG_OPTION % {value:absmod.id, selected:selected, titre:absmod.name}

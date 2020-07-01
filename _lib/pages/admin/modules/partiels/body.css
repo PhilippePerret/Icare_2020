@@ -1,0 +1,9 @@
+select#absmodules_list,
+select#absmodules_list *
+{
+  font-size: 18pt;
+}
+
+select#absmodules_list option {
+  margin-left: 2em;
+}
