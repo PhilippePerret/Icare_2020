@@ -33,8 +33,4 @@
 <textarea name="twork_methode" id="etape-<%= id %>-methode" rows="20" class="w100pct" placeholder="Méthode optionnelle pour le travail type"><%= methode && safe(methode&.sanitize) %></textarea>
 <div class="libelle">Liens <span class="small">(page_id::narration::titre)</span></div>
 <textarea name="twork_liens" id="etape-<%= id %>-liens" rows="4" class="w100pct" placeholder="Liens utiles au travail-type"><%= liens && safe(liens&.sanitize) %></textarea>
-
-<div class="buttons">
-  <button type="submit">Enregistrer</button>
-</div>
 </form>
