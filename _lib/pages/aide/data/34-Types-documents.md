@@ -1,5 +1,3 @@
-<!-- NON CORRIGÉ -->
-
 ## Types de documents de travail
 
 Vous pouvez utiliser les types de documents de tous les traitements de texte les plus usuels.

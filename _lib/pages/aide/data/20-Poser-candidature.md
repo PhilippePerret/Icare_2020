@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ## Poser sa candidature à l'atelier
 
 Poser sa candidature à l'atelier Icare ne doit pas être un acte “gratuit” ni “anodin”. Il faut y réfléchir sérieusement avant de franchir le pas. Car contrairement aux autres formations en ligne, dont certaines tiennent plus de l'épicerie que du lieu d'apprentissage, [Philippe Perret (alias <em>Phil</em>), pédagogue de l'atelier](overview/phil), est là pour accompagner réellement des auteurs dans leur parcours d'apprentissage et/ou dans le développement de leurs projets.

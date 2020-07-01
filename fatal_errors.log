@@ -505,4 +505,292 @@ Did you mean?  travail_type
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 16:12:00 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:39: syntax error, unexpected tSTRING_BEG, expecting '}'
+    'documents'     => {hname: 'Le...
+    ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:39: syntax error, unexpected =>, expecting end
+    'documents'     => {hname: 'Les documents de tr...
+                    ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:39: syntax error, unexpected ',', expecting end
+...ents de travail', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:40: syntax error, unexpected ',', expecting end
+...ouleur pour les commentaires'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:41: syntax error, unexpected ',', expecting end
+...ations dans les commentaires'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:42: syntax error, unexpected ',', expecting end
+...t numéroter ses versions ?'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:43: syntax error, unexpected ',', expecting end
+... de ses documents de travail'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:44: syntax error, unexpected ',', expecting end
+...ion des documents de travail'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:45: syntax error, unexpected =>, expecting end
+    '35.bis'  => {hname: 'Ajout de documents'...
+              ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:45: syntax error, unexpected ',', expecting end
+...: 'Ajout de documents', id:35},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:46: syntax error, unexpected ',', expecting end
+...oi partager ses documents ?'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:47: syntax error, unexpected ',', expecting end
+...echarger ses commentaires ?'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:48: syntax error, unexpected ',', expecting end
+...-estimation de ses documents'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:49: syntax error, unexpected ',', expecting end
+... {hname: 'Types de documents'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:53: syntax error, unexpected =>, expecting end
+    'quaidesdocs'   => {hname: 'le Quai des docs', ...
+                    ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:53: syntax error, unexpected ',', expecting end
+...e Quai des docs', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:54: syntax error, unexpected ',', expecting end
+...t-ce que le Quai des docs ?'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:55: syntax error, unexpected ',', expecting end
+...'Cotage des documents'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:56: syntax error, unexpected ',', expecting end
+...époser ses documents'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:61: syntax error, unexpected =>, expecting end
+    'divers'  => {hname: 'Divers', titre: tru...
+              ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:61: syntax error, unexpected ',', expecting end
+...{hname: 'Divers', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:62: syntax error, unexpected ',', expecting end
+...vre des Lois de la Narration'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:63: syntax error, unexpected ',', expecting end
+...ption visiteur pour le frigo'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:64: syntax error, unexpected ',', expecting end
+... module ou de l’échéance'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:66: syntax error, unexpected '}', expecting end
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:40:in `load_xrequired'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:28:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 16:25:01 +0200 --- FATAL ERROR:
+    undefined local variable or method `file' for #<AideFile:0x00007fb3768e7318>
+Did you mean?  film
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:28:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 16:51:14 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:37: syntax error, unexpected end-of-input, expecting tSTRING_DEND
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:23:in `deserb_or_markdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:26:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 16:52:16 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:37: syntax error, unexpected end-of-input, expecting tSTRING_DEND
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:23:in `deserb_or_markdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:26:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 16:53:32 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:37: syntax error, unexpected end-of-input, expecting tSTRING_DEND
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:23:in `deserb_or_markdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:26:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 16:54:29 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/feminines.rb:16:in `fem'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/string_helpers_module.rb:22:in `fem'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:37:in `bind'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:32:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:30:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:23:in `deserb_or_markdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:26:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 17:04:43 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:17: syntax error, unexpected tSTRING_BEG, expecting '}'
+    'inscription' => {hname: 'Insc...
+    ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:17: syntax error, unexpected =>, expecting end
+    'inscription' => {hname: 'Inscription', titre...
+                  ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:17: syntax error, unexpected ',', expecting end
+...e: 'Inscription', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:18: syntax error, unexpected ',', expecting end
+...hname: 'Poser sa candidature'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:19: syntax error, unexpected ',', expecting end
+... 'Documents de présentation'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:21: syntax error, unexpected =>, expecting end
+    'interface' => { hname:"L'Interface", titre...
+                ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:21: syntax error, unexpected ',', expecting end
+...ame:"L'Interface", titre:true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:22: syntax error, unexpected =>, expecting end
+    '11.bis'    => {hname: 'Constitution du bur...
+                ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:22: syntax error, unexpected ',', expecting end
+...du bureau de travail', id: 11},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:23: syntax error, unexpected ',', expecting end
+...avigation sur le site'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:28: syntax error, unexpected =>, expecting end
+    'module_apprentissage' => {hname: 'Modules d’accompa...
+                           ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:28: syntax error, unexpected ',', expecting end
+...’apprentissage', titre: true},
+...                               ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:29: syntax error, unexpected ',', expecting end
+...gnement et d’apprentissage'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:30: syntax error, unexpected ',', expecting end
+... 'Durée réelle des modules'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:34: syntax error, unexpected =>, expecting end
+    'travail'       => {hname: 'Travail au sein de ...
+                    ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:34: syntax error, unexpected ',', expecting end
+... de l’atelier', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:35: syntax error, unexpected ',', expecting end
+...itution du bureau de travail'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:36: syntax error, unexpected ',', expecting end
+...name: 'Échéance du travail'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:37: syntax error, unexpected ',', expecting end
+...ion des documents de travail'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:38: syntax error, unexpected ',', expecting end
+...echarger ses commentaires ?'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:41: syntax error, unexpected =>, expecting end
+    'documents'     => {hname: 'Les documents de tr...
+                    ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:41: syntax error, unexpected ',', expecting end
+...ents de travail', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:42: syntax error, unexpected ',', expecting end
+...ouleur pour les commentaires'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:43: syntax error, unexpected ',', expecting end
+...ations dans les commentaires'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:44: syntax error, unexpected ',', expecting end
+...t numéroter ses versions ?'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:45: syntax error, unexpected ',', expecting end
+... de ses documents de travail'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:46: syntax error, unexpected ',', expecting end
+...ion des documents de travail'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:47: syntax error, unexpected =>, expecting end
+    '35.bis'  => {hname: 'Ajout de documents'...
+              ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:47: syntax error, unexpected ',', expecting end
+...: 'Ajout de documents', id:35},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:48: syntax error, unexpected ',', expecting end
+...oi partager ses documents ?'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:49: syntax error, unexpected ',', expecting end
+...-estimation de ses documents'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:50: syntax error, unexpected ',', expecting end
+... {hname: 'Types de documents'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:54: syntax error, unexpected =>, expecting end
+    'quaidesdocs'   => {hname: 'le Quai des docs', ...
+                    ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:54: syntax error, unexpected ',', expecting end
+...e Quai des docs', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:55: syntax error, unexpected ',', expecting end
+...t-ce que le Quai des docs ?'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:56: syntax error, unexpected ',', expecting end
+...'Cotage des documents'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:57: syntax error, unexpected ',', expecting end
+...époser ses documents'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:62: syntax error, unexpected =>, expecting end
+    'divers'  => {hname: 'Divers', titre: tru...
+              ^~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:62: syntax error, unexpected ',', expecting end
+...{hname: 'Divers', titre: true},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:63: syntax error, unexpected ',', expecting end
+...vre des Lois de la Narration'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:64: syntax error, unexpected ',', expecting end
+...ption visiteur pour le frigo'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:65: syntax error, unexpected ',', expecting end
+... module ou de l’échéance'},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb:67: syntax error, unexpected '}', expecting end
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:40:in `load_xrequired'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:28:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-01 17:05:12 +0200 --- FATAL ERROR:
+    Il faut fournir l'ID
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:17:in `get'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:59:in `destinataire'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:48:in `destinataire_contactable?'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:33:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ### Auto-estimation de ses propres documents de travail
 
 Avant de transmettre vos documents de travail, vous devez attribuer à chacun d'entre eux une note qui donne votre avis personnel sur leur valeur.

@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ## Rédaction des documents de travail
 
 Pour chaque étape de travail, un ou plusieurs “documents de travail” sont à remettre. Le contenu de ces documents est défini de façon plus ou moins explicite dans l'énoncé du travail de l'étape, sur votre bureau d'Icarien#{fem(:e)}.

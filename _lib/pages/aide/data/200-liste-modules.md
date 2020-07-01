@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ## Liste et tarifs des modules d'apprentissage
 
   Vous pouvez trouver la [liste complète des modules](modules/home) depuis le [plan du site](plan), en cliquant sur le lien “Tous les modules”.

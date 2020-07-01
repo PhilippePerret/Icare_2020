@@ -11,6 +11,8 @@ class Aide
     'site' => { hname:'Le Site de l’atelier', titre:true},
     1       => { hname: 'Où aller après l’identification'},
     4       => { hname: 'Fréquence des mails d’activité'},
+    5       => {hname: 'Comment peut vous contacter un·e icarien·ne ?'},
+    6       => {hname: 'Comment peut vous contacter le reste du monde ?'},
     # ---------------------------------------------------------------------
 
     'inscription' => {hname: 'Inscription', titre: true},
@@ -33,6 +35,8 @@ class Aide
     'travail'       => {hname: 'Travail au sein de l’atelier', titre: true},
     11  => {hname: 'Constitution du bureau de travail'},
     410 => {hname: 'Échéance du travail'},
+    35  => {hname: 'Transmission des documents de travail'},
+    36  => {hname: 'Comment recharger ses commentaires ?'},
 
     # ---------------------------------------------------------------------
     'documents'     => {hname: 'Les documents de travail', titre: true},
@@ -41,9 +45,8 @@ class Aide
     38  => {hname: 'Comment numéroter ses versions ?'},
     32  => {hname: 'Nommage de ses documents de travail'},
     33  => {hname: 'Rédaction des documents de travail'},
-    35  => {hname: 'Ajout de documents'},
+    '35.bis'  => {hname: 'Ajout de documents', id:35},
     30  => {hname: 'Pourquoi partager ses documents ?'},
-    36  => {hname: 'Comment recharger ses commentaires ?'},
     10  => {hname: 'Auto-estimation de ses documents'},
     34  => {hname: 'Types de documents'},
     # ---------------------------------------------------------------------

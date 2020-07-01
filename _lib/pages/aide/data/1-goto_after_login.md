@@ -1,5 +1,3 @@
-<!-- Corrigé -->
-
 ### Où aller après l’identification
 
 #{user.guest? ? 'Lorsque' : 'Puisque'} vous êtes [inscrit#{fem(:e)}](user/signup) à l'atelier Icare, vous pouvez définir dans [vos préférences](bureau/preferences) la section à rejoindre tout de suite après votre identification.

@@ -21,17 +21,17 @@ def initialize aide_id
   @id = aide_id.to_s
 end #/ initialize
 def out
-  # inspect
   case fextension
   when '.md', '.erb'
-    deserb_or_markdown(fpath, self)
-    # AIKramdown.kramdown(fpath, self)
-  # when '.erb'
-  #   deserb(fpath, self)
+    deserb_or_markdown(code, self)
   else
-    file_read(fpath)
+    code
   end
 end
+
+def code
+  file_read(fpath)
+end #/ code
 
 def bind
   binding()

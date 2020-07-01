@@ -2,7 +2,7 @@
 =begin
   Pour transformer un fichier ERB en fichier MARKDOWN
 =end
-SRC_PATH = './_lib/pages/aide/data/34-Types-documents.erb'
+SRC_PATH = './_lib/pages/aide/data/600-Cest-quoi-le-QDD.erb'
 File.exists?(SRC_PATH) || raise("Le fichier #{SRC_PATH} est introuvable")
 DST_PATH = File.join(File.dirname(SRC_PATH), "#{File.basename(SRC_PATH, File.extname(SRC_PATH))}.md")
 !File.exists?(DST_PATH) || raise("Le fichier #{DST_PATH} existe. Je ne le remplace pas.")

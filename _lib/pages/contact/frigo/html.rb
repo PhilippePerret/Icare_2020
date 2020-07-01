@@ -19,7 +19,6 @@ class HTML
   def exec_operation
     case param(:op)
     when 'pose'
-      log("-> op = 'pose'")
       msg = MessageFrigo.new
       msg.ok? || return
       msg.pose
@@ -30,7 +29,9 @@ class HTML
 
   # Fabrication du body
   def build_body
-    vue = if destinataire_contactable?
+    vue = if param(:touid).nil?
+            'body'
+          elsif destinataire_contactable?
             case param(:op)
             when 'contact'  then 'form'
             when 'confirm'  then 'confirmation'

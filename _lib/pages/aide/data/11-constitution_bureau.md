@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ### Constitution du bureau
 
 Trouvez sur cette page l'explication des différents éléments #{user.guest? ? 'd’un bureau de travail' : "de [votre bureau de travail](bureau/home)"} à l'atelier Icare.

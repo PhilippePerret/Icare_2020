@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ## Durée réelle des *modules à durée déterminée*
 
 La plupart des [modules pédagogiques](modules/home) à durée déterminée ont une durée fixée à deux mois (trois mois pour quelques modules comme le module *Bible de série*).

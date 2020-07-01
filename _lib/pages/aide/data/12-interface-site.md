@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ### Navigation sur le site
 
 Le site de l'atelier a été pensé pour être le plus ergonomique possible.

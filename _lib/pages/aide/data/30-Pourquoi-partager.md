@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ### Pourquoi partager ses documents ?
 
 Bien entendu, concernant le partage de ses documents, l'auteur reste le seul décisionnaire. Soulignons cependant que ce partage est une des notions fondamentales et unique de l'atelier Icare.

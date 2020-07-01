@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ## Comment nommer ses documents de travail ?
 
 ### Les choses inutiles

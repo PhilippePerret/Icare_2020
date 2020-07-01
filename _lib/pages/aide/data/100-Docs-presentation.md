@@ -1,5 +1,3 @@
-<!-- corrigé -->
-
 ## Les documents de présentation
 
 Vous pouvez déposer votre candidature à l'atelier à l'aide du [formulaire d'inscription](user/signup). Mais vous devez au préalable rédiger deux documents&nbsp;: une présentation et une lettre de motivation qui vous seront réclamées à la fin de votre inscription.
