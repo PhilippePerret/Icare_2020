@@ -4,16 +4,12 @@
 =end
 class FrigoDiscussion < ContainerClass
 
-# --- Constantes ---
-TABLE_USERS = 'frigo_users'.freeze
-TABLE_DISCUSSIONS = 'frigo_discussions'.freeze
-
 class << self
   def table
     @table ||= TABLE_DISCUSSIONS
   end #/ table
   def table_messages
-    @table_messages ||= 'frigo_messages'
+    @table_messages ||= TABLE_MESSAGES
   end #/ table_messages
   def table_users
     @table_users ||= TABLE_USERS

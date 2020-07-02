@@ -12,7 +12,7 @@ class FrigoDiscussion < ContainerClass
   REQUEST_DISCUSSIONS_USER = <<-SQL.freeze
   SELECT
     dis.titre AS titre, dis.id AS discussion_id, u.pseudo AS owner_pseudo
-    FROM `frigo_users` AS fu
+    FROM #{TABLE_USERS} AS fu
     INNER JOIN `frigo_discussions` AS dis ON dis.id = fu.discussion_id
     INNER JOIN `users` AS u ON dis.user_id = u.id
     WHERE fu.user_id = %i
@@ -62,7 +62,9 @@ class << self
     if form.conform?
       # L'user doit être le possesseur de cette discussion
       # TODO
-      message("Je procède vraiment à la destruction de la discussion ##{discussion_id}")
+      discussion = get(discussion_id)
+      discussion.owner?(user) || raise(ERRORS[:destroy_require_owner])
+      discussion.destroy
     end
   end #/ destroy
 end # /<< self
@@ -77,6 +79,42 @@ end # /<< self
 # de l'icarien (ou l'admin) pour lequel on affiche la liste. Cet icarien est
 # indiqué dans la propriét :for des +options+ envoyées à la méthode `out`
 attr_accessor :nombre_non_lus
+
+# Retourne l'instance {User} de l'instigateur de la discussion
+def owner
+  @owner ||= User.get(user_id)
+end #/ owner
+
+# Retourne TRUE si +who+ est bien le créateur de la discussion
+def owner?(who)
+  return who.id == user_id
+end #/ owner?
+
+# Destruction complète de la discussion
+# -------------------------------------
+# Cela consiste à :
+#  - détruire l'enregistrement dans frigo_discussions
+#  - détruire les participations dans frigo_users
+#  - détruire tous les messages dans frigo_messages
+#  - avertir tous les participants de la suppression
+def destroy
+  msg = <<-HTML.freeze
+<p>%s,</p>
+<p>Je vous informe de #{owner.pseudo} vient de détruire la discussion “#{titre}” à laquelle vous participiez.</p>
+<p>Bien à vous,</p>
+<p>🤖 Le Bot de l'Atelier Icare 🦋</p>
+  HTML
+  participants.each do |participant|
+    participant.send_mail(subject:"Suppression de discussion", message: msg % participant.pseudo)
+  end
+  [
+    "DELETE FROM #{FrigoDiscussion::TABLE_DISCUSSIONS} WHERE id = #{id}".freeze,
+    "DELETE FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze,
+    "DELETE FROM #{FrigoDiscussion::TABLE_MESSAGES} WHERE discussion_id = #{id}".freeze
+  ].each do |request|
+    db_exec(request)
+  end
+end #/ destroy
 
 # Pour ajouter un message
 # +params+
@@ -105,7 +143,7 @@ MESSAGE_NEW_MESSAGE = <<-HTML.freeze
 <p>Je vous informe que %{from} vient de laisser un message sur votre frigo concernant la discussion “%{titre}”.</p>
 <p>Vous pouvez #{Tag.lien(route:'bureau/frigo?disid=%{disid}', full:true, text:'rejoindre cette discussion')}  sur votre frigo.</p>
 <p>Bien à vous,</p>
-<p>Le Bot de l'Atelier Icare</p>
+<p>🤖 Le Bot de l'Atelier Icare 🦋</p>
 HTML
 # Pour notifier les participants à cette discussion qu'un nouveau message
 # a été envoyé
@@ -179,7 +217,7 @@ end #/ send_invitations_to
 # Retourne la liste des participants à cette discussion (Array de User(s))
 def participants
   @participants ||= begin
-    db_exec("SELECT user_id FROM #{FrigoDiscussion.table_users} WHERE discussion_id = #{id}".freeze).collect do |ddis|
+    db_exec("SELECT user_id FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze).collect do |ddis|
       User.get(ddis[:user_id])
     end
   end
@@ -221,6 +259,7 @@ end #/ liste_messages_formated
 def for_download(options = nil)
   lines = []
   lines << "=== DISCUSSION ATELIER ICARE ##{id} ===#{RC}=".freeze
+  lines << "= Instiga#{owner.fem(:trice)} : #{owner.pseudo}".freeze
   lines << "= Entre : #{participants.collect{|u|u.pseudo}.pretty_join}".freeze
   lines << "= Date : #{formate_date}".freeze
   lines << RC2

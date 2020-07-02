@@ -6,6 +6,8 @@ ERRORS.merge!({
   message_frigo_too_long: 'Ce message est trop long (limite de 12 000 signes)'.freeze,
   message_frigo_too_short: 'Ce message est vraiment trop court…'.freeze,
   discussion_required: 'Une discussion est requise, pour exécuter cette opération…'.freeze,
+  not_a_participant: "Vous ne participez pas à cette discussion, vous ne pouvez pas la télécharger.".freeze,
+  destroy_require_owner: 'La destruction d’une discussion ne peut se faire que par son instigateur/instigatrice.'.freeze,
 })
 
 MESSAGES.merge!({
@@ -22,3 +24,9 @@ MESSAGES.merge!({
 <p>🤖 Le Bot de l'atelier Icare 🦋</p>
   HTML
 })
+
+class FrigoDiscussion < ContainerClass
+  TABLE_USERS       = 'frigo_users'.freeze
+  TABLE_DISCUSSIONS = 'frigo_discussions'.freeze
+  TABLE_MESSAGES    = 'frigo_messages'.freeze
+end #/FrigoDiscussion
