@@ -11,12 +11,15 @@ class FrigoDiscussion < ContainerClass
   # celles qui ont reçu le dernier message.
   REQUEST_DISCUSSIONS_USER = <<-SQL.freeze
   SELECT
-    dis.titre AS titre, dis.id AS discussion_id, u.pseudo AS owner_pseudo
+    dis.titre AS titre, dis.id AS discussion_id, u.pseudo AS owner_pseudo,
+    fm.created_at > fu.last_checked_at AS has_new_messages
     FROM #{TABLE_USERS} AS fu
-    INNER JOIN `frigo_discussions` AS dis ON dis.id = fu.discussion_id
+    INNER JOIN #{TABLE_DISCUSSIONS} AS dis ON dis.id = fu.discussion_id
+    INNER JOIN #{TABLE_MESSAGES} AS fm ON dis.last_message_id = fm.id
     INNER JOIN `users` AS u ON dis.user_id = u.id
     WHERE fu.user_id = %i
-    ORDER BY dis.created_at DESC
+    -- GROUP BY dis.id
+    ORDER BY fm.created_at DESC
   SQL
 class << self
 
@@ -25,8 +28,14 @@ class << self
   # +user_id+   {Integer|User} Soit l'identifiant de l'utilisateur soit lui-même
   def discussions_of user_id
     user_id = user_id.id if user_id.is_a?(User)
-    db_exec(REQUEST_DISCUSSIONS_USER % [user_id]).collect do |ddis|
-      Tag.lien(route:"bureau/frigo?disid=#{ddis[:discussion_id]}", text:"#{ddis[:titre]} <span class='small'>##{ddis[:discussion_id]}</span>", class:'block')
+    infos_discussions = db_exec(REQUEST_DISCUSSIONS_USER % [user_id])
+    log("infos_discussions:#{infos_discussions.inspect}")
+    if MyDB.error
+      return log(MyDB.error)
+    end
+    infos_discussions.collect do |ddis|
+      mark_new = ddis[:has_new_messages] == 1 ? ' <span class="red">❗</span>' : ''
+      Tag.lien(route:"bureau/frigo?disid=#{ddis[:discussion_id]}", text:"#{ddis[:titre]} <span class='small'>##{ddis[:discussion_id]}</span>#{mark_new}", class:'block')
     end.join
   end #/ discussions_of
 

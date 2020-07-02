@@ -71,7 +71,7 @@ class HTML
           elsif param(:disid)  # une discussion choisie
             'discussion'.freeze
           else
-            'body'.freeze
+            'home'.freeze
           end
     # On construit le body
     @body = deserb("vues/#{vue}", user)
