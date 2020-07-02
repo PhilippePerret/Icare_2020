@@ -25,9 +25,9 @@ L’adresse IP de l’utilisateur est conservé de façon tout à fait anonyme �
 
 #### Durée de vie des informations personnelles
 
-Lorsque l’on est icarienne ou icarien, c’est pour la vie. L’icarienne et l’icarien peuvent profiter *ad eternam* des services de l’atelier, conserver leur bureau intacte, revoir leur travail, consulter les documents du #{StringHelper.quai_des_docs}, les nouveaux comme les anciens, etc.
+Lorsque l’on est icarien·ne, c’est pour la vie. L’icarien·ne peut profiter *ad eternam* des services de l’atelier, conserver son bureau intact, revoir son travail, consulter les documents du [Quai des docs](qdd/home), les nouveaux comme les anciens, etc.
 
-Pour ce faire, leurs informations personnelles sont conservées *ad eternam* elles aussi. Tout icarien et toute icarienne a cependant la possibilité de détruire à tout moment son profil, sans requête, par simple confirmation sur sa #{user.guest? ? "page de profil" : profil("page de profil")}.
+Pour ce faire, ses informations personnelles sont conservées *ad eternam* elles aussi. Tout icarien et toute icarienne a cependant la possibilité de détruire à tout moment son profil, sans requête, par simple confirmation sur sa #{user.guest? ? "page de profil" : profil("page de profil")}.
 
 ### Modules suivis
 
@@ -71,13 +71,17 @@ Quelle que soit la situation, l'icarien·ne a la possibilité, sur simple demand
 
 C'est l'icarien ou l'icarienne qui détermine la nature et la fréquence de la communication qui peut lui être faite. Par défaut, l'icarien ou l'icarienne reçoit une information quotidienne sur l'avancée des travaux de ses condisciples, mais seulement s'il y a eu avancée. Dans les faits et une activité normale de l'atelier Icare, cette information peu intrusive correspond à deux ou trois mails par semaine (pour la rendre plus utile encore, elle est accompagnée d'une citation propre à l'écriture qui peut servir de source de méditation).
 
-L'icarien ou l'icarienne détermine également la nature de la communication avec le reste du monde, c'est-à-dire les autres icariens et icariennes ou les simples visiteurs. Pour chacun, l'icarien·ne peut accepter ou refuser d'être contacté·e par mail ou par “message de frigo”, une messagerie interne propre à l'atelier. Par défaut, l'administration seule — Phil inclus — peut contacter l'icarien ou l'icarienne par mail. Par défaut encore, seule l'administration et les autres icarien·ne·s peuvent établir un contact par la “porte du frigo”. Les simples visiteurs n'ont aucun moyen de contacter l'icarienne ou l'icarien sans son autorisation explicite.
+L'icarien·ne détermine également la nature de la communication avec le reste du monde, c'est-à-dire les autres icarien·ne·s ou les simples visiteurs. Pour chacun, l'icarien·ne peut accepter ou refuser d'être contacté·e par mail ou par “message de frigo”, une messagerie interne propre à l'atelier. Par défaut, l'administration seule — Phil inclus — peut contacter l'icarien ou l'icarienne par mail. Par défaut encore, seule l'administration et les autres icarien·ne·s peuvent établir un contact par la “porte du frigo”. Les simples visiteurs n'ont aucun moyen de contacter l'icarienne ou l'icarien sans son autorisation explicite.
 
-Même lorsque le contact par mail est accepté, l'adresse mail de l'icarien·ne demeure cachée, le mail étant envoyé de façon transparente depuis le site, par la section #{MAIN_LINKS[:contact_s]}.
+Même lorsque le contact par mail est accepté, l'adresse mail de l'icarien·ne demeure cachée, le message du mail étant envoyé de façon transparente depuis le site, par la [section “Contact”](contact/mail).
 
-L'auteur(e) peut définir ou modifier à tout moment toutes ces informations dans la #{user.guest? ? "section Préférences" : section_preferences} de son bureau.
+L'apprenti·e-auteur·e peut définir ou modifier à tout moment toutes ces informations dans la #{user.guest? ? "section Préférences" : section_preferences} de son bureau.
 
 À noter qu'au sein de l'atelier Icare, cette communication est exclusivement *informative*. L'atelier revendiquant le fait de ne pas être une “épicerie”, il ne sera jamais émis de messages de promotion ou d'avantages de quelconque nature.
+
+### Conservation du mail d'un visiteur quelconque
+
+Les visiteurs quelconque ont la possibilité, lorsque l’icarien·ne l’autorise, de déposer [un message sur le frigo](aide/fiche/50) d’un·e apprenti·e auteur·e. Pour ce faire, le visiteur doit laisser son adresse email afin de pouvoir être contacté par l’icarien·ne. Cette adresse n’est ni conservée ni transmise à un tiers, sous aucun prétexte. Elle est détruite sitôt que l’icarien·ne a répondu au-dit message ou l’a détruit.
 
 ### Mini-FAQ
 
