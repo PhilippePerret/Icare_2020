@@ -11,13 +11,23 @@ class Aide
     'site' => { hname:'Le Site de l’atelier', titre:true},
     1       => { hname: 'Où aller après l’identification'},
     4       => { hname: 'Fréquence des mails d’activité'},
-    5       => {hname: 'Comment peut vous contacter un·e icarien·ne ?'},
-    6       => {hname: 'Comment peut vous contacter le reste du monde ?'},
     # ---------------------------------------------------------------------
 
     'inscription' => {hname: 'Inscription', titre: true},
     20      => {hname: 'Poser sa candidature'},
     100     => {hname: 'Documents de présentation'},
+
+    # ---------------------------------------------------------------------
+    # Tout ce qui concerne l'interactivité
+    'interactivite' => {hname:'L’Interactivité', titre:true},
+    500 => {hname: 'Les discussions du frigo'},
+    5   => {hname: 'Comment peut vous contacter un·e icarien·ne ?'},
+    52  => {hname: 'Comment peut vous contacter le reste du monde ?'},
+    50  => {hname: 'Contacter un·e icarien·ne par son Frigo'},
+    51  => {hname: 'Contacter un·e icarien·ne en tant que simple visiteur'},
+
+    # ---------------------------------------------------------------------
+
 
     'interface' => { hname:"L'Interface", titre:true},
     '11.bis'    => {hname: 'Constitution du bureau de travail', id: 11},
@@ -29,6 +39,7 @@ class Aide
     'module_apprentissage' => {hname: 'Modules d’accompagnement et d’apprentissage', titre: true},
     200 => {hname: 'Liste et tarif des modules d’accompagnement et d’apprentissage'},
     201 => {hname: 'Durée réelle des modules'},
+    80  => {hname: 'Paiement du module ou de l’échéance'},
     # ---------------------------------------------------------------------
 
     # ---------------------------------------------------------------------
@@ -61,10 +72,9 @@ class Aide
 
     # ---------------------------------------------------------------------
     'divers'  => {hname: 'Divers', titre: true},
-    701 => {hname: 'Grand Livre des Lois de la Narration'},
-    700 => {hname: 'Inscription visiteur pour le frigo'},
-    80  => {hname: 'Paiement du module ou de l’échéance'},
-    81  => {hname: 'Conditions Générales d’Utilisation'}
+    701 => {hname: 'Le Grand Livre des Lois de la Narration'},
+    81  => {hname: 'Conditions Générales d’Utilisation'},
+    82  => {hname:'Politique de confidentialité'}
   }
 
 end #/Aide

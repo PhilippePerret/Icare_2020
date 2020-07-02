@@ -1,4 +1,13 @@
 /*
+
+*/
+blockquote {
+  color: #999999;
+  border-left: 3px solid #DDDDDD;
+  padding-left: 0.6em;
+  font-style: italic;
+}
+/*
   --- LES LISTES DE LIENS HORIZONTAUX ---
 */
 .horizontal_links {

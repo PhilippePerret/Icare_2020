@@ -19,8 +19,8 @@ class HTML
   def formulaire
     form = Form.new(id:'contact-form', size:700, route:route.to_s, libelle_size:100, value_size:600)
     rows = {
-      'Titre'   => {name:'envoi_titre', type:'text'},
-      'Message' => {name:'envoi_message', type:'textarea', height:260}
+      'Titre'   => {name:'envoi_titre', type:'text', value:param(:envoi_titre)},
+      'Message' => {name:'envoi_message', type:'textarea', height:260, value:param(:envoi_message)}
     }
     if user.guest?
       rows.merge!('Votre mail' => {name:'envoi_mail', type:'text'})

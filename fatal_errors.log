@@ -793,4 +793,35 @@ Did you mean?  film
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/frigo/html.rb:33:in `build_body'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-02 06:25:39 +0200 --- FATAL ERROR:
+    Le fichier d’aide est introuvable, malheureusement…
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:55:in `find'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:46:in `fextension'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:24:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-02 07:03:00 +0200 --- FATAL ERROR:
+    Le fichier d’aide est introuvable, malheureusement…
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:55:in `find'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:46:in `fextension'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:24:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-02 08:21:58 +0200 --- FATAL ERROR:
+    undefined method `count' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/lib/FrigoDiscussion.rb:121:in `send_invitations_to'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:36:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-02 09:49:26 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/download/Downloader.rb:65:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/files.rb:64:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:17:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

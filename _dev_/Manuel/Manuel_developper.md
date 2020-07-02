@@ -1872,6 +1872,10 @@ Tag.aide(<id>)
 
 # OU
 
+Tag.aide(<id>, 'titre du lien')
+
+# OU
+
 Tag.aide(id: <id>, titre: "<titre>", class:"<css>")
 ~~~
 
@@ -1883,7 +1887,43 @@ Avec `<id>` est le nombre défini dans la [table des matières de l’aide](/Use
 
 * Lui attribuer un numéro/id unique dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb),
 * ajouter son titre et ce numéro/id dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb),
-* créer son fichier dans le dossier `data` de l’aide, avec un nom commençant par son identifiant unique (la suite du nom importe peu) au format `md`, `erb` ou `html`.
+* créer son fichier dans le dossier `data` de l’aide, avec un nom commençant par son identifiant unique (la suite du nom importe peu) au format `md`, `erb` ou `html` (de préférence en Markdown).
+
+
+
+### Variables dans les fichiers Markdown
+
+Dans les fichiers markdown, on peut ajouter des variables en utilisant la syntax ruby, tout simplement. Par exemple :
+
+~~~markdown
+
+# Une opération
+
+La somme de 2 + 2 est égale à #{2+2}.
+
+~~~
+
+
+
+### Ancre vers titre interne
+
+Pour conduire à une ancre du fichier d'aide, il est impératif de mettre la route complète, on ne peut pas se contenter de mettre `#<ancre>` :
+
+~~~markdown
+
+<!-- fichier 300 -->
+
+Ceci est une [ancre vers Titre de mon ancre](aide/fichier?aid=300#mon-ancre).
+
+...
+
+<a name="mon-ancre"></a>
+
+## Titre de mon ancre
+
+...
+
+~~~
 
 
 
