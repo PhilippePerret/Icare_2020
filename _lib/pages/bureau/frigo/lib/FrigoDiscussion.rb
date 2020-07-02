@@ -200,8 +200,10 @@ SQL
 # En fait, cela revient à les ajouter à la discussion et leur envoyer un
 # message d'invitation.
 def send_invitations_to(icariens)
-  nombre_icariens = icariens&.count
-  return erreur(ERRORS[:invites_required]) if nombre_icariens.to_i == 0
+  return erreur(ERRORS[:invites_required]) if icariens.nil?
+  icariens = [icariens] unless icariens.is_a?(Array)
+  nombre_icariens = icariens.count
+  return erreur(ERRORS[:invites_required]) if nombre_icariens == 0
   nombre_hommes = 0
   lien_participer = Tag.lien(route:"bureau/frigo?disid=#{self.id}", full:true, text:'Lire la discussion'.freeze)
   lien_decliner   = Tag.lien(route:"bureau/frigo?op=decliner_invitation&did=#{self.id}", full:true, text:'Décliner cette invitation'.freeze)
@@ -220,7 +222,8 @@ def send_invitations_to(icariens)
 
   s = nombre_icariens > 1 ? 's' : ''
   es = nombre_icariens > 1 ? (nombre_hommes > 0 ? 's' : 'es') : ''
-  message("#{nombre_icariens} icarien·ne·#{s} ont été invité#{es} à rejoindre la discussion “#{titre}” : #{pseudos.pretty_join}.".freeze)
+  a_ete = nombre_icariens > 1 ? 'ont été' : 'a été'
+  message("#{nombre_icariens} icarien·ne·#{s} #{a_ete} invité#{es} à rejoindre la discussion “#{titre}” : #{pseudos.pretty_join}.".freeze)
 end #/ send_invitations_to
 
 # Retourne la liste des participants à cette discussion (Array de User(s))

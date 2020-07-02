@@ -6,6 +6,7 @@ ET = ' et ' unless defined?(ET)
 VG = ', '   unless defined?(VG)
 class Array
   def pretty_join
+    return self.first if self.count == 1
     ary = self
     lst = ary.pop
     ary.join(VG) + ET + lst
