@@ -8,6 +8,7 @@ ERRORS.merge!({
   discussion_required: 'Une discussion est requise, pour exécuter cette opération…'.freeze,
   not_a_participant: "Vous ne participez pas à cette discussion, vous ne pouvez pas la télécharger.".freeze,
   destroy_require_owner: 'La destruction d’une discussion ne peut se faire que par son instigateur/instigatrice.'.freeze,
+  invites_required: "Il faut choisir les icarien·ne·s à inviter !".freeze,
 })
 
 MESSAGES.merge!({

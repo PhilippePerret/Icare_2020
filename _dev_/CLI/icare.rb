@@ -12,5 +12,5 @@ begin
   end
 rescue Exception => e
   puts "ERREUR: #{e.message}".rouge
-  # puts e.backtrace.join("\n")
+  puts e.backtrace.join("\n")
 end

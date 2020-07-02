@@ -1199,4 +1199,12 @@ Did you mean?  mkdir
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-02 13:58:38 +0200 --- FATAL ERROR:
+    uninitialized constant FrigoDiscussion::ERREURS
+Did you mean?  ERRORS
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/lib/FrigoDiscussion.rb:196:in `send_invitations_to'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:48:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

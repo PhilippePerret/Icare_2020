@@ -191,8 +191,8 @@ SQL
 # En fait, cela revient à les ajouter à la discussion et leur envoyer un
 # message d'invitation.
 def send_invitations_to(icariens)
-  nombre_icariens = icariens.count
-  return if nombre_icariens == 0
+  nombre_icariens = icariens&.count
+  return erreur(ERRORS[:invites_required]) if nombre_icariens.to_i == 0
   nombre_hommes = 0
   lien_participer = Tag.lien(route:"bureau/frigo?disid=#{self.id}", full:true, text:'Lire la discussion'.freeze)
   lien_decliner   = Tag.lien(route:"bureau/frigo?op=decliner_invitation&did=#{self.id}", full:true, text:'Décliner cette invitation'.freeze)

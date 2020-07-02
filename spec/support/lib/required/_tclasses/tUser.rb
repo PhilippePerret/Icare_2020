@@ -4,6 +4,8 @@
   -----------
   Pour les user, pour les tests
 =end
+require 'capybara/rspec'
+
 class TUser
 include Capybara::DSL
 extend SpecModuleNavigation

@@ -6,7 +6,7 @@ SPEC_FOLDER = File.expand_path('.','spec')
 SPEC_SUPPORT_FOLDER   = File.join(SPEC_FOLDER,'support')
 SPEC_FOLDER_DOCUMENTS = File.join(SPEC_SUPPORT_FOLDER, 'asset','documents')
 
-LIB_FOLDER = File.join(File.expand_path('.'),'_lib')
+LIB_FOLDER = File.join(File.expand_path('.'),'_lib') unless defined?(LIB_FOLDER)
 
 require './spec/support/data/signup_data'
 # => DATA_SPEC_SIGNUP_INVALID
