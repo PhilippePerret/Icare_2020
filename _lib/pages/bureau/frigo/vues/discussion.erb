@@ -14,6 +14,10 @@
 # Pour inviter des icariens à rejoindre une discussion
 # Principe : on affiche une liste des icariens pour pouvoir les choisir
 if param(:op) == 'inviter'
+  conditions = ['id != 9'] # ne doit pas être l'anonyme
+  conditions << 'SUBSTRING(options,4,1) != "1"' # ne doit pas être détruit
+  conditions << 'CONVERT(SUBSTRING(options,28,1),UNSIGNED) & 2' # doit être contactable par frigo pour un icarien
+  conditions = conditions.join(AND).freeze
 %>
 <div class="mb2">
 <form class="noborder" action="<%= route.to_s %>" method="POST">
@@ -22,7 +26,7 @@ if param(:op) == 'inviter'
   <input type="hidden" name="disid" value="<%= param(:disid) %>">
   <p>Sélectionner dans la liste ci-dessous les icarien·ne·s à inviter <span class="small">(utiliser les touches ⌘ / Ctrl, ⇧ pour sélectionner plusieurs noms)</span>.</p>
   <select name="icariens" MULTIPLE size="10" class="small" style="width:100%;">
-    <% User.each('id != 9 AND SUBSTRING(options,4,1) != "1"'.freeze) do |user| %>
+    <% User.each(conditions) do |user| %>
       <option value="<%= user.id %>"><%= user.pseudo %></option>
     <% end %>
   </select>

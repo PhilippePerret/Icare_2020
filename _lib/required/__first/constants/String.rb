@@ -2,6 +2,8 @@
 =begin
   Constantes String pratiques (et freezées)
 =end
+AND = ' AND '.freeze
+
 BR = '<br/>'.freeze
 
 EMPTY_STRING = ''.freeze
