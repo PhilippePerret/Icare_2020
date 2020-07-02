@@ -30,6 +30,41 @@ class << self
     end.join
   end #/ discussions_of
 
+  def download_discussion(discussion_id)
+    discussion = get(discussion_id)
+    # L'user doit participer à cette discussion ou être administrateur
+    discussion.participant?(user) || user.admin? || raise(ERRORS[:not_a_participant])
+
+    folder_discussion_name  = "discussion-#{discussion_id}".freeze
+    discussion_zip_name     = "#{folder_discussion_name}.zip".freeze
+    discussion_zip_file     = File.join(DOWNLOAD_FOLDER, discussion_zip_name)
+    File.unlink(discussion_zip_file) if File.exists?(discussion_zip_file)
+    path_folder_discussion  = File.join(TEMP_FOLDER, folder_discussion_name)
+
+    FileUtils.rm_rf(path_folder_discussion) if File.exists?(path_folder_discussion)
+    `mkdir -p "#{path_folder_discussion}"`
+    path_file_discussion = File.join(path_folder_discussion,'discussion.txt')
+    File.open(path_file_discussion,'wb') do |f|
+      f.write(discussion.for_download)
+    end
+
+    # Fenêtre de chargement
+    download(path_folder_discussion, discussion_zip_name)
+    # Note : on reste sur la même page
+  end #/ download
+
+
+  def destroy(discussion_id)
+    unless param(:confirmed)
+      return message("Vous devez confirmer la destruction de la discussion".freeze)
+    end
+    form = Form.new
+    if form.conform?
+      # L'user doit être le possesseur de cette discussion
+      # TODO
+      message("Je procède vraiment à la destruction de la discussion ##{discussion_id}")
+    end
+  end #/ destroy
 end # /<< self
 # ---------------------------------------------------------------------
 #
@@ -149,6 +184,12 @@ def participants
     end
   end
 end #/ participants
+
+# La méthode retourne TRUE si +part+ {User} est un participant à la discussion
+def participant?(part)
+  return db_count(FrigoDiscussion::TABLE_USERS, {user_id:part.id, discussion_id:self.id}) > 0
+end #/ participant?
+
 # = main =
 #
 # Affichage de la discussion
@@ -174,6 +215,22 @@ def liste_messages_formated(options)
   liste = liste.collect { |message| message.out(options) }.join
   Tag.div(text: liste, class:'messages-discussion')
 end #/ liste_messages_formated
+
+
+# Retourne le code de la discussion pour téléchargement
+def for_download(options = nil)
+  lines = []
+  lines << "=== DISCUSSION ATELIER ICARE ##{id} ===#{RC}=".freeze
+  lines << "= Entre : #{participants.collect{|u|u.pseudo}.pretty_join}".freeze
+  lines << "= Date : #{formate_date}".freeze
+  lines << RC2
+  messages.each do |message|
+    lines << "#{message.auteur.pseudo.upcase}, #{formate_date(message.created_at,{hour:true})}#{RC}#{message.content}#{RC}"
+  end
+  lines << RC2
+  lines << "==== ©#{Time.now.year} Atelier Icare http://www.atelier-icare.net ==="
+  return lines.join(RC)
+end #/ for_download
 
 # Retourne les messages de la discussion, par order
 REQUEST_GET_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i ORDER BY `created_at`'.freeze

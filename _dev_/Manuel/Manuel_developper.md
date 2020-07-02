@@ -1101,7 +1101,8 @@ Le nom du **bouton de soumission** du formulaire se définit par :
 ~~~ruby
 form.submit_button = "<nom du bouton>".freeze
 # On peut aussi définir sa classe : (il est juste 'btn' par défaut)
-form.submit_button_class = 'main'
+form.submit_button_class = 'btn main'
+# Noter qu'il faut ajouter 'btn' car cette classe remplacera entièrement l'autre
 ~~~
 
 
@@ -2179,6 +2180,8 @@ Donc, depuis un watcher, au lieu de `download(path)`, on doit utiliser la métho
 * elle redirige vers la page actuelle, ce qui aura pour effet de l’actualiser, et en ajoutant le paramètre `tikd` avec l’identifiant du ticket précédent,
 * la page principale, voyant ce paramètre `tikd`, ajoute dans le code de la page un script javascript qui va changer la location courante. Noter, avant de poursuivre, qu’à ce stade, la page est actualisée, le watcher précédent a disparu et a été remplacé par le nouveau, le suivant en général,
 * la relocation est invoquée, avec cette fois un paramètre `tik` qui va avoir pour effet de lancer la méthode `download`, ce qui proposera le zip à télécharger sans aucun changement de la page courante.
+
+
 
 ### Téléchargement simple
 

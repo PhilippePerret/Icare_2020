@@ -28,7 +28,7 @@ attr_reader :original_paths, :zipfile_name, :options
 def initialize paths, zipfile_name = nil, options = nil
   paths = [paths] unless paths.is_a?(Array)
   finalpaths = []
-  paths.collect do |path|
+  paths.each do |path|
     if File.directory?(path)
       finalpaths += Dir["#{path}/**/*.*"]
     else
@@ -36,7 +36,7 @@ def initialize paths, zipfile_name = nil, options = nil
     end
   end
   @original_paths = finalpaths
-  @options = options
+  @options        = options
   @zipfile_name   = zipfile_name || "download-#{Time.now.to_i}.zip"
   @zipfile_name << '.zip' unless @zipfile_name.end_with?('.zip')
 end #/ initialize

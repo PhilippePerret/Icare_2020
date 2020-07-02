@@ -8,11 +8,23 @@ class HTML
     # Code à exécuter avant la construction de la page
     icarien_required
     case param(:op)
+    when 'download'
+      # Opération appelée quand on veut télécharger la discussion param(:disid)
+      # Le paramètre :follow peut définir la suite, quand par exemple il faut
+      # détruire la discussion après l'opération.
+      param(:disid) || raise(ERRORS[:discussion_required])
+      FrigoDiscussion.download_discussion(param(:disid))
+      return
     when 'decliner_invitation'
       # Méthode appelée depuis un mail pour décliner une invitation à
       # participer à une discussion
       param(:did) || raise(ERRORS[:discussion_required]) # passage en force
       user.quit_discussion(param(:did))
+      return
+    when 'destroy'
+      # Méthode appelée quand le possesseur d'une discussion veut la détruire
+      param(:did) || raise(ERRORS[:discussion_required]) # passage en force
+      FrigoDiscussion.destroy(param(:did))
       return
     when 'quitter_discussion'
       # Méthode appelée quand l'user clique sur le bouton pour quitter la
@@ -52,7 +64,11 @@ class HTML
   # Construction du corps de la page
   def build_body
     # Construction du body
-    vue = if param(:disid) # une discussion choisie
+    vue = if param(:op) == 'destroy'.freeze && !param(:confirmed)
+            'destroy'.freeze
+          elsif param(:op) == 'download'.freeze
+            'download'.freeze
+          elsif param(:disid)  # une discussion choisie
             'discussion'.freeze
           else
             'body'.freeze

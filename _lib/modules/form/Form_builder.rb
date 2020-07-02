@@ -300,7 +300,15 @@ class Form
   def button dbutton
     case dbutton
     when Hash
-      '<a class="btn small noborder" href="%{route}">%{text}</a>' % dbutton
+      css = ['btn']
+      unless dbutton.key?(:class)
+        css << 'small noborder'
+      else
+        css << dbutton[:class]
+      end
+      dbutton[:class] = css.join(SPACE)
+      dbutton[:titre] ||= dbutton.delete(:text)
+      TAG_LIEN_SIMPLE % dbutton
     when String
       dbutton
     else
