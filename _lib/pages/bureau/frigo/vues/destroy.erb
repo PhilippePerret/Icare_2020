@@ -3,7 +3,8 @@
 
 discussion = FrigoDiscussion.new(param(:did))
 
-lien_download = Tag.lien(text:'Télécharger la discussion avant de la détruire'.freeze, route:"bureau/frigo?op=download&disid=#{discussion.id}&follow=destroy")
+lien_download = Tag.lien(text:'Télécharger la discussion avant de la détruire'.freeze, route:"bureau/frigo?op=download&disid=#{discussion.id}")
+
 %>
 <p>Vous êtes sur le point de détruire la discussion “<%= discussion.titre %>” et ses <%= discussion.messages.count %> messages. Cette discussion sera entièrement détruite de la base de données de l'atelier Icare et aucun de ses <%= discussion.participants.count %> participants n'y aura plus accès.</p>
 <p class="right"> <%= lien_download %></p>

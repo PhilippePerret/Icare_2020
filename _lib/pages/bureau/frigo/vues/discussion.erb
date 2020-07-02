@@ -1,6 +1,7 @@
 <%
   discussion = FrigoDiscussion.new(param(:disid))
   listing_messages = discussion.out(for: user, last_check: user.last_check_discussion(param(:disid)))
+
 %>
 
 <%
@@ -45,7 +46,7 @@ if param(:op) == 'inviter'
 # ---------------------------------------------------------------------
 
 %>
-<div class="right">
+<div class="right discret">
   <div class="fleft">
     <span class="small<%= discussion.nombre_non_lus > 0 ? ' red' : '' %>">
       <%= MESSAGES[:nombre_messages_non_lus] % discussion.nombre_non_lus %>
@@ -56,7 +57,7 @@ if param(:op) == 'inviter'
   </div>
   <a href="bureau/frigo" class="small">LISTE DES DISCUSSIONS</a>
 </div>
-<div class="infos small">
+<div class="infos small discret">
   <span>Nombre de participants : <%= discussion.participants.count %></span>
   <span class="ml1"> (<%= discussion.participants.collect{|u|u.pseudo}.pretty_join %>)</span>
 </div>
@@ -91,11 +92,12 @@ form.submit_button = "Ajouter"
 form.submit_button_class = 'inline'
 other_buttons = []
 if discussion.user_id == user.id
-  other_buttons << {text:'Inviter des icarien·ne·s à rejoindre la discussion'.freeze, route:"bureau/frigo?op=inviter&disid=#{param(:disid)}".freeze}
   other_buttons << {text:'Détruire'.freeze, route:"bureau/frigo?op=destroy&did=#{param(:disid)}".freeze, class:'btn warning discret small'}
+  other_buttons << {text:'Inviter des icarien·ne·s à rejoindre la discussion'.freeze, route:"bureau/frigo?op=inviter&disid=#{param(:disid)}".freeze}
 else
   other_buttons << {text:'Quitter cette discussion'.freeze, route:"bureau/frigo?op=quitter_discussion&did=#{param(:disid)}".freeze}
 end
+other_buttons << {text:'Télécharger la discussion'.freeze, route:"bureau/frigo?op=download&disid=#{discussion.id}"}
 
 form.other_buttons = other_buttons
 %>
