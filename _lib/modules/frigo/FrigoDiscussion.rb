@@ -21,7 +21,7 @@ class << self
 
   # Retourne le formulaire pour créer une nouvelle discussion
   def create_form(destinataire = nil)
-    form = Form.new(id:'frigo-discussion-form', route:route.to_s, value_size:600, libelle_size:0, class:'nopadding nomargin')
+    form = Form.new(id:'frigo-discussion-form', route:route.to_s, value_size:600, libelle_size:0, class:'nomargin')
     rows = {
       'Titre'     => {name:'frigo_titre', type:'text', placeholder:'Titre de la discussion'.freeze},
       'Message'   => {name:'frigo_message', type:'textarea', height:200, placeholder:'Premier message de la discussion'.freeze},
