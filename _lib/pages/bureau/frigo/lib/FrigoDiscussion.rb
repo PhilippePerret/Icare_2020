@@ -17,9 +17,9 @@ class << self
       return log(MyDB.error)
     end
     infos_discussions.collect do |ddis|
-      mark_new = ddis[:has_new_messages] == 1 ? '<span class="small">❗</span>' : ''
+      has_new_messages = ddis[:has_new_messages] == 1
       mark_own = ddis[:owner_id] == user.id ? 'vous' : ddis[:owner_pseudo]
-      Tag.lien(route:"bureau/frigo?disid=#{ddis[:discussion_id]}", text:"#{ddis[:titre]} <span class='small'>##{ddis[:discussion_id]} (initiée par #{mark_own})</span>#{mark_new}", class:'block')
+      Tag.lien(class: "block#{(has_new_messages ? ' mark-new' : '')}", route:"bureau/frigo?disid=#{ddis[:discussion_id]}", text:"#{ddis[:titre]}<span class='small ml1'>##{ddis[:discussion_id]}#{SPACE}(initiée par #{mark_own})</span>")
     end.join
   end #/ discussions_of
 

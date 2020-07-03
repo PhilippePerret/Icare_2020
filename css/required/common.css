@@ -11,6 +11,12 @@ a.current {
   opacity:0.4;
 }
 
+/* Pour les discussions par exemple */
+a.mark-new:after {
+  content:'❗';
+  font-size:0.75em;
+}
+
 .hidden {display:none!important}
 .inline {display:inline!important}
 .inline-block{display:inline-block}

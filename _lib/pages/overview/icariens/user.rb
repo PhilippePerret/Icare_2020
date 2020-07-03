@@ -59,7 +59,7 @@ WHERE icm.user_id = %{id}
     return '' if modules_suivis.count > 0
     plus = modules_suivis.count > 1
     s = plus ? 's' : ''
-    "#{pseudo} #{SPAN_A_SUIVI} le#{s} module#{s} #{modules_suivi.collect{|m|m[:name]}.join(VG)}".freeze
+    "#{pseudo} #{SPAN_A_SUIVI} le#{s} module#{s} #{modules_suivis.collect{|m|m[:name]}.join(VG)}".freeze
   end #/ span_modules_suivis
 
   # Retourne la liste des modules suivis

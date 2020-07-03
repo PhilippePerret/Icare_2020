@@ -17,7 +17,12 @@ class TMails
 
     # Retourne TRUE si un message au moins parmi les messages transmis à
     # +mail_destinataire+ contient +searched+
+    # +searched+ {String} Le texte recherché (ou les options)
     def exists?(mail_destinataire, searched, options = nil)
+      if searched.is_a?(Hash)
+        options = searched
+        searched = nil
+      end
       nombre_candidats = self.find(mail_destinataire, searched, options).count
       if nombre_candidats == 0
         error = "aucun mail trouvé"
@@ -43,6 +48,10 @@ class TMails
       if options.key?(:expediteur)
         pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.expediteur == options[:expediteur]}
       end
+      if options.key?(:subject)
+        # Le sujet recherché
+        pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.subject.match?(options[:subject])}
+      end
       if options.key?(:after)
         options[:after] = Time.at(options[:after]) if options[:after].is_a?(Integer)
         pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.time > options[:after]}
@@ -63,6 +72,9 @@ TMail = Struct.new(:path) do
   def filename
     @filename ||= File.basename(path)
   end #/ filename
+  def subject
+    @subject ||= content.match(/^Subject:(.*?)$/).to_a[1].strip
+  end #/ subject
   def content
     @content ||= File.read(path).force_encoding('utf-8')
   end #/ content

@@ -11,6 +11,11 @@ include Capybara::DSL
 extend SpecModuleNavigation
 
 class << self
+  def get(uid)
+    @items ||= {}
+    @items[uid.to_i] ||= instantiate(db_get('users', uid.to_i))
+  end #/ get
+
   def instantiate(donnees)
     u = new(donnees[:id])
     u.data = donnees
@@ -27,7 +32,8 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
-attr_reader :data, :id
+attr_reader :data
+attr_accessor :session # instance MySessionCapybara
 def initialize(id)
   @id = id
 end #/ initialize
@@ -37,6 +43,18 @@ end #/ data= values
 def data
   @data ||= db_get('users', id)
 end #/ data
+
+# ---------------------------------------------------------------------
+#
+#   Propriétés de base
+#
+# ---------------------------------------------------------------------
+
+def id        ; @id       ||= data[:id]       end
+def pseudo    ; @pseudo   ||= data[:pseudo]   end
+def mail      ; @mail     ||= data[:mail]     end
+def password  ; @password ||= data[:password] end
+
 
 # ---------------------------------------------------------------------
 #

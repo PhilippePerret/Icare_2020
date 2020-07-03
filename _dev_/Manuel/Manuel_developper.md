@@ -2518,6 +2518,8 @@ options = {
 	from:		'<mail expéditeur>',   	# auto explicatif
   after:	Time,										# le mail doit avoir été envoyé après ce temps
   before:	Time,										# le mail doit avoir été envoyé avant ce temps
+  subject: 	String 								# Le sujet du message
+  only_one: Boolean,							# le mail doit être unique
 }
 ~~~
 

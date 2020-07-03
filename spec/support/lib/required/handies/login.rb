@@ -35,7 +35,7 @@ def goto_login_form
 end #/ goto_login_form
 
 def login_in_form(data)
-  within("#user-login") do
+  within("form#user-login") do
     fill_in('user_mail', with: data[:mail])
     fill_in('user_password', with:data[:password])
     click_on('S’identifier')
