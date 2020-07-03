@@ -26,6 +26,7 @@ def login_admin
   goto_login_form
   login_in_form(mail: PHIL_MAIL, password:PHIL_PASSWORD)
 end #/ login_admin
+alias :login_phil :login_admin
 
 # Pour s'identifier sur la page de login
 def goto_login_form

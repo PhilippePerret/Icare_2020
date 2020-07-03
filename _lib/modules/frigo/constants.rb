@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require './_lib/required/__first/ContainerClass'
 
 ERRORS.merge!({
   titre_discussion_required: 'Le titre de la discussion est requis'.freeze,

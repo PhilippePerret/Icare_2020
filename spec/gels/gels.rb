@@ -426,6 +426,7 @@ def destroyed_demarre_son_module
   degel_or_gel('destroyed_demarre_son_module') do
     phil_valide_inscription_destroyed
     puts "Fabrication du gel 'destroyed_demarre_son_module'".vert
+    Capybara.reset_sessions!
     login_destroyed
     goto 'bureau/notifications'
     click_on('run-button-icmodule-start')
@@ -438,6 +439,7 @@ def destroyed_se_detruit
   degel_or_gel('destroyed_se_detruit') do
     destroyed_demarre_son_module
     puts "Fabrication du gel 'destroyed_se_detruit'".vert
+    Capybara.reset_sessions!
     login_destroyed
     click_on 'Bureau'
     click_on 'Profil'
@@ -456,6 +458,7 @@ def elie_demarre_son_module
   degel_or_gel('elie_demarre_son_module') do
     destroyed_se_detruit
     puts "Fabrication du gel 'elie_demarre_son_module'".vert
+    Capybara.reset_sessions!
     login_elie
     goto 'bureau/notifications'
     click_on('run-button-icmodule-start')
@@ -467,6 +470,7 @@ def benoit_demarre_son_module
   degel_or_gel('benoit_demarre_son_module') do
     elie_demarre_son_module
     puts "Fabrication du gel 'benoit_demarre_son_module'".vert
+    Capybara.reset_sessions!
     login_benoit
     goto 'bureau/notifications'
     click_on('run-button-icmodule-start')
