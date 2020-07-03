@@ -97,4 +97,39 @@ feature 'Préparation en live' do
     phil_marion_elie_repondent_benoit
   end
 
+  scenario 'jusqu’à l’inscription du futur détruit', inscription_destroyed: true do
+    Gel.remove('inscription_destroyed') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    inscription_destroyed
+  end
+
+  scenario 'jusqu’à la validation du mail du futur détruit', destroyed_valide_son_mail: true do
+    Gel.remove('destroyed_valide_son_mail') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    destroyed_valide_son_mail
+  end
+
+  scenario 'jusqu’à la validation de l’inscription de destroyed', phil_valide_inscription_destroyed: true do
+    Gel.remove('phil_valide_inscription_destroyed') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    phil_valide_inscription_destroyed
+  end
+
+  scenario 'jusqu’au démarrage de son module par destroyed', destroyed_demarre_son_module: true do
+    Gel.remove('destroyed_demarre_son_module') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    destroyed_demarre_son_module
+  end
+
+  scenario 'jusqu’à la destruction par destroyed', destroyed_se_detruit: true do
+    Gel.remove('destroyed_se_detruit') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    destroyed_se_detruit
+  end
+
+  scenario 'jusqu’au démarrage du module d’Élie', elie_demarre_son_module: true do
+    Gel.remove('elie_demarre_son_module') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    elie_demarre_son_module
+  end
+
+  scenario 'jusqu’au démarrage du module de Benoit', benoit_demarre_son_module: true do
+    Gel.remove('benoit_demarre_son_module') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    benoit_demarre_son_module
+  end
+
 end

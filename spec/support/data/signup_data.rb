@@ -80,7 +80,7 @@ DATA_SPEC_SIGNUP_VALID = [
     module_2:       {value:true, type:'checkbox'},
     module_4:       {value:true, type:'checkbox'}
   },
-  # Candidate valide pour Benoi (index 1 - et rester index 1 pour les gels)
+  # Candidat valide pour Élie (index 1 - et rester index 1 pour les gels)
   {
     pseudo:         {value:'Élie'},
     patronyme:      {value:'Élie Perret'},
@@ -98,6 +98,25 @@ DATA_SPEC_SIGNUP_VALID = [
     rgpd:           {value:true, type:'checkbox'},
     module_6:       {value:true, type:'checkbox'},
     module_7:       {value:true, type:'checkbox'}
+  },
+  # Candidat valide pour détruit (4)
+  # Pour avoir un icarien détruit et voir si ça fonctionne bien
+  {
+    pseudo:         {value:'Destroyed'},
+    patronyme:      {value:'Wagram Destroyed'},
+    naissance:      {value:'1978', type:'select'},
+    sexe:           {value:'une femme', type:'select'},
+    mail:           {value:'userdestroyed@gmail.com'},
+    mail_conf:      {value:'userdestroyed@gmail.com'},
+    password:       {value:'sonmotdepasse'},
+    password_conf:  {value:'sonmotdepasse'},
+    presentation:   {value:'presentation.md', type:'file'},
+    motivation:     {value:'motivation.md',   type:'file'},
+    extrait:        {value:'extrait.odt',     type:'file'},
+    # options:        {value:OPTIONS_NEW_ICARIEN, editable:false},
+    cgu:            {value:true, type:'checkbox'},
+    rgpd:           {value:true, type:'checkbox'},
+    module_1:       {value:true, type:'checkbox'}
   }
 ]
 

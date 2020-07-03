@@ -6,16 +6,20 @@
 # Raccourcis
 def login_marion
   goto_login_form
-  login_icarien(1)
+  login_icarien(1) # User#10
 end #/ login_marion
 def login_benoit
   goto_login_form
-  login_icarien(2)
+  login_icarien(2) # User#11
 end #/ login_benoit
 def login_elie
   goto_login_form
-  login_icarien(3)
+  login_icarien(3) # User#12
 end #/ login_elie
+def login_destroyed
+  goto_login_form
+  login_icarien(4) # User#13
+end #/ login_destroyed
 
 def login_admin
   require './_lib/data/secret/phil'

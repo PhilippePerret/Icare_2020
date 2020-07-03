@@ -8,7 +8,6 @@ require_data('signup_data') # => DATA_SPEC_SIGNUP_VALID
 include SpecModuleNavigation
 include SpecModuleFormulaire
 
-
 def inscription_marion
   degel_or_gel('inscription_marion') do
     puts "Fabrication du gel 'inscription_marion'".vert
@@ -373,8 +372,109 @@ def phil_marion_elie_repondent_benoit
   end
 end #/ phil_marion_elie_repondent_benoit
 
+def inscription_destroyed
+  degel_or_gel('inscription_destroyed') do
+    phil_marion_elie_repondent_benoit
+    puts "Fabrication du gel 'inscription_destroyed'".vert
+    Capybara.reset_sessions!
+    def clic_signup_button
+      find('#signup-btn').click
+    end #/ clic_signup_button
+    # Les données à tester
+    data = DATA_SPEC_SIGNUP_VALID[4]
+    goto_home
+    clic_signup_button
+    fill_formulaire_with('#signup-form', data)
+    submit_formulaire('#signup-form')
+    screenshot('inscription_destroyed')
+  end
+end #/ inscription_destroyed
+
+def destroyed_valide_son_mail
+  degel_or_gel('destroyed_valide_son_mail') do
+    inscription_destroyed
+    puts "Fabrication du gel 'destroyed_valide_son_mail'".vert
+    Capybara.reset_sessions!
+    data = DATA_SPEC_SIGNUP_VALID[4]
+    user_mail = data[:mail][:value]
+    candidat  = db_get('users', {mail: user_mail})
+    dticket   = db_get('tickets', {user_id: candidat[:id]})
+    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
+    login_in_form(mail: user_mail, password:data[:password][:value])
+    screenshot('detruit_valide-son-mail')
+    logout # pour laisser la place à l'administrateur
+  end
+end #/ destroyed_valide_son_mail
+
+def phil_valide_inscription_destroyed
+  degel_or_gel('phil_valide_inscription_destroyed') do
+    destroyed_valide_son_mail
+    puts "Fabrication du gel 'phil_valide_inscription_destroyed'".vert
+    Capybara.reset_sessions!
+    login_admin
+    goto 'admin/notifications'
+    within("#validation-candidature-13-form".freeze) do
+      select('Analyse de film'.freeze, from: 'module_id-13')
+      click_on('Attribuer ce module'.freeze)
+    end
+    screenshot('phil-valide-signup-destroyed')
+    logout
+  end
+end #/phil_valide_inscription_destroyed
+
+def destroyed_demarre_son_module
+  degel_or_gel('destroyed_demarre_son_module') do
+    phil_valide_inscription_destroyed
+    puts "Fabrication du gel 'destroyed_demarre_son_module'".vert
+    login_destroyed
+    goto 'bureau/notifications'
+    click_on('run-button-icmodule-start')
+    screenshot('destroyed_demarre_son_module')
+    logout
+  end
+end #/ destroyed_demarre_son_module
+
+def destroyed_se_detruit
+  degel_or_gel('destroyed_se_detruit') do
+    destroyed_demarre_son_module
+    puts "Fabrication du gel 'destroyed_se_detruit'".vert
+    login_destroyed
+    click_on 'Bureau'
+    click_on 'Profil'
+    click_on 'Détruire le profil'
+    data_user = DATA_SPEC_SIGNUP_VALID[4]
+    within('form#destroy-user-form') do
+      fill_in('user_password', with: data_user[:password][:value])
+      click_on 'Détruire définitivement mon profil'
+    end
+    screenshot('destroyed_se_detruit')
+  end
+end #/ destroyed_se_detruit
+
 # Démarrage des modules pour Élie et Benoit
-# TODO
+def elie_demarre_son_module
+  degel_or_gel('elie_demarre_son_module') do
+    destroyed_se_detruit
+    puts "Fabrication du gel 'elie_demarre_son_module'".vert
+    login_elie
+    goto 'bureau/notifications'
+    click_on('run-button-icmodule-start')
+    screenshot('elie_demarre_son_module')
+    logout
+  end
+end #/ elie_demarre_son_module
+def benoit_demarre_son_module
+  degel_or_gel('benoit_demarre_son_module') do
+    elie_demarre_son_module
+    puts "Fabrication du gel 'benoit_demarre_son_module'".vert
+    login_benoit
+    goto 'bureau/notifications'
+    click_on('run-button-icmodule-start')
+    screenshot('benoit_demarre_son_module')
+    logout
+  end
+end #/ benoit_demarre_son_module
+
 
 # Réponse de 2 icariens aux messages frigo
 # TODO

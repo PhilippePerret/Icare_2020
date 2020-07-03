@@ -15,7 +15,7 @@ class User
     end
 
     # Destruction dans les discussions de frigo
-    request_owner = "UPDATE `frigo_discussions` SET user_id = 9 WHERE owner_id = #{id}".freeze
+    request_owner = "UPDATE `frigo_discussions` SET user_id = 9 WHERE user_id = #{id}".freeze
     db_exec(request_owner)
 
     # On détruit les éventuels tickets en cours
