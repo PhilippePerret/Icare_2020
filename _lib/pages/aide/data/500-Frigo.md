@@ -38,6 +38,47 @@ Il vous suffit d’**utiliser le champ en bas de page et de cliquer sur le bouto
 
 Notez que vous pouvez [quitter une discussion](aide/fiche?aid=500#quit_discussion) à tout moment, sans explication.
 
+### Format des messages
+
+Les messages s’écrivent au format [Markdown](https://daringfireball.net/projects/markdown/), un format très pratique qui permet notamment d'écrire tout à fait normalement si on le veut, sans tenir compte du tout du formatage. La seule chose dont il faut se souvenir alors, c'est que les simples retours chariot seront ignorés (en mettre au moins 2 pour avoir un retour à la ligne).
+
+Les formatages les plus usuels et les plus pratiques sont les suivants :
+
+* les italiques en entourant de deux astérisques : *\*texte en italic\**,
+* les gras en entourant de quatre astéristiques : **\*\*texte en gras\*\***,
+* les liens avec \[le texte du lien\](*l'URL*), par exemple `[atelier Icare](http://www.atelier-icare.net)` qui donnera : [atelier Icare](http://www.atelier-icare.net),
+* les listes de définition :
+
+  ~~~markdown
+  Titre de définition
+  : La sous-élément de la définition
+
+  Titre autre définition
+  : Description de la définition
+  ~~~
+  qui donnera :
+
+  Titre de définition
+  : La sous-élément de la définition
+
+  Titre autre définition
+  : Description de la définition
+
+* les listes avec des astéristiques en début de ligne :
+
+  ~~~markdown
+    * Premier item
+    * Deuxième item
+    * Troisième item
+  ~~~
+  … qui donnera :
+
+  * Premier item
+  * Deuxième item
+  * Troisième item
+
+Pour une liste complète des formatages possibles, voir la [documentation de Markdown](https://daringfireball.net/projects/markdown/).
+
 <a name="new_messages"></a>
 
 ### Les nouveaux messages
