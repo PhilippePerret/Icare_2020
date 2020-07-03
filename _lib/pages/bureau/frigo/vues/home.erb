@@ -24,16 +24,32 @@
 %>
 <div style="clear:both"></div>
 <% if user.admin? %>
-  <p>En tant qu’administrateur, vous pouvez lancer un appel à discussion à tous les icariens et icariennes [à implémenter].</p>
+  <h3>Lancer une discussion avec les icariens</h3>
+  <p class="explication">En tant qu’administrateur, vous pouvez lancer un appel à discussion à tous les icariens et icariennes.</p>
 <% else %>
-  <h4>Lancer une discussion avec Phil</h4>
-  <%
-    formphil = Form.new(id:'discussion-phil-form', route:route.to_s, class:'noborder nomargin', libelle_size:0, value_size:600)
-    formphil.rows = {
-      'Titre'   => {name:'frigo_titre', type:'text', placeholder:'Titre de la discussion'.freeze},
-      'Message' => {name:'frigo_message', type:'textarea', height:200, placeholder:"Premier message de la discussion".freeze}
-    }
-    formphil.submit_button = "Lancer la discussion avec Phil"
-  %>
-  <%= formphil.out %>
+  <h3>Lancer une discussion avec Phil</h3>
 <% end %>
+<%
+  formdiscuss = Form.new(id:"discussion-#{user.admin? ? 'all' : 'phil'}-form", route:route.to_s, class:'noborder nomargin nolibelle')
+  rows = {
+    'Titre'   => {name:'frigo_titre', type:'text', placeholder:'Titre de la discussion'.freeze},
+    'Message' => {name:'frigo_message', type:'textarea', height:200, placeholder:"Premier message de la discussion".freeze}
+  }
+  if user.admin?
+    cbs = [
+      {value:1, titre:'actifs', id:'target-a'},
+      {value:2, titre:'inactifs', id:'target-i'},
+      {value:4, titre:'essais', id:'target-e'},
+      {value:7, titre:'Tous', id:'target-t'},
+      {value:8, titre:'sauf très anciens', id:'target-s'}
+    ].collect do |dcb|
+      '<span class="mr2"><input id="%{id}" type="checkbox" name="target" value="%{value}"><label for="%{id}">%{titre}</label></span>' % dcb
+    end.join
+
+    rows.merge!('<avec/>' => {name:'frigo_target', type:'raw', value:cbs})
+  end
+  formdiscuss.rows = rows
+  button_name = user.admin? ? "Lancer la discussion".freeze : "Lancer la discussion avec Phil".freeze
+  formdiscuss.submit_button = button_name
+%>
+<%= formdiscuss.out %>

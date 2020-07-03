@@ -56,6 +56,10 @@ Pour que ce signalement soit pertinent, il convient d’indiquer lorsque ces nou
 
 <span class="small">(\*) Notez que cela ne marque lus que les messages de la discussion courante.</span>
 
+### Nombre de messages affichés
+
+La porte de frigo ne peut contenir que 40 messages par discussion. Si vous désirez relire l'historique complet de la discussion, il vous suffit de [la télécharger](aide/fiche?aid=500#save_discussion).
+
 ### Inviter des icarien·ne·s à une discussion
 
 Lorsque vous êtes l’instiga#{fem(:trice)} d’une discussion, vous pouvez inviter autant d’icarien·ne·s que vous voulez à participer à cette discussion — ce qui peut la rendre très riche. Pour ce faire, rejoignez la discussion en question en cliquant sur son titre depuis [votre frigo](bureau/frigo) et **utilisez le lien “Inviter des icarien·ne·s” situé en bas de la page**, près du bouton “Ajouter”.
@@ -100,4 +104,4 @@ Notez que vous ne pouvez pas quitter une discussion dont vous êtes l’intisga#
 
 ### Enregistrer une discussion
 
-Avant de [détruire](aide/fiche?aid=500#destroy_discussion) ou de [quitter](aide/fiche?aid=500#quit_discussion) une discussion, vous pourriez vouloir en garder une trace quand des choses intéressantes en sont sorties. Pour ce faire, il vous suffit de **suivre le lien “Télécharger cette discussion”** se trouvant en bas de la discussion.
+Lorsque vous voulez relire les anciens messages d’une discussion ou en garder une trace avant sa  [destruction](aide/fiche?aid=500#destroy_discussion) ou avant de la [quitter](aide/fiche?aid=500#quit_discussion), vous pouvez télécharger l’intégralité de cette conversation. Pour ce faire, il vous suffit de **suivre le lien “Télécharger cette discussion”** se trouvant tout en bas de la page de la discussion en question.

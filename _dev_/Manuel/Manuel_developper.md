@@ -292,22 +292,33 @@ Les icariens et les icariennes sont des `User`s.
 
 Le visiteur courant est toujours accessible dans le programme par `user`.
 
-> Note : il ne faut donc jamais utiliser ce nom comme variable. Préférer `_user` ou même `icarien`.
+> Note : il ne faut donc jamais utiliser ce nom comme variable. Préférer `_user` ou même `icarien`. Dans beaucoup de cas, `owner` est la meilleure solution, en sachant que c’est un mot réservé pour beaucoup de classes.
 
-Quand c'est l'icarien d'une autre classe, on emploie la propriété `owner` pour le désigner.
+Un visiteur non identifié répond positivement à **`user.guest?`**. 
 
-> Note : il ne faut donc jamais utiliser ce nom comme variable.
 
-Un visiteur non identifié répond positivement à `user.guest?`. 
 
 ### Options des icariens
+
+Les options des icariens (propriété `:options`) permet de les caractériser dans les moindres détails.
+
+En général, pour récupérer des icariens :
+
+* on s'assure que le bit 0 soit à 0, sinon c'est un administrateur,
+* on s’assure que ce ne soit pas le visiteur #9 (qui est John Doe),
+* on s'assure que le bit 3 (4e) soit à 0 (sinon, à 1, c'est un icarien détruit),
+* on regarde dans le bit 16 (17e) le statut de l'icarien (actif, inactif, etc.),
+* on regarde dans le bit 24 (25e) s'il est "réel" (s'il a déjà payé).
+
+
+
 
 | Bit (0-start) | Description                                                  |
 | ------------- | ------------------------------------------------------------ |
 | 0             | > 0 => administrateur du site.  <br />> 1 => super administrateur (moi) |
 | 1             | Bit de grade                                                 |
 | 2             | 1: le mail a été confirmé                                    |
-| 3             | 1 si l’icarien a été détruit. Note : toutes ses « productions » sur le site devient anonymes (`user_id` = 9). |
+| 3             | **Bit de destruction**<br />1 si l’icarien a été détruit. Note : toutes ses « productions » sur le site devient anonymes (`user_id` = 9). |
 | 4             | Bit de fréquence de mail<br />0: quotidien, 1:hebdomadaire, 9: aucun mail |
 | 5             |                                                              |
 | 6             |                                                              |

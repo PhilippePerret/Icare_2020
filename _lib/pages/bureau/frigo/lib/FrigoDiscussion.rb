@@ -5,22 +5,6 @@
 =end
 class FrigoDiscussion < ContainerClass
 
-  # Requête pour obtenir toutes les discussion de l'user
-  # TODO Pour le moment, elles sont classées par ordre de création inverse
-  # (les plus récentes en premier), plus tard, on pourra mettre en premier
-  # celles qui ont reçu le dernier message.
-  REQUEST_DISCUSSIONS_USER = <<-SQL.freeze
-  SELECT
-    dis.titre AS titre, dis.id AS discussion_id, u.pseudo AS owner_pseudo,
-    fm.created_at > fu.last_checked_at AS has_new_messages
-    FROM #{TABLE_USERS} AS fu
-    INNER JOIN #{TABLE_DISCUSSIONS} AS dis ON dis.id = fu.discussion_id
-    INNER JOIN #{TABLE_MESSAGES} AS fm ON dis.last_message_id = fm.id
-    INNER JOIN `users` AS u ON dis.user_id = u.id
-    WHERE fu.user_id = %i
-    -- GROUP BY dis.id
-    ORDER BY fm.created_at DESC
-  SQL
 class << self
 
   # Retourne la liste (formatée) des discussions de l'icarien (ou moi)
@@ -29,13 +13,13 @@ class << self
   def discussions_of user_id
     user_id = user_id.id if user_id.is_a?(User)
     infos_discussions = db_exec(REQUEST_DISCUSSIONS_USER % [user_id])
-    log("infos_discussions:#{infos_discussions.inspect}")
     if MyDB.error
       return log(MyDB.error)
     end
     infos_discussions.collect do |ddis|
-      mark_new = ddis[:has_new_messages] == 1 ? ' <span class="red">❗</span>' : ''
-      Tag.lien(route:"bureau/frigo?disid=#{ddis[:discussion_id]}", text:"#{ddis[:titre]} <span class='small'>##{ddis[:discussion_id]}</span>#{mark_new}", class:'block')
+      mark_new = ddis[:has_new_messages] == 1 ? '<span class="small">❗</span>' : ''
+      mark_own = ddis[:owner_id] == user.id ? 'vous' : ddis[:owner_pseudo]
+      Tag.lien(route:"bureau/frigo?disid=#{ddis[:discussion_id]}", text:"#{ddis[:titre]} <span class='small'>##{ddis[:discussion_id]} (initiée par #{mark_own})</span>#{mark_new}", class:'block')
     end.join
   end #/ discussions_of
 
@@ -146,14 +130,6 @@ rescue Exception => e
   erreur(e.message)
 end #/ add_message
 
-SUBJECT_NEW_MESSAGE = 'Nouveau message de %s sur votre frigo'.freeze
-MESSAGE_NEW_MESSAGE = <<-HTML.freeze
-<p>Bonjour %{pseudo},</p>
-<p>Je vous informe que %{from} vient de laisser un message sur votre frigo concernant la discussion “%{titre}”.</p>
-<p>Vous pouvez #{Tag.lien(route:'bureau/frigo?disid=%{disid}', full:true, text:'rejoindre cette discussion')}  sur votre frigo.</p>
-<p>Bien à vous,</p>
-<p>🤖 Le Bot de l'Atelier Icare 🦋</p>
-HTML
 # Pour notifier les participants à cette discussion qu'un nouveau message
 # a été envoyé
 # +params+
@@ -173,28 +149,6 @@ def notify_followers(params)
     message(MESSAGES[:follower_warned_for_new_message] % part.pseudo)
   end
 end #/ notify_followers
-
-SUBJECT_INVITATION = "Invitation à rejoindre une discussion"
-MESSAGE_INVITATION = <<-HTML.freeze
-<p>Bonjour %{pseudo},</p>
-<p>Excusez-moi de vous déranger, mais %{owner} vous invite à rejoindre sa discussion “%{titre}”.</p>
-<p>Pour participer à cette discussion, cliquer sur le bouton ci-dessous :</p>
-<p style="text-align:center;">%{lien_participer}</p>
-<p>Pour décliner cette invitation, il suffit de cliquer le bouton ci-dessous</p>
-<p style="text-align:center">%{lien_decliner}</p>
-<p>Bien à vous,</p>
-<p>🤖 Le Bot de l’Atelier Icare 🦋</p>
-HTML
-
-# La requête pour créer un nouveau lien entre un user et une discussion (donc
-# pour ajouter l'icarien/admin à la discussion) en vérifiant que ce lien
-# n'existe pas déjà.
-REQUEST_ADD_TO_DISCUSSION = <<-SQL.freeze
-  INSERT INTO `#{FrigoDiscussion::TABLE_USERS}`
-    (user_id, discussion_id, last_checked_at, created_at, updated_at)
-  VALUES (?, ?, ?, ?, ?)
-  ON DUPLICATE KEY UPDATE user_id = user_id -- peu importe
-SQL
 
 # Pour envoyer des invitations à rejoindre une discussion
 # En fait, cela revient à les ajouter à la discussion et leur envoyer un
@@ -260,7 +214,7 @@ def out(options = nil)
 end #/ out
 
 def liste_messages_formated(options)
-  liste = messages
+  liste = messages(false)
   liste = liste.reverse if options[:inverse]
   liste = liste.collect { |message| message.out(options) }.join
   Tag.div(text: liste, class:'messages-discussion')
@@ -275,7 +229,7 @@ def for_download(options = nil)
   lines << "= Entre : #{participants.collect{|u|u.pseudo}.pretty_join}".freeze
   lines << "= Date : #{formate_date}".freeze
   lines << RC2
-  messages.each do |message|
+  messages(true).each do |message|
     lines << "#{message.auteur.pseudo.upcase}, #{formate_date(message.created_at,{hour:true})}#{RC}#{message.content}#{RC}"
   end
   lines << RC2
@@ -284,14 +238,18 @@ def for_download(options = nil)
 end #/ for_download
 
 # Retourne les messages de la discussion, par order
-REQUEST_GET_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i ORDER BY `created_at`'.freeze
-def messages
-  @messages ||= begin
-    db_exec(REQUEST_GET_MESSAGES % [id]).collect do |dmes|
+def messages(all = false)
+  prop, request = all ? [:all_messages, REQUEST_GET_ALL_MESSAGES] : [:messages, REQUEST_GET_MESSAGES]
+  instance_variable_get("@#{prop}") || begin
+    msgs = db_exec(request % [id]).collect do |dmes|
       fmsg = FrigoMessage.instantiate(dmes)
       fmsg.discussion = self # sert à incrémenter le nombre de messages non lus
       fmsg
     end
+    msgs.reverse! unless all
+    instance_variable_set("@#{prop}", msgs)
   end
+  instance_variable_get("@#{prop}")
 end #/ messages
+
 end #/FrigoDiscussion < ContainerClass

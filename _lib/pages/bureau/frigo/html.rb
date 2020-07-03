@@ -52,8 +52,10 @@ class HTML
       form = Form.new
       if form.conform?
         case param(:form_id)
+        when 'discussion-all-form'
+          start_discussion_with_all # je lance une discussion
         when 'discussion-phil-form'
-          start_discussion_with_phil
+          start_discussion_with_phil # un icarien lance une discuss avec moi
         when 'discussion-form'
           add_message_to_discussion
         end
@@ -77,6 +79,7 @@ class HTML
     @body = deserb("vues/#{vue}", user)
   end
 
+  # Méthode appelée quand un icarien lance une discussion avec moi
   def start_discussion_with_phil
     tit = safe(param(:frigo_titre).nil_if_empty) || raise(ERRORS[:titre_discussion_required])
     msg = safe(param(:frigo_message).nil_if_empty) || raise(ERRORS[:message_discussion_required])
@@ -84,6 +87,59 @@ class HTML
   rescue Exception => e
     erreur e.message
   end #/ start_discussion_with_phil
+
+  def start_discussion_with_all
+    tit = safe(param(:frigo_titre).nil_if_empty) || raise(ERRORS[:titre_discussion_required])
+    msg = safe(param(:frigo_message).nil_if_empty) || raise(ERRORS[:message_discussion_required])
+    # On fait la liste des icariens en fonction des cases à cocher
+
+    target =  case param(:target)
+              when NilClass
+                return erreur(ERRORS[:invites_required])
+              when Array
+                param(:target).inject(0){|t, n| t + n.to_i}
+              else
+                param(:target).to_i
+              end
+
+    # On établit la condition
+    conditions = ["SUBSTRING(options,4,1) != '1'"] # non détruit
+    conditions << "SUBSTRING(options,1,1) = 0" # pas un administrateur
+    bit17_in = []
+    if target & 1 > 0 # => il faut prendre les actifs
+      bit17_in << '3'
+      bit17_in << '4'
+    end
+    if target & 2 > 0 # => il faut prendre les inactifs
+      bit17_in << '5'
+    end
+    if target & 4 > 0 # => il faut prendre les icariens à l'essai
+      bit17_in << '2'
+    end
+    if target & 8 > 0 # => il ne faut pas prendre les trop vieux (> 5 ans)
+      conditions << "updated_at > #{Time.now.to_i - 5 * 365.days}"
+    end
+    unless bit17_in.empty?
+      if bit17_in.count == 1
+        conditions << "SUBSTRING(options,17,1) = #{bit17_in.first}"
+      else
+        conditions << "SUBSTRING(options,17,1) IN (#{bit17_in.join(VG)})"
+      end
+    end
+
+    # On prend les instances icariens qui seront concernées
+    conditions = conditions.join(AND)
+    request = "SELECT id, pseudo, mail FROM `users` WHERE #{conditions}".freeze
+    allusers = db_exec(request).collect{|duser|User.instantiate(duser)}
+
+    if allusers.empty?
+      erreur ERRORS[:no_participants_found]
+    else
+      # On crée la discussion
+      FrigoDiscussion.create(allusers, tit, msg)
+    end
+
+  end #/ start_discussion_with_all
 
   # Pour ajouter un message à la discussion courante.
   # - L'ID de la discussion est contenu dans param(:disid)

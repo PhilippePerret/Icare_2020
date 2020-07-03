@@ -30,6 +30,12 @@ class Form
     end
   end
 
+  # Retourne TRUE si c'est un formulaire sans libellé
+  def no_libelle?
+    @is_sans_libelle = (data[:class]||'').match?(/\bnolibelle\b/) if @is_sans_libelle.nil?
+    @is_sans_libelle
+  end #/ no_libelle?
+
   # Sortie du formulaire
   # --------------------
   # On en profite aussi pour enregistrer son token
@@ -77,7 +83,9 @@ class Form
   # et :value_size ou de sa définition explicite
   def form_size
     @form_size ||= begin
-      if data.key?(:size)
+      if no_libelle?
+        'auto'
+      elsif data.key?(:size)
         "#{data[:size]}px"
       elsif libelle_size || value_size
         "calc(#{libelle_size||DEFAULT_LIBELLE_WIDTH} + #{value_size||'auto'})"
@@ -97,7 +105,9 @@ class Form
   end #/ libelle_size
   def value_size
     @value_size ||= begin
-      if data[:value_size].nil?
+      if no_libelle?
+        '100%'
+      elsif data[:value_size].nil?
         DEFAULT_VALUE_WIDTH
       else
         # Quand défini dans les arguments d'instanciation (data)
@@ -186,7 +196,7 @@ class Form
         #
         <<-HTML
 <div class="row"#{row_style(dfield)}>
-  <span class="libelle"#{libelle_style}>#{label}</span>
+  #{span_libelle(style: libelle_style, label: label)}
   <span class="value#{" file" if dfield[:type] == 'file'}">
     #{value_field_for(dfield)}
     #{explication_field(dfield) if dfield.key?(:explication)}
@@ -196,6 +206,14 @@ class Form
       end
     end.join(RC)
   end
+
+  SPAN_LIBELLE = '<span class="libelle"%{style}>%{label}</span>'.freeze
+  # Retourne le span pour la libelle
+  # Sauf si c'est un formulaire sans libellé (nolibelle) raison pour laquelle
+  # cette construction a été séparée
+  def span_libelle(dspan)
+    (SPAN_LIBELLE % dspan) unless no_libelle?
+  end #/ span_libelle
 
   # Une explication du champ est peut-être donnée
   def explication_field(dfield)
@@ -207,7 +225,7 @@ class Form
   # affecteront la propriété :grid-template-columns du row
   def row_style(dfield)
     sty = []
-    if dfield[:nogrid]
+    if dfield[:nogrid] || no_libelle?
       sty << 'grid-template-columns:auto;'
     elsif libelle_size || value_size
       sty << "grid-template-columns:#{libelle_size||'auto'} #{value_size||'auto'};"
