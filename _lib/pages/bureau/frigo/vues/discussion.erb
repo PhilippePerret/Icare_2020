@@ -77,6 +77,15 @@ if param(:op) == 'inviter'
 if param(:disid)
 %>
   <%= listing_messages %>
+
+  <%# Boutons sous la discussion  %>
+  <div>
+    <% if discussion.nombre_non_lus > 0 %>
+      <%= MESSAGES[:bouton_tout_marquer_lu] % param(:disid) %>
+    <% end %>
+    <a href="bureau/frigo" class="small discret ml2">LISTE DES DISCUSSIONS</a>
+  </div>
+
 <% else %>
   <p>Vous devez choisir la discussion à afficher !</p>
 <%
