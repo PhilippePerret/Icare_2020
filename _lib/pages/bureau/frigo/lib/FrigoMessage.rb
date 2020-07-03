@@ -43,7 +43,7 @@ def user_auteur? ; @user_is_auteur end
 
 def content_formated
   Tag.div(text:auteur_formated + date_formated, class:'infos') +
-  Tag.div(text:content.gsub(/\n/,'<br/>'), class:'content')
+  Tag.div(text:kramdown(content), class:'content')
 end #/ content_formated
 
 
