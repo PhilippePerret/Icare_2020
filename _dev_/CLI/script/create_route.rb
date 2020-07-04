@@ -80,21 +80,24 @@ end #/ create_constants_file
 
 
 def html_code_type
-  <<-RUBY
+  <<-RUBY.freeze
 # encoding: UTF-8
 #{'require_module(\'form\')' if DATA_PAGE[:form]}
 class HTML
   def titre
     "#{DATA_PAGE[:titre]||"TITRE MANQUANT"}".freeze
-  end
+  end #/titre
+
   # Code à exécuter avant la construction de la page
   def exec
     #{"icarien_required\n" if DATA_PAGE[:icarien_required]}#{"admin_required\n" if DATA_PAGE[:admin_required]}
-  end
+  end # /exec
+
   # Fabrication du body
   def build_body
     @body = #{DATA_PAGE[:body_erb] ? 'deserb(\'body\', self)' : "<<-HTML#{RC2}    HTML"}
-  end
+  end # /build_body
+
 end #/HTML
   RUBY
 end

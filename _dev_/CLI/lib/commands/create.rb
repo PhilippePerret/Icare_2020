@@ -48,7 +48,8 @@ LISTE_CLASSES = [
   {name: 'IcDocument'},
   {name: 'IcEtape'},
   {name: 'IcModule'},
-  {name: 'User'}
+  {name: 'User'},
+  {name: 'FrigoDiscussion'}
 ]
 
 NEW_WATCHER = {

@@ -54,6 +54,7 @@ def id        ; @id       ||= data[:id]       end
 def pseudo    ; @pseudo   ||= data[:pseudo]   end
 def mail      ; @mail     ||= data[:mail]     end
 def password  ; @password ||= data[:password] end
+def options   ; @options  ||= data[:options]  end
 
 
 # ---------------------------------------------------------------------
@@ -79,7 +80,16 @@ end #/ deconnect
 
 # Les options
 def options
-  @options ||= data[:options]
+  @options ||= begin
+    opts = data[:options]
+    if opts.nil?
+      # C'est le cas si on instancie l'user avec le minimum de données
+      # Il faut alors le recharger complètement
+      @data = nil
+      opts = data[:options]
+    end
+    opts
+  end
 end #/ options
 # Une valeur d'option en particulier
 def option(bit)

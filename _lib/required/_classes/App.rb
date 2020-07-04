@@ -1,6 +1,7 @@
 # encoding: UTF-8
 class App
 
+ONLINE = ENV['HTTP_HOST'] != "localhost" unless defined?(ONLINE)
 URL_ONLINE  = 'www.atelier-icare.net'.freeze
 URL_OFFLINE = 'localhost/AlwaysData/Icare_2020'.freeze
 FULL_URL_ONLINE   = "http://#{URL_ONLINE}".freeze

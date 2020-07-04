@@ -9,28 +9,15 @@ class TUser
   include ::RSpec::Matchers # pour pouvoir utiliser expect
   include Capybara::DSL
 
-def loginit
-  Capybara.reset_sessions!
-  goto_login_form
-  expect(page).to have_selector('form#user-login')
-  within("form#user-login") do
-    fill_in('user_mail', with: mail)
-    fill_in('user_password', with: password)
-    click_on('S’identifier')
-  end
-end #/ login_it
 def rejoint_son_frigo
   loginit
   goto("bureau/frigo")
 end #/ benoit_rejoint_son_frigo
-def rejoint_son_bureau
-  loginit
-  goto("bureau/home")
-end #/ rejoint_son_bureau
 
 # Pour rejoindre une discussion
 # Soit directement, soit depuis l'endroit où se trouve l'user connecté
-def rejoint_la_discussion(titre_discussion)
+# +checks+  Peut définir les checks à faire. Cf. mode d'emploi
+def rejoint_la_discussion(titre_discussion, checks = nil)
   if page.has_css?('a', text: 'se déconnecter')
     click_on 'Bureau'
     click_on 'Porte de frigo'
@@ -38,6 +25,22 @@ def rejoint_la_discussion(titre_discussion)
     rejoint_son_frigo
   end
   click_on(titre_discussion)
+  if checks
+    if checks.key?(:new_messages)
+      expect(page).to have_css('span.new-messages-count', text:checks[:new_messages].to_s),
+        "La page devrait afficher le nombre de nouveaux messages avec le bon compte"
+      expect(page).to have_css('a.mark-lu-btn', count: 2),
+        "La page devrait avoir deux liens 'Tout marquer lu'"
+    end
+    if checks.key?(:participants_nombre)
+      expect(page).to have_css('span.participants-nombre', text:checks[:participants_nombre]),
+        "Le bon nombre de participants devrait être indiqué (#{checks[:participants_nombre]})."
+    end
+    if checks.key?(:participants_pseudos)
+      expect(page).to have_css('span.participants-pseudos', text:checks[:participants_pseudos]),
+        "La bonne liste de pseudos devrait être indiquée (#{checks[:participants_pseudos]})"
+    end
+  end
 end #/ rejoint_la_discussion
 
 def start_discussion_with_phil(titre, msg)

@@ -2,6 +2,8 @@
 =begin
   Constantes propres à la section Frigo du bureau
 =end
+require './_lib/required/__first/helpers/Tag.rb'
+
 class FrigoDiscussion < ContainerClass
 
 # Requête pour obtenir toutes les discussion de l'user
@@ -56,4 +58,12 @@ SQL
 REQUEST_GET_ALL_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i ORDER BY `created_at`'.freeze
 REQUEST_GET_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i ORDER BY `created_at` DESC LIMIT 40'.freeze
 
+SUBJECT_ANNONCE_DESTROY = 'Destruction d’une discusion à laquelle vous participez'
+MESSAGE_ANNONCE_DESTROY = <<-HTML.freeze
+<p>%{pseudo},</p>
+<p>Je vous annonce par la présente que la discussion “%{titre}” instiguée par %{owner_pseudo} à laquelle vous participez va être supprimée dans une semaine.</p>
+<p>Si vous voulez en conserver une trace, #{Tag.lien(route:'bureau/frigo&disid=%{id}', text:'vous pouvez la télécharger', full:true)} grâce au bouton “Télécharger” placée en dessous de cette discussion.</p>
+<p>Bien à vous,</p>
+<p>🤖 Le Bot de l'atelier Icare 🦋</p>
+HTML
 end #/FrigoDiscussion < ContainerClass

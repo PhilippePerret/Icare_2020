@@ -9,7 +9,7 @@ class TWatchers
     # Retourne TRUE si un message au moins parmi les messages transmis à
     # +user_id+ contient +searched+
     def exists?(params)
-      nombre_candidats = self.find(params).count
+      nombre_candidats = self.find_all(params).count
       if nombre_candidats == 0
         @error = "aucun watcher trouvé"
         false
@@ -23,31 +23,33 @@ class TWatchers
 
     # Retourne les mails transmis à +user_id+ qui contiennent
     # le message +searched+
-    def find(params)
-      pr = proc { |tmail| tmail }
+    def find_all(params)
+      pr = proc { |obj| obj }
       if params.key?(:wtype)
-        pr = pr >> proc {|tmail| tmail if tmail && tmail.wtype == params[:wtype]}
+        pr = pr >> proc {|obj| obj if obj && obj.wtype == params[:wtype]}
       end
       if params.key?(:after)
-        params[:after] = Time.at(params[:after]) if params[:after].is_a?(Integer)
-        pr = pr >> proc { |tmail| tmail if tmail && tmail.time > params[:after]}
+        pr = pr >> proc { |obj| obj if obj && obj.created_at > params[:after]}
       end
       if params.key?(:before)
-        params[:before] = Time.at(params[:before]) if params[:before].is_a?(Integer)
-        pr = pr >> proc { |tmail| tmail if tmail && tmail.time < params[:before]}
+        pr = pr >> proc { |obj| obj if obj && obj.created_at < params[:before]}
       end
       # On filtre les watchers
-      @founds = self.for(params).select do |tmail|
-        pr.call(tmail)
+      @founds = self.for(params).select do |obj|
+        pr.call(obj)
       end
+    end #/ find
+
+    def find(params)
+      find_all(params).first
     end #/ find
 
     # Retourne tous les watchers (instances TWatcher) pour l'icarien
     # +params:user_id+
     def for(params)
-      user_id = params[:user_id] || params[:user].id
-      cols = "id, user_id, wtype, objet_id, params, created_at, updated_at, triggered_at"
-      request = "SELECT #{cols} FROM watchers WHERE user_id = #{user_id}"
+      user_id = params[:user_id] || params[:user]&.id || params[:owner]&.id || params[:owner_id]
+      cols = "id, user_id, wtype, objet_id, params, created_at, updated_at, triggered_at".freeze
+      request = "SELECT #{cols} FROM watchers WHERE user_id = #{user_id}".freeze
       db_exec(request).collect do |dwatcher|
         TWatcher.new(*dwatcher.values)
       end

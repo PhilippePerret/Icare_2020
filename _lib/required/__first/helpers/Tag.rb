@@ -3,6 +3,8 @@
   Module contenant notamment la class Tag qui permet d'avoir
   des balises très facilement à l'aide de Tag.<type>
 =end
+require './_lib/required/_classes/App.rb'
+
 class Tag
 class << self
 

@@ -1,0 +1,41 @@
+<%
+require_module('user/modules')
+discussion = FrigoDiscussion.get(param(:did))
+%>
+<%
+# ---------------------------------------------------------------------
+#
+#   PARTIE INVITATION
+#
+# ---------------------------------------------------------------------
+
+# Pour inviter des icariens à rejoindre une discussion
+# Principe : on affiche une liste des icariens pour pouvoir les choisir
+conditions = ['id != 9'] # ne doit pas être l'anonyme
+conditions << 'SUBSTRING(options,4,1) != "1"' # ne doit pas être détruit
+conditions << 'CONVERT(SUBSTRING(options,28,1),UNSIGNED) & 2' # doit être contactable par frigo pour un icarien
+conditions = conditions.join(AND).freeze
+%>
+<h3><%= UI_TEXTS[:inviter_users_button] %> à la discussion “<%= discussion.titre %>”</h3>
+<div class="mb2">
+<form id="invitation-frigo-form" class="noborder nomargin" action="<%= route.to_s %>" method="POST">
+  <input type="hidden" name="op" value="send_invitations">
+  <input type="hidden" name="route" value="bureau/frigo">
+  <input type="hidden" name="disid" value="<%= param(:did) %>">
+  <p>Sélectionner dans la liste ci-dessous les icarien·ne·s à inviter <span class="small">(utiliser les touches ⌘ / Ctrl, ⇧ pour sélectionner plusieurs noms)</span>.</p>
+  <select name="icariens" MULTIPLE size="10" class="small" style="width:100%;">
+    <% User.each(conditions) do |user| %>
+      <% next if discussion.participant?(user) %>
+      <option value="<%= user.id %>"><%= user.pseudo %> (<%= user.actif? ? "module “#{user.icmodule.name}”" : 'inactif' %>)</option>
+    <% end %>
+  </select>
+  <div class="buttons">
+    <div class="other_buttons">
+      <a href="bureau/frigo?disid=<%=param(:did)%>" class='btn'>Renoncer</a>
+    </div>
+    <input type="submit" name="" value="Inviter">
+  </div>
+</form>
+</div>
+
+<p class="explication">Merci de noter que n’apparaissent dans cette liste que les icarien·ne·s qui acceptent de participer aux discussions.</p>

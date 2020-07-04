@@ -93,5 +93,13 @@ DATA_WATCHERS = {
     relpath: 'MiniFaq/answer_question'.freeze,
     actu_id: nil,
     next: nil
-  }
+  },
+
+  # --- DIVERS ---
+  destroy_discussion: {
+    titre: 'Destruction d’une discussion'.freeze,
+    relpath: 'FrigoDiscussion/destroy'.freeze,
+    actu_id: nil,
+    next: nil
+  },
 }

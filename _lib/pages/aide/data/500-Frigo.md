@@ -121,11 +121,11 @@ Lorsque vous vous trouvez sur une discussion, vous pouvez revenir à la liste de
 
 ### Destruction d’une discussion
 
-Avec le temps, votre nombre de discussions devrait être considérable. Afin de ne pas vous y perdre, vous pourriez vouloir supprimer les plus vieilles (note : on ne peut le faire que si l’on est l’initiateur de la discussion — voir ci-dessous les deux autres moyens).
+Avec le temps, votre nombre de discussions devrait être important. Afin de ne pas vous y perdre, vous pourriez vouloir supprimer les plus vieilles (note : on ne peut le faire que si l’on est l’initiateur ou l’initiatrice de la discussion — voir ci-dessous les deux autres moyens).
 
 Pour ce faire, il suffit d’**utiliser le bouton “Détruire” en regard du bouton “Ajouter” en bas de la discussion.**
 
-N’hésitez pas, par courtoisie, à prévenir les participants à cette discussion avant cette destruction — par exemple par un dernier message frigo — afin qu’ils aient le temps d’[enregistrer cette conversation](aide/fiche?aid=500#save_discussion).
+Par courtoisie, les participants à cette discussion seront avertis et disposeront d’une semaine pour l’[enregistrer](aide/fiche?aid=500#save_discussion) avant sa véritable destruction.
 
 Notez que vous ne pouvez supprimer une discussion que si vous en êtes l’instiga#{fem(:trice)}. Dans le cas contraire, vous avez deux moyens de procéder :
 

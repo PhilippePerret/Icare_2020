@@ -25,6 +25,44 @@ Il s’agit ici de la version produite en 2020 de l’Atelier Icare. Elle vise �
 
 
 
+## Synopsis du fonctionnement général
+
+### Synopsis très général
+
+~~~
+index.rb
+	App.run
+		~ Quelques initialisations
+		html.build_page		# construction de la page suivant la route
+		html.out					# sortie et envoi du code à l'utilisateur
+		~ Quelques finitions
+~~~
+
+### Construction de la page (`HTML#build_page`)
+
+~~~
+HTML#build_page
+	Chargement de la route. (`Page::load`)
+		Par exemple 'ma/route' va charger le dossier
+		./_lib/pages/ma/route/ qui contient certainement un fichier 
+		`html.rb` définissant :
+			HTML#exec					Méthode qui sera appelée tout de suite après le
+												chargement de la page.
+			HTML#build_body		qui sera appelée ensuite pour construire 
+												le @body
+			HTML#titre				qui sera appelée plus tard aussi pour obtenir le
+												titre de la page (+ TITLE)
+		De la même manière, tous les fichiers `.js` et `.css` des dossiers
+		des routes sont automatiquement chargés.
+		Voir aussi la particularité des dossiers `xrequired` ci-dessous.
+	Construction des différents éléments de la page
+		HTML#titre et HTML#raw_titre sont appelés pour définir les titres
+		de la page (titre dans la page et balise TITLE).
+	Assemblage final du code de la page
+~~~
+
+---
+
 ## Les quatre dossiers principaux
 
 
@@ -1495,6 +1533,21 @@ id_new_watcher = icarien.watchers.add(<watcher type>, {<data>} )
 > ~~~
 >
 
+~~~ruby
+# Les <data> peuvent se limiter à :
+data_watcher = {
+	objet_id: {Integer} # ID de l'objet visé, dont la classe est définie
+											# dans la définition du watcher.
+	# Optionnellement
+	triggered_at: {Integer} # Le timestamp de déclenchement du watcher 
+													# (moment où il doit s'afficher)
+													
+	params: {JsonString}		# Données éventuelles à transmettre.
+}
+~~~
+
+
+
 Les `types de watchers` sont définis dans le fichier des [données absolues des watchers][].
 
 Pour voir les données enregistrées dans la base de donnée, [voir ici](#addwatcher).
@@ -2320,7 +2373,26 @@ end
 
 Soit un gel de nom `mon_premier_gel`, on le produit :
 
-**En créant son scenario de test**
+**À la fin d’un test**
+
+~~~ruby
+feature "Ma fonctionnalité" do
+	scenario "le scénario du test" do
+		degel('letat-de-depart')
+
+		# ... le test ici
+		
+		# === ON PRODUIT LE GEL ICI ===
+		gel('mon_premier_gel')
+	end
+	
+end
+~~~
+
+
+> Bien sûr, ce gel ci-dessus ne sera pas introduit dans une suite de gels. Mais s'il part bien d'un dégel, donc d'un état fixe, il suffit de rejouer le test pour actualiser le gel.
+
+**OU en créant son scenario de test**
 
 Ce scénario se crée dans le fichier [./spec/gels/gels_spec.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/gels/gels_spec.rb).
 
@@ -2344,7 +2416,12 @@ On crée ensuite la méthode qui va produire l’exécution propre à ce gel, da
 ~~~ruby
 ...
 def	mon_premier_gel
-  gel('mon_premier_gel').degel_or_gel do
+  degel_or_gel('mon_premier_gel') do
+    # L'appel du gel précédent
+    mon_gel_precedent_pour_la_suite
+    # Réinitialisation de la session (suppression cookies, etc.)
+    Capybara.reset_sessions!
+    puts "Production du gel 'mon_premier_gel'".vert
     # ... le "test" à produire pour arriver dans
     # ... l'état désiré
   end
@@ -2475,26 +2552,40 @@ Cela vide le dossier `./tmp/mails` dans lequel sont enregistrés les codes html 
 #### Tester si un mail contenant un certain texte a été envoyé
 
 ~~~ruby
-TMails.exists?(<dest.>, <cherché>[,<options>])			TMails.exists?("phil@chez.moi", "Bonjour Phil !")
+TMails.exists?(<dest.>[, <cherché>][,<options>])			TMails.exists?("phil@chez.moi", "Bonjour Phil !")
 ~~~
 
+#### Tester si un mail a été envoyé sans tester son contenu
+
+~~~ruby
+TMails.exists?(<dest.>,<options>)
+~~~
+
+Par exemple pour tester si un mail avec un certain titre a été envoyé après un certain temps (lu dans le test)  m'a été envoyé :
+
+~~~ruby
+TMails.exists?("phil@chez.moi", {subject: 'Mon mail', after: start_time})
+~~~
+
+Donc pour les tests :
+
+~~~ruby
+expect(TMails).to be_exists("phil@chez.moi", {subject: 'Mon mail', after: start_time})
+~~~
 
 
 #### Récupérer tous les mails d’un certain utilisateur
 
 ~~~ruby
 TMails.for(<mail destinataire>[,<options>])							TMails.for("phil@chez.moi")
-# => Liste d'instance TMail
-~~~
-
-# 
+# => Liste d'instances {TMail}
 ~~~
 
 <a name="classtmail"></a>
 
 Cette méthode retourne donc une liste d’instance `TMail` qui répond aux méthodes suivantes :
 
-​~~~ruby
+~~~ruby
 tmail.contains?(str)		# retourne true si contient le texte +str+
 tmail.content						# le contenu textuel du mail
 tmail.time							# Le temps de l'envoi

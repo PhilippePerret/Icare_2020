@@ -21,10 +21,15 @@ class HTML
       param(:did) || raise(ERRORS[:discussion_required]) # passage en force
       user.quit_discussion(param(:did))
       return
-    when 'destroy'
+    when 'inviter'
+      param(:did) || raise(ERRORS[:discussion_required])
+      owner_discussion_required || user.admin? || raise(ERRORS[:inviter_requires_owner])
+      return
+    when 'annonce_destruction'
       # Méthode appelée quand le possesseur d'une discussion veut la détruire
       param(:did) || raise(ERRORS[:discussion_required]) # passage en force
-      FrigoDiscussion.destroy(param(:did))
+      owner_discussion_required || user.admin? || raise(ERRORS[:destroy_requires_owner])
+      FrigoDiscussion.get(param(:did)).annonce_destruction
       return
     when 'quitter_discussion'
       # Méthode appelée quand l'user clique sur le bouton pour quitter la
@@ -61,19 +66,25 @@ class HTML
         end
       end #/fin de si le formulaire est conforme
     end
-  end
+  rescue Exception => e
+    log(e)
+    param(:op, '')
+    erreur(e.message)
+  end #/exec
 
   # Construction du corps de la page
   def build_body
     # Construction du body
-    vue = if param(:op) == 'destroy'.freeze && !param(:confirmed)
-            'destroy'.freeze
-          elsif param(:op) == 'download'.freeze
-            'download'.freeze
+    vue = if param(:op) == STRINGS[:destroy] && !param(:confirmed)
+            STRINGS[:destroy]
+          elsif param(:op) == STRINGS[:inviter]
+            STRINGS[:inviter]
+          elsif param(:op) == STRINGS[:download]
+            STRINGS[:download]
           elsif param(:disid)  # une discussion choisie
-            'discussion'.freeze
+            STRINGS[:discussion]
           else
-            'home'.freeze
+            STRINGS[:home]
           end
     # On construit le body
     @body = deserb("vues/#{vue}", user)
@@ -147,4 +158,14 @@ class HTML
   def add_message_to_discussion
     FrigoDiscussion.get(param(:disid))&.add_message({auteur:user, message:param(:frigo_message)})
   end #/ add_message_to_discussion
+
+  private
+
+    # Retourne FALSE si l'user courant n'est pas le propriétaire de la
+    # discussion (et qu'il n'est pas un administrateur)
+    def owner_discussion_required
+      discussion = FrigoDiscussion.get(param(:disid)||param(:did))
+      return discussion.owner.id == user.id
+    end #/ owner_discussion_required
+
 end #/HTML

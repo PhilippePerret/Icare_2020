@@ -38,7 +38,6 @@ def load_xrequired
     path_xrequired = File.join(the_path,'xrequired')
     if File.exists?(path_xrequired)
       require_folder(path_xrequired)
-      log("Dossier xrequired chargé : #{path_xrequired}")
     end
   end
 end

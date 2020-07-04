@@ -47,7 +47,10 @@ class << self
       other.add_discussion(discussion_id)
     end
     # On ajoute aussi ce message pour celui qui a initié la discussion
-    db_compose_insert(table_users, {discussion_id:discussion_id, user_id:user.id, last_checked_at:Time.now.to_i + 10})
+    # [1] Ne pas mettre un nombre trop grand, sinon ça pose problème pendant
+    #     les test : un nouveau message posté dans les x secondes après ne
+    #     serait pas considéré comme nouveau.
+    db_compose_insert(table_users, {discussion_id:discussion_id, user_id:user.id, last_checked_at:Time.now.to_i + 1}) # [1]
 
     # Message de confirmation
     unless options && options[:no_message]
@@ -63,5 +66,46 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
+
+# Retourne la liste des participants à cette discussion (Array de User(s))
+def participants
+  @participants ||= begin
+    db_exec("SELECT user_id FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze).collect do |ddis|
+      User.get(ddis[:user_id])
+    end
+  end
+end #/ participants
+
+# Destruction complète de la discussion
+# -------------------------------------
+# Cela consiste à :
+#  - détruire l'enregistrement dans frigo_discussions
+#  - détruire les participations dans frigo_users
+#  - détruire tous les messages dans frigo_messages
+#  - avertir tous les participants de la suppression
+def destroy
+  msg = <<-HTML.strip.freeze
+<p>%s,</p>
+<p>Je vous informe de #{owner.pseudo} vient de détruire la discussion “#{titre}” à laquelle vous participiez.</p>
+<p>Bien à vous,</p>
+<p>🤖 Le Bot de l'Atelier Icare 🦋</p>
+  HTML
+  participants.each do |participant|
+    participant.send_mail(subject:"Suppression de discussion", message: msg % participant.pseudo)
+  end
+  [
+    "DELETE FROM #{FrigoDiscussion::TABLE_DISCUSSIONS} WHERE id = #{id}".freeze,
+    "DELETE FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze,
+    "DELETE FROM #{FrigoDiscussion::TABLE_MESSAGES} WHERE discussion_id = #{id}".freeze
+  ].each do |request|
+    db_exec(request)
+  end
+end #/ destroy
+
+# Retourne l'instance {User} de l'instigateur de la discussion
+def owner
+  @owner ||= User.get(user_id)
+end #/ owner
+
 
 end #/FrigoDiscussion

@@ -6,14 +6,13 @@ discussion = FrigoDiscussion.new(param(:did))
 lien_download = Tag.lien(text:'Télécharger la discussion avant de la détruire'.freeze, route:"bureau/frigo?op=download&disid=#{discussion.id}")
 
 %>
-<p>Vous êtes sur le point de détruire la discussion “<%= discussion.titre %>” et ses <%= discussion.messages.count %> messages. Cette discussion sera entièrement détruite de la base de données de l'atelier Icare et aucun de ses <%= discussion.participants.count %> participants n'y aura plus accès.</p>
+<p>Vous désirez détruire la discussion “<%= discussion.titre %>” et ses <%= discussion.messages.count %> messages. Cette discussion sera entièrement détruite de la base de données de l'atelier Icare et aucun de ses <%= discussion.participants.count %> participants n'y aura plus accès. Mais cette opération <strong>ne sera exécutée réellement que dans 1 semaine</strong>, pour permettre aux participants de la télécharger.</p>
 <p class="right"> <%= lien_download %></p>
 <%
 form = Form.new(id:'form-destroy-discussion', route:route.to_s, class:'inline')
 form.rows = {
-  '<confirmed/>' => {name:'confirmed', type:'hidden', value:'1'},
   '<discussion/>' => {name:'did', type:'hidden', value: param(:did)},
-  '<operation>/'  => {name:'op', type:'hidden', value:'destroy'}
+  '<operation>/'  => {name:'op', type:'hidden', value:'annonce_destruction'}
 }
 form.submit_button = "Détruire cette discussion"
 form.submit_button_class = 'btn warning'

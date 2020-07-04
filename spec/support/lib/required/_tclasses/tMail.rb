@@ -3,77 +3,124 @@
   Méthodes utiles pour les mails
 =end
 class TMails
-  class << self
-    attr_reader :founds
-    attr_reader :error
+class << self
+  attr_reader :founds
+  attr_reader :error
+  attr_accessor :raison_exclusion
 
-    # Retourne les mails transmis à +mail_destinataire+ qui contiennent
-    # le message +searched+
-    def find(mail_destinataire, searched, options = nil)
-      @founds = self.for(mail_destinataire, options).select do |tmail|
-        tmail.contains?(searched)
-      end
-    end #/ find
+  # Retourne les mails transmis à +mail_destinataire+ qui contiennent
+  # le message +searched+
+  def find_all(mail_destinataire, searched, options = nil)
+    @founds = self.for(mail_destinataire, options)
+    return @founds if searched.nil?
+    @founds.select do |tmail|
+      tmail.contains?(searched)
+    end
+  end #/ find_all
 
-    # Retourne TRUE si un message au moins parmi les messages transmis à
-    # +mail_destinataire+ contient +searched+
-    # +searched+ {String} Le texte recherché (ou les options)
-    def exists?(mail_destinataire, searched, options = nil)
-      if searched.is_a?(Hash)
-        options = searched
-        searched = nil
-      end
-      nombre_candidats = self.find(mail_destinataire, searched, options).count
-      if nombre_candidats == 0
-        error = "aucun mail trouvé"
-      elsif options && options[:only_one]
-        return error= "plusieurs mails trouvés (cf. TMails.founds)" if nombre_candidats > 1
-        return true
-      else
-        return nombre_candidats > 0
-      end
-    end #/ exists?
-
-    def error= msg
-      @error = msg
+  # Retourne TRUE si un message au moins parmi les messages transmis à
+  # +mail_destinataire+ contient +searched+
+  # +searched+ {String} Le texte recherché (ou les options)
+  def exists?(mail_destinataire, searched, options = nil)
+    if searched.is_a?(Hash)
+      options = searched
+      searched = nil
+    end
+    candidats = self.find_all(mail_destinataire, searched, options)
+    # if candidats.empty?
+    #   puts "TMails.error: #{TMails.error}".rouge
+    # else
+    #   puts "candidats: #{candidats.inspect}"
+    # end
+    nombre_candidats = candidats.count
+    if nombre_candidats == 0
+      error = "aucun mail trouvé"
       return false
-    end #/ error
+    elsif options && options[:only_one]
+      if nombre_candidats > 1
+        return error=("plusieurs mails trouvés (cf. TMails.founds)".freeze)
+      else
+        return true
+      end
+    else
+      return nombre_candidats > 0
+    end
+  end #/ exists?
 
-    def for(mail_destinataire, options = nil)
-      options ||= {}
-      options.merge!(destinataire: mail_destinataire)
-      options.merge!(expediteur: options.delete(:from)) if options.key?(:from)
-      # On compose la procédure
-      pr = proc { |tmail, options| [tmail, options] if tmail && tmail.destinataire == options[:destinataire] }
-      if options.key?(:expediteur)
-        pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.expediteur == options[:expediteur]}
+  def error= msg
+    @error = msg
+    return false
+  end #/ error
+
+  def for(mail_destinataire, options = nil)
+    options ||= {}
+
+    options.merge!(destinataire: mail_destinataire)
+
+    options.merge!(expediteur: options.delete(:from)) if options.key?(:from)
+
+    # On compose la procédure
+    pr = proc do |tmail, options|
+      if tmail && tmail.destinataire == options[:destinataire]
+        [tmail, options]
+      elsif tmail
+        self.raison_exclusion = "Destinataire attendu: #{options[:destinataire].inspect}, obtenu: #{tmail.destinataire.inspect}"
+        false
       end
-      if options.key?(:subject)
-        # Le sujet recherché
-        pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.subject.match?(options[:subject])}
+    end
+
+    if options.key?(:expediteur)
+      pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.expediteur == options[:expediteur]}
+    end
+    if options.key?(:subject)
+      # Le sujet recherché
+      pr = pr >> proc do |tmail, options|
+        if tmail && tmail.subject.include?(options[:subject])
+          [tmail, options]
+        elsif tmail
+          self.raison_exclusion = "Subject attendu: #{options[:subject].inspect}, obtenu: #{tmail.subject.inspect}"
+          false
+        end
       end
-      if options.key?(:after)
-        options[:after] = Time.at(options[:after]) if options[:after].is_a?(Integer)
-        pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.time > options[:after]}
+    end
+    if options.key?(:after)
+      pr = pr >> proc do |tmail, options|
+        if tmail && tmail.time.to_i > options[:after]
+          [tmail, options]
+        elsif tmail
+          self.raison_exclusion = "Émis à #{tmail.time.to_i}, attendu après #{options[:after]}"
+          false
+        end
       end
-      if options.key?(:before)
-        options[:before] = Time.at(options[:before]) if options[:before].is_a?(Integer)
-        pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.time < options[:before]}
-      end
-      all.select do |tmail| pr.call(tmail, options) end
-    end #/ for
-    def all
-      Dir["./tmp/mails/*.html"].collect{|path| TMail.new(path)}
-    end #/ all
-  end # /<< self
+    end
+    if options.key?(:before)
+      pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.time.to_i < options[:before]}
+    end
+    all.select do |tmail|
+      choix = pr.call(tmail, options)
+      # puts "Raison exclusion: #{raison_exclusion}"
+      self.raison_exclusion = nil
+      choix # true/false
+    end
+  end #/ for
+
+
+  def all
+    Dir["./tmp/mails/*.html"].collect{|path| TMail.new(path)}
+  end #/ all
+
+end # /<< self
 end #/Mails
 
 TMail = Struct.new(:path) do
   def filename
     @filename ||= File.basename(path)
   end #/ filename
+  def affixe
+    @affixe = File.basename(path, File.extname(path))
+  end #/ affixe
   def subject
-    @subject ||= content.match(/^Subject:(.*?)$/).to_a[1].strip
+    @subject ||= content.match(/Subject:(.*?)$/).to_a[1].strip
   end #/ subject
   def content
     @content ||= File.read(path).force_encoding('utf-8')
@@ -85,11 +132,15 @@ TMail = Struct.new(:path) do
     @time ||= Time.at(timestamp)
   end #/ time
   def timestamp
-    @timestamp ||= filename.split('-')[1].to_i
-  end #/ timestamp
+    @timestamp ||= split_filename[0]
+  end
   def destinataire
-    @destinataire ||= filename.split('-')[0]
-  end #/ destinataire
+    @destinataire ||= split_filename[1]
+  end
+  def split_filename
+    bouts = affixe.split('-')
+    [@timestamp = bouts.pop.to_i, @destinataire = bouts.join('-')]
+  end #/ split_filename
   def expediteur
     @expediteur ||= content.match(/From: <(.+?)>/).to_a[1]
   end #/ expediteur

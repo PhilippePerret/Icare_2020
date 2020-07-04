@@ -54,11 +54,13 @@ class << self
     form = Form.new
     if form.conform?
       # L'user doit être le possesseur de cette discussion
-      # TODO
       discussion = get(discussion_id)
       discussion.owner?(user) || raise(ERRORS[:destroy_require_owner])
       discussion.destroy
     end
+  rescue Exception => e
+    log(e)
+    erreur(e.message)
   end #/ destroy
 end # /<< self
 # ---------------------------------------------------------------------
@@ -73,41 +75,25 @@ end # /<< self
 # indiqué dans la propriét :for des +options+ envoyées à la méthode `out`
 attr_accessor :nombre_non_lus
 
-# Retourne l'instance {User} de l'instigateur de la discussion
-def owner
-  @owner ||= User.get(user_id)
-end #/ owner
-
 # Retourne TRUE si +who+ est bien le créateur de la discussion
 def owner?(who)
   return who.id == user_id
 end #/ owner?
 
-# Destruction complète de la discussion
-# -------------------------------------
-# Cela consiste à :
-#  - détruire l'enregistrement dans frigo_discussions
-#  - détruire les participations dans frigo_users
-#  - détruire tous les messages dans frigo_messages
-#  - avertir tous les participants de la suppression
-def destroy
-  msg = <<-HTML.freeze
-<p>%s,</p>
-<p>Je vous informe de #{owner.pseudo} vient de détruire la discussion “#{titre}” à laquelle vous participiez.</p>
-<p>Bien à vous,</p>
-<p>🤖 Le Bot de l'Atelier Icare 🦋</p>
-  HTML
-  participants.each do |participant|
-    participant.send_mail(subject:"Suppression de discussion", message: msg % participant.pseudo)
+# Annonce la destruction de la discussion et préviens les participants
+# pour qu'ils puissent la charger
+# Rappel : seul l'administrateur peut détruire une discussion. Lorsque son
+# propriétaire la détruit
+# Cette méthode envoie un mail à chaque participant
+# et produit un watcher qui me permettra de détruire la discussion.
+def annonce_destruction
+  require_module('watchers')
+  participants.each do |follower|
+    follower.send_mail(subject: SUBJECT_ANNONCE_DESTROY, message: (MESSAGE_ANNONCE_DESTROY % {pseudo: follower.pseudo, titre:titre, id:id, owner_pseudo: owner.pseudo}))
   end
-  [
-    "DELETE FROM #{FrigoDiscussion::TABLE_DISCUSSIONS} WHERE id = #{id}".freeze,
-    "DELETE FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze,
-    "DELETE FROM #{FrigoDiscussion::TABLE_MESSAGES} WHERE discussion_id = #{id}".freeze
-  ].each do |request|
-    db_exec(request)
-  end
-end #/ destroy
+  owner.watchers.add('destroy_discussion', {objet_id:id, triggered_at:Time.now.to_i + 7.days})
+  message("La destruction de la conversation “#{titre}” a été annoncée aux participants. Elle sera effectivement détruite dans une semaine.")
+end #/ annonce_destruction
 
 # Pour ajouter un message
 # +params+
@@ -179,15 +165,6 @@ def send_invitations_to(icariens)
   a_ete = nombre_icariens > 1 ? 'ont été' : 'a été'
   message("#{nombre_icariens} icarien·ne·#{s} #{a_ete} invité#{es} à rejoindre la discussion “#{titre}” : #{pseudos.pretty_join}.".freeze)
 end #/ send_invitations_to
-
-# Retourne la liste des participants à cette discussion (Array de User(s))
-def participants
-  @participants ||= begin
-    db_exec("SELECT user_id FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze).collect do |ddis|
-      User.get(ddis[:user_id])
-    end
-  end
-end #/ participants
 
 # La méthode retourne TRUE si +part+ {User} est un participant à la discussion
 def participant?(part)

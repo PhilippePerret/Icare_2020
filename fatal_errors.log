@@ -1253,4 +1253,42 @@ Did you mean?  inspect
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:19:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-04 10:04:27 +0200 --- FATAL ERROR:
+    Une discussion est requise, pour exécuter cette opération…
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:50:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-04 10:05:17 +0200 --- FATAL ERROR:
+    Une discussion est requise, pour exécuter cette opération…
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:50:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-04 10:06:22 +0200 --- FATAL ERROR:
+    Une discussion est requise, pour exécuter cette opération…
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:50:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-04 11:20:48 +0200 --- FATAL ERROR:
+    La destruction d’une discussion ne peut se faire que par son instigateur/instigatrice.
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/lib/FrigoDiscussion.rb:59:in `destroy'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:30:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-04 11:21:34 +0200 --- FATAL ERROR:
+    La destruction d’une discussion ne peut se faire que par son instigateur/instigatrice.
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/lib/FrigoDiscussion.rb:59:in `destroy'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:30:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-04 11:30:20 +0200 --- FATAL ERROR:
+    La destruction d’une discussion ne peut se faire que par son instigateur/instigatrice.
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/html.rb:31:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

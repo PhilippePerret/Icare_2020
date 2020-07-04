@@ -4,6 +4,7 @@
 =end
 ERRORS    = {} unless defined?(ERRORS) # cas des tests
 MESSAGES  = {} unless defined?(MESSAGES) # cas des tests
+UI_TEXTS  = {} unless defined?(UI) # cas des tests
 
 ERRORS.merge!({
   unfound_user_with_id: "Impossible de trouver un utilisateur d'identifiant %s…".freeze,
@@ -17,4 +18,8 @@ ERRORS.merge!({
 
 MESSAGES.merge!({
   ask_identify: 'Merci de vous identifier avant de rejoindre cette page.'.freeze
+})
+
+UI_TEXTS.merge!({
+  destroy: 'Détruire'.freeze
 })

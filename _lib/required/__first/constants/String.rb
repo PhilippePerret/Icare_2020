@@ -2,6 +2,14 @@
 =begin
   Constantes String pratiques (et freezées)
 =end
+STRINGS = {
+  destroy: 'destroy'.freeze,
+  discussion: 'discussion'.freeze,
+  download: 'download'.freeze,
+  home: 'home'.freeze,
+  inviter: 'inviter'.freeze,
+}
+
 AND = ' AND '.freeze
 
 BR = '<br/>'.freeze

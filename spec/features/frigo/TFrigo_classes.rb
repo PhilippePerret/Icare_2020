@@ -61,6 +61,7 @@ class << self
     return d
   end #/ instantiate
 
+
 end # /<< self
 # ---------------------------------------------------------------------
 #
@@ -77,6 +78,21 @@ end #/ data= values
 def data
   @data ||= db_get('frigo_discussions', id)
 end #/ data
+
+# ---------------------------------------------------------------------
+#
+#   Pour matchers
+#
+# ---------------------------------------------------------------------
+
+# Retourne true si la discussion est une vraie discussions, c'est-à-dire
+# qu'elle possède au moins 2 participants et des messages
+def real_discussion?
+  return true &&
+    db_count('frigo_discussions',{id: self.id}) > 0 &&
+    db_count('frigo_users', {discussion_id: self.id}) > 1 &&
+    db_count('frigo_messages', {discussion_id: self.id}) > 0
+end #/ real_discussion?
 
 def la_chose
   @la_chose ||= "la discussion “#{titre}”"
@@ -102,6 +118,15 @@ def messages
     db_exec(request).collect { |dmessage| TFMessage.new(*dmessage.values) }
   end
 end #/ messages
+
+# Retourne la liste Array des {TUser} participants
+def participants
+  @participants ||= begin
+    db_exec("SELECT user_id FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze).collect do |ddis|
+      TUser.get(ddis[:user_id])
+    end
+  end
+end #/ participants
 end #/TFrigoDiscussion
 
 

@@ -15,8 +15,9 @@ end
 
 FOLDER_GELS = File.expand_path(File.join('.','spec','support','Gel','gels'))
 
+# Procède au gel voulu
 def gel(name)
-  Gel.get(name)
+  Gel.get(name).gel
 end #/ gel
 
 # Pour procéder à un dégel
@@ -74,7 +75,7 @@ end #/ degel_or_gel
 # Joue le code et procède au gel
 #
 def proceed_gel(&block)
-  puts "Je joue et je gèle “#{name}”"
+  puts "Je joue et je gèle “#{name}”".mauve
   yield if block_given?
   gel
 end #/ run_and_gel
