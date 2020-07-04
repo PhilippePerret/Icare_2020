@@ -17,6 +17,12 @@ class TUser
     revient_dans_son_bureau
   end #/ rejoint_son_bureau
 
+  def rejoint_ses_notifications
+    loginit
+    revient_dans_son_bureau
+    click_on 'Notifications'
+  end #/ rejoint_ses_notifications
+
 # ---------------------------------------------------------------------
 #
 #   Méthodes fonctionnelles (privées)

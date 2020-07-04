@@ -3,6 +3,7 @@
   Constantes String pratiques (et freezées)
 =end
 STRINGS = {
+  body: 'body'.freeze,
   destroy: 'destroy'.freeze,
   discussion: 'discussion'.freeze,
   download: 'download'.freeze,

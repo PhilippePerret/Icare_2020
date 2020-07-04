@@ -69,6 +69,7 @@ RSpec::Matchers.define :have_discussion do |titre_discussion, options|
         "#{icarien.pseudo} devrait être l'instigateur de cette discussion."
     end
     expect(db_count('frigo_users', {user_id: icarien.id, discussion_id:discussion.id})).to eq(1)
+    expect(db_count('frigo_messages', {discussion_id: discussion.id})).to be > 0
     true
   end
   description do

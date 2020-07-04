@@ -27,16 +27,27 @@ MESSAGES.merge!({
   discussion_marquee_lue: 'La discussion a été marquée lue.'.freeze,
   confirmation_quit_discussion: 'Vous avez bien quitté la discussion “%s”.'.freeze,
   subject_depart_discussion: 'Départ d’une de vos discussions'.freeze,
+  confirm_discussion_destroyed: 'La discussion a été correctement détruite.'.freeze,
+  cancel_destroying_discussion: "On abandonne la destruction de cette discussion.".freeze,
   message_depart_discussion:<<-HTML.freeze
 <p>%{owner},</p>
 <p>Je vous informe que %{pseudo} vient de quitter votre discussion “%{titre}”.</p>
 <p>Bien à vous,</p>
 <p>🤖 Le Bot de l'atelier Icare 🦋</p>
   HTML
+
 })
 
 class FrigoDiscussion < ContainerClass
   TABLE_USERS       = 'frigo_users'.freeze
   TABLE_DISCUSSIONS = 'frigo_discussions'.freeze
   TABLE_MESSAGES    = 'frigo_messages'.freeze
+
+  TITRE_MAIL_DESTRUCTION = "Une discussion à laquelle vous participiez a été supprimée".freeze
+  MAIL_DESTRUCTION = <<-HTML.strip.freeze
+<p>%{pseudo},</p>
+<p>Je vous informe que %{owner_pseudo} vient de détruire la discussion “%{titre}” à laquelle vous participiez. Il n'est plus possible, à présent, de la télécharger.</p>
+<p>Bien à vous,</p>
+<p>🤖 Le Bot de l'Atelier Icare 🦋</p>
+  HTML
 end #/FrigoDiscussion

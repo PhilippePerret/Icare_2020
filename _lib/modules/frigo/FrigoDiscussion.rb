@@ -82,23 +82,22 @@ end #/ participants
 #  - détruire l'enregistrement dans frigo_discussions
 #  - détruire les participations dans frigo_users
 #  - détruire tous les messages dans frigo_messages
-#  - avertir tous les participants de la suppression
+#  - avertir tous les participants de la suppression (sauf le propriétaire)
 def destroy
-  msg = <<-HTML.strip.freeze
-<p>%s,</p>
-<p>Je vous informe de #{owner.pseudo} vient de détruire la discussion “#{titre}” à laquelle vous participiez.</p>
-<p>Bien à vous,</p>
-<p>🤖 Le Bot de l'Atelier Icare 🦋</p>
-  HTML
-  participants.each do |participant|
-    participant.send_mail(subject:"Suppression de discussion", message: msg % participant.pseudo)
-  end
   [
     "DELETE FROM #{FrigoDiscussion::TABLE_DISCUSSIONS} WHERE id = #{id}".freeze,
     "DELETE FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze,
     "DELETE FROM #{FrigoDiscussion::TABLE_MESSAGES} WHERE discussion_id = #{id}".freeze
   ].each do |request|
     db_exec(request)
+  end
+  msg_discuss = MAIL_DESTRUCTION % {pseudo: '%s', owner_pseudo:owner.pseudo, titre:titre}
+  participants.each do |participant|
+    next if participant.id == owner.id # le propriétaire a son propre message
+    participant.send_mail({
+      subject: TITRE_MAIL_DESTRUCTION,
+      message: msg_discuss % participant.pseudo
+    })
   end
 end #/ destroy
 

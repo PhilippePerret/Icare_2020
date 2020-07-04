@@ -89,6 +89,7 @@ end #/ owner?
 def annonce_destruction
   require_module('watchers')
   participants.each do |follower|
+    next if follower.id == owner.id # Pas d'avertissement pour le propriétaire
     follower.send_mail(subject: SUBJECT_ANNONCE_DESTROY, message: (MESSAGE_ANNONCE_DESTROY % {pseudo: follower.pseudo, titre:titre, id:id, owner_pseudo: owner.pseudo}))
   end
   owner.watchers.add('destroy_discussion', {objet_id:id, triggered_at:Time.now.to_i + 7.days})

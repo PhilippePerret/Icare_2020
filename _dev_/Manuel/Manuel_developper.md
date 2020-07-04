@@ -1788,6 +1788,9 @@ C’est le watcher lui-même qui est *bindé* à la vue, donc pour obtenir l’u
 <p>Bonjour <%= owner.pseudo %> !</p>
 ~~~
 
+#### Titre (sujet) du mail
+
+Pour le moment, c'est le titre du watcher qui est utilisé comme sujet du mail, donc le titre défini dans les données générales qui sont définies dans le fichier [./\_lib/\_watchers\_processus\_/\_constants\_.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_watchers_processus_/_constants_.rb).
 
 
 #### Méthodes d’helpers pour les mails

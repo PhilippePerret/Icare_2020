@@ -124,8 +124,15 @@ feature "Test du frigo" do
     expect(benoit).to have_no_pastille_frigo
     pitch('Benoit ne voit plus la pastille avec l’indication des 2 messages')
 
-    gel('discussion-phil-benoit-3-messages')
-    pitch("Note : le gel 'discussion-phil-benoit-3-messages' est produit")
+    gel('discussion-phil-benoit-3-messages', <<-TEXT.freeze)
+Dans cette discussion instanciée par Benoit avec Phil, 3 messages ont été échangés, les deux derniers émis par Phil et Benoit vient de les lire et de les marquer lus.
+
+* Titre discussion : "Message pour Phil"
+* Participants : Benoit, Phil
+* Messages : 3
+* Premier message de Benoit, deux suivant par Phil
+
+    TEXT
   end
 
   scenario 'Benoit peut renoncer à inviter quelqu’un et revenir à sa discussion' do
@@ -214,9 +221,14 @@ feature "Test du frigo" do
     expect(elie).to have_been_invited_to_discussion('Message pour Phil')
     pitch("Élie a été correctement invité à la discussion “Message pour Phil”")
 
-    # === NOUVEAU DEGEL ===
-    gel('marion-et-elie-invites-discussion-benoit-phil')
+    # === NOUVEAU GEL ===
+    gel('marion-et-elie-invites-discussion-benoit-phil', <<-TEXT.freeze)
+Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie à rejoindre cette discussion. Ils ont reçus les mails mais n'ont pas encore répondu.
 
+* Titre discussion : "Message pour Phil"
+* Participants : Benoit, Phil
+* Messages : 3
+    TEXT
   end
 
   scenario 'Benoit ne peut pas inviter Marion à la discussion si elle interdit le contact' do
@@ -309,7 +321,7 @@ feature "Test du frigo" do
 
   end
 
-  scenario 'Benoit ne peut pas détruire sa discussion, mais peut la marquer à détruire', only:true do
+  scenario 'Benoit ne peut pas détruire sa discussion, mais peut la marquer à détruire' do
     degel('marion-et-elie-invites-discussion-benoit-phil')
 
     start_time = Time.now.to_i
@@ -343,17 +355,98 @@ feature "Test du frigo" do
     pitch('… mais un watcher a été initié pour la détruire dans une semaine…'.freeze)
     data_mail = {after: start_time, subject:FrigoDiscussion::SUBJECT_ANNONCE_DESTROY}
     discussion.participants.each do |part|
-      expect(TMails).to be_exists(part.mail, data_mail)
+      if part.id == discussion.owner.id
+        # Le propriétaire n'a pas à recevoir ce mail
+        expect(TMails).not_to be_exists(part.mail, data_mail),
+          "Le propriétaire de la discussion ne devrait pas recevoir le mail d'avertissement"
+      else
+        expect(TMails).to be_exists(part.mail, data_mail),
+          "Un participant à la discussion devrait toujours recevoir un mail d'avertissement"
+          # Même s'il ne veut pas être contacté par mail
+      end
     end
     pitch("… et tous les participants ont été prévenus.".freeze)
+
+    gel('after-benoit-pre-destroy-discussion', <<-TEXT.freeze)
+Dans ce gel, la discussion instanciée par Benoit, qui rassemble Marion, Élie et Phil, a été détruite par Benoit. Mais cette destruction n'est pas encore effectuée puisque c'est un watcher, qui doit se déclencher dans une semaine, qui doit permettre à Phil de la détruire.
+
+En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avertir et leur permettre de télécharger la discussion. Dans le mail se trouve un lien direct vers la discussion.
+
+* Nombre de messages : 3 (de Benoit et de Phil)
+* Participants : Benoit, Marion, Élie, Phil
+    TEXT
+
   end
 
-  scenario 'Seul un administrateur peut détruire une discussion (avec un watcher)' do
-    pending "à implémenter"
-    # TODO Toutes les frigo_users ont bien été détruits
-    # TODO Tous les messages ont bien été détruits
-    expect(TFrigo).to have_no_discussion(1)
+  scenario 'Seul un administrateur peut détruire une discussion (avec un watcher)', only:true do
+    degel('after-benoit-pre-destroy-discussion')
+
+    pitch("Phil va rejoindre ses notifications pour détruire la discussion. Mais avant ça, Benoit va vérifier qu'il voit bien la notification.")
+
+    # On récupère les informations sur la discussion qui doit être détruite
+    discuss   = TDiscussion.get_by_titre('Message pour Phil')
+    disid     = discuss.id.freeze
+    distitre  = discuss.titre.freeze
+    participants = discuss.participants
+    expect(benoit).to have_discussion(distitre, {owner: true})
+
+    # Ici, on modifie le watcher de destruction produit pendant le gel
+    # pour qu'il apparaisse sur mon bureau d'administration
+    dwatcher = db_get('watchers', {objet_id: disid, wtype:'destroy_discussion', user_id: benoit.id})
+    expect(dwatcher).not_to eq(nil),
+      "On devrait trouver le watcher de destruction de la discussion…".freeze
+    request = "UPDATE `watchers` SET triggered_at = ? WHERE id = ?".freeze
+    db_exec(request, [Time.now.to_i - 10, dwatcher[:id]])
+
+    # Le selector du watcher
+    wselector = "div#watcher-#{dwatcher[:id]}".freeze
+
+    pitch("Benoit rejoint ses notifications…")
+    benoit.rejoint_ses_notifications
+    expect(page).to have_css(wselector, text: 'destruction de la discussion “Message pour Phil”')
+    pitch("… et en trouve une lui indiquant la destruction prochaine.".freeze)
+    logout
+
+    start_time = Time.now.to_i
+
+    # Maintenant, je peux aller trouver le watcher
+    phil.rejoint_ses_notifications
+    expect(page).to have_css(wselector),
+      "La page devrait montrer le watcher pour détruire la discussion"
+    pitch("Phil trouve la notification sur son bureau")
+    within(wselector) do
+      pitch("Il clique sur le bouton pour détruire la discussion.")
+      click_on("Détruire la discussion".freeze)
+    end
+
+    # === Vérifications ===
+    expect(page).to have_content(MESSAGES[:confirm_discussion_destroyed]),
+      "La page devrait afficher le message de confirmation de destruction"
+    pitch("Un message confirme la destruction.")
+    logout
+
+    # On vérifie
+    expect(TFrigo).to have_no_discussion(disid),
+      "La discussion “#{distitre}” ne devrait plus exister"
     pitch("La discussion est intégralement détruite (participants, messages)")
+
+    data_mail = {after: start_time, subject:'Destruction d’une discussion'.freeze}
+    expect(TMails).to be_exists(benoit.mail, data_mail),
+      "Benoit aurait dû recevoir un mail lui annonçant la destruction"
+    pitch("Benoit est prévenu par un mail spécial (depuis la notification)")
+
+    data_mail = {after: start_time, subject:FrigoDiscussion::TITRE_MAIL_DESTRUCTION}
+    participants.each do |part|
+      if part.id == benoit.id
+        expect(TMails).not_to be_exists(part.mail, data_mail),
+          "Benoit ne devrait pas recevoir le mail d'information aux participants".freeze
+      else
+        expect(TMails).to be_exists(part.mail, data_mail),
+          "Un participant à la discussion autre que le propriétaire devrait toujours recevoir un mail d'information de destruction"
+      end
+    end
+    pitch("Les autres participants sont prévenus par mail")
+
   end
 
   scenario 'Marion peut quitter la conversation de Benoit' do

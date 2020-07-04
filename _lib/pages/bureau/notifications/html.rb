@@ -18,6 +18,6 @@ class HTML
   end
   # Fabrication du body
   def build_body
-    @body = deserb('body', user)
+    @body = deserb(STRINGS[:body], user)
   end
 end #/HTML
