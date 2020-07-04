@@ -16,8 +16,10 @@ end
 FOLDER_GELS = File.expand_path(File.join('.','spec','support','Gel','gels'))
 
 # Procède au gel voulu
-def gel(name)
-  Gel.get(name).gel
+# Si +description+ est défini, c'est une définition du gel qui sera ajoutée
+# sous forme de fichier markdown au gel, pour savoir ce qu'il contient.
+def gel(name, description = nil)
+  Gel.get(name).gel(description)
 end #/ gel
 
 # Pour procéder à un dégel
@@ -81,8 +83,8 @@ def proceed_gel(&block)
 end #/ run_and_gel
 
 # Procède au gel du gel
-def gel
-  # Créer le dossier du gel
+def gel(description = nil)
+  remove if exists?
   FileUtils.mkdir_p(folder)
   # Faire un dump de la base de données
   `mysqldump -u root icare_test > "#{folder}/icare_test.sql"`
@@ -92,6 +94,10 @@ def gel
     next unless File.exists?(dossier)
     # puts "Je place le dossier #{dossier.inspect} dans le dossier #{folder.inspect}"
     FileUtils.cp_r(dossier, folder)
+  end
+  # Si la description est données, on fait un fichier readme.md
+  unless description.nil?
+    File.open(read_me_file,'wb'){|f|f.write("# Description du gel#{RC2}#{description}")}
   end
 end #/ gel
 
@@ -136,4 +142,9 @@ end #/ exists?
 def folder
   @folder ||= File.join(FOLDER_GELS, name)
 end #/ folder
+
+# Le fichier ReadMe s'il existe
+def read_me_file
+  @read_me_file ||= File.join(folder, 'README.md')
+end #/ read_me_file
 end #/Gel
