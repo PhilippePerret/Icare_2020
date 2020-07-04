@@ -219,7 +219,8 @@ private
     Mail.send(
       to: whouser.mail,
       from:otheruser.mail,
-      message: data[:body]
+      message: data[:body],
+      subject: titre # pour le moment
     )
   end #/ send_mail
 

@@ -68,7 +68,7 @@ class Watcher < ContainerClass
         css << 'unread'
         body << Tag.span(text:'', class:'pastille-rouge')
       end
-      Tag.div(text:body, class:css.join(' '))
+      Tag.div(id:"watcher-#{id}", text:body, class:css.join(' '))
     else '' end
   end #/ out
 
