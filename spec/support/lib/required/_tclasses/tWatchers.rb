@@ -6,6 +6,15 @@ class TWatchers
   class << self
     attr_reader :founds
 
+    def get(wid)
+      dwatcher = db_get('watchers', wid.to_i)
+      if dwatcher.nil?
+        nil
+      else
+        instantiate(dwatcher)
+      end
+    end #/ get
+
     # Retourne TRUE si un message au moins parmi les messages transmis à
     # +user_id+ contient +searched+
     def exists?(params)
@@ -25,6 +34,9 @@ class TWatchers
     # le message +searched+
     def find_all(params)
       pr = proc { |obj| obj }
+      if params.key?(:id)
+        pr = pr << proc {|obj| obj if obj && obj.id == param[:id]}
+      end
       if params.key?(:wtype)
         pr = pr >> proc {|obj| obj if obj && obj.wtype == params[:wtype]}
       end

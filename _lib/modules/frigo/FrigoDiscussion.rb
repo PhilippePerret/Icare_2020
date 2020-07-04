@@ -84,13 +84,10 @@ end #/ participants
 #  - détruire tous les messages dans frigo_messages
 #  - avertir tous les participants de la suppression (sauf le propriétaire)
 def destroy
-  [
-    "DELETE FROM #{FrigoDiscussion::TABLE_DISCUSSIONS} WHERE id = #{id}".freeze,
-    "DELETE FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze,
-    "DELETE FROM #{FrigoDiscussion::TABLE_MESSAGES} WHERE discussion_id = #{id}".freeze
-  ].each do |request|
-    db_exec(request)
-  end
+  # [1] WARNING Il faut impérativement envoyer les mails avant la destruction
+  #     dans les tables, ou alors, il faut récupérer les informations avant et
+  #     les mettre de côté (titre, participant, owner, etc.) pour pouvoir les
+  #     utiliser dans les mails.
   msg_discuss = MAIL_DESTRUCTION % {pseudo: '%s', owner_pseudo:owner.pseudo, titre:titre}
   participants.each do |participant|
     next if participant.id == owner.id # le propriétaire a son propre message
@@ -98,6 +95,14 @@ def destroy
       subject: TITRE_MAIL_DESTRUCTION,
       message: msg_discuss % participant.pseudo
     })
+  end
+  # Mettre ça après l'envoi des mails. Cf. [1] ci-dessus
+  [
+    "DELETE FROM #{FrigoDiscussion::TABLE_DISCUSSIONS} WHERE id = #{id}".freeze,
+    "DELETE FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze,
+    "DELETE FROM #{FrigoDiscussion::TABLE_MESSAGES} WHERE discussion_id = #{id}".freeze
+  ].each do |request|
+    db_exec(request)
   end
 end #/ destroy
 

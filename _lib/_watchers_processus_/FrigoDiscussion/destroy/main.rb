@@ -17,4 +17,5 @@ class Watcher < ContainerClass
 
   def discussion_titre ; @discussion_titre end
   def date_destruction ; @date_destruction end
+  
 end # /Watcher < ContainerClass

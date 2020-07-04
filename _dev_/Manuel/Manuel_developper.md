@@ -2512,6 +2512,10 @@ Forme canonique :
 
 ~~~ruby
 expect(TWatchers.exists?({params})).to be(true), "Le watcher tatata devrait exister"
+
+# OU
+
+expect(TWatchers).to be_exists({params}), "Le watcher devrait exister"
 ~~~
 
 En paramètres `{params}`, on peut trouver :

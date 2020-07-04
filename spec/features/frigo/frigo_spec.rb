@@ -390,7 +390,7 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
     participants = discuss.participants
     expect(benoit).to have_discussion(distitre, {owner: true})
 
-    # Ici, on modifie le watcher de destruction produit pendant le gel
+    # Ici, ON MODIFIE LE WATCHER DE DESTRUCTION produit pendant le gel
     # pour qu'il apparaisse sur mon bureau d'administration
     dwatcher = db_get('watchers', {objet_id: disid, wtype:'destroy_discussion', user_id: benoit.id})
     expect(dwatcher).not_to eq(nil),
@@ -418,11 +418,24 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
       pitch("Il clique sur le bouton pour détruire la discussion.")
       click_on("Détruire la discussion".freeze)
     end
+    screenshot("after-phil-destroys-discussion")
 
     # === Vérifications ===
     expect(page).to have_content(MESSAGES[:confirm_discussion_destroyed]),
       "La page devrait afficher le message de confirmation de destruction"
     pitch("Un message confirme la destruction.")
+    expect(TWatchers.get(dwatcher[:id])).to eq(nil),
+      "Le watcher de destruction devrait avoir été détruit."
+    logout
+
+
+
+    pitch("Benoit rejoint ses notifications et…".freeze)
+    benoit.rejoint_ses_notifications
+    screenshot('benoit-in-notifs-after-destroying'.freeze)
+    expect(page).not_to have_css(wselector),
+      "Le watcher aurait dû être détruit (or, Benoit le trouve.)"
+    pitch("… note (sic) que le watcher de destruction n'est plus affiché.".freeze)
     logout
 
     # On vérifie
@@ -442,10 +455,19 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
           "Benoit ne devrait pas recevoir le mail d'information aux participants".freeze
       else
         expect(TMails).to be_exists(part.mail, data_mail),
-          "Un participant à la discussion autre que le propriétaire devrait toujours recevoir un mail d'information de destruction"
+          "Un participant à la discussion autre que le propriétaire devrait toujours recevoir un mail d'information de destruction (#{part.pseudo} n'en a pas reçu)"
       end
     end
     pitch("Les autres participants sont prévenus par mail")
+
+    get('phil-has-destroyed-discussion-benoit', <<-MKD.freeze)
+Dans ce gel, Phil vient de détruire la discussion instanciée par Benoit, à laquelle participaient Marion et Élie. Cette discussion, ici, n'existe plus, et les mails ont été envoyés à tout le monde. La notification (watcher) de destruction n'existe plus.
+
+Discussion ID: ##{disid}
+Titre discussion : "#{distitre}"
+Messages avant destruction : 3
+Participants : Benoit (créateur), Phil, Marion, Élie
+    MKD
 
   end
 
