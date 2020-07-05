@@ -132,4 +132,9 @@ feature 'Préparation en live' do
     benoit_demarre_son_module
   end
 
+  scenario 'tout un cycle de document pour Marion', marion_envoie_deux_autres_documents_cycle_complet: true do
+    Gel.remove('marion_envoie_deux_autres_documents_cycle_complet') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    marion_envoie_deux_autres_documents_cycle_complet
+  end
+
 end

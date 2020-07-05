@@ -480,14 +480,99 @@ def benoit_demarre_son_module
 end #/ benoit_demarre_son_module
 
 
+
+def marion_envoie_deux_autres_documents_cycle_complet
+  degel_or_gel('marion_envoie_deux_autres_documents_cycle_complet') do
+    benoit_demarre_son_module
+    puts "Fabrication du gel 'marion_envoie_deux_autres_documents_cycle_complet'".vert
+    login_marion
+    goto 'bureau/sender?rid=send_work_form'
+    path_doc_work   = File.join(SPEC_FOLDER_DOCUMENTS,'doc_travail_final.odt')
+    path_doc_work2  = File.join(SPEC_FOLDER_DOCUMENTS,'doc_travail_final2.odt')
+    within("form#send-work-form") do
+      # Le premier document
+      attach_file('document-1', path_doc_work)
+      sleep 1
+      # sleep 30
+      select("8/20", from: 'note-document1')
+      # Le second document
+      attach_file('document-2', path_doc_work2)
+      sleep 1
+      select("11/20", from: 'note-document2')
+      # Soumettre le formulaire
+      click_on(class: 'btn-send-work')
+    end
+    screenshot('marion-envoie-second-travail')
+    logout
+
+    phil.rejoint_ses_notifications
+    click_on('Télécharger les documents')
+    logout
+
+    # Je reviens donner les commentaires
+    login_admin
+    goto('admin/notifications')
+    # On doit donner les documents commentés
+    path_doc_comments  = File.join(SPEC_FOLDER_DOCUMENTS,'final1_comsPhil.pdf')
+    path_doc_comments2 = File.join(SPEC_FOLDER_DOCUMENTS,'final2_comsPhil.pdf')
+    within("form#send-comments-form") do
+      attach_file('document-3-comments', path_doc_comments)
+      attach_file('document-4-comments', path_doc_comments)
+      click_on('Envoyer les commentaires')
+    end
+    screenshot('phil-envoie-seconds-commentaires-a-marion')
+    logout
+
+    marion.rejoint_ses_notifications
+    click_on('Télécharger les commentaires')
+    screenshot('marion-gets-ses-seconds-commentaires')
+    logout
+
+    phil.rejoint_ses_notifications
+    click_on('Changer l’étape'.freeze)
+    screenshot('Phil-change-etape-de-Marion')
+    logout
+
+
+    phil.rejoint_ses_notifications
+    # On doit donner les documents commentés
+    path_doc1_original = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.pdf')
+    path_doc1_comments = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail_comsPhil.pdf')
+    path_doc2_original = File.join(SPEC_FOLDER_DOCUMENTS, 'final1_comsPhil.pdf')
+    path_doc2_comments = File.join(SPEC_FOLDER_DOCUMENTS, 'final2_comsPhil.pdf')
+    within("form#qdd-depot-form-etape-2") do
+      attach_file("document-3-original", path_doc1_original)
+      attach_file("document-3-comments", path_doc1_comments)
+      attach_file("document-4-original", path_doc2_original)
+      attach_file("document-4-comments", path_doc2_original)
+      click_on('Déposer ces documents'.freeze)
+    end
+    screenshot('depot-qdd')
+    logout
+
+    require './_lib/_watchers_processus_/IcEtape/qdd_sharing/constants.rb'
+    marion.rejoint_ses_notifications
+    within("form#sharing-form-etape-2") do
+      select(DATA_SHARING[1][:name], from: "partage-3-original")
+      select(DATA_SHARING[1][:name], from: "partage-3-comments")
+      select(DATA_SHARING[1][:name], from: "partage-4-original")
+      select(DATA_SHARING[1][:name], from: "partage-4-comments")
+      click_on('Appliquer ce partage'.freeze)
+    end
+    screenshot('marion-partage-tout-ses-seconds-documents')
+    logout
+  end
+end #/ marion_envoie_deux_autres_documents_cycle_complet
+
+
 # Réponse de 2 icariens aux messages frigo
 # TODO
-
+#
 # Invitation d'un icarien à rejoindre une discussion
 # TODO
-
+#
 # Paiement d'un module (par PayPal)
 # TODO
-
+#
 # Paiement d'un module (par IBAN
 # TODO)

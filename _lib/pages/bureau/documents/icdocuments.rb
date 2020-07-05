@@ -5,7 +5,7 @@
   Voir le module 'document.rb' pour la gestion d'UN document
 =end
 class IcDocuments
-  
+
   attr_reader :owner
   def initialize user
     @owner = user
@@ -28,9 +28,9 @@ class IcDocuments
   # Retourne la liste des instances IcDocument des documents de l'icarien
   def items
     @items ||= begin
-      request = "SELECT * FROM icdocuments WHERE user_id = #{owner.id}"
+      request = "SELECT * FROM icdocuments WHERE user_id = #{owner.id} ORDER BY created_at DESC"
       db_exec(request).collect do |ddoc|
-        IcDocument.new(ddoc)
+        IcDocument.instantiate(ddoc)
       end
     end
   end

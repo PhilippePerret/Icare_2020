@@ -1355,4 +1355,41 @@ Did you mean?  inspect
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:51:in `build_body'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-05 22:05:12 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:19: syntax error, unexpected tSTRING_DEND, expecting then or ';' or '\n'
+  #{if has_comments?}
+                    ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:20: syntax error, unexpected tIDENTIFIER, expecting tSTRING_DEND
+...mg/icones/pdf-comments.jpg" alt="Document commentaires">
+...                            ^~~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:22: syntax error, unexpected '<'
+  <div class="original-name">#{d...
+  ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:24: syntax error, unexpected '<'
+  <div class="tools">
+  ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:25: syntax error, unexpected '<'
+    <div>
+    ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:26: syntax error, unexpected tIDENTIFIER, expecting do or '{' or '('
+      [Pour redéfinir le partage]
+            ^~~~~~~~~~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:26: syntax error, unexpected ']', expecting tSTRING_DEND
+...   [Pour redéfinir le partage]
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:28: unknown regexp options - dv
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:29: syntax error, unexpected '<'
+</div>
+^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:32: unterminated regexp meets end of file
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/icdocument.rb:32: syntax error, unexpected end-of-input, expecting tSTRING_DEND
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

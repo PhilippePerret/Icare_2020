@@ -2,7 +2,7 @@
 class User
 
   def nombre_documents
-    @nombre_documents ||= db_count('icdocuments', {user_id: user.id})
+    @nombre_documents ||= db_count('icdocuments', {user_id: user.id} )
   end
 
   def documents

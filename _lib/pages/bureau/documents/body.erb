@@ -1,7 +1,9 @@
 <div>
   <span class="libelle">Nombre total de documents :</span>
-  <span class="value"><%= nombre_documents %>.</span>
+  <span class="value nombre-documents"><%= nombre_documents %></span>
 </div>
-<div class="only-message">
-  Bientôt, ici, la liste complète de tous vos documents<br/>(avec leurs spécificités).
+<div class="documents">
+  <% documents.each do |document| %>
+    <%= document.as_card %>
+  <% end %>
 </div>
