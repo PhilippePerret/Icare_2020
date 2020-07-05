@@ -81,6 +81,12 @@ DATA_WATCHERS = {
     actu_id: "",
     next: nil
   },
+  qdd_coter: {
+    titre: 'Coter et commenter'.freeze,
+    relpath: 'IcDocument/cotes_n_comments'.freeze,
+    actu_id: nil,
+    next: nil
+  },
   # --- Modules ---
   commande_module:    {
     titre: 'Commande de module',

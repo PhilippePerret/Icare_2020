@@ -25,7 +25,6 @@ class User
 
   def set_last_connexion(user)
     request = if last_connexion_for?(user)
-      debug("Dernière connexion: #{db_get('connexions',{id:user.id}).inspect}")
                 "UPDATE connexions SET route = ?, time = ? WHERE id = ?"
               else
                 "INSERT connexions (route, time, id) VALUES (?, ?, ?)"

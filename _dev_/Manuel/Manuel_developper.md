@@ -357,7 +357,7 @@ En général, pour récupérer des icariens :
 | 1             | Bit de grade                                                 |
 | 2             | 1: le mail a été confirmé                                    |
 | 3             | **Bit de destruction**<br />1 si l’icarien a été détruit. Note : toutes ses « productions » sur le site devient anonymes (`user_id` = 9). |
-| 4             | Bit de fréquence de mail<br />0: quotidien, 1:hebdomadaire, 9: aucun mail |
+| 4             | **Bit de fréquence de mail**<br />0: quotidien, 1:hebdomadaire, 9: aucun mail |
 | 5             |                                                              |
 | 6             |                                                              |
 | 7             |                                                              |

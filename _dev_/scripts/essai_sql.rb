@@ -1,6 +1,7 @@
 require_relative 'required'
 
-MyDB.DBNAME = 'icare_test'
+# MyDB.DBNAME = 'icare_test'
+MyDB.DBNAME = 'icare'
 # req = <<-SQL
 # SELECT
 #   doc.id, icet.id AS icetape, doc.icetape_id,
@@ -117,10 +118,7 @@ MyDB.DBNAME = 'icare_test'
 
 disid = 1
 req = <<-SQL.freeze
-SELECT DISTINCT u.pseudo
-  FROM frigo_messages AS fm
-  INNER JOIN users AS u ON fm.user_id = u.id
-  WHERE discussion_id = #{disid}
+SELECT readers_original, readers_comments, cotes_original, cotes_comments FROM `current_icdocuments`
 SQL
 
 res = db_exec(req)
