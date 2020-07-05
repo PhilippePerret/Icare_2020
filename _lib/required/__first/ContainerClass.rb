@@ -26,9 +26,13 @@ class ContainerClass
     # Note : si l'item est déjà connu, c'est lui qu'on prend (on utilise `get`
     # plutôt que `new`, maintenant)
     def instantiate data
-      obj = get(data[:id])
-      obj.data = data
-      return obj
+      if @items&.key?(data[:id])
+        @items(data[:id])
+      else
+        obj = get(data[:id])
+        obj.data = data
+        return obj
+      end
     end #/ instantiate
 
     # Création d'une nouvelle donnée avec les données fournies
