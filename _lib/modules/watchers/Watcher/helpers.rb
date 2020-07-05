@@ -62,7 +62,7 @@ class Watcher < ContainerClass
     css = ['watcher']
     erbpath = path_notification(key)
     if File.exists?(erbpath)
-      body = inner(erbpath)
+      body = _inner(erbpath)
       if options && options[:unread]
         # Quand c'est une notification qui n'est pas lue
         css << 'unread'
@@ -72,9 +72,9 @@ class Watcher < ContainerClass
     else '' end
   end #/ out
 
-  def inner(erbpath)
+  def _inner(erbpath)
     Tag.div(text:bande_infos, class:'infos') + body(erbpath)
-  end #/ inner
+  end #/ _inner
 
   # Entête de la notification à afficher
   def bande_infos

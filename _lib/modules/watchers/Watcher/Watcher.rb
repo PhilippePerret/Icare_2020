@@ -25,11 +25,11 @@ end # /<< self
 def run
   require_folder_processus unless folder_processus_required?
   self.send(processus.to_sym)
-  send_mails
+  _send_mails
   add_actualite
   next_watcher if absdata[:next]
   post_operation if respond_to?(:post_operation)
-  destroy
+  _destroy
   send(:onSuccess) if respond_to?(:onSuccess)
 rescue WatcherInterruption => e
   log("Error WatcherInterruption")
@@ -44,7 +44,7 @@ def unrun
   require_folder_processus unless folder_processus_required?
   self.send("contre_#{processus}".to_sym)
   send_contre_mails
-  destroy
+  _destroy
   send(:onSuccess) if respond_to?(:onSuccess)
 rescue Exception => e
   log(e)
@@ -64,10 +64,10 @@ def next_watcher
 end #/ next_watcher
 
 # Destruction du watcher
-def destroy
+def _destroy
   request = "DELETE FROM watchers WHERE id = #{id}"
   db_exec(request)
-end #/ destroy
+end #/ _destroy
 
 # Cf. le mode d'emploi pour le détail de cette procédure (dans la section
 # des téléchargements, pas des watchers)
@@ -195,24 +195,24 @@ end #/ folder
 private
 
   # Procédure d'envoi de mail si tout s'est bien passé
-  def send_mails
-    send_mail_to(:admin) if File.exists?(path_mail(:admin))
-    send_mail_to(:user) if File.exists?(path_mail(:user))
-  end #/ send_mail
+  def _send_mails
+    _send_mail_to(:admin) if File.exists?(path_mail(:admin))
+    _send_mail_to(:user) if File.exists?(path_mail(:user))
+  end #/ _send_mail
   def send_contre_mails
-    send_contre_mail_to(:admin) if File.exists?(path_contre_mail(:admin))
-    send_contre_mail_to(:user) if File.exists?(path_contre_mail(:user))
+    _send_contre_mail_to(:admin) if File.exists?(path_contre_mail(:admin))
+    _send_contre_mail_to(:user) if File.exists?(path_contre_mail(:user))
   end #/ contre_send_mail
 
-  def send_mail_to(who)
-    send_mail(who, {body: deserb(path_mail(who), self)})
-  end #/ send_mail_to
+  def _send_mail_to(who)
+    _send_mail(who, {body: deserb(path_mail(who), self)})
+  end #/ _send_mail_to
 
-  def send_contre_mail_to(who)
-    send_mail(who, {body: deserb(path_contre_mail(who), self)})
-  end #/ send_mail_to
+  def _send_contre_mail_to(who)
+    _send_mail(who, {body: deserb(path_contre_mail(who), self)})
+  end #/ _send_mail_to
 
-  def send_mail(who, data)
+  def _send_mail(who, data)
     require_module('mail')
     whouser   = who_is(who)
     otheruser = other_who_is(who)
@@ -222,7 +222,7 @@ private
       message: data[:body],
       subject: titre # pour le moment
     )
-  end #/ send_mail
+  end #/ _send_mail
 
   def who_is(who)
     case who

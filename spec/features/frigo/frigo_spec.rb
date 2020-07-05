@@ -378,7 +378,7 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
 
   end
 
-  scenario 'Seul un administrateur peut détruire une discussion (avec un watcher)', only:true do
+  scenario 'Seul un administrateur peut détruire une discussion (avec un watcher)' do
     degel('after-benoit-pre-destroy-discussion')
 
     pitch("Phil va rejoindre ses notifications pour détruire la discussion. Mais avant ça, Benoit va vérifier qu'il voit bien la notification.")
@@ -460,7 +460,7 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
     end
     pitch("Les autres participants sont prévenus par mail")
 
-    get('phil-has-destroyed-discussion-benoit', <<-MKD.freeze)
+    gel('phil-has-destroyed-discussion-benoit', <<-MKD.freeze)
 Dans ce gel, Phil vient de détruire la discussion instanciée par Benoit, à laquelle participaient Marion et Élie. Cette discussion, ici, n'existe plus, et les mails ont été envoyés à tout le monde. La notification (watcher) de destruction n'existe plus.
 
 Discussion ID: ##{disid}
@@ -471,10 +471,32 @@ Participants : Benoit (créateur), Phil, Marion, Élie
 
   end
 
-  scenario 'Marion peut quitter la conversation de Benoit' do
-    # TODO Il faut d'abord faire un gel du moment où elle est invitée
-    # par Benoit
-    pending "à implémenter"
+
+
+
+
+
+  scenario 'Marion peut quitter la conversation de Benoit', only:true do
+    degel('marion-et-elie-invites-discussion-benoit-phil')
+
+    marion.rejoint_la_discussion('Message pour Phil'.freeze)
+
+    # Vérification pré-test pour voir si les choses sont OK
+    expect(page).to have_css(),
+      "Le nombre de messages devrait être de 3"
+
+    gel('marion-a-quitte-discussion-benoit', <<-TEXT.freeze)
+Dans ce gel, marion a quitté la conversation initiée entre Benoit et Phil, mais en laissant deux messages.
+
+Discussion : ##{discuss.id}
+Titre : #{discuss.titre}
+Participants : Benoit, Phil, Élie (ex Marion)
+Nombre de messages : 5
+    TEXT
+  end
+
+  scenario 'la liste des participants fait une différence entre courants et historique' do
+    pitch("Marion va déposer un message et quitter la conversation. Elle sera pourtant toujours comptée dans le nombre de participants et dans la liste des participants, mais en tant qu'ancienne participante.")
   end
 
 end
