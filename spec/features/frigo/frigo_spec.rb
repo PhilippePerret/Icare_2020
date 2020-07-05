@@ -333,9 +333,9 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
     pitch('Même en forçant l’accès aux invitations…')
     goto("bureau/frigo?op=inviter&did=1")
     screenshot("marion-tente-forcer-invitations")
-    expect(page).to have_css('h2', text: 'Votre porte de frigo')
+    expect(page).to have_titre('Discussion de frigo'.freeze)
     expect(page).to have_content(ERRORS[:inviter_requires_owner])
-    pitch("Marion ne parvient pas à atteindre la page des invitations.")
+    pitch("Marion ne parvient pas à atteindre la page des invitations.".freeze)
 
   end
 
@@ -361,11 +361,11 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
 
     pitch("Même en essayant de la forcer par une route directe, Marion échoue.")
     goto("bureau/frigo?op=destroy&did=1")
+    screenshot('marion-tries-to-destroy-discussion-benoit')
     expect(page).not_to have_content('Détruire cette discussion'),
       "La page ne devrait pas contenir le texte “Détruire cette discussion”"
     expect(page).not_to have_css('form#form-destroy-discussion'),
       "La page ne devrait pas contenir le formulaire de destruction de la discussion"
-    screenshot('marion-tries-to-destroy-discussion-benoit')
     logout
 
     expect(benoit).to have_discussion('Message pour Phil', {owner:true})
@@ -555,7 +555,7 @@ Participants : Benoit (créateur), Phil, Marion, Élie
     marion.rejoint_la_discussion('Message pour Phil'.freeze)
 
     # Vérification pré-test pour voir si les choses sont OK
-    expect(page).to have_new_messages_count(0)
+    expect(page).to have_new_messages_count(3)
     expect(page).to have_total_messages_count(3)
     expect(page).to have_participants_count(4)
     expect(page).to have_participants_pseudos('Phil, Marion, Benoit et Élie')
@@ -575,7 +575,7 @@ Participants : Benoit (créateur), Phil, Marion, Élie
     # === Vérifications ===
     expect(page).to have_content('Vous avez bien quitté la discussion “Message pour Phil”')
     pitch('Un message lui confirme que c’est fait')
-    expect(page).to have_css('h2', text: 'Votre porte de frigo')
+    expect(page).to have_titre('Votre porte de frigo')
     pitch('Elle se retrouve sur sa porte de frigo')
     logout
 
@@ -602,7 +602,7 @@ Nombre de messages : 5
 
 
 
-  scenario 'tous les titres du frigo sont bons', only: true do
+  scenario 'tous les titres du frigo sont bons' do
     degel('marion-a-quitte-discussion-benoit') # celui-là ou un autre
 
     pitch("Benoit rejoint son bureau et…")

@@ -27,18 +27,15 @@ def rejoint_la_discussion(titre_discussion, checks = nil)
   click_on(titre_discussion)
   if checks
     if checks.key?(:new_messages)
-      expect(page).to have_css('span.new-messages-count', text:checks[:new_messages].to_s),
-        "La page devrait afficher le nombre de nouveaux messages avec le bon compte"
+      expect(page).to have_new_messages_count(checks[:new_messages])
       expect(page).to have_css('a.mark-lu-btn', count: 2),
         "La page devrait avoir deux liens 'Tout marquer lu'"
     end
     if checks.key?(:participants_nombre)
-      expect(page).to have_css('span.participants-nombre', text:checks[:participants_nombre]),
-        "Le bon nombre de participants devrait être indiqué (#{checks[:participants_nombre]})."
+      expect(page).to have_participants_count(checks[:participants_nombre])
     end
     if checks.key?(:participants_pseudos)
-      expect(page).to have_css('span.participants-pseudos', text:checks[:participants_pseudos]),
-        "La bonne liste de pseudos devrait être indiquée (#{checks[:participants_pseudos]})"
+      expect(page).to have_participants_pseudos(checks[:participants_pseudos])
     end
   end
 end #/ rejoint_la_discussion

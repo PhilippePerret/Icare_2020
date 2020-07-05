@@ -2,7 +2,7 @@
 require_modules(['form','frigo'])
 class HTML
   def titre
-    unless param(:disid) || param(:did)
+    unless param(:disid) || (param(:did) && param(:did)!=EMPTY_STRING)
       "#{RETOUR_BUREAU}🌡️ Votre porte de frigo".freeze
     else
       "#{RETOUR_FRIGO}🌡️ Discussion de frigo".freeze
@@ -29,6 +29,10 @@ class HTML
       param(:did) || raise(ERRORS[:discussion_required])
       owner_discussion_required || user.admin? || raise(ERRORS[:inviter_requires_owner])
       return
+    when 'destroy'
+      param(:did) || raise(ERRORS[:discussion_required]) # passage en force
+      owner_discussion_required || user.admin? || raise(ERRORS[:destroy_requires_owner])
+      return
     when 'annonce_destruction'
       # Méthode appelée quand le possesseur d'une discussion veut la détruire
       param(:did) || raise(ERRORS[:discussion_required]) # passage en force
@@ -40,6 +44,7 @@ class HTML
       # discussion sur laquelle il se trouve
       param(:did) || raise(ERRORS[:discussion_required]) # passage en force
       user.quit_discussion(param(:did))
+      param(:did, EMPTY_STRING) # Pour le titre
       return
     when 'marquer_lus'
       # On passe par ici quand l'user clique sur le bouton pour marquer une
