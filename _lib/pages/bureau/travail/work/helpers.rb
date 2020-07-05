@@ -74,7 +74,7 @@ class AbsEtape
   #   MÉTHODE DE LA PARTIE MINIFAQ
   # ---------------------------------------------------------------------
   def formulaire_minifaq
-    MiniFaq.form(:absetape, id).out
+    MiniFaq.form(:absetape, id)
   end #/ formulaire_minifaq
 
   def liste_reponses_minifaq
@@ -90,7 +90,7 @@ class AbsEtape
     # La logique pour récupérer le nombre :
     # Il faut trouver le nombre d'icetapes qui ont pour étapes absolues absetape_id
     # Et récolter tous les documents de ces étapes
-    request = <<-SQL
+    request = <<-SQL.freeze
 SELECT COUNT(id)
   FROM icetapes ice
   INNER JOIN absetapes abe ON abe.id = ice.absetape_id
