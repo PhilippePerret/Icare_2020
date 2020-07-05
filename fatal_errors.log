@@ -1307,4 +1307,52 @@ Did you mean?  inspect
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:16:in `<top (required)>'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
-    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'2020-07-05 10:56:48 +0200 --- FATAL ERROR:
+    Il faut fournir l'ID
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:17:in `get'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:32:in `instantiate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:54:in `partiel_per_op'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:44:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-05 11:04:06 +0200 --- FATAL ERROR:
+    Il faut fournir l'ID
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:17:in `get'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:32:in `instantiate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:61:in `partiel_per_op'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:51:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-05 11:05:09 +0200 --- FATAL ERROR:
+    Il faut fournir l'ID
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:17:in `get'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:32:in `instantiate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:61:in `partiel_per_op'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:51:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-05 11:07:12 +0200 --- FATAL ERROR:
+    Il faut fournir l'ID
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:17:in `get'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:32:in `instantiate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:61:in `partiel_per_op'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:51:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-05 11:08:50 +0200 --- FATAL ERROR:
+    Il faut fournir l'ID
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:17:in `get'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:32:in `instantiate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:61:in `partiel_per_op'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:51:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-05 11:09:00 +0200 --- FATAL ERROR:
+    Il faut fournir l'ID
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:17:in `get'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:32:in `instantiate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:61:in `partiel_per_op'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/modules/html.rb:51:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

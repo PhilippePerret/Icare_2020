@@ -1,0 +1,9 @@
+<%
+# Affichage de l'étape pour visualisation
+require_module('minifaq')
+require './_lib/pages/bureau/travail/work/helpers'
+%>
+<p class="explication">Affichage de l'étape <%= numero %>. “<%= titre %>” du module “<%= absmodule.name %>”</p>
+<%= section_etape_work %>
+<%= section_etape_mini_faq %>
+<%= section_etape_qdd %>

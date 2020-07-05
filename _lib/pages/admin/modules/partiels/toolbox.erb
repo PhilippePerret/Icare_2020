@@ -1,7 +1,10 @@
 <div id="edit-toolbox" class="toolbox">
   <button id="toolbox-btn-save" type="button" class="btn mb2">Enregistrer</button>
-  <button id="toolbox-btn-insert-variable" type="button">-> Balise variable</button>
-  <button id="toolbox-btn-edit-wtype" type="button">Éditer le travail type</button>
+  <% if param(:etape_id)||param(:eid) %>
+    <button id="toolbox-btn-show" type="button" class="small btn">Voir l’étape</button>
+  <% end %>
+  <button id="toolbox-btn-insert-variable" class="small btn" type="button">-> Balise variable</button>
+  <button id="toolbox-btn-edit-wtype" class="small btn" type="button">Éditer le travail type</button>
   <hr>
   <%= html.menu_films %>
   <%= html.menu_mots %>

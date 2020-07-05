@@ -6,19 +6,30 @@ class ToolBox {
     const ObsData= [
       // [buttonId, classe, method]
       ['#toolbox-btn-save', ToolBox, 'submitForm'],
+      ['#toolbox-btn-show', ToolBox, 'showEtape'],
       ['#toolbox-btn-insert-variable', CurrentField, 'insertBaliseVariable'],
       ['#toolbox-btn-edit-wtype', ToolBox, 'editTravailType']
     ];
     ObsData.forEach(tierce => {
       const [buttonId, classe, method] = tierce ;
       const btn = this.obj.querySelector(buttonId)
-      btn.addEventListener('click', classe[method].bind(classe))
+      if (btn) {
+        btn.addEventListener('click', classe[method].bind(classe))
+      }
     })
   }
 
   // Méthode qui permet de soumettre le formulaire
   static submitForm(){
     document.querySelector('form.edit-form').submit()
+  }
+
+  static showEtape(){
+    window.open(`admin/modules?op=show-etape&eid=${this.etape_id}`, "visualiser-etape")
+  }
+
+  static get etape_id(){
+    return document.querySelector('input[type="text"][name="etape_id"]').value
   }
 
   // Méthode qui permet d'éditer le travail type

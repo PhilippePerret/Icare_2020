@@ -1,7 +1,7 @@
 div.toolbox {
 
 }
-div.toolbox * {
+div.toolbox select {
   box-sizing:border-box;
 }
 

@@ -6,6 +6,7 @@ div.toolbox {
   border-radius:8px;
   padding:1em;
   text-align:center;
+  width:280px;
 }
 div.toolbox:before {
   content:'ToolBox';

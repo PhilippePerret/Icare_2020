@@ -6,7 +6,18 @@ class HTML
   attr_reader :absmodule
 
   def titre
-    "#{RETOUR_MODULE unless param(:op).nil?}Étapes des modules".freeze
+    tit = case param(:op)
+          when NilClass, 'show'
+            "Étapes des modules".freeze
+          when 'edit-etape', 'create-etape', 'save-etape'
+            "Édition d’étape".freeze
+          when 'show-etape'
+            "Visualisateur d’étape".freeze
+          else
+            "OP inconnue à régler (#{param(:op)})"
+          end
+    # Le titre complet
+    "#{RETOUR_MODULE unless param(:op).nil?}#{tit}".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -23,6 +34,8 @@ class HTML
       AbsEtape.create_new
     when 'save-etape'
       AbsEtape.get(param(:etape_id)).check_and_save
+    when 'show-etape'
+
     when 'edit-twork'
       # Édition du travail param(:twdos)/param(:tw)
     when 'save-twork'
@@ -54,6 +67,8 @@ class HTML
       ['absetape_form', AbsEtape.instantiate(AbsEtape::DEFAULT_DATA.merge(absmodule_id: param(:mid).to_i)), {formate:false}]
     when 'edit-etape', 'save-etape'
       ['absetape_form', AbsEtape.get(param(:eid)||param(:etape_id)), {formate:false}]
+    when 'show-etape'
+      ['absetape_show', AbsEtape.get(param(:eid)||param(:etape_id)), {formate:false}]
     when 'create-twork'
       ['travail_type_form', TravailType.instantiate(TravailType::DEFAULT_DATA)]
     when 'edit-twork',  'save-twork'
