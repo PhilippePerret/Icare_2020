@@ -27,7 +27,7 @@ class ContainerClass
     # plutôt que `new`, maintenant)
     def instantiate data
       if @items&.key?(data[:id])
-        @items(data[:id])
+        @items[data[:id]]
       else
         obj = get(data[:id])
         obj.data = data
