@@ -12,23 +12,23 @@
 log("iceatpe:#{icetape.inspect}")
    %>
   <%= StateList.row('Étape', "#{icetape.numero}. #{icetape.titre}") %>
-  <!-- < %= StateList.row('Commencé le', icetape.f_started_at, {css:'small'}) %> -->
+  <%= StateList.row('Commencé le', icetape.f_started_at, {css:'small'}) %>
   <hr>
-  <!-- < %= StateList.row('À remettre le', echeance_field) %> -->
-  <!-- < %= StateList.row('<remettre>', Tag.lien(route:'bureau/sender?rid=send_work_form', text:"Remettre le travail", class:'main btn'), {class:'right mt2'}) %> -->
+  <%= StateList.row('À remettre le', echeance_field) %>
+  <%= StateList.row('<remettre>', Tag.lien(route:'bureau/sender?rid=send_work_form', text:"Remettre le travail", class:'main btn'), {class:'right mt2'}) %>
 </div>
 
 <%
 # --- DESCRIPTION DU TRAVAIL ---
 %>
-<%#= absetape.section_etape_work %>
+<%= absetape.section_etape_work %>
 
 <%
 # --- MINI-FAQ DE L'ÉTAPE ---
 %>
-<%#= absetape.section_etape_mini_faq %>
+<%= absetape.section_etape_mini_faq %>
 
 <%
 # --- QUAI DES DOCS (DOCUMENTS DE L'ÉTAPE) ---
 %>
-<%#= absetape.section_etape_qdd %>
+<%= absetape.section_etape_qdd %>
