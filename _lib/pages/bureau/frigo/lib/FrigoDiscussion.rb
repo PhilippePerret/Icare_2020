@@ -181,6 +181,7 @@ end #/ participant?
 # = main =
 #
 # Affichage de la discussion
+# --------------------------
 #
 # +options+
 #   :for        {User} L'user pour lequel on doit afficher la discussion. Par
@@ -200,6 +201,15 @@ end #/ out
 def liste_messages_formated(options)
   liste = messages(false)
   liste = liste.reverse if options[:inverse]
+  # S'il y a plus de deux participants, il faut indiquer les autres participants
+  # par une couleur particulière. Ce sera la propriété :color_discussion pour
+  # l'auteur.
+  if auteurs_messages.count > 2
+    auteurs_messages.each do |auteur|
+      next if auteur.id == user.id
+      auteur.color_discussion = "rgb(#{rand(255)},#{rand(255)},#{rand(255)})"
+    end
+  end
   liste = liste.collect { |message| message.out(options) }.join
   Tag.div(text: liste, class:'messages-discussion')
 end #/ liste_messages_formated

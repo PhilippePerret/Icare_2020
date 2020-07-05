@@ -68,4 +68,5 @@ MESSAGE_ANNONCE_DESTROY = <<-HTML.freeze
 <p>Bien à vous,</p>
 <p>🤖 Le Bot de l'atelier Icare 🦋</p>
 HTML
+
 end #/FrigoDiscussion < ContainerClass

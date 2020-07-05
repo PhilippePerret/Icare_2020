@@ -34,7 +34,7 @@ def out(options)
     # Incrémenter le nombre de messages non lu
     discussion.nombre_non_lus += 1
   end
-  Tag.div(text:content_formated, class:css.join(SPACE))
+  Tag.div(text:content_formated, class:css.join(SPACE),style: "border-color:#{auteur.color_discussion||'transparent'};")
 end #/ out
 
 # Renvoie true si l'auteur qui visualise la discussion est l'auteur du
