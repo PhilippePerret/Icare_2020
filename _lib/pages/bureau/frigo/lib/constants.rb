@@ -4,6 +4,8 @@
 =end
 require './_lib/required/__first/helpers/Tag.rb'
 
+RETOUR_FRIGO = Tag.retour(route:'bureau/frigo', titre:'Frigo')
+
 class FrigoDiscussion < ContainerClass
 
 # Requête pour obtenir toutes les discussion de l'user

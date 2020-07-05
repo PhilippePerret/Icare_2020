@@ -2,7 +2,11 @@
 require_modules(['form','frigo'])
 class HTML
   def titre
-    "#{RETOUR_BUREAU}🌡️ Votre porte de frigo".freeze
+    unless param(:disid) || param(:did)
+      "#{RETOUR_BUREAU}🌡️ Votre porte de frigo".freeze
+    else
+      "#{RETOUR_FRIGO}🌡️ Discussion de frigo".freeze
+    end
   end
   def exec
     # Code à exécuter avant la construction de la page

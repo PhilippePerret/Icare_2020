@@ -8,22 +8,6 @@ require_relative 'TUser_discussions'
 
 # ---------------------------------------------------------------------
 #
-#   LES UTILITAIRES
-#
-# ---------------------------------------------------------------------
-
-def benoit_rejoint_son_frigo
-  TFrigo.user_rejoint_son_frigo(:benoit)
-end #/ benoit_rejoint_son_frigo
-def marion_rejoint_son_frigo
-  TFrigo.user_rejoint_son_frigo(:marion)
-end #/ marion_rejoint_son_frigo
-def phil_rejoint_son_frigo
-  TFrigo.user_rejoint_son_frigo(:admin)
-end #/ phil_rejoint_son_frigo
-
-# ---------------------------------------------------------------------
-#
 #   LES TESTS
 #
 # ---------------------------------------------------------------------
@@ -33,6 +17,9 @@ feature "Test du frigo" do
     Capybara.reset_sessions!
   end
   let(:count_messages) { TFrigo.count_messages }
+
+
+
   scenario "Benoit peut initier une discussion avec Phil" do
     degel('validation_deux_inscriptions')
     # NOTE
@@ -105,7 +92,9 @@ feature "Test du frigo" do
     pitch('Phil ajoute deux nouveaux messages'.freeze)
     phil.rejoint_la_discussion('Message pour Phil')
     phil.add_message_to_discussion('Message pour Phil', 'La réponse de Phil à Benoit.')
+    expect(page).to have_total_messages_count(2)
     phil.add_message_to_discussion('Message pour Phil', 'Une autre réponse de Phil à Benoit.')
+    expect(page).to have_total_messages_count(3)
     logout
 
     # = Vérification =
@@ -135,6 +124,13 @@ Dans cette discussion instanciée par Benoit avec Phil, 3 messages ont été éc
     TEXT
   end
 
+
+
+
+
+
+
+
   scenario 'Benoit peut renoncer à inviter quelqu’un et revenir à sa discussion' do
     degel('discussion-phil-benoit-3-messages')
     pitch("Benoit rejoint la discussion avec Phil pour inviter…")
@@ -151,6 +147,14 @@ Dans cette discussion instanciée par Benoit avec Phil, 3 messages ont été éc
       "Benoit devrait se retrouver sur la page de la discussion"
     pitch('… et se retrouve sur la page de discussion avec Phil')
   end
+
+
+
+
+
+
+
+
 
   scenario 'Benoit peut inviter Marion à la discussion si elle l’autorise' do
     degel('discussion-phil-benoit-3-messages')
@@ -177,6 +181,15 @@ Dans cette discussion instanciée par Benoit avec Phil, 3 messages ont été éc
 
   end
 
+
+
+
+
+
+
+
+
+
   scenario 'Benoit ne peut pas s’inviter lui-même ou inviter Phil' do
     degel('discussion-phil-benoit-3-messages')
     start_time = Time.now.to_i
@@ -194,6 +207,16 @@ Dans cette discussion instanciée par Benoit avec Phil, 3 messages ont été éc
       pitch("Et il ne trouve ni son nom ni Phil…")
     end
   end
+
+
+
+
+
+
+
+
+
+
 
   scenario 'Benoit peut inviter deux icariens à participer à la discussion' do
     degel('discussion-phil-benoit-3-messages')
@@ -230,6 +253,17 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
 * Messages : 3
     TEXT
   end
+
+
+
+
+
+
+
+
+
+
+
 
   scenario 'Benoit ne peut pas inviter Marion à la discussion si elle interdit le contact' do
     degel('discussion-phil-benoit-3-messages')
@@ -279,6 +313,15 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
 
   end
 
+
+
+
+
+
+
+
+
+
   scenario 'Marion ne peut pas forcer l’invitation à la discussion de Benoit' do
     degel('marion-et-elie-invites-discussion-benoit-phil')
 
@@ -295,6 +338,15 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
     pitch("Marion ne parvient pas à atteindre la page des invitations.")
 
   end
+
+
+
+
+
+
+
+
+
 
 
   scenario 'Marion ne peut pas détruire la discussion de Benoit' do
@@ -320,6 +372,15 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
     pitch("Malgré les tentatives de destruction de Marion, la discussion est toujours là")
 
   end
+
+
+
+
+
+
+
+
+
 
   scenario 'Benoit ne peut pas détruire sa discussion, mais peut la marquer à détruire' do
     degel('marion-et-elie-invites-discussion-benoit-phil')
@@ -377,6 +438,17 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
     TEXT
 
   end
+
+
+
+
+
+
+
+
+
+
+
 
   scenario 'Seul un administrateur peut détruire une discussion (avec un watcher)' do
     degel('after-benoit-pre-destroy-discussion')
@@ -476,7 +548,8 @@ Participants : Benoit (créateur), Phil, Marion, Élie
 
 
 
-  scenario 'Marion peut quitter la conversation de Benoit', only:true do
+
+  scenario 'Marion peut quitter la conversation de Benoit' do
     degel('marion-et-elie-invites-discussion-benoit-phil')
 
     marion.rejoint_la_discussion('Message pour Phil'.freeze)
@@ -526,8 +599,39 @@ Nombre de messages : 5
     TEXT
   end
 
-  scenario 'la liste des participants fait une différence entre courants et historique' do
-    pitch("Marion va déposer un message et quitter la conversation. Elle sera pourtant toujours comptée dans le nombre de participants et dans la liste des participants, mais en tant qu'ancienne participante.")
+
+
+
+  scenario 'tous les titres du frigo sont bons', only: true do
+    degel('marion-a-quitte-discussion-benoit') # celui-là ou un autre
+
+    pitch("Benoit rejoint son bureau et…")
+    benoit.rejoint_son_bureau
+    expect(page).to have_css('div.goto#goto-frigo', text: 'Porte de frigo')
+    pitch('… trouve le div-goto “Porte de frigo”')
+    pitch('Il clique sur ce div-goto…')
+    click_on 'Porte de frigo'
+    expect(page).to have_titre('Votre porte de frigo', {retour:{route:'bureau/home', text:'Bureau'}})
+    pitch('… et arrive sur le frigo proprement dit avec le titre “Votre porte de frigo” et un lien pour retourner au bureau')
+    within('h2.page-title') do
+      click_on 'Bureau'
+    end
+    pitch('Benoit, en cliquant sur le lien retour, revient sur le bureau'.freeze)
+    expect(page).to have_titre('Votre bureau')
+    click_on 'Porte de frigo'
+    pitch('Benoit clique sur la discussion “Message pour Phil”…')
+    click_on 'Message pour Phil'
+    pitch('… et rejoint la page de la discussion'.freeze)
+    expect(page).to have_css('div.titre-discussion', text:'Message pour Phil')
+    pitch('… qui contient le titre de la discussion'.freeze)
+    expect(page).to have_titre('Discussion de frigo', {retour:{route:'bureau/frigo', text:'Frigo'}})
+    pitch('… qui contient le titre “Discussion de frigo” avec un lien retour vers la porte de frigo.'.freeze)
+    pitch('Benoit clique sur le lien retour…'.freeze)
+    within('h2.page-title') do
+      click_on 'Frigo'
+    end
+    expect(page).to have_titre('Votre porte de frigo'.freeze)
+    pitch('… et revient sur sa porte de frigo.'.freeze)
   end
 
 end

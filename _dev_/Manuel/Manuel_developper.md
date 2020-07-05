@@ -2489,6 +2489,31 @@ icare degel[ <nom_du_gel>]
 > Si on n’indique pas de nom de dégel, la liste des tous les gels est présentée pour un choix facile et rapide.
 
 
+
+<a name="testpage"></a>
+
+### Tester la page
+
+#### Tester le titre (`have_titre(titre[,{options}]`)
+
+Le matcher `have_titre` permet de tester le titre, son contenu et le lien de retour.
+
+Test du titre simple :
+
+~~~ruby
+expect(page).to have_titre("Mon titre grosso modo")
+~~~
+
+Test du titre et du lien retour qu'il contient :
+
+~~~ruby
+expect(page).to have_titre("Mon titre grosso modo", {retour:{route:'ma/route', text:'texte du retour'}})
+~~~
+
+> Note : on peut aussi utiliser soit seulement `:route` soit seulement `:text`.
+
+
+
 <a name="testerdb"></a>
 
 ### Tester la base de données
