@@ -31,6 +31,40 @@ expect(discussion).to be_real_discussion
 
 
 
+#### `have_new_messages_count(nombre)`
+
+Pour tester le nombre de messages nouveaux affiché dans la discussion.
+
+~~~ruby
+expect(page).to have_new_messages_count(3)
+~~~
+
+#### `have_total_messages_count(nombre)`
+
+Pour tester l'affichage du nombre total de messages dans la discussion.
+
+~~~ruby
+expect(page).to have_total_messages_count(3)
+~~~
+
+#### `have_participants_count(nombre)`
+
+Pour tester l'affichage du nombre total de participants courants.
+
+~~~ruby
+expect(page).to have_participants_count(3)
+~~~
+
+#### `have_participants_pseudos("liste pseudos")`
+
+Pour tester la liste des pseudos affichées au-dessus de la discussion.
+
+~~~ruby
+expect(page).to have_participants_pseudos("Phil, Benoit et Élie (ex : Marion)")
+~~~
+
+
+
 
 
 
@@ -145,5 +179,17 @@ checks = {
   participants_nombre: {Integer},	# Vérifie que le nombre de participants soit bien indiqué
   participants_pseudos: {String},	# Vérifie que les pseudos des participants soient ceux-là.
 }
+~~~
+
+
+
+#### `<tuser>.add_message_to_discussion(titre, message)`
+
+Permet à l'user d'ajouter un message à la discussion (par le biais du formulaire normal de bas de discussion).
+
+Par exemple :
+
+~~~ruby
+marion.add_message_to_discussion('Discussion avec Phil', "J'écris un message pour la discussion.")
 ~~~
 

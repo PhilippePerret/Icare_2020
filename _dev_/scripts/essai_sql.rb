@@ -106,13 +106,21 @@ MyDB.DBNAME = 'icare_test'
 #     AND fm.id != fd.last_message_id
 # SQL
 
-users_ids = '1, 11, 12'
+# users_ids = '1, 11, 12'
+# req = <<-SQL.freeze
+# SELECT COUNT(*)
+#   FROM frigo_discussions AS fd
+#   INNER JOIN frigo_users AS fu ON fu.discussion_id = fd.id
+#   WHERE fu.user_id IN (#{users_ids})
+#     AND fu.discussion_id = fd.id
+# SQL
+
+disid = 1
 req = <<-SQL.freeze
-SELECT COUNT(*)
-  FROM frigo_discussions AS fd
-  INNER JOIN frigo_users AS fu ON fu.discussion_id = fd.id
-  WHERE fu.user_id IN (#{users_ids})
-    AND fu.discussion_id = fd.id
+SELECT DISTINCT u.pseudo
+  FROM frigo_messages AS fm
+  INNER JOIN users AS u ON fm.user_id = u.id
+  WHERE discussion_id = #{disid}
 SQL
 
 res = db_exec(req)

@@ -5,6 +5,58 @@
 require './_lib/modules/frigo/constants.rb'
 require './_lib/pages/bureau/frigo/lib/constants.rb'
 
+RSpec::Matchers.define :have_new_messages_count do |nombre|
+  match do |page|
+    @text = page.find('span.new-messages-count').text
+    @text == nombre.to_s
+  end
+  failure_message do
+    "Le nombre (affiché) de nouveaux messages devrait être de #{nombre} or il est de #{@text}"
+  end
+  description do
+    "Le nombre (affiché) de nouveaux messages est bien de #{nombre}"
+  end
+end #/have_new_messages_count
+
+RSpec::Matchers.define :have_total_messages_count do |nombre|
+  match do |page|
+    @displayed = page.find('span.total-messages-count').text
+    @displayed == nombre.to_s
+  end
+  failure_message do
+    "Le nombre total de messages (affiché) devrait être de #{nombre} or il est de #{@displayed}."
+  end
+  description do
+    "Le nombre total de messages (affiché) est bien de #{nombre}."
+  end
+end #/have_new_messages_count
+
+RSpec::Matchers.define :have_participants_count do |nombre|
+  match do |page|
+    @displayed = page.find('span.participants-count').text
+    @displayed == nombre.to_s
+  end
+  failure_message do
+    "Le nombre de participants (affiché) devrait être de #{nombre} or il est de #{@displayed}."
+  end
+  description do
+    "Le nombre de participants (affiché) est bien de #{nombre}."
+  end
+end #/have_new_messages_count
+
+RSpec::Matchers.define :have_participants_pseudos do |liste|
+  match do |page|
+    @displayed = page.find('span.participants-pseudos').text
+    @displayed == liste
+  end
+  failure_message do
+    "La liste des pseudos affichés devrait être “#{liste}” or elle affiche “#{@displayed}”."
+  end
+  description do
+    "La liste des pseudos affichés est bien “#{liste}”."
+  end
+end #/have_new_messages_count
+
 RSpec::Matchers.define :have_message do |dmessage|
   match do |sujet|
     dmessage.merge!(user_id: dmessage.delete(:user).id) if dmessage.key?(:user)

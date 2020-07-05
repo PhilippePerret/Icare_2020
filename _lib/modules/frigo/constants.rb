@@ -22,7 +22,6 @@ ERRORS.merge!({
 
 MESSAGES.merge!({
   follower_warned_for_new_message: "J'ai averti %s de ce nouveau message.".freeze,
-  nombre_messages_non_lus: "Nouveaux messages : <span class='new-messages-count'>%i</span>".freeze,
   bouton_tout_marquer_lu: '<span class="small ml2"><a class="mark-lu-btn" href="bureau/frigo?disid=%s&op=marquer_lus">Tout marquer lu</a></span>'.freeze,
   discussion_marquee_lue: 'La discussion a été marquée lue.'.freeze,
   confirmation_quit_discussion: 'Vous avez bien quitté la discussion “%s”.'.freeze,
@@ -50,4 +49,13 @@ class FrigoDiscussion < ContainerClass
 <p>Bien à vous,</p>
 <p>🤖 Le Bot de l'Atelier Icare 🦋</p>
   HTML
+
+# Requête pour récupérer les auteurs de tous les messages
+REQUEST_AUTEURS_MESSAGES = <<-SQL.freeze
+SELECT DISTINCT u.id
+  FROM frigo_messages AS fm
+  INNER JOIN users AS u ON fm.user_id = u.id
+  WHERE discussion_id = %i
+SQL
+
 end #/FrigoDiscussion

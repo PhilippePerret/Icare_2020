@@ -76,6 +76,24 @@ def participants
   end
 end #/ participants
 
+# Retourne la liste de TOUS les participants, même ceux qui ont quitté
+# la discussion. On l'appelle la "liste historique des participants"
+# Cette liste se récupère par rapport aux messages.
+# Mais attention : tous les participants n'ont pas forcément laissé de messages
+# donc il faut mixer les deux listes, participants et auteurs_messages
+def anciens_participants
+  @anciens_participants ||= begin
+    (auteurs_messages - participants)
+  end
+end #/ anciens_participants
+
+
+def auteurs_messages
+  @auteurs_messages ||= begin
+    db_exec(REQUEST_AUTEURS_MESSAGES % id).collect { |du| User.get(du[:id]) }
+  end
+end #/ auteurs_messages
+
 # Destruction complète de la discussion
 # -------------------------------------
 # Cela consiste à :

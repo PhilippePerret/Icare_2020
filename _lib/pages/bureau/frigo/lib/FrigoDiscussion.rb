@@ -105,6 +105,9 @@ def add_message(params)
   msg || raise(ERRORS[:message_discussion_required])
   msg.length < 12000 || raise(ERRORS[:message_frigo_too_long])
   msg.length > 2 || raise(ERRORS[:message_frigo_too_short])
+  # Pour forcer l'actualisation
+  @all_messages = nil
+  @messages = nil
   # On crée le message
   msg_id = db_compose_insert(FrigoDiscussion.table_messages, {discussion_id:id, user_id: params[:auteur].id, content:msg})
   # On indique l'ID du dernier message de la discussion
@@ -165,6 +168,9 @@ def send_invitations_to(icariens)
   es = nombre_icariens > 1 ? (nombre_hommes > 0 ? 's' : 'es') : ''
   a_ete = nombre_icariens > 1 ? 'ont été' : 'a été'
   message("#{nombre_icariens} icarien·ne·#{s} #{a_ete} invité#{es} à rejoindre la discussion “#{titre}” : #{pseudos.pretty_join}.".freeze)
+  @participants = nil
+  @anciens_participants = nil
+  @auteurs_messages = nil
 end #/ send_invitations_to
 
 # La méthode retourne TRUE si +part+ {User} est un participant à la discussion
@@ -198,6 +204,15 @@ def liste_messages_formated(options)
   Tag.div(text: liste, class:'messages-discussion')
 end #/ liste_messages_formated
 
+# Retourne la liste des participants en indiquant ceux qui ont quitté
+# discussion depuis
+def liste_complete_participants
+  lp = participants.collect{|u|u.pseudo}.pretty_join
+  unless anciens_participants.empty?
+    lp << " (ex #{anciens_participants.collect{|u|u.pseudo}.pretty_join})"
+  end
+  lp
+end #/ liste_complete_participants
 
 # Retourne le code de la discussion pour téléchargement
 def for_download(options = nil)

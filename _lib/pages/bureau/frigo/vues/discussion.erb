@@ -15,7 +15,11 @@
 <div class="right discret">
   <div class="fleft">
     <span class="small<%= discussion.nombre_non_lus > 0 ? ' red' : '' %>">
-      <%= MESSAGES[:nombre_messages_non_lus] % discussion.nombre_non_lus %>
+      <span>Nouveaux messages :</span>
+      <span class='new-messages-count'><%= discussion.nombre_non_lus %></span>
+      <span>—</span>
+      <span class="">total :</span>
+      <span class="total-messages-count"><%= discussion.messages.count %></span>
     </span>
     <% if discussion.nombre_non_lus > 0 %>
     <%= MESSAGES[:bouton_tout_marquer_lu] % param(:disid) %>
@@ -24,8 +28,8 @@
   <a href="bureau/frigo" class="small">LISTE DES DISCUSSIONS</a>
 </div>
 <div class="infos small discret">
-  <span>Participants : <span class="participants-nombre"><%= discussion.participants.count %></span></span>
-  <span class="ml1"> (<span class="participants-pseudos"><%= discussion.participants.collect{|u|u.pseudo}.pretty_join %></span>)</span>
+  <span>Participants : <span class="participants-count"><%= discussion.participants.count %></span></span>
+  <span>— <span class="participants-pseudos"><%= discussion.liste_complete_participants %></span></span>
 </div>
 <%
 # ---------------------------------------------------------------------

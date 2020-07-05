@@ -482,9 +482,40 @@ Participants : Benoit (créateur), Phil, Marion, Élie
     marion.rejoint_la_discussion('Message pour Phil'.freeze)
 
     # Vérification pré-test pour voir si les choses sont OK
-    expect(page).to have_css(),
-      "Le nombre de messages devrait être de 3"
+    expect(page).to have_new_messages_count(0)
+    expect(page).to have_total_messages_count(3)
+    expect(page).to have_participants_count(4)
+    expect(page).to have_participants_pseudos('Phil, Marion, Benoit et Élie')
+    pitch("Marion trouve un affichage correct du nombre de messages et de participants")
 
+    pitch("Marion laisse deux messages…")
+    marion.add_message_to_discussion('Message pour Phil', 'Le premier message de Marion.')
+    marion.add_message_to_discussion('Message pour Phil', 'Le second message de Marion.')
+    expect(page).to have_css('span.total-messages-count', text:'5'),
+      "Le nombre total de messages (affiché) devrait être de 5"
+    pitch("… et peut voir que le nombre de messages a changé.")
+
+    pitch("Marion quitte la discussion")
+    expect(page).to have_css('a[href="bureau/frigo?op=quitter_discussion&did=1"]', text:'Quitter cette discussion'),
+      "La page devrait présenter un bouton pour quitter la conversation"
+    click_on('Quitter cette discussion'.freeze)
+    # === Vérifications ===
+    expect(page).to have_content('Vous avez bien quitté la discussion “Message pour Phil”')
+    pitch('Un message lui confirme que c’est fait')
+    expect(page).to have_css('h2', text: 'Votre porte de frigo')
+    pitch('Elle se retrouve sur sa porte de frigo')
+    logout
+
+    pitch("Benoit va venir sur la discussion pour voir les changements")
+    benoit.rejoint_la_discussion('Message pour Phil')
+    screenshot('bon-comptes-apres-marion-quit-discuss')
+    expect(page).to have_new_messages_count(2)
+    expect(page).to have_total_messages_count(5)
+    expect(page).to have_participants_count(3)
+    expect(page).to have_participants_pseudos("Phil, Benoit et Élie (ex Marion)".freeze)
+    pitch('Il trouve le bon nombre de messages (nouveaux et total) et le bon affichage des pseudos (malgré le départ de Marion)')
+
+    discuss = TDiscussion.get_by_titre('Message pour Phil')
     gel('marion-a-quitte-discussion-benoit', <<-TEXT.freeze)
 Dans ce gel, marion a quitté la conversation initiée entre Benoit et Phil, mais en laissant deux messages.
 
