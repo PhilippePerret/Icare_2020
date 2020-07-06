@@ -4,4 +4,4 @@
 <h2>Anciennes icariennes et anciens icariens</h2>
 <%= User.anciens.collect{|u|u.out}.join %>
 <h2>Candidats et candidates</h2>
-<%= User.candidats.collect{|u|u.out}.join %>
+<%= User.candidats.collect{|u|u.out unless u.id == 0}.join %>
