@@ -2,7 +2,7 @@
 =begin
   Requis par le module essai ou les modules de ce dossier
 =end
-SANDBOX = true
+SANDBOX = true unless defined?(SANDBOX)
 require './_lib/required'
 
 FOLDER_SQL_GOODS_FOR_2020 = File.join('/','Users','philippeperret','Sites','AlwaysData','xbackups','Goods_for_2020')

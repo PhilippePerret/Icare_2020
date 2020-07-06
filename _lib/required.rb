@@ -17,6 +17,8 @@ Dir["#{LIB_FOLDER}/required/__first/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/_classes/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/then/**/*.rb"].each{|m|require m}
 
+log("DATABASE: #{MyDB.DBNAME.inspect}")
+
 # On trace ce chargement
 data_trace = {}
 # S'il y a des params, on les ajoute, mais pas s'ils sont trop longs

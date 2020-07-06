@@ -7,17 +7,13 @@
       `current_absetapes` et l'enregistrer dans le dossier "Version_current_online"
       avec comme nom `current_absetapes.sql`
 
-    - Récupérer les `users` en supprimant les colonnes `adresse` et `telephone`
+    - Récupérer les `users`
       (tout le reste sera traité ici) et enregistrer la table dans 'users.sql'
       dans le dossier 'Version_current_online'
 
     - Récupérer la table `minifaq` avec ces transformations :
         * renommer 'mini_faq' en 'minifaq'
-        * abs_module_id -> absmodule_id
-        * abs_etape_id  -> absetape_id
-        * supprimer colonnes `user_pseudo`, `content`, `numero`, `options`
-      Enregistrer la table dans 'minifaq.sql' dans le dossier
-      'Goods_for_2020' (NOTE C'est le fichier goods)
+      Enregistrer la table dans 'Version_current_online/minifaq.sql'
 
     - Récupérer la table `lectures_qdd` en la renommant `current_lectures_qdd`
       L'enregistrer dans le fichier `Version_current_online/current_lectures_qdd.sql`
@@ -25,23 +21,17 @@
     - Récupérer la table `icdocuments` en la renommant `current_icdocuments`
       dans le fichier `Version_current_onlin/current_icdocuments.sql`
 
-    - Récupérer la table `icetapes` en finale avec les changements suivant :
-        * supprimer les colonnes `numero` et `documents`
-        * renommer la colonne `abs_etape_id` en `absetape_id`
-      Dumper les données dans `Goods_for_2020/icetapes.sql` (NOTE: dossier
-      Goods). Ce seront les données finales à prendre.
+    - Récupérer la table `icetapes` telle quelle dans 'Version_current_online/icetapes.sql'
 
     - Récupérer la table `icmodules` en finale avec les changements suivants :
-        * renommer la colonne `abs_module_id` -> absmodule_id
-        * renommer la colonne next_paiement -> next_paiement_at
-        * supprimer les colonnes `icetapes` et `paiements`
-      Dumper les données dans `Goods_for_2020/icmodules.sql` (NOTE: dossier
-      Goods). Ce seront les données finales à prendre.
+      Dumper les données dans `Version_current_online/icmodules.sql`
 
     - Récupérer la table `watchers` telle quelle en la renommant `current_watchers`
       en la dumpant dans `Version_current_online/current_watchers.sql`
 
 =end
+
+FORCE_ESSAI = false # zappe toutes les méthodes de contrôle
 
 require './_lib/required'
 require './_dev_/CLI/lib/required/String' # notamment pour les couleur
@@ -61,7 +51,7 @@ FOLDER_CURRENT_ONLINE = '/Users/philippeperret/Sites/AlwaysData/xbackups/Version
 # On s'assure que la table de correspondance pour les watchers contient toutes
 # les valeurs
 File.exists?("#{FOLDER_CURRENT_ONLINE}/current_watchers.sql") || begin
-  puts "Le fichier 'Version_current_online/current_watchers.sql' est introuvable. Cf. les commentaires pour le produire".rouge
+  puts "Le fichier 'Version_current_online/current_watchers.sql' est introuvable. Enregistrez la table EN LA RENOMMANT 'current_watchers'.".rouge
   exit
 end
 TABLECORS_WATCHERS = {
@@ -82,43 +72,58 @@ db_exec("SELECT objet, processus FROM `current_watchers`".freeze).each do |dwatc
   cors_missing.merge!(keychecked => true) unless cors_missing.key?(keychecked)
 end
 unless cors_missing.empty?
-  puts "Des correspondances manquent dans TABLECORS_WATCHERS pour traiter les watchers. Il faut les définir et relancer le script.".rouge
+  puts "Des correspondances manquent dans TABLECORS_WATCHERS pour traiter les watchers. Il faut les définir et relancer le script. (ligne #{__LINE__})".rouge
   puts cors_missing.keys.join(VG).rouge
   exit
 end
 
-File.exists?("#{FOLDER_CURRENT_ONLINE}/users.sql".freeze) || begin
-  puts "Le fichier Version_current_online/users.sql est introuvable. cf. les commentaires pour le produire".rouge
+FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/users.sql".freeze) || begin
+  puts "Le fichier Version_current_online/users.sql est introuvable. Enregistrez la table telle quelle.".rouge
   exit
 end
-File.exists?("#{FOLDER_CURRENT_ONLINE}/current_absetapes.sql".freeze) || begin
-  puts "Le fichier 'Version_current_online/current_absetapes.sql' est introuvable. Cf. les commentaires pour le produire".rouge
+FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/current_absetapes.sql".freeze) || begin
+  puts "Le fichier 'Version_current_online/current_absetapes.sql' est introuvable. Enregistrez-la telle quelle en changeant LE NOM DU FICHIER (absetapes.sql -> current_absetapes.sql).".rouge
   exit
 end
-File.exists?("#{FOLDER_GOODS_SQL}/minifaq.sql".freeze) || begin
-  puts "Le fichier 'Goods_for_2020/minifaq.sql' est introuvable. Cf. les commentaires pour le produire".rouge
-  exit
-end
-File.exists?("#{FOLDER_CURRENT_ONLINE}/current_icdocuments.sql") || begin
-  puts "Le fichier 'Version_current_online/current_icdocuments.sql' est introuvable. Cf. les commentaires pour le produire".rouge
+FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/minifaq.sql".freeze) || begin
+  puts "Le fichier 'Version_current_online/minifaq.sql' est introuvable. Produisez-le en changeant le nom de la table : mini_faq -> minifaq. (ligne #{__LINE__})".rouge
   exit
 end
 
-File.exists?("#{FOLDER_CURRENT_ONLINE}/current_lectures_qdd.sql") || begin
-  puts "Le fichier 'Version_current_online/current_lectures_qdd.sql' est introuvable. Cf. les commentaires pour le produire".rouge
+FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/current_icdocuments.sql") || begin
+  puts "Le fichier 'Version_current_online/current_icdocuments.sql' est introuvable. Enregistrez la table EN LA RENOMMANT 'current_icdocuments'. (ligne #{__LINE__})".rouge
+  exit
+end
+
+FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/icmodules.sql") || begin
+  puts "Le fichier 'Version_current_online/icmodules.sql' est introuvable. Enregistrez la table 'icmodules' telle quelle.'. (ligne #{__LINE__})".rouge
+  exit
+end
+
+FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/icetapes.sql") || begin
+  puts "Le fichier 'Version_current_online/icetapes.sql' est introuvable. Enregistrez la table 'icetapes' telle quelle.'. (ligne #{__LINE__})".rouge
+  exit
+end
+
+FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/current_lectures_qdd.sql") || begin
+  puts "Le fichier 'Version_current_online/current_lectures_qdd.sql' est introuvable. Enregistrez la table EN LA RENOMMANT 'current_lecture_qdd'. (ligne #{__LINE__})".rouge
+  exit
+end
+
+FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/paiements.sql") || begin
+  puts "Le fichier 'Version_current_online/paiements.sql' est introuvable. Enregistrez la table 'paiements' telle quelle. (ligne #{__LINE__})".rouge
   exit
 end
 
 
-puts "POUR ÉVITER DE LANCER CE SCRIPT PAR ERREUR, IL FAUT DÉBLOQUER ICI (ligne #{__LINE__})".jaune
-exit
-
+FORCE_ESSAI || begin
+  # puts "POUR ÉVITER DE LANCER CE SCRIPT PAR ERREUR, IL FAUT DÉBLOQUER ICI À LA MAIN (ligne #{__LINE__})".jaune
+  # exit
+end
 
 
 TACHES = []
 
-
-# Commencer par faire un sauvegarde complète de chaque DB (icare_hot, icare_cold, etc.)
 
 # temoignages         OK    icare > online
 `mysqldump -u root icare temoignages > "#{FOLDER_GOODS_SQL}/temoignages.sql"`
@@ -159,12 +164,6 @@ require './_dev_/scripts/new_site/update_etapes_modules'
 `mysqldump -d -u root icare frigo_users > "#{FOLDER_GOODS_SQL}/frigo_users.sql"`
 `mysqldump -d -u root icare frigo_messages > "#{FOLDER_GOODS_SQL}/frigo_messages.sql"`
 
-# paiements           OK    data online en transformant facture en facture_id
-msg = "Exporter la table `paiements` online en remplaçant `facture` en `facture_id`".jaune
-TACHES << msg
-puts msg
-
-
 # table users             OK
 # -----------
 #     synopsis
@@ -173,12 +172,19 @@ puts msg
 #       - modifier les options pour intégrer les bits 26:3, 27:3, 28:0
 #       - mettre un '-' aux bits 17, 19 et 23
 #       - dumper pour exportation
-db_exec("TRUNCATE `users`")
 `mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/users.sql"`
 values = []
+db_exec(<<-SQL.strip.freeze)
+ALTER TABLE `users` DROP COLUMN `adresse`;
+ALTER TABLE `users` DROP COLUMN `telephone`;
+SQL
+if MyDB.error
+  puts MyDB.error.inspect.rouge
+  exit 1
+end
 db_exec('SELECT id, options FROM users WHERE id > 1'.freeze).each do |duser|
   # puts duser.inspect
-  opts = duser[:options]
+  opts = duser[:options].ljust(32,'0')
   opts[17] = '-'
   opts[19] = '-'
   opts[23] = '-'
@@ -188,7 +194,7 @@ db_exec('SELECT id, options FROM users WHERE id > 1'.freeze).each do |duser|
   values << [opts, duser[:id]]
 end
 unless values.empty?
-  db_exec('UPDATE users SET options = ? WHERE id = ?', values)
+  db_exec('UPDATE users SET options = ? WHERE id = ?'.freeze, values)
 end
 # NOTE L'icarien anonyme (en #9) sera traité plus bas, lorsque toutes
 #      les tables auront été traitées.
@@ -201,6 +207,18 @@ end
 #         * abs_etape_id  -> absetape_id
 #         * suppression des colonnes user_pseudo, content, numero et options
 #       - elles sont prêtes à être réinjectée dans la nouvelle structure
+`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/minifaq.sql"`
+db_exec(<<-SQL.freeze)
+ALTER TABLE `minifaq` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) DEFAULT NULL;
+ALTER TABLE `minifaq` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) DEFAULT NULL;
+ALTER TABLE `minifaq` DROP COLUMN `user_pseudo`;
+ALTER TABLE `minifaq` DROP COLUMN `content`;
+ALTER TABLE `minifaq` DROP COLUMN `numero`;
+ALTER TABLE `minifaq` DROP COLUMN `options`;
+SQL
+`mysqldump -u root icare minifaq > "#{FOLDER_GOODS_SQL}/minifaq.sql"`
+puts "Dumping de la minifaq opéré avec succès".vert
+
 
 # lectures_qdd        NOT OK
 #     Synopsis
@@ -208,7 +226,6 @@ end
 #       - dispatcher 'cotes' dans 'cote_original' (1er chiffre-string) et 'cote_comments' (2nd chiffre-string)
 #       - garder toutes les autres colonnes, même comments qui en contient quelques uns
 #       - exporter seulement quand icdocuments sera passé par là.
-db_exec("TRUNCATE `lectures_qdd`")
 `mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/current_lectures_qdd.sql"`
 values = []
 CLECTURES_COLS = [:id, :user_id, :icdocument_id, :cotes, :comments, :created_at, :updated_at]
@@ -220,16 +237,19 @@ db_exec("SELECT #{CLECTURES_COLS.join(VG)} FROM `current_lectures_qdd`".freeze).
     cote_comments = cote_comments == '-' ? nil : cote_comments.to_i
     dlecture.merge!(cote_original:cote_original, cote_comments:cote_comments)
   end
-  values << dlecture
+  values << LECTURES_COLUMNS.collect { |prop| dlecture[prop] }
 end
-interro = Array.new(LECTURES_COLUMNS.count, '?').join(VG)
-request = "INSERT INTO `lectures_qdd` (#{LECTURES_COLUMNS.join(VG)}) VALUES (#{interro})".freeze
-db_exec(request, values)
+unless values.empty?
+  db_exec('TRUNCATE `lectures_qdd`')
+  interro = Array.new(LECTURES_COLUMNS.count, '?').join(VG)
+  request = "INSERT INTO `lectures_qdd` (#{LECTURES_COLUMNS.join(VG)}) VALUES (#{interro})".freeze
+  db_exec(request, values)
+end
 # NOTE Ne pas exporter avant d'avoir traité icdocuments, qui peut aussi
 # créer des lectures
 
 #
-# icdocuments         NOT OK
+# icdocuments         OK
 #       Gros travail de récupération des données :
 #       - changement du nom des colonnes
 #       - retrait de ce qui relève des commentaires
@@ -250,10 +270,10 @@ db_exec(request, values)
 #             dans lectures_qdd.
 #         - readers_comments    -> lectures_qdd   et DROP
 # Le plus simple, c'est de partir des données online et de les traiter ici
-db_exec("TRUNCATE `icdocuments`")
 `mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/current_icdocuments.sql"`
 values = []
 COLUMNS_ICDOC = [:id, :user_id, :icetape_id, :original_name, :time_original, :time_comments, :options, :created_at, :updated_at]
+nombre_lectures_creees = 0
 db_exec("SELECT * FROM `current_icdocuments`".freeze).each do |ddoc|
   unless ddoc[:readers_original].nil?
     readers_o = ddoc[:readers_original].split(SPACE).collect{|uid|uid.to_i}
@@ -271,27 +291,33 @@ db_exec("SELECT * FROM `current_icdocuments`".freeze).each do |ddoc|
     # une lecture. Sinon, on la créée
     values_new_lectures = []
     readers.each do |uid|
-      db_get(`lectures_qdd`, {user_id:uid, icdocument_id:ddoc[:id]}) || begin
+      db_get('lectures_qdd', {user_id:uid, icdocument_id:ddoc[:id]}) || begin
         values_new_lectures << [uid, ddoc[:id], ddoc[:created_at], ddoc[:updated_at]]
       end
     end
     unless values_new_lectures.empty?
-      reqlectures = "INSERT INTO `lectures_qdd` (user_id, icdocuments_id, created_at, updated_at) VALUES (?, ?, ?, ?)".freeze
+      reqlectures = "INSERT INTO `lectures_qdd` (user_id, icdocument_id, created_at, updated_at) VALUES (?, ?, ?, ?)".freeze
       db_exec(reqlectures, values_new_lectures)
-      puts "Nombre de lectures créées : #{values_new_lectures.count}".vert
+      nombre_lectures_creees += values_new_lectures.count
     end
   end
   values << COLUMNS_ICDOC.collect { |prop| ddoc[prop] }
 end
+puts "Nombre de lectures créées : #{nombre_lectures_creees}".vert
 # On peut injecter toutes les données dans icdocuments
 unless values.empty?
+  db_exec('TRUNCATE `icdocuments`')
   interro = Array.new(COLUMNS_ICDOC.count, '?').join(VG)
-  request = "INSERT INTO `icdocuments` (#{COLUMNS_ICDOC.join(VG)}) VALUES #{interro}".freeze
+  request = "INSERT INTO `icdocuments` (#{COLUMNS_ICDOC.join(VG)}) VALUES (#{interro})".freeze
   db_exec(request, values)
+  puts "Dumping des icdocuments opéré avec succès".vert
 end
+db_exec("DROP TABLE `current_icdocuments`".freeze)
 
 # On peut exporter la table lectures_qdd
 `mysqldump -u root icare lectures_qdd > "#{FOLDER_GOODS_SQL}/lectures_qdd.sql"`
+puts "Dumping des lectures_qdd opéré avec succès".vert
+db_exec("DROP TABLE `current_lectures_qdd`".freeze)
 
 # icetapes        OK
 #     Synopsis
@@ -300,17 +326,37 @@ end
 #         (supprimer les colonnes `numero` et `documents`)
 #         (transformer la colonne `abs_etape_id` en `absetape_id`)
 #       - exporter pour online
-# C'est fait avant de lancer ce script
+`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/icetapes.sql"`
+db_exec(<<-SQL.strip.freeze)
+ALTER TABLE `icetapes` DROP COLUMN `numero`;
+ALTER TABLE `icetapes` DROP COLUMN `documents`;
+ALTER TABLE `icetapes` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) NOT NULL;
+SQL
+`mysqldump -u root icare icetapes > "#{FOLDER_GOODS_SQL}/icetapes.sql"`
+puts "Dumping des icetapes opéré avec succès".vert
 
 # icmodules       OK
-#     Synopsis
-#       - récupérer data online
-#       - faire les records dans icare.icmodules avec les données utiles
 #         (`abs_module_id` -> absmodule_id)
 #         (next_paiement -> next_paiement_at)
 #         (supprimer colonnes `icetapes` et `paiements`)
-#       - exporter pour online
-# C'est fait avant de lancer ce script
+`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/icmodules.sql"`
+db_exec(<<-SQL.strip.freeze)
+ALTER TABLE `icmodules` DROP COLUMN `icetapes`;
+ALTER TABLE `icmodules` DROP COLUMN `paiements`;
+ALTER TABLE `icmodules` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
+ALTER TABLE `icmodules` CHANGE COLUMN `next_paiement` `next_paiement_at` INT(10) DEFAULT NULL;
+SQL
+`mysqldump -u root icare icmodules > "#{FOLDER_GOODS_SQL}/icmodules.sql"`
+puts "Dumping des icmodules opéré avec succès".vert
+
+
+# paiements
+`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/paiements.sql"`
+db_exec(<<-SQL.strip.freeze)
+ALTER TABLE `paiements` CHANGE COLUMN `facture` `facture_id` VARCHAR(30) DEFAULT NULL;
+SQL
+`mysqldump -u root icare paiements > "#{FOLDER_GOODS_SQL}/paiements.sql"`
+puts "Dumping des paiements opéré avec succès".vert
 
 
 # watchers            NOT OK
@@ -327,7 +373,6 @@ end
 #         - faire les tables de correspondance
 #         - alimenter la table watchers local
 #         - charger la table watchers en distant
-db_exec("TRUNCATE `watchers`")
 values = []
 WATCHER_COLS = [:id, :wtype, :user_id, :objet_id, :triggered_at, :params, :vu_admin, :vu_user, :created_at, :updated_at]
 db_exec("SELECT * FROM `current_watchers`".freeze).each do |dwatcher|
@@ -341,12 +386,14 @@ db_exec("SELECT * FROM `current_watchers`".freeze).each do |dwatcher|
   values << WATCHER_COLS.collect { |prop| dwatcher[prop] }
 end
 unless values.empty?
+  db_exec('TRUNCATE `watchers`')
   interro = Array.new(WATCHER_COLS.count,'?').join(VG)
   request = "INSERT INTO `watchers` (#{WATCHER_COLS.join(VG)}) VALUES (#{interro})".freeze
   db_exec(request, values)
   `mysqldump -u root icare watchers > "#{FOLDER_GOODS_SQL}/watchers.sql"`
   puts "Dumping des watchers opéré avec succès".vert
 end
+db_exec("DROP TABLE `current_watchers`".freeze)
 
 
 # [1] RÉCUPÉRER TOUTES LES DONNÉES DU SITE DISTANT
