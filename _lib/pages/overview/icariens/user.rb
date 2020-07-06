@@ -2,7 +2,7 @@
 require_modules(['user/modules'])
 class User
 
-  SPAN_PSEUDO   = '<span class="pseudo">%s %s</span>'.freeze
+  SPAN_PSEUDO   = '<span class="pseudo big">%s %s</span>'.freeze
   SPAN_CURRENT_MODULE = '<span class="module">“%s”</span>'.freeze
   SPAN_SINCE    = '<span class="since-date">, à l’atelier depuis le %s</span>'.freeze
   BOUTON_FRIGO  = '<span class="tool"><a href="contact/frigo?op=contact&touid=%i" class="small btn discret">message sur son frigo</a></span>'.freeze

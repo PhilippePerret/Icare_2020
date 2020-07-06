@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "Icariennes et icariens".freeze
+    "👩‍🦰🧑🏻👨🏾‍🦱🧕🏽👨🏼‍🦳👽👩🏻‍🌾🧔🏻 Icariennes et icariens".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -10,6 +10,6 @@ class HTML
   end
   # Fabrication du body
   def build_body
-    @body = deserb('body', self)
+    @body = deserb(STRINGS[:body], self)
   end
 end #/HTML
