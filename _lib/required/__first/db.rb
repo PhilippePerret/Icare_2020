@@ -342,8 +342,10 @@ end # << self
 
     def count db_name, db_table, where_clause = nil
       db_name ||= MyDB.DBNAME
+      # Soit on prend la première clé de where_clause, soit "*"
+      etoile = where_clause.is_a?(Hash) ? where_clause.keys.first : '*'.freeze
       wclause, values = treat_where_clause(where_clause, [])
-      request = "SELECT COUNT(*) FROM #{db_table}#{wclause};"
+      request = "SELECT COUNT(#{etoile}) FROM #{db_table}#{wclause};".freeze
       use_database db_name
       if values.empty?
         client.query(request)
