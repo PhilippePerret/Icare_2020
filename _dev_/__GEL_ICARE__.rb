@@ -26,13 +26,23 @@ puts "Données icare importées dans icare_test avec succès".vert
 MyDB.DBNAME = 'icare_test'
 
 # Maintenant, on doit modifier tous les users
+# pour pouvoir les utiliser (mot de passe unique mis à 'motdepasse')
 REQUEST_UPDATE_PASSWORD = 'UPDATE `users` SET cpassword = ? WHERE id = ?'.freeze
 values = []
 db_exec("SELECT id, pseudo, mail, salt FROM users").each do |duser|
-  print "Traitement de #{duser[:pseudo]}… "
+  # print "Traitement de #{duser[:pseudo]}… "
   new_cpassword = Digest::MD5.hexdigest("motdepasse#{duser[:mail]}#{duser[:salt]}")
   values << [new_cpassword, duser[:id]]
-  puts "OK !"
+  # puts "OK !"
 end
 db_exec(REQUEST_UPDATE_PASSWORD, values)
 puts "Mot de passe des users uniformisés (mis à 'motdepasse').".vert
+
+# Il faut vider certaines tables
+db_exec(<<-SQL.strip.freeze)
+TRUNCATE `frigo_messages`
+TRUNCATE `frigo_discussions`
+TRUNCATE `frigo_users`
+TRUNCATE `tickets`
+SQL
+puts "Tables initialisées".vert
