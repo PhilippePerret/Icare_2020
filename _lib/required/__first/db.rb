@@ -5,7 +5,8 @@ REQUEST_INSERT = 'INSERT INTO %{table} (%{columns}) VALUES (%{interro})'.freeze
 REQUEST_UPDATE = 'UPDATE %{table} SET %{columns} WHERE id = ?'.freeze
 
 def db_compose_insert table, data
-  data.merge!(created_at:Time.now.to_i, updated_at:Time.now.to_i)
+  data.merge!(created_at:Time.now.to_i) unless data.key?(:created_at)
+  data.merge!(updated_at:Time.now.to_i) unless data.key?(:updated_at)
   valeurs = data.values
   columns = data.keys.join(VG)
   interro = Array.new(valeurs.count,'?').join(VG)
