@@ -1,1 +1,27 @@
 <p class="explication">Très prochainement, ici, l'historique de votre travail au sein de l'atelier.</p>
+<p>
+Cet historique de travail <%=
+case owner.option(21)
+when 0 then 'n’est partagé avec personne'
+when 1 then 'est partagé avec les icarien·ne·s seulement'
+when 8 then 'est partagé avec tout le monde (visiteurs quelconque et icarien·ne·s)'
+end
+%> (<%= Tag.lien(route:"bureau/preferences", text:'changer ce réglage') %>).
+</p>
+<%
+if owner.option(21) > 0 || owner.id == user.id
+%>
+<p>
+  <div class="historique timeline">
+    <div class="vertical-timeline">
+
+    </div>
+    <% last_jour = nil %>
+    <% owner.historique.each do |linehisto| %>
+      <%= linehisto.out(last_jour) %>
+      <% last_jour = linehisto.date_jour %>
+    <% end %>
+  </div>
+<%
+end # / si l'historique est partagé
+%>

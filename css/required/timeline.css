@@ -1,0 +1,47 @@
+/*
+  Un div qui va contenir une ligne de temps, comme dans la liste des documents
+  ou l'historique de l'icarien.
+*/
+div.timeline {
+  position:relative;
+  box-sizing:border-box;
+}
+div.timeline div.vertical-timeline  {
+  position:absolute;
+  left:calc(50% - 2px);
+  top:-40px;
+  width:4px;
+  height:calc(100% + 100px);
+  background-color:#555555;
+  z-index:-1;
+}
+
+div.timeline div.day-div {
+  text-align:center;
+  margin-top:2em;
+  margin-bottom:1em;
+  z-index:1;
+  width:var(--text-max-width);
+}
+div.timeline div.day-div span.day {
+  border:1px solid;
+  font-family:Georgia;
+  /* font-weight:bold; */
+  font-size:0.65em;
+  padding:5px 15px;
+  background-color: #777777;
+  color:white;
+  z-index:1;
+}
+
+div.timeline div.step-format1 {
+  font-size: 14pt;
+  padding:1em;
+  box-shadow:5px 5px 5px 4px #e2e2e2;
+  background-color:#FCFCFC;
+  border:1px solid #EEECEC;
+  margin-bottom: 1em;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
