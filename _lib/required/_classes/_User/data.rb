@@ -12,11 +12,11 @@ class User
   def unread_notifications_count
     return 0 if user.guest?
     where = if user.admin?
-              "vu_admin = FALSE".freeze
+              "vu_admin = FALSE"
             else
-              "user_id = #{id} AND vu_user = FALSE".freeze
+              "user_id = #{id} AND vu_user = FALSE"
             end
-    where << " AND ( triggered_at IS NULL OR triggered_at < #{Time.now.to_i})"
+    where << " AND ( triggered_at IS NULL OR triggered_at < #{Time.now.to_i})".freeze
     return db_count('watchers', where)
   end #/ unread_notifications_count
 
