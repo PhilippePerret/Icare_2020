@@ -134,7 +134,8 @@ class ContainerClass
     if self.respond_to?(:absdata) && method_name.to_s == objet_class&.downcase
       @objet = Object.const_get(objet_class).get(data[:objet_id])
     else
-      raise "Méthode manquante : #{self}##{method_name}"
+      log("-- [method_missing] data vaut: #{data.inspect}")
+      raise "Méthode manquante : #{self}##{method_name} (voir data dans le journal)"
     end
   end #/ method_missing
 
