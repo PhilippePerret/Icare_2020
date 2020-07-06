@@ -68,7 +68,11 @@ class ContainerClass
     # sur tous les éléments. Noter que cette méthode instancie TOUS les
     # éléments de la base de données, donc il faut y aller mollo.
     def collect(filtre = nil)
+      order_by = filtre && (filtre.delete(:order) || filtre.delete(:order_by))
       where = where_clausize(filtre)
+      unless order_by.nil?
+        where << " ORDER BY #{order_by}".freeze
+      end
       db_exec("SELECT * FROM #{table}#{where}".freeze).collect do |ditem|
         item = new(ditem[:id])
         item.data = ditem
@@ -111,7 +115,7 @@ class ContainerClass
         if filtre.is_a?(Hash)
           filtre = filtre.collect{|k,v| "#{k} = #{v.inspect}"}.join(' AND ').freeze
         end
-        return " WHERE #{filtre}".freeze
+        return " WHERE #{filtre}"
       end #/ where_clausize
 
   end # /<< self

@@ -2109,14 +2109,47 @@ Cette méthode permet d’instancier un objet avec ses données, lorsqu’on vie
 > Classe.instantiate(dobjet)
 > end
 > ~~~
->
-> 
+
+
+
+
+
+<a name="definition-filtre-collect"></a>
+
+### Définition du filtre
+
+Toutes les méthodes suivantes peuvent définir un filtre pour filtrer les enregistrements (ou les instances) à utiliser. Ce filtre peut avoir les formes suivantes :
+
+**Un string explicite**
+
+	~~~ruby
+	"id = 12 ORDER BY created_at DESC"
+	~~~
+
+**Un hash de propriétés**
+
+	~~~ruby
+	{id:12, completed:true}
+	~~~
+
+**Un hash de propriétés et précision pour la requête**
+
+	~~~ruby
+	{id: 12, order:'created_at DESC'}
+	~~~
+
+
 
 
 
 ### `<Classe>::get_instances(filtre)`
 
-Pour obtenir une liste `Array` de toutes les instances filtrées par `filtre` (`{Hash}`). Cela sert en quelque sorte de « classe pluriel ». Noter qu'on peut encore aller plus vite, si on ne doit pas conserver les instances, en utilisant la méthode [`collect`](#containerclass-collect) ou [`each`](#containerclass-each]) (cf. plus bas).
+Pour obtenir une liste `Array` de toutes les instances filtrées par `filtre` (`{Hash}`). Cela sert en quelque sorte de « classe pluriel ». Noter qu’on peut encore aller plus vite, si on ne doit pas conserver les instances, en utilisant la méthode [`collect`](#containerclass-collect) ou [`each`](#containerclass-each]) (cf. plus bas).
+
+Cf. ci-dessus la [définition du filtre](#definition-filtre-collect).
+
+
+
 
 
 
@@ -2125,6 +2158,8 @@ Pour obtenir une liste `Array` de toutes les instances filtrées par `filtre` (`
 Retourne la liste des instances de classe filtrée par `{filtre}` qui s’applique à toutes les propriétés enregistrées de l’objet.
 
 On peut en plus utiliser les filtres `:created_after`, `:created_before`, `updated_after` et `updated_before` pour faire des filtres sur les temps (TODO Pas encore implémenté).
+
+Cf. ci-dessus la [définition du filtre](#definition-filtre-collect).
 
 #### Options
 
@@ -2140,21 +2175,16 @@ options = {
 Cf. aussi la méthode `::collect` ci-dessous qui fait un peut la même chose, mais permet d’agir immédiatement sur la liste récoltée.
 
 
+
 <a name="containerclass-collect"></a>
 
 ### `<classe>::collect([filtre])`
 
 Permet de collecter sur tous les éléments (chargés de la base de données, donc consommateur).
 
-Le filtre optionnel est un `String` définissant la clause WHERE. Par exemple :
+Cf. ci-dessus la [définition du filtre](#definition-filtre-collect).
 
-~~~ruby
-AbsModule.collect("name LIKE 'S%'") do |absmodule|
-  # On peut travailler sur absmodule, l'instance AbsModule
-  # retenue
-  ...
-end
-~~~
+
 
 <a name="containerclass-each"></a>
 
@@ -2174,6 +2204,8 @@ end
 
 
 
+
+
 ### `<classe>::each_with_index([filtre])`
 
 Même chose que pour `each` ci-dessus, mais avec l'index en deuxième paramètres.
@@ -2185,6 +2217,8 @@ AbsModule.each_with_index("user_id = 1") do |mod, idx|
   puts "Module d'index #{idx}"
 end
 ~~~
+
+Cf. ci-dessus la [définition du filtre](#definition-filtre-collect).
 
 
 
@@ -2208,7 +2242,9 @@ end
 
 > Noter que le code précédent revient à utiliser `IcModule.each("user_id = #{icarien.id}") do ...`
 
-
+Cf. ci-dessus la [définition du filtre](#definition-filtre-collect).
+
+
 
 ### `<classe>#data`
 
