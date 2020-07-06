@@ -76,6 +76,10 @@ class ContainerClass
       end
     end #/ collect
 
+    def get_instances(filtre = nil)
+      self.collect(filtre) { |item| item }
+    end #/ get_instances
+
     # Retourne le nombre d'éléments répondant au filtre +filtre+. Si +filtre+
     # est nil, retourne le nombre total d'éléments.
     def count(filtre = nil)

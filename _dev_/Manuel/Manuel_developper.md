@@ -2082,7 +2082,7 @@ end # /MaClasse
 
 ### `<Classe>::get(item_id)`
 
-Pour pouvoir récupérer une instance quelconque.
+Pour pouvoir récupérer une instance quelconque par son identifiant.
 
 > Note : les éléments sont mis dans `@items`.
 
@@ -2096,9 +2096,9 @@ Cette méthode permet d’instancier un objet avec ses données, lorsqu’on vie
 >
 > ~~~ruby
 > db_exec(request).collect do |dobjet|
->   objet = new(dobjet[:id])
->   objet.data = dobjet
->   objet # pour la collect
+> objet = new(dobjet[:id])
+> objet.data = dobjet
+> objet # pour la collect
 > end
 > ~~~
 >
@@ -2106,9 +2106,17 @@ Cette méthode permet d’instancier un objet avec ses données, lorsqu’on vie
 >
 > ~~~ruby
 > db_exec(request).collect do |dobjet|
->   Classe.instantiate(dobjet)
+> Classe.instantiate(dobjet)
 > end
 > ~~~
+>
+> 
+
+
+
+### `<Classe>::get_instances(filtre)`
+
+Pour obtenir une liste `Array` de toutes les instances filtrées par `filtre` (`{Hash}`). Cela sert en quelque sorte de « classe pluriel ». Noter qu'on peut encore aller plus vite, si on ne doit pas conserver les instances, en utilisant la méthode [`collect`](#containerclass-collect) ou [`each`](#containerclass-each]) (cf. plus bas).
 
 
 
@@ -2132,6 +2140,7 @@ options = {
 Cf. aussi la méthode `::collect` ci-dessous qui fait un peut la même chose, mais permet d’agir immédiatement sur la liste récoltée.
 
 
+<a name="containerclass-collect"></a>
 
 ### `<classe>::collect([filtre])`
 
@@ -2147,7 +2156,7 @@ AbsModule.collect("name LIKE 'S%'") do |absmodule|
 end
 ~~~
 
-
+<a name="containerclass-each"></a>
 
 ### `<classe>::each([filtre])`
 
@@ -2162,6 +2171,8 @@ end
 ~~~
 
 > Note : c’est juste un exemple car la classe `Watcher`, à l’heure d’aujourd’hui, n’est pas un ContainerClass.
+
+
 
 ### `<classe>::each_with_index([filtre])`
 

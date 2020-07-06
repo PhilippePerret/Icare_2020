@@ -2,16 +2,14 @@
 class User
 
   def nombre_documents
-    @nombre_documents ||= db_count('icdocuments', {user_id: user.id} )
+    @nombre_documents ||= documents.count
   end
+
+  # def documents
+  #   @documents ||= IcDocuments.new(self)
+  # end
 
   def documents
-    @documents ||= IcDocuments.new(self)
-  end
-
-  def liste_documents
-    documents.collect do |icdoc|
-      icdoc.as_card
-    end.join(RC)
-  end
+    @documents ||= IcDocument.get_instances({user_id: id})
+  end #/ documents
 end

@@ -3,7 +3,12 @@
   <span class="value nombre-documents"><%= nombre_documents %></span>
 </div>
 <div class="documents">
+  <% last_date = Time.now.to_i + 1 %>
   <% documents.each do |document| %>
+    <% if document.older_than(last_date) %>
+      <% last_date = document.created_at %>
+      <%= document.date_jour %>
+    <% end %>
     <%= document.as_card %>
   <% end %>
 </div>
