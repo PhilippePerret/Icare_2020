@@ -34,6 +34,22 @@ def shared?(fordoc)
   option(fordoc == :original ? 1 : 9) == 1
 end #/ shared?
 
+# Méthode pour définir le partage du document
+# +fordoc+ :original ou :comments
+# +shareit+ TRUE si on doit le partager
+def share(fordoc, shareit)
+  bit = fordoc == :original ? 1 : 9
+  val = shareit ? 1 : 2
+  set_option(bit, val, true)
+  unless shareit
+    # Dans le cas d'un dé-partage de document, on avertit Phil de l'opération
+    # Noter que normalement on ne passe pas par ici quand on définit le partage
+    # la première fois
+    phil.send_mail(subject:MESSAGES[:subject_mailadmin_unshared_doc], message:MESSAGES[:msg_mailadmin_unshared_doc] % {pseudo:user.pseudo, user_id:user.id, id:id, titre:name})
+  end
+  return true
+end #/ share
+
 def icetape
   @icetape ||= IcEtape.get(icetape_id)
 end #/ icetape

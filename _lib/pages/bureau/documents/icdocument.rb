@@ -23,7 +23,7 @@ def as_card
   </div>
   <div class="original">
     <div>
-      <img src="./img/icones/pdf.jpg" alt="Document original">
+      <a href="bureau/documents?op=download&did=#{id}&fd=original"><img src="./img/icones/pdf.jpg" alt="Pictor de document original"></a>
       <span class="libelle inline nopadding">Émis le</span>
       <span class="date">#{formate_date(time_original,{hour:true})}</span>
     </div>
@@ -38,7 +38,7 @@ def block_comments
   <<-HTML.strip.freeze
 <div class="comments">
   <div>
-    <a href="bureau/documents?op=download&did=#{id}&fd=comments"><img src="./img/icones/pdf-comments.jpg" alt="Document commentaires"></a>
+    <a href="bureau/documents?op=download&did=#{id}&fd=comments"><img src="./img/icones/pdf-comments.jpg" alt="Picto de document commentaires"></a>
     <span class="libelle inline nopadding">Remis le</span>
     <span class="date">#{formate_date(time_comments,{hour:true})}</span>
   </div>
@@ -48,13 +48,16 @@ def block_comments
 end #/ block_comments
 
 # Le bloc avec les outils
+TAG_LIEN_SHARE = '<a class="discret" href="bureau/documents?op=share&did=%i&fd=%s&mk=%i">%s</a>'.freeze
 def block_tools(fordoc)
+  is_shared = shared?(fordoc)
+  mark_shared = is_shared ? 'Partagé' : 'Non partagé'
+  lien_shared = is_shared ? 'ne plus partager' : 'le partager'
+  lien_shared = TAG_LIEN_SHARE % [id, fordoc.to_s, is_shared ? 0 : 1, lien_shared]
   <<-HTML.strip.freeze
 <div class="tools center">
-  <select name="partage-#{fordoc}" class="small">
-    <option value="1"#{shared?(fordoc) ? ' SELECTED' : ''}>partagé</option>
-    <option value="0"#{shared?(fordoc) ? '' : ' SELECTED'}>non partagé</option>
-  </select>
+  <span id="partage-#{id}-#{fordoc}" class="partage-#{fordoc} #{is_shared ? 'shared' : 'not-shared'}">#{mark_shared}</span>
+  <span class="ml2">#{lien_shared}</span>
 </div>
   HTML
 end #/ block_tools
@@ -72,9 +75,14 @@ end #/ date_jour
 def proceed_download
   require_module('qdd')
   qdddoc = QddDoc.new(data)
-  require_module('download')
-  downloader = Downloader.new(qdddoc.path)
-  downloader.download
+  fordoc = param(:fd).to_sym
+  if qdddoc.pdf_exists?(fordoc)
+    require_module('download')
+    downloader = Downloader.new(qdddoc.path(fordoc))
+    downloader.download
+  else
+    erreur(ERRORS[:cant_find_qdd_document])
+  end
 end #/ download
 
 # Retourne TRUE si le document a été émis un autre jour (plus tard)

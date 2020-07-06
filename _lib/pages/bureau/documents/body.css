@@ -9,6 +9,10 @@ div.icdocuments div.icdocument {
   box-shadow:5px 5px 5px 4px #e2e2e2;
   background-color:#EFEFEF;
 }
+
+div.icdocuments div.icdocument div.tools span.shared {color:#28c628}
+div.icdocuments div.icdocument div.tools span.not-shared {color:#d70f0f}
+
 div.icdocuments div.icdocument div.infos {
   grid-column:1/4;
   grid-row:1;

@@ -8,6 +8,14 @@ class HTML
     # Code à exécuter avant la construction de la page
     icarien_required
     case param(:op)
+    when 'share'
+      icdocument = IcDocument.get(param(:did))
+      require_document_author(icdocument) || user.admin? || raise(ERRORS[:auteur_document_required])
+      fordoc = param(:fd).to_sym
+      shareit = param(:mk) == '1'
+      if icdocument.share(fordoc, shareit)
+        message(MESSAGES[shareit ? :document_set_shared : :document_unset_shared] % icdocument.name)
+      end
     when 'download'
       icdocument = IcDocument.get(param(:did))
       require_document_author(icdocument) || user.admin? || raise(ERRORS[:auteur_document_required])
