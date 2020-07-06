@@ -2852,13 +2852,13 @@ Les options de l'icdocument tiennent sur un mot de 16 bits qui peuvent prendre u
 | Bit  | Description de la valeur du bit             |
 | ---- | ------------------------------------------------------------ |
 | 0    | 1 => Le document original existe                 |
-| 1 | Définition du partage<br/>0: partage non défini, 1: partagé, 2: non partagé |
+| 1 | **Partage de l'original**<br/>0: partage non défini, 1: partagé, 2: non partagé |
 | 2 | 1 => le document a été téléchargé par l'administrateur |
 | 3 | 1 => le document original a été déposé sur le Quai des docs |
 | 4 | 1 => le partage du document a été défini |
 | 5 | 1=> le document original a achevé son cycle complet |
 | 8    | 1=> Le document commentaires existe                       |
-| 9 | Définition du partage<br/>0: partage non défini, 1: partagé, 2: non partagé |
+| 9 | **Partage du document commenté**<br/>0: partage non défini, 1: partagé, 2: non partagé |
 | 10 | 1=> le document commenté a été téléchargé par l'auteur |
 | 11 | 1=> le document commentaire a été déposé sur le Quai des docs |
 | 12 | 1=> le partage du document commentaires a été défini |

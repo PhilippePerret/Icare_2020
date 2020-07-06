@@ -1,5 +1,5 @@
 # encoding: UTF-8
-
+require_module('qdd')
 class HTML
   def titre
     "#{retour_qdd}📥 Téléchargement".freeze

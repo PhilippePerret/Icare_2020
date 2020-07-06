@@ -30,4 +30,12 @@ def has_comments?
   get_option(8) == 1
 end #/ has_comments?
 
+def shared?(fordoc)
+  option(fordoc == :original ? 1 : 9) == 1
+end #/ shared?
+
+def icetape
+  @icetape ||= IcEtape.get(icetape_id)
+end #/ icetape
+
 end #/IcDocument < ContainerClass

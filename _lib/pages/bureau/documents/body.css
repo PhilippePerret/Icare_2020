@@ -1,4 +1,65 @@
-div.document {
-  border:1px solid;
+div.icdocuments div.icdocument {
+  display:grid;
+  border:1px solid #EEECEC;
   margin-bottom: 2em;
+  grid-template-columns: 45% 10% 45%;
+  grid-template-rows: auto auto;
+  font-size: 14pt;
+  padding:1em;
+  box-shadow:5px 5px 5px 4px #e2e2e2;
+  background-color:#EFEFEF;
+}
+div.icdocuments div.icdocument div.infos {
+  grid-column:1/4;
+  grid-row:1;
+  margin-bottom:1em;
+}
+div.icdocuments div.icdocument div.infos div.name {
+  margin-bottom: 0.5em;
+}
+div.icdocuments div.icdocument div.name span {
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+div.icdocuments div.icdocument div.original {
+  grid-column:1;
+  grid-row:2;
+  vertical-align:middle;
+}
+div.icdocuments div.icdocument img {
+  vertical-align:middle;
+}
+div.icdocuments div.icdocument div.comments {
+  grid-column:3;
+  grid-row:2;
+}
+
+div.icdocuments {
+  position:relative;
+  margin-top:4em;
+  display:grid;
+}
+div.icdocuments div#vertical-timeline {
+  position:absolute;
+  left:calc(50% - 2px);
+  top:-40px;
+  width:4px;
+  height:calc(100% + 100px);
+  background-color:#555555;
+  z-index:-1;
+}
+div.icdocuments div.day-div {
+  text-align:center;
+  margin-bottom:1em;
+  z-index:1;
+}
+div.icdocuments span.day {
+  border:1px solid;
+  font-family:Georgia;
+  /* font-weight:bold; */
+  font-size:0.85em;
+  padding:6px 25px;
+  background-color: #777777;
+  color:white;
+  z-index:1;
 }

@@ -1,8 +1,9 @@
-<div>
+<div class="right">
   <span class="libelle">Nombre total de documents :</span>
   <span class="value nombre-documents"><%= nombre_documents %></span>
 </div>
-<div class="documents">
+<div class="icdocuments mt2">
+  <div id="vertical-timeline"></div>
   <% last_date = Time.now.to_i + 1 %>
   <% documents.each do |document| %>
     <% if document.older_than(last_date) %>

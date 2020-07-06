@@ -1418,4 +1418,18 @@ Did you mean?  inspect
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-06 10:43:34 +0200 --- FATAL ERROR:
+    undefined local variable or method `require_document_author' for #<HTML:0x00007ff80414dbe8>
+Did you mean?  require_module
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-06 10:45:03 +0200 --- FATAL ERROR:
+    Méthode manquante : #<IcDocument:0x00007fcef984d788>#download (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:146:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/documents/html.rb:17:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

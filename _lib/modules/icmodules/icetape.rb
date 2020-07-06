@@ -58,7 +58,7 @@ class IcEtape
 
 def ref
   log("---data:#{data.inspect}")
-  @ref ||= "étape “#{numero}. #{titre}”#{f_id}</span> du #{icmodule.ref}".freeze
+  @ref ||= "étape #{numero}. “#{titre}”#{f_id}</span> du #{icmodule.ref}".freeze
 end #/ ref
 
 # Retourne la liste des instances IcDocuments de l'étape

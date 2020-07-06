@@ -10,6 +10,6 @@ class User
   # end
 
   def documents
-    @documents ||= IcDocument.get_instances({user_id: id})
+    @documents ||= IcDocument.get_instances({user_id: id, order:'created_at DESC'})
   end #/ documents
 end
