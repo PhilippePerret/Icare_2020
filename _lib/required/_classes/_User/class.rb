@@ -6,12 +6,6 @@
 =end
 class User
 
-REQUEST_USER = <<-SQL
-SELECT u.id, u.pseudo, u.mail, u.sexe, u.options, u.icmodule_id
-  FROM users u
-  WHERE u.id = %{id}
-SQL
-
 class << self
   attr_accessor :current
 
@@ -22,7 +16,7 @@ class << self
   # Initialisation de l'utilisateur courant
   # Soit c'est l'utilisateur reconnu par la session, soit c'est un invité
   def init
-    log("session['user_id'] = #{session['user_id'].inspect}")
+    log("session['user_id'] = #{session['user_id'].inspect}".freeze)
     reconnect_user unless session['user_id'].nil_if_empty.nil?
     self.current ||= User.instantiate(DATA_GUEST)
   end
@@ -33,7 +27,7 @@ class << self
     duser || raise(ERRORS[:unfound_user_with_id] % [session['user_id']])
     duser[:session_id] == session.id || raise(ERRORS[:alert_intrusion])
     self.current = self.get(duser[:id])
-    log "USER RECONNECTED : #{current.pseudo} (##{current.id})"
+    log "USER RECONNECTED : #{current.pseudo} (##{current.id})".freeze
   rescue Exception => e
     erreur e.message
     session.delete('user_id') # pour ne plus avoir le problème
