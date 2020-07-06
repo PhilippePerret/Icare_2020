@@ -16,6 +16,10 @@ MOIS = {
   12 => {court: 'déc', long: 'décembre'}
 }
 
+DAYNAMES = [
+  'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'
+]
+
 def formate_date(time = nil, options = nil)
   options ||= {}
   options.key?(:mois) || options.merge!(mois: :long)
@@ -25,6 +29,9 @@ def formate_date(time = nil, options = nil)
   temp = "%-d #{mois} %Y"
   temp << " %H:%M".freeze if options[:time] || options[:hour]
   d = time.strftime(temp)
+  if options[:jour] || options[:day]
+    d.prepend(DAYNAMES[time.wday]+SPACE)
+  end
   if options[:duree]
     now = Time.now
     mot = now > time ? 'il y a' : 'dans' ;
