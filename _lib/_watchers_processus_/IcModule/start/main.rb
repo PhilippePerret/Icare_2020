@@ -10,7 +10,8 @@ class Watcher < ContainerClass
     icmodule = objet
 
     modul_data = {started_at: now}
-    owner_data = {icmodule_id: objet_id}
+    set_option(16, 2, false) # actif (ne pas enregistrer)
+    owner_data = {icmodule_id: objet_id, options: owner.options}
 
     # Watcher de paiement
     # -------------------
@@ -33,8 +34,3 @@ class Watcher < ContainerClass
     message "Votre module a été démarré ! Vous pouvez voir le premier travail dans votre section « Travail courant » que vous trouverez à l'accueil de votre bureau.".freeze
   end #/ start
 end #/IcModule
-
-
-class User
-
-end #/User

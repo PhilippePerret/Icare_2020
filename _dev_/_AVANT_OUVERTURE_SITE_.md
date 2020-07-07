@@ -53,9 +53,6 @@
   ALTER TABLE `paiements` CHANGE COLUMN `facture` `facture_id` VARCHAR(30) NOT NULL;
   ~~~
 
-* Faire l'user 3 qui sera l'user "anonyme", lorsqu'un user détruit son profil.
-  MAIS AVANT il faut mettre #3 et #4 autre part et modifier dans toutes les tables (user_id = 3 et user_id = 4)
-
 * Table `absetapes`, remplacer la colonne `module_id` par `absmodule_id`
 
   ~~~SQL
@@ -158,14 +155,3 @@
   ALTER TABLE watchers ADD COLUMN `vu_admin`  BOOL DEFAULT false AFTER data;
   ALTER TABLE watchers ADD COLUMN `vu_user`   BOOL DEFAULT false AFTER `vu_admin`;
   ~~~
-
-* Modifier les icariens suivants:
-
-  ~~~SQL
-  ~~~
-
-## Table `icdocuments`
-
-C'est la table qui va le plus bouger, notamment avec la suppression de l'enregistrement des lectures dedans. On utilise maintenant la table `qdd_lectures`
-
-Il faut donc récupérer les informations des colonnes `cote_original`, `cotes_original`, `cote_comments`, `cotes_comments`, `readers_original` et `readers_comments` pour alimenter cette nouvelle table (en sachant qu'on sera obligé, ici, d'attribuer une note moyenne pour chaque lecture — ou plus exactement une note dont le total devra être cohérent — peut-être, pour simplifier, prendra-t-on une fois la valeur arrondie au-dessus et une fois en dessous).

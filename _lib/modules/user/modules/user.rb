@@ -7,6 +7,11 @@ class User
     !data[:icmodule_id].nil?
   end #/ has_module?
 
+  # Retourne tous les modules suivis par l'icarien
+  def modules
+    @modules ||= IcModule.get_instances({user_id: id})
+  end #/ modules
+
   def icmodule
     @icmodule ||= data[:icmodule_id] && IcModule.get(data[:icmodule_id])
   end #/ icmodule

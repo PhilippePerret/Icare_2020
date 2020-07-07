@@ -369,7 +369,7 @@ En général, pour récupérer des icariens :
 | 13            |                                                              |
 | 14            |                                                              |
 | 15            |                                                              |
-| 16            | **Bit de statut** (ou d’activité)<br /><br />0 : non défini, <br />1: invité (visiteur non identifié), <br />2 : candidat retenu, <br />3 : actif, <br />4 : en pause, <br />5 : inactif (ancien) |
+| 16            | **Bit de statut** (ou d’activité)<br /><br />0 : non défini, <br />1: invité (visiteur non identifié), <br />2 : candidat retenu, <br />3 : actif, <br />4 : inactif (ancien)<br />8: ? |
 | 17            | **Bit de non contact par mail**<br />OBSOLÈTE. Cf. 26, 27 et 28 |
 | 18            | **Bit de redirection**<br />Détermine la section à rejoindre après l’identification. Cf. TODO |
 | 19            | **Bit de contact**<br />OBSOLÈTE. CF. bit 26                 |

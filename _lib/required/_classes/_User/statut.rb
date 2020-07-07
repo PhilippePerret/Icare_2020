@@ -10,9 +10,13 @@ def guest?
 end
 
 def icarien?
-  @is_icarien = option(16) > 1 if @is_icarien.nil?
+  @is_icarien = option(16) > 1 && statut != :candidat if @is_icarien.nil?
   @is_icarien
 end
+
+def recu_inactif?
+  statut == :recu
+end #/ recu_inactif?
 
 def real?
   @is_real_icarien = option(24) == 1 || admin? if @is_real_icarien.nil?
@@ -44,9 +48,14 @@ def actif?
 end #/ actif?
 
 def inactif?
-  @is_inactif = real? && !actif? if @is_inactif.nil?
+  @is_inactif = statut == :inactif if @is_inactif.nil?
   @is_inactif
 end #/ inactif?
+
+def pause?
+  statut == :en_pause
+end #/ pause?
+alias :en_pause? :pause?
 
 def candidat?
   statut == :candidat
@@ -73,14 +82,21 @@ def frequence_mail_actu
 end
 
 def statut
-  return :actif if actif? # bit 16 ne sert plus pour actif
-  case option(16)
-  when 0 then :undefined
-  when 1 then :guest
-  when 2 then :candidat
-  when 3 then :actif
-  when 4 then :en_pause
-  when 5 then :inactif
+  @statut ||= begin
+    if actif? # bit 16 ne sert plus pour actif
+      :actif
+    else
+      case option(16)
+      when 0 then :undefined
+      when 1 then :guest
+      when 2 then :actif # :candidat
+      when 3 then :candidat
+      when 4 then :inactif
+      when 5 then :destroyed
+      when 6 then :recu # et inactif
+      when 8 then :pause
+      end
+    end
   end
 end
 
