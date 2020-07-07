@@ -34,14 +34,17 @@ div.timeline div.day-div span.day {
   z-index:1;
 }
 
-div.timeline div.step-format1 {
+div.timeline div.step.format1 {
   font-size: 14pt;
   padding:1em;
   box-shadow:5px 5px 5px 4px #e2e2e2;
   background-color:#FCFCFC;
   border:1px solid #EEECEC;
   margin-bottom: 1em;
+}
+/* Sauf si l'étape a la class nooverflow, on ne permet qu'une seule ligne */
+div.timeline div.step:not(.nooverflow) {
+  white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-  white-space:nowrap;
 }

@@ -34,10 +34,18 @@ class HTML
     owner.id == user.id
   end #/ user_is_owner?
 
+  # Retourne TRUE si l'historique peut être affiché
+  def displayable?
+    user.admin? || user_is_owner? || (user.icarien? && shares_with_icariens?) || shares_with_world?
+  end #/ displayable?
+
   # Retourne TRUE si l'historique est partagé avec le monde
   def shares_with_world?
     owner.option(21) & 8 > 0
   end #/ shares_with_world?
 
+  def shares_with_icariens?
+    owner.option(21) & 1 > 0
+  end #/ shares_with_icariens?
 
 end #/HTML

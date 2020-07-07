@@ -17,7 +17,12 @@ class User
 
       # Les modules
       IcModule.collect(user_id: id) do |icmodule|
-        histo << LineHisto.new(icmodule.started_at, "⏱️ Démarrage du module “#{icmodule.absmodule.name}”", 0)
+        if icmodule.started_at.nil?
+          # Un module à démarrer
+          histo << LineHisto.new(icmodule.created_at, "⏳ Module “#{icmodule.absmodule.name}” en attente de démarrage", 0)
+        else
+          histo << LineHisto.new(icmodule.started_at, "⏱️ Démarrage du module “#{icmodule.absmodule.name}”", 0)
+        end
         if icmodule.ended_at
           histo << LineHisto.new(icmodule.ended_at, "⏰ Fin du module “#{icmodule.absmodule.name}”", 1)
         end
@@ -54,9 +59,75 @@ class User
       end
 
       # Les discussions initiés
-      # TODO
+      # discuss = db_exec(<<-SQL.strip.freeze)
+      # SELECT fd.created_at
+      # FROM frigo_discussions as fd
+      # INNER JOIN users as u ON fd.user_id = u.id
+      # WHERE fd.user_id = #{id}
+      # SQL
+      discuss = db_exec(<<-SQL.strip.freeze)
+      SELECT
+        fd.id         AS id,
+        fd.titre      AS titre,
+        uo.pseudo     AS owner_pseudo,
+        uo.id         AS owner_id,
+        fd.created_at AS create_time
+      FROM frigo_users AS fu
+      INNER JOIN frigo_discussions AS fd ON fu.discussion_id = fd.id
+      INNER JOIN users AS uo ON fd.user_id = uo.id
+      WHERE fu.user_id = #{id}
+      SQL
+      if MyDB.error
+        log(MyDB.error.inspect)
+        raise "Une erreur"
+      end
+      # D'abord, on rassemble les informations dans la discussion
+      hdiscuss = {}
+      discuss.each do |ddis|
+        # log("ddis: #{ddis.inspect}")
+        hdiscuss.key?(ddis[:id]) || hdiscuss.merge!(ddis[:id] => {id: ddis[:id], created_at:ddis[:create_time], owner:{id:ddis[:owner_id], pseudo:ddis[:owner_pseudo]}, titre:ddis[:titre], participants:[]})
+        parts = db_exec(<<-SQL.strip.freeze)
+        SELECT
+          u.pseudo,
+          fu.created_at AS join_time
+          FROM frigo_users AS fu
+          INNER JOIN users AS u ON u.id = fu.user_id
+          WHERE fu.discussion_id = #{ddis[:id]}
+        SQL
+        if MyDB.error
+          raise MyDB.error
+        end
+        parts.each do |duser|
+          hdiscuss[ddis[:id]][:participants] << {pseudo: duser[:pseudo], join_time:duser[:join_time]}
+        end
+      end
+      # Maintenant, on a toutes les informations rassemblées dans
+      # chaque discussion, on peut définir les évènements
+      hdiscuss.each do |discuss_id, ddis|
+        # log("ddis: #{ddis.inspect}")
+        create_time = ddis[:created_at]
+        userisowner = ddis[:owner][:id] == user.id
+        auteur_discussion = userisowner ? 'vous' : ddis[:owner][:pseudo]
+        # L'évènement de création
+        histo << LineHisto.new(create_time, "🗯️#{ISPACE}Discussion “#{ddis[:titre]}” initiée par #{auteur_discussion} <span class='small'>(avec #{ddis[:participants].collect{|dp|dp[:pseudo] == user.pseudo ? 'vous' : dp[:pseudo]}.pretty_join})</span>",0,'nooverflow')
+        ddis[:participants].each do |dpart|
+          next if dpart[:pseudo] == ddis[:owner][:pseudo]
+          histo << LineHisto.new(dpart[:join_time], "💬#{ISPACE}#{dpart[:pseudo] == user.pseudo ? 'Vous rejoignez' : "#{dpart[:pseudo]} rejoint"} la discussion “#{ddis[:titre]}” initiée par #{auteur_discussion}.", 1, 'nooverflow')
+        end
+      end
 
-      histo.sort_by { |linehisto| linehisto.time }
+      # ---------------------------------------------------------------------
+      #
+      #   Toutes les informations sont rassemblées, on peut procéder au
+      #   classement des évènements.
+      #
+      # ---------------------------------------------------------------------
+
+      histo.sort_by { |linehisto| linehisto.time || begin
+        # Une erreur : un temps non défini
+        erreur("Le temps de #{linehisto.description} n'est pas défini")
+        Time.now.to_i
+      end }
     end
   end #/ historique
 
@@ -71,12 +142,13 @@ end #/User
 #
 # ---------------------------------------------------------------------
 
-LineHisto = Struct.new(:time, :description, :level, :note) do
+LineHisto = Struct.new(:time, :description, :level, :css) do
 def out(last_date)
+  added_classes = css.nil? ? '': " #{css}"
   <<-HTML.strip.freeze
 <div class="line-histo">
   #{div_day unless last_date == date_jour}
-  <div class="description step-format1" style="margin-left:#{(level||1)*16}px;">#{description}</div>
+  <div class="step format1#{added_classes}" style="margin-left:#{(level||1)*16}px;">#{description}</div>
 </div>
   HTML
 end #/ out

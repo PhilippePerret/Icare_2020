@@ -1,7 +1,7 @@
 require_relative 'required'
 
-# MyDB.DBNAME = 'icare_test'
-MyDB.DBNAME = 'icare'
+MyDB.DBNAME = 'icare_test'
+# MyDB.DBNAME = 'icare'
 # req = <<-SQL
 # SELECT
 #   doc.id, icet.id AS icetape, doc.icetape_id,
@@ -116,10 +116,7 @@ MyDB.DBNAME = 'icare'
 #     AND fu.discussion_id = fd.id
 # SQL
 
-disid = 1
-req = <<-SQL.freeze
-SELECT readers_original, readers_comments, cotes_original, cotes_comments FROM `current_icdocuments`
-SQL
+
 
 res = db_exec(req)
 # puts "db_exec(req): #{res.inspect}"

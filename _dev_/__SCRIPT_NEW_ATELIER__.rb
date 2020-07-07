@@ -177,6 +177,7 @@ values = []
 db_exec(<<-SQL.strip.freeze)
 ALTER TABLE `users` DROP COLUMN `adresse`;
 ALTER TABLE `users` DROP COLUMN `telephone`;
+ALTER TABLE `users` MODIFY COLUMN `naissance` SMALLINT(4) DEFAULT NULL;
 SQL
 if MyDB.error
   puts MyDB.error.inspect.rouge
@@ -474,6 +475,8 @@ unless duser9.nil? # déjà traité
   end
 end
 
+# LANCER LE SCRIPT DE RÉPARATION SUR LA BASE ACTUELLE
+raise "Lancer le script de réparation"
 
 # UPLOADER LE DOSSIER ./_lib
 # UPLOADER LE DOSSIER ./public

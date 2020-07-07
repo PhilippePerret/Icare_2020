@@ -11,6 +11,11 @@ class TUser
     click_on 'Bureau'
   end #/ revient_dans_son_bureau
 
+  # Rejoint le site (signifie qu'il va s'identifier)
+  def rejoint_le_site
+    loginit
+  end #/ rejoint_le_site
+  
   # Rejoint le bureau par une identification complète
   def rejoint_son_bureau
     loginit

@@ -1,12 +1,15 @@
 # encoding: UTF-8
 require_modules(['user/modules'])
+require_relative 'constants'
+
 class User
 
   SPAN_PSEUDO   = '<span class="pseudo big">%s %s</span>'.freeze
   SPAN_CURRENT_MODULE = '<span class="module">“%s”</span>'.freeze
   SPAN_SINCE    = '<span class="since-date">, à l’atelier depuis le %s</span>'.freeze
-  BOUTON_FRIGO  = '<span class="tool"><a href="contact/frigo?op=contact&touid=%i" class="small btn discret">message sur son frigo</a></span>'.freeze
-  BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i" class="small btn discret">lui écrire</a></span>'.freeze
+  BOUTON_FRIGO  = '<span class="tool"><a href="contact/frigo?op=contact&touid=%i" class="small btn discret">'+UI_TEXTS[:btn_message_frigo]+'</a></span>'.freeze
+  BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i" class="small btn discret">'+UI_TEXTS[:btn_lui_ecrire]+'</a></span>'.freeze
+  BOUTON_HISTO  = '<span class="tool"><a href="bureau/historique?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_voir_historique]+'</a></span>'.freeze
 
   SPAN_A_SUIVI = '<span>a suivi </span>'.freeze
   SPAN_SUIT    = '<span>, suit le module </span>'.freeze
@@ -36,12 +39,9 @@ WHERE icm.user_id = %{id}
     div << span_modules_suivis # n'écrit quelque chose que s'il y en a
     div << SPAN_POINT
     divcontact = []
-    if frigo_enabled
-      divcontact << BOUTON_FRIGO % id
-    end
-    if mail_enabled
-      divcontact << BOUTON_MAIL % id
-    end
+    divcontact << BOUTON_HISTO % id if histo_enabled?
+    divcontact << BOUTON_FRIGO % id if frigo_enabled?
+    divcontact << BOUTON_MAIL  % id if mail_enabled?
 
     if user.admin?
       # Si c'est l'administrateur qui visite, on peut ajouter
@@ -68,19 +68,32 @@ WHERE icm.user_id = %{id}
   end #/ modules_suivis
 
   # Retourne TRUE si le contact est possible avec l'icarien
-  def frigo_enabled
+  def frigo_enabled?
     return false if user.id == id
     return true if user.admin? && (type_contact_admin & 2 > 0)
     return true if user.icarien? && (type_contact_icariens & 2 > 0)
     return (type_contact_world & 2) > 0
-  end #/ frigo_enabled
+  end #/ frigo_enabled?
 
-  def mail_enabled
+  def mail_enabled?
     return false if user.id == id
     return true if user.admin? && (type_contact_admin & 1 > 0)
     return true if user.icarien? && (type_contact_icariens & 1 > 0)
     return (type_contact_world & 1) > 0
-  end #/ mail_enabled
+  end #/ mail_enabled?
+
+  def histo_enabled?
+    return true if user.admin? || id == user.id
+    return true if user.icarien? && histo_shared_with_icariens?
+    return histo_shared_with_world?
+  end #/ histo_enabled?
+  
+  def histo_shared_with_icariens?
+    option(21) & 1 > 0
+  end #/ histo_shared_with_icariens
+  def histo_shared_with_world?
+    option(21) & 8 > 0
+  end #/ histo_shared_with_world?
 
 # ---------------------------------------------------------------------
 #

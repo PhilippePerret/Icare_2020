@@ -1,16 +1,6 @@
 
 # Modifications à faire dans la base de données
 
-* Une fois que toutes les tables sont prêtes, lancer le script `scripts/new_site/user_anonyme.rb` pour faire de l'utilisateur `#9` un utilisateur anonyme. Note : le script a été vérifié, donc il devrait marcher sans problème.
-
-* Dans `users`
-
-  ~~~SQL
-  ALTER TABLE `users` DROP COLUMN `adresse`;
-  ALTER TABLE `users` DROP COLUMN `telephone`;
-  ALTER TABLE `users` MODIFY COLUMN `naissance` SMALLINT(4) DEFAULT NULL;
-  ~~~
-
 * Dans `temoignages`
   ~~~SQL
   ALTER TABLE `temoignages` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) DEFAULT NULL;

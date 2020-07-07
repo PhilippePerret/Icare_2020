@@ -15,3 +15,7 @@ Je prends ici les notes sur les réparations qui seront à faire (en fonction de
 * Des envois de document (icdocument.time_original) qui sont trop proches de l'envoi des commentaires (icdocument.time_comments).
   * voir si mettre time_original et created_at résoud le problème
   * voir si mettre time_comments un peu avant la fin de l'étape résoud le problème
+
+* Voir le problème des icariens mal placés dans la salle des icariens (avec le dégel '_real-icare_').
+  * Trouver d'où ça vient et empêcher que ça se produise
+  * Supprimer l'enregistrement vide (le dernier de la liste)
