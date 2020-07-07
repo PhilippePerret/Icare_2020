@@ -26,7 +26,7 @@ end #/ db_compose_update
 # Handy methods
 def db_exec request, values = nil
   if request =~ /;/
-    request = request.split(PV)
+    request = request.split(PV).reject{|i|i.to_s.empty?}
   end
   begin
     res = MyDB.db.execute(request, values)
