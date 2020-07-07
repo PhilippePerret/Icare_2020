@@ -7,8 +7,9 @@ when bit21 & 1 > 0 then 'est partagé avec les icarien·ne·s seulement'
 when bit21 & 8 > 0 then 'est partagé avec tout le monde (visiteurs quelconque et icarien·ne·s)'
 end
 %><% if user_is_owner?
-  %> <span class="small">(<%= Tag.lien(route:"bureau/preferences", text:'modifier') %>)</span>.
-  <% end %>
+  %> <span class="small">(<%= Tag.lien(route:"bureau/preferences", text:'modifier') %>)</span>
+  <% end
+  %>.
 </p>
 <%
 if displayable?
