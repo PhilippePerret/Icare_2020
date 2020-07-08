@@ -82,22 +82,7 @@ def frequence_mail_actu
 end
 
 def statut
-  @statut ||= begin
-    if actif? # bit 16 ne sert plus pour actif
-      :actif
-    else
-      case option(16)
-      when 0 then :undefined
-      when 1 then :guest
-      when 2 then :actif # :candidat
-      when 3 then :candidat
-      when 4 then :inactif
-      when 5 then :destroyed
-      when 6 then :recu # et inactif
-      when 8 then :pause
-      end
-    end
-  end
+  @statut ||= DATA_STATUT[option(16)]
 end
 
 def no_mail?

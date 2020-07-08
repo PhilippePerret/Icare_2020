@@ -1,6 +1,10 @@
 # encoding: UTF-8
 class String
 
+  def numeric?
+    Float(self) != nil rescue false
+  end
+    
   def nil_if_empty
     if self == ''
       nil

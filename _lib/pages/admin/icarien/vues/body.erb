@@ -1,0 +1,20 @@
+<h3>Icarien : <%= icarien.pseudo %> (#<%= icarien.id %>)</h3>
+<div class="change-user right mb2">
+  <form id="form-uid" action="<%= route.to_s %>" class="noform small" accept-charset=="UTF-8" method="POST">
+    Éditer (ID ou pseudo) <input type="text" name="uid" value="" class="medium">
+    <input type="hidden" name="route" value="admin/icarien">
+    <input type="hidden" name="op" value="change-user">
+    <input type="submit" name="" value="Edit" class="small btn">
+  </form>
+</div>
+
+<section class="forms">
+
+<%= prop_form(:pseudo) %>
+<%= prop_form(:statut) %>
+<%= prop_form(:icmodule_id, 'Module courant') %>
+<% if icarien.actif? %>
+  <%= prop_form(:icetape_id, 'Étape courante') %>
+<% end %>
+
+</section><%# Section section-form  %>

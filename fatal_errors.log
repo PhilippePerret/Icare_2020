@@ -1503,4 +1503,176 @@ Did you mean?  require_module
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 09:18:33 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html_helpers.rb:22: syntax error, unexpected tIDENTIFIER, expecting '}'
+...e:prop, id:"prop-#{prop}" value:icarien.send(prop)}
+...                          ^~~~~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html_helpers.rb:22: syntax error, unexpected '}', expecting end
+...rop}" value:icarien.send(prop)}
+...                              ^
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 09:21:32 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html_helpers.rb:16: syntax error, unexpected tIDENTIFIER, expecting '}'
+  statut: {type: 'select', options: :...
+  ^~~~~~
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 09:32:55 +0200 --- FATAL ERROR:
+    undefined method `numeric?' for "Cyrille":String
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:18:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 09:34:53 +0200 --- FATAL ERROR:
+    undefined local variable or method `uid' for #<HTML:0x00007fa51a89b3d8>
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:21:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 09:35:15 +0200 --- FATAL ERROR:
+    undefined method `get_by_pseudo' for User:Class
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:21:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 09:47:17 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007fd653154470>#status (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:146:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:40:in `save_property'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:24:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 09:49:44 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:36:in `save_property'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:24:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 09:50:38 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:36:in `save_property'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:24:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 10:11:05 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:85: syntax error, unexpected ':', expecting =>
+...2 => :actif, 3 => :candidat, 4: :inactif, 5 => :destroyed, 6...
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:86: syntax error, unexpected ',', expecting end
+...ue:0, name:'indéfini'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:87: syntax error, unexpected ',', expecting end
+...alue:1, name:'invité'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:88: syntax error, unexpected ',', expecting end
+...{value:2, name:'actif'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:89: syntax error, unexpected ',', expecting end
+...lue:3, name:'candidat'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:90: syntax error, unexpected ',', expecting end
+...alue:4, name:'inactif'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:91: syntax error, unexpected ',', expecting end
+...lue:5, name:'détruit'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:92: syntax error, unexpected ',', expecting end
+...{value:6, name:'reçu'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:94: syntax error, unexpected '}', expecting end
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:17:in `block in <top (required)>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:17:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:17:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'2020-07-08 10:11:52 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:85: syntax error, unexpected ':', expecting =>
+...2 => :actif, 3 => :candidat, 4: :inactif, 5 => :destroyed, 6...
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:86: syntax error, unexpected ',', expecting end
+...ue:0, name:'indéfini'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:87: syntax error, unexpected ',', expecting end
+...alue:1, name:'invité'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:88: syntax error, unexpected ',', expecting end
+...{value:2, name:'actif'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:89: syntax error, unexpected ',', expecting end
+...lue:3, name:'candidat'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:90: syntax error, unexpected ',', expecting end
+...alue:4, name:'inactif'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:91: syntax error, unexpected ',', expecting end
+...lue:5, name:'détruit'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:92: syntax error, unexpected ',', expecting end
+...{value:6, name:'reçu'.freeze},
+...                              ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/statut.rb:94: syntax error, unexpected '}', expecting end
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:17:in `block in <top (required)>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:17:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:17:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'2020-07-08 10:18:44 +0200 --- FATAL ERROR:
+    wrong number of arguments (given 0, expected 1)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:183:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/user.rb:6:in `statut='
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:48:in `save_property'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:24:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 10:55:34 +0200 --- FATAL ERROR:
+    key{titre} not found
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tag.rb:100:in `%'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tag.rb:100:in `retour'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/constants.rb:12:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 10:55:49 +0200 --- FATAL ERROR:
+    can't modify frozen String
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:6:in `prepend'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:6:in `titre'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:69:in `build_titre'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:12:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 10:55:55 +0200 --- FATAL ERROR:
+    can't modify frozen String
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:6:in `prepend'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/icarien/html.rb:6:in `titre'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:69:in `build_titre'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:12:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

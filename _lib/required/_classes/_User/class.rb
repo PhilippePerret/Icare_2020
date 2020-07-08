@@ -13,6 +13,11 @@ class << self
     @table ||= 'users'.freeze
   end #/ table
 
+  def get_by_pseudo(pseudo)
+    res = db_exec("SELECT id FROM users WHERE pseudo = ?".freeze, [pseudo]).first
+    res.nil? ? nil : self.get(res[:id])
+  end #/ get_by_pseudo
+  
   # Initialisation de l'utilisateur courant
   # Soit c'est l'utilisateur reconnu par la session, soit c'est un invité
   def init

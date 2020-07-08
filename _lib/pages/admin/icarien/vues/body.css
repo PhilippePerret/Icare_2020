@@ -1,0 +1,12 @@
+section.forms {
+
+}
+
+section.forms form span.libelle {
+  width: 120px;
+  font-size:0.76em;
+}
+section.forms form span.value {
+  display:inline-block;
+  width: 300px;
+}

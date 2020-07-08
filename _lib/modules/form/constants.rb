@@ -20,6 +20,7 @@ SPAN_DATE_FIELDS = '<span id="%{prefix_id}-date-fields" class="%{class}">%{selec
 OPTION_SELECTED_TAG = '<option value="%{value}" selected>%{titre}</option>'.freeze
 
 INPUT_TEXT_TAG = '<input type="text" id="%{id}" name="%{name}" value="%{value}" class="%{class}" placeholder="%{placeholder}" style="%{style}" />'.freeze
+INPUT_TEXT_TAG_S = '<input type="text" id="%{id}" name="%{name}" value="%{value}" />'.freeze
 PASSWORD_TAG = '<input type="password" id="%{id}" name="%{name}" value="%{value}" class="%{class}" style="%{style}" />'.freeze
 TEXTAREA_TAG = '<textarea id="%{id}" name="%{name}" class="%{class}" style="%{style}" placeholder="%{placeholder}">%{value}</textarea>'.freeze
 

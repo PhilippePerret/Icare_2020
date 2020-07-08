@@ -95,7 +95,7 @@ class HTML
 
   # Fabrication du body
   def build_body
-    @body = #{DATA_PAGE[:body_erb] ? 'deserb(\'body\', self)' : "<<-HTML#{RC2}    HTML"}
+    @body = #{DATA_PAGE[:body_erb] ? 'deserb(STRINGS[:body], self)' : "<<-HTML#{RC2}    HTML"}
   end # /build_body
 
 end #/HTML

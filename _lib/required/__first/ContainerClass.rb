@@ -183,6 +183,11 @@ class ContainerClass
   def save(new_data)
     new_data = {new_data => get(new_data)} if new_data.is_a?(Symbol)
     db_compose_update(self.class.table, id, new_data)
+    if MyDB.error
+      log("SQL ERREUR : #{MyDB.error.inspect}")
+      erreur "ERREUR DB : #{MyDB.error[:error]}"
+      raise MyDB.error
+    end
     # On peut affecter les nouvelles valeurs à l'instance
     new_data.each { |k, v| self.data[k] = v }
   end #/ save
