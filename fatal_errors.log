@@ -1463,4 +1463,44 @@ Did you mean?  require_module
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:17:in `<top (required)>'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
-    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'2020-07-08 05:51:24 +0200 --- FATAL ERROR:
+    undefined method `<<' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:203:in `block in dispatch_all_users'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:202:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:202:in `dispatch_all_users'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/html.rb:9:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 05:52:16 +0200 --- FATAL ERROR:
+    undefined method `<<' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:204:in `block in dispatch_all_users'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:203:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:203:in `dispatch_all_users'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/html.rb:9:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 05:52:35 +0200 --- FATAL ERROR:
+    undefined method `<<' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:205:in `block in dispatch_all_users'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:204:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:204:in `dispatch_all_users'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/html.rb:9:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-08 06:11:53 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/overview/icariens/user.rb:87: syntax error, unexpected if (modifier), expecting '}'
+...: icmodule.name_with_project if actif?,
+...                             ^~
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:8:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

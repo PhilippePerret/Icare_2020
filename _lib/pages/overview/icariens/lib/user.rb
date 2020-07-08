@@ -1,7 +1,5 @@
 # encoding: UTF-8
-require_modules(['user/modules'])
 require_relative 'constants'
-
 
 =begin
   TODO POURSUIVRE LE DÉVELOPPEMENT
@@ -17,55 +15,36 @@ class User
   BOUTON_FRIGO  = '<span class="tool"><a href="contact/frigo?op=contact&touid=%i" class="small btn discret">'+UI_TEXTS[:btn_message_frigo]+'</a></span>'.freeze
   BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i" class="small btn discret">'+UI_TEXTS[:btn_lui_ecrire]+'</a></span>'.freeze
   BOUTON_HISTO  = '<span class="tool"><a href="bureau/historique?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_voir_historique]+'</a></span>'.freeze
-
-# Requête simple pour obtenir les noms des modules suivis par l'icarien
-REQUEST_MODULES_SUIVIS = <<-SQL.strip.freeze
-  SELECT icm.id, abs.name
-  FROM icmodules AS icm
-  INNER JOIN absmodules AS abs ON icm.absmodule_id = abs.id
-  WHERE icm.user_id = %{id}
-SQL
-
-REQUEST_AUTRES_MODULES_SUIVIS = <<-SQL.strip.freeze
-  SELECT icm.id, abs.name
-  FROM icmodules AS icm
-  INNER JOIN absmodules AS abs ON icm.absmodule_id = abs.id
-  WHERE icm.user_id = %{id} AND icm.id != %{current}
-SQL
+  BOUTON_EDIT   = '<span class="tool"><a href="admin/icarien?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_edit]+'</a></span>'.freeze
 
   # = main =
   #
   # Méthode d'affichage principal de l'icarien dans la salle des icariens.
-  # Prépare sa "carte". Elle doit ressembler à ça :
-  # ACTIF
-  #    MAchin est à l'atelier depuis le <date>. Il/Elle travaille sur
-  #    le module xxx (nom projet). Il/Elle a précédemment suivi les
-  #     modules xxx, xxx (nom projet) et xxx.
-  # INACTIF
-  #   Machin s'est inscrit/e le <date>. Il/Elle a suivi les modules
-  #   xxx (nom projet), xxx exxx.
-  # CANDIDAT
-  #   Machin a posé sa candidature pour l'atetelier Icare le <date>.
+  # Prépare sa "carte" en fonction de son statut.
   #
   CARD_ACTIF = <<-HTML.strip.freeze
 <div id="icarien-%{id}" class="icarien">
-  <span class="pseudo big">%{picto} %{pseudo}</span> est à l’atelier depuis le <span class="date-signup">%{date_signup}</span>.
-  <span>%{Il} suit le module <span class='module'>%{module_courant}</span>.</span>
-  %{span_pause}
-  %{precedemment}
-  %{div_tools}
+  <span class="pseudo big">%{picto} %{pseudo}</span> est à l’atelier depuis le
+  <span class="date-signup">%{date_signup}</span> (<span class="duree">%{duree}</span>).
+  <span>%{Il} suit <span class='module'>%{module_courant}</span>.</span>
+  <span class="small">
+    %{span_pause}
+    %{precedemment}
+    %{div_tools}
+  </span>
 </div>
   HTML
 
   SPAN_PRECEDEMMENT = <<-HTML.strip.freeze
-<span> Précédemment, %{modules_suivis}.</span>
+<span> Précédemment, %{pseudo} a suivi %{modules_suivis}.</span>
   HTML
 
   CARD_INACTIF = <<-HTML.strip.freeze
 <div id="icarien-%{id}" class="icarien">
   <span class="pseudo big">%{picto} %{pseudo}</span> a travaillé à l’atelier du
-  <span class="date-signup">%{date_signup}</span> au <span class="date signout">%{date_signout}</span>.
-  %{modules_suivis}
+  <span class="date-signup">%{date_signup}</span> au <span class="date signout">%{date_signout}</span>
+  <span class="duree">(%{duree})</span>.
+  <span class="small">%{pseudo} a suivi %{modules_suivis}.</span>
   %{div_tools}
 </div>
   HTML
@@ -96,7 +75,7 @@ SQL
     divcontact << BOUTON_FRIGO % id if frigo_enabled?
     divcontact << BOUTON_MAIL  % id if mail_enabled?
     if user.admin?
-      # Boutons administration ?
+      divcontact << BOUTON_EDIT % id
     end
     div_tools = Tag.div(text:divcontact.join, class:'tools')
 
@@ -104,17 +83,18 @@ SQL
       picto: visage, id:id, pseudo: pseudo,
       date_signup: formate_date(created_at, {jour:true}).downcase,
       date_signout: formate_date(date_sortie, {jour:true}).downcase,
+      duree: formate_duree(created_at, date_sortie, {nojours: true}),
       s: plusieurs_modules? ? 's' : '',
       e: fem(:e),
       Il:fem(:Elle),
       modules_suivis: modules_suivis,
-      module_courant: module_courant,
-      precedemment: precedemment,
       span_pause: span_pause,
       div_tools: div_tools
     }
     case true
-    when actif?     then CARD_ACTIF % datacard
+    when actif?
+      datacard.merge!(precedemment: precedemment(datacard), module_courant: icmodule.name_with_project)
+      CARD_ACTIF % datacard
     when inactif?   then CARD_INACTIF % datacard
     when recu_inactif?  then CARD_RECU_INACTIF % datacard
     when candidat?  then CARD_CANDIDAT % datacard
@@ -124,10 +104,10 @@ SQL
     end
   end #/ out
 
-  def precedemment
+  def precedemment(datacard)
     return '' unless actif?
     return '' if modules.count == 1
-    SPAN_PRECEDEMMENT % {modules_suivis: modules_suivis}
+    SPAN_PRECEDEMMENT % datacard.merge(modules_suivis: modules_suivis)
   end #/ precedemment
 
   def plusieurs_modules?
@@ -140,13 +120,16 @@ SQL
     end
   end #/ plusieurs_modules?
 
-  # Module courant de l'actif
-  def module_courant
-    '[MODULE COURANT]'
-  end #/ module_courant
-
   def modules_suivis
-    '[LES MODULES SUIVIS]'
+    if actif?
+      # <= C'est un icarien en activité
+      # => Il ne faut mettre que les modules hors du module courant
+      modules.collect { |m| m.id == icmodule_id ? nil : m.name_with_project }
+    else
+      # <= C'est un ancien
+      # => On prend tous ses modules
+      modules.collect { |m| m.name_with_project rescue nil}
+    end.compact.pretty_join
   end #/ modules_suivis
 
   def span_pause
@@ -183,6 +166,17 @@ SQL
     option(21) & 8 > 0
   end #/ histo_shared_with_world?
 
+# Retourne la date de dernière activité de l'icarien actif (pour savoir
+# s'il est vraiment actif)
+def date_last_activite
+  @date_last_activite ||= begin
+    # Date de dernier document
+    request = "SELECT updated_at FROM icdocuments WHERE user_id = #{id} ORDER BY updated_at DESC LIMIT 1".freeze
+    last_document = db_exec(request).first
+    last_document.nil? ? Time.now.to_i : last_document[:updated_at]
+  end
+end #/ date_last_activite
+
 # ---------------------------------------------------------------------
 #
 #   MÉTHODES DE CLASSE
@@ -190,35 +184,47 @@ SQL
 # ---------------------------------------------------------------------
 
 class << self
-  # TODO : on va plutôt dispatcher en une seule fois plutôt que de
-  # passer à chaque fois en revue
+  # Préparation des listes des icariens en fonction de leur statut
   def dispatch_all_users
     @listes = {
       actif:    [],
       candidat: [],
       inactif:  [],
       recu:     [],
-      pause:    []
+      pause:    [],
+      destroyed:[],
+      undefined:[],
+      guest:[]
     }
     all_but_users_out.each do |u|
-      
+      state = u.statut
+      if u.actif?
+        # Quand c'est un actif, on regarde quand était sa dernière activité
+        # pour voir si c'est vraiment un actif. Si elle remonte à plus de
+        # 6 mois, il passe en inactif (pour la liste seulement).
+        if u.date_last_activite < (Time.now.to_i - (6 * 31).days)
+          log("--- #{u.pseudo} rétrogradé d'actif à inactif (dernière activité : #{formate_date(u.date_last_activite)})")
+          state = :inactif
+        end
+      end
+      @listes[state] << u
     end
   end #/ dispatch_all_users
 
   def actifs
-    all_but_users_out.select { |u| u.actif? }
+    @listes[:actif]
   end #/ actifs
   def en_pause
-    all_but_users_out.select { |u| u.statut == :pause }
+    @listes[:pause]
   end #/ en_pause
   def anciens
-    all_but_users_out.select { |u| u.statut == :inactif }
+    @listes[:inactif]
   end #/ anciens
   def candidats
-    all_but_users_out.select { |u| u.statut == :candidat }
+    @listes[:candidat]
   end #/ candidats
   def recus
-    all_but_users_out.select { |u| u.statut == :recu }
+    @listes[:recu]
   end #/ recus
   def all_but_users_out
     @all_but_users_out ||= find("SUBSTRING(options,1,1) = 0 AND id != 9 AND SUBSTRING(options,4,1) = '0'".freeze).values

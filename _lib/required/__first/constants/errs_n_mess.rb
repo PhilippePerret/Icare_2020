@@ -21,5 +21,6 @@ MESSAGES.merge!({
 })
 
 UI_TEXTS.merge!({
-  destroy: 'Détruire'.freeze
+  destroy: 'Détruire'.freeze,
+  btn_edit:  'éditer'.freeze,
 })

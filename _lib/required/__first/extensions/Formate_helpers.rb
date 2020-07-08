@@ -46,3 +46,31 @@ def formate_date(time = nil, options = nil)
   end
   return d
 end #/ formate_date
+
+# Formate la durée entre +date1+ et +date2+ pour qu'elle ressemble
+# à "8 ans et 3 mois"
+# +options+
+#   :nojours      Si TRUE, on n'indique que les années et les mois
+#   :long         idem
+def formate_duree(date1, date2, options = nil)
+  date1   ||= Time.now.to_i
+  date2   ||= Time.now.to_i
+  options ||= {}
+  duree_secondes = date2 - date1
+  nombre_annees = duree_secondes / 365.days
+  reste = duree_secondes % 365.days
+  nombre_mois  = reste / 30.days
+  reste = reste % 30.days
+  nombre_jours = reste / 1.days
+  duree = []
+  duree << "#{nombre_annees} an#{'s' if nombre_annees > 1}" if nombre_annees > 0
+  duree << "#{nombre_mois} mois" if nombre_mois > 0
+  unless options[:nojours] || options[:long]
+    duree << "#{nombre_jours} jour#{'s' if nombre_jours > 1}" if nombre_jours > 0
+  end
+  return duree.pretty_join
+end #/ formate_duree
+
+def formate_short_duree
+  raise "à implémenter"
+end #/ formate_short_duree

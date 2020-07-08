@@ -6,7 +6,7 @@
   atteignable que par ceux qui peuvent en fonction des différents réglages.
 
 =end
-require './_lib/pages/overview/icariens/constants'
+require './_lib/pages/overview/icariens/lib/constants'
 
 class TUser
 
