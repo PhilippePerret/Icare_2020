@@ -36,11 +36,11 @@ div.watcher form {
   margin:0;
   max-width:89%!important;
 }
-form {
+form:not(.noform) {
   display:inline-block;
   background-color:#F7F7F7;
 }
-form:not(.inline){
+form:not(.inline):not(.noform){
   min-width:50%;
   border:1px solid steelblue;
   border-radius:9px;
@@ -57,11 +57,11 @@ form div.row:not(.nogrid) {
 form.inline div.buttons,
 form.inline div.row {display: inline}
 
-form div.row:not(.nogrid) span.libelle {
+form:not(.noform) div.row:not(.nogrid) span.libelle {
   grid-columns:1;
   grid-row:1;
 }
-form div.row:not(.nogrid) span.value {
+form:not(.noform) div.row:not(.nogrid) span.value {
   grid-columns:2;
   grid-row:1
 }
@@ -89,20 +89,20 @@ form div.row span.value > *:not(.explication) {
   font-style:inherit;
 }
 
-form div.row span.value > input[type="text"],
-form div.row span.value > input[type="password"]
+form:not(.noform) div.row span.value > input[type="text"],
+form:not(.noform) div.row span.value > input[type="password"]
 {
   width:95%;
 }
 
-form div.row span.value > *:not(select):not(input[type="checkbox"]) {
+form:not(.noform) div.row span.value > *:not(select):not(input[type="checkbox"]) {
   width:100%;
 }
-form div.row span.value textarea {
+form:not(.noform) div.row span.value textarea {
   width:95%;
 }
 
-form div.buttons input[type="submit"] {
+form:not(.noform) div.buttons input[type="submit"] {
   border:1px solid;
   color:rgb(27, 106, 227);
   background-color:white;
@@ -110,7 +110,7 @@ form div.buttons input[type="submit"] {
   font-family:Arial,Helvetica,Geneva;
   border-radius:0.3em;
 }
-form:not(.inline) {
+form:not(.inline):not(.noform) {
   padding-left:40px;
   padding-right:40px;
 }
