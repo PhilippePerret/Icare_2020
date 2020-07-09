@@ -21,6 +21,7 @@ MESSAGES = {
   confirm_watcher: 'Confirmez-vous la création de ce watcher ?'.freeze,
   ask_for_route: 'Nouvelle route à créer : (dossier/sousdossier)'.freeze,
   titre_route: 'Titre qu’affichera la page de cette route'.freeze,
+  ask_if_usefull_links: 'Y a-t-il des liens utiles en regard du titre de page ?'.freeze,
   ask_if_body_erb: 'Faut-il une page body.erb pour construire la page ?'.freeze,
   ask_if_fichier_constantes: 'Y a-t-il un fichier de constantes (pour les messages par exemple) ?'.freeze,
   ask_if_module_user: 'Y a-t-il besoin d’une extension User (user.rb) ?'.freeze,
@@ -62,7 +63,7 @@ NEW_WATCHER = {
 DATA_PAGE = {
   id: nil, titre:nil, body_erb:false, form:false, module_user:false,
   icarien_required:false, admin_required: false,
-  fichier_constantes: false
+  fichier_constantes: false, usefull_links:false
 }
 class IcareCLI
 class << self
