@@ -3,25 +3,6 @@
   Helpers pour HTML (donc pour le body.erb)
 =end
 
-=begin
-  Pour un type 'select', la propriété :options doit définir la méthode
-  qui doit être appelée pour construire les options. Cette méthode doit recevoir
-  en premier argument l'icarien.
-  Quand la propriété est :editable, ça signifie qu'un bouton 'edit' sera
-  ajouter pour éditer l'élément dans le détail. Par exemple, pour icmodule_id,
-  on peut éditer l'IcModule. C'est une op 'edit-<prop>' qui est alors appelée,
-  qui doit traiter l'édition en fonction de la propriété. Par exemple, on doit
-  avoir op = 'edit-icmodule_id'
-=end
-DATA_PROPS = {
-  pseudo:         {type: 'text'},
-  mail:           {type: 'text'},
-  statut:         {type: 'select',  vtype: 'symbol', options: :options_statuts},
-  icmodule_id:    {type: 'text',    vtype: 'integer',  editable: true},
-  icetape_id:     {type: 'text',    vtype: 'integer',  editable: true},
-  project_name:   {type: 'text'}
-}
-BUTTON_EDIT_OBJET = '<span class="button"><a href="%{route}?uid=%{uid}&op=edit-objet&objet=%{objet}&pid=%{pid}" class="small btn">Voir</a></span>'.freeze
 
 class HTML
 
