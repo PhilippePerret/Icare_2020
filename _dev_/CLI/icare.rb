@@ -4,13 +4,17 @@
   icare en ligne de commande
   Pour le moment, c'est un simple bricolage
 =end
-require_relative 'lib/required'
+CLI_FOLDER = File.dirname(__FILE__)
+APP_FOLDER = File.dirname(File.dirname(CLI_FOLDER))
 begin
   Dir.chdir(APP_FOLDER) do
+    require './_dev_/CLI/lib/required'
     IcareCLI.analyse_command
     IcareCLI.run
   end
 rescue Exception => e
-  puts "ERREUR: #{e.message}".rouge
+  msg = "ERREUR: #{e.message}"
+  msg = msg.rouge if String.respond_to?(:rouge)
+  puts msg
   puts e.backtrace.join("\n")
 end
