@@ -4,13 +4,9 @@ SPAN_ACTU = '<span><strong>%s</strong> devient un <em>vrai</em> icarien !</span
 
 class Watcher < ContainerClass
   def paiement
-    message "Je dois jouer le processus IcModule/paiement"
-
-
+    # Normalement, on ne doit jamais passer par là, car le paiement sera
+    # traiter dans la section module et le watcher sera détruit à ce moment-là.
   end # / paiement
-  def contre_paiement
-    message "Je dois jouer le contre processus IcModule/contre_paiement"
-  end # / contre_paiement
 
 
   # Méthode appelée quand le paiement est effectuée

@@ -34,9 +34,63 @@ end # /<< self
 # ---------------------------------------------------------------------
 attr_reader :data
 attr_accessor :session # instance MySessionCapybara
+
+
 def initialize(id)
   @id = id
 end #/ initialize
+
+
+# ---------------------------------------------------------------------
+#
+#   POUR MATCHERS
+#
+# ---------------------------------------------------------------------
+
+# Pour : expect(lui).to be_guest
+def guest?
+  option(16) == 1
+end #/ guest?
+
+# Pour 'expect(lui).to be_candidat'
+def candidat?
+  option(16) == 3
+end #/ candidat?
+
+# Pour : expect(lui).to be_recu
+def recu?
+  option(16) == 6
+end #/ recu?
+
+# Pour : expect(lui).to be_inactif
+def inactif?
+  option(16) == 4
+end #/ inactif?
+
+# Pour : expect(lui).to be_actif
+def actif?
+  option(16) == 2
+end #/ actif?
+
+# Pour : expect(lui).to be_destroyed
+def destroyed?
+  option(16) == 5
+end #/ destroyed?
+
+# Pour : expect(lui).to be_en_pause
+def en_pause?
+  option(16) == 8
+end #/ en_pause?
+
+
+
+# ---------------------------------------------------------------------
+#
+#   PROPERTIES
+#
+# ---------------------------------------------------------------------
+
+
 def data= values
   @data = values
 end #/ data= values

@@ -9,10 +9,6 @@ class Watcher < ContainerClass
     owner.valide_inscription
   end #/ signup
 
-  def contre_signup
-    raise "Je dois refuer l'inscription"
-  end #/ contre_signup
-
   def download_signup
     download(signup_folder,nil,{keep:true})
   end #/ download_signup

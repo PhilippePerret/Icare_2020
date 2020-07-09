@@ -3,6 +3,8 @@
 
 =end
 class User
+
+# Les données pour le statut de l'icarien (son bit 16)
 DATA_STATUT = {
   0 => :undefined, 1 => :guest, 2 => :actif, 3 => :candidat, 4 => :inactif, 5 => :destroyed, 6 => :recu,  8 => :pause,
   undefined:  {value:0, name:'indéfini'.freeze},

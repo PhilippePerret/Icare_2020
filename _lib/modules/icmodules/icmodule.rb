@@ -22,6 +22,8 @@ class << self
     icmodule_id = create_in_db(data)
     # Quel que soit le module, un watcher de démarrage
     owner.watchers.add(:start_module, {objet_id: icmodule_id})
+    # Et un watcher de paiement
+    
     return icmodule_id
   end #/ create
 
