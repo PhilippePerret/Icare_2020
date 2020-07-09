@@ -38,8 +38,6 @@ require './_dev_/CLI/lib/required/String' # notamment pour les couleur
 
 MyDB.DBNAME = 'icare'
 
-FOLDER_GOODS_SQL = '/Users/philippeperret/Sites/AlwaysData/xbackups/Goods_for_2020'
-FOLDER_CURRENT_ONLINE = '/Users/philippeperret/Sites/AlwaysData/xbackups/Version_current_online'
 
 =begin
   Cette page présente le synopsis des choses à faire pour ouvrir le nouvel
@@ -475,48 +473,4 @@ unless duser9.nil? # déjà traité
   end
 end
 
-# LANCER LE SCRIPT DE RÉPARATION SUR LA BASE ACTUELLE
-raise "Lancer le script de réparation"
-
-# UPLOADER LE DOSSIER ./_lib
-# UPLOADER LE DOSSIER ./public
-
-# BLOQUER LE SITE EN DIRIGEANT VERS LA PAGE EN TRAVAUX
-# TODO (je peux simplement télécharger un .htaccess vers index.html)
-# Note : peut-être qu'il faut bloquer avant de prendre toutes les données
-# DB pour ne rien oublier. Ou alors prendre les principales avant et les hot
-# juste après ça.
-
-# À partir d'ici le site est bloqué et inactif
-
-# UPLOADER LE DOSSIER ./css
-# UPLOADER LE DOSSIER ./js
-# UPLOADER LE DOSSIER ./img (mais en gardant l'autre car des images sont utiles ailleurs)
-
-# FAIRE QUELQUES TESTS
-# TODO
-
-# PAGE DES ICARIENS
-# Voir si la liste des anciens icariens présente bien la liste des modules suivis.
-
-# DÉBLOQUER LA PAGE DE TRAVAUX
-# TODO
-
-# ANNONCER LA RÉ-OUVERTURE DU SITE
-MESSAGE_REOUVERTURE = <<-MK.strip.freeze
-Bonjour à tous,
-
-J’ai l’immense plaisir de vous annoncer l’installation du tout nouveau site de l’atelier Icare.
-
-Vous pourrez le trouver à l’adresse habituelle [http://www.atelier-icare.net](http://www.atelier-icare.net).
-
-En espérant que vous vous y fassiez rapidement, je vous souhaite à toutes et tous une excellente rentrée.
-
-Bien à vous,
-
-Phil
-MK
-# TODO Faire un message de ré-ouverture et l'envoyer à tous les icariens
-
-# LANCER LE TRACEUR POUR SURVEILLER LES OPÉRATIONS
-# TODO
+puts "=== TOUT EST OK ===".vert
