@@ -175,7 +175,7 @@ class << self
     end
     DATA_PAGE[:titre] = Q.ask(MESSAGES[:titre_route])
     [
-      :body_erb, :form, :module_user, :icarien_required, :admin_required, :fichier_constantes
+      :usefull_links, :body_erb, :form, :module_user, :icarien_required, :admin_required, :fichier_constantes
     ].each do |key|
       DATA_PAGE[key] = Q.select(MESSAGES["ask_if_#{key}".to_sym]) do |q|
         q.choices [{name:'oui', value:true}, {name:'non', value:false}]

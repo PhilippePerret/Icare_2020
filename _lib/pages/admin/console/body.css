@@ -1,0 +1,19 @@
+form#console-form {
+  position:fixed;
+  bottom:40px;
+}
+textarea#console {
+  box-sizing:border-box;
+  width:100%;
+  background-color:#333;
+  color:white;
+  font-family:courier;
+}
+
+pre {
+  margin:0;padding:0;
+}
+pre#resultat {
+  border:1px solid grey;
+  padding:4px;
+}

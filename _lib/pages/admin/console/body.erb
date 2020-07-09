@@ -1,0 +1,23 @@
+<form id="console-form" method="post" class="noform">
+  <input type="hidden" name="route" value="admin/console">
+  <input type="hidden" name="op" value="evaluate">
+  <div class="row nogrid">
+    <textarea id="console" name="code" rows="8" cols="200" placeholder="Code à évaluer/jouer"><%= param(:code) %></textarea>
+  </div>
+  <div class="right">
+    <span class="libelle">Langage</span>
+    <select class="" name="language">
+      <option value="ruby"<%= ' SELECTED' if param(:language) == 'ruby' %>>Ruby</option>
+      <option value="bash"<%= ' SELECTED' if param(:language) == 'bash' %>>Bash</option>
+      <option value="sql"<%= ' SELECTED' if param(:language) == 'sql' %>>MySql</option>
+    </select>
+    <input type="submit" class="btn" value="Run">
+  </div>
+</form>
+
+<% unless resultat.nil? %>
+  <pre class="small"><code>Évaluation de : <%= param(:code) %></code></pre>
+  <pre id="resultat"><code><%= resultat %></code></pre>
+<% else %>
+  <p class="explication">Taper le code à évaluer ci-dessous, en choisissant le langage, puis cliquer sur le bouton “Run”</p>
+<% end %>
