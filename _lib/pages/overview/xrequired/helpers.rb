@@ -12,6 +12,7 @@ class HTML
     current_route ||= route.to_s
     liens = [
       {route:'overview/home'.freeze, titre: 'Description de l’atelier'.freeze},
+      {route:'overview/phil'.freeze, titre: 'Philippe Perret, pédagogue de l’atelier'.freeze},
       {route:'overview/reussites'.freeze, titre: 'Les belles réussites'.freeze},
       {route:'overview/temoignages'.freeze, titre: 'Témoignages d’icarien·ne·s'.freeze},
       {route:'overview/parcours'.freeze, titre: 'Parcours fictif de 3 icarien·ne·s'.freeze},

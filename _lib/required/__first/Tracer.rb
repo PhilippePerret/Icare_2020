@@ -41,18 +41,20 @@ end #/ trace
 
 
 class Tracer
-DEL = '-:-:-:-'
+DEL = '-:-:-:-'.freeze
+DEL_DATA = '-^-'.freeze
 class << self
   # Pour ajouter des données tracées
   # +param+
   #   :id       ID de traceur (p.e. 'REDIRECTION')
   #   :message  Le message, qui peut être un argument pour l'id (pe la route
   #             de redirection)
-  #   :data     Les données supplémentaires.
+  #   :data     Les données supplémentaires (une table Hash).
+  #
   def add(params)
-    params[:data] ||= {}
-    ip = ENV['X-Real-IP'] || ENV['REMOTE_ADDR']
-    file.write "#{Time.now.to_i}#{DEL}#{ip}::#{params[:id]}::#{params[:message]}::#{params[:data].to_json}#{RC}"
+    ip    = ENV['X-Real-IP'] || ENV['REMOTE_ADDR']
+    data  = [ip, params[:id], params[:message], (params[:data]||{}).to_json]
+    file.write "#{Time.now.to_i}#{DEL}#{data.join(DEL_DATA)}#{RC}"
   end #/ add
 
   # Pour lire le tracer depuis cette date

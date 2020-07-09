@@ -37,8 +37,14 @@ class << self
   def decompose(lines)
     lines.each do |line|
       time, donnees = line.split(Tracer::DEL)
-      tline = TracerLine.new(time.to_i, *donnees.split('::'.freeze))
-      next if all_lines.key?(tline.time) # une ligne déjà connue
+      next if all_lines.key?(time.to_i) # une ligne déjà connue
+      next if line.index(Tracer::DEL_DATA).nil?
+      donnees = donnees.split(Tracer::DEL_DATA)
+      if donnees.count > 4
+        puts "La ligne suivante contient trop de données (séparées par '::') : #{line}.\nJe prends seulement les 4 premières pour renseigner TracerLine".rouge
+        donnees = donnees[0..3]
+      end
+      tline = TracerLine.new(time.to_i, *donnees)
       all_lines.merge!(tline.time => tline)
       new_lines << tline
     end
