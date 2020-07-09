@@ -8,6 +8,7 @@ unless defined?(DATA_PAGE)
   NEW_ROUTE = nil # remettre à nil après pour éviter les erreurs
   DATA_PAGE = {
     titre: "Activité de l'atelier Icare",
+    usefull_links: false,       # si true, la méthode pour ajouter des liens utiles
     body_erb: true,          # si true, on crée le fichier body.erb
     form: false,              # si true, on requiert le module 'forms'
     module_user: false,        # si true, on crée 'user.rb'
@@ -67,6 +68,9 @@ def create_constants_file(folder)
 =begin
   Constantes messages
 =end
+UI_TEXTS.merge!({
+
+})
 MESSAGES.merge!({
 
 })
@@ -80,6 +84,10 @@ end #/ create_constants_file
 
 
 def html_code_type
+  ulinks = ''
+  if DATA_PAGE[:usefull_links]
+    ulinks = "\ndef usefull_links\n\t\t[\n\t\t\t# Ici les liens\n\t\t]\n\tend\n".freeze
+  end
   <<-RUBY.freeze
 # encoding: UTF-8
 #{'require_module(\'form\')' if DATA_PAGE[:form]}
@@ -87,7 +95,7 @@ class HTML
   def titre
     "#{DATA_PAGE[:titre]||"TITRE MANQUANT"}".freeze
   end #/titre
-
+  #{ulinks}
   # Code à exécuter avant la construction de la page
   def exec
     #{"icarien_required\n" if DATA_PAGE[:icarien_required]}#{"admin_required\n" if DATA_PAGE[:admin_required]}

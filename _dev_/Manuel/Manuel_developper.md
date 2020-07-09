@@ -672,6 +672,27 @@ end #/HTML
 
 
 
+### Liens outils utiles en regard du titre
+
+On peut ajouter des liens utiles en regard du titre de la page (à droite) à l'aide de la méthode `userfull_links` qui doit retourner une liste des boutons (`a`, `button`, `form`) à ajouter :
+
+~~~ruby
+class HTML
+	...
+	def usefull_links
+		[
+			Tag.lien(route: "ma/route", text:"le titre"),
+			Tag.lien(route: 'autre/route', text:'autre texte')
+			...
+		]
+	end
+end #/HTML
+~~~
+
+
+
+
+
 ### Méthodes d'helpers générales
 
 Le module `LIB/required/__start/helpers/string_helpers_module.rb` qui définit le module `StringHelpersMethods` permet d'ajouter les méthodes d'helpers générales à toutes les classes qui en ont besoin.

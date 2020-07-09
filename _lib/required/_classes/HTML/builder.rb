@@ -67,8 +67,12 @@ class HTML
   def build_titre
     return '' if route.home?
     t = respond_to?(:titre) ? titre : "Titre page manquant"
+    ulinks = EMPTY_STRING
+    if respond_to?(:usefull_links)
+      ulinks = '<div class="usefull-links">%s</div>'.freeze % usefull_links.join
+    end
     @raw_titre ||= t.dup&.safetize
-    @titre = "<h2 class=\"page-title\">#{t}</h2>"
+    @titre = "<h2 class=\"page-title\">#{ulinks}#{t}</h2>".freeze
   end
 
   def build_header

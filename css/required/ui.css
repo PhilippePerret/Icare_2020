@@ -32,6 +32,17 @@ H2 {
   font-size: 1.6em;
   margin-bottom: 1.4em;
 }
+H2 div.usefull-links {
+  float:right;
+  font-size: 11pt;
+}
+
+H2 div.usefull-links a,
+H2 div.usefull-links button,
+H2 div.usefull-links form {
+  margin-left: 12px;
+}
+
 H3 {
   font-size: 1.3em;
   margin-top: 2em;
