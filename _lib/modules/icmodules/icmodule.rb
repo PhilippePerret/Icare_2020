@@ -59,4 +59,9 @@ def name
   @name ||= absmodule.name
 end #/ name
 
+# Étape courante
+def icetape
+  @icetape ||= IcEtape.get(icetape_id)
+end #/ icetape
+
 end #/IcModule

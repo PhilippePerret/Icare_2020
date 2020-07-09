@@ -8,5 +8,18 @@ section.forms form span.libelle {
 }
 section.forms form span.value {
   display:inline-block;
-  width: 300px;
+  width: 320px;
+}
+section.forms form span.value input[type="text"],
+section.forms form span.value select {
+  box-sizing:border-box;
+  width:-webkit-fill-available;
+}
+
+div.row {
+
+}
+div.row span.libelle {
+  /* display:inline-block; */
+  width: 160px;
 }

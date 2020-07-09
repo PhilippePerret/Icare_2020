@@ -14,12 +14,14 @@
   avoir op = 'edit-icmodule_id'
 =end
 DATA_PROPS = {
-  pseudo:       {type: 'text'},
-  statut:       {type: 'select', vtype: 'symbol', options: :options_statuts},
-  icmodule_id:  {type: 'text', vtype: 'integer',  editable: true},
-  icetape_id:   {type: 'text', vtype: 'integer',  editable: true}
+  pseudo:         {type: 'text'},
+  mail:           {type: 'text'},
+  statut:         {type: 'select',  vtype: 'symbol', options: :options_statuts},
+  icmodule_id:    {type: 'text',    vtype: 'integer',  editable: true},
+  icetape_id:     {type: 'text',    vtype: 'integer',  editable: true},
+  project_name:   {type: 'text'}
 }
-BUTTON_EDIT = '<span class="button"><a href="%{route}?uid=%{uid}&op=edit-objet&objet=%{objet}&pid=%{pid}" class="small btn">Edit objet</a></span>'.freeze
+BUTTON_EDIT_OBJET = '<span class="button"><a href="%{route}?uid=%{uid}&op=edit-objet&objet=%{objet}&pid=%{pid}" class="small btn">Voir</a></span>'.freeze
 
 class HTML
 
@@ -34,7 +36,7 @@ class HTML
 
     button_edit = ''
     if dataprop[:editable]
-      button_edit = BUTTON_EDIT % {route:route.to_s, uid: icarien.id, objet: prop[0..-4], pid: icarien.send(prop)}
+      button_edit = BUTTON_EDIT_OBJET % {route:route.to_s, uid: icarien.id, objet: prop[0..-4], pid: icarien.send(prop)}
     end
     <<-HTML.strip.freeze
 <form id="form-#{prop}" action="#{route.to_s}" class="noform nopadding" accept-charset="UTF-8" method="POST">

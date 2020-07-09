@@ -1,11 +1,18 @@
 # encoding: UTF-8
-require_modules(['form', 'user/modules'])
+require_modules(['form', 'user/modules', 'icmodules'])
 class HTML
   def titre
     tit = "👩‍🎓👨‍🎓 Édition d’icarien"
     tit.prepend(BUTTON_RETOUR) if param('op') == 'edit-objet'
     tit.freeze
   end #/titre
+
+  # Liste des liens utiles en regard du titre
+  def usefull_links
+    [
+      Tag.lien(route:'overview/icariens'.freeze, text:'Salle des icariens'.freeze)
+    ]
+  end #/ usefull_links
 
   def icarien
     @icarien ||= User.get(param(:uid))
@@ -29,9 +36,9 @@ class HTML
       # de la propriété icmodule_id
       case param(:objet)
       when 'icmodule'
-        message("Je dois éditer l'icmodule #{param(:pid)}")
+        # Édition de l'icmodule (cf. la vue)
       when 'icetape'
-        message("Je dois éditer l'icetape #{param(:pid)}")
+        # Édition de l'icétape (cf. la vue)
       end
     end
   end # /exec
@@ -40,9 +47,9 @@ class HTML
   def build_body
     @body = case param(:op)
             when 'edit-objet'
-              deserb("vues/#{param(:objet)}", self)
+              deserb("vues/#{param(:objet)}".freeze, self)
             else
-              deserb("vues/#{STRINGS[:body]}", self)
+              deserb("vues/icarien".freeze, self)
             end
   end # /build_body
 
@@ -58,13 +65,17 @@ class HTML
     cur_value = icarien.send(prop)
     if new_value != cur_value
       # message("la propriété #{prop.inspect} a changé : #{cur_value.inspect} -> #{new_value.inspect}")
+      msg_success = "Propriété #{prop.inspect} mise à #{new_value.inspect} avec succès.".freeze
       if icarien.respond_to?("set_#{prop}".to_sym)
         icarien.send("set_#{prop}".to_sym, new_value)
+        message(msg_success)
       elsif icarien.respond_to?("#{prop}=".to_sym)
         icarien.send("#{prop}=".to_sym, new_value)
+        message(msg_success)
       else
         begin
           icarien.set(prop => new_value)
+          message(msg_success)
         rescue Exception => e
           erreur(e.message)
           erreur("Il faut définir la méthode User#set_#{prop} ou User##{prop}= pour enregistrer la propriété #{prop.inspect}.")

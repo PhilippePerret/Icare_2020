@@ -1,6 +1,6 @@
 # encoding: UTF-8
 =begin
-  Constantes messages
+  Constantes message
 =end
 MESSAGES.merge!({
 

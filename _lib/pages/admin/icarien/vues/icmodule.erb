@@ -1,3 +1,27 @@
-<p>Édition d'un icmodule
-<%= param(:pid) %>
-</p>
+<%
+icmodule = IcModule.get(param(:pid))
+%>
+<h3>Icmodule #<%= param(:pid) %></h3>
+<div class="row">
+  <span class="libelle">Propriétaire</span>
+  <span class="value">
+    <%= icmodule.owner.pseudo %> <span class="small">#<%= icmodule.owner.id %></span>
+  </span>
+</div>
+<div class="row">
+  <span class="libelle">Module absolu</span>
+  <span class="value"><%= icmodule.absmodule.name %> <span class="small">#<%= icmodule.absmodule.id %></span></span>
+</div>
+<div class="row">
+  <span class="libelle">Démarrage</span>
+  <span class="value">
+    <%= icmodule.started_at ? formate_date(icmodule.started_at) : '- en attente -'%>
+  </span>
+</div>
+<div class="row">
+  <span class="libelle">Étape courante</span>
+  <span class="value">
+    <%= icmodule.icetape.numero %>. <%= icmodule.icetape.titre %>
+    <%= BUTTON_EDIT_OBJET % {uid:param(:uid), route:route.to_s, objet:'icetape', pid:icmodule.icetape.id} %>
+  </span>
+</div>
