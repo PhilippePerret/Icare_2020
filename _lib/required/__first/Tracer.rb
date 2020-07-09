@@ -25,6 +25,10 @@ unless defined?(RC)
 RC = '
 '
 end
+unless defined?(LOGS_FOLDER)
+  LOGS_FOLDER = File.expand_path(File.join('.','tmp','logs'))
+  `mkdir -p "#{LOGS_FOLDER}"` unless File.exists?(LOGS_FOLDER)
+end
 
 def trace(data)
   Tracer.add(data)

@@ -56,7 +56,7 @@ class HTML
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <base href="http://localhost/AlwaysData/Icare_2020/">
   <title>Atelier Icare#{@raw_titre ? " | #{@raw_titre}" : ""}</title>
-  <link rel="icon" href="img/icare.ico?" type="image/x-icon">
+  <link rel="icon" href="img/icare.ico" type="image/x-icon">
   #{css_tags}
   <script type="text/javascript">#{@raw_js}</script>
 </head>
