@@ -17,7 +17,12 @@
 
   # Pour lire le tracer depuis le temps +time+
   Tracer.read(time)
+  Retourne la liste des lignes lues
 
+  ENV['HTTP_USER_AGENT']    Navigateur et système
+  ENV['HTTP_REFERER']       L'adresse courante ? NON
+  ENV['REQUEST_URI']              Contient l'URL appelé
+  ENV['REDIRECT_QUERY_STRING']    Contient l'URL traitéee
 =end
 require 'json'
 
@@ -51,20 +56,16 @@ class << self
   end #/ add
 
   # Pour lire le tracer depuis cette date
+  # Retourne la liste des lignes lues
   def read(from = nil)
+    lines = []
     File.foreach(path) do |line|
       time, data = line.split(DEL)
       next if from && time.to_i < from
-      traite(JSON.parse(data))
+      lines << line
     end
+    return lines
   end #/ read
-
-  # Si le module qui utilise le Tracer ne définit pas la
-  # méthode Tracer#traite(data), le tracer passe simplement
-  # par ici
-  def traite(data)
-
-  end #/ traite
 
   # Référence au fichier en ouverture
   def file

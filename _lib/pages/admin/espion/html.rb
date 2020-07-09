@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{RETOUR_ADMIN}🦹‍♀️ Espion".freeze
+    "#{RETOUR_ADMIN}🦹‍♀️ Traceur du site".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -10,8 +10,9 @@ class HTML
   end
   # Fabrication du body
   def build_body
-    @body = <<-HTML
-<p>Cette page doit permettre de lancer l'espion de l'atelier.</p>
+    @body = <<-HTML.freeze
+<p class="explication">Ce traceur permet de suivre en direct les connexions et les problèmes sur le site distant.</p>
+<div class="only-message">Pour lancer le traceur du site, ouvrir une fenêtre Terminal et taper <code>icare trace</code>.</div>
     HTML
   end
 end #/HTML
