@@ -110,6 +110,15 @@ def mail      ; @mail     ||= data[:mail]     end
 def password  ; @password ||= data[:password] end
 def options   ; @options  ||= data[:options]  end
 
+def reset
+  @data = nil
+  @icmodule_id = nil
+  @data_icmodule_id = nil
+  @pseudo = nil
+  @mail = nil
+  @password = nil
+  @options = nil
+end #/ reset
 
 # ---------------------------------------------------------------------
 #
@@ -162,4 +171,5 @@ end #/ icmodule_id
 def data_icmodule_id
   @data_icmodule_id ||= db_get('icmodules', icmodule_id)
 end #/ data_icmodule_id
+
 end #/TUser

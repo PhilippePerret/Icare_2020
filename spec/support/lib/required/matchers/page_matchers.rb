@@ -14,6 +14,7 @@ RSpec::Matchers.define :have_notification do |params|
           candidats = params[:id]
         else
           candidats = [params[:id]]
+          params.merge!(count: 1)
         end
       elsif params.key?(:ids)
         candidats = params[:ids]
@@ -67,6 +68,8 @@ RSpec::Matchers.define :have_notification do |params|
       if trouved.count == 0
         @error = params.inspect
       end
+      $notifications_ids  = trouved
+      $notification_id    = trouved.first
       return trouved.count > 0 # Résultat final
     else
       @error = "on ne se trouve pas sur la page des notifications…"

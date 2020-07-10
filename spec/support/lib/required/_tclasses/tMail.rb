@@ -51,10 +51,13 @@ class << self
 
 
   def has_mails?(params)
-    candidats = self.find_all(params[:destinataire], params[:content], params)
+    destinataire = params[:destinataire]
+    destinataire = destinataire.mail if destinataire.is_a?(TUser)
+    candidats = self.find_all(destinataire, params[:content], params)
 
   end #/ has_mails?
   alias :has_mail? :has_mails?
+  alias :has_item? :has_mails?
 
   def error= msg
     @error = msg

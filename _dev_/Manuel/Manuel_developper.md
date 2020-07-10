@@ -2680,6 +2680,27 @@ expect(page).to have_notifications(user_id: 12, count: 4)
 ~~~
 
 
+
+#### Récupérer l'identifiant de la notification
+
+Quand on utilise `have_notification(s)` (cf. ci-dessus), on peut récupérer l'identifiant de la ou des notifications grâce aux variables globales `$notification_id` et `$notifications_ids` qui contiennent respectivement les dernier et tous les identifiants des notifications trouvées.
+
+Une forme classique pour activer un bouton dans une notification est par exemple de faire :
+
+~~~ruby
+
+expect(page).to have_notification(user_id: benoit.id, wtype:'validation_inscription')
+watcher_id = $notification_id
+
+within("div#watcher-#{watcher_id}") do
+	click_on "le bouton"
+end
+~~~
+
+
+
+
+
 ### Tester les mails
 
 

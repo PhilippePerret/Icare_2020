@@ -5,9 +5,12 @@
 require_module('absmodules')
 class Watcher < ContainerClass
   def signup
-    # Validation inscription
     owner.valide_inscription
   end #/ signup
+
+  def contre_signup
+    owner.destroy
+  end #/ contre_signup
 
   def download_signup
     download(signup_folder,nil,{keep:true})

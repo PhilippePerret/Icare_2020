@@ -70,7 +70,13 @@ class << self
   def for(params)
     user_id = params[:user_id] || params[:user]&.id || params[:owner]&.id || params[:owner_id]
     cols = "id, user_id, wtype, objet_id, params, created_at, updated_at, triggered_at".freeze
-    request = "SELECT #{cols} FROM watchers WHERE user_id = #{user_id}".freeze
+    request = if !user_id.nil?
+      "SELECT #{cols} FROM watchers WHERE user_id = #{user_id}".freeze
+    elsif params.key?(:id)
+      "SELECT #{cols} FROM watchers WHERE id = #{params[:id]}".freeze
+    else
+      raise "Impossible d'établir la requête pour trouver les watchers."
+    end
     db_exec(request).collect do |dwatcher|
       TWatcher.new(*dwatcher.values)
     end

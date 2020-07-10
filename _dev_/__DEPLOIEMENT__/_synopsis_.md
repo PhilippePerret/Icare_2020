@@ -2,9 +2,16 @@
 
 
 
+- [ ] [UNE SEMAINE AVANT] Prévenir les icariens que le site va être actualisé (nouvelle version)
+
+  - [ ] Nouveau système pour les discussion frigo. Donc les discussions actuelles seront détruites. Les récupérer si nécessaire ou répondre aux derniers messages.
+
 - [ ] Récupérer les données DB telles que décrites dans [fichier de récupération des données DB][].
+
 - [ ] Lancer le [fichier de récupération des données DB][]. (qui va transformer toutes les données anciennes en données nouvelles)
+
 - [ ] Créer la base `icare_db` sur [AlwaysData](https://admin.alwaysdata.com/) si ce n’est pas encore fait.
+
 - [ ] Injecter les données récupérées et traitées dans la base `icare_db`. Pour ce faire :
 	- [ ] Lancer le  [script feed](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/__DEPLOIEMENT__/feed_db_icare.rb)
 	- [ ] Comme on ne peut pas automatiser l'injection dans la base distante, se rendre sur PhpMySql sur [AlwaysData](https://admin.alwaysdata.com/) et injecter tous les fichiers du dossier `home/deploiement/db`.

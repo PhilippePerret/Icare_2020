@@ -14,13 +14,13 @@ class User
     log("Création de l'icmodule d'après le module #{param(:module_id).to_i}.")
     icmodule = IcModule.create_new_for(user: self, absmodule_id:param(:module_id).to_i)
     # Modification des informations de l'user (validé)
-    set_option(16, 6) # 6 = reçu inactif
+    set_option(16, 6, true) # 6 = reçu inactif
   end #/ valide_inscription
 
   # Quand tout s'est bien passé
   def onSuccess
     # On peut détruire le dossier de candidature si tout est OK
-    messsage "Tout s'est bien passé on peut détruire le dossier de candidature"
+    messsage "Tout s'est bien passé on peut détruire le dossier de candidature".freeze
     FileUtils.rm_rf(signup_folder)
 
   end #/ onSuccess
