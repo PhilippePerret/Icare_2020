@@ -54,7 +54,7 @@ class << self
   def add(params)
     ip    = ENV['X-Real-IP'] || ENV['REMOTE_ADDR']
     data  = [ip, params[:id], params[:message], (params[:data]||{}).to_json]
-    file.write "#{Time.now.to_i}#{DEL}#{data.join(DEL_DATA)}#{RC}"
+    file.write "#{Time.now.to_f}#{DEL}#{data.join(DEL_DATA)}#{RC}"
   end #/ add
 
   # Pour lire le tracer depuis cette date

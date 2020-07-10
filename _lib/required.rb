@@ -19,8 +19,6 @@ Dir["#{LIB_FOLDER}/required/then/**/*.rb"].each{|m|require m}
 
 log("DATABASE: #{MyDB.DBNAME.inspect}")
 
-log("ENV: #{ENV.inspect}")
-
 # On trace ce chargement
 data_trace = {}
 # S'il y a des params, on les ajoute, mais pas s'ils sont trop longs

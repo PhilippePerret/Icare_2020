@@ -36,6 +36,7 @@ class << self
     if nombre_candidats == 0
       error = "aucun mail trouvé"
       return false
+    elsif options && options.key?(:count)
     elsif options && options[:only_one]
       if nombre_candidats > 1
         return error=("plusieurs mails trouvés (cf. TMails.founds)".freeze)
@@ -46,6 +47,14 @@ class << self
       return nombre_candidats > 0
     end
   end #/ exists?
+  alias :has_item? :exists?
+
+
+  def has_mails?(params)
+    candidats = self.find_all(params[:destinataire], params[:content], params)
+
+  end #/ has_mails?
+  alias :has_mail? :has_mails?
 
   def error= msg
     @error = msg

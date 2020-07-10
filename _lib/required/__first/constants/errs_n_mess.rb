@@ -13,7 +13,8 @@ ERRORS.merge!({
   no_initial_data_provided: 'Aucune donnée d’initialisation fournie.'.freeze,
   unfound_data: 'Données introuvables (avec %{with})'.freeze,
   file_unfound: 'Fichier introuvable : %s'.freeze,
-  mark_unfound_file: '[FICHIER MANQUANT : `%s`]'.freeze
+  mark_unfound_file: '[FICHIER MANQUANT : `%s`]'.freeze,
+  erb_error_with: 'ERB ERROR AVEC %s'.freeze,
 })
 
 MESSAGES.merge!({

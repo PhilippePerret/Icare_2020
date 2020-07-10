@@ -2601,7 +2601,14 @@ db_exec("SELECT * FROM users")
 
 ### Tester les watchers
 
-Forme canonique :
+Formes canoniques :
+
+~~~ruby
+expect(TWatchers).to have_watcher(params)
+expect(TWatchers).to have_item(params)
+~~~
+
+
 
 ~~~ruby
 expect(TWatchers.exists?({params})).to be(true), "Le watcher tatata devrait exister"
@@ -2630,6 +2637,47 @@ TWatchers.founds
 # => Array des instances TWatcher trouvées
 ~~~
 
+
+### Tester les notifications
+
+« Tester les notifications » signifie voir, sur la page « Notifications » où l'on doit se trouver, si une ou des notifications sont affichées. La méthode `have_notification(s)` ne teste que la présence de la notification, pas son contenu. Pour tester le contenu, il faut utiliser d'autres matchers (comme `have_css`).
+
+~~~ruby
+expect(page).to have_notification(params)
+expect(page).to have_notifications(params)
+~~~
+
+Avec `params` qui peut contenir :
+
+~~~ruby
+params = {
+	id: 		Integer, 			# l'identifiant de la notification
+	ids:		Array of Int 	# la liste des identifiants à trouver
+	# Par des données définissant le ou les watchers, permettant de 
+	# relever leur(s) id(s)
+	user_id:	Integer,		# Identifiant du possesseur du watcher
+	wtype:		String			# Le watcher-type (qui est son id, en fait)
+	# D'autres informations possible
+	count:		Integer			# Le nombre précis de notifications attendues
+	only_one:	Booelan			# Si true, on attend une seule notification
+	after:		Time				# Les notifications produites après ce temps
+	before:		Time				# Les notifications produites avant ce temps
+	unread:		Boolean			# Si true, les notifications doivent être non lue
+												# Noter que ça ne fonctionne pas avec false. On 
+												# ne peut pas connaitre les notifications lues de
+												# cette manière.
+}
+~~~
+
+> Attention : le nombre de notifications ne correspond pas forcément au nombre de watchers. Certaines watchers, par exemple s'ils définissent un `triggered_at`, peuvent ne pas être affichés.
+
+Par exemple, pour voir si toutes les notifications de l'user sont affichées :
+
+~~~ruby
+user12.rejoint_ses_notifications
+expect(page).to have_notifications(user_id: 12, count: 4)
+# Produit un succès si l'user 12 a bien 4 watchers affichés
+~~~
 
 
 ### Tester les mails

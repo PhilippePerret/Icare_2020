@@ -1,6 +1,5 @@
 # encoding: UTF-8
-require_module('form')
-require_module('user/modules')
+require_modules(['form','user/modules','absmodules'])
 html.add_js('./js/modules/form_with_files.js')
 
 class HTML
@@ -26,7 +25,6 @@ class HTML
 
   # Méthode appelée lorsque l'on soumet les documents à envoyer
   def check_documents_and_save
-    debug("-> check_documents_and_save")
     # S'il existe, on détruit le dossier qui doit contenir les document à
     # envoyer
     SentDocument.remove_user_folder(user, 'sent-work')

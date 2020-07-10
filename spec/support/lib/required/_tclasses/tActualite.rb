@@ -20,6 +20,8 @@ class TActualites
         return nombre_candidats > 0
       end
     end #/ exists?
+    alias :has_actualite? :exists?
+    alias :has_item? :exists?
 
     def error= msg
       @error = msg

@@ -12,13 +12,6 @@ class << self
   #
   # ---------------------------------------------------------------------
 
-  # Pour répondre à `expect(TWatchers).to have(<params>)`
-  def has?(params)
-    exists?(params)
-  end #/ has?
-
-
-
   def get(wid)
     dwatcher = db_get('watchers', wid.to_i)
     if dwatcher.nil?
@@ -42,6 +35,9 @@ class << self
       return nombre_candidats > 0
     end
   end #/ exists?
+  # Pour répondre à `expect(TWatchers).to have(<params>)`
+  alias :has_watcher? :exists?
+  alias :has_item? :exists?
 
   # Retourne les mails transmis à +user_id+ qui contiennent
   # le message +searched+

@@ -71,6 +71,7 @@ def envoi_travail
     puts "Fabrication du gel 'envoi_travail'".vert
     login_marion
     goto 'bureau/sender?rid=send_work_form'
+    screenshot('sender-work-marion')
     path_doc_work   = File.join(SPEC_FOLDER_DOCUMENTS,'extrait.odt')
     path_doc_work2  = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.rtf')
     within("form#send-work-form") do

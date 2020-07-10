@@ -2,7 +2,8 @@
 
 # Le fait de prendre des screenshots est très dispendieux en temps
 # On peut les zapper en mettant cette constante à true
-NO_SCREENSHOT = true
+NO_SCREENSHOT = false
+# NO_SCREENSHOT = true
 
 require 'yaml'
 require 'capybara/rspec'

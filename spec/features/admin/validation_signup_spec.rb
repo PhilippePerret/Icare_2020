@@ -11,36 +11,38 @@ feature "Validation d'une inscription" do
     scenario "l'inscription peut être validée", only:true do
 
       pending "à terminer"
-      
+
       start_time = Time.now.to_i
 
       # === Vérifications préliminaires ===
       expect(benoit).to be_candidat
       wparams = {wtype:'paiement_module', user_id: benoit.id}
-      expect(TWatchers).not_to have(wtype:'paiement_module', user_id: benoit.id),
+      expect(TWatchers).not_to have_watcher(wtype:'paiement_module', user_id: benoit.id),
       # expect(TWatcher.exists?(wparams)).not_to be(true),
         "Aucun watcher de paiement de module ne devrait exister pour Benoit"
       wparams = {wtype:'start_module', user_id: benoit.id}
-      expect(TWatcher.exists?(wparams)).not_to be(true),
+      expect(TWatchers).not_to have_watcher(wparams),
         "Aucun watcher de démarrage de module ne devrait exister pour Benoit"
 
       pitch("En rejoignant mon bureau d'administrateur, je trouve une notification pour valider l'inscription de Benoit.")
       phil.rejoint_ses_notifications
       # Je trouve une notification pour valider l'inscription de Benoit
-      expect(page).to have_notification(user_id: benoit.id, wtype: 'inscription_benoit')
+      expect(page).to have_notification(user_id: benoit.id, wtype: 'validation_inscription')
+
+      # === ON PROCÈDE À L'OPÉRATION ===
 
       # Un watcher de paiement a été généré
       wparams = {wtype:'paiement_module', user_id: benoit.id, after:start_time}
-      expect(TWatchers.exists?(wparams)).to be(true),
+      expect(TWatchers).to have_watcher(wparams),
         "Le watcher pour permettre à Benoit de payer son module devrait exister"
       pitch("On doit trouver…")
       pitch("… un watcher permettant à Benoit de payer son module")
       wparams = {wtype:'start_module', user_id: benoit.id, after:start_time}
-      expect(TWatchers.exists?(wparams)).to be(true),
+      expect(TWatchers).to have_watcher(wparams),
         "Le watcher pour démarrer le module devrait exister"
       pitch("… un watcher pour démarrer le module")
       # aparams = {id:'REALICARIEN', user_id:benoit.id}
-      expect(TActualites).to have(id:'REALICARIEN', user_id:benoit.id),
+      expect(TActualites).to have_item(id:'REALICARIEN', user_id:benoit.id),
       # expect(TActualites.exists?(aparams)).to be(true),
         "Il devrait exister une actualité annonçant la validation de l'inscription."
       pitch("… une annonce de cette validation")
