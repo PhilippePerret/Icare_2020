@@ -54,6 +54,11 @@ end #/ initialize
 # Pour savoir si l'user possède un watcher
 def has_watcher?(params)
   watchers = TWatchers.find_all(params.merge!(user_id: id))
+  # Pour conserver les ids et pouvoir les récupérer dans les tests
+  if watchers.count > 0
+    $watcher_id = watchers.first[:id]
+    $watchers_ids = watchers.collect{|h|h[:id]}
+  end
   if params.key?(:count)
     return watchers.count = params[:count]
   else

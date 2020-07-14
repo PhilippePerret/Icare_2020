@@ -48,7 +48,8 @@ class << self
       end
       tline = TracerLine.new(time.to_f, *donnees)
       all_lines.merge!(time => tline)
-      puts tline.out # === ÉCRITURE DE LA LIGNE ===
+      # === ÉCRITURE DE LA LIGNE ===
+      puts tline.out
     end
   end #/ decompose
 
@@ -76,7 +77,7 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :data) do
   attr_accessor :seen
   def out
     msg = []
-    msg << Time.at(time).strftime('%d %m %Y %H:%M'.freeze)
+    msg << Time.at(time).strftime('%d %m %H:%M'.freeze)
     msg << ip_formated
     msg << id.ljust(17)
     msg << message.to_s
@@ -91,10 +92,10 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :data) do
   end #/ error?
 
   def ip_formated
-    if ip.length > 20
-      ip[0..19] + '…'
+    if ip.length > 15
+      ip[0...15] + '…'
     else
       ip
-    end.ljust(21)
+    end.ljust(16)
   end #/ ip_formated
 end

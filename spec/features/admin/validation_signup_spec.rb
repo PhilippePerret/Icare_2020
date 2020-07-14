@@ -66,7 +66,7 @@ feature "Validation d'une inscription" do
 
 
 
-    scenario 'l’inscription peut être refusée', only:true do
+    scenario 'l’inscription peut être refusée' do
 
       start_time  = Time.now.to_i
       benoit_id   = benoit.id
@@ -126,13 +126,40 @@ feature "Validation d'une inscription" do
 
   context 'par un icarien quelconque' do
     scenario 'il ne peut pas valider une inscription' do
-      pending "à implémenter"
+
+      benoit.rejoint_son_bureau
+
+      # On fabrique une fausse soumission
+      qstr  = "form-id=validation-candidature-11-form&route=admin/notifications&wid=13&module_id-11=1"
+      route = "admin/notifications?#{qstr}"
+
+      # === Vérification préliminaire ===
+      expect(benoit).to be_candidat,
+        "Benoit devrait être candidat"
+
+      # === TEST ===
+      goto route
+
+      # === Vérification ===
+      expect(benoit).to be_candidat,
+        "Benoit devrait toujours être candidat"
+
     end
   end
 
   context 'par un visiteur quelconque' do
     scenario 'l’inscription ne peut pas être validée' do
-      pending "à implémenter"
+      # On fabrique une fausse soumission
+      qstr  = "form-id=validation-candidature-11-form&route=admin/notifications&wid=13&module_id-11=1"
+      route = "admin/notifications?#{qstr}"
+      # === Vérification préliminaire ===
+      expect(benoit).to be_candidat,
+        "Benoit devrait être candidat"
+      # === TEST ===
+      goto route
+      # === Vérification ===
+      expect(benoit).to be_candidat,
+        "Benoit devrait toujours être candidat"
     end
   end
 end

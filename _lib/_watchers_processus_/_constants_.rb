@@ -38,6 +38,18 @@ DATA_WATCHERS = {
     relpath: 'IcModule/paiement'.freeze,
     actu_id: nil
   },
+  annonce_virement: {
+    titre: 'Annonce de virement IBAN'.freeze,
+    relpath: 'IcModule/annonce_virement'.freeze,
+    actu_id: nil,
+    next: 'confirm_virement'.freeze
+  },
+  confirm_virement: {
+    titre: 'Confirmation du virement IBAN'.freeze,
+    relpath: 'IcModule/confirm_virement'.freeze,
+    actu_id: nil,
+    next: nil
+  },
   # --- Parcours des documents d'une icétape ---
   send_work: {
     titre: 'Envoi des documents de travail'.freeze,

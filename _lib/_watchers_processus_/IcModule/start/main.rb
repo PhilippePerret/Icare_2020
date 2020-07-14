@@ -15,7 +15,7 @@ class Watcher < ContainerClass
 
     # Watcher de paiement
     # -------------------
-    dwatcher  = {objet_id: objet_id, vu_admin:true}
+    dwatcher  = {objet_id: objet_id, vu_admin:true, vu_user:false}
     dwatcher.merge!(triggered_at: now+10.days) unless owner.real?
     watcher_id = owner.watchers.add('paiement_module', dwatcher)
 
