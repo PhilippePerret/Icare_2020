@@ -107,6 +107,7 @@ div.warning, p.warning, span.warning {
 /*
   Les sélecteurs "no"
 */
+.nodisplay {display:none}
 .noborder {
   border:unset!important;
 }

@@ -12,10 +12,15 @@ class TActualites
     def exists?(params)
       nombre_candidats = self.find(params).count
       if nombre_candidats == 0
-        error= "aucun actualité trouvé"
+        self.error = "aucun actualité trouvé"
+        return false
       elsif params.key?(:only_one)
-        return error= "il y a #{nombre_candidats} actualités" if nombre_candidats > 1
-        return true
+        if nombre_candidats > 1
+          self.error = "il y a plus d'une seule actualité (#{nombre_candidats})"
+          return false
+        else
+          return true
+        end
       else
         return nombre_candidats > 0
       end

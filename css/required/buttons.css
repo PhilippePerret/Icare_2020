@@ -62,7 +62,7 @@ div.buttons a:not(.main)
 }
 
 .btn.warning,
-div.buttons a.warning
+a.warning
 {
   background-color:red!important;
   color:white!important;

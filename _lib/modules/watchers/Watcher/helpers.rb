@@ -32,7 +32,13 @@ class Watcher < ContainerClass
   # jouer la méthode 'unrun' (donc la méthode définie par :
   # <objet_class>#contre_<processus>) dans le dossier des données du watcher
   def button_unrun(titre, options = nil)
-    Tag.lien(route:"#{route.to_s}?op=unrun&wid=#{id}", titre: titre, id:"unrun-button-#{objet_class}-#{processus}")
+    options ||= {}
+    options.merge!({
+      route:"#{route.to_s}?op=unrun&wid=#{id}",
+      titre: titre,
+      id:"unrun-button-#{id}"
+    })
+    Tag.lien(options)
   end #/ button_unrun
 
   def votre_bureau(titre = nil)

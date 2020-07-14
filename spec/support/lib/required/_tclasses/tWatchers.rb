@@ -39,8 +39,7 @@ class << self
   alias :has_watcher? :exists?
   alias :has_item? :exists?
 
-  # Retourne les mails transmis à +user_id+ qui contiennent
-  # le message +searched+
+  # Retourne les watchers de +user_id+
   def find_all(params)
     pr = proc { |obj| obj }
     if params.key?(:id)

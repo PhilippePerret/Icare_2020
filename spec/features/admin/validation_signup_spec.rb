@@ -68,17 +68,15 @@ feature "Validation d'une inscription" do
 
     scenario 'l’inscription peut être refusée', only:true do
 
-      start_time = Time.now.to_i
+      start_time  = Time.now.to_i
+      benoit_id   = benoit.id
 
       # === Vérifications préliminaires ===
       expect(benoit).to be_candidat
-      wparams = {wtype:'paiement_module', user_id: benoit.id}
-      expect(TWatchers).not_to have_watcher(wtype:'paiement_module', user_id: benoit.id),
-      # expect(TWatcher.exists?(wparams)).not_to be(true),
-        "Aucun watcher de paiement de module ne devrait exister pour Benoit"
-      wparams = {wtype:'start_module', user_id: benoit.id}
-      expect(TWatchers).not_to have_watcher(wparams),
-        "Aucun watcher de démarrage de module ne devrait exister pour Benoit"
+      expect(benoit).not_to have_watcher(wtype:'start_module', after: start_time),
+        "Benoit ne devrait avoir aucun watcher de paiement de module"
+      expect(benoit).not_to have_watcher(wtype:'start_module', after: start_time),
+        "Benoit ne devrait avoir aucun watcher de démarrage de module"
 
       pitch("En rejoignant mon bureau d'administrateur, je trouve une notification pour valider l'inscription de Benoit. Je peux la refuser.")
       phil.rejoint_ses_notifications
@@ -87,31 +85,40 @@ feature "Validation d'une inscription" do
       watcher_id = $notification_id
 
       # === ON PROCÈDE À L'OPÉRATION ===
+      expect(page).to have_link('Notifier le refus par mail')
       within("div#watcher-#{watcher_id}") do
         click_on('Notifier le refus par mail')
-        click_on('détruire')
       end
       screenshot('phil-invalide-inscription-benoit')
 
-      expect(TWatchers).not_to have_item(id: watcher_id),
-        "Le watcher de validation devrait avoir été détruit"
-      pitch("Le watcher de validation a été détruit.")
+      within("div#watcher-#{watcher_id}") do
+        expect(page).to have_link('Détruire la candidature'),
+          "La page devrait présenter un lien pour détruire la candidature"
+        click_on('Détruire la candidature')
+      end
+      screenshot('phil-detruit-candidature')
 
-      expect(TWatchers).not_to have_watcher(wtype:'start_module', user_id: benoit.id, after:start_time),
-        "Le watcher pour démarrer le module ne devrait pas exister"
+      expect(benoit).not_to have_watcher(wtype:'start_module', after:start_time),
+        "Benoit ne devrait pas avoir de watcher pour démarrer un module"
       pitch("Benoit n'a pas de watcher pour démarrer le module")
 
       expect(TActualites).not_to have_item(id:'REALICARIEN', user_id:benoit.id, after:start_time),
         "Il ne devrait pas exister une actualité annonçant la validation de l'inscription."
       pitch("Pas d'annonce annonçant la validation")
 
-      expect(TMails).not_to have_mail({destinataire:benoit, after: start_time, subject: DATA_WATCHERS[:validation_inscription][:titre]}),
+      expect(benoit).not_to have_mail(after:start_time, subject:DATA_WATCHERS[:validation_inscription][:titre]),
         "Benoit ne devrait pas avoir reçu de mail lui annonçant la validation de son inscription."
       pitch("Benoit ne reçoit pas de mail lui annonçant sa validation.")
 
-      expect(benoit).to be_destroyed,
-        "Benoit devrait être marqué détruit."
-      pitch("et le statut de Benoit est passé à détruit.")
+      # Une candidature refusée detruit l'user dans la base de données, car
+      # ça ne sert à rien de le garder puisqu'il n'a rien fait.
+      expect(db_get('users', 11)).to be(nil),
+        "Benoit devrait être détruit de la base de données."
+      pitch("et Benoit a été détruit de la base de données.")
+
+      expect(TWatchers).not_to have_item(id: watcher_id),
+        "Le watcher de validation devrait avoir été détruit"
+      pitch("Le watcher de validation a été détruit.")
 
     end
 

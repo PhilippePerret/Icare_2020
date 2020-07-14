@@ -47,6 +47,29 @@ end #/ initialize
 #
 # ---------------------------------------------------------------------
 
+# ---------------------------------------------------------------------
+#   Matchers divers
+# ---------------------------------------------------------------------
+
+# Pour savoir si l'user possède un watcher
+def has_watcher?(params)
+  watchers = TWatchers.find_all(params.merge!(user_id: id))
+  if params.key?(:count)
+    return watchers.count = params[:count]
+  else
+    return watchers.count > 0
+  end
+end #/ has_watcher?
+
+# Matcher pour voir si l'user a reçu un mail
+def has_mail?(params)
+  TMails.has_mails?(params.merge(destinataire: self))
+end #/ has_mail?
+
+# ---------------------------------------------------------------------
+#   Matchers de statut
+# ---------------------------------------------------------------------
+
 # Pour : expect(lui).to be_guest
 def guest?
   option(16) == 1

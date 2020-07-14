@@ -5,7 +5,7 @@
 class TMails
 class << self
   attr_reader :founds
-  attr_reader :error
+  attr_accessor :error
   attr_accessor :raison_exclusion
 
   # Retourne les mails transmis à +mail_destinataire+ qui contiennent
@@ -33,15 +33,19 @@ class << self
     #   puts "candidats: #{candidats.inspect}"
     # end
     nombre_candidats = candidats.count
+    options ||= {}
+    if options.key?(:only_one) && options[:only_one]
+      options.merge!(count: 1)
+    end
     if nombre_candidats == 0
-      error = "aucun mail trouvé"
+      self.error = "aucun mail trouvé"
       return false
-    elsif options && options.key?(:count)
-    elsif options && options[:only_one]
-      if nombre_candidats > 1
-        return error=("plusieurs mails trouvés (cf. TMails.founds)".freeze)
-      else
+    elsif options.key?(:count)
+      if nombre_candidats == options[:count]
         return true
+      else
+        self.error = "le nombre de mails trouvés (#{nombre_candidats}) est différent du nombre de mails attendus (#{options[:count]})".freeze
+        return false
       end
     else
       return nombre_candidats > 0
@@ -53,8 +57,7 @@ class << self
   def has_mails?(params)
     destinataire = params[:destinataire]
     destinataire = destinataire.mail if destinataire.is_a?(TUser)
-    candidats = self.find_all(destinataire, params[:content], params)
-
+    exists?(destinataire, params[:content], params)
   end #/ has_mails?
   alias :has_mail? :has_mails?
   alias :has_item? :has_mails?

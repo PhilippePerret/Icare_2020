@@ -1774,13 +1774,15 @@ Quand c’est une notification administrateur, les boutons pour forcer la destru
 
 ### Méthodes d’helpers pour les notifications
 
-~~~erb
+~~~ruby
 <%= button_run('Titre bouton') %>
   # => bouton principal pour jouer le watcher
 
 <%= button_unrun('Renoncer') %>
-	# => bouton secondaire pour "contre-jouer" le watcher (refuser)
+# => bouton secondaire pour "contre-jouer" le watcher (refuser)
 ~~~
+
+
 
 Il existe d’autres helpers ici :
 

@@ -10,7 +10,8 @@ Candidature de <%= owner.pseudo %> #<%= owner.id %> à l'atelier. Merci de la va
 
 bouton_load_presentation = Tag.lien(route:"#{route.to_s}?op=download_signup&uid=#{owner.id}&wid=#{self.id}", text:"Documents de présentation", class:'btn main small')
 
-bouton_refus = Tag.div(text: Tag.lien(route:"mailto:#{owner.mail}", text:'Notifier le refus par mail'), class: 'center mt1')
+bouton_refus = "<a href='mailto:#{owner.mail}' class='btn-notify-refus' data-wid='#{self.id}'>Notifier le refus par mail</a>"
+bouton_destroy  = button_unrun('Détruire la candidature'.freeze, {class:'warning nodisplay'})
 
 # Formulaire pour choisir ou confirmer son module
 form = Form.new(id:"validation-candidature-#{owner.id}-form", class:'inline', route:route.to_s)
@@ -27,7 +28,12 @@ form.submit_button = "Attribuer ce module"
 %>
 <div>
   <div class="fleft">
-    <%= bouton_load_presentation %>
-    <%= bouton_refus %></div>
+    <div><%= bouton_load_presentation %></div>
+    <div class="mt1 center">
+      <%= bouton_refus %>
+      <%= bouton_destroy %>
+    </div>
+  </div>
+
   <div class="right"><%= form.out %></div>
 </div>
