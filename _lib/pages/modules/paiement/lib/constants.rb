@@ -3,6 +3,10 @@
   Constantes pour le paiement
 =end
 
+UI_TEXTS.merge!({
+  button_download_iban: "Télécharger l’IBAN de Phil".freeze,
+})
+
 MESSAGES.merge!({
   objet_paiement: 'Objet : paiement du module d’apprentissage “%s”.'.freeze,
   actu_real: '<span><strong>%{pseudo}</strong> devient un%{e} <em>vrai%{e}</em> icarien%{ne} !</span>'.freeze

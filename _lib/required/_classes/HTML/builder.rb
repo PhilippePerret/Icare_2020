@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 class HTML
+  include StringHelpersMethods
 
   # Construction complète de la page
   def build_page

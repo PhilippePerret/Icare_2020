@@ -1767,4 +1767,72 @@ Did you mean?  when
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:23:26 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007fe93117aad0>#watchers (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:146:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:23:54 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007ff87b9ae9c8>#watchers (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:146:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:24:52 +0200 --- FATAL ERROR:
+    undefined local variable or method `objet' for #<HTML:0x00007fcadb86a080>
+Did you mean?  object_id
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:25:16 +0200 --- FATAL ERROR:
+    undefined local variable or method `objet' for #<HTML:0x00007f85e20b9bf8>
+Did you mean?  object_id
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:31:37 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007fd6648e6b00>#db_delete (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:146:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/user_paiement.rb:44:in `remplace_watcher_paiement_par_annonce_virement'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:31:53 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007fad738aa598>#db_delete (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:146:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/user_paiement.rb:44:in `remplace_watcher_paiement_par_annonce_virement'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:37:52 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/download/Downloader.rb:65:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/files.rb:64:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:20:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:39:32 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/download/Downloader.rb:65:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/files.rb:64:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:20:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:41:05 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/download/Downloader.rb:65:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/files.rb:64:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:20:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

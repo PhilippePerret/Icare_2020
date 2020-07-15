@@ -33,6 +33,17 @@ class User
     set_option(24, 1, true)
     Actualite.add('REALICARIEN', self.id, MESSAGES[:actu_real] % {pseudo:pseudo, e:fem(:e), ne:fem(:ne)})
   end #/ set_real
+
+  # En cas de volonté de paiement par IBAN
+  # pour ajouter le watcher permettant d'annoncer le virement effectué et pour
+  # détruire le watcher courant de paiement.
+  def remplace_watcher_paiement_par_annonce_virement
+    dwatcher = db_get('watchers', {user_id: id, wtype:'paiement_module'})
+    self.watchers.add('annonce_virement', objet_id: dwatcher[:objet_id])
+    db_delete('watchers', dwatcher[:id])
+    message("Une notification vous permettra d'informer Phil lorsque le virement aura été effectué.")
+  end #/ remplace_watcher_paiement_par_annonce_virement
+
 end #/User
 
 class IcModule < ContainerClass

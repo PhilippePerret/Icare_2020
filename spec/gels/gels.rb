@@ -326,7 +326,7 @@ def phil_marion_elie_repondent_benoit
     login_admin
     click_on('Bureau')
     click_on('Porte de frigo')
-    click_on('Titre discussion avec Phil #3')
+    click_on('Titre discussion avec Phil')
     within('form#discussion-form') do
       fill_in('frigo_message', with: "La réponse de Phil au message de Benoit.")
       click_on("Ajouter")
@@ -339,7 +339,7 @@ def phil_marion_elie_repondent_benoit
     login_marion
     click_on('Bureau')
     click_on('Porte de frigo')
-    click_on('Titre discussion avec Marion #1')
+    click_on('Titre discussion avec Marion')
     within('form#discussion-form') do
       fill_in('frigo_message', with: "Marion répond qu'elle veut bien discuter.")
       click_on("Ajouter")
@@ -352,14 +352,15 @@ def phil_marion_elie_repondent_benoit
     login_elie
     click_on('Bureau')
     click_on('Porte de frigo')
-    click_on('Titre discussion avec Élie #2')
+    click_on('Titre discussion avec Élie')
     within('form#discussion-form') do
       fill_in('frigo_message', with: "Réponse d’Élie à Benoit.")
       click_on("Ajouter")
     end
     message_benoit = MESSAGES[:follower_warned_for_new_message] % 'Benoit'
     screenshot('elie-premier-message-benoit')
-    expect(page).to have_content(message_benoit)
+    expect(page).not_to have_content(message_benoit),
+      "Élie ne devrait pas avoir de message lui disant que Benoit a été averti. Benoit a déjà un message non lu pour ce fil."
 
     # Élie laisse un second message
     within('form#discussion-form') do

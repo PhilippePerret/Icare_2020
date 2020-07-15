@@ -23,4 +23,4 @@ CLIENT_ID = SANDBOX ? 'AcA_9RCWQsSa0STmdpcgX2nE61kSI6YNRmwFpP58LO-59KqtkTkPnb8mE
 <script src="https://www.paypal.com/sdk/js?client-id=<%= CLIENT_ID %>&currency=EUR" data-sdk-integration-source="button-factory"></script>
 <script type="text/javascript">const PAYPAL_MONTANT = <%= SANDBOX ? '0.01' : "#{absmodule.tarif}.00" %>;</script>
 
-<p class="mt4">Vous pouvez également régler par virement. <a href="<%= route.to_s %>?op=downloadiban">Télécharger l'IBAN de Phil</a> pour l’enregistrer comme bénéficiaire sur votre compte et procédez à un virement ponctuel de <%= user.icmodule.montant_humain %>.</p>
+<p class="mt4">Vous pouvez également régler par virement. <a href="<%= route.to_s %>?op=downloadiban"><%= UI_TEXTS[:button_download_iban] %></a> pour l’enregistrer comme bénéficiaire sur votre compte et procédez à un virement ponctuel de <%= user.icmodule.montant_humain %>.</p>
