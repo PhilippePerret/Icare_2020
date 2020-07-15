@@ -18,6 +18,8 @@ class HTML
       # permettra à l'icarien de prévenir Phil que son paiement a été effectué.
       user.remplace_watcher_paiement_par_annonce_virement
       download(File.join(PUBLIC_FOLDER,'IBAN_Icare.pdf'), 'IBAN_Icare.zip')
+    elsif param(:op) == 'per_virement'
+      user.remplace_watcher_paiement_par_annonce_virement
     elsif param(:op) == 'ok'
       # Le paiement a été effectué avec succès, on peut enregistrer
       # ce paiement pour l'user

@@ -41,7 +41,8 @@ class User
     dwatcher = db_get('watchers', {user_id: id, wtype:'paiement_module'})
     self.watchers.add('annonce_virement', objet_id: dwatcher[:objet_id])
     db_delete('watchers', dwatcher[:id])
-    message("Une notification vous permettra d'informer Phil lorsque le virement aura été effectué.")
+    message(MESSAGES[:notification_to_inform_phil_when_virement])
+    self.send_mail(subject:MESSAGES[:subject_mail_paiement_per_virement], message:deserb('mail_user_per_virement', self))
   end #/ remplace_watcher_paiement_par_annonce_virement
 
 end #/User

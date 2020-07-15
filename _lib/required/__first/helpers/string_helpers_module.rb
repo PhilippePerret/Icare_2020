@@ -58,6 +58,10 @@ def bureau(titre = nil)
   Tag.lien(route: "bureau/home", text:titre||'bureau de travail')
 end #/ votre_bureau
 
+def votre_bureau(titre = nil)
+  bureau(titre || 'votre bureau')
+end #/ votre_bureau
+
 def quai_des_docs(titre = nil)
   @quai_des_docs ||= Tag.lien(route:'qdd/home', text:titre||'Quai des docs').freeze
 end #/ Quai_des_docs

@@ -1,5 +1,11 @@
 <p>Bonjour Phil,</p>
 
-<p>Message du mail</p>
-
+<p><%= owner.pseudo %> vient de procéder au paiement de son module “<%= objet.absmodule.name %>”.</p>
+<p>Il faut vérifier que le virement a bien été effectué et marquer le module payé depuis ta <%= section_notifications %>.</p>
+<p>Informations précises :</p>
+<pre><code>
+ICARIEN : <%= owner.pseudo %> (#<%= owner.id %>)
+MODULE  : <%= objet.absmodule.name %> (#<%= objet.id %>)
+TARIF   : <%= objet.absmodule.tarif %>
+</code></pre>
 <p><%= le_bot %></p>

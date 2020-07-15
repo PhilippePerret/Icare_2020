@@ -1835,4 +1835,58 @@ Did you mean?  object_id
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 09:52:11 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/user_paiement.rb:42:in `remplace_watcher_paiement_par_annonce_virement'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 10:08:37 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/user_paiement.rb:42:in `remplace_watcher_paiement_par_annonce_virement'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 10:09:02 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/download/Downloader.rb:65:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/files.rb:64:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:20:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 10:16:34 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007fbbed89e710>#marion (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:146:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/user_paiement.rb:45:in `remplace_watcher_paiement_par_annonce_virement'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 10:18:15 +0200 --- FATAL ERROR:
+    Méthode manquante : #<User:0x00007f937b8a2710>#marion (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:146:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/user_paiement.rb:45:in `remplace_watcher_paiement_par_annonce_virement'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:19:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 10:19:14 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/download/Downloader.rb:65:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/files.rb:64:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:20:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-15 10:26:22 +0200 --- FATAL ERROR:
+    undefined method `[]' for nil:NilClass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/download/Downloader.rb:65:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/files.rb:64:in `download'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb:20:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

@@ -1,0 +1,10 @@
+<%
+# NB : C'est l'icarien qui est bindé à cette vue.
+%>
+<% extend StringHelpersMethods %>
+<p><%= pseudo %>,</p>
+<p>Vous avez choisi le virement bancaire pour payer votre module “<%= icmodule.absmodule.name %>”.</p>
+<p>Une notification a été préparée sur <%= votre_bureau %>, dans la section des notifications, qui vous permettra d'avertir l'administration de l'atelier Icare dès que le virement aura été effectué.</p>
+<p>En vous remerciant de votre confiance et en vous souhaitant un bon et studieux séjour à l’atelier,</p>
+<p>Bien à vous,</p>
+<%= le_bot %>
