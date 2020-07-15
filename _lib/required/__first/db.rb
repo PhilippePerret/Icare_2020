@@ -53,6 +53,14 @@ def db_last_id
   MyDB.db.last_id_of(MyDB.DBNAME)
 end
 
+# Supprime une ou plusieurs valeurs
+def db_delete(table, filter)
+  filter = {id: filter} if filter.is_a?(Integer)
+  where_clause, values = MyDB.db.treat_where_clause(filter, [])
+  request = "DELETE FROM #{table}#{where_clause}".freeze
+  db_exec(request, values)
+end #/ db_delete
+
 # Retourne les valeurs des colonnes des champs de +table+ correspondants à
 # +filter+
 # NOTE Retourne UNE SEULE valeur
@@ -67,6 +75,7 @@ def db_get(table, filter, params = {})
     candidats.first
   end
 end
+
 # Retourne toutes les rangées de +table+ correspondants à +filter+
 # +Params+
 #   +table+::[String] La table dans laquelle il faut trouver les données
@@ -81,7 +90,7 @@ def db_get_all(table, filter, params = {})
   where_clause, values = MyDB.db.treat_where_clause(filter, [])
   params[:columns] ||= '*'
   params[:columns] = params[:columns].join(', ') if params[:columns].is_a?(Array)
-  req = "SELECT #{params[:columns]||'*'} FROM #{table}#{where_clause} #{params[:request_suffix]}".strip
+  req = "SELECT #{params[:columns]||'*'} FROM #{table}#{where_clause} #{params[:request_suffix]}".strip.freeze
   db_exec(req, values)
 end
 
