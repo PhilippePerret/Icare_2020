@@ -23,7 +23,7 @@ class << self
     # Quel que soit le module, un watcher de démarrage
     owner.watchers.add(:start_module, {objet_id: icmodule_id})
     # Et un watcher de paiement
-    
+
     return icmodule_id
   end #/ create
 
@@ -65,5 +65,9 @@ end #/ name
 def icetape
   @icetape ||= IcEtape.get(icetape_id)
 end #/ icetape
+
+def montant_humain
+  @montant_humain ||= "#{absmodule.tarif}#{ISPACE}€"
+end #/ montant_humain
 
 end #/IcModule

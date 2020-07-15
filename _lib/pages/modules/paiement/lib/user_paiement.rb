@@ -39,16 +39,11 @@ class User
   # détruire le watcher courant de paiement.
   def remplace_watcher_paiement_par_annonce_virement
     dwatcher = db_get('watchers', {user_id: id, wtype:'paiement_module'})
-    self.watchers.add('annonce_virement', objet_id: dwatcher[:objet_id])
     db_delete('watchers', dwatcher[:id])
+    self.watchers.add('annonce_virement', objet_id: dwatcher[:objet_id])
+    dwatannonce = db_get('watchers', {wtype:'annonce_virement', user_id: self.id})
     message(MESSAGES[:notification_to_inform_phil_when_virement])
     self.send_mail(subject:MESSAGES[:subject_mail_paiement_per_virement], message:deserb('mail_user_per_virement', self))
   end #/ remplace_watcher_paiement_par_annonce_virement
 
 end #/User
-
-class IcModule < ContainerClass
-  def montant_humain
-    @montant_humain ||= "#{absmodule.tarif}#{ISPACE}€"
-  end #/ montant_humain
-end #/IcModule

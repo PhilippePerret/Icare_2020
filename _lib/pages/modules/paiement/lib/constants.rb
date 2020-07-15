@@ -4,7 +4,7 @@
 =end
 
 UI_TEXTS.merge!({
-  button_download_iban: "Télécharger l’IBAN de Phil".freeze,
+  button_download_iban: "Télécharger l’IBAN de Philippe Perret".freeze,
 })
 
 MESSAGES.merge!({

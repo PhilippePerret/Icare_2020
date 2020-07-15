@@ -2,7 +2,11 @@
 =begin
   Module de test du paiement
 =end
+# Pour les constantes
 require './_lib/pages/modules/paiement/lib/constants'
+require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
+require './_lib/_watchers_processus_/_constants_'
+
 feature "Paiement d'un module d'apprentissage" do
 
 
@@ -69,8 +73,6 @@ feature "Paiement d'un module d'apprentissage" do
     expect(page).to have_notification(wtype:'annonce_virement'),
       "Marion devrait trouver une notification d'annonce de virement"
 
-    # Pour les constantes
-    require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
 
     pitch("Elle trouve une notification pour annoncer le virement et clique sur le bouton.")
     click_on(UI_TEXTS[:button_confirm_virement])
