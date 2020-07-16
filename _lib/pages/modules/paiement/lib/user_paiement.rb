@@ -1,13 +1,17 @@
 # encoding: UTF-8
+require_relative('AIPaiement')
+require_relative('constants')
 class User
 
   attr_reader :paiement # Instance AIPaiement (quand on revient du paiement)
 
   def has_paiement?
-    true # TODO
+    db_count('watchers', {wtype:'paiement_module', user_id: self.id}) > 0
   end #/ has_paiement?
   def paiement_overcomen?
-    true # TODO
+    return false unless has_paiement?
+    dpaiement = db_get('watchers', {wtype:'paiement_module', user_id: self.id})
+    Time.now.to_i > dpaiement[:triggered_at]
   end #/ paiement_overcomen?
 
   # On ajoute un paiement pour le module +icmodule_id+ qu'on peut passer
@@ -34,14 +38,24 @@ class User
     Actualite.add('REALICARIEN', self.id, MESSAGES[:actu_real] % {pseudo:pseudo, e:fem(:e), ne:fem(:ne)})
   end #/ set_real
 
+  def simple_watcher_pour_virement
+    add_watcher_pour_virement
+    message(MESSAGES[:annonce_new_notif_virement])
+  end #/ simple_watcher_pour_virement
+
+  # Cette méthode est commune au chargement de l'IBAN et au simple signalement
+  # de paiement
+  def add_watcher_pour_virement
+    dwatcher = db_get('watchers', {user_id: id, wtype:'paiement_module'})
+    db_delete('watchers', dwatcher[:id])
+    self.watchers.add('annonce_virement', objet_id: dwatcher[:objet_id], vu_user:false)
+  end #/ add_watcher_pour_virement
+
   # En cas de volonté de paiement par IBAN
   # pour ajouter le watcher permettant d'annoncer le virement effectué et pour
   # détruire le watcher courant de paiement.
   def remplace_watcher_paiement_par_annonce_virement
-    dwatcher = db_get('watchers', {user_id: id, wtype:'paiement_module'})
-    db_delete('watchers', dwatcher[:id])
-    self.watchers.add('annonce_virement', objet_id: dwatcher[:objet_id])
-    dwatannonce = db_get('watchers', {wtype:'annonce_virement', user_id: self.id})
+    add_watcher_pour_virement
     message(MESSAGES[:notification_to_inform_phil_when_virement])
     self.send_mail(subject:MESSAGES[:subject_mail_paiement_per_virement], message:deserb('mail_user_per_virement', self))
   end #/ remplace_watcher_paiement_par_annonce_virement

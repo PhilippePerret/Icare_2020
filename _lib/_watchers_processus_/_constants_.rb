@@ -46,6 +46,7 @@ DATA_WATCHERS = {
   },
   confirm_virement: {
     titre: 'Confirmation du virement IBAN'.freeze,
+    titre_mail_user: 'Votre facture'.freeze,
     relpath: 'IcModule/confirm_virement'.freeze,
     actu_id: nil,
     next: nil

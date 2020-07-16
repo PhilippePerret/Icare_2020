@@ -66,7 +66,7 @@ def traite
   # Envoyer la facture à l'utilisateur (avec un lien vers la politique
   # de confidentialité)
   owner.send_mail({
-    subject: 'Facture de paiement'.freeze,
+    subject: MESSAGES[:votre_facture],
     message: deserb('mail_user', self)
   })
 end #/ traite

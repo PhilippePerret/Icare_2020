@@ -19,7 +19,8 @@ class HTML
       user.remplace_watcher_paiement_par_annonce_virement
       download(File.join(PUBLIC_FOLDER,'IBAN_Icare.pdf'), 'IBAN_Icare.zip')
     elsif param(:op) == 'per_virement'
-      user.remplace_watcher_paiement_par_annonce_virement
+      user.simple_watcher_pour_virement
+      redirect_to 'bureau/notifications'
     elsif param(:op) == 'ok'
       # Le paiement a été effectué avec succès, on peut enregistrer
       # ce paiement pour l'user

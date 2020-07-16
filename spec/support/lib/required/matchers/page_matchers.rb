@@ -9,6 +9,7 @@ RSpec::Matchers.define :have_notification do |params|
   match do |page|
     # On doit déjà se trouver dans la page des notifications
     if page.has_css?('h2.page-title', text:'Notifications')
+      params = {id: params} if params.is_a?(Integer)
       if params.key?(:id)
         if params[:id].is_a?(Array)
           candidats = params[:id]
@@ -86,6 +87,8 @@ end # /have_notification
 
 RSpec::Matchers.alias_matcher :have_notifications, :have_notification
 
+
+
 RSpec::Matchers.define :have_titre do |expected, options|
   match do |page|
     @errors = []
@@ -129,6 +132,6 @@ RSpec::Matchers.define :have_titre do |expected, options|
     "Le titre de la page est à peu près “#{expected.source}”."
   end
   failure_message do
-    "Mauvais titre de page : #{@errors.join(VG)}."
+    "Mauvaise page : #{@errors.join(VG)}."
   end
 end #/have_titre

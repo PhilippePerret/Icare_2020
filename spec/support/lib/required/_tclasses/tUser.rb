@@ -110,7 +110,9 @@ def en_pause?
   option(16) == 8
 end #/ en_pause?
 
-
+def real?
+  option(24) == 1
+end #/ real?
 
 # ---------------------------------------------------------------------
 #
@@ -135,8 +137,18 @@ end #/ data
 def id        ; @id       ||= data[:id]       end
 def pseudo    ; @pseudo   ||= data[:pseudo]   end
 def mail      ; @mail     ||= data[:mail]     end
-def password  ; @password ||= data[:password] end
 def options   ; @options  ||= data[:options]  end
+def password
+  @password ||= begin
+    pwd = data[:password]
+    if pwd.nil?
+      puts "data: #{data.inspect}"
+      # raise("Le mot de passe ne devrait pas pouvoir être nil")
+      pwd = 'motdepasse'
+    end
+    pwd
+  end
+end
 
 def reset
   @data = nil

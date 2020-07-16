@@ -11,21 +11,25 @@ class TActualites
     # +user_id+ contient +searched+
     def exists?(params)
       nombre_candidats = self.find(params).count
-      if nombre_candidats == 0
+      if params.key?(:only_one)
+        params.delete(:only_one)
+        params.merge!(count: 1)
+      end
+      if nombre_candidats == 0 && params[:count] != 0
         self.error = "aucun actualité trouvé"
         return false
-      elsif params.key?(:only_one)
-        if nombre_candidats > 1
-          self.error = "il y a plus d'une seule actualité (#{nombre_candidats})"
-          return false
-        else
+      elsif params.key?(:count)
+        if nombre_candidats == params[:count]
           return true
+        else
+          self.error = "on attendait #{params[:count]} actualité(s), il y en a #{nombre_candidats}"
         end
       else
         return nombre_candidats > 0
       end
     end #/ exists?
     alias :has_actualite? :exists?
+    alias :has_actu? :exists?
     alias :has_item? :exists?
 
     def error= msg
@@ -36,6 +40,9 @@ class TActualites
     # le message +searched+
     def find(params)
       pr = proc { |tactu| tactu }
+      if params.key?(:user_id)
+        pr = pr >> proc {|tactu| tactu if tactu && tactu.user_id == params[:user_id]}
+      end
       if params.key?(:type)
         pr = pr >> proc {|tactu| tactu if tactu && tactu.type == params[:type]}
       end

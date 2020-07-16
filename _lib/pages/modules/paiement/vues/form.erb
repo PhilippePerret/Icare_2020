@@ -25,6 +25,6 @@ CLIENT_ID = SANDBOX ? 'AcA_9RCWQsSa0STmdpcgX2nE61kSI6YNRmwFpP58LO-59KqtkTkPnb8mE
 
 <p class="mt4">Vous pouvez également régler par virement. Deux cas peuvent se présenter, choisissez celui qui correspond à votre situation :</p>
 <ul>
-  <li><a href="<%= route.to_s %>?op=per_virement">Vous avez déjà ajouté Philippe Perret comme bénéficiaire sur votre compte bancaire</a>.</li>
+  <li class="mb1">Vous avez déjà ajouté Philippe Perret comme bénéficiaire sur votre compte bancaire et vous voulez <a href="<%= route.to_s %>?op=per_virement"><%= UI_TEXTS[:button_signale_virement] %></a>.</li>
   <li><a href="<%= route.to_s %>?op=downloadiban"><%= UI_TEXTS[:button_download_iban] %></a> pour l’enregistrer comme bénéficiaire sur votre compte et procédez à un virement ponctuel de <%= user.icmodule.montant_humain %>.</li>
 </ul>
