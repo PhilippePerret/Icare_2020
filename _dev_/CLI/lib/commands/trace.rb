@@ -73,23 +73,38 @@ SSH`
 end #/<<self
 end #/IcareCLI
 
-TracerLine = Struct.new(:time, :ip, :id, :message, :data) do
+TracerLine = Struct.new(:time, :ip, :id, :message, :datastr) do
   attr_accessor :seen
   def out
     msg = []
     msg << Time.at(time).strftime('%d %m %H:%M'.freeze)
     msg << ip_formated
-    msg << id.ljust(17)
+    msg << id.ljust(15)
+    msg << pseudo_if_identified
     msg << message.to_s
     msg = msg.join(' | '.freeze)
     msg = msg.rouge if error?
     return msg
   end #/ out
 
+  def data
+    @data ||= JSON.parse(datastr.strip)
+  end #/ data
+
   def error?
     # puts "id:#{id.inspect} / !!id.match?(/(ERROR|ERREUR)/) = #{(!!id.match?(/(ERROR|ERREUR)/)).inspect}"
     !!id.match?(/(ERROR|ERREUR)/)
   end #/ error?
+
+  def pseudo_if_identified
+    if data.key?('user')
+      ps = TracerUser.new(*data['user']).pseudo
+      ps = ps[0...10] + '…' if ps.length > 10
+      ps
+    else
+      ''
+    end.ljust(10)
+  end #/ pseudo_if_identified
 
   def ip_formated
     if ip.length > 15
@@ -99,3 +114,7 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :data) do
     end.ljust(16)
   end #/ ip_formated
 end
+
+TracerUser = Struct.new(:id, :pseudo, :mail) do
+  
+end #/TracerUser
