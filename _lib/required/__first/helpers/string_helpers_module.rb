@@ -62,6 +62,10 @@ def votre_bureau(titre = nil)
   bureau(titre || 'votre bureau')
 end #/ votre_bureau
 
+def vos_notifications(titre = nil)
+  @vos_notifications ||= Tag.lien(route:'bureau/notifications'.freeze, text:titre||'vos notifications'.freeze).freeze
+end #/ vos_notifications
+
 def quai_des_docs(titre = nil)
   @quai_des_docs ||= Tag.lien(route:'qdd/home', text:titre||'Quai des docs').freeze
 end #/ Quai_des_docs
