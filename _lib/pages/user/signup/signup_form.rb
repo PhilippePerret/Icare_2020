@@ -60,25 +60,26 @@ class HTML
       end
     end
     [
-      ['<explirequire>','explication',"Les champs marqués d'un#{SPAN_REQUIRED} sont obligatoires.".freeze],
-      ['🗿 Identité', 'titre'],
-      ['Pseudo*', 'text'],
-      ['Patronyme','text'],
-      ['Naissance*', 'select', nil, (1960..(Time.now.year - 16))],
-      ['Vous êtes…*', 'select', 'usexe', [['F','une femme'],['H','un homme'],['X','autre']]],
-      ['🔐 Contact et accès au site', 'titre'],
-      ['Mail*', 'text'],
-      ['Confirmer mail*', 'text', 'umail_conf'],
+      ['<explirequire>',STRINGS[:explication],"Les champs marqués d'un#{SPAN_REQUIRED} sont obligatoires.".freeze],
+      ['🗿 Identité', STRINGS[:titre]],
+      ['Pseudo*', TEXT],
+      ['Patronyme',TEXT],
+      ['Naissance*', SELECT, nil, (1960..(Time.now.year - 16))],
+      ['Vous êtes…*', SELECT, 'usexe', [['F','une femme'],['H','un homme'],['X','autre']]],
+      ['🔐 Contact et accès au site', STRINGS[:titre]],
+      ['Mail*', TEXT],
+      ['Confirmer mail*', TEXT, 'umail_conf'],
       ['Mot de passe<span class="small"> (MdP)</span>*', 'password', 'upassword'],
       ['Confirmer MdP*', 'password', 'upassword_conf'],
       ['CGU*', 'checkbox', 'ucgu', '<span class="small">J’accepte les <a href="http://www.atelier-icare.net/CGU_Atelier_ICARE.pdf" target="_blank">Conditions Générales d’Utilisation</a> de l’atelier Icare.</span>'.freeze],
       ['RGPD*', 'checkbox', 'urgpd', '<span class="small">En cochant cette case vous approuvez la <a href="overview/policy" target="_blank">Politique de confidentialité</a> de l’atelier en matière de protection et d’utilisation des données.</span>'.freeze],
-      ['📃 Documents de présentation', 'titre'],
+      ['📃 Documents de présentation', STRINGS[:titre]],
       ary_presentation,
       ary_motivation,
       ary_extrait,
-      ['💼 Choix des modules*', 'titre'],
-      ['explichoixdoc', 'explication', "Choisissez le ou les modules qui vous intéressent. Noter que Phil ne vous en attribuera qu'un seul. Lors de l’étude de votre candidature, Phil pourra discuter avec vous de la pertinence du choix du module en fonction de vos aspirations.".freeze],
+      ['💼 Choix des modules*', STRINGS[:titre]],
+      ['explichoixdoc', STRINGS[:explication], "Choisissez le ou les modules qui vous intéressent. Noter que Phil ne vous en attribuera qu'un seul. Lors de l’étude de votre candidature, Phil pourra discuter avec vous de la pertinence du choix du module en fonction de vos aspirations.".freeze],
+      ['<liendescmodules/>', 'raw', "#{FLECHE} Voir la <a href=\"modules/home\" target=\"_blank\">description des modules</a>."],
       ['<Modules optionned/>', 'raw', cbs_modules, nil, {nogrid: true}]
     ]
   end #/ data_form

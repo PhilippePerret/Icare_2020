@@ -7,8 +7,10 @@ STRINGS = {
   destroy: 'destroy'.freeze,
   discussion: 'discussion'.freeze,
   download: 'download'.freeze,
+  explication:'explication'.freeze,
   home: 'home'.freeze,
   inviter: 'inviter'.freeze,
+  titre:'titre'.freeze,
 }
 
 AND = ' AND '.freeze
