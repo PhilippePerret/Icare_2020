@@ -9,7 +9,12 @@ class HTML
   def exec
     admin_required
     if param(:op) == 'evaluate'
-      send("evaluate_as_#{param(:language)}")
+      begin
+        send("evaluate_as_#{param(:language)}".freeze)
+      rescue Exception => e
+        log(e)
+        @resultat = "ERROR: #{e.message.gsub(/</,'&lt;')}#{RC}Consulter le journal pour le détail".freeze
+      end
     end
   end # /exec
 

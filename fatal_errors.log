@@ -1954,4 +1954,11 @@ Did you mean?  object_id
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-17 11:13:42 +0200 --- FATAL ERROR:
+    undefined local variable or method `e' for #<HTML:0x00007fc614950f60>
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/console/html.rb:14:in `rescue in exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/console/html.rb:12:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'
