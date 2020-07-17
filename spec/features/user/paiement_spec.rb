@@ -29,7 +29,16 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
     DEF
   end
 
-  scenario "un icarien peut payer par virement bancaire" do
+
+
+
+
+
+
+
+
+
+  scenario "un icarien peut payer par virement bancaire", only:true do
     degel('marion_avec_paiement')
     pitch("Marion va rejoindre son bureau pour payer son module d'apprentissage.")
 
@@ -97,19 +106,60 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
     # Un nouveau watcher 'valide_paiement' doit avoir été instancié
     expect(marion).to have_watcher(wtype:'confirm_virement', after:start_time)
     pitch("Un nouveau watcher pour valider le paiement a été produit, et le précédent a été détruit.")
+    wch_conf_paie_id = $watcher_id
     logout
 
     # Je peux venir marquer le paiement effectué
-    pitch("Après avoir vérifié que le virement avait bien été effectué, je reviens pour entériner le paiement.")
+    pitch("Après avoir vérifié que le virement avait bien été effectué sur mon compte bancaire, je reviens pour entériner le paiement. Cela transformera Marion en vraie icarienne, ce qui sera annoncé dans les actualités.")
     phil.rejoint_ses_notifications
 
-    # FAIRE LA SUITE
-    # TODO
+    screenshot('notifs-phil-apres-marion-confirm-paiement')
+    expect(page).to have_notification(wch_conf_paie_id)
+
+    # === Je procède à la validation ===
+    within("div#watcher-#{wch_conf_paie_id}") do
+      click_on('Confirmer le paiement'.freeze)
+    end
+    screenshot('phil-confirm-virement-marion')
+
+    marion.reset
+
+    # Le module est marqué payé
+    record_paiement = db_get('paiements', {icmodule_id: marion.icmodule_id})
+    expect(record_paiement).not_to be(nil),
+      "Un nouvel enregistrement de paiement, pour le module, devrait avoir été enregistré."
+    pitch("Le module a bien été marqué payé (un nouveau paiement a été effectué pour lui)")
+    # Marion a reçu un mail de confirmation
+    expect(marion).to have_mail(after: start_time, subject:MESSAGES[:votre_facture])
+    pitch("Marion a reçu un mail avec sa facture")
+    # Marion devient une vrai icarienne
+    expect(marion).to be_real
+    pitch("Marion devient une vraie icarienne")
+    # Une actualité annonce que Marion est devenue une vraie icarienne
+    expect(TActualites).to have_actualite(user_id: marion.id, type:'REALICARIEN', after: start_time)
+    pitch("Une actualité annonce que Marion est devenue une vraie icarienne.")
+    # Pas d'autre paiement
+    expect(marion).not_to have_watcher(wtype: 'paiement_module'),
+      "Marion ne devrait plus avoir de matcher de paiement"
+    pitch("Comme le module n'est pas à durée indéterminée, il n'est pas à repayer, pas de nouveau matcher de paiement")
 
   end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   context 'un icarien m’ayant déjà mis en bénéficiaire' do
-    scenario 'peut directement informer du virement', only:true do
+    scenario 'peut directement informer du virement' do
 
       pitch("Marion, qui a déjà téléchargé mon IBAN, et m'a mis en bénéficiaire, veut simplement m'informer de son virement. Elle peut rejoindre son bureau pour le faire.")
 
@@ -206,7 +256,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       pitch("Marion a reçu un mail avec sa facture")
       # Marion devient une vrai icarienne
       expect(marion).to be_real
-      pitch("Marion devient une vraie icarien")
+      pitch("Marion devient une vraie icarienne")
       # Une actualité annonce que Marion est devenue une vraie icarienne
       expect(TActualites).to have_actualite(user_id: marion.id, type:'REALICARIEN', after: start_time)
       pitch("Une actualité annonce que Marion est devenue une vraie icarienne.")
