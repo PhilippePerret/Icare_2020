@@ -124,6 +124,10 @@ feature "Validation d'une inscription" do
 
   end
 
+
+
+
+
   context 'par un icarien quelconque' do
     scenario 'il ne peut pas valider une inscription' do
 
