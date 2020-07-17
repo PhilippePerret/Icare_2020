@@ -8,8 +8,8 @@
 
 ONLINE  = ENV['HTTP_HOST'] != "localhost"
 OFFLINE = !ONLINE
-DB_NAME       = 'icare'
-DB_TEST_NAME  = 'icare_test'
+DB_NAME         = ONLINE ? 'icare_db' : 'icare'
+DB_TEST_NAME    = 'icare_test'
 
 APP_FOLDER      = File.dirname(LIB_FOLDER) unless defined?(APP_FOLDER)
 PAGES_FOLDER    = File.join(LIB_FOLDER,'pages'.freeze) unless defined?(PAGES_FOLDER)
