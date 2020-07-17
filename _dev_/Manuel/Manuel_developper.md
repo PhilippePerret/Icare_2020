@@ -369,7 +369,7 @@ En général, pour récupérer des icariens :
 | 13            |                                                              |
 | 14            |                                                              |
 | 15            |                                                              |
-| 16            | **Bit de statut** (ou d’activité)<br /><br />0 : non défini, <br />1: invité (visiteur non identifié), <br />2 : candidat retenu, <br />3 : actif, <br />4 : inactif (ancien)<br />8: ? |
+| 16            | **Bit de statut** (ou d’activité)<br /><br />0 : non défini, <br />1: invité (visiteur non identifié), <br />2 : actif, <br />3 : candidat, <br />4 : inactif (ancien)<br />5 : détruit<br />6 : reçu<br />8: en pause |
 | 17            | **Bit de non contact par mail**<br />OBSOLÈTE. Cf. 26, 27 et 28 |
 | 18            | **Bit de redirection**<br />Détermine la section à rejoindre après l’identification. Cf. TODO |
 | 19            | **Bit de contact**<br />OBSOLÈTE. CF. bit 26                 |
@@ -2627,6 +2627,11 @@ expect(page).to have_titre("Mon titre grosso modo", {retour:{route:'ma/route', t
 
 > Note : on peut aussi utiliser soit seulement `:route` soit seulement `:text`.
 
+#### Tester les erreurs (`have_error(err)`)
+
+Le matcher `have_error` ou `have_erreur` permet de tester la présence ou non d'un message d'erreur dans la page.
+
+> Attention, ce message doit disparaitre au bout d'un certain temps.
 
 
 <a name="testerdb"></a>

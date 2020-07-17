@@ -3,6 +3,30 @@
   Matchers de page (Capybara::Session)
 =end
 
+RSpec::Matchers.define :have_error do |err_msg|
+  match do |page|
+    if page.has_css?('div.errors')
+      if page.has_css?('div.errors', text: err_msg)
+        return true
+      else
+        actua_msg = page.find('div.errors').text
+        @ajout = "En revanche, le message “#{actua_msg}” a été trouvé."
+        return false
+      end
+    else
+      @ajout = "Elle ne contient aucun message d’erreur.".freeze
+      return false
+    end
+  end
+  failure_message do
+    "La page devrait contenir le message d’erreur “#{err_msg}”. #{@ajout}".freeze
+  end
+  description do
+    "La page contient bien le message d’erreur “#{err_msg}”.".freeze
+  end
+end
+RSpec::Matchers.alias_matcher :have_erreur, :have_error
+
 # Matcher pour vérifier que la notification décrite par +params+ existe
 # bien dans la page.
 RSpec::Matchers.define :have_notification do |params|

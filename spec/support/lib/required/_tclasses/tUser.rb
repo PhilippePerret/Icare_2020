@@ -13,17 +13,36 @@ extend SpecModuleNavigation
 class << self
   def get(uid)
     @items ||= {}
-    @items[uid.to_i] ||= instantiate(db_get('users', uid.to_i))
+    @items[uid.to_i] ||= begin
+      @items_by_mail ||= {}
+      u = instantiate(db_get('users', uid.to_i))
+      @items_by_mail.merge!(u.mail => u)
+      u
+    end
   end #/ get
 
   def instantiate(donnees)
-    u = new(donnees[:id])
-    u.data = donnees
-    return u
+    @items ||= {}
+    @items_by_mail ||= {}
+    if @items.key?(donnees[:id])
+      @items[donnees[:id]]
+    else
+      u = new(donnees[:id])
+      u.data = donnees
+      @items.merge!(u.id => u)
+      @items_by_mail.merge!(u.mail => u)
+      return u
+    end
   end #/ instantiate
 
   def get_user_by_mail(mail)
-    instantiate(db_get('users', {mail: mail}))
+    @items_by_mail ||= {}
+    @items_by_mail[mail] ||= begin
+      @items ||= {}
+      u = instantiate(db_get('users', {mail: mail}))
+      @items.merge!(u.id => u)
+      u
+    end
   end #/ get_user_by_mail
 end # /<< self
 
@@ -32,7 +51,6 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
-attr_reader :data
 attr_accessor :session # instance MySessionCapybara
 
 
@@ -70,6 +88,29 @@ end #/ has_watcher?
 def has_mail?(params)
   TMails.has_mails?(params.merge(destinataire: self))
 end #/ has_mail?
+
+def has_etape?(detape)
+  icmodule_id || raise("#{pseudo} n'a pas de module, donc pas d'étape")
+  detape.merge!({user_id: self.id, icmodule_id: icmodule_id})
+  values = detape.values
+  wheres = detape.collect do |k, v|
+    case k
+    when :after   then "ie.created_at > ?"
+    when :before  then "ie.created_at < ?"
+    when :numero  then "ae.numero = ?"
+    else "#{k} = ?"
+    end
+  end
+  request = <<-SQL.freeze
+SELECT COUNT(ie.id)
+  FROM icetapes AS ie
+  INNER JOIN absetapes AS ae ON ie.absetape_id = ae.id
+  WHERE #{wheres.join(AND)}
+  SQL
+  res = db_exec(request, values)
+  nombre = res.first.values.first
+  return nombre == 1
+end #/ has_etape?
 
 # ---------------------------------------------------------------------
 #   Matchers de statut
@@ -125,7 +166,20 @@ def data= values
   @data = values
 end #/ data= values
 def data
-  @data ||= db_get('users', id)
+  @data ||= begin
+    ds = db_get('users', id)
+    userIdx = case ds[:pseudo]
+    when 'Benoit' then 2
+    when 'Manon'  then 1
+    when 'Phil'   then 0
+    when 'Élie'   then 3
+    else nil
+    end
+    unless userIdx.nil?
+      ds.merge!(password: DATA_SPEC_SIGNUP_VALID[userIdx][:password][:value])
+    end
+    ds
+  end
 end #/ data
 
 # ---------------------------------------------------------------------

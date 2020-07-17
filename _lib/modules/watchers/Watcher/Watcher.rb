@@ -23,6 +23,7 @@ end # /<< self
 
 # Méthode qui joue le watcher
 def run
+  require_owner_or_admin
   require_folder_processus unless folder_processus_required?
   self.send(processus.to_sym)
   _send_mails
@@ -41,6 +42,7 @@ rescue Exception => e
 end #/ run
 
 def unrun
+  require_owner_or_admin
   require_folder_processus unless folder_processus_required?
   self.send("contre_#{processus}".to_sym)
   send_contre_mails
@@ -65,6 +67,7 @@ end #/ next_watcher
 
 # Destruction du watcher
 def _destroy
+  require_owner_or_admin
   request = "DELETE FROM watchers WHERE id = #{id}"
   db_exec(request)
 end #/ _destroy
@@ -94,10 +97,16 @@ def folder_processus_required?
 end #/ folder_processus_required?
 
 def require_folder_processus
-  relpath || raise("Impossible de requérir le dossier processus voulu.")
+  relpath || raise(ERRORS[:processus_folder_unabled])
   require_folder(File.join(PROCESSUS_WATCHERS_FOLDER, relpath))
   @folder_processus_has_been_already_required = true
 end #/ require_folder_processus
+
+# Lève une exception si l'utilisateur courant n'est ni le possesseur du
+# watcher ni un administrateur
+def require_owner_or_admin
+  user.admin? || user.id == owner.id || raise(ERRORS[:owner_or_admin_required] % user.pseudo)
+end #/ require_owner_or_admin
 
 # Retourne true si le watcher a été vu par l'icarien +who+
 def vu_par?(who)

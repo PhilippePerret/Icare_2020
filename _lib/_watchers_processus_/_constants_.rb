@@ -29,7 +29,7 @@ DATA_WATCHERS = {
   },
   # --- LES MODULES ---
   start_module:  {
-    titre:  'Démarrage du module',
+    titre:  'Démarrage du module d’apprentissage',
     relpath:'IcModule/start',
     actu_id: 'STARTMOD'
   },
