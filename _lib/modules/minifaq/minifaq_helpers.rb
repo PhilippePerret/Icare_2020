@@ -21,12 +21,12 @@ class << self
   # +target_id+     Identifiant du module ou de l'étape
   def form(target_type, target_id)
     require_module('form')
-    form = Form.new(id:'form-minifaq', route:route.to_s, libelle_size:0, value_size: 500, class:'noborder nomargin')
+    form = Form.new(id:'form-minifaq', route:route.to_s, value_size: '100%', class:'nolibelle noborder nomargin')
     rows = {
       'ope-minifaq' => {name:'ope', type:'hidden', value: 'minifaq-add-question'},
       'target-type' => {name:'minifaq_target_type', value:target_type, type:'hidden'},
       'target-id'   => {name:'minifaq_target_id', value:target_id, type:'hidden'},
-      '<Question/>' => {name:'minifaq_question', type:'textarea', height:48, class:'w100pct', placeholder:"Question à poser sur #{target_type==:absmodule ? 'ce module' : 'cette étape'}"}
+      '<Question/>' => {name:'minifaq_question', type:'textarea', height:140, class:'w100pct', placeholder:"Question à poser sur #{target_type==:absmodule ? 'ce module' : 'cette étape'}"}
     }
     if user.guest? || user.admin?
       rows.merge!({
@@ -42,7 +42,7 @@ class << self
     form.submit_button = "Poser cette question"
     form.submit_button_class = 'very small'
 
-    '<div class="mt2 italic">Posez votre propre question si vous n’avez pas encore votre réponse :</div>'.freeze +
+    '<div class="mt2 italic">Posez votre propre question si vous n’avez pas trouvé votre réponse :</div>'.freeze +
     form.out
   end #/ form
 

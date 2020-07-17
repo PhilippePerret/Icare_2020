@@ -72,9 +72,13 @@ class Form
 
   def form_style
     @form_style ||= begin
-      sty = []
-      sty << "width:#{form_size};" unless form_size.nil?
-      sty.empty? ? '' : " style=\"#{sty.join(';')}\""
+      if data[:style]
+        " style=\"#{data[:style]}\""
+      else
+        sty = []
+        sty << "width:#{form_size};" unless form_size.nil?
+        sty.empty? ? '' : " style=\"#{sty.join(';')}\""
+      end
     end
   end #/ form_style
 
@@ -84,7 +88,11 @@ class Form
   def form_size
     @form_size ||= begin
       if no_libelle?
-        'auto'
+        if data[:value_size] == '100%'
+          '100%;box-sizing:border-box'
+        else
+          'auto'
+        end
       elsif data.key?(:size)
         "#{data[:size]}px"
       elsif libelle_size || value_size

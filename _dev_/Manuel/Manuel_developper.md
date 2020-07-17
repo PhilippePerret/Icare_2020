@@ -2559,6 +2559,51 @@ icare degel[ <nom_du_gel>]
 > Si on n’indique pas de nom de dégel, la liste des tous les gels est présentée pour un choix facile et rapide.
 
 
+<a name="testuser"></a>
+
+### Tester l'utilisateur (l'icarien)
+
+Il existe de nombreuses méthodes qui facilitent le travail sur un utilisateur.
+
+La classe utilisée est la classe `TUser` qui ressemble beaucoup à la classe `User` du site. Mais de nombreuses méthodes permettent de mieux gérer l'utilisateur au niveau du TDD comme au niveau des tests. On trouve ci-dessous une liste non exhaustive des méthodes intéressantes.
+
+#### Les méthodes "rejoint une section"
+
+Ces méthodes  définies dans [./spec/support/lib/required\/\_tclasses/TUser\_tdd.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/support/lib/required/_tclasses/TUser_tdd.rb) permettent de faire rejoindre une section par un utilisateur identifié de façon très simple :
+
+~~~ruby
+marion.rejoint_son_bureau
+benoit.rejoint_ses_notifications
+phil.rejoint_le_site
+~~~
+
+>  Noter que `marion`, `benoit` et `phil` sont ici des instances de `TUsers`. On trouve aussi `elie` et tous les icariens créés pour les gels.
+
+Voir toutes les autres méthodes dans le fichier ci-dessus.
+
+#### Les méthods matchers
+
+Les méthodes définies dans [./spec/support/lib/required/_tclasses/tUser.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/support/lib/required/_tclasses/tUser.rb) permettent de faire des tests simples sur l'icarien.
+
+Par exemple (voir toutes les autres méthodes dans le fichier ci-dessus) :
+
+~~~ruby
+expect(marion).to be_real
+# Produit un succès si Marion est une vraie icarienne
+
+expect(benoit).to be_en_pause
+# Produit un échec si Benoit n'est pas en pause
+
+expect(elie).to have_watcher('le_type_du_watcher', after: start_test_time)
+# Produit un succès si Élie possède un watcher de ce type généré
+# après le temps donnée
+
+expect(phil).to have_mail(subject:'mon sujet', before: ce_temps)
+# Produit un échec si Phil n'a pas reçu de mail avec ce titre
+# avant le temps donné.
+~~~
+
+
 
 <a name="testpage"></a>
 

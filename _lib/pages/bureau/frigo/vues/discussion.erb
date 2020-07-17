@@ -70,7 +70,7 @@ end #/ fi param(:disid)
 #   FORMULAIRE EN BAS DE PAGE
 #
 # ---------------------------------------------------------------------
-form = Form.new(id:'discussion-form', route:route.to_s, class:'noborder w100pct nopadding nomargin', value_size:740, libelle_size:0)
+form = Form.new(id:'discussion-form', route:route.to_s, class:'noborder nopadding nomargin nolibelle', style:'width:140%')
 form.rows = {
   '<message/>'    => {name:'frigo_message', type:'textarea', height:120, value:param(:frigo_message), placeholder:'Votre réponse'.freeze},
   '<op/>'         => {name:'op', type:'hidden', value:'add'},
