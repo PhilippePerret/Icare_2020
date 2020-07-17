@@ -51,11 +51,11 @@ class HTML
   end #/ relocation_if_download
 
   def build_head
-    @head = <<-HTML
+    @head = <<-HTML.freeze
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <base href="http://localhost/AlwaysData/Icare_2020/">
+  <base href="#{App::URL}/">
   <title>Atelier Icare#{@raw_titre ? " | #{@raw_titre}" : ""}</title>
   <link rel="shortcut icon" href="./img/favicon.png?2020" type="image/png">
   <link rel="icon" href="./img/favicon.png?2020" type="image/png">
