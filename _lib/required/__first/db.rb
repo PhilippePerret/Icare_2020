@@ -1,5 +1,5 @@
 # encoding: UTF-8
-# require 'mysql'
+require 'mysql2'
 
 REQUEST_INSERT = 'INSERT INTO %{table} (%{columns}) VALUES (%{interro})'.freeze
 REQUEST_UPDATE = 'UPDATE %{table} SET %{columns} WHERE id = ?'.freeze

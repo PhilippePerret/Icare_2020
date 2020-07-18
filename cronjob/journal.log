@@ -1,40 +1,18 @@
---- CRON JOB DU 2020-07-18 08:30:00 +0200 ---
-nettoie_signups_folder a déjà été joué aujourd'hui
+--- CRON JOB DU 2020-07-18 16:00:01 +0200 ---
+L'heure n'est pas venue pour nettoie_signups_folder : attendu:1 / actuelle:16
+L'heure n'est pas venue pour mail_actu_quotidien : attendu:2 / actuelle:16
+L'heure n'est pas venue pour mail_actu_hebdo : attendu:2 / actuelle:16
 
 
 
---- CRON JOB DU 2020-07-18 08:35:01 +0200 ---
-nettoie_signups_folder a déjà été joué aujourd'hui
-
-
-
---- CRON JOB DU 2020-07-18 08:40:01 +0200 ---
-nettoie_signups_folder a déjà été joué aujourd'hui
-
-
-
---- CRON JOB DU 2020-07-18 08:45:01 +0200 ---
-nettoie_signups_folder a déjà été joué aujourd'hui
-
-
-
---- CRON JOB DU 2020-07-18 08:50:00 +0200 ---
-nettoie_signups_folder a déjà été joué aujourd'hui
-
-
-
---- CRON JOB DU 2020-07-18 08:55:00 +0200 ---
-nettoie_signups_folder a déjà été joué aujourd'hui
-
-
-
---- CRON JOB DU 2020-07-18 09:00:00 +0200 ---
-nettoie_signups_folder a déjà été joué aujourd'hui
-
-
-
---- CRON JOB DU 2020-07-18 09:05:00 +0200 ---
-nettoie_signups_folder a déjà été joué aujourd'hui
-
-
-
+FATAL ERROR: /Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/_required/classes/CJUser.rb:34: syntax error, unexpected keyword_end
+end #/ mail_quotidien?
+   ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/_required/classes/CJUser.rb:40: syntax error, unexpected end-of-input, expecting keyword_end
+/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/required.rb:10:in `block in <top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/required.rb:10:in `each'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/required.rb:10:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `<main>'

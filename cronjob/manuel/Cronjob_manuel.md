@@ -26,15 +26,30 @@ Pour ce faire, un `crontab -e` a été réglé sur le site distant pour appeler 
 
 ### Définition des travaux
 
+Les travaux se définissent dans le fichier [./cronjob/data/data_works_definition.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/data/data_works_definition.rb). La donnée `DATA_WORKS_FIRST_DEFINITION` permet de définir tous les jobs au départ. Voir la [procédure d’ajout de nouveaux travaux](#ajout-travaux) lorsque le cronjob a déjà été joué.
+
+Chaque job définit :
+
 ~~~ruby
 
 {
   id: 		String,		# Un identifiant unique, par exemple 'nettoyage_signup_folder'
   every:	Integer,	# Fréquence. Par exemple 10.days (tous les 10 jours), 1.hour (toutes les
   									# heures) etc.
+  day:		Integer,  # Le jour où le job doit être effectué (lundi = 1)
   at:			Integer,	# L'heure précise à laquelle il faut effectuer l'opération. Un entier entre
  										# 22 et 4 (22 heures du soir et 4 heures du matin)
-  proc:		Proc,			# La procédure à exécuter
+  exec:		String,		# Le code à évaluer pour faire le travail. Le plus souvent, une méthode d'objet
+  									# définie dans le dossier des modules.
 }
 ~~~
 
+
+
+<a name="ajout-travaux"></a>
+
+### Ajout de nouveaux travaux
+
+Quand le cronjob a déjà été joué  (i.e. que le fichier `data_last_work.msh` a été produit), il suffit de définir la donnée `DATA_ADDED_WORKS` dans le fichier [./cronjob/data/data_works_definition.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/data/data_works_definition.rb) pour définir les nouveaux jobs à prendre en compte. Ne pas oublier, après la première utilisation, de remettre cette donnée à rien (même si ça n’est pas rédhibitoire puisque les clés ne feront que se remplacer).
+
+Noter qu’on peut aussi ajouter les nouveaux travaux dans ``DATA_WORKS_FIRST_DEFINITION``, mais que toutes les données courantes seront alors perdues (ce qui n’est finalement pas bien grave, entendu que les seules données qui changent sont, pour le moment, la date de dernière exécution).

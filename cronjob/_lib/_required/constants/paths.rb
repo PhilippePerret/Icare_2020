@@ -5,6 +5,7 @@
 
 DATA_FOLDER = File.join(CRON_FOLDER,'data')
 LIB_FOLDER  = File.join(CRON_FOLDER,'_lib')
+MODULES_FOLDER  = File.join(LIB_FOLDER,'modules')
 
 # Chemin d'accès au fichier contennant les données sur les
 # dernières étapes

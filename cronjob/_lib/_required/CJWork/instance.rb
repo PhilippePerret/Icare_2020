@@ -15,6 +15,9 @@ end #/ initialize
 # Méthode principale qui joue le travail (mais seulement s'il n'a
 # pas encore été joué)
 def run
+  if required
+    Cronjob.require_module(self.required)
+  end
   # On exécute le job
   eval(exec)
   # On mémorise sa date de dernière exécution
@@ -30,6 +33,10 @@ def time_has_come?
   end
   if at && NOW.hour != at
     puts "L'heure n'est pas venue pour #{id} : attendu:#{at} / actuelle:#{NOW.hour}"
+    return false
+  end
+  if day && NOW.wday != day
+    puts "Le jour n'est pas venu pour #{id}. Attendu:#{day} / actuel:#{NOW.wday}"
     return false
   end
   return true
@@ -52,9 +59,10 @@ end #/ ran_today?
 # ---------------------------------------------------------------------
 #   NON VOLATILE PROPERTIES
 # ---------------------------------------------------------------------
-def id ; @id ||= data[:id] end
-def every ; @every ||= data[:every] end
-def at ; @at ||= data[:at] end
-def exec ; @exec ||= data[:exec] end
+def id; @id ||= data[:id] end
+def every; @every ||= data[:every] end
+def required; @required ||= data[:required] end
+def at; @at ||= data[:at] end
+def exec; @exec ||= data[:exec] end
 
 end #/CJWork

@@ -24,6 +24,7 @@ end #/ run_each_work
 
 # Chargement des travaux (définition de DATA_WORKS et self.works)
 def load
+  require './cronjob/data/data_works_definition'
   if File.exists?(DATA_WORKS_PATH)
     File.open(DATA_WORKS_PATH,'rb') do |f|
       DATA_WORKS.merge!(Marshal.load(f.read))
@@ -32,7 +33,7 @@ def load
     DATA_WORKS.merge!(define_init_works)
   end
   # On ajoute les travaux ajoutés
-  DATA_WORKS.merge!(added_works) unless added_works.empty?
+  DATA_WORKS.merge!(added_works) unless DATA_ADDED_WORKS.empty?
 end #/ load
 
 # Sauvegarde de l'état actuel des travaux
@@ -50,20 +51,21 @@ private
   # Définit les jobs et les renvoie
   # Pour la définition des travaux, voir le mode d'emploi
   def define_init_works
-    hworks = {}
-    [
-      {id: 'nettoie_signups_folder', every: 10.days, at: 1}
-    ].each do |dwork|
-      cj = CJWork.new(dwork)
-      hworks.merge!(cj.id => cj)
-    end
-    return hworks
+    instancie_works(DATA_WORKS_FIRST_DEFINITION)
   end #/ define_init_works
 
   # Permet d'ajouter des jobs
   def added_works
-    {}
+    instancie_works(DATA_ADDED_WORKS)
   end #/ added_works
 
+  def instancie_works(arr_works)
+    hws = {}
+    arr_works.each do |dwork|
+      cj = CJWork.new(dwork)
+      hws.merge!(cj.id => cj)
+    end
+    return hws
+  end #/ instancie_works
 end # /<< self
 end #/CJWork
