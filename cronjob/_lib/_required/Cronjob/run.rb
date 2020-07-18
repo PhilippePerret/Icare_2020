@@ -6,9 +6,12 @@
 class Cronjob
 class << self
   def run
-    puts "J'écrie une première phrase à #{Time.now}."
+    init
+    CJWork.run_each_work
+    finish
   rescue Exception => e
-    erreur(e)
+    puts "RUN ERROR: #{e.message}"
+    puts e.backtrace.join("\n")
   end #/ run
 end # /<< self
 end #/Cronjob

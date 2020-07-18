@@ -4,4 +4,4 @@
 =end
 
 # Requérir tout le dossier des requis
-Dir["#{THISFOLDER}/_lib/_required/**/*.rb"].each { |m| require m }
+Dir["#{CRON_FOLDER}/_lib/_required/**/*.rb"].each { |m| require m }

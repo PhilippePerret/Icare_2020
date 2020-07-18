@@ -10,12 +10,17 @@
     n'était pas surveillé.
 =end
 
-THISFOLDER  = File.expand_path(File.dirname(__FILE__)).freeze
-APPFOLDER   = File.dirname(THISFOLDER).freeze
+CRON_FOLDER = File.expand_path(File.dirname(__FILE__)).freeze
+APPFOLDER   = File.dirname(CRON_FOLDER).freeze
 
 # Note : pas de begin ici, pour traiter toutes les erreurs là où elles
 # se produisent afin d'obtenir un mode sans erreur.
-require_relative './_lib/required'
-Dir.chdir(APPFOLDER) do
-  Cronjob.run
+begin
+  require_relative './_lib/required'
+  Dir.chdir(APPFOLDER) do
+    Cronjob.run
+  end
+rescue Exception => e
+  puts "FATAL ERROR: #{e.message}"
+  puts e.backtrace.join("\n")
 end
