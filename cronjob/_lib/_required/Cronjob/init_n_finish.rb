@@ -9,7 +9,7 @@ class << self
   # -------------------------
   # - définit les travaux dans DATA_WORKS
   def init
-    puts "--- CRON JOB DU #{NOW} ---"
+    puts "--- CRON JOB DU #{NOW.to_s(jour:true)} ---"
     load_works
   end #/ init
 

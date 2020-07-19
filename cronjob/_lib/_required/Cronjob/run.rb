@@ -10,7 +10,7 @@ class << self
     CJWork.run_each_work
     finish
   rescue Exception => e
-    puts "RUN ERROR: #{e.message}"
+    puts "CRONJOB RUN ERROR: #{e.message}"
     puts e.backtrace.join("\n")
   end #/ run
 end # /<< self

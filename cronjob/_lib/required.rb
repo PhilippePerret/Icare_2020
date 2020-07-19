@@ -16,4 +16,6 @@ Dir["#{CRON_FOLDER}/_lib/_required/**/*.rb"].each { |m| require m }
   require m
 end
 
-MyDB.DBNAME = ONLINE ? 'icare_db' : 'icare'
+# Pour la base de données
+MyDB.DBNAME = ONLINE ? 'icare_db' : 'icare_test'
+require './_lib/data/secret/mysql' # => DATA_MYSQL

@@ -14,6 +14,12 @@ AIDE = <<-BASH
       Pour dégeler un gel (un état de l'atelier particulier)
       Ne pas mettre d'argument pour voir la liste de tous les gels.
 
+  #{'icare feed[ <what>]'.jaune}
+
+      Pour "nourrir" la base de données icare_test avec des
+      valeurs appropriées.
+
+
   LISTE DES COMMANDES
   -------------------
   - #{liste_commandes.join("\n  - ")}

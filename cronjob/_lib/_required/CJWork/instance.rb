@@ -8,6 +8,7 @@ class CJWork
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
+attr_reader :id, :every, :at, :day, :exec, :required
 def initialize data
   data.each {|k,v|instance_variable_set("@#{k}",v)}
 end #/ initialize
@@ -20,6 +21,8 @@ def run
   end
   # On exécute le job
   eval(exec)
+  # Information journal
+  puts "+ #{NOW.to_s(simple:true)} ran: #{id}"
   # On mémorise sa date de dernière exécution
   @last_run_time = NOW_S
 end #/ run
@@ -27,7 +30,7 @@ end #/ run
 # La méthode retourne true si le job courant doit être
 # joué.
 def time_has_come?
-  if ran_today?
+  if ran_today? && !ENV['CRONJOB_FORCE']
     puts "#{id} a déjà été joué aujourd'hui"
     return false
   end
@@ -54,15 +57,5 @@ alias :lrt :last_run_time
 def ran_today?
   last_run_time > TODAY_S
 end #/ ran_today?
-
-
-# ---------------------------------------------------------------------
-#   NON VOLATILE PROPERTIES
-# ---------------------------------------------------------------------
-def id; @id ||= data[:id] end
-def every; @every ||= data[:every] end
-def required; @required ||= data[:required] end
-def at; @at ||= data[:at] end
-def exec; @exec ||= data[:exec] end
 
 end #/CJWork

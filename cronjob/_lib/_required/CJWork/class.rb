@@ -18,6 +18,7 @@ def run_each_work
       work.run if work.time_has_come?
     rescue Exception => e
       puts "PROBLÈME AVEC : #{wid} : #{e.message}"
+      puts e.backtrace.join("\n")
     end
   end
 end #/ run_each_work

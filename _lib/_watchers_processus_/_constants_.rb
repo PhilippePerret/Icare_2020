@@ -91,7 +91,7 @@ DATA_WATCHERS = {
   qdd_sharing: {
     titre: 'Définition du partage des documents'.freeze,
     relpath: 'IcEtape/qdd_sharing'.freeze,
-    actu_id: "",
+    actu_id: "QDDSHARING",
     next: nil
   },
   qdd_coter: {
