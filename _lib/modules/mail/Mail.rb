@@ -5,6 +5,10 @@
   Envoi de mails
 =end
 require 'net/smtp'
+require './_lib/required/__first/Deserb'
+
+TEMP_FOLDER = File.expand_path(File.join('.','tmp','mails')) unless defined?(TEMP_FOLDER)
+DATA_FOLDER = File.expand_path(File.join('.','_lib','data')) unless defined?(DATA_FOLDER)
 
 class Mail
 class << self
@@ -17,6 +21,7 @@ class << self
   # +data+
   #   :to       Mail du destinataire
   #   :from     Mail de l'expéditeur
+  #   :subject  Sujet du message
   #   :message  Le message, au format HTML (toujours, sur l'atelier)
   #   :force    Si on est en OFFLINE, force l'envoi du mail
   #

@@ -4,42 +4,98 @@
   ------------------
   Gestion des actualités
 =end
+
+# Pour l'envoi des mails
+require './_lib/modules/mail/Mail'
+require './_lib/data/secret/phil' # => PHIL
+
 class CJActualites
 class << self
 
-  def mail_quotidien
+  def traite_mail_quotidien
     puts "* Production et envoi du mail quotidien"
     if actualites_veille.count == 0
       return rapport("Pas d'actualité de la veille => Pas de mail quotidien d'actualité")
     else
       rapport("Nombre d'actualités pour la veille : #{actualites_veille.count}")
     end
-    # Y a-t-il de nouvelles actualités ?
-    # TODO
-    # Construire le mail d'actualités
-    # TODO
+    # Les données pour le mail
+    datamail = {subject:"Activité du #{Time.veille.to_s(heure:false)}".freeze, message: nil}
+    # puts "datamail quotidien : #{datamail.inspect}"
+
     # Envoyer le mail à l'administrateur
-    # TODO
+    datamail.merge!({to: PHIL[:mail], message: mail_quotidien  % {pseudo: 'Phil'}})
+    Mail.send(datamail)
+
+    nombre_envois_quotidien = 0
     CJUser.each do |cuser|
       next if cuser.destroyed?
       next unless cuser.mail_quotidien?
-      # puts "Je vais envoyer le mail quotidien à #{cuser.pseudo}"
+      datamail.merge!(to:cuser.mail, message:(mail_quotidien % {pseudo: cuser.pseudo}))
+      Mail.send(datamail)
+      nombre_envois_quotidien += 1
     end
+    rapport("Nombre d'envois des actualités quotidiennes : #{nombre_envois_quotidien}")
   end #/ mail_quotidien
 
-  def mail_hebdomadaire
+  def traite_mail_hebdomadaire
     rapport "* Production et envoi du mail hebdomadaire"
     if actualites_semaine.count == 0
       return rapport("Aucune actualité pour la semaine passée")
     else
       rapport("Nombre d'actualités pour la semaine passée : #{actualites_semaine.count}")
     end
-    # TODO Il m'est toujours envoyé
+    # Les données d'envoi
+    datamail = {subject:'Activités de la semaine'.freeze, message: nil, to: nil}
+    # puts "datamail hebdo : #{datamail.inspect}"
+
+    # Il m'est toujours envoyé
+    Mail.send(datamail.merge!(to:PHIL[:mail], message:mail_hebdo % {pseudo:'Phil'}))
+
+    nombre_envois_hebdo = 0
     CJUser.each do |cuser|
       next if cuser.destroyed?
       next unless cuser.mail_hebdomadaire?
+      datamail.merge!({
+        to:cuser.mail, message:(mail_hebdo % {pseudo:cuser.pseudo})
+      })
+      nombre_envois_hebdo += 1
     end
+    rapport("Nombre d'envois du rapport d'activités hebdomadaire : #{nombre_envois_hebdo}")
   end #/ mail_hebdomadaire
+
+  GABARIT_MAIL_QUOTIDIEN = <<-HTML.strip.freeze
+<p>%{pseudo},</p>
+<p>Veuillez trouver ci-joint la liste des activités du %{date}.</p>
+%{actualites}
+<p>Bien à vous,</p>
+<p>🤖 Le bot de l’atelier</p>
+  HTML
+
+GABARIT_MAIL_HEBDOMADAIRE = <<-HTML.strip.freeze
+<p>Veuillez trouver ci-joint la liste des activités de la semaine.</p>
+%{actualites}
+<p>Bien à vous,</p>
+<p>🤖 Le bot de l’atelier</p>
+  HTML
+
+  def mail_quotidien; @mail_quotidien ||= compose_mail_quotidien end
+  def compose_mail_quotidien
+    m = []
+    owners_veille.each do |uid, cuser|
+      m << cuser.actualites_formated(:veille)
+    end
+    GABARIT_MAIL_QUOTIDIEN % {actualites: m.join, pseudo:'%{pseudo}', date: Time.veille.to_s(jour:true, heure:false)}
+  end #/ compose_mail_quotidien
+
+  def mail_hebdo; @mail_hebdo ||= compose_mail_hebdo end
+  def compose_mail_hebdo
+    m = []
+    owners_hebdo.each do |uid, cuser|
+      m << cuser.actualites_formated(:hebdo)
+    end
+    GABARIT_MAIL_HEBDOMADAIRE % {actualites: m.join, pseudo:'%{pseudo}'}
+  end #/ compose_mail_hebdo
 
   # Tous les users qui possèdent des actualités de la veille
   def owners_veille
@@ -104,8 +160,14 @@ def initialize data, ttype # ttype = :veille ou :hebdo
   self.class.send("add_owners_#{ttype}".to_sym, owner)
   # On ajoute ce propriétaire à la liste des propriétaires qui ont des
   # actulités
-
 end #/ initialize
+
+# La table de données qui sera utilisée pour composer les lignes des
+# mails d'actualité.
+def line_data
+  @line_data ||= {message:message, date:Time.at(created_at).to_s(simple:true)}
+end #/ line_data
+
 def owner
   @owner ||= CJUser.get(user_id)
 end #/ owner

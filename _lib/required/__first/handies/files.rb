@@ -2,6 +2,13 @@
 =begin
   Ce module contient des méthodes pratiques pour les codes helpers récurrents.
 =end
+require './_lib/required/__first/handies/string' # pour safe, par exemple
+
+ERRORS = {} unless defined?(ERRORS)
+ERRORS.merge!({
+  file_unfound: 'Fichier introuvable : %s'.freeze,
+  mark_unfound_file: '[FICHIER MANQUANT : `%s`]'.freeze,
+})
 
 # Permet de créer le path +dirpath+ si le dossier n'existe pas
 def mkdir dirpath
@@ -30,13 +37,6 @@ end #/ full_path
 def fromCaller(relpath, from)
   File.join(File.dirname(from[0].split(':')[0]), relpath.to_s)
 end #/ fromCaller
-
-# Déserbe le fichier de chemin relatif +relpath+ (par rapport à dossier courant)
-def deserb relpath, owner = nil, options = nil
-  str = Deserb.deserb(relpath, owner, File.dirname(Kernel.caller[0].split(':')[0]))
-  return str if options && options[:formate] === false
-  str&.special_formating
-end
 
 # Demarkdownise le fichier de chemin relatif +relpath+ (par rapport au dossier
 # courant)

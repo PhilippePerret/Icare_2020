@@ -72,16 +72,4 @@ def option(idx)
   options[idx].to_i
 end #/ option
 
-# Ajoute une actualité (instance CJActualite) de la veille
-def add_actualite_veille actu
-  @actualites_veille ||= []
-  @actualites_veille << actu
-end #/ add_actualite
-
-# Ajoute une actualité (instance CJActualite) de la veille
-def add_actualite_hebdo actu
-  @actualites_hebdo ||= []
-  @actualites_hebdo << actu
-end #/ add_actualite
-
 end #/CJUser

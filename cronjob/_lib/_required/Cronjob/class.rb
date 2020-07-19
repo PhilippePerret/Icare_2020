@@ -12,5 +12,9 @@ class << self
   def require_module(module_name)
     require_folder(File.join(MODULES_FOLDER,module_name))
   end #/ require_module
+
+  def require_app_module(module_name)
+    require_folder(File.join(APP_MODULES_FOLDER,module_name))
+  end #/ require_app_module
 end # /<< self
 end #/Cronjob
