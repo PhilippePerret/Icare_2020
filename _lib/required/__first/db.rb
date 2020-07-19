@@ -25,6 +25,9 @@ end #/ db_compose_update
 
 # Handy methods
 def db_exec request, values = nil
+  while request.end_with?(';')
+    request = request[0...-1]
+  end
   if request =~ /;/
     request = request.split(PV).reject{|i|i.to_s.empty?}
   end
