@@ -6,8 +6,7 @@
 =end
 
 # Pour l'envoi des mails
-require './_lib/modules/mail/Mail'
-require './_lib/data/secret/phil' # => PHIL
+require_mail
 
 class CJActualites
 class << self
