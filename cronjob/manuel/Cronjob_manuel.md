@@ -69,7 +69,7 @@ ou
 CRONJOB_TIME='19 07 2020 10:00' ./cronjob/cronjob.rb
 ~~~
 
-Mais si le cronjob a déjà été lancé, il ne sera pas rejoué. Pour forcer le lancement d’un travail même s’il a été lancé, ajouter `CRONJOB_FORCE=true` :
+Mais si le cronjob a déjà été lancé, il ne sera pas rejoué. Pour forcer le lancement d’un travail même s’il a été lancé dans la journée, ajouter `CRONJOB_FORCE=true` :
 
 ~~~bash
 CRONJOB_TIME='19 07 2020 10:00' CRONJOB_FORCE=true ./cronjob/cronjob.rb
@@ -79,4 +79,6 @@ CRONJOB_TIME='19 07 2020 10:00' CRONJOB_FORCE=true ./cronjob/cronjob.rb
 
 ### Données pour les tests
 
-On peut obtenir des données pour les tests en jouant le fichier []()
+On peut obtenir des données pour les tests en jouant la commande `icare feed` et en choisissant par exemple « Actualités » pour ajouter des actualités dans les 20 derniers jours.
+
+La définition des données ajoutées se fait dans le fichier [./\_dev\_/CLI/lib/commands/feed/Actualites.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/CLI/lib/commands/feed/Actualites.rb).
