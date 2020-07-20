@@ -7,7 +7,7 @@
 require 'net/smtp'
 require './_lib/required/__first/Deserb'
 
-TEMP_FOLDER = File.expand_path(File.join('.','tmp','mails')) unless defined?(TEMP_FOLDER)
+TEMP_FOLDER = File.expand_path(File.join('.','tmp')) unless defined?(TEMP_FOLDER)
 DATA_FOLDER = File.expand_path(File.join('.','_lib','data')) unless defined?(DATA_FOLDER)
 
 class Mail
