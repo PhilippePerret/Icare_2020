@@ -1,0 +1,9 @@
+Réduction du traceur§$%°£&{"type":"operation","time":1595034000}
+Pas de fichier traceur. Je ne le réduis pas.§$%°£&{"type":"resultat","time":1595034000}
+Nettoyage des dossiers…§$%°£&{"type":"titre","time":1595034000}
+Nettoyage du dossier des inscriptions (signups)§$%°£&{"type":"operation","time":1595034000}
+Nettoyage du dossier des mails locaux§$%°£&{"type":"operation","time":1595034000}
+= Aucun fichier nettoyé§$%°£&{"type":"resultat","time":1595034000}
+= Aucun fichier nettoyé§$%°£&{"type":"resultat","time":1595034000}
+Nettoyage du dossier des tokens de formulaire§$%°£&{"type":"operation","time":1595034000}
+Nettoyage du dossier des téléchargements§$%°£&{"type":"operation","time":1595034000}
