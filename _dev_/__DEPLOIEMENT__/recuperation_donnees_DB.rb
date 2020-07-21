@@ -181,7 +181,7 @@ if MyDB.error
   puts MyDB.error.inspect.rouge
   exit 1
 end
-db_exec('SELECT id, options FROM users WHERE id > 1'.freeze).each do |duser|
+db_exec('SELECT id, options FROM users WHERE id > 2'.freeze).each do |duser|
   # puts duser.inspect
   opts = duser[:options].ljust(32,'0')
   opts[17] = '-'
@@ -418,7 +418,23 @@ db_exec("DROP TABLE `current_watchers`".freeze)
 #   db_exec('UPDATE users SET id = 9 WHERE id = 10'.freeze)
 # end
 
-REQUEST_UPDATE_USER_ID = 'UPDATE %{table} SET %{prop} = %{id} WHERE %{prop} = 9'
+TABLES_WITH_USER_ID =   [
+  ['watchers'],
+  ['icmodules'],
+  ['actualites'],
+  ['connexions', 'id'],
+  ['icdocuments'],
+  ['icetapes'],
+  ['icmodules'],
+  ['lectures_qdd'],
+  ['minifaq'],
+  ['paiements'],
+  ['temoignages'],
+  ['tickets'],
+  ['watchers']
+]
+
+REQUEST_UPDATE_USER9 = 'UPDATE %{table} SET %{prop} = %{id} WHERE %{prop} = 9'
 duser9 = db_get('users', 9)
 unless duser9.nil? # déjà traité
   duser9.delete(:id)
@@ -447,23 +463,10 @@ unless duser9.nil? # déjà traité
     exit
   end
   puts "Nouvel ID pour l'anonyme : #{new_user_id}"
+
   # Il faut remplacer user_id ou owner_id partout où ça peut être utilisé
   # dans toutes les tables.
-  [
-    ['watchers'],
-    ['icmodules'],
-    ['actualites'],
-    ['connexions', 'id'],
-    ['icdocuments'],
-    ['icetapes'],
-    ['icmodules'],
-    ['lectures_qdd'],
-    ['minifaq'],
-    ['paiements'],
-    ['temoignages'],
-    ['tickets'],
-    ['watchers']
-  ].each do |table, prop_name|
+  TABLES_WITH_USER_ID.each do |table, prop_name|
     prop_name ||= 'user_id'
     db_exec(REQUEST_UPDATE_USER_ID % {table:table, prop:prop_name, id:new_user_id})
     if MyDB.error
@@ -472,5 +475,36 @@ unless duser9.nil? # déjà traité
     end
   end
 end
+
+# ---------------------------------------------------------------------
+#
+#   Pour récupérer tous les users de 3 à 8 et les déplacer plus loin
+#
+# ---------------------------------------------------------------------
+REQUEST_UPDATE_USER_ID = 'UPDATE %{table} SET %{prop} = %{id} WHERE %{prop} = %{old_id}'
+REQUEST_DELETE_USER = 'DELETE FROM users WHERE id = %{id}'
+db_get_all('users', 'id > 2 AND id < 9').each do |duser|
+  user_old_id = duser.delete(:id)
+  db_exec(REQUEST_DELETE_USER % {id: user_old_id})
+  new_user_id = db_compose_insert('users', duser)
+  if MyDB.error
+    puts MyDB.error.inspect
+    exit
+  end
+  puts "Nouvel ID pour user ##{user_old_id} : #{new_user_id}"
+
+  # Il faut remplacer user_id ou owner_id partout où ça peut être utilisé
+  # dans toutes les tables.
+  TABLES_WITH_USER_ID.each do |table, prop_name|
+    prop_name ||= 'user_id'
+    db_exec(REQUEST_UPDATE_USER_ID % {table:table, prop:prop_name, id:new_user_id, old_id:user_old_id})
+    if MyDB.error
+      puts MyDB.error.inspect
+      exit
+    end
+  end
+end #/boucle sur chaque user
+
+
 
 puts "=== TOUT EST OK ===".vert
