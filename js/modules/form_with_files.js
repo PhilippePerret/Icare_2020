@@ -6,7 +6,7 @@
 class RowDocument {
   constructor(obj, name){
     this.obj  = obj
-    this.name = name
+    this.name = name // P.e. 'upresentation'
   }
   // Appelé quand on clique sur le fakeButton pour choisir le document
   onClick(ev) {
@@ -25,7 +25,6 @@ class RowDocument {
   }
   // Méthode appelée quand on a choisi le fichier
   onChooseFile(){
-    console.log("-> onChooseFile")
     this.hide(this.fakeButton)
     this.show(this.nameSpan)
     this.show(this.resetButton)
@@ -47,7 +46,7 @@ class RowDocument {
   toggle(obj, show){ obj.classList[show?'remove':'add']('hidden')}
 
   get realFileButton(){
-    return this._realfilebtn || (this._realfilebtn = this.obj.querySelector(`#document-${this.name}`))
+    return this._realfilebtn || (this._realfilebtn = this.obj.querySelector(`#${this.name}`))
   }
   get fakeButton(){
     return this._fakebutton || (this._fakebutton = this.obj.querySelector('.file-choose'))
