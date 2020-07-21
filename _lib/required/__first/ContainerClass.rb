@@ -73,10 +73,18 @@ class ContainerClass
       unless order_by.nil?
         where << " ORDER BY #{order_by}".freeze
       end
-      db_exec("SELECT * FROM #{table}#{where}".freeze).collect do |ditem|
-        item = new(ditem[:id])
-        item.data = ditem
-        yield item
+      request = "SELECT * FROM #{table}#{where}".freeze
+      allcollect = db_exec(request)
+      unless allcollect.nil?
+        allcollect.collect do |ditem|
+          item = new(ditem[:id])
+          item.data = ditem
+          yield item
+        end
+      else
+        log("ERROR dans ContainerClass::collect (l.#{__LINE__}) avec la requête : #{request}")
+        log("ERROR MyDB.error: #{MyDB.error.inspect}")
+        []
       end
     end #/ collect
 
@@ -92,10 +100,18 @@ class ContainerClass
 
     def each(filtre = nil)
       where = where_clausize(filtre)
-      db_exec("SELECT * FROM #{table}#{where}".freeze).each do |ditem|
-        item = new(ditem[:id])
-        item.data = ditem
-        yield item
+      request = "SELECT * FROM #{table}#{where}".freeze
+      alleach = db_exec(request)
+      unless alleach.nil?
+        alleach.each do |ditem|
+          item = new(ditem[:id])
+          item.data = ditem
+          yield item
+        end
+      else
+        log("ERROR: Problème avec la requête : ''#{request}''")
+        log("ERROR (MyDB.error) : #{MyDB.error.inspect}")
+        []
       end
     end #/ each
 
