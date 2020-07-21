@@ -8,11 +8,15 @@ def titre
   "🔐#{ISPACE}Identification"
 end
 def exec
-  if URL.param(:form_id) == 'user-login'
+  if param(:form_id) == 'user-login'
     # debug "Soumission du formulaire d'identification"
     form = Form.new
-    form.conform? || return
-    User.check_user
+    if form.conform?
+      User.check_user
+    else
+      log('Le formulaire #user-login n’est pas conforme')
+      return
+    end
   end
 end # exec
 
