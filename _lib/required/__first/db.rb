@@ -132,7 +132,7 @@ class << self
     @db_prefix ||= ''
   end
   def data_client
-    @data_client ||= DATA_MYSQL[:local]
+    @data_client ||= DATA_MYSQL[ONLINE ? :distant : :local]
   end
 end # << self
 
