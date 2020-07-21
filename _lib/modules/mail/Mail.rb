@@ -56,7 +56,7 @@ end #/ initialize
 # tmp/mails, ce qu'on fait toujours.
 def send
   init_server
-  save
+  save # On enregistre toujours le message
   if ONLINE || data[:force]
     Net::SMTP.start(server, port, host, user_smtp, password) do |smtp|
       smtp.send_message( full_mail, destinataire, expediteur)

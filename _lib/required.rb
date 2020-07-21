@@ -17,8 +17,8 @@ Dir["#{LIB_FOLDER}/required/__first/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/_classes/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/then/**/*.rb"].each{|m|require m}
 
+log("ONLINE: #{ONLINE.inspect} (OFFLINE est #{OFFLINE.inspect})")
 log("DATABASE: #{MyDB.DBNAME.inspect}")
-
 log("ENV['REMOTE_ADDR'] = #{ENV['REMOTE_ADDR'].inspect}")
 
 # On trace ce chargement
