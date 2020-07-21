@@ -115,7 +115,7 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :datastr) do
   end #/ ip_formated
   def formated_message
     if error?
-      message.gsub(/\\n/,"\n")
+      'cf. l’erreur ci-dessous' + RC + message.gsub(/\\n/,"\n")
     else
       message
     end
