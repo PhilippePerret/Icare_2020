@@ -1,6 +1,11 @@
 # encoding: UTF-8
 require 'mysql2'
 
+SANDBOX = false unless defined?(SANDBOX)
+unless defined?(DATA_MYSQL)
+  require './_lib/data/secret/mysql'
+end
+
 REQUEST_INSERT = 'INSERT INTO %{table} (%{columns}) VALUES (%{interro})'.freeze
 REQUEST_UPDATE = 'UPDATE %{table} SET %{columns} WHERE id = ?'.freeze
 
