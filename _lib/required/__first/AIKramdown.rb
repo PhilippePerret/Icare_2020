@@ -27,6 +27,10 @@ class << self
   end #/ kramdown
 
   def evaluate(code, owner)
+    if code.nil?
+      log('ERROR : code nil dans AIKramdown::evaluate')
+      return ''
+    end
     code.gsub!(/#\{(.*?)\}/) do
       # log("Évaluation de #{$1}")
       owner.bind.eval($1)

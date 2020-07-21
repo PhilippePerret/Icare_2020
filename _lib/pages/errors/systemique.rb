@@ -7,7 +7,7 @@ html.build_head rescue nil
 html.build_footer rescue nil
 begin
   backtrace = if user.admin? || OFFLINE
-                ERROR.backtrace.collect{|m| "<div>#{m.gsub(/</,'&lt;')}</div>"}.join('')
+                ERROR.backtrace.collect{|m| "<div>#{m.to_s.gsub(/</,'&lt;')}</div>"}.join('')
               else
                 # On doit envoyer l'erreur par mail et l'enregistrer
                 # dans le journal d'erreur
@@ -26,7 +26,7 @@ STDOUT.write <<-HTML
   <section id="body">
     <h1 class="titre">🚨 Une erreur est survenue</h1>
     <div>
-      <div class="warning">#{ERROR.message.gsub(/</,'&lt;')}</div>
+      <div class="warning">#{ERROR.message.to_s.gsub(/</,'&lt;')}</div>
       #{backtrace}
     </div>
     <div class="center mt2 big">👩‍🚒 👨‍🏭 👨‍🚒 👩‍🏭</div>

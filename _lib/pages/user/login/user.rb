@@ -53,7 +53,7 @@ class << self
   # On met également sa session en données pour comparer les deux.
   def authentify_user
     session['user_id'] = @dbuser[:id].to_s
-    db_exec("UPDATE users SET session_id = ? WHERE id = ?", [session.id, @dbuser[:id]])
+    db_exec("UPDATE users SET session_id = ? WHERE id = ?".freeze, [session.id, @dbuser[:id]])
     User.current = User.get(@dbuser[:id])
     notice "Soyez #{user.fem(:la)} bienvenu#{user.fem(:e)}, #{user.pseudo} !"
   end

@@ -20,7 +20,7 @@ class << self
   end
 
   def redirect_to road, options = nil
-    trace({id:"REDIRECTION",message:nil, data:{to:road, options:options}})
+    trace({id:"REDIRECTION",message:"--> #{road}", data:{options:options}})
     Errorer.sessionnize
     Noticer.sessionnize
     puts cgi.header('status'=>'REDIRECT', 'location' => "#{App.url}/#{road}")
