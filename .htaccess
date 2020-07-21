@@ -7,13 +7,10 @@ DirectoryIndex index.rb
 Options +FollowSymlinks
 RewriteEngine on
 
-RewriteCond %{REQUEST_FILENAME} !\.(css|js|png|jpg)
+RewriteCond %{REQUEST_FILENAME} !.+\.(css|js|png|jpg|ico)$
 
-# === REDIRECTION : EN CHANTIER ===
-# Tout rediriger vers index.html le temps d'installer la nouvelle
-# version de l'atelier. Mais ça doit être valable sauf pour mon IP
-#RewriteCond %{REMOTE_ADDR} !^::1
-#RewriteCond %{REMOTE_ADDR} !^5\.50\.38\.1 # mettre ici mon IP
-####RewriteRule ^(.*)$ index.html [L]
+#RewriteCond %{REMOTE_ADDR} ::1
+#RewriteCond %{REMOTE_ADDR} 2a01:cb1c:98:2e00:890:fc7d:2811:3506
+#RewriteRule ^(.*)$ index2020.rb?route_init=$1 [QSA,L]
 
 RewriteRule ^(.*)$ index.rb?route_init=$1 [QSA,L]

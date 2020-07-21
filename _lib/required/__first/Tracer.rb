@@ -53,6 +53,7 @@ class << self
   #
   def add(params)
     ip    = ENV['X-Real-IP'] || ENV['REMOTE_ADDR']
+    params[:message] = params[:message]&.gsub(/\r/,'').gsub(/\n/,'\\n')
     data  = [ip, params[:id], params[:message], (params[:data]||{}).to_json]
     file.write "#{Time.now.to_f}#{DEL}#{data.join(DEL_DATA)}#{RC}"
   end #/ add

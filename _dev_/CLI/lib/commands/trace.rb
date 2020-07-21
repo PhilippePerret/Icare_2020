@@ -81,7 +81,7 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :datastr) do
     msg << ip_formated
     msg << id.ljust(15)
     msg << pseudo_if_identified
-    msg << message.to_s
+    msg << formated_message.to_s
     msg = msg.join(' | '.freeze)
     msg = msg.rouge if error?
     return msg
@@ -113,8 +113,17 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :datastr) do
       ip
     end.ljust(16)
   end #/ ip_formated
-end
+  def formated_message
+    if error?
+      message.gsub(/\\n/,"\n")
+    else
+      message
+    end
+  end #/ formated_message
+
+end #/TracerLine
+
 
 TracerUser = Struct.new(:id, :pseudo, :mail) do
-  
+
 end #/TracerUser

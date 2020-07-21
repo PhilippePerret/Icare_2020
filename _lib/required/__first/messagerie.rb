@@ -57,6 +57,10 @@ class << self
       msg = msg.collect {|k,v| "=== #{k} = #{v.inspect}"}.join(RC)
     end
     ref.write "---[#{Time.now}] #{msg}#{RC}"
+    # Dès que le message contient ERROR ou ERREUR, on le trace
+    if msg.match?(/(ERROR|ERREUR)/)
+      trace(id:'ERROR', message:msg, data:{log_time:Time.now})
+    end rescue nil
   end
   def ref
     @ref ||= begin

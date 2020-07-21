@@ -1,0 +1,16 @@
+<div id="bandeau" class="nolimit">
+  <div id="main-cadre">
+    <div id="papillon">🦋</div>
+    <div id="titre"><a href="plan">Atelier Icare</a></div>
+    <div id="sous-titre"><span class="nowrap">L’écriture dans</span> <span class="nowrap">tous ses états (*)</span></div>
+  </div>
+</div>
+<div id="legende" class="nolimit">
+  (*) Dans la forme (roman, scénario, BD, etc.) comme dans le fond (pitch, résumé, synopsis, scénario, etc.).
+</div>
+<div id="air-sous-bandeau">&nbsp;</div>
+<%= Citation.rand.out %>
+<div id="actualites">
+  <div class="titre">dernières activités</div>
+  <%= Actualite.out(:lasts) %>
+</div>
