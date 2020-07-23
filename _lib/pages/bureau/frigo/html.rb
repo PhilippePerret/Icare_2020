@@ -3,9 +3,9 @@ require_modules(['form','frigo'])
 class HTML
   def titre
     unless param(:disid) || (param(:did) && param(:did)!=EMPTY_STRING)
-      "#{RETOUR_BUREAU}🌡️ Votre porte de frigo".freeze
+      "#{RETOUR_BUREAU}#{EMO_THERMOMETRE+ISPACE}Votre porte de frigo".freeze
     else
-      "#{RETOUR_FRIGO}🌡️ Discussion de frigo".freeze
+      "#{RETOUR_FRIGO}#{EMO_THERMOMETRE+ISPACE}Discussion de frigo".freeze
     end
   end
   def exec

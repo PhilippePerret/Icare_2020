@@ -1,7 +1,8 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "#{RETOUR_BUREAU}#{user.femme? ? '👩🏻‍💻' : '👨🏻‍💻'} Votre profil"
+    require './_lib/pages/bureau/xrequired/required'
+    "#{RETOUR_BUREAU}#{user.femme? ? EMO_ETUDIANTE : EMO_ETUDIANT}#{ISPACE}Votre profil"
   end
   def exec
     # Code à exécuter avant la construction de la page

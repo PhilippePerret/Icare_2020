@@ -2,7 +2,7 @@
 require_module('form')
 class HTML
   def titre
-    "#{RETOUR_ADMIN}🛠️ Outils".freeze
+    "#{RETOUR_ADMIN}#{EMO_OUTILS.page_title}#{ISPACE}Outils".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

@@ -4,7 +4,7 @@ La “🌡️ porte de frigo” de [votre bureau](bureau/home) — si vous êt
 
 ### Rejoindre sa porte de frigo
 
-La *porte de frigo* se rejoint depuis l’[accueil de son bureau](bureau/home) après s’être identifié·e. Il suffit de cliquer sur le bloc “🌡️ Porte de frigo”.
+La *porte de frigo* se rejoint depuis l’[accueil de son bureau](bureau/home) après s’être identifié·e. Il suffit de cliquer sur le bloc “#{EMO_THERMOMETRE.texte} Porte de frigo”.
 
 Vous rejoignez alors votre frigo sur lequel vous pouvez :
 
@@ -28,7 +28,7 @@ Cela vous conduit à un bloc de message qu’il vous suffit de remplir avec un t
 
 ### Répondre à une discussion
 
-Lorsque vous recevez une invitation pour une discussion — par mail si vous l’avez autorisé —, il vous suffit de **cliquer sur le lien du mail** pour la rejoindre dans votre bureau. Le cas échéant, vous pouvez rejoindre l’[accueil de votre bureau](bureau/home). Vous verrez alors une petite pastille sur votre bloc “🌡️ Porte de frigo” indiquant le nombre de nouveaux messages collés sur votre frigo. Il suffit alors de cliquer sur ce bloc “🌡️ Porte de frigo” pour rejoindre votre frigo.
+Lorsque vous recevez une invitation pour une discussion — par mail si vous l’avez autorisé —, il vous suffit de **cliquer sur le lien du mail** pour la rejoindre dans votre bureau. Le cas échéant, vous pouvez rejoindre l’[accueil de votre bureau](bureau/home). Vous verrez alors une petite pastille sur votre bloc “#{EMO_THERMOMETRE.texte} Porte de frigo” indiquant le nombre de nouveaux messages collés sur votre frigo. Il suffit alors de cliquer sur ce bloc “#{EMO_THERMOMETRE.texte} Porte de frigo” pour rejoindre votre frigo.
 
 Sur la conversation proprement dite, vous trouvez son titre ainsi que les messages. À droite les vôtres, à gauche ceux des autres interlocuteurs.
 
@@ -85,9 +85,9 @@ Pour une liste complète des formatages possibles, voir la [documentation de Mar
 
 Les nouveaux messages sont indiqués de plusieurs manières.
 
-* Sur votre [accueil de bureau](bureau/home), une pastille contenant le nombre total de nouveaux messages est affichée en rouge sur le bloc “🌡️ Porte de frigo”.
+* Sur votre [accueil de bureau](bureau/home), une pastille contenant le nombre total de nouveaux messages est affichée en rouge sur le bloc “#{EMO_THERMOMETRE.texte} Porte de frigo”.
 * Sur [votre frigo](bureau/frigo), le nombre de nouveaux messages est indiqué, par discussion, en regard du titre de chaque discussion courante.
-* Sur la discussion elle-même, leur nombre est indiqué en haut de page et ils sont signalés dans la discussion proprement dite par le signe “❗️” en marge du message.
+* Sur la discussion elle-même, leur nombre est indiqué en haut de page et ils sont signalés dans la discussion proprement dite par le signe “#{EMO_EXCLAMATION.texte}” en marge du message.
 
 ### Marquer tous les messages de la discussion lus
 

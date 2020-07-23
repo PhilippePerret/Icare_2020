@@ -36,4 +36,4 @@ Le protagoniste retourne chez lui. Il titube, visiblement saoul \[\[*je n'aime p
 
 <!/document>
 
-Bien entendu, il convient de ne pas truffer la document de ce type de commentaires. Le document ne doit pas devenir un immense commentaire d'un tout petit texte qui ne contiendrait rien du tout…  Dans le cas contraire, ce n'est plus de *zone d'ombre* dont il faudra parler, mais de *nuit complète* sur votre projet. 🤔
+Bien entendu, il convient de ne pas truffer la document de ce type de commentaires. Le document ne doit pas devenir un immense commentaire d'un tout petit texte qui ne contiendrait rien du tout…  Dans le cas contraire, ce n'est plus de *zone d'ombre* dont il faudra parler, mais de *nuit complète* sur votre projet. #{SMILEY_REFLEXIF.texte}

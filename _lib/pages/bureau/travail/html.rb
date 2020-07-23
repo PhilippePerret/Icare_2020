@@ -2,7 +2,7 @@
 require_modules(['user/modules', 'minifaq'])
 class HTML
   def titre
-    "#{RETOUR_BUREAU}🏠 Votre travail".freeze
+    "#{RETOUR_BUREAU+EMO_TRAVAIL.page_title+ISPACE}Votre travail".freeze
   end
   def exec
     icarien_required

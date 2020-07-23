@@ -23,6 +23,8 @@ SELECT
   ORDER BY fm.created_at DESC
 SQL
 
+SIGNATURE_BOT = "<p>#{EMO_ROBOT.texte(full:true) + ISPACE}Le Bot de l'Atelier Icare #{EMO_PAPILLON.regular(full:true)}</p>".freeze
+
 # Pour un mail de notification de nouveau message frigo
 SUBJECT_NEW_MESSAGE = 'Nouveau message de %s sur votre frigo'.freeze
 MESSAGE_NEW_MESSAGE = <<-HTML.freeze
@@ -30,7 +32,7 @@ MESSAGE_NEW_MESSAGE = <<-HTML.freeze
 <p>Je vous informe que %{from} vient de laisser un message sur votre frigo concernant la discussion “%{titre}”.</p>
 <p>Vous pouvez #{Tag.lien(route:'bureau/frigo?disid=%{disid}', full:true, text:'rejoindre cette discussion')}  sur votre frigo.</p>
 <p>Bien à vous,</p>
-<p>🤖 Le Bot de l'Atelier Icare 🦋</p>
+#{SIGNATURE_BOT}
 HTML
 
 # Pour un message d'invitation à participer à une conversation
@@ -43,7 +45,7 @@ MESSAGE_INVITATION = <<-HTML.freeze
 <p>Pour décliner cette invitation, il suffit de cliquer le bouton ci-dessous</p>
 <p style="text-align:center">%{lien_decliner}</p>
 <p>Bien à vous,</p>
-<p>🤖 Le Bot de l’Atelier Icare 🦋</p>
+#{SIGNATURE_BOT}
 HTML
 
 # La requête pour créer un nouveau lien entre un user et une discussion (donc
@@ -66,7 +68,7 @@ MESSAGE_ANNONCE_DESTROY = <<-HTML.freeze
 <p>Je vous annonce par la présente que la discussion “%{titre}” instiguée par %{owner_pseudo} à laquelle vous participez va être supprimée dans une semaine.</p>
 <p>Si vous voulez en conserver une trace, #{Tag.lien(route:'bureau/frigo&disid=%{id}', text:'vous pouvez la télécharger', full:true)} grâce au bouton “Télécharger” placée en dessous de cette discussion.</p>
 <p>Bien à vous,</p>
-<p>🤖 Le Bot de l'atelier Icare 🦋</p>
+#{SIGNATURE_BOT}
 HTML
 
 end #/FrigoDiscussion < ContainerClass

@@ -30,3 +30,5 @@ RATIO_MOTS_PER_DOCTYPE = {
   '.docx' => 0.162,
   'any'   => 0.097
 }
+
+EMO_PARABOLE = Emoji.get('objets/parabole')

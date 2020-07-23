@@ -2,7 +2,7 @@
 require_modules(['form', 'user/modules', 'icmodules'])
 class HTML
   def titre
-    tit = "👩‍🎓👨‍🎓 Édition d’icarien"
+    tit = "#{EMO_ETUDIANT.page_title}#{EMO_ETUDIANTE.page_title}#{ISPACE}Édition d’icarien"
     tit.prepend(BUTTON_RETOUR) if param('op') == 'edit-objet'
     tit.freeze
   end #/titre

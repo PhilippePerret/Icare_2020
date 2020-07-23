@@ -6,7 +6,7 @@
 =end
 class HTML
   def titre
-    "Votre bureau"
+    "#{EMO_BUREAU.page_title}#{ISPACE}Votre bureau".freeze
   end
   def exec
     icarien_required

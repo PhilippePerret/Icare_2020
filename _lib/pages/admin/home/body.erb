@@ -1,21 +1,21 @@
 
 <div id="goto-notifications" class="goto">
-  📣 <%= MAIN_LINKS[:admin_notifications] % {non_vus: pastille_notifications_non_vues}%>
+   <%= (EMO_PORTE_VOIX+ISPACE+MAIN_LINKS[:admin_notifications] % {non_vus: pastille_notifications_non_vues}).freeze %>
 </div>
 
-<%= divGoto('🛠️ <a href="admin/tools">OUTILS</a>'.freeze) %>
+<%= divGoto((EMO_OUTILS+ISPACE+'<a href="admin/tools">OUTILS</a>').freeze) %>
 
-<%= divGoto('🖥️ '+ISPACE+'<a href="admin/console">Console</a>'.freeze) %>
+<%= divGoto((EMO_ECRAN+ISPACE+ISPACE+'<a href="admin/console">Console</a>').freeze) %>
 
-<%= divGoto('🗄️ <a href="admin/database">Base de données</a>'.freeze) %>
+<%= divGoto((EMO_ARMOIRE+ISPACE+'<a href="admin/database">Base de données</a>').freeze) %>
 
-<%= divGoto('🦹‍♀️ <a href="admin/espion">Traceur site</a>'.freeze) %>
+<%= divGoto((EMO_ESPIONNE+ISPACE+'<a href="admin/espion">Traceur site</a>').freeze) %>
 
-<%= divGoto('🗺️ <a href="admin/overview">Aperçu</a>'.freeze) %>
+<%= divGoto((EMO_RAPPORT+ISPACE+'<a href="admin/overview">Aperçu</a>').freeze) %>
 
-<%= divGoto('<a href="admin/modules">🧰 Modules</a>'.freeze) %>
+<%= divGoto((EMO_TOOLBOX+ISPACE+'<a href="admin/modules">Modules</a>').freeze) %>
 
-<%= divGoto('<a href="bureau/preferences">⚙️ Préférences</a>') %>
+<%= divGoto((EMO_ROUE_DENTEE+ISPACE+'<a href="bureau/preferences">Préférences</a>').freeze) %>
 
 <div id="goto-frigo" class="goto">
   <%= MAIN_LINKS[:frigo] % {non_vus: pastille_messages_frigo_non_vus} %>

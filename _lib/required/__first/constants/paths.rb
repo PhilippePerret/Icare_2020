@@ -49,7 +49,7 @@ MAIN_LINKS = {
   work:       '<a href="bureau/travail">Travail courant</a>'.freeze,
   notices:    '<a href="bureau/notifications">Notifications%{non_vus}</a>'.freeze,
   admin_notifications:  '<a href="admin/notifications">Notifications%{non_vus}</a>'.freeze,
-  frigo:      '<a href="bureau/frigo">🌡️ Porte de frigo%{non_vus}'.freeze,
+  frigo:      ('<a href="bureau/frigo">'+EMO_THERMOMETRE+' Porte de frigo%{non_vus}').freeze,
   # DIVERS
   aide:       '<a href="aide/home">'+EMO_GYROPHARE+' <span>Aide</span></a>'.freeze,
   aide_s:     '<a href="aide/home">aide</a>'.freeze,

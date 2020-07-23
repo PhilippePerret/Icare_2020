@@ -1974,4 +1974,92 @@ Did you mean?  object_id
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:11:in `<top (required)>'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
     /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
-    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'2020-07-23 06:08:07 +0200 --- FATAL ERROR:
+    undefined method `titre' for #<Emoji:0x00007fac5c05fce8 @init_relpath="objets/armoire">
+Did you mean?  title
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/database/html.rb:5:in `titre'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:71:in `build_titre'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:13:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-23 06:59:31 +0200 --- FATAL ERROR:
+    undefined method `texte' for #<Emoji:0x00007fd3b2a61c28 @init_relpath="gestes/coucou-main">
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:37:in `bind'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:36:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:36:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:34:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:34:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:23:in `deserb_or_markdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:26:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:11:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-23 07:19:14 +0200 --- FATAL ERROR:
+    uninitialized constant AideFile::EMO_APPLAUSE_LEFT
+Did you mean?  EMO_APPLAUSE_RIGHT
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:37:in `bind'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:36:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:36:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:34:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:34:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:23:in `deserb_or_markdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:26:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:11:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-23 07:24:37 +0200 --- FATAL ERROR:
+    undefined method `get' for Emoji:Class
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:37:in `bind'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:36:in `eval'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:36:in `block in evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:34:in `gsub!'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:34:in `evaluate'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/AIKramdown.rb:23:in `kramdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/string.rb:23:in `deserb_or_markdown'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/AideFile.rb:26:in `out'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/fiche/html.rb:28:in `build_body'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:11:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-23 07:39:45 +0200 --- FATAL ERROR:
+    uninitialized constant ISPACE
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/paths.rb:52:in `<top (required)>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:11:in `require_relative'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required.rb:11:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:4:in `<main>'2020-07-23 09:15:32 +0200 --- FATAL ERROR:
+    undefined method `is_a' for "height:1.3em;":String
+Did you mean?  is_a?
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/emojis.rb:117:in `build'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/emojis.rb:92:in `build_with_or_without_options'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/emojis.rb:78:in `texte'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/lib/constants.rb:26:in `<class:FrigoDiscussion>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/lib/constants.rb:9:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-23 09:15:40 +0200 --- FATAL ERROR:
+    undefined local variable or method `styl' for #<Emoji:0x00007fe30c98e260>
+Did you mean?  sty
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/emojis.rb:117:in `build'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/emojis.rb:92:in `build_with_or_without_options'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/emojis.rb:67:in `regular'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/lib/constants.rb:26:in `<class:FrigoDiscussion>'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/bureau/frigo/lib/constants.rb:9:in `<top (required)>'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

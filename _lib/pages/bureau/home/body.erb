@@ -1,9 +1,9 @@
 <p>Bienvenue dans votre bureau de travail à l'atelier Icare, <%= pseudo %>.</p>
 <div id="goto-travail" class="goto">
-  🏠 <%= MAIN_LINKS[:work] %>
+  <%= EMO_TRAVAIL+ISPACE+MAIN_LINKS[:work] %>
 </div>
 <div id="goto-notifications" class="goto">
-  📌 <%= MAIN_LINKS[:notices] % {non_vus: pastille_notifications_non_vues}%>
+  <%= EMO_PUNAISE+ISPACE+MAIN_LINKS[:notices] % {non_vus: pastille_notifications_non_vues}%>
 </div>
 
 <div id="goto-frigo" class="goto">
@@ -11,13 +11,13 @@
 </div>
 
 <div id="goto-documents" class="goto">
-  📚 <a href="bureau/documents">Documents</a>
+  <%= EMO_PILE_LIVRES.regular + ISPACE %><a href="bureau/documents">Documents</a>
 </div>
 
 <div id="goto-profil" class="goto">
-  <%= femme? ? '👩🏻‍💻' : '👨🏻‍💻' %> <a href="user/profil">Profil</a>
+  <%= femme? ? EMO_ETUDIANTE.regular : EMO_ETUDIANT.regular %> <a href="user/profil">Profil</a>
 </div>
 
-<%= divGoto('<a href="bureau/preferences">⚙️ Préférences</a>') %>
+<%= divGoto(('<a href="bureau/preferences">'+EMO_ROUE_DENTEE+ISPACE+'Préférences</a>').freeze) %>
 
-<%= divGoto('<a href="bureau/historique">📆 Historique</a>'.freeze) %>
+<%= divGoto(('<a href="bureau/historique">'+EMO_CALENDAR+ISPACE+'Historique</a>').freeze) %>

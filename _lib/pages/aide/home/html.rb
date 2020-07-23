@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "🚨 Aide de l’atelier".freeze
+    "#{EMO_GYROPHARE.page_title}#{ISPACE}Aide de l’atelier".freeze
   end
   def exec
     # Code à exécuter avant la construction de la page

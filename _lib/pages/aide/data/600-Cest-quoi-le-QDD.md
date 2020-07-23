@@ -20,4 +20,4 @@ Notez qu'il faut être *vrai·e icarien·ne* pour profiter pleinement de cette r
 
 Nous en profitons pour remercier chaleureusement, ici, tout·e·s les auteur·e·s de l'atelier qui partagent leur travail et favorisent ainsi la propagation du savoir et surtout du *savoir-faire*.
 
-👏 Un grand merci à eux tous ! 👏
+#{EMO_APPLAUSE_RIGHT.texte} Un grand merci à eux tous ! #{EMO_APPLAUSE_LEFT.texte}

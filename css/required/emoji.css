@@ -10,11 +10,18 @@
 .emoji.small {
   width:20px;
 }
+.emoji.texte {
+  /* width:20px; */
+  height:1.3em;
+}
 .emoji.regular {
   width:30px;
 }
 .emoji.title {
   width:60px;
+}
+.emoji.page_title {
+  width:45px;
 }
 .emoji.large {
   width:120px;

@@ -9,7 +9,7 @@ class HTML
   def titre
     if param(:aid)
       unless Aide::DATA_TDM[param(:aid).to_i].nil?
-        "#{RETOUR_AIDE}<span class='emoji'>🚨</span>"
+        "#{RETOUR_AIDE}#{EMO_GYROPHARE.page_title}"
       else
         erreur(ERRORS[:aid_unfound])
         "#{RETOUR_AIDE}Aide introuvable".freeze

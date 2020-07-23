@@ -10,7 +10,7 @@ Vous trouvez en bas de toutes les pages un bandeau contenant d'autres boutons ut
 
 À tout moment, pour rejoindre le plan du site, vous pouvez cliquer sur le logo de l'atelier, en haut à gauche de chaque page.
 
-Si vous voulez rejoindre la toute première page, cliquez plutôt sur le papillon 🦋.
+Si vous voulez rejoindre la toute première page, cliquez plutôt sur le papillon #{EMO_PAPILLON.texte}.
 
 #### Flèche pour remonter en haut de la page
 

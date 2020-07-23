@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "#{RETOUR_ADMIN}🎮 Notifications".freeze
+    "#{RETOUR_ADMIN}#{EMO_PORTE_VOIX.page_title}#{ISPACE}Notifications".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

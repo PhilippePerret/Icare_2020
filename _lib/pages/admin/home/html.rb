@@ -6,7 +6,7 @@
 =end
 class HTML
   def titre
-    "🎮 Tableau de bord administration"
+    "#{EMO_MANETTE_JEU.page_title}#{ISPACE}Tableau de bord administration".freeze
   end #/ titre
   def exec
     log('-> exec (home admin)')

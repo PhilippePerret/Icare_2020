@@ -2,7 +2,7 @@
 require_module('icmodules')
 class HTML
   def titre
-    "#{RETOUR_BUREAU}🏠 Vos documents".freeze
+    "#{RETOUR_BUREAU}#{EMO_DOCUMENTS.page_titre}#{ISPACE}Vos documents".freeze
   end
   def exec
     # Code à exécuter avant la construction de la page

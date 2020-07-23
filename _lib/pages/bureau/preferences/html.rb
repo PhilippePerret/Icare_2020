@@ -2,7 +2,7 @@
 require_modules(['user/modules','form'])
 class HTML
   def titre
-    "#{RETOUR_BUREAU}🏠 Vos préférences".freeze
+    "#{RETOUR_BUREAU}#{EMO_ROUE_DENTEE.page_title+ISPACE}Vos préférences".freeze
   end
   def exec
     # Code à exécuter avant la construction de la page

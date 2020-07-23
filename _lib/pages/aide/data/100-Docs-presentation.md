@@ -36,4 +36,4 @@ Une fois vos documents de présentation soigneusement rédigés, relus et corrig
 
 Et vous pouvez enfin poser votre candidature en remplissant le [formulaire d’inscription](user/signup).
 
-👋 Bonne chance à vous&nbsp;! Au plaisir de vous retrouver au sein de l'atelier Icare !
+#{EMO_COUCOU_MAIN.texte} Bonne chance à vous&nbsp;! Au plaisir de vous retrouver au sein de l'atelier Icare !

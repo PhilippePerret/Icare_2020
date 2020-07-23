@@ -11,7 +11,7 @@
 
 class HTML
   def titre
-    "📆 Historique de travail#{user_is_owner? ? '' : " de #{owner.pseudo}"}".freeze
+    "#{RETOUR_BUREAU}#{EMO_CALENDAR.page_title+ISPACE}Historique de travail#{user_is_owner? ? '' : " de #{owner.pseudo}"}".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

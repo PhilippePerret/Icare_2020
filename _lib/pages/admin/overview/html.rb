@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{RETOUR_ADMIN}🗺️ Aperçu de l’atelier".freeze
+    "#{RETOUR_ADMIN}#{EMO_RAPPORT.page_title}#{ISPACE}Aperçu de l’atelier".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

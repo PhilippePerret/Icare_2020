@@ -2,7 +2,7 @@
 require_module('form')
 class HTML
   def titre
-    "Console d’administration".freeze
+    "#{RETOUR_ADMIN}#{EMO_ECRAN.page_title}#{ISPACE}Console d’administration".freeze
   end #/titre
 
   # Code à exécuter avant la construction de la page

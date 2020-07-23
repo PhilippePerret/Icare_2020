@@ -46,6 +46,10 @@ div.warning, p.warning, span.warning {
 .red {color:red}
 .blue {color:blue}
 
+.tiny {
+  font-size:0.35em !important;
+  line-height:0.9em;
+}
 .small {
   font-size:0.75em;
   line-height:1.2em;

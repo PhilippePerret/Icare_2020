@@ -180,9 +180,8 @@ TAG_OPTION = '<option value="%{value}"%{selected}>%{titre}</option>'.freeze
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze
 SUBMIT_BUTTON = '<input type="submit" class="%{class}" value="%{name}" />'.freeze
 
-RETOUR_LINK = "<a href='%{route}' class='small'><span style='vertical-align:sub;'>↩︎</span>&nbsp;%{titre}</a>&nbsp;".freeze
+RETOUR_LINK = "<a href='%{route}' class='tiny'><span style='vertical-align:sub;'>↩︎</span>&nbsp;%{titre}</a>&nbsp;".freeze
 
-RETOUR_BUREAU = Tag.retour(route:'bureau/home'.freeze, titre:'Bureau'.freeze)
 RETOUR_PROFIL = Tag.retour(route:'user/profil'.freeze, titre:'Profil'.freeze)
 
 URL_MOT_SCENODICO   = 'http://www.scenariopole.fr/scenodico/mot/%i'.freeze

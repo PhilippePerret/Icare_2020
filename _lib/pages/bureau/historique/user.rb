@@ -8,7 +8,7 @@ class User
       histo = []
 
       # Inscription et fin
-      histo << LineHisto.new(created_at, '🦋 Inscription à l’atelier Icare'.freeze, 0)
+      histo << LineHisto.new(created_at, (EMO_PAPILLON.texte+ISPACE+'Inscription à l’atelier Icare').freeze, 0)
       if date_sortie
         histo << LineHisto.new(date_sortie 'Fin du travail à l’atelier'.freeze, 0)
       else
@@ -19,35 +19,35 @@ class User
       IcModule.collect(user_id: id) do |icmodule|
         if icmodule.started_at.nil?
           # Un module à démarrer
-          histo << LineHisto.new(icmodule.created_at, "⏳ Module “#{icmodule.absmodule.name}” en attente de démarrage", 0)
+          histo << LineHisto.new(icmodule.created_at, (EMO_SABLIER_T+ISPACE+"Module “#{icmodule.absmodule.name}” en attente de démarrage").freeze, 0)
         else
-          histo << LineHisto.new(icmodule.started_at, "⏱️ Démarrage du module “#{icmodule.absmodule.name}”", 0)
+          histo << LineHisto.new(icmodule.started_at, (EMO_CHRONOMETRE_T+ISPACE+"Démarrage du module “#{icmodule.absmodule.name}”").freeze, 0)
         end
         if icmodule.ended_at
-          histo << LineHisto.new(icmodule.ended_at, "⏰ Fin du module “#{icmodule.absmodule.name}”", 1)
+          histo << LineHisto.new(icmodule.ended_at, (EMO_REVEIL_ROUGE_T+ISPACE+"Fin du module “#{icmodule.absmodule.name}”").freeze, 1)
         end
         if icmodule.pauses
           JSON.parse(icmodule.pauses).each do |dpause|
             dpause = JSON.parse(dpause) if dpause.is_a?(String) # ça arrive…
-            histo << LineHisto.new(dpause['start'], "⏲️ Mise en pause du module “#{icmodule.absmodule.name}”".freeze, 1) if dpause['start']
-            histo << LineHisto.new(dpause['end'], "⏲️ Reprise du module “#{icmodule.absmodule.name}”".freeze, 1) unless dpause['end'].nil?
+            histo << LineHisto.new(dpause['start'], (EMO_MINUTEUR_T+ISPACE+"Mise en pause du module “#{icmodule.absmodule.name}”").freeze, 1) if dpause['start']
+            histo << LineHisto.new(dpause['end'], (EMO_MINUTEUR_T+ISPACE+"Reprise du module “#{icmodule.absmodule.name}”").freeze, 1) unless dpause['end'].nil?
           end
         end
       end
 
       # Les icetapes
       IcEtape.collect(user_id: id) do |icetape|
-        histo << LineHisto.new(icetape.started_at + 100, "🔰 Démarrage de l’<b>étape #{icetape.numero}</b> “#{icetape.titre}”", 2)
+        histo << LineHisto.new(icetape.started_at + 100, (EMO_BLASON_T+ISPACE+"Démarrage de l’<b>étape #{icetape.numero}</b> “#{icetape.titre}”").freeze, 2)
         unless icetape.ended_at.nil?
-          histo << LineHisto.new(icetape.ended_at, "⛳ Fin de l'<b>étape #{icetape.numero}</b> “#{icetape.titre}”", 2)
+          histo << LineHisto.new(icetape.ended_at, (EMO_DRAPEAU_GOLF_T+ISPACE+"Fin de l'<b>étape #{icetape.numero}</b> “#{icetape.titre}”").freeze, 2)
         end
       end
 
       # Les icdocuments
       IcDocument.collect(user_id: id) do |icdocument|
-        histo << LineHisto.new(icdocument.time_original, "📋 Envoi du document “#{icdocument.name}”", 4)
+        histo << LineHisto.new(icdocument.time_original, (EMO_PORTE_DOCUMENT_T+ISPACE+"Envoi du document “#{icdocument.name}”").freeze, 4)
         unless icdocument.time_comments.nil?
-          histo << LineHisto.new(icdocument.time_comments + 100, "📝 Réception des commentaires sur “#{icdocument.name}”.", 4)
+          histo << LineHisto.new(icdocument.time_comments + 100, (EMO_DOCUMENT_CRAYON_T+ISPACE+"Réception des commentaires sur “#{icdocument.name}”.").freeze, 4)
         end
       end
 
@@ -55,7 +55,7 @@ class User
       db_exec("SELECT icdocument_id, created_at FROM `lectures_qdd` WHERE user_id = #{id}".freeze).each do |dlecture|
         icdoc = IcDocument.get(dlecture[:icdocument_id])
         next if id == icdoc.owner.id
-        histo << LineHisto.new(dlecture[:created_at], "📒 QdD : chargement et lecture du document ##{dlecture[:icdocument_id]} de #{icdoc.owner.pseudo}".freeze, 1)
+        histo << LineHisto.new(dlecture[:created_at], (EMO_LIVRE_JAUNE_T+ISPACE+"QdD : chargement et lecture du document ##{dlecture[:icdocument_id]} de #{icdoc.owner.pseudo}").freeze, 1)
       end
 
       # Les discussions initiés
@@ -109,10 +109,10 @@ class User
         userisowner = ddis[:owner][:id] == user.id
         auteur_discussion = userisowner ? 'vous' : ddis[:owner][:pseudo]
         # L'évènement de création
-        histo << LineHisto.new(create_time, "🗯️#{ISPACE}Discussion “#{ddis[:titre]}” initiée par #{auteur_discussion} <span class='small'>(avec #{ddis[:participants].collect{|dp|dp[:pseudo] == user.pseudo ? 'vous' : dp[:pseudo]}.pretty_join})</span>",0,'nooverflow')
+        histo << LineHisto.new(create_time, (EMO_BULLE_EXCLAMATION_T+ISPACE+"Discussion “#{ddis[:titre]}” initiée par #{auteur_discussion} <span class='small'>(avec #{ddis[:participants].collect{|dp|dp[:pseudo] == user.pseudo ? 'vous' : dp[:pseudo]}.pretty_join})</span>").freeze,0,'nooverflow')
         ddis[:participants].each do |dpart|
           next if dpart[:pseudo] == ddis[:owner][:pseudo]
-          histo << LineHisto.new(dpart[:join_time], "💬#{ISPACE}#{dpart[:pseudo] == user.pseudo ? 'Vous rejoignez' : "#{dpart[:pseudo]} rejoint"} la discussion “#{ddis[:titre]}” initiée par #{auteur_discussion}.", 1, 'nooverflow')
+          histo << LineHisto.new(dpart[:join_time], "#{EMO_BULLE_MESSAGE.texte}#{ISPACE}#{dpart[:pseudo] == user.pseudo ? 'Vous rejoignez' : "#{dpart[:pseudo]} rejoint"} la discussion “#{ddis[:titre]}” initiée par #{auteur_discussion}.", 1, 'nooverflow')
         end
       end
 

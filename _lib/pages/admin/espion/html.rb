@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{RETOUR_ADMIN}🦹‍♀️ Traceur du site".freeze
+    "#{RETOUR_ADMIN}#{EMO_ESPIONNE.page_title} Traceur du site".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

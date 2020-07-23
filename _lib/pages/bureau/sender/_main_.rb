@@ -5,7 +5,7 @@ html.add_js('./js/modules/form_with_files.js')
 class HTML
   def titre
     # Note : le titre est dynamique en fonction de la chose à envoyer
-    "#{RETOUR_BUREAU}📡 #{MESSAGES["titre_#{param(:rid)}".to_sym]}".freeze
+    "#{RETOUR_BUREAU+EMO_PARABOLE.page_title+ISPACE}#{MESSAGES["titre_#{param(:rid)}".to_sym]}".freeze
   end
 
   # Code à exécuter avant la construction de la page
