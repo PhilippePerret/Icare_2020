@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "🌎#{ISPACE}Description de l’atelier".freeze
+    "#{Emoji.get('nature/terre').page_title+ISPACE}Description de l’atelier".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

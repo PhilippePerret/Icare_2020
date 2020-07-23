@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{retour_base}⏳ Activité de l'atelier Icare".freeze
+    "#{retour_base}#{Emoji.get('objets/sablier-coule').page_title+ISPACE}Activité de l'atelier Icare".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

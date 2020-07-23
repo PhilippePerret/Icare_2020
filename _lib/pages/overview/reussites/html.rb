@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{DIV_AIR}🎉 Les belles réussites (hall of fame)#{DIV_AIR}".freeze
+    "#{DIV_AIR+Emoji.get('objets/paquet-cadeau').page_title+ISPACE}Les belles réussites (hall of fame)#{DIV_AIR}".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

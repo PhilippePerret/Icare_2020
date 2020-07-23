@@ -3,7 +3,7 @@
 class HTML
   include StringHelpersMethods
   def titre
-    "👮‍♀️ Politique de confidentialité".freeze
+    "#{Emoji.get('humain/femme-flic').page_title+ISPACE}Politique de confidentialité".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

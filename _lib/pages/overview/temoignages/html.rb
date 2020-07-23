@@ -2,7 +2,7 @@
 require_module('temoignages')
 class HTML
   def titre
-    "#{DIV_AIR}📰 Témoignages d’icarien·ne·s#{DIV_AIR}".freeze
+    "#{DIV_AIR+Emoji.get('objets/journal').page_title+ISPACE}Témoignages d’icarien·ne·s#{DIV_AIR}".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
