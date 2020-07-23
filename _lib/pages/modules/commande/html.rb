@@ -4,7 +4,7 @@ class HTML
   attr_reader :absmodule
 
   def titre
-    "#{RETOUR_MODULES}<span class='vmiddle'>📓</span> Commande d’un module".freeze
+    "#{RETOUR_MODULES+Emoji.get('objets/notebook').page_title+ISPACE}Commande d’un module".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

@@ -2,7 +2,7 @@
 class HTML
   attr_reader :absmodule
   def titre
-    "#{RETOUR_MODULES}🗣️ Confirmation de commande".freeze
+    "#{RETOUR_MODULES+Emoji.get('gestes/parle').page_title+ISPACE}Confirmation de commande".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

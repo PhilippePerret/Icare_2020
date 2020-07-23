@@ -4,7 +4,7 @@ SANDBOX = TESTS || OFFLINE
 
 class HTML
   def titre
-    "💳 Paiement".freeze
+    "#{Emoji.get('objets/cb').page_title+ISPACE}Paiement".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "📚 Les Modules pédagogiques".freeze
+    "#{Emoji.get('objets/pile-livres').page_title+ISPACE}Les Modules pédagogiques".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -20,7 +20,7 @@ class HTML
 
   def listing_modules
     @listing_modules ||= begin
-      pictos = ['📕', '📔', '📗', '📘', '📙', '📒']
+      pictos = ['objets/livre-rouge', 'objets/notebook-jaune', 'objets/livre-vert', 'objets/livre-bleu', 'objets/livre-orange', 'objets/livre-jaune'].collect{|rp|Emoji.get(rp).regular}
       ipicto = 0
       nbpictos = pictos.count
       AbsModule.get_all
