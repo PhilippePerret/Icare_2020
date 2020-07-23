@@ -7,7 +7,8 @@ DirectoryIndex index.rb
 Options +FollowSymlinks
 RewriteEngine on
 
-RewriteCond %{REQUEST_FILENAME} !.+\.(css|js|png|jpg|ico)$
+# Pour ne pas rediriger les images, fichiers css, fonts, etc.
+RewriteCond %{REQUEST_FILENAME} !.+\.(css|js|png|jpg|ico|ttf|woff|woff2)$
 
 #RewriteCond %{REMOTE_ADDR} ::1
 #RewriteCond %{REMOTE_ADDR} 2a01:cb1c:98:2e00:890:fc7d:2811:3506

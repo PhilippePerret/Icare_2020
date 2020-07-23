@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>VOIR EMOJI</title>
+    <style media="screen">
+      body {
+        background:transparent;
+      }
+      div#emoji {
+        font-size:480px;
+        margin:0.5em;
+      }
+      div#emoji.shadowed {
+        text-shadow:29px 55px 58px rgba(91, 84, 84, 0.81);
+      }
+      button#ombrer{
+        position:fixed;
+        bottom:1em;
+        right:1em;
+        font-size:2em;
+      }
+      div#methode {
+        position:fixed;
+        right:0;
+        top:0;
+        width:320px;
+      }
+    </style>
+    <script type="text/javascript">
+    function toggleShadow(){
+      const o = document.querySelector('#emoji');
+      if (o.classList.contains('shadowed')){
+        o.classList.remove('shadowed')
+      } else {
+        o.classList.add('shadowed')
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <!--
+
+          IL FAUT COPIER L'EMOJI ICI
+
+    -->
+    <div id="emoji" class="">🚨‍</div>
+    <div id="methode">
+      <p>Pour produire une image d'émoji :</p>
+      <ol>
+        <li>Copier-coller l'émoji <a href="atm://open/?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/Emoji/show.html">dans ce fichier</a></li>
+        <li>Recharger ce fichier pour le voir.</li>
+        <li>Faire une copie partielle d'écran avec CMD-MAJ-4.</li>
+        <li>Récupérer le fichier dans le dossier captures courant (DD MacOsCatalina/Captures).</li>
+        <li>Ouvrir le fichier avec Gimp.</li>
+        <li>Ne pas utiliser la transparence, faire une sélection de la couleur blanche et “Édition/Agrandir…” la sélection de 2 pixels.</li>
+        <li>Effacer avec Fn-Effacement arrière.</li>
+        <li>Améliorer en gommant les blancs restants.</li>
+        <li>Mettre l'image dans un cadre de 480px/480px (Crop - Maj-C).</li>
+        <li>Exporter l'image en png dans le dossier ./img/emojis/ du site de l'atelier.</li>
+        <li>Pour faire une version ombrée, cliquer sur le bouton “Ombrer” ci-dessous et recommencer les opérations précédentes en nommant le fichier final comme le fichier précédent et <b>“-shadowed.png”</b>.</li>
+        <li>Dans le fichier <a href="atm://open/?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/emojis.rb">__first/constants/emojis.rb</a> définir une constante pour cet emoji en s'inspirant des autres.</li>
+      </ol>
+    </div>
+    <button id="ombrer" type="button" onclick="toggleShadow()">Ombrer/désombrer</button>
+  </body>
+</html>

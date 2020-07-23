@@ -1,0 +1,24 @@
+/*
+  Les émojis sont générés par des images, pour avoir celles de Mac
+*/
+.emoji {
+  vertical-align:text-bottom;
+}
+.emoji.mini {
+  width:10px;
+}
+.emoji.small {
+  width:20px;
+}
+.emoji.regular {
+  width:30px;
+}
+.emoji.title {
+  width:60px;
+}
+.emoji.large {
+  width:120px;
+}
+.emoji.big {
+  width:240px;
+}

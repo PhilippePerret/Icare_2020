@@ -20,8 +20,8 @@ div#main-cadre {
 
 div#main-cadre div#papillon {
   font-size:40pt;
-  margin-top:3pt;
-  text-shadow:5px 5px 4px #777;
+  margin-top:-2pt;
+  /* text-shadow:5px 5px 4px #777; */
 }
 div#main-cadre div#titre {
   font-size:50pt;

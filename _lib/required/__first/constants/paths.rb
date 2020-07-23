@@ -31,6 +31,8 @@ end
 
 require File.join(DATA_FOLDER,'secret','mysql') # => DATA_MYSQL
 
+require_relative 'emojis'
+
 MAIN_LINKS = {
   home:       '<a href="home">atelier icare</a>'.freeze,
   overview:   '<a href="overview/home"><span class="emoji">👀</span> <span>en savoir plus</span></a>'.freeze,
@@ -49,7 +51,7 @@ MAIN_LINKS = {
   admin_notifications:  '<a href="admin/notifications">Notifications%{non_vus}</a>'.freeze,
   frigo:      '<a href="bureau/frigo">🌡️ Porte de frigo%{non_vus}'.freeze,
   # DIVERS
-  aide:       '<a href="aide/home"><span class="emoji">🚨</span><span>aide</span></a>'.freeze,
+  aide:       '<a href="aide/home">'+EMO_GYROPHARE+' <span>Aide</span></a>'.freeze,
   aide_s:     '<a href="aide/home">aide</a>'.freeze,
   contact:    '<a href="contact/mail"><span class="emoji">📧</span><span>contact</span></a>'.freeze,
   contact_s:  '<a href="contact/mail">contact</a>'.freeze,
