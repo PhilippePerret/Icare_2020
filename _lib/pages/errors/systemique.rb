@@ -24,12 +24,17 @@ STDOUT.write <<-HTML
 <body>
   <section id="header">#{html.header rescue nil}</section>
   <section id="body">
-    <h1 class="titre">🚨 Une erreur est survenue</h1>
+    <h1 class="titre">#{EMO_GYROPHARE.page_title} Une erreur est survenue</h1>
     <div>
       <div class="warning">#{ERROR.message.to_s.gsub(/</,'&lt;')}</div>
       #{backtrace}
     </div>
-    <div class="center mt2 big">👩‍🚒 👨‍🏭 👨‍🚒 👩‍🏭</div>
+    <div class="center mt2 big">
+      <img src="http://www.atelier-icare.net/img/Emojis/humain/femme-pompier.png" alt="femme-pompier" style="width:40px;">
+      <img src="http://www.atelier-icare.net/img/Emojis/humain/homme-chalumeau.png" alt="homme-chalumeau" style="width:40px;">
+      <img src="http://www.atelier-icare.net/img/Emojis/humain/homme-pompier.png" alt="homme-pompier" style="width:40px;">
+      <img src="http://www.atelier-icare.net/img/Emojis/humain/femme-chalumeau.png" alt="femme-chalumeau" style="width:40px;">
+    </div>
     <p class="explication red">Le problème a été signalé, il devrait être corrigé dans les plus brefs délais par nos technicien·ne·s. Merci de votre compréhension.</p>
     <p style="text-align:center"><a href="home">Retourner à l’accueil</p>
   </section>

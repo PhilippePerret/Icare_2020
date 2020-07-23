@@ -2,7 +2,7 @@
 require_modules(['form','frigo'])
 class HTML
   def titre
-    "Porte de frigo".freeze
+    (Emoji.get('objets/thermometre').page_title+ISPACE+"Porte de frigo").freeze
   end
 
   # Code à exécuter avant la construction de la page

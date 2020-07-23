@@ -4,7 +4,7 @@
 =end
 class HTML
   def titre
-    "⚡#{ISPACE}Accès interdit"
+    "#{Emoji.get('nature/eclair').page_title+ISPACE}Accès interdit"
   end #/ titre
   def build_body
     @body = <<-HTML

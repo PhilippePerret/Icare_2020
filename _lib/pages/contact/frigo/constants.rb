@@ -12,7 +12,7 @@ MESSAGES.merge!({
 <p>Pour lui répondre :</p>
 <p><a href="mailto:%{mail}">Répondre à %{mail}</a></p>
 <p>Bien à vous,</p>
-<p>Le Bot de l’atelier Icare</p>
+<p>#{EMO_ROBOT.texte+ISPACE}Le Bot de l’atelier Icare #{EMO_PAPILLON.texte}</p>
   HTML
 })
 

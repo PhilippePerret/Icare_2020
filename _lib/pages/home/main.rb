@@ -3,6 +3,7 @@
   Module chargé quand on est à l'accueil du site, pour avoir une
   page tout à fait différente.
 =end
+raise
 require_module('citation')
 class HTML
   def build_body

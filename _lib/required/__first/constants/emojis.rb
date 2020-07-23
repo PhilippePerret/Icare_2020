@@ -143,6 +143,9 @@ end #/Emoji
 
 EMO_PAPILLON = Emoji.new('animaux/papillon')
 EMO_ROBOT = Emoji.new('machine/robot')
+EMO_GYROPHARE = Emoji.new('objets/gyrophare')
+
+
 EMO_RAPPORT = Emoji.new('machine/rapport')
 EMO_MANETTE_JEU = Emoji.new('machine/manette-jeu')
 EMO_TERRE = Emoji.new('nature/terre')
@@ -154,7 +157,6 @@ EMO_LETTRE_MAIL = Emoji.new('objets/lettre-mail')
 EMO_PILE_LIVRES = Emoji.new('objets/pile-livres')
 EMO_TABLEAU_SOLEIL = Emoji.new('objets/tableau-soleil')
 EMO_SABLIER_COULE = Emoji.new('objets/sablier-coule')
-EMO_GYROPHARE = Emoji.new('objets/gyrophare')
 EMO_ARMOIRE = Emoji.new('objets/armoire')
 EMO_OUTILS = Emoji.new('objets/outils')
 EMO_ECRAN = Emoji.new('objets/ecran')

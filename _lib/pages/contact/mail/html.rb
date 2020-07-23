@@ -2,7 +2,7 @@
 require_module('form')
 class HTML
   def titre
-    "📧#{ISPACE}Contact".freeze
+    "#{Emoji.get('objets/lettre-mail').page_title+ISPACE}Contact".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
