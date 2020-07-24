@@ -2,11 +2,10 @@
 require_modules(['absmodules','form', 'user/helpers','icmodules'])
 class HTML
   def titre
-    "🗃️ Le Quai des Docs".freeze
+    "#{Emoji.get('objets/boite-dossier').page_title+ISPACE}Le Quai des Docs".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
-    log('-> exec')
     icarien_required
     if param(:form_id)
       form = Form.new

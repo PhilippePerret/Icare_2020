@@ -2,7 +2,7 @@
 require_module('qdd')
 class HTML
   def titre
-    "#{retour_qdd}📥 Téléchargement".freeze
+    "#{retour_qdd}#{Emoji.get('signes/tiroir-fleche').page_title+ISPACE}Téléchargement".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -17,8 +17,6 @@ class HTML
   end
   # Fabrication du body
   def build_body
-    @body = <<-HTML
-<p>Le téléchargement a dû être opéré.</p>
-    HTML
+    @body = '<p>Le téléchargement a dû être opéré.</p>'.freeze
   end
 end #/HTML

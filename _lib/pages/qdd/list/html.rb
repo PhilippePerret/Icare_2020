@@ -1,8 +1,8 @@
 # encoding: UTF-8
-
+require_module('qdd')
 class HTML
   def titre
-    "#{retour_qdd}📑 Liste des documents filtrés".freeze
+    "#{retour_qdd+Emoji.get('objets/feuilles-onglets').page_title+ISPACE}Liste des documents filtrés".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

@@ -1,4 +1,6 @@
 # encoding: UTF-8
+require_module('qdd')
+
 class HTML
 
   def traite_formulaire_search(form)
@@ -32,12 +34,10 @@ class HTML
       @listing = Tag.div(text:MESSAGES[:no_document_with_params], class:'explication')
     else
       @listing = founds.collect do |found|
-        # doc = IcDocument.instantiate(found)
-        doc = QddDoc.new(found)
+        doc = QddDoc.new(found) # BUG
         doc.cards
       end.join
     end
-
 
     MyDB.DBNAME = 'icare_test' if OFFLINE
 
@@ -96,8 +96,6 @@ class HTML
       specs << "limiter la recherche à #{param(:qdd_limit)} documents"
       " LIMIT #{param(:qdd_limit)}"
     end
-
-
 
     request = <<-SQL
 SELECT
