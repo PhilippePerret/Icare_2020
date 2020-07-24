@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "🔏#{ISPACE}Changement du mot de passe"
+    "#{Emoji.get('objets/cadenas-stylo').page_title+ISPACE}Changement du mot de passe"
   end
   # Code à exécuter avant la construction de la page
   def exec

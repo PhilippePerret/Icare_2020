@@ -1,6 +1,6 @@
 <% extend StringHelpersMethods %>
 <p>
-<%= "#{user.pseudo}, v" unless user.guest? %>ous rejoignez cette page parce que vous avez l'intention de détruire votre profil. Nous sommes évidemment déçus de vous voir partir. Mais avant de procéder à cette opération, laissez-moi vous rappeler les implications de cette destruction :
+<%= user.guest? ? 'V' : "#{user.pseudo}, v" %>ous rejoignez cette page parce que vous avez l'intention de détruire votre profil. Nous sommes évidemment déçus de vous voir partir. Mais avant de procéder à cette opération, laissez-moi vous rappeler les implications de cette destruction :
 </p>
 <ul>
   <li>vous ne recevrez plus aucune information de la part de l'atelier <span class="small">(si c'est la raison de cette destruction, notez que vous pouvez modifier vos <%= section_preferences('préférences') %> pour ne plus recevoir ces messages)</span>,</li>

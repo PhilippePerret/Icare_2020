@@ -2,7 +2,7 @@
 require_module('form')
 class HTML
   def titre
-    "🚪 Candidater".freeze
+    "#{Emoji.get('objets/card').page_title+ISPACE}Candidater".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

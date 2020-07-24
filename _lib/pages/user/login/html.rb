@@ -5,7 +5,7 @@
 require_module('form')
 class HTML
 def titre
-  "🔐#{ISPACE}Identification"
+  "#{Emoji.get('objets/cadenas-cle').page_title+ISPACE}Identification"
 end
 def exec
   if param(:form_id) == 'user-login'

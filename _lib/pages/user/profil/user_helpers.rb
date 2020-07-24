@@ -1,7 +1,6 @@
 # encoding: UTF-8
 class User
   def redirection_apres_login
-    "Rediriger vers : #{redirection.downcase}"
   end #/ redirection_apres_login
 
   def redirection

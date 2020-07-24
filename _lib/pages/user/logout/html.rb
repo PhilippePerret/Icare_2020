@@ -5,7 +5,7 @@ class HTML
     user.deconnecte
   end
   def titre
-    "👋#{ISPACE}À bientôt".freeze
+    "#{Emoji.get('gestes/coucou-main').page_title+ISPACE}À bientôt".freeze
   end #/ titre
   def build_body
     @body = deserb('body', @user_init)

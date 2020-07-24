@@ -11,6 +11,7 @@ STRINGS = {
   home: 'home'.freeze,
   inviter: 'inviter'.freeze,
   titre:'titre'.freeze,
+  users:'users'.freeze,
 }
 
 AND = ' AND '.freeze

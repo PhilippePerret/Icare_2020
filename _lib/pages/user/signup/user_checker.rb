@@ -145,7 +145,7 @@ end #/ patronyme_valid?
 
 # Retourne true si le pseudo existe déjà
 def pseudo_exists?
-  db_exec("SELECT id FROM users WHERE pseudo = ?", [pseudo]).count > 0
+  db_count(STRINGS[:users], {pseudo: pseudo}) > 0
 end #/ pseudo_exists?
 
 def mail_valid?
@@ -161,7 +161,7 @@ def mail_valid?
 end #/ mail_valid?
 # Retourne true si le pseudo existe déjà
 def mail_exists?
-  db_exec("SELECT id FROM users WHERE mail = ?", [mail]).count > 0
+  db_count(STRINGS[:users], {mail: mail}) > 0
 end #/ pseudo_exists?
 
 def naissance_valid?
@@ -206,7 +206,7 @@ end #/ rgpd_valid?
 
 def modules_valid?
   modules_ids = []
-  db_exec("SELECT id FROM absmodules").each do |dmod|
+  db_exec("SELECT id FROM absmodules".freeze).each do |dmod|
     mod_id = dmod[:id]
     modules_ids << mod_id if param("umodule_#{mod_id}".to_sym)
   end

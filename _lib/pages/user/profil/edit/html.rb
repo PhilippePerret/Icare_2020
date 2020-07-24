@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "#{RETOUR_PROFIL}#{user.femme? ? '🧛‍♀️' : '🧛🏻‍♂️'} Édition du profil".freeze
+    "#{RETOUR_PROFIL+Emoji.get("humain/etudiant#{user.fem(:e)}".freeze).page_title+ISPACE}Édition du profil".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

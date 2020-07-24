@@ -7,5 +7,5 @@ ERRORS.merge!({
 })
 
 MESSAGES.merge!({
-  destroy_confirm: 'Votre profil a été détruit avec succès, %{pseudo} (et c’est la dernière fois que je prononce votre pseudo 😢).'
+  destroy_confirm: 'Votre profil a été détruit avec succès, %{pseudo} (et c’est la dernière fois que je prononce votre pseudo '+Emoji.get('smileys/larme').texte+').'
 })
