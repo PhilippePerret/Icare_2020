@@ -2,6 +2,8 @@
 
 .htaccess
 
+.fatal_errors.log
+
 _lib/data/secret/
 
 _lib/data/qdd/
