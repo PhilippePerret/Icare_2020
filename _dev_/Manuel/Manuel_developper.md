@@ -690,8 +690,39 @@ end #/HTML
 ~~~
 
 
+### Liens principaux
 
+On peut utiliser la classe `MainLink` pour récupérer (ou définir) des liens généraux, récurrents, qui sont utilisés souvent.
 
+Ces liens sont définis dans le fichier [constants/MainLink.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/MainLink.rb), dans la constante `MainLink::DATA_KEY`.
+
+Pour obtenir un lien simple, c'est-à-dire avec le titre par défaut en minuscule et pas de picto (faux émoji), on utilise simplement la méthode `simple` :
+
+~~~ruby
+MainLink[:contact].simple
+# => Produit le lien vers le formulaire de contact
+~~~
+
+Si on remplace la méthode `simple` par la méthode `with` on peut définir beaucoup de choses :
+
+> Tous les exemples ci-dessous sont cumulables.
+
+~~~ruby
+MainLink[:contact].with(text: 'nouveau texte du lien')
+# Pour changer le titre visible du lien
+
+MainLink[:contact].with(picto: true)
+# Pour ajouter le picto devant le titre
+
+MainLink[:contact].with(titleize: true)
+# Pour mettre une capitale au titre du lien ('contact' -> 'Contact')
+
+MainLink[:contact].with(pastille: 'la pastille')
+# Cas d'utilisation unique, pour remplace '%{non_vus}' par le 
+# texte fourni
+~~~
+
+> Pour la gestion des faux Émojis, cf. [faux émojis](#faux-emojis)
 
 ### Méthodes d'helpers générales
 
@@ -759,6 +790,40 @@ plus long pour voir comment est réparti l'espace.
 #{TIRET}Un troisième item de liste.
 
 ~~~
+
+<a name="faux-emojis"></a>
+
+### Faux Émojis
+
+Les émojis étant affreux sur PC windows 10 (et autres), on ne peut pas utiliser les émojis normalement. On utilise à la place des images qui se trouvent dans le dossier `img/Emojis`.
+
+Pour utiliser un émoji, on utilise la classe `Emoji` :
+
+~~~ruby
+emoji = Emoji.get('dossier/nom-fichier')
+
+emoji.texte
+# Produit la version textuelle (en taille) de l'émoji
+~~~
+
+Les tailles suivantes existent :
+
+~~~
+tiny					# Très petit
+mini
+small
+texte					# Pour les utiliser dans le texte
+regular				# Par exemple dans les div.goto
+page_title		# spécialement pour les pages de titre
+large
+big
+~~~
+
+#### Fabrication des faux émojis
+
+Les images des faux émojis sont des fichiers `PNG` de 480px sur 480px.
+
+On peut les fabriquer facilement avec le fichier [./\_dev\_/Emoji/show.html](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/Emoji/show.html) qui explique en détail toute la procédure (il suffit au départ de placer l'émoji dans ce fichier show.html et de l'ouvrir dans Safari par exemple.
 
 
 

@@ -7,15 +7,15 @@
 
 class MainLink
 DATA_KEY = {
-  signup:   {route:'user/signup'.freeze,  text:'s’inscrire'.freeze, picto:''},
-  login:    {route:'user/login'.freeze,   text:'s’identifier'.freeze},
-  logout:   {route:'user/logout'.freeze,  text:'se déconnecter'.freeze},
-  aide:     {route:'aide/home'.freeze,    text:'aide'.freeze,     picto:'objets/gyrophare'.freeze},
-  bureau:   {route:'bureau/home'.freeze,  text:'bureau'.freeze,   picto:'objets/bureau'.freeze},
-  frigo:    {route:'bureau/frigo'.freeze, text:'porte de frigo',  picto:'objets/thermometre'.freeze},
-  contact:  {route:'contact/mail'.freeze, text:'contact', picto:'objets/lettre-mail'.freeze},
-  plan:     {route:'plan'.freeze, text:'plan', picto:'objets/boussole'.freeze},
-  reussites:{route:'overview/reussites'.freeze, text:'belles réussites', picto:'objets/paquet-cadeau'.freeze},
+  signup:     {route:'user/signup'.freeze,  text:'s’inscrire'.freeze, picto:''},
+  login:      {route:'user/login'.freeze,   text:'s’identifier'.freeze},
+  logout:     {route:'user/logout'.freeze,  text:'se déconnecter'.freeze},
+  aide:       {route:'aide/home'.freeze,    text:'aide'.freeze,     picto:'objets/gyrophare'.freeze},
+  bureau:     {route:'bureau/home'.freeze,  text:'bureau'.freeze,   picto:'objets/bureau'.freeze},
+  frigo:      {route:'bureau/frigo'.freeze, text:'porte de frigo',  picto:'objets/thermometre'.freeze},
+  contact:    {route:'contact/mail'.freeze, text:'contact', picto:'objets/lettre-mail'.freeze},
+  plan:       {route:'plan'.freeze, text:'plan', picto:'objets/boussole'.freeze},
+  reussites:  {route:'overview/reussites'.freeze, text:'belles réussites', picto:'objets/paquet-cadeau'.freeze},
 }
 # ---------------------------------------------------------------------
 #

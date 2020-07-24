@@ -30,5 +30,3 @@ PUBLIC_FOLDER   = File.join(APP_FOLDER, 'public'.freeze)
 end
 
 require File.join(DATA_FOLDER,'secret','mysql') # => DATA_MYSQL
-
-require_relative 'emojis'
