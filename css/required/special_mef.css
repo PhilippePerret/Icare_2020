@@ -69,54 +69,48 @@ div.goto {
   display:inline-block;
   position:relative;
   padding:1.5em;
-  font-size:1.2;
   width:200px;
   min-width:200px;
   max-width:200px;
   text-align:center;
   margin-top:1em;
   margin-right:12px;
-  border:1px solid;
+  border:1px solid #DDDDDD;
 }
-div.goto:not(.exergue):not(.simple) {
-  background:linear-gradient(to right, var(--fond-inner-object), rgb(126, 196, 229));
-}
-
-div.goto.exergue {
-  background:linear-gradient(to right,#74babc,#397d7f);
-}
-
-div.goto.simple {
-  background:transparent;
-  color:#555555;
-}
-
-div.goto:hover {
-  background-color:#EEEEEE;
-  border-color:rgb(42, 127, 168);
-  transition:0.3s;
-}
+div.goto.empty {visibility:hidden;}
 
 div.goto a {
   font-family:Geneva, Helvetica, Arial;
   letter-spacing:0.2px;
   font-size:0.9em;
 }
-div.goto:hover a {
-  /* color:rgb(42, 127, 168); */
-  transition:0.3s;
+
+/* Couleur du fond (3 : normal, simple et exergue) */
+div.goto:not(.exergue):not(.simple) {
+  background-color: rgba(174, 217, 210, 1);
+}
+div.goto.simple {
+  background-color:transparent;
+}
+div.goto.exergue {
+  background:linear-gradient(to right,#74babc,#397d7f);
 }
 
-div.goto:not(.simple) a {
-  color:white;
+/* Couleur du lien = texte */
+div.goto:not(.exergue) a {
+  color: #555555;
 }
-div.goto:not(.simple) a:hover {
-  color:rgb(33, 223, 243);
+div.goto.exergue a {
+  color: white;
 }
-div.goto.simple a:hover {
-  color:var(--fond-inner-object);
+/* Survol du lien */
+div.goto:hover a { transition:0.1s; }
+div.goto:not(.exergue) a:hover {
+  color:#000000;
 }
-div.goto.empty {visibility:hidden;}
+div.goto.exergue a:hover {
+  color:#000000;
+}
 
 
 span.pastille {
