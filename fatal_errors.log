@@ -2110,4 +2110,33 @@ Did you mean?  sty
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-24 06:18:30 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/plan/html.rb:40: syntax error, unexpected tCONSTANT, expecting do or '{' or '('
+...ar+EMO_HOMME_MAR  RON_MOUSTACHE+EMO_FEMME_VOILEE+EMO_EXTRATE...
+...                  ^~~~~~~~~~~~~
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/plan/html.rb:40: syntax error, unexpected ')', expecting tSTRING_DEND
+...EUNE_HOMME_BLOND+'</a>'.freeze)}
+...                              ^
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-24 06:19:43 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/plan/html.rb:40: syntax error, unexpected tCONSTANT, expecting do or '{' or '('
+...ar+EMO_HOMME_MAR  RON_MOUSTACHE+EMO_FEMME_VOILEE+EMO_EXTRATE...
+...                  ^~~~~~~~~~~~~
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'
