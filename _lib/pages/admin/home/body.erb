@@ -1,6 +1,6 @@
 
 <div id="goto-notifications" class="goto">
-   <%= (EMO_PORTE_VOIX+ISPACE+MAIN_LINKS[:admin_notifications] % {non_vus: pastille_notifications_non_vues}).freeze %>
+   <%= (EMO_PORTE_VOIX+ISPACE+Tag.link(route:'admin/notifications'.freeze, text:('Notifications%{non_vus}' % {non_vus: pastille_notifications_non_vues}).freeze)).freeze %>
 </div>
 
 <%= divGoto((EMO_OUTILS+ISPACE+'<a href="admin/tools">OUTILS</a>').freeze) %>
@@ -18,5 +18,5 @@
 <%= divGoto((EMO_ROUE_DENTEE+ISPACE+'<a href="bureau/preferences">Préférences</a>').freeze) %>
 
 <div id="goto-frigo" class="goto">
-  <%= MAIN_LINKS[:frigo] % {non_vus: pastille_messages_frigo_non_vus} %>
+  <%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, picto:true ) %>
 </div>

@@ -77,7 +77,7 @@ feature 'Inscription à l’atelier Icare' do
     extend SpecModuleFormulaire
 
     def clic_signup_button
-      find('#signup-btn').click
+      find('#btn-signup').click
     end #/ clic_signup_button
 
     # Les données à tester
@@ -103,7 +103,7 @@ feature 'Inscription à l’atelier Icare' do
     extend SpecModuleFormulaire
 
     def clic_signup_button
-      find('#signup-btn').click
+      find('#btn-signup').click
     end #/ clic_signup_button
 
     # Les données à tester
@@ -129,7 +129,7 @@ feature 'Inscription à l’atelier Icare' do
     extend SpecModuleFormulaire
 
     def clic_signup_button
-      find('#signup-btn').click
+      find('#btn-signup').click
     end #/ clic_signup_button
 
     # Les données à tester

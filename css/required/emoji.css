@@ -4,6 +4,10 @@
 .emoji {
   vertical-align:text-bottom;
 }
+.emoji.logo {
+  width:30px;
+  vertical-align:text-top;
+}
 .emoji.mini {
   width:10px;
 }

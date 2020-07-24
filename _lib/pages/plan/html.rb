@@ -24,7 +24,7 @@ class HTML
     # 👀
     @body = <<-HTML
 
-#{aGoto(Tag.lien_bureau) unless user.guest?}
+#{aGoto(MainLink[:bureau].with(picto:true, titleize:true)) unless user.guest?}
 
 #{aGoto('<a href="user/profil">'+user.visage+' Profil</a>'.freeze) unless user.guest?}
 
@@ -43,7 +43,7 @@ class HTML
 
 #{aGoto('<a href="qdd/home">'+Emoji.get('objets/pile-livres').regular+' Quai de docs</a>'.freeze)}
 
-#{divGoto(MAIN_LINKS[:aide])}
+#{divGoto(MainLink[:aide].with(picto: true, titleize:true))}
 
 #{divGoto('<a href="overview/temoignages">'+Emoji.get('objets/tableau-soleil').regular+' Témoignages</a>'.freeze)}
 

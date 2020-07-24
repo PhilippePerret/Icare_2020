@@ -1,13 +1,13 @@
 <p>Bienvenue dans votre bureau de travail à l'atelier Icare, <%= pseudo %>.</p>
 <div id="goto-travail" class="goto">
-  <%= EMO_TRAVAIL+ISPACE+MAIN_LINKS[:work] %>
+  <%= EMO_TRAVAIL+ISPACE+Tag.link(route:'bureau/travail'.freeze, text:'Travail courant'.freeze) %>
 </div>
 <div id="goto-notifications" class="goto">
-  <%= EMO_PUNAISE+ISPACE+MAIN_LINKS[:notices] % {non_vus: pastille_notifications_non_vues}%>
+  <%= EMO_PUNAISE+ISPACE+Tag.link(route:'bureau/notifications'.freeze,text:('Notifications%{non_vus}' % {non_vus: pastille_notifications_non_vues}).freeze) %>
 </div>
 
 <div id="goto-frigo" class="goto">
-  <%= MAIN_LINKS[:frigo] % {non_vus: pastille_messages_frigo_non_vus} %>
+  <%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, picto:true ) %>
 </div>
 
 <div id="goto-documents" class="goto">

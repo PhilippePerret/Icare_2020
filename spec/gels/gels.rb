@@ -12,7 +12,7 @@ def inscription_marion
   degel_or_gel('inscription_marion') do
     puts "Fabrication du gel 'inscription_marion'".vert
     def clic_signup_button
-      find('#signup-btn').click
+      find('#btn-signup').click
     end #/ clic_signup_button
     # Les données à tester
     data = DATA_SPEC_SIGNUP_VALID[1]
@@ -191,7 +191,7 @@ def inscription_benoit
     puts "Fabrication du gel 'inscription_benoit'".vert
     Capybara.reset_sessions!
     def clic_signup_button
-      find('#signup-btn').click
+      find('#btn-signup').click
     end #/ clic_signup_button
     # Les données à tester
     data = DATA_SPEC_SIGNUP_VALID[2]
@@ -209,7 +209,7 @@ def inscription_elie
     puts "Fabrication du gel 'inscription_elie'".vert
     Capybara.reset_sessions!
     def clic_signup_button
-      find('#signup-btn').click
+      find('#btn-signup').click
     end #/ clic_signup_button
     # Les données à tester
     data = DATA_SPEC_SIGNUP_VALID[3]
@@ -380,7 +380,7 @@ def inscription_destroyed
     puts "Fabrication du gel 'inscription_destroyed'".vert
     Capybara.reset_sessions!
     def clic_signup_button
-      find('#signup-btn').click
+      find('#btn-signup').click
     end #/ clic_signup_button
     # Les données à tester
     data = DATA_SPEC_SIGNUP_VALID[4]

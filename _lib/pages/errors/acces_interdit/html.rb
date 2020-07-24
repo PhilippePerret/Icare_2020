@@ -9,7 +9,7 @@ class HTML
   def build_body
     @body = <<-HTML
 <div class="only-message">Désolé, mais l’accès à cette page vous est interdit.</div>
-<div class="center">#{MAIN_LINKS[:plan]}</div>
+<div class="center">#{MainLink[:plan].with(picto:true, titleize:true)}</div>
     HTML
   end
 end #/HTML

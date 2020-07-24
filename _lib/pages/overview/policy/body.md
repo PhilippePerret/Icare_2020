@@ -61,7 +61,7 @@ De même que les documents, ces cotes sont conservées à vie, même lorsque l�
 
 ### Informations professionnelles
 
-Dans sa section #{MAIN_LINKS[:reussites_s]}, l'atelier présente au jour le jour les réussites professionnelles des icarien·ne·s qui ont profité de l'apprentissage de l'atelier. Cet affichage se fait toujours avec l'accord implicite de l'icarien·ne lorsque c'est lui ou elle qui a communiqué l'information à l'administration de l'atelier ou Phil, ou par demande explicite lorsque cette information a été trouvée par l'administration de l'atelier.
+Dans sa section #{MainLink[:reussites].simple}, l'atelier présente au jour le jour les réussites professionnelles des icarien·ne·s qui ont profité de l'apprentissage de l'atelier. Cet affichage se fait toujours avec l'accord implicite de l'icarien·ne lorsque c'est lui ou elle qui a communiqué l'information à l'administration de l'atelier ou Phil, ou par demande explicite lorsque cette information a été trouvée par l'administration de l'atelier.
 
 Lorsque l'information existe, c'est le patronyme qui est utilisé pour l'annonce.
 

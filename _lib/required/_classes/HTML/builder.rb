@@ -101,11 +101,11 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
   def build_footer
     @footer = <<-HTML
 
-#{MAIN_LINKS[:home]}
-#{MAIN_LINKS[:overview_s]}
-#{MAIN_LINKS[:aide_s]}
-#{MAIN_LINKS[:contact_s]}
-#{MAIN_LINKS[:plan_s]}
+#{Tag.lien(route:'home',text:'atelier icare'.freeze)}
+#{Tag.link(route:'overview/home'.freeze, text:'en savoir plus'.freeze)}
+#{MainLink[:aide].simple}
+#{MainLink[:contact].simple}
+#{MainLink[:plan].simple}
 #{Tag.lien(text:'<span class="nowrap">politique de confidentialité</span>', route:'overview/policy')}
     HTML
   end

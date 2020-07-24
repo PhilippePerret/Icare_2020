@@ -11,13 +11,13 @@ class HTML
 
   def build_header
     @header = []
-    @header << MAIN_LINKS[:overview_s]
+    @header << Tag.link(route:'overview/home'.freeze, text:'en savoir plus'.freeze)
     if user.guest?
-      @header << MAIN_LINKS[:login_s]
-      @header << MAIN_LINKS[:signup_s]
+      @header << MainLink[:login].simple
+      @header << MainLink[:signup].simple
     else
-      @header << MAIN_LINKS[:logout_s]
-      @header << MAIN_LINKS[:bureau_s]
+      @header << MainLink[:logout].simple
+      @header << MainLink[:bureau].simple
     end
     @header = @header.join(' ')
   end

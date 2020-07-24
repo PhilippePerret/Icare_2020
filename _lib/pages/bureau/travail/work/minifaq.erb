@@ -3,5 +3,5 @@
   <%= liste_reponses_minifaq %>
   <p>Vous pouvez poser votre question sur cette étape (*).</p>
   <%= formulaire_minifaq %>
-  <div class="p small explication">(*) Merci de n'utiliser ce formulaire QUE pour poser une question sur cette étape et seulement sur cette étape. Pour toute autre question, merci d'utiliser le formulaire de <%= MAIN_LINKS[:contact] %>.</div>
+  <div class="p small explication">(*) Merci de n'utiliser ce formulaire QUE pour poser une question sur cette étape et seulement sur cette étape. Pour toute autre question, merci d'utiliser le <%= MainLink[:contact].with(text:'formulaire de contact') %>.</div>
 </fieldset>

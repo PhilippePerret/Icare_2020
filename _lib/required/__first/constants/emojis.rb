@@ -83,6 +83,9 @@ end #/ large
 def big(options = nil)
   build_with_or_without_options(:big, options)
 end #/ big
+def logo(options = nil)
+  build_with_or_without_options(:logo, options)
+end #/ logo
 def build_with_or_without_options(type, options)
   if options.nil?
     @builts ||= {}
@@ -108,7 +111,7 @@ def full?
   options && (options[:full] === true)
 end #/ full?
 TAILLES = {
-  mini: 10, small:20, texte: 'height:1.3em;', regular:30, title:60, page_title:45, large:120, big:240
+  mini: 10, small:20, texte: 'height:1.3em;', regular:30, title:60, page_title:45, large:120, big:240, logo:30
 }
 def build taille
   if full?
