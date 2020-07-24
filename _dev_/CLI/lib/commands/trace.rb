@@ -8,20 +8,23 @@ class IcareCLI
 class << self
   attr_accessor :all_lines
   attr_accessor :new_lines
+
   def proceed_trace
     clear
+    puts "Traceur #{online? ? 'ONLINE' : 'OFFLINE (ajouter -o pour tracer en distant)'}"
+    puts "Afficher #{only_errors? ? 'seulement les erreurs (retirer -e/--errors_only pour tout voir)' : 'tout (ajouter -e/--errors_only pour voir seulement les erreurs)'}"
     puts "Taper Ctrl-C pour arrêter le traceur de l'atelier.".vert
     self.all_lines = {}
     begin
       self.new_lines = []
-      res = get_lines
-      lines = Marshal.load(res)
+      lines = get_lines
       decompose(lines)
       # affiche_new_lines
     rescue Exception => e
       break if e.message == '' #ctrl c
       unless res.nil?
         puts "Problème à la lecture des lines du traceur : #{e.message}".rouge
+        puts e.backtrace.join("\n").rouge
         puts "RETOUR: #{res.inspect}".rouge
       else
         puts e.message.rouge
@@ -30,6 +33,18 @@ class << self
       sleep FREQUENCE_CHECK
     end while true
   end #/ proceed_trace
+
+
+  def online?
+    @for_online = option?(:online) if @for_online.nil?
+    @for_online
+  end #/ online?
+
+  def only_errors?
+    @require_only_errors = option?(:errors_only) if @require_only_errors.nil?
+    @require_only_errors
+  end #/ only_errors?
+
 
   DEL_DATA_ESCAPED = Regexp.escape(Tracer::DEL_DATA)
   def decompose(lines)
@@ -49,6 +64,7 @@ class << self
       tline = TracerLine.new(time.to_f, *donnees)
       all_lines.merge!(time => tline)
       # === ÉCRITURE DE LA LIGNE ===
+      next if only_errors? && !tline.error?
       puts tline.out
     end
   end #/ decompose
@@ -56,6 +72,14 @@ class << self
   # Méthode qui va chercher les lignes depuis le temps maintenant - 3600
   # secondes et affiche les nouvelles
   def get_lines
+    online? ? Marshal.load(get_lines_distant) : get_lines_local
+  end #/ get_lines
+
+  def get_lines_local
+    Tracer.read(Time.now.to_i - 3600)
+  end #/ get_lines_local
+
+  def get_lines_distant
     `ssh #{serveur_ssh} bash <<SSH
 ruby <<EOT
 Dir.chdir('./www') do
@@ -64,7 +88,7 @@ puts Marshal.dump(Tracer.read(#{Time.now.to_i - 3600}))
 end
 EOT
 SSH`
-  end #/ get_lines
+  end #/ get_lines_distant
 
   def serveur_ssh
     @serveur_ssh ||= "icare@ssh-icare.alwaysdata.net"

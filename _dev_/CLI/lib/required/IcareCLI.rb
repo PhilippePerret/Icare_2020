@@ -3,10 +3,15 @@
   Class IcareCLI
   -----------
   Gestion principale de la ligne de commande
+
+
+  option?(:<long>) pour savoir si une option est activée
 =end
 class IcareCLI
   OPTIONS_DIM_TO_REAL = {
-    'k' => :keep
+    'e' => :errors_only,
+    'k' => :keep,
+    'o' => :online,
   }
 # ---------------------------------------------------------------------
 #
@@ -23,8 +28,10 @@ class << self
     (0...ARGV.length).each do |ivar|
       if ARGV[ivar].start_with?('--')
         @options.merge!(ARGV[ivar][2..-1].to_sym => true)
-      elsif ARGV[ivar].start_with?('-')
-        @options.merge!(OPTIONS_DIM_TO_REAL[ARGV[ivar][1..-1]] => true)
+      elsif ARGV[ivar].start_with?('-') # on peut utiliser -eohg
+        ARGV[ivar][1..-1].split('').each do |short_opt|
+          @options.merge!((OPTIONS_DIM_TO_REAL[short_opt]||short_opt) => true)
+        end
       else
         @params.merge!(ivar => ARGV[ivar])
       end

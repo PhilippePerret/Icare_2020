@@ -69,9 +69,9 @@ end #/ out
 
 def lien_plebiscite
   if user.guest?
-    "👍 (#{plebiscites})"
+    "#{Emoji.get('gestes/pouceup').texte+ISPACE}(#{plebiscites})".freese
   else
-    Tag.lien(route:"#{route.to_s}?op=plebisciter&temid=#{id}", text:"+ 👍 (#{plebiscites})", class:'small')
+    Tag.lien(route:"#{route.to_s}?op=plebisciter&temid=#{id}", text:"+ #{Emoji.get('gestes/pouceup').texte+ISPACE}(#{plebiscites})".freeze, class:'small')
   end
 end #/ lien_plebiscite
 

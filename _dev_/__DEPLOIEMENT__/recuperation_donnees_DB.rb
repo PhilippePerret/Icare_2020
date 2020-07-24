@@ -38,13 +38,22 @@ require './_dev_/CLI/lib/required/String' # notamment pour les couleur
 
 MyDB.DBNAME = 'icare'
 
-
 =begin
   Cette page présente le synopsis des choses à faire pour ouvrir le nouvel
   atelier Icare.
 =end
 
 # === VÉRIFICATIONS PRÉLIMINAIRES ===
+
+# Table témoignages
+#  1. elle doit contenir la colonne `plebiscites TINYINT`
+#  2. tous les témoignages doivent être validés (confirmed)
+fields_temoignages = db_exec('SHOW COLUMNS FROM temoignages').collect{|dc|dc[:Field]}
+fields_temoignages.include?('plebiscites') || begin
+  puts "Il faut rajouter la colonne `plebiscites TINYINT` à la table `temoignages` : \nALTER TABLE `temoignages` ADD COLUMN plebiscites TINYINT DEFAULT 0 AFTER confirmed;".rouge
+  exit
+end
+db_exec('UPDATE temoignages SET confirmed = TRUE')
 
 # On s'assure que la table de correspondance pour les watchers contient toutes
 # les valeurs
@@ -124,6 +133,8 @@ TACHES = []
 
 
 # temoignages         OK    icare > online
+# Il faut s'assurer que la colonne `prebiscites TINYINT` existe bien (elle
+# disparait si on utilise l'ancienne table online)
 `mysqldump -u root icare temoignages > "#{FOLDER_GOODS_SQL}/temoignages.sql"`
 
 # actualites          OK    online > Faire une sauvegarde pour les garder

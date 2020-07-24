@@ -67,6 +67,7 @@ class << self
   # Retourne la liste des lignes lues
   def read(from = nil)
     lines = []
+    file.close unless @file.nil?
     File.foreach(path) do |line|
       time, data = line.split(DEL)
       next if from && time.to_i < from
