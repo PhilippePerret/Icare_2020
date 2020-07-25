@@ -8,6 +8,10 @@
   et actualise le gel `real-icare` qui permet d'avoir des données locales
   correspondant aux données distantes.
 
+  LE PLUS SIMPLE POUR JOUER CE SCRIPT (pour voir bien défiler les messages) :
+  * se mettre dans le dossier de l'atelier
+  * jouer `ruby ./_dev_/__DEPLOIEMENT__/GET_DATA_DB_OLD_SITE.rb`
+
 =end
 FORCE_ESSAI           = false # zappe toutes les méthodes de contrôle si TRUE
 UPDATE_ICARE_TEST_DB  = true # pour que toutes les données soient chargées dans icare_test à la fin
