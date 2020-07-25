@@ -44,150 +44,17 @@ MyDB.DBNAME = 'icare'
 FileUtils.rm_rf(FOLDER_GOODS_SQL) if File.exists?(FOLDER_GOODS_SQL)
 `mkdir -p "#{FOLDER_GOODS_SQL}"`
 
+# Récupération de toutes les données du site distant
+# Note : peut être ex-commenté si les données viennent d'être chargées avec succès
+require_relative 'GET_OLD_DATA/get_all_tables_from_icare'
+# Vérifications préliminaires pour savoir si on peut exécuter l'opération
+# Note : ex-commenter si les vérifications ont été faites
+require_relative 'GET_OLD_DATA/checks_preliminary'
+# Dump simple de tables qui doivent rester telles quelles
+require_relative 'GET_OLD_DATA/dumps_simples'
 
-# ---------------------------------------------------------------------
-# VÉRIFICATIONS PRÉLIMINAIRES
-# On fait quelques vérifications pour voir si on peut lancer la
-# récupération des données.
-# ---------------------------------------------------------------------
-# Table témoignages
-#  1. elle doit contenir la colonne `plebiscites TINYINT`
-#  2. tous les témoignages doivent être validés (confirmed)
-fields_temoignages = db_exec('SHOW COLUMNS FROM temoignages').collect{|dc|dc[:Field]}
-fields_temoignages.include?('plebiscites') || begin
-  puts "Il faut rajouter la colonne `plebiscites TINYINT` à la table `temoignages` : \nALTER TABLE `temoignages` ADD COLUMN plebiscites TINYINT DEFAULT 0 AFTER confirmed;".rouge
-  exit
-end
-# On confirme tous les témoignages
-db_exec('UPDATE temoignages SET confirmed = TRUE')
-
-# On s'assure que la table de correspondance pour les watchers contient toutes
-# les valeurs
-File.exists?("#{FOLDER_CURRENT_ONLINE}/current_watchers.sql") || begin
-  puts "Le fichier 'Version_current_online/current_watchers.sql' est introuvable. Enregistrez#{RC}  la table : `icare_hot/watchers`#{RC}  dans : current_watchers.sql#{RC}  EN LA RENOMMANT 'current_watchers'.".rouge
-  exit
-end
-TABLECORS_WATCHERS = {
-  # 'objet::processus' =>
-  'ic_etape::send_work' => {wtype:'send_work', vu_admin:true, vu_user:false},
-  'quai_des_docs::cote_et_commentaire' => {wtype:'qdd_coter', vu_admin:true, vu_user:false},
-  'ic_document::define_partage' => {wtype:'qdd_sharing', vu_admin:true, vu_user:false},
-  'ic_module::paiement' => {wtype:'paiement_module', vu_admin:true, vu_user:false},
-  'ic_module::change_etape' => {wtype:'changement_etape', vu_admin:false, vu_user:true},
-  'ic_document::admin_download' => {error:"On ne peut pas traiter ce watcher. Il faut charger les documents online."},
-  'ic_document::user_download_comments' => {wtype:'download_comments', vu_admin:true, vu_user:false},
-  'ic_document::depot_qdd' => {wtype:'qdd_depot', vu_admin:false, vu_user:true},
-  'ic_document::upload_comments' => {wtype:'send_comments', vu_admin:false, vu_user:true}
-}
-cors_missing = {}
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/current_watchers.sql"`
-db_exec("SELECT objet, processus FROM `current_watchers`".freeze).each do |dwatcher|
-  keychecked = "#{dwatcher[:objet]}::#{dwatcher[:processus]}".freeze
-  next if TABLECORS_WATCHERS.key?(keychecked)
-  cors_missing.merge!(keychecked => true) unless cors_missing.key?(keychecked)
-end
-unless cors_missing.empty?
-  puts "Des correspondances manquent dans TABLECORS_WATCHERS pour traiter les watchers. Il faut les définir et relancer le script. (ligne #{__LINE__})".rouge
-  puts cors_missing.keys.join(VG).rouge
-  exit
-end
-
-FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/users.sql".freeze) || begin
-  puts "Le fichier Version_current_online/users.sql est introuvable. Enregistrez la…#{RC} table : icare_users/users#{RC}  dans : users.sql#{RC} telle qu'elle est.".rouge
-  exit
-end
-FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/current_absetapes.sql".freeze) || begin
-  puts "Le fichier 'Version_current_online/current_absetapes.sql' est introuvable. Enregistrez la#{RC}  table : icare_modules/absetapes#{RC}  dans : current_absetapes.sql#{RC}  en la renommant `current_absetapes`.".rouge
-  exit
-end
-FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/minifaq.sql".freeze) || begin
-  puts "Le fichier 'Version_current_online/minifaq.sql' est introuvable. Produisez-le#{RC}  table : icare_modules/mini_faq#{RC}  dans : minifaq.sql#{RC}  en la renommant `minifaq`. (ligne #{__LINE__})".rouge
-  exit
-end
-
-FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/current_icdocuments.sql") || begin
-  puts "Le fichier 'Version_current_online/current_icdocuments.sql' est introuvable. Enregistrez#{RC}  la table : icare_modules/icdocuments#{RC}  dans : current_icdocuments.sql#{RC}  EN LA RENOMMANT `current_icdocuments`. (ligne #{__LINE__})".rouge
-  exit
-end
-
-FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/icmodules.sql") || begin
-  puts "Le fichier 'Version_current_online/icmodules.sql' est introuvable. Enregistrez la…#{RC}  table : `icare_modules/icmodules`#{RC}  dans : icmodules.sql#{RC}  telle qu’elle est.'. (ligne #{__LINE__})".rouge
-  exit
-end
-
-FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/icetapes.sql") || begin
-  puts "Le fichier 'Version_current_online/icetapes.sql' est introuvable. Enregistrez la…#{RC}  table icare_modules/icetapes#{RC}  dans : icetapes.sql#{RC}  telle qu’elle est.'. (ligne #{__LINE__})".rouge
-  exit
-end
-
-FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/current_lectures_qdd.sql") || begin
-  puts "Le fichier 'Version_current_online/current_lectures_qdd.sql' est introuvable. Enregistrez la…#{RC}  table : icare_modules/qdd_lecture#{RC}  dans : current_lectures_qdd.sql (ATTENTION AU “s”)#{RC}  EN LA RENOMMANT 'current_lectures_qdd' (ATTENTION AU “s”). (ligne #{__LINE__})".rouge
-  exit
-end
-
-FORCE_ESSAI || File.exists?("#{FOLDER_CURRENT_ONLINE}/paiements.sql") || begin
-  puts "Le fichier 'Version_current_online/paiements.sql' est introuvable. Enregistrez la…#{RC}  table : icare_users/paiements#{RC}  dans : paiements.sql#{RC}  telle qu’elle est. (ligne #{__LINE__})".rouge
-  exit
-end
-
-
-FORCE_ESSAI || begin
-  # puts "POUR ÉVITER DE LANCER CE SCRIPT PAR ERREUR, IL FAUT DÉBLOQUER ICI À LA MAIN (ligne #{__LINE__})".jaune
-  # exit
-end
-
-
-TACHES = []
-
-
-# temoignages         OK    icare > online
-# Il faut s'assurer que la colonne `prebiscites TINYINT` existe bien (elle
-# disparait si on utilise l'ancienne table online)
-`mysqldump -u root icare temoignages > "#{FOLDER_GOODS_SQL}/temoignages.sql"`
-puts "🗄️ Dumping des témoignages effectué avec succès".vert
-
-# actualites          OK    online > Faire une sauvegarde pour les garder
-#                           On repart à zéro en ajoutant l'actualité du nouveau site
-`mysqldump -d -u root icare actualites > "#{FOLDER_GOODS_SQL}/actualites.sql"`
-puts "🗄️ Dumping de la table actualites effectué avec succès".vert
-
-# checkform           OK    À détruire
-
-# connexions          OK    Repartir de zéro (structure only)
-`mysqldump -d -u root icare connexions > "#{FOLDER_GOODS_SQL}/connexions.sql"`
-puts "🗄️ Dumping de la table connexions effectué avec succès".vert
-
-# connexions_per_ip   OK    À détruire
-
-# last_dates          OK    La reprendre de goods
-
-# taches              OK    À détruire
-
-# tickets             OK    Repartir de zéro (structure only)
-`mysqldump -d -u root icare tickets > "#{FOLDER_GOODS_SQL}/tickets.sql"`
-puts "🗄️ Dumping de la table tickets effectué avec succès".vert
-
-# absmodules          OK    Prendre les données locales dans icare
-`mysqldump -u root icare absmodules > "#{FOLDER_GOODS_SQL}/absmodules.sql"`
-puts "🗄️ Dumping des modules absolus effectué avec succès".vert
-
-# absetapes           OK    Après avoir joué update_etapes_modules.rb, prendre
-#                           les données dans le fichier absetapes.sql produit
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/current_absetapes.sql"`
-require './_dev_/scripts/new_site/update_etapes_modules'
-`mysqldump -u root icare absetapes > "#{FOLDER_GOODS_SQL}/absetapes.sql"`
-puts "🗄️ Dumping des étapes absolues effectué avec succès".vert
-
-# abstravauxtypes     OK    Prendre les données locales dans icare (PAS icare_test)
-`mysqldump -u root icare abstravauxtypes > "#{FOLDER_GOODS_SQL}/abstravauxtypes.sql"`
-puts "🗄️ Dumping des travaux absolus effectué avec succès".vert
-
-# frigos (3 tables)   OK    Rien à récupérer. Prendre la structure des trois
-#                           tables frigo_discussions, frigo_users, frigo_messages
-`mysqldump -d -u root icare frigo_discussions > "#{FOLDER_GOODS_SQL}/frigo_discussions.sql"`
-`mysqldump -d -u root icare frigo_users > "#{FOLDER_GOODS_SQL}/frigo_users.sql"`
-`mysqldump -d -u root icare frigo_messages > "#{FOLDER_GOODS_SQL}/frigo_messages.sql"`
-puts "🗄️ Dumping du frigo effectué avec succès".vert
+puts "JE M'ARRÊTE LÀ POUR LE MOMENT".jaune
+exit
 
 # table users             OK
 # -----------
