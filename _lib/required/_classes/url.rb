@@ -38,11 +38,15 @@ class URL
 # Obtenir ou redéfinir un paramètre
 # Note pour affecter la valeur nil, il faut utiliser :null
 def param(key, value = nil)
-  if value.nil?
-    params[key]
+  if key.is_a?(Hash)
+    key.each { |k,v| params[k] = v}
   else
-    value = nil if value == :null
-    params[key] = value
+    if value.nil?
+      params[key]
+    else
+      value = nil if value == :null
+      params[key] = value
+    end
   end
 end
 
