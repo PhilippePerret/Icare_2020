@@ -58,8 +58,9 @@ def send
   init_server
   save # On enregistre toujours le message
   if ONLINE || data[:force]
+    # log("-> Envoi réel du message avec les données :\ndestinataire:#{destinataire.inspect},\nexpediteur:#{expediteur.inspect}")
     Net::SMTP.start(server, port, host, user_smtp, password) do |smtp|
-      smtp.send_message( full_mail, destinataire, expediteur)
+      smtp.send_message( full_mail, expediteur, destinataire)
     end
   end
 end #/ send
@@ -93,7 +94,9 @@ end #/ formated_message
 
 def formated_subject
   @formated_subject ||= begin
-    "🦋ICARE | #{data[:subject]}".freeze
+    "🦋ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # Il faudrait pouvoir utiliser l'image comme ça :
+    # "<img src='http://www.atelier-icare.net/img/Emojis/animaux/papillon.png' style='width:20px;'/> ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
   end
 end #/ formated_subject
 

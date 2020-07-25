@@ -1,5 +1,8 @@
 # encoding: UTF-8
-require_module('form')
+require_modules(['form','mail'])
+MESSAGES.merge!({
+  confirme_envoi: 'Votre message a bien été transmis à %s.'
+})
 class HTML
   def titre
     "#{Emoji.get('objets/lettre-mail').page_title+ISPACE}Contact".freeze
@@ -32,12 +35,23 @@ class HTML
   end #/ formulaire
 
   def traite_envoi
-    unless user.guest?
-      mail = user.data[:mail]
+    dmail = {
+      subject: param(:envoi_titre),
+      message: param(:envoi_message),
+      to: nil,
+      from: (user.guest? ? param(:envoi_mail)  : user.data[:mail])
+    }
+    # Pour déterminer le destinataire
+    if param(:envoi_user_id)
+      dmail.merge!(to: User.get(param(:envoi_user_id)).mail)
     else
-      # Mail fourni en dur
-      # TODO
+      dmail.merge!(to: phil.mail)
     end
-
+    # On envoie le message
+    log("Envoi du message avec dmail = #{dmail.inspect}")
+    Mail.send(dmail)
+    destinataire = 'Phil'
+    message(MESSAGES[:confirme_envoi] % destinataire)
+    param({envoi_titre:nil, envoi_message:nil, envoi_mail:nil, envoi_mail_confirmation:nil})
   end #/ traite_envoi
 end #/HTML
