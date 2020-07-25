@@ -14,7 +14,8 @@ def phil
 end #/ phil
 
 def param key, value = nil
-  URL.param(key.to_sym, value)
+  key = key.to_sym if key.is_a?(String)
+  URL.param(key, value)
 end
 
 def html
