@@ -22,12 +22,8 @@ class << self
       # affiche_new_lines
     rescue Exception => e
       break if e.message == '' #ctrl c
-      unless res.nil?
-        puts "Problème à la lecture des lines du traceur : #{e.message}".rouge
-        puts e.backtrace.join("\n").rouge
-      else
-        puts e.message.rouge
-      end
+      puts e.message.rouge
+      puts e.backtrace.join("\n").rouge
     ensure
       sleep FREQUENCE_CHECK
     end while true
@@ -59,6 +55,9 @@ class << self
       if donnees.count > 4
         puts "La ligne suivante contient trop de données : #{line}.\nJe prends seulement les 4 premières pour renseigner TracerLine".rouge
         donnees = donnees[0..3]
+      elsif donnees.count < 4
+        puts "La ligne suivante contient trop peu de données : #{line}.\nJ'en mets 4.".rouge.freeze
+        donnees += Array.new(4 - donnees.count, nil)
       end
       tline = TracerLine.new(time.to_f, *donnees)
       all_lines.merge!(time => tline)
@@ -111,7 +110,7 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :datastr) do
   end #/ out
 
   def data
-    @data ||= JSON.parse(datastr.strip)
+    @data ||= JSON.parse((datastr||"{}").strip)
   end #/ data
 
   def error?

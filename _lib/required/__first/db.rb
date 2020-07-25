@@ -47,7 +47,7 @@ def db_exec request, values = nil
     res = MyDB.db.execute(request, values)
     if MyDB.error
       log(MyDB.error)
-      erreur("ERREUR SQL : #{MyDB.error[:error]} (consulter la console pour le détail)")
+      # erreur("ERREUR SQL : #{MyDB.error[:error]} (consulter la console pour le détail)")
     end
     return res
   rescue Exception => e

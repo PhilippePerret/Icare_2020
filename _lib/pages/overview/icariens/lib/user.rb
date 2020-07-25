@@ -172,8 +172,22 @@ def date_last_activite
   @date_last_activite ||= begin
     # Date de dernier document
     request = "SELECT updated_at FROM icdocuments WHERE user_id = #{id} ORDER BY updated_at DESC LIMIT 1".freeze
-    last_document = db_exec(request).first
-    last_document.nil? ? Time.now.to_i : last_document[:updated_at]
+    res = db_exec(request)
+    if res.nil?
+      if MyDB.error
+        if OFFLINE || user.admin?
+          erreur("Une erreur est survenue : #{MyDB.error[:error]}")
+        else
+          # muet
+        end
+        trace(id:'MYSQL ERROR'.freeze, message:MyDB.error[:error].to_s)
+      else
+      end
+      Time.now.to_i
+    else
+      last_document = res.first
+      last_document.nil? ? Time.now.to_i : last_document[:updated_at]
+    end
   end
 end #/ date_last_activite
 
