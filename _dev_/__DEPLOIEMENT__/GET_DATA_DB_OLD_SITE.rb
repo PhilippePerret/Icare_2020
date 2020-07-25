@@ -18,7 +18,7 @@ DEBUG = 1 # Niveau de retour (jusqu'à 6)
 require_relative 'required'
 
 MyDB.DBNAME = 'icare'
-
+GET_OLD_DATA_FOLDER = File.join(THISFOLDER,'GET_OLD_DATA')
 =begin
   Cette page permet de produire et charger les tables de données à
   utiliser sur le nouveau site icare 2020.
@@ -34,7 +34,7 @@ MyDB.DBNAME = 'icare'
 # Pour mettre tous les messages d'erreurs qui seront reproduit à la fin
 # Note : ici, ce sont des erreurs non fatales qui n'ont pas empêché de
 # faire le traitement des données.
-@errors = []
+ERRORS_TRANS_DATA = []
 
 # ---------------------------------------------------------------------
 # VIDAGE DU DOSSIER DES TABLES
@@ -44,435 +44,57 @@ MyDB.DBNAME = 'icare'
 FileUtils.rm_rf(FOLDER_GOODS_SQL) if File.exists?(FOLDER_GOODS_SQL)
 `mkdir -p "#{FOLDER_GOODS_SQL}"`
 
-# Récupération de toutes les données du site distant
-# Note : peut être ex-commenté si les données viennent d'être chargées avec succès
-require_relative 'GET_OLD_DATA/get_all_tables_from_icare'
-# Vérifications préliminaires pour savoir si on peut exécuter l'opération
-# Note : ex-commenter si les vérifications ont été faites
-require_relative 'GET_OLD_DATA/checks_preliminary'
-# Dump simple de tables qui doivent rester telles quelles
-require_relative 'GET_OLD_DATA/dumps_simples'
-
-puts "JE M'ARRÊTE LÀ POUR LE MOMENT".jaune
-exit
-
-# table users             OK
-# -----------
-#     synopsis
-#       - récuperer data online en transformant :
-#         * supprimer colonne adresse, telephone
-#       - modifier les options pour intégrer les bits 26:3, 27:3, 28:0
-#       - mettre un '-' aux bits 17, 19 et 23
-#       - dumper pour exportation
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/users.sql"`
-values = []
-db_exec(<<-SQL.strip.freeze)
-ALTER TABLE `users` DROP COLUMN `adresse`;
-ALTER TABLE `users` DROP COLUMN `telephone`;
-ALTER TABLE `users` MODIFY COLUMN `naissance` SMALLINT(4) DEFAULT NULL;
-SQL
-if MyDB.error
-  puts MyDB.error.inspect.rouge
-  exit 1
-end
-db_exec('SELECT id, options FROM users WHERE id > 2'.freeze).each do |duser|
-  # puts duser.inspect
-  opts = duser[:options].ljust(32,'0')
-  opts[17] = '-'
-  opts[19] = '-'
-  opts[23] = '-'
-  opts[26] = '3'
-  opts[27] = '3'
-  opts[28] = '0'
-  values << [opts, duser[:id]]
-end
-unless values.empty?
-  db_exec('UPDATE users SET options = ? WHERE id = ?'.freeze, values)
-end
-# NOTE  L'icarien anonyme (en #9) sera traité plus bas, lorsque toutes
-#       les tables auront été traitées. De même que tous les utilisateurs
-#       qui se trouvent entre 3 et 10 (pour laisser la place)
-
-
-# minifaq           OK ICI
-#     Synopsis
-#       - récupérer data en faisant ces transformations :
-#         * abs_module_id -> absmodule_id
-#         * abs_etape_id  -> absetape_id
-#         * suppression des colonnes user_pseudo, content, numero et options
-#       - elles sont prêtes à être réinjectée dans la nouvelle structure
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/minifaq.sql"`
-db_exec(<<-SQL.strip.freeze)
-ALTER TABLE `minifaq` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) DEFAULT NULL;
-ALTER TABLE `minifaq` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) DEFAULT NULL;
-ALTER TABLE `minifaq` DROP COLUMN `user_pseudo`;
-ALTER TABLE `minifaq` DROP COLUMN `content`;
-ALTER TABLE `minifaq` DROP COLUMN `numero`;
-ALTER TABLE `minifaq` DROP COLUMN `options`;
-SQL
-if MyDB.error
-  puts "SQL ERROR : #{MyDB.error.inspect}".rouge
-  exit
-end
-`mysqldump -u root icare minifaq > "#{FOLDER_GOODS_SQL}/minifaq.sql"`
-puts "🗄️ Dumping de la minifaq opéré avec succès".vert
-
-
-# lectures_qdd
-# ------------
-#     Synopsis
-#       - récupérer les données online
-#       - dispatcher 'cotes' dans 'cote_original' (1er chiffre-string) et 'cote_comments' (2nd chiffre-string)
-#       - garder toutes les autres colonnes, même comments qui en contient quelques uns
-#       - exporter seulement quand icdocuments sera passé par là.
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/current_lectures_qdd.sql"`
-db_exec(<<-SQL.strip.freeze)
-DROP TABLE IF EXISTS `lectures_qdd`;
-CREATE TABLE `lectures_qdd` (
-  icdocument_id   INT(11) NOT NULL,
-  user_id         INT(11) NOT NULL,
-  cote_original   TINYINT,
-  cote_comments   TINYINT,
-  comments        TEXT,
-  created_at      INT(10) DEFAULT NULL,
-  updated_at      INT(10) DEFAULT NULL,
-  PRIMARY KEY(icdocument_id, user_id)
-);
-SQL
-if MyDB.error
-  puts "SQL ERROR : #{MyDB.error.inspect}".rouge
-  exit
-end
-values = []
-CLECTURES_COLS = [:id, :user_id, :icdocument_id, :cotes, :comments, :created_at, :updated_at]
-LECTURES_COLUMNS = [:user_id, :icdocument_id, :comments, :created_at, :updated_at, :cote_original, :cote_comments]
-db_exec("SELECT #{CLECTURES_COLS.join(VG)} FROM `current_lectures_qdd`".freeze).each do |dlecture|
-  unless dlecture[:cotes]
-    cote_original, cote_comments = dlecture.delete(:cotes).split(EMPTY_STRING)
-    cote_original = cote_original == '-' ? nil : cote_original.to_i
-    cote_comments = cote_comments == '-' ? nil : cote_comments.to_i
-    dlecture.merge!(cote_original:cote_original, cote_comments:cote_comments)
-  end
-  values << LECTURES_COLUMNS.collect { |prop| dlecture[prop] }
-end
-unless values.empty?
-  interro = Array.new(LECTURES_COLUMNS.count, '?').join(VG)
-  request = "INSERT INTO `lectures_qdd` (#{LECTURES_COLUMNS.join(VG)}) VALUES (#{interro})".freeze
-  db_exec(request, values)
-end
-# NOTE Ne pas exporter avant d'avoir traité icdocuments, qui peut aussi
-# créer des lectures
-
-#
-# icdocuments         OK
-#       Gros travail de récupération des données :
-#       - changement du nom des colonnes
-#       - retrait de ce qui relève des commentaires
-#       - alimentation de la table `lectures_qdd`
-#       Détails :
-#         - colonne `abs_module_id` DROP
-#         - colonne `abs_etape_id`  DROP
-#         - icmodule_id   DROP
-#         - icetape_id  En fait, on ne garde que celle-là, à propos des modules/etapes
-#         - doc_affixe    DROP
-#         - cote_original DROP
-#         - cote_comments DROP
-#         - expected_comments   DROP
-#         - cotes_original      DROP (mais au début, voir quand même si valeur)
-#         - cotes_comments      DROP (idem)
-#         - readers_original    -> lectures_qdd   et DROP
-#             Pour les deux readers, il faut voir si la donnée existe déjà
-#             dans lectures_qdd.
-#         - readers_comments    -> lectures_qdd   et DROP
-# Le plus simple, c'est de partir des données online et de les traiter ici
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/current_icdocuments.sql"`
-values = []
-COLUMNS_ICDOC = [:id, :user_id, :icetape_id, :original_name, :time_original, :time_comments, :options, :created_at, :updated_at]
-nombre_lectures_creees = 0
-db_exec("SELECT * FROM `current_icdocuments`".freeze).each do |ddoc|
-  unless ddoc[:readers_original].nil?
-    readers_o = ddoc[:readers_original].split(SPACE).collect{|uid|uid.to_i}
-  else
-    readers_o = []
-  end
-  unless ddoc[:readers_comments].nil?
-    readers_c = ddoc[:readers_comments].split(SPACE).collect{|uid|uid.to_i}
-  else
-    readers_c = []
-  end
-  readers = (readers_o + readers_c) - (readers_o & readers_c)
-  unless readers.empty?
-    # S'il y a des readers (lecteurs), il faut vérifier qu'ils ont déjà
-    # une lecture. Sinon, on la créée
-    values_new_lectures = []
-    readers.each do |uid|
-      db_get('lectures_qdd', {user_id:uid, icdocument_id:ddoc[:id]}) || begin
-        values_new_lectures << [uid, ddoc[:id], ddoc[:created_at], ddoc[:updated_at]]
-      end
-    end
-    unless values_new_lectures.empty?
-      reqlectures = "INSERT INTO `lectures_qdd` (user_id, icdocument_id, created_at, updated_at) VALUES (?, ?, ?, ?)".freeze
-      db_exec(reqlectures, values_new_lectures)
-      nombre_lectures_creees += values_new_lectures.count
-    end
-  end
-  values << COLUMNS_ICDOC.collect { |prop| ddoc[prop] }
-end
-puts "Nombre de lectures créées : #{nombre_lectures_creees}".vert
-# On peut injecter toutes les données dans icdocuments
-unless values.empty?
-  db_exec('TRUNCATE `icdocuments`')
-  interro = Array.new(COLUMNS_ICDOC.count, '?').join(VG)
-  request = "INSERT INTO `icdocuments` (#{COLUMNS_ICDOC.join(VG)}) VALUES (#{interro})".freeze
-  db_exec(request, values)
-  puts "🗄️ Dumping des icdocuments opéré avec succès".vert
-end
-db_exec("DROP TABLE `current_icdocuments`".freeze)
-
-# On peut exporter la table lectures_qdd
-`mysqldump -u root icare lectures_qdd > "#{FOLDER_GOODS_SQL}/lectures_qdd.sql"`
-puts "🗄️ Dumping des lectures_qdd opéré avec succès".vert
-db_exec("DROP TABLE `current_lectures_qdd`".freeze)
-
-# icetapes        OK
-#     Synopsis
-#       - récupérer données online
-#       - faire les records dans icare.icetapes avec les données utiles
-#         (supprimer les colonnes `numero` et `documents`)
-#         (transformer la colonne `abs_etape_id` en `absetape_id`)
-#       - exporter pour online
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/icetapes.sql"`
-db_exec(<<-SQL.strip.freeze)
-ALTER TABLE `icetapes` DROP COLUMN `numero`;
-ALTER TABLE `icetapes` DROP COLUMN `documents`;
-ALTER TABLE `icetapes` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) NOT NULL;
-SQL
-`mysqldump -u root icare icetapes > "#{FOLDER_GOODS_SQL}/icetapes.sql"`
-puts "🗄️ Dumping des icetapes opéré avec succès".vert
-
-# icmodules       OK
-#         (`abs_module_id` -> absmodule_id)
-#         (next_paiement -> next_paiement_at)
-#         (supprimer colonnes `icetapes` et `paiements`)
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/icmodules.sql"`
-db_exec(<<-SQL.strip.freeze)
-ALTER TABLE `icmodules` DROP COLUMN `icetapes`;
-ALTER TABLE `icmodules` DROP COLUMN `paiements`;
-ALTER TABLE `icmodules` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
-ALTER TABLE `icmodules` CHANGE COLUMN `next_paiement` `next_paiement_at` INT(10) DEFAULT NULL;
-SQL
-`mysqldump -u root icare icmodules > "#{FOLDER_GOODS_SQL}/icmodules.sql"`
-puts "🗄️ Dumping des icmodules opéré avec succès".vert
-
-
-# paiements
-`mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/paiements.sql"`
-db_exec(<<-SQL.strip.freeze)
-ALTER TABLE `paiements` CHANGE COLUMN `facture` `facture_id` VARCHAR(30) DEFAULT NULL;
-SQL
-`mysqldump -u root icare paiements > "#{FOLDER_GOODS_SQL}/paiements.sql"`
-puts "🗄️ Dumping des paiements opéré avec succès".vert
-
-
-# watchers
-#       Gros travail de transformation car la structure change et les données
-#       changent. En sachant que le gros des changements tient dans le watcher
-#       permettant d'attribuer une note à un document QDD téléchargé.
-#       - Relever en DISTINCT les objets et les processus pour voir tous ceux
-#         qui sont utilisés
-#       - Faire le script de transformation (old data -> new data)
-#         Créer la nouvelle table.
-#       Script complet:
-#         - récupérer les données distantes (en changeant le nom)
-#         - relever les objet(s) et processus différent
-#         - faire les tables de correspondance
-#         - alimenter la table watchers local
-#         - charger la table watchers en distant
-values = []
-WATCHER_COLS = [:id, :wtype, :user_id, :objet_id, :triggered_at, :params, :vu_admin, :vu_user, :created_at, :updated_at]
-db_exec("SELECT * FROM `current_watchers`".freeze).each do |dwatcher|
-  keychecked = "#{dwatcher[:objet]}::#{dwatcher[:processus]}".freeze
-  datawatcher = TABLECORS_WATCHERS[keychecked]
-  if datawatcher.key?(:error)
-    puts datawatcher[:error].rouge
-    @errors << datawatcher[:error]
-    next
-  end
-  dwatcher.merge!({
-    wtype:    datawatcher[:wtype],
-    vu_admin: datawatcher[:vu_admin],
-    vu_user:  datawatcher[:vu_user]
-  })
-  values << WATCHER_COLS.collect { |prop| dwatcher[prop] }
-end
-unless values.empty?
-  db_exec('TRUNCATE `watchers`')
-  interro = Array.new(WATCHER_COLS.count,'?').join(VG)
-  request = "INSERT INTO `watchers` (#{WATCHER_COLS.join(VG)}) VALUES (#{interro})".freeze
-  db_exec(request, values)
-  `mysqldump -u root icare watchers > "#{FOLDER_GOODS_SQL}/watchers.sql"`
-  puts "🗄️ Dumping des watchers opéré avec succès".vert
-end
-db_exec("DROP TABLE `current_watchers`".freeze)
-
-
-# DÉPLACEMENT DE L'ICARIEN ANONYME
-# --------------------------------
-# On doit déplacer le user 9 pour réserver cette place à un anonyme
-
-# Pour tester avant le grand saut :
-# if db_count('users', {id:9}) == 0
-#   puts "Je mets Marion en #9"
-#   db_exec('UPDATE users SET id = 9 WHERE id = 10'.freeze)
-# end
-
-TABLES_WITH_USER_ID =   [
-  ['watchers'],
-  ['icmodules'],
-  ['actualites'],
-  ['connexions', 'id'],
-  ['icdocuments'],
-  ['icetapes'],
-  ['icmodules'],
-  ['lectures_qdd'],
-  ['minifaq'],
-  ['paiements'],
-  ['temoignages'],
-  ['tickets'],
-  ['watchers']
+SCRIPT_LIST = [
+  # Récupération de toutes les données du site distant
+  # Note : peut être ex-commenté si les données viennent d'être chargées avec succès
+  'get_all_tables_from_icare',
+  # Vérifications préliminaires pour savoir si on peut exécuter l'opération
+  # Note : ex-commenter si les vérifications ont été faites
+  'checks_preliminary',
+  # Dump simple de tables qui doivent rester telles quelles
+  'dumps_simples',
+  # Conformisation des options des icariens
+  'traitement_options_users',
+  # Conformisation de la minifaq
+  'traitement_minifaq',
+  # Conformisation des lectures QdD
+  'traitement_lectures_qdd',
+  # Conformisation des icdocuments, documents d'icariens
+  'traitement_icdocuments',
+  # Conformisation des modules et étapes d'icariens
+  'traitement_modules_icariens',
+  # Conformisation des watchers
+  'traitement_watchers',
+  # Traitement de l'icarien anonyme (9)
+  'icarien_anonyme',
+  # Traitement des icariens se trouvant entre 3 et 8 pour libération place
+  'icariens_entre_3_et_8',
+  # Copie des fichiers des tables vers le site distant et injection
+  # dans la base icare_db
+  'set_all_tables_to_icare',
+  # On met aussi ces données dans icare_test en local (pour pouvoir s'en servir
+  # en produisant le gel 'real-icare')
+  'inject_in_icare_test_and_gel'
 ]
 
-REQUEST_UPDATE_USER9 = 'UPDATE %{table} SET %{prop} = %{id} WHERE %{prop} = 9'
-REQUEST_UPDATE_USER_ID = 'UPDATE %{table} SET %{prop} = %{id} WHERE %{prop} = %{old_id}'
-REQUEST_DELETE_USER = 'DELETE FROM users WHERE id = %{id}'
-
-duser9 = db_get('users', 9)
-unless duser9.nil? # déjà traité
-  duser9.delete(:id)
-  # On ajoute les données de l'user anonyme
-  # On peut créer l'utilisateur 9
-  opts = '001090000000000011090009'.ljust(32,'0')
-  opts[26] = '0'
-  opts[27] = '0'
-  opts[28] = '0'
-  data_anonymous = {
-    id: 9,
-    pseudo: 'Anonyme',
-    patronyme: 'Anonyme',
-    mail:'anonyme@gmail.com',
-    naissance: 2000,
-    cpassword: 'lepassportsnormalementencrypted',
-    salt:'unsel',
-    sexe: 'H',
-    options: opts
-  }
-  db_compose_update('users', 9, data_anonymous)
-  # On remet l'user 9
-  new_user_id = db_compose_insert('users', duser9)
-  if MyDB.error
-    puts MyDB.error.inspect
+# On vérifie que tous les scripts existent bien
+SCRIPT_LIST.each do |script|
+  fpath = File.join(GET_OLD_DATA_FOLDER, "#{script}.rb")
+  File.exists?(fpath) || begin
+    puts "💣 Impossible de trouver le script #{fpath}".rouge
     exit
   end
-  puts "Nouvel ID pour l'anonyme : #{new_user_id}"
-
-  # Il faut remplacer user_id ou owner_id partout où ça peut être utilisé
-  # dans toutes les tables.
-  TABLES_WITH_USER_ID.each do |table, prop_name|
-    prop_name ||= 'user_id'
-    db_exec(REQUEST_UPDATE_USER_ID % {table:table, prop:prop_name, id:new_user_id, old_id:9})
-    if MyDB.error
-      puts MyDB.error.inspect
-      exit
-    end
-  end
 end
 
-# ---------------------------------------------------------------------
-#   Déplacement de tous les users de 3 à 8 vers d'autres emplacements
-#   pour laisser libre jusqu'à 9 (anonyme)
-# ---------------------------------------------------------------------
-db_get_all('users', 'id > 2 AND id < 9').each do |duser|
-  user_old_id = duser.delete(:id)
-  db_exec(REQUEST_DELETE_USER % {id: user_old_id})
-  new_user_id = db_compose_insert('users', duser)
-  if MyDB.error
-    puts MyDB.error.inspect
-    exit
-  end
-  puts "Nouvel ID pour user ##{user_old_id} : #{new_user_id}" if DEBUG > 5
-  # Il faut remplacer user_id ou owner_id partout où ça peut être utilisé
-  # dans toutes les tables.
-  TABLES_WITH_USER_ID.each do |table, prop_name|
-    prop_name ||= 'user_id'
-    db_exec(REQUEST_UPDATE_USER_ID % {table:table, prop:prop_name, id:new_user_id, old_id:user_old_id})
-    if MyDB.error
-      puts MyDB.error.inspect
-      exit
-    end
-  end
-end #/boucle sur chaque user
-# On peut exporter la table users
-`mysqldump -u root icare users > "#{FOLDER_GOODS_SQL}/users.sql"`
-puts "🗄️ Table users exportée.".vert
-
-
-# ---------------------------------------------------------------------
-#   Copie des tables locales sur le site distant
-# ---------------------------------------------------------------------
-puts "📲 Copie des tables locales vers site distant…".bleu
-puts "(⏳ ça peut prendre un moment)".bleu
-
-Dir["#{FOLDER_GOODS_SQL}/*.sql"].each do |src|
-  src_name = File.basename(src)
-  dst_path = "./deploiement/db/#{src_name}".freeze
-  `scp "#{src}" #{SERVEUR_SSH}:#{dst_path}`
-  # puts "\tCOPY: #{dst_path.inspect}"
+SCRIPT_LIST.each do |script|
+  require_relative "GET_OLD_DATA/#{script}"
 end
-puts "🚀 Copie des fichiers .sql effectuée dans deploiement/db".vert
 
-# ---------------------------------------------------------------------
-#
-#   INJECTION DES DONNÉES DANS LA BASE icare_db DISTANTE
-#
-# ---------------------------------------------------------------------
-SSH_COMMAND_LOAD_TABLE = <<SSH.strip.freeze
-ssh #{SERVEUR_SSH} bash <<BASH
-mysql -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} icare_db < deploiement/db/%{table_name}
-BASH
-SSH
-Dir["#{FOLDER_GOODS_SQL}/*.sql"].each do |table_path|
-  table_name = File.basename(table_path)
-  def_command = SSH_COMMAND_LOAD_TABLE % {table_name: table_name}
-  puts def_command if DEBUG > 5
-  res = `#{def_command}`
-  puts res if res != nil && DEBUG > 5
-end
-puts "🎉 TABLES CHARGÉES DANS icare_db DISTANT".vert
-
-
-if UPDATE_ICARE_TEST_DB
-
-  # D'abord, on dumpe toutes les données de icare
-  `mysqldump -u root icare > ./tmp/icare.sql`
-  puts "Données icare exportées avec succès.".vert
-
-  `mysql -u root icare_test < ./tmp/icare.sql`
-  puts "Données icare importées dans icare_test avec succès".vert
-
-  # Pour ne pas l'envoyer par mégarde, on le détruit
-  File.delete('./tmp/icare.sql')
-
-  if PRODUCE_GEL_ICARE
-    load './_dev_/scripts/GEL_REAL_ICARE.rb'
-    puts "Le gel real-icare a été produit avec succès".vert
-  end
-
-end
 
 message_conclusion = "TOUT EST OK"
-unless @errors.empty?
+unless ERRORS_TRANS_DATA.empty?
   message_conclusion << " (hormis les erreurs non fatales ci-dessus)"
-  puts @errors.join(RC)
+  puts ERRORS_TRANS_DATA.join(RC)
 end
 puts <<-TEXT.strip.freeze
 
