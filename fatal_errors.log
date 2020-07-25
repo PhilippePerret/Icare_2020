@@ -16,4 +16,37 @@
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-25 14:41:05 +0200 --- FATAL ERROR:
+    undefined method `params' for #<HTML:0x00007f99099933e8 @all_css=["./css/_variables.css"]>
+Did you mean?  param
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/mail/html.rb:38:in `traite_envoi'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/mail/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-25 14:41:22 +0200 --- FATAL ERROR:
+    uninitialized constant HTML::Mail
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/mail/html.rb:41:in `traite_envoi'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/mail/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-25 14:51:20 +0200 --- FATAL ERROR:
+    undefined method `to_sym' for {:envoi_titre=>nil, :envoi_message=>nil, :envoi_mail=>nil}:Hash
+Did you mean?  to_s
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/instances.rb:17:in `param'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/mail/html.rb:44:in `traite_envoi'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/mail/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-25 14:58:00 +0200 --- FATAL ERROR:
+    undefined method `to_sym' for {:envoi_titre=>nil, :envoi_message=>nil, :envoi_mail=>nil}:Hash
+Did you mean?  to_s
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/instances.rb:17:in `param'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/mail/html.rb:44:in `traite_envoi'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/contact/mail/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'
