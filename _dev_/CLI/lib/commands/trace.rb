@@ -25,7 +25,6 @@ class << self
       unless res.nil?
         puts "Problème à la lecture des lines du traceur : #{e.message}".rouge
         puts e.backtrace.join("\n").rouge
-        puts "RETOUR: #{res.inspect}".rouge
       else
         puts e.message.rouge
       end

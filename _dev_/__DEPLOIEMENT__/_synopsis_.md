@@ -4,7 +4,7 @@
 
 - [ ] [UNE SEMAINE AVANT] Prévenir les icariens que le site va être actualisé (nouvelle version)
 
-  - [ ] Nouveau système pour les discussion frigo. Donc les discussions actuelles seront détruites. Les récupérer si nécessaire ou répondre aux derniers messages.
+  - [ ] Nouveau système pour les discussions frigo. Donc les discussions actuelles seront détruites. Les récupérer si nécessaire ou répondre aux derniers messages.
 
 - [ ] Récupérer les données DB telles que décrites dans [fichier de récupération des données DB][].
 
@@ -48,19 +48,19 @@
 
   ~~~
   Bonjour à tous,
-  
+
   J’ai l’immense plaisir de vous annoncer l’installation du tout nouveau site de l’atelier Icare.
-  
+
   Vous pourrez le trouver à l’adresse habituelle [http://www.atelier-icare.net](http://www.atelier-icare.net).
-  
+
   En espérant que vous vous y fassiez rapidement, je vous souhaite à toutes et tous une excellente rentrée.
-  
+
   Bien à vous,
-  
+
   Phil
   ~~~
 
-  
+
 
 - [ ] Sur [AlwaysData](https://admin.alwaysdata.com/), détruire les autres DB (laisser juste `icare_db`)
 

@@ -1,12 +1,15 @@
 # encoding: UTF-8
 =begin
+
   Gel Icare permet d'utiliser les données réelles en local.
-  Ce script doit être lancé après avoir joué _SCRIPT_NEW_ATELIER_.rb qui
+  Ce script doit être lancé après avoir joué GET_DATA_DB_OLD_SITE.rb qui
   récupère toutes les données de l'ancien atelier (actuel) pour les formater
   au nouveau format.
-  Ensuite, ces données sont intégralement chargées dans icare_test
-  Et enfin, toutes les données cpassword de la table icare_test.users sont
-  modifiées pour n'utiliser que 'motdepasse' comme mot de passe avec le salt
+  À la fin de ce script, les données sont intégralement chargées dans
+  `icare_test`
+
+  Ici, tous les cpassword de la table icare_test.users sont modifiées (sauf
+  le mien) pour n'utiliser que 'motdepasse' comme mot de passe avec le salt
   qui est conservé, afin de pouvoir utiliser le site avec n'importe quel
   icarien.
 =end
@@ -16,12 +19,13 @@ require './_lib/required'
 require './_dev_/CLI/lib/required/String' # notamment pour les couleur
 require 'digest/md5'
 
-# D'abord, on dumpe toutes les données de icare
-`mysqldump -u root icare > ./tmp/icare.sql`
-puts "Données icare exportées avec succès.".vert
+unless defined? ALWAYSDATA_FOLDER
+  ALWAYSDATA_FOLDER = '/Users/philippeperret/Sites/AlwaysData'.freeze
+end
+unless defined? ICARE_FOLDER
+  ICARE_FOLDER = File.join(ALWAYSDATA_FOLDER, 'Icare_2020').freeze
+end
 
-`mysql -u root icare_test < ./tmp/icare.sql`
-puts "Données icare importées dans icare_test avec succès".vert
 
 MyDB.DBNAME = 'icare_test'
 
@@ -29,7 +33,7 @@ MyDB.DBNAME = 'icare_test'
 # pour pouvoir les utiliser (mot de passe unique mis à 'motdepasse')
 REQUEST_UPDATE_PASSWORD = 'UPDATE `users` SET cpassword = ? WHERE id = ?'.freeze
 values = []
-db_exec("SELECT id, pseudo, mail, salt FROM users").each do |duser|
+db_exec("SELECT id, pseudo, mail, salt FROM users WHERE id > 8").each do |duser|
   # print "Traitement de #{duser[:pseudo]}… "
   new_cpassword = Digest::MD5.hexdigest("motdepasse#{duser[:mail]}#{duser[:salt]}")
   values << [new_cpassword, duser[:id]]
