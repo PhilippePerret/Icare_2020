@@ -10,7 +10,7 @@
 
   LE PLUS SIMPLE POUR JOUER CE SCRIPT (pour voir bien défiler les messages) :
   * se mettre dans le dossier de l'atelier
-  * jouer `ruby ./_dev_/__DEPLOIEMENT__/GET_DATA_DB_OLD_SITE.rb`
+  * jouer `ruby ./_dev_/__DEPLOIEMENT__/GET_OLD_DATA_SITE.rb`
 
 =end
 FORCE_ESSAI           = false # zappe toutes les méthodes de contrôle si TRUE

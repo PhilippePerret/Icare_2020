@@ -4,7 +4,7 @@
   mettre dans des fichiers .sql qui seront chargés ici et tranformés
 =end
 puts "📥 Récupération des données depuis le site distant (ancien site)".bleu
-puts "  (⏳ this can take a while…)"
+puts "  (⏳ this can take a while…)".bleu
 require_relative '../required'
 
 # ---------------------------------------------------------------------
