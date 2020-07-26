@@ -8,12 +8,20 @@ class Aide
 
   DATA_TDM = {
     # ---------------------------------------------------------------------
+    'primo' => {hname: 'Premiers arrivants'.freeze, titre:true},
+    '200.primo' => {hname: 'Liste et tarif des modules d’apprentissage et d’accompagnement'.freeze, id:200},
+    '20.primo'  => {hname:'Poser sa candidature'.freeze, id:20},
+    '12.primo'  => {hname:'Navigation sur le site'.freeze, id:12},
+    '81.primo'  => {hname: 'Conditions Générales d’Utilisation', id:81},
+    '82.primo'  => {hname:'Politique de confidentialité', id:82},
+
+    # ---------------------------------------------------------------------
     'site' => { hname:'Le Site de l’atelier', titre:true},
     1       => { hname: 'Où aller après l’identification'},
     4       => { hname: 'Fréquence des mails d’activité'},
     # ---------------------------------------------------------------------
 
-    'inscription' => {hname: 'Inscription', titre: true},
+    'inscription' => {hname: 'L’inscription', titre: true},
     20      => {hname: 'Poser sa candidature'},
     100     => {hname: 'Documents de présentation'},
 
@@ -33,17 +41,16 @@ class Aide
     '11.bis'    => {hname: 'Constitution du bureau de travail', id: 11},
     12          => {hname:'Navigation sur le site'.freeze},
 
-
     # ---------------------------------------------------------------------
     # Tout ce qui concerne le travail sur un module
-    'module_apprentissage' => {hname: 'Modules d’accompagnement et d’apprentissage', titre: true},
+    'module_apprentissage' => {hname: 'Les modules d’accompagnement et d’apprentissage', titre: true},
     200 => {hname: 'Liste et tarif des modules d’accompagnement et d’apprentissage'},
     201 => {hname: 'Durée réelle des modules'},
     80  => {hname: 'Paiement du module ou de l’échéance'},
     # ---------------------------------------------------------------------
 
     # ---------------------------------------------------------------------
-    'travail'       => {hname: 'Travail au sein de l’atelier', titre: true},
+    'travail' => {hname: 'Le travail au sein de l’atelier', titre: true},
     11  => {hname: 'Constitution du bureau de travail'},
     410 => {hname: 'Échéance du travail'},
     35  => {hname: 'Transmission des documents de travail'},
