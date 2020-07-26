@@ -21,8 +21,8 @@ class HTML
   #{head}
   <body class="#{css}" id="top">
     <section id="header" class="#{css}">#{header}</section>
-    #{@titre}
     <section id="messages">#{messages}</section>
+    #{@titre}
     <section id="body" class="#{css}">#{body}</section>
     <div style="clear:both"></div>
     #{top_page_button}

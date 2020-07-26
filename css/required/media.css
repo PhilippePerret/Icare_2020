@@ -7,7 +7,6 @@
     padding:2em 8em;
   }
 
-  section#messages {max-width:50%;}
   form:not(.inline):not(.noform) {
     margin:3em;
     width:calc(100% - 6em);
@@ -19,7 +18,21 @@
     margin-left: 10%;
   }
   section#messages {
-    margin-left:2em;
+    position: fixed;
+    top: 60px;
+    max-height: 200px;
+    max-width: 40%;
+    left: calc(25%);
+    left: calc(50% - attr(width) / 2);
+    overflow: auto;
+  }
+  section#messages > div {
+    padding-left:68px;
+  }
+  section#messages img.emoji.page_title {
+    position:absolute;
+    top:4px;
+    left:12px;
   }
 }
 
@@ -64,7 +77,11 @@
   }
 
   section#messages {
-    margin-left:0;
+    margin:1em 0;
+  }
+  section#messages img.emoji.page_title {
+    position:block;
+    text-align:center;
   }
 
 }

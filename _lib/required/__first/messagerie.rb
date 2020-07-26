@@ -40,11 +40,11 @@ class Debugger < Messager
 end #/Debug
 class Errorer < Messager
   def self.css_class;'errors' end
-  def self.picto ; '⚠️ ' end
+  def self.picto ; Emoji.get('panneau/attention').page_title.freeze end
 end #/Errorer
 class Noticer < Messager
   def self.css_class;'notices' end
-  def self.picto ; '🗣️ ' end
+  def self.picto ; Emoji.get('geste/parle').page_title.freeze end
 end #/Errorer
 
 class Logger
