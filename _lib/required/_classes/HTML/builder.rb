@@ -15,7 +15,7 @@ class HTML
     build_footer
     build_messages
     css = route.home? ? 'home' : ''
-    @page = <<-HTML
+    @page = <<-HTML.strip.freeze
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   #{head}
@@ -66,13 +66,20 @@ class HTML
   end
 
   # Fabrication du titre de la page
+  REG_FAUX_EMOJI = /<img(.*?)emoji(.*?)\/>/.freeze
   def build_titre
-    return '' if route.home?
+    return EMPTY_STRING if route.home?
     t = respond_to?(:titre) ? titre : "Titre page manquant"
     ulinks = EMPTY_STRING
     if respond_to?(:usefull_links)
       ulinks = '<div class="usefull-links">%s</div>'.freeze % usefull_links.join
     end
+    # # Si le titre possède un faux-émoji, on le récupère
+    # # Malheureusement, on ne peut pas mettre d'image dans la balise TITLE
+    # picto = EMPTY_STRING
+    # if t.match?(REG_FAUX_EMOJI)
+    #   emoji = t.match(REG_FAUX_EMOJI).to_a.first
+    # end
     @raw_titre ||= t.dup&.safetize
     @titre = "<h2 class=\"page-title\">#{ulinks}#{t}</h2>".freeze
   end

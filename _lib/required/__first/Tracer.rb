@@ -36,6 +36,11 @@ unless defined?(LOGS_FOLDER)
 end
 
 def trace(data)
+  # Utilisation particulière du tracer, pour sortir un message au
+  # cours du développement (mode "sniff")
+  if data.is_a?(String)
+    data = {id:'SNIFF'.freeze, message:data}
+  end
   Tracer.add(data)
 end #/ trace
 

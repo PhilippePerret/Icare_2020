@@ -2,6 +2,14 @@ html {
   scroll-behavior: smooth;
 }
 
+head title {
+  color:red;
+  font-size:4em;
+}
+head title:after {
+  content:'pour voir plus loin';
+}
+
 body {
   font-family:"Times new Roman", serif, Avenir;
   font-size:16pt;

@@ -116,9 +116,34 @@ On place un traceur dans le code à l'aide de :
 trace(id: '<identifiant>', message:'<message>', data: {données})
 ~~~
 
+
+
+On peut aussi utiliser le traceur en mode « sniff », à n’importe quel endroit du programme, en envoyant simplement un string comme argument :
+
+~~~ruby
+trace("Mon message à renifler")
+~~~
+
+> Ces messages portent l’identifiant `SNIFF`
+
+
+
 #### Lancement du suivi du traceur
 
-Ce lancement est encore à définir, mais ce sera un démon qui appelera régulièrement le fichier `./temp/logs/traceur.log`.
+On lance le traceur à l’aide de :
+
+~~~bash
+> icare trace[ options]
+~~~
+
+Options :
+
+~~~
+-e/--error_only			Pour n'afficher que les erreurs programme
+-o/--online					Tracer le site online
+~~~
+
+
 
 ---
 
