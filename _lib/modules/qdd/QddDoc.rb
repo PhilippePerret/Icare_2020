@@ -95,10 +95,12 @@ end #/ absetape_id
 def absetape
   @absetape ||= QddAbsEtape.get(absetape_id)
 end #/ absetape
+alias :etape :absetape
 
 def absmodule
   @absmodule = absetape.module
 end #/ absmodule
+alias :module :absmodule
 
 def formated_date(dtype)
   @formated_date ||= formate_date(send("time_#{dtype}".to_sym))

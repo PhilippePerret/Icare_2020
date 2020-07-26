@@ -10,10 +10,12 @@ OFFLINE = !ONLINE
 Dir["#{CRON_FOLDER}/_lib/_required/**/*.rb"].each { |m| require m }
 
 # On requiert quelques classes du site
-[
-  './_lib/required/__first/db'
-].each do |m|
-  require m
+Dir.chdir(APPFOLDER) do
+  [
+    './_lib/required/__first/db'
+  ].each do |m|
+    require m
+  end
 end
 
 # Pour la base de données
