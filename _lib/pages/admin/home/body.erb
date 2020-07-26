@@ -3,6 +3,8 @@
    <%= (EMO_PORTE_VOIX+ISPACE+Tag.link(route:'admin/notifications'.freeze, text:('Notifications%{non_vus}' % {non_vus: pastille_notifications_non_vues}).freeze)).freeze %>
 </div>
 
+<%= divGoto((Emoji.get('machine/validator').regular+ISPACE+Tag.lien(route:'admin/validator_pages'.freeze,text:'Inspecteur'.freeze)).freeze) %>
+
 <%= divGoto((EMO_OUTILS+ISPACE+'<a href="admin/tools">OUTILS</a>').freeze) %>
 
 <%= divGoto((EMO_ECRAN+ISPACE+ISPACE+'<a href="admin/console">Console</a>').freeze) %>
