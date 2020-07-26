@@ -10,6 +10,6 @@ class HTML
   end
   def build_body
     # Construction du body
-    @body = deserb('body', self)
+    @body = kramdown('body', self)
   end
 end #/HTML
