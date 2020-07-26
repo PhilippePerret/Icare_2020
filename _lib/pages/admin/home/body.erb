@@ -17,6 +17,8 @@
 
 <%= divGoto((EMO_ROUE_DENTEE+ISPACE+'<a href="bureau/preferences">Préférences</a>').freeze) %>
 
+<%= divGoto((Emoji.get('humain/etudiant').reg+ISPACE+'<a href="user/profil">Profil</a>').freeze) %>
+
 <div id="goto-frigo" class="goto">
   <%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, picto:true ) %>
 </div>
