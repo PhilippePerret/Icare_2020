@@ -5,11 +5,15 @@ html.add_js('./js/modules/form_with_files.js')
 class HTML
   def titre
     # Note : le titre est dynamique en fonction de la chose à envoyer
-    "#{RETOUR_BUREAU+EMO_PARABOLE.page_title+ISPACE}#{MESSAGES["titre_#{param(:rid)}".to_sym]}".freeze
+    "#{RETOUR_BUREAU+Emoji.get('objets/parabole').page_title+ISPACE}#{MESSAGES["titre_#{param(:rid)}".to_sym]}".freeze
   end
 
   # Code à exécuter avant la construction de la page
   def exec
+    unless user.actif?
+      message("Vous n’êtes pas acti#{user.fem(:ve)}, vous ne pouvez donc pas envoyer de documents.".freeze)
+      redirect_to(:bureau)
+    end
     icarien_required
     if param(:form_id) == 'send-work-form'
       # On passe par ici lorsque l'icarien soumet le formulaire avec

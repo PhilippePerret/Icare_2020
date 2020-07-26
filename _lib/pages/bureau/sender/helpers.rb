@@ -16,13 +16,13 @@ HTML
   def row_document(idoc)
     <<-HTML
 <div class="row mt1 nogrid">
-  <span class="value file-field" data-name="#{idoc}">
+  <span class="value file-field" data-name="document#{idoc}">
     <button id="buttondocument#{idoc}" type="button" class="file-choose">Choisir le document #{idoc}…</button>
     <span class="doc-name-span hidden">
       <button type="button" class="file-reset">❌</button>
       <span class="file-name"><!-- nom du document --></span>
     </span>
-    <input type="file" name="document#{idoc}" id="document-#{idoc}" />
+    <input type="file" name="document#{idoc}" id="document#{idoc}" />
     <span class="hidden span-note">
       <span class="libelle inline">Estimation </span>
       #{SELECT_NOTE % {idoc: idoc}}

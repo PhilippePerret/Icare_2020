@@ -29,6 +29,31 @@ RSpec::Matchers.define :have_error do |err_msg|
 end
 RSpec::Matchers.alias_matcher :have_erreur, :have_error
 
+RSpec::Matchers.define :have_message do |msg|
+  match do |page|
+    msg || raise("Il faut fournir le message à trouver !".freeze)
+    if page.has_css?('section#messages div.notices')
+      # if page.has_css?('div.errors', text: /#{Regexp.escape(msg)}/)
+      if page.has_css?('section#messages div.notices', text: msg.gsub(/ /,' '))
+        return true
+      else
+        actua_msg = page.find('section#messages div.notices').text
+        @ajout = "En revanche, le message “#{actua_msg}” a été trouvé."
+        return false
+      end
+    else
+      @ajout = "Elle ne contient aucun message.".freeze
+      return false
+    end
+  end
+  failure_message do
+    "La page devrait contenir le message “#{msg}”. #{@ajout}".freeze
+  end
+  description do
+    "La page contient bien le message  “#{msg}”.".freeze
+  end
+end
+
 # Matcher pour vérifier que la notification décrite par +params+ existe
 # bien dans la page.
 RSpec::Matchers.define :have_notification do |params|

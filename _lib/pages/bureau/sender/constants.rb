@@ -2,6 +2,9 @@
 =begin
   Constantes pour la partie bureau/sender
 =end
+UI_TEXTS.merge!({
+  btn_transmettre_documents: 'Transmettre les documents'.freeze,
+})
 MESSAGES.merge!({
   # Pour les titres de page possible
   titre_:           'Transmission de documents non définie'.freeze,
@@ -30,5 +33,3 @@ RATIO_MOTS_PER_DOCTYPE = {
   '.docx' => 0.162,
   'any'   => 0.097
 }
-
-EMO_PARABOLE = Emoji.get('objets/parabole')

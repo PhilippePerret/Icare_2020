@@ -10,6 +10,14 @@ OFFLINE = !ONLINE
 Dir["#{CRON_FOLDER}/_lib/_required/**/*.rb"].each { |m| require m }
 
 # On requiert quelques classes du site
+2.times do
+  begin
+    require 'mysql2'
+    break
+  rescue Exception => e
+    `gem install mysql2 --doc`
+  end
+end
 Dir.chdir(APPFOLDER) do
   [
     './_lib/required/__first/db'
