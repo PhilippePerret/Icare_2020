@@ -66,7 +66,6 @@ class HTML
   end
 
   # Fabrication du titre de la page
-  REG_FAUX_EMOJI = /<img(.*?)emoji(.*?)\/>/.freeze
   def build_titre
     return EMPTY_STRING if route.home?
     t = respond_to?(:titre) ? titre : "Titre page manquant"
@@ -76,6 +75,7 @@ class HTML
     end
     # # Si le titre possède un faux-émoji, on le récupère
     # # Malheureusement, on ne peut pas mettre d'image dans la balise TITLE
+    # REG_FAUX_EMOJI = /<img(.*?)emoji(.*?)\/>/.freeze (à replacer en dehors si utilisé)
     # picto = EMPTY_STRING
     # if t.match?(REG_FAUX_EMOJI)
     #   emoji = t.match(REG_FAUX_EMOJI).to_a.first
