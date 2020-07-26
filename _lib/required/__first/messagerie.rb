@@ -44,7 +44,7 @@ class Errorer < Messager
 end #/Errorer
 class Noticer < Messager
   def self.css_class;'notices' end
-  def self.picto ; Emoji.get('geste/parle').page_title.freeze end
+  def self.picto ; Emoji.get('gestes/parle').page_title.freeze end
 end #/Errorer
 
 class Logger

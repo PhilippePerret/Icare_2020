@@ -21,13 +21,14 @@
     position: fixed;
     top: 60px;
     max-height: 200px;
-    max-width: 40%;
-    left: calc(25%);
-    left: calc(50% - attr(width) / 2);
-    overflow: auto;
+    max-width: 60%;
+    left: calc(20%);
+    left: calc(60% - attr(width) / 2);
+    overflow-y: auto;
   }
   section#messages > div {
     padding-left:68px;
+    box-sizing:border-box;
   }
   section#messages img.emoji.page_title {
     position:absolute;
