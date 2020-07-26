@@ -55,4 +55,48 @@ Did you mean?  to_s
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:84:in `build_titre'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:13:in `build_page'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-26 08:37:04 +0200 --- FATAL ERROR:
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/constants.rb:10: syntax error, unexpected ':', expecting '}'
+  oldpass_required: 'Votre mot de passe courant ...
+                  ^
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/constants.rb:11: syntax error, unexpected '}', expecting end-of-input
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `block in require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/require_methods.rb:4:in `require_folder'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:29:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/page.rb:13:in `load'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:9:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-26 08:37:31 +0200 --- FATAL ERROR:
+    undefined local variable or method `curpass' for #<HTML:0x00007fd4da1a7168 @all_css=["./css/_variables.css"]>
+Did you mean?  cur_pass
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:25:in `traitement_changement_password'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:12:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-26 08:37:55 +0200 --- FATAL ERROR:
+    exception class/object expected
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:25:in `raise'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:25:in `traitement_changement_password'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:12:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-26 08:52:04 +0200 --- FATAL ERROR:
+    Le nouveau mot de passe est requis !
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:30:in `traitement_changement_password'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-26 08:52:44 +0200 --- FATAL ERROR:
+    Le nouveau mot de passe est requis !
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:30:in `traitement_changement_password'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/user/change_password/html.rb:13:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

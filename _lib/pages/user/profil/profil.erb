@@ -4,7 +4,7 @@
     ['Pseudo', pseudo],
     ['Mail', data[:mail]],
     ['Inscription', formate_date(data[:created_at])],
-    ['Mot de passe', '<a href="user/change_password">Modifier le mot de passe</a>'.freeze],
+    ['Mot de passe', ('<a href="user/change_password">'+UI_TEXTS[:btn_lien_change_password]+'</a>').freeze],
     ['Module courant', data[:icmodule_id]],
     ['Après identification', redirection_apres_login],
     ['Session', session.id]
@@ -13,5 +13,5 @@
   <% end %>
 </div>
 <div class="buttons mt4">
-  <a href="user/destroy" class="btn warning discret">Détruire le profil</a>
+  <a href="user/destroy" class="btn warning discret"><%= UI_TEXTS[:btn_detruire_profil] %></a>
 </div>

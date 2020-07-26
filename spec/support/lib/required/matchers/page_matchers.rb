@@ -5,8 +5,10 @@
 
 RSpec::Matchers.define :have_error do |err_msg|
   match do |page|
+    err_msg || raise("Il faut fournir le message d'erreur à trouver !".freeze)
     if page.has_css?('div.errors')
-      if page.has_css?('div.errors', text: err_msg)
+      # if page.has_css?('div.errors', text: /#{Regexp.escape(err_msg)}/)
+      if page.has_css?('div.errors', text: err_msg.gsub(/ /,' '))
         return true
       else
         actua_msg = page.find('div.errors').text

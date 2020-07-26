@@ -52,6 +52,6 @@ end #/ login_icarien
 
 # Pour se déconnecter
 def logout
-  click_on(class:'btn-logout')
+  click_on(id:'btn-logout')
   Capybara.reset_sessions!
 end #/ logout
