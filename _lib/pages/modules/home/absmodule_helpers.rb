@@ -20,7 +20,6 @@ class AbsModule < ContainerClass
     #{ligne_boutons}
   </div>
   <div class="minifaq">
-    <p class="explication">Vous voulez en savoir davantage#{ISPACE}? N'hésitez pas à lire les réponses ci-dessous.</p>
     #{MiniFaq.full_block(:absmodule, id)}
   </div>
 </div>

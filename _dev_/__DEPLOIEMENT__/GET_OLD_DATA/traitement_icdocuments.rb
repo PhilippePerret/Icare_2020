@@ -61,13 +61,12 @@ db_exec("SELECT * FROM `current_icdocuments`".freeze).each do |ddoc|
 end
 puts "Nombre de lectures créées : #{nombre_lectures_creees}".vert
 # On peut injecter toutes les données dans icdocuments
-unless values.empty?
-  db_exec('TRUNCATE `icdocuments`')
-  interro = Array.new(COLUMNS_ICDOC.count, '?').join(VG)
-  request = "INSERT INTO `icdocuments` (#{COLUMNS_ICDOC.join(VG)}) VALUES (#{interro})".freeze
-  db_exec(request, values)
-  puts "🗄️ Dumping des icdocuments opéré avec succès".vert
-end
+db_exec('TRUNCATE `icdocuments`')
+interro = Array.new(COLUMNS_ICDOC.count, '?').join(VG)
+request = "INSERT INTO `icdocuments` (#{COLUMNS_ICDOC.join(VG)}) VALUES (#{interro})".freeze
+db_exec(request, values)
+`mysqldump -u root icare icdocuments > "#{FOLDER_GOODS_SQL}/icdocuments.sql"`
+puts "🗄️ Dumping des icdocuments opéré avec succès".vert
 db_exec("DROP TABLE `current_icdocuments`".freeze)
 
 # On peut exporter la table lectures_qdd

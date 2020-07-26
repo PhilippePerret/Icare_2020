@@ -28,6 +28,6 @@ end
 # Dans l'ancien site, la donnée absmodule_id correspondait au module de l'étape
 # de la question. Dans le nouveau site, c'est une question sur le module absolu
 # proprement dit. Il faut donc mettre tous les absmodule_id à NULL.
-db_exect("UPDATE `minifaq` SET absmodule_id = NULL")
+db_exec("UPDATE `minifaq` SET absmodule_id = NULL")
 `mysqldump -u root icare minifaq > "#{FOLDER_GOODS_SQL}/minifaq.sql"`
 puts "🗄️ Dumping de la minifaq opéré avec succès".vert

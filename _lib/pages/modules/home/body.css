@@ -1,0 +1,4 @@
+/* Pour bien aligner le picto */
+.absmodule img.emoji {
+  vertical-align:baseline!important;
+}

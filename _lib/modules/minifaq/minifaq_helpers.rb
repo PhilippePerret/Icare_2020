@@ -30,7 +30,7 @@ class << self
     }
     if user.guest? || user.admin?
       rows.merge!({
-        '<Mail/>'       => {name:'minifaq_user_mail', type:'text', placeholder:'Votre adresse email vérifiée'},
+        '<Mail/>'       => {name:'minifaq_user_mail', type:'text', placeholder:'Votre adresse email (vérifiée par vos soins)'},
         '<explimail/>'  => {type:'raw', value:"<div class='explication small'>Cette adresse mail permettra seulement ne vous informer d'une réponse et ne sera en aucun cas conservée dans notre base de données. Vous pouvez consulter la #{StringHelper.politique_confidentialite} de l'atelier Icare.</div>"}
       })
     else
@@ -42,7 +42,7 @@ class << self
     form.submit_button = "Poser cette question"
     form.submit_button_class = 'very small'
 
-    '<div class="mt2 italic">Posez votre propre question si vous n’avez pas trouvé votre réponse :</div>'.freeze +
+    '<div class="mt2 italic">Votre question, si vous n’avez pas trouvé de réponse ci-dessus :</div>'.freeze +
     form.out
   end #/ form
 
