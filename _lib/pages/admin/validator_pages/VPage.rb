@@ -7,21 +7,59 @@
 
 =end
 class VPage < ContainerClass
+# ---------------------------------------------------------------------
+#
+#   CONSTANTES
+#
+# ---------------------------------------------------------------------
+SUBJECT_LINE      = '<span class="route">Route</span>'
+VALIDATION_LINE   = '<span class="route">%{route}</span>'.freeze
+SPAN_CHECKBOX_TAG = '<span class="col-cb"><input type="checkbox" name="cpage_%{id}_spec_%{bit}"%{checked} /></span>'
+PICTO_BIT         = '<span class="col-cb"><img src="img/Emojis/%{relpath}" class="picto-bit" /></span>'.freeze
+DATA_BITS_VALIDATOR = {
+  0   => {name:'Corrigé', picto:'humain/marion'},
+  1   => {name:'Finalisé', picto:'humain/phil'},
+  2   => {name:'Sur Mac', picto:'machine/mac'},
+  3   => {name:'Sur windows', picto:'machine/windows'},
+  4   => {name:'Sur tablette', picto:'machine/tablette'},
+  5   => {name:'Sur iPhones',  picto:'machine/iphone'},
+  6   => {name:'Sur Androïde',  picto:'machine/androide'},
+  31  => {name:'Prioritaire',   picto:'signes/exclamation'},
+}
+ORDRE_BITS = [0,1,2,3,4,5,6,31]
+# ---------------------------------------------------------------------
+#
+#   CLASSE
+#
+# ---------------------------------------------------------------------
 class << self
   def table
     @table ||= 'validations_pages'
   end #/ table
+  def subject_line
+    ORDRE_BITS.each do |bit|
+      SUBJECT_LINE << PICTO_BIT % {relpath:DATA_BITS_VALIDATOR[bit][:picto]}
+    end
+    SUBJECT_LINE.freeze
+  end #/ subject_line
 end # /<< self
 
-SUBJECT_LINE    = '<span class="route">Route</span>'.freeze
-VALIDATION_LINE = '<span class="route">%{route}</span>'.freeze
 
 # Sortie de la ligne de validation
 def validation_line
-  VALIDATION_LINE % {
-    route: route
-  }
+  dataline = {route: route}
+  line = (VALIDATION_LINE % dataline)
+  ORDRE_BITS.each do |bit|
+    line << (SPAN_CHECKBOX_TAG % {id:id, bit:bit, checked:checked_for(bit)})
+  end
 end #/ validation_line
+
+def checked_for(bit)
+  checked?(bit) ? CHECKED : EMPTY_STRING
+end #/ checked_for
+def checked?(bit)
+  spec(bit) == 1
+end #/ checked?
 # ---------------------------------------------------------------------
 #   Spécifications
 #   Concerne la donnée SPECS qui est un string de 32 caractères qui

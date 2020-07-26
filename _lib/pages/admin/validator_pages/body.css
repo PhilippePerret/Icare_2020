@@ -1,0 +1,14 @@
+img.picto-bit {
+  width:40px;
+}
+span.route,
+span.col-cb {
+  display:inline-block;
+}
+span.col-cb {
+  width:60px;
+  text-align:center;
+}
+span.route {
+  width:140px;
+}
