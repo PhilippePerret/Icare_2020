@@ -12,9 +12,9 @@ class VPage < ContainerClass
 #   CONSTANTES
 #
 # ---------------------------------------------------------------------
-SUBJECT_LINE  = '<span class="route">Route</span>'
+SUBJECT_LINE  = '<span class="route"></span>'
 COL_ROUTE     = '<span class="route">%{route}</span>'.freeze
-SPAN_CB_TAG   = '<span class="col-cb"><input type="checkbox" name="cpage_%{id}_spec_%{bit}"%{checked} /></span>'
+SPAN_CB_TAG   = '<span class="col-cb"><input type="checkbox" value="1" name="cpage_%{id}_spec_%{bit}"%{checked} /></span>'
 PICTO_BIT     = '<span class="col-cb"><img src="img/Emojis/%{picto}.png" class="picto-bit" title="%{title}" /></span>'.freeze
 DIV_LINE      = '<div id="%{id}" class="vpage-line">%{cols}</div>'.freeze
 OPEN_LINK     = ('<span class="col-cb"><a href="%s" target="_new">'+Emoji.get('humain/yeux-droite').texte+'</a></span>').freeze
@@ -43,15 +43,37 @@ class << self
     @table ||= 'validations_pages'
   end #/ table
 
+  # Pour enregistrer le nouvel état des pages
+  #
+  # Il ne faut enregistrer que les pages qui ont changé d'état
+  def save
+    values = []
+    get_vpages(all = false).each do |vpage|
+      values << [vpage.specs, vpage.id] if vpage.modified?
+    end
+    if values.empty?
+      message(MESSAGES[:no_page_modified])
+    else
+      request = 'UPDATE validations_pages SET specs = ? WHERE id = ?'.freeze
+      db_exec(request, values)
+      if MyDB.error
+        log("ERREUR SQL : #{MyDB.error.inspect}")
+        erreur(MyDB.error[:error])
+      else
+        message(MESSAGES[:save_success])
+      end
+    end
+  end #/ save
+
   # Pour faire le listing des pages
   def listing
     vpages = get_vpages(all = false)
-    # Pour simuler
-    vpages = [
-      self.instantiate({route:'home', specs:'0'*32, id:1}),
-      self.instantiate({route:'bureau/home', specs:'0'*32, id:2}),
-      self.instantiate({route:'overview/phil', specs:'0'*32, id:3})
-    ]
+    # # Pour simuler
+    # vpages = [
+    #   self.instantiate({route:'home', specs:'0'*32, id:1}),
+    #   self.instantiate({route:'bureau/home', specs:'0'*32, id:2}),
+    #   self.instantiate({route:'overview/phil', specs:'0'*32, id:3})
+    # ]
     vpages.collect do |vpage|
       vpage.out
     end.join
@@ -92,6 +114,29 @@ end #/ checked_for
 def checked?(bit)
   spec(bit) == 1
 end #/ checked?
+
+# Retourne TRUE si la ligne a été modifiée
+def modified?
+  valeurs = nil
+  modified = false
+  ORDRE_BITS.each do |bit|
+    valeurs = []
+    key = "cpage_#{id}_spec_#{bit}".to_sym
+    val = param(key).to_i
+    if val != spec(bit)
+      data[:specs][bit] = val.to_s
+      modified = true
+      valeurs << "bit #{bit} = #{val}"
+    end
+  end
+  if modified
+    message("Page ##{id} modifiée : #{valeurs.join(VG)}")
+  else
+    message("La page ##{id} n'a pas changé")
+  end
+  modified
+end #/ modified?
+
 # ---------------------------------------------------------------------
 #   Spécifications
 #   Concerne la donnée SPECS qui est un string de 32 caractères qui

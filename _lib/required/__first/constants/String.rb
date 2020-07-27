@@ -18,6 +18,8 @@ AND = ' AND '.freeze
 
 BR = '<br/>'.freeze
 
+CHECKED = ' CHECKED'.freeze
+
 EMPTY_STRING = ''.freeze
 ESPACE_FINE = "<this />".freeze
 ESPERLUETTE = '&'.freeze

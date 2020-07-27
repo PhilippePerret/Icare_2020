@@ -8,7 +8,9 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     admin_required
-
+    if param(:op) == 'save-inspection'
+      VPage.save
+    end
   end # /exec
 
   # Fabrication du body

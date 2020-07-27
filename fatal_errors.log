@@ -193,4 +193,35 @@ Did you mean?  __name
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/class.rb:37:in `init_as_admin'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/_User/class.rb:28:in `init'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:20:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-27 10:40:41 +0200 --- FATAL ERROR:
+    uninitialized constant VPage::ORDRE_BIT
+Did you mean?  VPage::ORDRE_BITS
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:121:in `modified?'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:52:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:51:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:51:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/html.rb:12:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:21:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-27 10:40:50 +0200 --- FATAL ERROR:
+    undefined method `strip' for #<Mysql2::Error:0x00007ff81e967fa8>
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/messagerie.rb:10:in `add'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/handies/messages.rb:54:in `erreur'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:61:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/html.rb:12:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:21:in `run'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'2020-07-27 10:45:55 +0200 --- FATAL ERROR:
+    Méthode manquante : #<VPage:0x00007ffbe519bf48>#valeurs (voir data dans le journal)
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/ContainerClass.rb:162:in `method_missing'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:132:in `modified?'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:52:in `block in save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:51:in `each'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/VPage.rb:51:in `save'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/validator_pages/html.rb:12:in `exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/exec.rb:11:in `proceed_exec'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/builder.rb:10:in `build_page'
+    /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/App.rb:21:in `run'
     /Users/philippeperret/Sites/AlwaysData/Icare_2020/index.rb:5:in `<main>'

@@ -1,26 +1,12 @@
-<p class="explication">Cette section permet de suivre le travail de vérification des pages (orthographe, aspect sur tous les appareils).</p>
-<p>Pour ajouter une page, la rejoindre et cliquer sur le bouton <%= Emoji.get('machine/inspector').page_title %> pour l’inspecter</p>
+<p class="explication">Cette section permet de suivre le travail de vérification des pages (orthographe, aspect sur tous les appareils). Pour ajouter une page, la rejoindre, ouvrir la boite à outils administeur en bas à gauche de l'écran et cliquer sur “Inspecter la page”.</p>
 <%
 =begin
   Ici, on présente une liste des pages avec des colonnes présentant :
-
-  - correction par Marion achevée
-  - correction par Phil achevée
-  - visibilité sur ordinateur mac OK
-  - visibilité sur ordinateur PC OK
-  - visibilité sur tablette OK
-  - visibiliité sur Androïdes OK
-  - visibilité sur iPhones OK
-
-  case pour marquer achevée (on n'affiche plus)
-  case pour retirer de la liste
-
 =end
 %>
-<form action="<%= route.to_s %>" method="POST">
+<form action="<%= route.to_s %>" method="POST" class="nolimit noborder nopadding nogrid noform" style="">
 <input type="hidden" name="op" value="save-inspection">
 <input type="hidden" name="route" value="<%= route.to_s %>">
-</form>
 <div id="inspector-list" class="nolimit">
   <div id="inspector-list-header">
     <%= VPage.listing_header %>
@@ -29,6 +15,7 @@
     <%= VPage.listing %>
   </div>
   <div id="inspector-list-buttons" class="buttons">
-    <input type="submit" name="" value="Enregistrer">
+    <input type="submit" class="btn main" value="Enregistrer">
   </div>
 </div>
+</form>

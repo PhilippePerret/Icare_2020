@@ -1147,7 +1147,11 @@ Les outils discrets sont des boutons qui ont une faible opacité et qui s’affi
 
 ---
 
+
+
 ## Formulaires
+
+
 
 Les formulaires peuvent être facilement créés grâce à la classe `Form`.
 
@@ -1187,6 +1191,32 @@ form = Form.new(id:'login-form', route:'user/login', size: 300)
 ~~~
 
 
+
+### Aspect général du formulaire
+
+Par défaut, le formulaire possède un aspect qui s'adapte bien à toutes les situations. Pour des cas spéciaux, on peut cependant avoir besoin de modifier son aspect général. On peut régler cet aspect général grâce aux classes CSS génériques `no---`.
+
+La class `noform` retire tout aspect au formulaire. Même les boutons sont affectés et si l'on veut des `input-submit` qui ressemblent à de beaux boutons, il faut leur appliquer les classes `btn` (par exemple `main btn` pour le bouton prinvipal).
+
+~~~html
+<form ... class="noform">
+	...
+</form>
+~~~
+
+On peut aussi utiliser les classes :
+
+~~~
+nogrid			# retire l'affichage par grille pour libellé/valeur
+nolimit			# le formulaire n'est pas limité en largeur
+noborder		# les bordures sont retirées
+nopadding		# pas de paddings intérieurs
+nomargin		# aucune marge n'est appliquée
+~~~
+
+
+
+### Rangées du formulaire
 
 On peut définir ensuite les rangées par :
 
@@ -1263,6 +1293,10 @@ form.submit_button = "<nom du bouton>".freeze
 # On peut aussi définir sa classe : (il est juste 'btn' par défaut)
 form.submit_button_class = 'btn main'
 # Noter qu'il faut ajouter 'btn' car cette classe remplacera entièrement l'autre
+
+# OU
+
+form.submit_button = {'<nom bouton>', {class: 'sa classe'}}
 ~~~
 
 
@@ -1339,6 +1373,7 @@ end #/HTML
 ~~~
 
 
+
 #### Définition d'un menu
 
 ~~~ruby
@@ -1352,7 +1387,7 @@ En `values`, on peut aussi mettre une liste simple, quand les valeurs sont égal
 
 
 
-### Champ pour les dates
+#### Champ pour les dates
 
 Pour construire un champ avec trois menus pour choisir une date, on peut utiliser la méthode `Form.date_field({<params>})`.
 
@@ -1399,6 +1434,12 @@ message("Le nouveau temps est #{formate_date(newDate)}")
 ~~~
 
 > cf. la méthode [formate_date][]
+
+
+
+
+
+---
 
 
 

@@ -9,6 +9,7 @@ end # /<< self
 class Toolbox
 class << self
   def out
+    admin_required
     <<-HTML.strip.freeze
 <div id="admin-toolbox">
 <div class="titre"><img src="img/Emojis/machine/manette-jeu.png" style="width:40px;" /></div>
