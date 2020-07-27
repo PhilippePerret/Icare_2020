@@ -68,6 +68,18 @@ class << self
     file.write "#{Time.now.to_f}#{DEL}#{data.join(DEL_DATA)}#{RC}"
   end #/ add
 
+  # Méthode qui retourne les paramètres courant (URL) à ajouter à la trace,
+  # s'ils ne sont pas trop longs.
+  def params_added
+    data_trace = {}
+    # S'il y a des params, on les ajoute au traceur, mais pas s'ils sont trop longs
+    unless URL.current.params.nil? || URL.current.params.empty?
+      params_json = URL.current.params.to_json
+      data_trace.merge!(params: params_json) unless params_json.length > 1000
+    end
+    return data_trace
+  end #/ params_added
+
   # Pour lire le tracer depuis cette date
   # Retourne la liste des lignes lues
   def read(from = nil)

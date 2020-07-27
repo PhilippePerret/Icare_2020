@@ -22,13 +22,9 @@ log("DATABASE: #{MyDB.DBNAME.inspect}")
 log("ENV['REMOTE_ADDR'] = #{ENV['REMOTE_ADDR'].inspect}")
 
 # On trace ce chargement
-data_trace = {}
-# S'il y a des params, on les ajoute, mais pas s'ils sont trop longs
-unless URL.current.params.nil? || URL.current.params.empty?
-  params_json = URL.current.params.to_json
-  data_trace.merge!(params: params_json) unless params_json.length > 1000
-end
-trace(id:"LOADING",message:route.to_s,data:data_trace)
+trace(id:"LOADING",message:route.to_s,data:Tracer.params_added())
+
+Admin.operation(:essai)
 
 TESTS = File.exists?('./TESTS_ON') # réglé par spec_helper.rb
 log("TESTS : #{TESTS.inspect}")
