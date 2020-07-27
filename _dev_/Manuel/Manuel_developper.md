@@ -2463,6 +2463,32 @@ La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` 
 Voir le [dossier contenant le fichier principal dans module/paiment](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb) et la classe [AIPaiement](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/AIPaiement.rb) (attention, cette classe se trouve dans le dossier `modules/paiement`, pas dans un dossier module — qui serait un peu superfétatoire).
 
 
+---
+
+
+## Opérations administrateurs
+
+### Description
+
+Les opérations administrateurs sont des opérations qui peuvent être exécutées de n'importe quel endroit du site. Elles ont été inaugurées pour l'inspection des pages (un bouton dans la boite d'outils de l'administrateur permet de marque que la page doit être inspectée).
+
+### Définition des opérations
+
+Les opérations doivent être définies dans le dossier [modules/admin/operations/operations](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/admin/operations/operations).
+
+### Appels des opérations
+
+Normalement, dès que c'est l'administrateur qui visite le site (en mode administrateur), le module `admin/operations` est chargé. Donc il n'y a rien d'autre à faire que d'appeler l'opération avec la formule :
+
+~~~ruby
+
+Admin.exec(:operation[, {params}])
+
+# Qui est un raccourci de :
+
+Admin::Operation.exec(:operation[, {params}])
+
+~~~
 
 ---
 

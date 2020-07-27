@@ -1,3 +1,33 @@
+/* Le listing principal */
+div#inspector-list {
+  position:relative;
+  border:1px solid;
+  padding-top:50px;
+}
+/* Header du listing principal */
+div#inspector-list div#inspector-list-header {
+  position:absolute;
+  width:100%;
+  top:0;
+  left:0;
+  border-bottom:2px solid;
+}
+/* Le listing principal */
+div#inspector-list div#inspector-list-listing {
+  height:500px;
+  max-height:500px;
+}
+/* Les lignes de chaque page */
+div#inspector-list div#inspector-list-listing div.vpage-line {
+  vertical-align:middle;
+}
+div#inspector-list div#inspector-list-listing div.vpage-line:nth-child(odd) {
+  background-color:var(--fond-discret-inner-object);
+}
+div#inspector-list div#inspector-list-listing div.vpage-line:nth-child(even) {
+  background-color:white;
+}
+
 img.picto-bit {
   width:40px;
 }
@@ -5,10 +35,23 @@ span.route,
 span.col-cb {
   display:inline-block;
 }
+span.col-cb a {
+  vertical-align:middle;
+}
+
+/* div#inspector-list div#inspector-list-listing span.route, */
+div#inspector-list div#inspector-list-listing span.col-cb
+{
+  vertical-align:super;
+}
 span.col-cb {
   width:60px;
   text-align:center;
 }
 span.route {
-  width:140px;
+  width:240px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  padding-left:18px;
+  box-sizing:border-box;
 }

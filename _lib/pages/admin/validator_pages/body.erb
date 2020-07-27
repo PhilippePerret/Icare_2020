@@ -11,6 +11,24 @@
   - visibilité sur tablette OK
   - visibiliité sur Androïdes OK
   - visibilité sur iPhones OK
+
+  case pour marquer achevée (on n'affiche plus)
+  case pour retirer de la liste
+
 =end
 %>
-<%= VPage.subject_line %>
+<form action="<%= route.to_s %>" method="POST">
+<input type="hidden" name="op" value="save-inspection">
+<input type="hidden" name="route" value="<%= route.to_s %>">
+</form>
+<div id="inspector-list" class="nolimit">
+  <div id="inspector-list-header">
+    <%= VPage.listing_header %>
+  </div>
+  <div id="inspector-list-listing">
+    <%= VPage.listing %>
+  </div>
+  <div id="inspector-list-buttons" class="buttons">
+    <input type="submit" name="" value="Enregistrer">
+  </div>
+</div>
