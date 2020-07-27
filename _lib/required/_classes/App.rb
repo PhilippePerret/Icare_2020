@@ -17,6 +17,7 @@ class << self
   def run
     log("-> App::run")
     self.init
+    User.init
     html.build_page
     html.out
     self.finish
@@ -29,7 +30,6 @@ class << self
     Session.init
     Errorer.desessionnize
     Noticer.desessionnize
-    User.init
   end
 
   # Pour finir

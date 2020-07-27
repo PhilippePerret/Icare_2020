@@ -2465,6 +2465,7 @@ Voir le [dossier contenant le fichier principal dans module/paiment](/Users/phil
 
 ---
 
+<a name="operations-admin"></a>
 
 ## Opérations administrateurs
 
@@ -2478,17 +2479,28 @@ Les opérations doivent être définies dans le dossier [modules/admin/operation
 
 ### Appels des opérations
 
-Normalement, dès que c'est l'administrateur qui visite le site (en mode administrateur), le module `admin/operations` est chargé. Donc il n'y a rien d'autre à faire que d'appeler l'opération avec la formule :
+Normalement, dès que c'est l'administrateur qui visite le site (en mode administrateur) et que le query-string définit `adminop` (“administrator operation”), le module `admin/operations` est chargé. Donc il n'y a rien d'autre à faire que d'appeler l'opération avec la formule :
 
 ~~~ruby
 
-Admin.exec(:operation[, {params}])
+Admin.operation(:<operation_name>[, {params}])
 
 # Qui est un raccourci de :
 
 Admin::Operation.exec(:operation[, {params}])
 
 ~~~
+
+<a name="admin-toolbox"></a>
+
+## Administrateur toolbox
+
+La boite à outils de l'administrateur, qui permet d'effectuer divers opérations n'importe où dans le site, est un module défini dans [\_lib/modules/admin/toolbox]().
+
+Dès qu'on se connecte en administrateur, en mode administrateur, on a accès à cette boite à outils qui permet de faire différentes choses.
+
+La boite à outils est directement en relation avec les [opérations administrateur](#operations-admin)
+
 
 ---
 

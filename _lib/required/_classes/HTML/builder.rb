@@ -31,6 +31,7 @@ class HTML
     #{Admin.section_essais if SHOW_DEVELOPPEMENT_TOOLS}
     #{js_tags}
     #{relocation_if_download}
+    #{Admin::Toolbox.out if user.admin?}
   </body>
 </html>
     HTML

@@ -17,14 +17,26 @@ class << self
     res = db_exec("SELECT id FROM users WHERE pseudo = ?".freeze, [pseudo]).first
     res.nil? ? nil : self.get(res[:id])
   end #/ get_by_pseudo
-  
+
   # Initialisation de l'utilisateur courant
   # Soit c'est l'utilisateur reconnu par la session, soit c'est un invité
   def init
     log("session['user_id'] = #{session['user_id'].inspect}".freeze)
     reconnect_user unless session['user_id'].nil_if_empty.nil?
     self.current ||= User.instantiate(DATA_GUEST)
+    # Si l'utilisateur est un administrateur, on le traite tel quel
+    init_as_admin if user.admin?
   end
+
+  def init_as_admin
+    # Dans tous les cas on charge la boite à outils
+    require_module('admin/toolbox')
+    # Si une opération administrateur est demandée
+    if param(:adminop)
+      require_module('admin/operations')
+      Admin.operation(param(:adminop).to_sym)
+    end
+  end #/ init_as_admin
 
   # Reconnection d'un icarien reconnu en session
   def reconnect_user

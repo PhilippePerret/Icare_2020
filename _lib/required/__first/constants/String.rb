@@ -20,6 +20,7 @@ BR = '<br/>'.freeze
 
 EMPTY_STRING = ''.freeze
 ESPACE_FINE = "<this />".freeze
+ESPERLUETTE = '&'.freeze
 ET = ' et '.freeze
 
 FLECHE  = '➵'
@@ -37,7 +38,7 @@ RETOUR    = '<span style="vertical-align:sub;">↩︎</span>'.freeze
 
 SELECT    = 'select'.freeze
 SELECTED  = ' SELECTED'.freeze
-SPACE = ' '
+SPACE     = ' '
 
 TAB       = '    '.freeze
 TAB2      = (TAB*2).freeze

@@ -6,7 +6,7 @@ require 'mysql2'
 require 'erb'
 require 'yaml'
 
-LIB_FOLDER      = File.dirname(__FILE__)
+LIB_FOLDER = File.dirname(__FILE__)
 
 require_relative 'required/__first/constants/paths'
 
@@ -24,9 +24,10 @@ log("ENV['REMOTE_ADDR'] = #{ENV['REMOTE_ADDR'].inspect}")
 # On trace ce chargement
 trace(id:"LOADING",message:route.to_s,data:Tracer.params_added())
 
-Admin.operation(:essai)
-
 TESTS = File.exists?('./TESTS_ON') # réglé par spec_helper.rb
 log("TESTS : #{TESTS.inspect}")
 
 log("ROUTE : #{route.to_s}")
+
+# NOTE Dans ce required.rb, user n'est pas encore défini. Il le sera seulement
+# dans User.init appelé par App.init
