@@ -1,4 +1,4 @@
-#!/Users/philippeperret/.rbenv/versions/2.6.3/bin/ruby
+#!/usr/bin/env ruby
 # encoding: UTF-8
 =begin
   Cronjob pour effectuer des tâches routinières sur le site, à commencer par :

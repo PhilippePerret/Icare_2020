@@ -8,6 +8,8 @@ _lib/data/secret/
 
 _lib/data/qdd/
 
+*.log
+
 tmp/
 tmp/forms/
 
