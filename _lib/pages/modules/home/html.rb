@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class HTML
   def titre
-    "#{Emoji.get('objets/pile-livres').page_title+ISPACE}Les Modules pédagogiques".freeze
+    "#{Emoji.get('objets/pile-livres').page_title+ISPACE}#{UI_TEXTS[:modules_apprentissage]}".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec

@@ -137,4 +137,14 @@ feature 'Préparation en live' do
     marion_envoie_deux_autres_documents_cycle_complet
   end
 
+  scenario 'marion paie son module d’apprentissage (devient une vraie icarienne)', marion_paie_son_module: true do
+    Gel.remove('marion_paie_son_module') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    marion_paie_son_module
+  end
+
+  scenario 'marion termine son module (devient inactive)', marion_devient_inactive: true do
+    Gel.remove('marion_devient_inactive') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    marion_devient_inactive
+  end
+
 end

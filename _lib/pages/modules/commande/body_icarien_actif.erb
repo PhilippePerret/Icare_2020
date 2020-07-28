@@ -1,0 +1,9 @@
+<%
+# Ce module est chargé quand l'icarien, inscrit, à choisi un module
+# à optionner. Il doit confirmer ici sa commande.
+require_module('user/modules')
+%>
+<p>
+  <%= user.pseudo %>, en tant qu’icarien<%= user.fem(:ne) %> acti<%= user.fem(:ve) %>, vous ne pouvez pas commander un module d’apprentissage avant d’avoir achevé le vôtre.
+</p>
+<p>Si vous voulez mettre fin à votre module “<%= user.icmodule.name %>” pour passer à un autre module — ce qui est tout à fait possible —, <%= contact('parlez-en à Phil'.freeze) %>.</p>

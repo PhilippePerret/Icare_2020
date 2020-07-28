@@ -5,9 +5,7 @@ class Watcher < ContainerClass
     log("-> confirm_virement")
     # On ajoute le paiement en créant un enregistrement
     require './_lib/pages/modules/paiement/lib/user_paiement'
-    owner.add_paiement(objet_id)
-    # Si module à durée indéterminée : prochain paiement
-    log("<- confirm_virement")
+    owner.add_paiement(objet_id) # fait tout
   end # / confirm_virement
 
 end # /Watcher < ContainerClass

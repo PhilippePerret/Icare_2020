@@ -43,8 +43,7 @@ class AbsModule < ContainerClass
     @ligne_boutons ||= begin
       <<-HTML
 <div class="right mt1 mb1">
-  <a href="#{route.to_s}#top" class="small">haut de page</a>
-  <a href="modules/commande?mid=#{id}" class="btn main">Commander le module « #{name} »…</a>
+  <a href="modules/commande?mid=#{id}" class="btn main">#{UI_TEXTS[:btn_commander_module] % name}</a>
 </div>
       HTML
     end

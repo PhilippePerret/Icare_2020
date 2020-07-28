@@ -30,9 +30,9 @@ class HTML
 
 #{aGoto('<a href="overview/home">'+Emoji.get('nature/terre').regular+' L’ATELIER</a>'.freeze)}
 
-#{aGoto('<a href="overview/reussites">'+Emoji.get('gestes/pouceup').regular+' Belles réussites</a>'.freeze)}
+#{aGoto('<a href="overview/reussites">'+Emoji.get('gestes/pouceup').regular+ISPACE+UI_TEXTS[:les_belles_reussites]+'</a>'.freeze)}
 
-#{aGoto('<a href="modules/home">'+Emoji.get('objets/boite-dossier').regular+' Les modules</a>'.freeze, exergue:true)}
+#{aGoto('<a href="modules/home">'+Emoji.get('objets/boite-dossier').regular+ISPACE+UI_TEXTS[:les_modules]+'</a>'.freeze, exergue:true)}
 
 #{aGoto('<a href="user/signup">'+Emoji.get('objets/fichier-crayon').regular+' S’inscrire</a>'.freeze, exergue:true) if user.guest?}
 #{aGoto('<a href="user/login">'+Emoji.get('objets/cadenas-cle').regular+' S’identifier</a>'.freeze) if user.guest?}

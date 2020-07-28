@@ -42,7 +42,13 @@ def date_next_paiement
 end #/ date_next_paiement
 
 # Traitement du paiement APRÈS retour de paypal où le module a été
-# réglé.
+# réglé ou bien après confirmation de bonne réception pour un
+# virement.
+# La méthode :
+#   - crée un nouveau watcher de paiement si c'est un module à durée indéterminée
+#   - envoie la facture à l'icarien
+#   - marque l'icarien réel s'il était à l'essai (en appelant la méthode set_real
+#     qui produit une actualité)
 def traite
   log("-> AIPaiement#traite")
   # Marquer le paiement effectué

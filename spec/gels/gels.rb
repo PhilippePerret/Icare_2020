@@ -535,7 +535,6 @@ def marion_envoie_deux_autres_documents_cycle_complet
     screenshot('Phil-change-etape-de-Marion')
     logout
 
-
     phil.rejoint_ses_notifications
     # On doit donner les documents commentés
     path_doc1_original = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.pdf')
@@ -566,6 +565,29 @@ def marion_envoie_deux_autres_documents_cycle_complet
   end
 end #/ marion_envoie_deux_autres_documents_cycle_complet
 
+
+# Note : pour le paiement du module, pour le moment, on le fait de
+# façon tout à fait artificielle.
+def marion_paie_son_module
+  degel_or_gel('marion_paie_son_module') do
+    marion_envoie_deux_autres_documents_cycle_complet
+    puts "Fabrication du gel 'marion_paie_son_module'".vert
+    require './_lib/pages/modules/paiement/lib/user_paiement'
+    marion.add_paiement(marion.icmodule.id)
+  end
+end #/ marion_paie_son_module
+
+def marion_devient_inactive
+  degel_or_gel('marion_paie_son_module') do
+    marion_paie_son_module # le précédent
+    puts "Fabrication du gel 'marion_devient_inactive'".vert
+    login_phil
+    goto('bureau/tools')
+    # Je choisis
+    sleep 10
+  end
+
+end #/ marion_devient_inactive
 
 # Réponse de 2 icariens aux messages frigo
 # TODO
