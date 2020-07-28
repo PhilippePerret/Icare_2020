@@ -5,7 +5,7 @@ require 'fileutils'
 # ---------------------------
 # Contient quelque chose comme '/Users/moi/Sites/MonApplication'
 #
-APP_FOLDER = File.dirname(File.dirname(File.dirname(__FILE__)))
+APP_FOLDER = File.dirname(File.dirname(File.dirname(File.dirname(__FILE__))))
 log("APP_FOLDER = #{APP_FOLDER.inspect}")
 require_relative 'ajax_class'
 

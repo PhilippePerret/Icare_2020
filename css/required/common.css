@@ -21,6 +21,7 @@ a.mark-new:after {
 .inline {display:inline!important}
 .inline-block{display:inline-block}
 .block {display:block}
+.border {border:1px solid #CCCCCC; padding:0.5em;}
 
 .invisible {visibility:hidden}
 

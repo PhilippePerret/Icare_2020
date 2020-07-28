@@ -10,6 +10,7 @@ STRINGS = {
   explication:'explication'.freeze,
   home: 'home'.freeze,
   inviter: 'inviter'.freeze,
+  small:'small'.freeze,
   titre:'titre'.freeze,
   users:'users'.freeze,
 }

@@ -19,4 +19,15 @@ class String
     replace(special_formating)
   end #/ special_formating!
 
+  SPECIALS_CHARACTERS_2_OLD_HTML = {
+    'é' => '&eacute;',
+    'è' => '&egrave;',
+    'ê' => '&ecirc;',
+    '’' => '&apos;',
+  }
+
+  def to_old_html
+    self.gsub(/[#{SPECIALS_CHARACTERS_2_OLD_HTML.keys.join}]/, SPECIALS_CHARACTERS_2_OLD_HTML)
+  end #/ to_old_html
+
 end #/String

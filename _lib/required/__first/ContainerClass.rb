@@ -127,7 +127,7 @@ class ContainerClass
     private
 
       def where_clausize filtre
-        return '' if filtre.nil?
+        return '' if filtre.nil? || filtre.empty?
         if filtre.is_a?(Hash)
           filtre = filtre.collect{|k,v| "#{k} = #{v.inspect}"}.join(' AND ').freeze
         end

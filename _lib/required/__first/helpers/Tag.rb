@@ -167,14 +167,20 @@ TAG_INFO_BULLE  = '<span class="info-bulle %{class}"><span class="info-bulle-cli
 TAG_LIEN  = '<a href="%{route}" id="%{id}" class="%{class}" title="%{title}" target="%{target}" style="%{style}">%{titre}</a>'.freeze
 TAG_LIEN_SIMPLE  = '<a href="%{route}" class="%{class}">%{titre}</a>'.freeze
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'.freeze
+TAG_DIV_S = '<div class="%{class}">%{text}</div>'.freeze
 TAG_LI    = '<li id="%{id}" class="%{class}" style="%{style}">%{text}</li>'.freeze
 TAG_ANCHOR    = '<a name="%s"></a>'.freeze
 TAG_PASTILLE  = '<span class="pastille">%s</span>'.freeze
 
 TAG_SELECT = '<select id="%{id}" name="%{name}" class="select-%{prefix} %{class}" style="%{style}">%{options}</select>'.freeze
 TAG_SELECT_SIMPLE = '<select id="%{id}" name="%{name}" class="%{class}">%{options}</select>'.freeze
+TAG_SELECT_SIMPLE_SIZED = '<select id="%{id}" name="%{name}" class="%{class}" size="%{size}">%{options}</select>'.freeze
 TAG_SELECT_S = '<select id="%{id}" name="%{name}">%{options}</select>'.freeze
+TAG_SELECT_SIZED = '<select id="%{id}" name="%{name}" size="%{size}"><div>%{options}</div></select>'.freeze
 TAG_OPTION = '<option value="%{value}"%{selected}>%{titre}</option>'.freeze
+TAG_OPTION_C = '<option value="%{value}" class="%{class}"%{selected}>%{titre}</option>'.freeze
+
+TAG_CHECKBOX = '<input type="checkbox" id="%{id}" name="%{name}"%{checked} /><label for="%{id}" class="%{class}">%{titre}</label>'.freeze
 
 # Formulaires
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze

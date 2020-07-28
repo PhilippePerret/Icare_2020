@@ -4,9 +4,17 @@ select
   all:unset;
   border: 1px solid;
   border-radius: 4px;
-  padding:4px 1em;
   position:relative;
   cursor:pointer;
+}
+select option {
+  padding:4px 1em;
+}
+
+select,
+select option
+{
+  font-size:1.2em; /* ne pas mettre !important*/
 }
 
 /*
@@ -152,11 +160,6 @@ span.date-fields select:not(.warning){
   border-color:#CCCCCC;
 }
 
-select,
-select option
-{
-  font-size:1.2em; /* ne pas mettre !important*/
-}
 
 input[type="checkbox"] + label {
   margin-left:0.3em;
