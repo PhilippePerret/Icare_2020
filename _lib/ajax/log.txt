@@ -1,0 +1,16 @@
+--- [2020-07-28 09:07:13 +0200] Entrée dans ajax.rb
+APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib"
+Chargement des modules
+Chargement module '/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/app/app_constants.rb'
+--- [2020-07-28 09:08:45 +0200] Entrée dans ajax.rb
+APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib"
+Chargement des modules
+Chargement module '/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/app/app_constants.rb'
+--- [2020-07-28 09:09:09 +0200] Entrée dans ajax.rb
+APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib"
+Chargement des modules
+Chargement module '/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/app/app_constants.rb'
+--- [2020-07-28 09:09:42 +0200] Entrée dans ajax.rb
+APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib"
+Chargement des modules
+Chargement module '/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/app/app_constants.rb'
