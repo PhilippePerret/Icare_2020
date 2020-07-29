@@ -2508,15 +2508,13 @@ Voir le [dossier contenant le fichier principal dans module/paiment](/Users/phil
 
 <a name="operations-admin"></a>
 
-## Opérations administrateurs
+## Opérations administrateurs (sur icariens)
 
 ### Description
 
 Les opérations administrateurs sont des opérations qui peuvent être exécutées de n'importe quel endroit du site. Elles ont été inaugurées pour l'inspection des pages (un bouton dans la boite d'outils de l'administrateur permet de marque que la page doit être inspectée).
 
-### Définition des opérations
 
-Les opérations doivent être définies dans le dossier [modules/admin/operations/operations](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/admin/operations/operations).
 
 ### Appels des opérations
 
@@ -2531,6 +2529,31 @@ Admin.operation(:<operation_name>[, {params}])
 Admin::Operation.exec(:operation[, {params}])
 
 ~~~
+
+
+
+### Création d'une nouvelle opération
+
+Il faut la définir dans la constante ruby `DATA_OPERATIONS` dans le [fichier des constantes des outils] (/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/tools/constants.rb) (noter que la modification de ce fichier entrainera automatique, au prochain chargement de la page, l'actualisation du fichier `data.js` qui contient les données des opérations pour javascript).
+
+Pour la créer s'inspirer des autres opérations, tout est self-explained.
+
+Il faut ensuite créer le fichier opération dont l'affixe est l'identifiant de l'opération (quand l'opération a l'identifiant/clé `add_actualite` dans `DATA_OPERATIONS`, on doit créer le fichier `add_actualite.rb`) dans [le dossier des opérations](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/admin_operations/essai.rb).
+
+Là aussi, pour le créer, s'inspirer des autres opérations.
+
+On pourra retenir seulement les points suivants, récurrents.
+
+* Une opération est une méthode d’instance de la classe `Amin::Operation`.
+* `owner` contient l'instance `User` de l'icarien visé par l'opération s'il y en a un.
+* `short_value` contient la valeur `String` de la valeur courte si elle est définie (sinon, `nil`).
+* `medium_value` contient la valeur `String` de la valeur moyenne si elle est définie (sinon, `nil`).
+* `long_value` contient la valeur `String` de la valeur longue si elle est définie (sinon, `nil`).
+* Si on doit ajouter d’autres données récurrentes, on doit le faire dans le [module de la class Admin::Operation](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/admin/operations/operations_admin.rb).
+* Pour pouvoir faire un retour ajax, et notamment le message de retour, on utilisera `Ajax << {message: "le message de retour", error: "ou l'erreur de retour"}`.
+
+
+
 
 <a name="admin-toolbox"></a>
 

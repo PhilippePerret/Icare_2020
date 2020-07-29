@@ -1,11 +1,56 @@
-<p>[Outil pour nettoyer l'atelier online ou offline]</p>
+<div class="nolimit">
+  <%= liste_statuts %>
+  <select id="icariens" class="small fleft errorizable" size=21></select>
+  <!-- Pour sortir les icariens de la liste -->
+  <%= menu_operations %>
+</div>
+<%=
+  # Le menu invisible des icariens (qui les contient tous au départ)
+  menu_icariens_out %>
+<%=
+  # Le menu invisible qui contient les opérations "out", c'est-à-dire qui
+  # ne sont pas utilisables pour les icariens choisis en fonction de leur
+  # statut.
+  menu_operations_out
+%>
 
-<p>[Outil : opération icarien]</p>
-<%= liste_statuts %>
-<select id="icariens" class="small fleft" size=20></select>
-<%= menu_icariens %>
-<%= menu_operations %>
-<!-- Pour sortir les icariens de la liste -->
+<%
+# ---------------------------------------------------------------------
+#
+#   Les champs de saisie
+#
+# ---------------------------------------------------------------------
+=begin
+  La class css .errorizable
+  -------------------------
+  La class css .errorizable permet de supprimer la class .error qui est
+  ajoutée au champ lorsqu'il y a un problème avec sa valeur (pour le
+  moment, simplement lorsqu'elle devrait être définie et qu'elle ne
+  l'est pas). Dans body.js, on place un observateur sur tous les champs
+  marqués .errorizable pour que lorsqu'on clique dessus, ça supprime la
+  class .error (pour qu'ils ne restent par rouge).
+=end
+%>
+<div style="clear:both;"></div>
+<div id="div-fields" class="mt1 hidden">
+  <div id="long_value-div" class="hidden">
+    <div id="long_value-txt"></div>
+    <textarea id="long_value" rows="8" cols="80" class="errorizable"></textarea>
+  </div>
+  <div id="medium_value-div" class="hidden">
+    <div id="medium_value-txt"></div>
+    <input type="text" id="medium_value" value="" class="errorizable" />
+  </div>
+  <div id="short_value-div" class="hidden">
+    <div id="short_value-txt"></div>
+    <input type="text" id="short_value" value="" class="short errorizable" />
+  </div>
+
+  <div id="" class="row buttons">
+    <button type="button" class="main btn" onclick="executeOperation()"><%= UI_TEXTS[:btn_execute_operation] %></button>
+  </div>
+</div>
+
 
 <p>
 <button type="button" onclick="EssaiAjax()">Essai simple ajax</button>

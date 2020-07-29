@@ -29,15 +29,21 @@ form {
   font-family:inherit;
   font-style:inherit;
 }
-form input[type="text"],
-form input[type="password"],
-form textarea,
-form select,
-form select option
+input[type="text"],
+input[type="password"],
+textarea,
+select,
+select option
 {
   font-size:inherit;
   font-family:inherit;
   font-style:inherit;
+}
+input.error,
+select.error,
+textarea.error
+{
+  border-color:red;
 }
 
 div.watcher form {

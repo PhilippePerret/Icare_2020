@@ -1,0 +1,17 @@
+const DATA_OPERATIONS = {
+'add_actualite': {for: "all", long_value:"Message d'actualit\u00E9 \u00E0 attribuer \u00E0 l'icarien s\u00E9lectionn\u00E9. Le message sera \u00E9valu\u00E9, donc on peut utiliser des `\#{icarien.pseudo}` \u00E0 l'int\u00E9rieur (code ruby \u00E9valu\u00E9 comme dans un String normal).", medium_value:null, short_value:null, required:["long_value"]},
+'free_days': {for: "actif", long_value:"Raison \u00E9ventuelle du don de jours gratuits (format ERB).", medium_value:null, short_value:"Nombre de jours gratuits", required:["short_value","icarien"]},
+'travail_propre': {for: "actif", long_value:"Description du travail propre (format ERB).<br>Laisser vide et cliquez sur \u201CEx\u00E9cuter\u201D pour charger le travail qui peut d\u00E9j\u00E0 exister.", medium_value:null, short_value:null, required:["long_value","icarien"]},
+'inject_document': {for: "actif", long_value:null, medium_value:"Nom du fichier", short_value:null, required:["medium_value","icarien"]},
+'move_document': {for: ["actif","inactif","pause"], long_value:null, medium_value:"ID de l\u2019icetape de destination", short_value:"ID du document", required:["short_value","medium_value","icarien"]},
+'etape_change': {for: "actif", long_value:null, medium_value:null, short_value:"Num\u00E9ro de l\u2019\u00E9tape", required:["short_value","icarien"]},
+'code_sur_table': {for: "all", long_value:"Code \u00E0 ex\u00E9cuter <strong>sur chaque icarien de la table</strong>, sur la table OFFLINE puisse que vous \u00EAtes OFFLINE.<br><br><code>User.each do |cu|<br>&nbsp;&nbsp;cu.&lt;what&gt;</code>", medium_value:null, short_value:null, required:["long_value"]},
+'pause_module': {for: "actif", long_value:null, medium_value:null, short_value:"X pour ne pas envoyer l'email", required:["icarien"]},
+'restart_module': {for: "pause", long_value:null, medium_value:null, short_value:null, required:["icarien"]},
+'arret_module': {for: "actif", long_value:"Si un texte (en HTML) est \u00E9crit ci-dessous, il sera consid\u00E9r\u00E9 comme le suppl\u00E9ment d\u2019un mail \u00E0 envoyer \u00E0 l\u2019icarien du module l\u2019informant de l\u2019arr\u00EAt/la fin de son module. Dans le cas contraire, le module sera simplement arr\u00EAt\u00E9.", medium_value:null, short_value:null, required:["icarien"]},
+'change_module': {for: "actif", long_value:null, medium_value:"Num\u00E9ro de la nouvelle \u00E9tape dans le nouveau module (on peut l\u2019obtenir avec l\u2019outil Burea > \u00C9dition des \u00E9tapes)", short_value:"ID du nouveau module absolu d\u2019apprentissage (on peut le trouver avec l\u2019outils Bureau > \u00C9dition des \u00E9tapes, c\u2019est le nombre entre parenth\u00E8ses apr\u00E8s le nom du module)", required:["short_value","icarien","medium"]},
+'temoignage': {for: "all", long_value:"Code HTML du t\u00E9moignage \u00E0 ajouter", medium_value:null, short_value:"ID du t\u00E9moignage si c\u2019est une modification", required:["long_value","icarien"]},
+'titre_projet': {for: ["actif","inactif","pause"], long_value:null, medium_value:"Titre du projet (ou rien pour le supprimer)", short_value:"ID du IcModule si \u00E7a n\u2019est pas le courant", required:["icarien"]},
+'destroy_user': {for: "all", long_value:null, medium_value:null, short_value:"ID de l\u2019icarien choisi (pour confirmation)", required:["short_value","icarien"]},
+'nettoyage_site': {for: "all", long_value:null, medium_value:null, short_value:null, required:[]},
+};

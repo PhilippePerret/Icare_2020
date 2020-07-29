@@ -41,5 +41,26 @@ end #/ __exists?
 def __path
   @__path ||= File.join(self.class.folder,"#{__name}.rb")
 end #/ __path
+
+# ---------------------------------------------------------------------
+#
+#   Les méthodes utiles pour les opérations icariens
+#
+# ---------------------------------------------------------------------
+def owner
+  @owner ||= User.get(Ajax.param(:icarien))
+end #/ owner
+def short_value
+  @short_value ||= Ajax.param(:short_value)
+end #/ short_value
+def medium_value
+  @medium_value ||= Ajax.param(:medium_value)
+end #/ medium_value
+def long_value
+  @long_value ||= Ajax.param(:long_value)
+end #/ long_value
+# ---------------------------------------------------------------------
+#   /Fin des informations pour les opérations icariens
+# ---------------------------------------------------------------------
 end #/Operation
 end #/Admin
