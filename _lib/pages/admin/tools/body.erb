@@ -1,6 +1,6 @@
 <div class="nolimit">
   <%= liste_statuts %>
-  <select id="icariens" class="small fleft errorizable" size=21></select>
+  <select id="icariens" class="small fleft errorizable" size=12></select>
   <!-- Pour sortir les icariens de la liste -->
   <%= menu_operations %>
 </div>
@@ -33,19 +33,18 @@
 %>
 <div style="clear:both;"></div>
 <div id="div-fields" class="mt1 hidden">
-  <div id="long_value-div" class="hidden">
-    <div id="long_value-txt"></div>
-    <textarea id="long_value" rows="8" cols="80" class="errorizable"></textarea>
-  </div>
-  <div id="medium_value-div" class="hidden">
-    <div id="medium_value-txt"></div>
-    <input type="text" id="medium_value" value="" class="errorizable" />
-  </div>
   <div id="short_value-div" class="hidden">
-    <div id="short_value-txt"></div>
+    <div id="short_value-txt" class="small"></div>
     <input type="text" id="short_value" value="" class="short errorizable" />
   </div>
-
+  <div id="medium_value-div" class="hidden">
+    <div id="medium_value-txt" class="small"></div>
+    <input type="text" id="medium_value" value="" class="errorizable" />
+  </div>
+  <div id="long_value-div" class="hidden">
+    <div id="long_value-txt" class="small"></div>
+    <textarea id="long_value" rows="8" cols="80" class="errorizable"></textarea>
+  </div>
   <div id="" class="row buttons">
     <button type="button" class="main btn" onclick="executeOperation()"><%= UI_TEXTS[:btn_execute_operation] %></button>
   </div>

@@ -2,6 +2,24 @@
 =begin
   Matchers de page (Capybara::Session)
 =end
+RSpec::Matchers.define :have_no_erreur do
+  match do |page|
+    if page.has_css?('div.errors')
+      @erreurs_messages = page.find('div.errors').text # TODO S'il y en a plusieurs (find_all ?)
+      false
+    else
+      true
+    end
+  end
+  description do
+    "La page ne contient aucun message d'erreur.".freeze
+  end
+  failure_message do
+    "La page ne devrait contenir aucune erreur. Elle contient : #{@erreurs_messages}".freeze
+  end
+end
+RSpec::Matchers.alias_matcher :have_aucune_erreur, :have_no_erreur
+
 
 RSpec::Matchers.define :have_error do |err_msg|
   match do |page|

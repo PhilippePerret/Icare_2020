@@ -5,6 +5,7 @@ select
   border: 1px solid;
   border-radius: 4px;
   position:relative;
+  padding:0 0.5em; /* peut-être un truc pour les select avec size */
   cursor:pointer;
 }
 select option {

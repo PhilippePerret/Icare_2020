@@ -354,3 +354,21 @@ FATAL ERROR: cannot load such file -- ./_lib/data/secret/mysql
 /Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/required.rb:31:in `<top (required)>'
 /Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `require_relative'
 /Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `<main>'
+FATAL ERROR: cannot load such file -- ./_lib/data/secret/mysql
+/Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+/Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/required.rb:31:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `<main>'
+FATAL ERROR: cannot load such file -- ./_lib/data/secret/mysql
+/Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+/Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/required.rb:31:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `<main>'
+FATAL ERROR: cannot load such file -- ./_lib/data/secret/mysql
+/Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+/Users/philippeperret/.rbenv/versions/2.6.3/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/_lib/required.rb:31:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb:19:in `<main>'

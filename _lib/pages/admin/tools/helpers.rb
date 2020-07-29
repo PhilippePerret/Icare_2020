@@ -38,10 +38,10 @@ class HTML
     cbs_statuts = User::DATA_STATUT.collect do |k, v|
       next unless k.is_a?(Symbol)
       next unless v[:icarien]
-      cb = TAG_CHECKBOX % {titre: v[:name], id:"cb-statut-#{k}", name:k.to_s, class:"small cb-statut".freeze, checked:''}
+      cb = TAG_CHECKBOX_C % {titre: v[:name], id:"cb-statut-#{k}", name:k.to_s, class_cb:'cb-statut', class:STRINGS[:small], checked:''}
       "<div>#{cb}</div>".freeze
     end.compact.join
-    TAG_DIV_S % {class:'div-status fleft border mr2', text:cbs_statuts}
+    TAG_DIV % {class:'div-status fleft border mr2', id:'div-statuts', text:cbs_statuts, style:''}
   end #/ build_types_icarien
 
   # Construction du menu des opérations
@@ -64,7 +64,7 @@ class HTML
       end
     end
     @menu_operations_out = TAG_SELECT_SIMPLE % {id:'operations-out', name:'operations-out', options: opts_ops_out.join, class:'hidden'}
-    TAG_SELECT_SIMPLE_SIZED % {id:'operations', name:'operation', options: opts_ops.join, size:15, class:'ml1'}
+    TAG_SELECT_SIMPLE_SIZED % {id:'operations', name:'operation', options: opts_ops.join, size:9, class:'ml1'}
   end #/ build_menu_operations
 
 end #/HTML

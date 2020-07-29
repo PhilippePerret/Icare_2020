@@ -53,7 +53,7 @@ class Message {
     this.constructor.display(this.span)
   }
   get span(){
-    const span = document.createElement('SPAN');
+    const span = document.createElement('DIV');
     span.className = `${this.type}s`;
     span.innerHTML = this.content;
     return span ;

@@ -7,7 +7,7 @@ require './_lib/required/__first/constants/flags'
 
 MESSAGES.merge!({
   confirm_titre_projet_saved: 'Le titre de votre projet courant a été enregistré.'.freeze,
-  confirm_options_saved: 'Vos nouvelles options ont été enregistrées.'.freeze,
+  confirm_options_saved: 'Vos nouvelles préférences ont été enregistrées.'.freeze,
   # --- les textes d'explication ---
   # Note : les clés doivent être composées à l'aide de :expli_<clé dans DATA_PREFERENCES>
   #

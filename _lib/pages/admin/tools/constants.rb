@@ -2,8 +2,11 @@
 =begin
   Constantes pour les outils icariens.
 =end
+require 'json'
+require './_lib/required/_classes/Actualite'
+
 DATA_OPERATIONS_ICARIENS = {
-  'add_actualite'   => {id:'add_actualite',   name:'Ajouter actualité'.freeze,  for: :all,      required: [:long_value], long_value: "Message d'actualité à attribuer à l'icarien sélectionné. Le message sera évalué, donc on peut utiliser des `\#{icarien.pseudo}` à l'intérieur (code ruby évalué comme dans un String normal)."},
+  'add_actualite'   => {id:'add_actualite',   name:'Ajouter actualité'.freeze,  for: :all,      required: [:long_value, :medium_value], medium_value:('Type de l’actualité, parmi %s.'.freeze % Actualite.types_explained), long_value: "Message d'actualité à attribuer à l'icarien sélectionné. Le message sera évalué, donc on peut utiliser des `\#{icarien.pseudo}` à l'intérieur (code ruby évalué comme dans un String normal)."},
   'free_days'       => {id:'free_days',       name:'Jours gratuits',            for: :actif,    required: [:short_value, :icarien], short_value: "Nombre de jours gratuits", long_value: "Raison éventuelle du don de jours gratuits (format ERB)."},
   'travail_propre'  => {id:'travail_propre',  name:'Travail propre',            for: :actif,    required: [:long_value, :icarien], short_value: nil, long_value: "Description du travail propre (format ERB).<br>Laisser vide et cliquez sur “Exécuter” pour charger le travail qui peut déjà exister."},
   'inject_document' => {id:'inject_document', name:'Document par mail',         for: :actif,    required: [:medium_value, :icarien], medium_value: 'Nom du fichier'},

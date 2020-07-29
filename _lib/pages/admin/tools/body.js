@@ -79,14 +79,13 @@ function afterReady(){
 // Et il faut mettre dans les opérations les opérations qui correspondent
 // au choix.
 function onToggleCbStatut(cb, ev) {
-  const statut = cb.getAttribute('for').split('-')[2]
-  const cbid = `#cb-statut-${statut}`
-  const is_checked = !document.querySelector(cbid).checked
-  const liste_src = is_checked ? 'icariens-out' : 'icariens'
-  const liste_dst = document.querySelector(`select#${is_checked ? 'icariens' : 'icariens-out'}`)
+  const cbid = `#${cb.id}`
+  const statut = cb.name
+  const liste_src = cb.checked ? 'icariens-out' : 'icariens'
+  const liste_dst = document.querySelector(`select#${cb.checked ? 'icariens' : 'icariens-out'}`)
   document.querySelectorAll(`select#${liste_src} option.${statut}`).forEach(opt => liste_dst.appendChild(opt))
-  const liste_opes_src = is_checked ? 'operations-out' : 'operations'
-  const liste_opes_dst = document.querySelector(`select#${is_checked ? 'operations' : 'operations-out'}`)
+  const liste_opes_src = cb.checked ? 'operations-out' : 'operations'
+  const liste_opes_dst = document.querySelector(`select#${cb.checked ? 'operations' : 'operations-out'}`)
   document.querySelectorAll(`select#${liste_opes_src} option.${statut}`).forEach(opt => liste_opes_dst.appendChild(opt))
   // On met toujours dans la liste des opérations in les opérations qui sont valables
   // tout le temps

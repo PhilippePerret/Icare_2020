@@ -4,6 +4,7 @@
 =end
 class Admin::Operation
   def add_actualite
-    Ajax << {message: "J'ai ajouté une actualité “#{long_value}” pour #{owner.pseudo}"}
+    Actualite.add(type:medium_value, user_id:owner.id, message:long_value)
+    Ajax << {message: "Actualité “#{long_value}” de type #{medium_value} ajoutée pour #{owner.pseudo}"}
   end #/ add_actualite
 end #/Admin::Operation

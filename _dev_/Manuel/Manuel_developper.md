@@ -2064,6 +2064,10 @@ cf. [ Insertion d'un lien vers un ticket dans les mails](#insertticketinmail).
 ### Instancier une nouvelle actualité
 
 ~~~ruby
+Actualite.add('<le type>', <user>, "<le message>")
+
+# Ou
+
 Actualite.add(type: '<le type>', user: <user>, message: "<le message>")
 ~~~
 
@@ -2076,6 +2080,8 @@ Actualite.add(type: '<le type>', user: <user>, message: "<le message>")
 <a name="creeractualite"></a>
 
 ### Créer un nouveau type d'actualité
+
+Pour créer une nouvelle actualité, on crée une nouvelle donnée dans `Actualite::DATA_ACTU` dans [le module Actualite](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/Actualite.rb).
 
 
 
@@ -2825,6 +2831,17 @@ Le matcher `have_error` ou `have_erreur` permet de tester la présence ou non d'
 
 > Attention, ce message doit disparaitre au bout d'un certain temps.
 
+### Tester l'absence d'erreur
+
+Pour tester que la page ne contient aucun message d'erreur, on utilise le matcher :
+
+~~~ruby
+expect(page).to have_no_erreur()
+
+# OU
+
+expect(page).to have_aucune_erreur()
+~~~
 
 <a name="testerdb"></a>
 

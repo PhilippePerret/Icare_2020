@@ -15,7 +15,7 @@ class TUser
   def rejoint_le_site
     loginit
   end #/ rejoint_le_site
-  
+
   # Rejoint le bureau par une identification complète
   def rejoint_son_bureau
     loginit
@@ -27,6 +27,25 @@ class TUser
     revient_dans_son_bureau
     click_on 'Notifications'
   end #/ rejoint_ses_notifications
+
+# ---------------------------------------------------------------------
+#
+#   Méthodes d'interaction avec la page
+#
+# ---------------------------------------------------------------------
+def click(what, options = nil)
+  options ||= {}
+  options.merge!(within: 'body') unless options.key?(:within)
+  bouton = nil
+  within(options[:within]) do
+    bouton = page.first('*', text: what) if page.has_css?('*', text: what)
+    bouton = page.first(".#{what}") if bouton.nil? && page.has_css?(".#{what}")
+    bouton = page.first("##{what}") if bouton.nil? && page.has_css?("##{what}")
+  end
+  # puts "bouton: #{bouton}"
+  bouton || raise("Le bouton défini par #{what.inspect} est introuvable, ni en tant que texte, ni en tant qu'identifiant, ni en tant que classe CSS.")
+  bouton.click
+end #/ click
 
 # ---------------------------------------------------------------------
 #

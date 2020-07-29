@@ -5,9 +5,9 @@
     ['Mail', data[:mail]],
     ['Inscription', formate_date(data[:created_at])],
     ['Mot de passe', ('<a href="user/change_password">'+UI_TEXTS[:btn_lien_change_password]+'</a>').freeze],
-    ['Module courant', data[:icmodule_id]],
-    ['Après identification', redirection_apres_login],
-    ['Session', session.id]
+    ['Module courant', module_courant_name],
+    ['Session', session.id],
+    ['Préférences', Tag.lien(route:'bureau/preferences'.freeze, text:'régler les préférences'.freeze)]
   ].each do |pair| %>
     <%= StateList.row(pair.first, pair.last) %>
   <% end %>

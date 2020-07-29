@@ -181,6 +181,8 @@ TAG_OPTION = '<option value="%{value}"%{selected}>%{titre}</option>'.freeze
 TAG_OPTION_C = '<option value="%{value}" class="%{class}"%{selected}>%{titre}</option>'.freeze
 
 TAG_CHECKBOX = '<input type="checkbox" id="%{id}" name="%{name}"%{checked} /><label for="%{id}" class="%{class}">%{titre}</label>'.freeze
+# Le même, avec la possibilité d'une class CSS pour le checkbox
+TAG_CHECKBOX_C = '<input type="checkbox" id="%{id}" name="%{name}" class="%{class_cb}"%{checked} /><label for="%{id}" class="%{class}">%{titre}</label>'.freeze
 
 # Formulaires
 HIDDEN_FIELD  = '<input type="hidden" id="%{id}" name="%{name}" value="%{value}" />'.freeze
