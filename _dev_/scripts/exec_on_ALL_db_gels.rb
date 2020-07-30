@@ -5,17 +5,8 @@
 =end
 PV = ';'.freeze unless defined?(PV)
 DB_REQUEST = <<-SQL.strip.freeze
-DROP TABLE IF EXISTS `unique_usage_ids`;
-CREATE TABLE `unique_usage_ids`
-(
-  user_id     INT(11) DEFAULT NULL,
-  session_id  VARCHAR(32) NOT NULL,
-  uuid        SMALLINT NOT NULL,
-  scope       VARCHAR(32) DEFAULT NULL,
-  created_at  INT(10) NOT NULL,
-  updated_at  INT(10) NOT NULL,
-  PRIMARY KEY (uuid)
-);
+ALTER TABLE `icmodules` DROP COLUMN `next_paiement_at`;
+ALTER TABLE `icmodules` DROP COLUMN `options`;
 SQL
 
 

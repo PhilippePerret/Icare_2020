@@ -2,6 +2,8 @@
 =begin
   Opérations administrateur
 =end
+class PiratageError < StandardError; end
+
 class Admin
 class << self
   # Raccourci pour Admin::Operation::exec
@@ -46,7 +48,7 @@ end #/ __path
 def admin_required
   unless user.admin?
     log("Administrateur requis")
-    raise "#{user.pseudo} #{user.id} n'est pas un administrateur"
+    raise PiratageError("#{user.pseudo} #{user.id} n'est pas un administrateur")
   end
 end #/ admin_required
 

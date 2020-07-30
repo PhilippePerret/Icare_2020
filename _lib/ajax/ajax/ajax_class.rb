@@ -32,15 +32,11 @@ class Ajax
     end #/ check
 
     def treate_request
-      STDOUT.write "Content-type: application/json; charset:utf-8;\n\n"
       init
-      if check
-        begin
-          require_relative "./_scripts/#{param(:script)}"
-        rescue Exception => e
-          raise e # pour le moment
-        end
-      end
+      check || raise(PiratageError.new)
+
+      # --- On joue le script ---
+      require_relative "./_scripts/#{param(:script)}"
 
       # On ajoute au retour, le script joué et les clés envoyés en
       # paramètres CGI
@@ -56,14 +52,19 @@ class Ajax
       #   args: args,
       #   message: message
       # }
+      STDOUT.write "Content-type: application/json; charset:utf-8;\n\n"
       STDOUT.write data.to_json+"\n"
+    rescue PiratageError => e
+      STDOUT.write "Content-type: text/html; charset: utf-8;\n\n"
+      STDOUT.write "{\"Ce que j'en pense\":\"PIRATE!\"}"
     rescue Exception => e
+      STDOUT.write "Content-type: application/json; charset:utf-8;\n\n"
       error = Hash.new
       error.merge!(error: Hash.new)
       error[:error].merge!(message: e.message)
       error[:error].merge!(backtrace: e.backtrace)
       STDOUT.write error.to_json
-    end
+    end #/treate_request
 
     # # Retourne l'argument de clé +key+
     # def arg key

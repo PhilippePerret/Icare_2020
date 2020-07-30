@@ -2548,7 +2548,7 @@ Admin::Operation.exec(:operation[, {params}])
 
 ### Création d'une nouvelle opération
 
-Il faut la définir dans la constante ruby `DATA_OPERATIONS` dans le [fichier des constantes des outils] (/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/tools/constants.rb) (noter que la modification de ce fichier entrainera automatique, au prochain chargement de la page, l'actualisation du fichier `data.js` qui contient les données des opérations pour javascript).
+Il faut la définir dans la constante ruby `DATA_OPERATIONS` dans le [fichier des constantes des outils](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/tools/constants.rb) (noter que la modification de ce fichier entrainera automatique, au prochain chargement de la page, l'actualisation du fichier `data.js` qui contient les données des opérations pour javascript).
 
 Pour la créer s'inspirer des autres opérations, tout est self-explained.
 

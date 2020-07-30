@@ -29,8 +29,9 @@ puts "🗄️ Dumping des icetapes opéré avec succès".vert
 db_exec(<<-SQL.strip.freeze)
 ALTER TABLE `icmodules` DROP COLUMN `icetapes`;
 ALTER TABLE `icmodules` DROP COLUMN `paiements`;
+ALTER TABLE `icmodules` DROP COLUMN `next_paiement`;
+ALTER TABLE `icmodules` DROP COLUMN `options`;
 ALTER TABLE `icmodules` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
-ALTER TABLE `icmodules` CHANGE COLUMN `next_paiement` `next_paiement_at` INT(10) DEFAULT NULL;
 SQL
 `mysqldump -u root icare icmodules > "#{FOLDER_GOODS_SQL}/icmodules.sql"`
 puts "🗄️ Dumping des icmodules opéré avec succès".vert

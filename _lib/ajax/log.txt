@@ -52,3 +52,77 @@ Chargement des modules
 [Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
 Chargement des modules
 STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 16:50:57 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 16:54:08 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 16:55:31 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 16:56:29 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 16:58:40 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 17:00:07 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 17:02:17 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 17:03:16 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 17:03:34 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 17:03:53 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 17:05:13 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 17:05:29 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 17:11:24 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+STOP PIRATE (Pas de __uuid dans la requête)
+--- [2020-07-30 17:11:49 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 17:13:17 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 18:33:13 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 20:24:48 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 20:26:21 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 20:27:31 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 20:30:47 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
+--- [2020-07-30 20:32:22 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules

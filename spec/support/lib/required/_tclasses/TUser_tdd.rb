@@ -8,6 +8,9 @@ class TUser
 
   # L'user doit déjà être identifié
   def revient_dans_son_bureau
+    unless page.has_css?('a', text: 'Bureau')
+      click_on 'bureau' # home page vraie
+    end
     click_on 'Bureau'
   end #/ revient_dans_son_bureau
 

@@ -8,7 +8,7 @@ const OPES_KEYS = ['long_value', 'medium_value','short_value']
 function executeOperation(){
   const data = {}
   // User choisi
-  data.icarien = document.querySelector('#icariens').value
+  data.icarien = Number(document.querySelector('#icariens').value);
   // Opération choisie
   data.operation = document.querySelector('#operations').value
   // Valeurs transmises

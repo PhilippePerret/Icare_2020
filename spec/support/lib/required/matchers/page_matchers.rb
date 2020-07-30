@@ -6,6 +6,7 @@ RSpec::Matchers.define :have_no_erreur do
   match do |page|
     if page.has_css?('div.errors')
       @erreurs_messages = page.find('div.errors').text # TODO S'il y en a plusieurs (find_all ?)
+      screenshot('erreur-page-with-errors')
       false
     else
       true

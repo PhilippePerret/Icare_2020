@@ -52,18 +52,13 @@ end #/ date_next_paiement
 def traite
   log("-> AIPaiement#traite")
   # Marquer le paiement effectué
-  # En fait, il n'y a rien de particulier à faire, si ce n'est
-  # de supprimer la valeur de :next_paiement_at si elle est
-  # définie quand on n'est pas en suivi
+  # En fait, il n'y a rien de particulier à faire
 
   # Si c'est un suivi de projet, faire le prochain watcher
   if icmodule.suivi?
     next_paiement =  Time.now.to_i + 31.days
     owner.add_watcher('paiement_module', {objet_id: id, triggered_at:next_paiement})
     @date_next_paiement = formate_date(next_paiement)
-    icmodule.save(next_paiement_at: next_paiement)
-  else
-    icmodule.save(next_paiement_at: nil)
   end
 
   # Si l'utilisateur était à l'essai, il devient un vrai icarien

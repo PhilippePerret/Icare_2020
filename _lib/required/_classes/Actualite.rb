@@ -22,7 +22,8 @@ DATA_ACTU = {
   'STARTMOD'    => {name:'Démarrage de module'.freeze},
   'QDDDEPOT'    => {name:'Dépôt sur le Quai des docs'.freeze},
   'COMMENTS'    => {name:'Envoi des commentaires sur documents'.freeze},
-  'CHGETAPE'    => {name:'Changement d’étape'.freeze}
+  'CHGETAPE'    => {name:'Changement d’étape'.freeze},
+  'ENDMODULE'   => {name:'Fin de module'.freeze},
 }.freeze
 
 # ---------------------------------------------------------------------

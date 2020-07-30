@@ -14,11 +14,10 @@ feature "Operation Ajout d'une actualité" do
       expect(page).to have_titre('Identification')
     end
 
-    scenario 'ne peut pas forcer l’ajout d’une actualité (par URL)', only:true do
+    scenario 'ne peut pas forcer l’ajout d’une actualité (par URL)' do
       start_time = Time.now
-      querystring = {"icarien":"[\"1\",\"string\"]","operation":"[\"add_actualite\",\"string\"]","long_value":"[\"C'est à voir ?\",\"string\"]","medium_value":"[\"SIMPLEMESS\",\"string\"]","short_value":"[\"\",\"string\"]","script":"[\"operation_icarien.rb\",\"string\"]"}
+      querystring = {"uid":"[\"1\",\"integer\"]","icarien":"[\"1\",\"string\"]","operation":"[\"add_actualite\",\"string\"]","long_value":"[\"C'est à voir ?\",\"string\"]","medium_value":"[\"SIMPLEMESS\",\"string\"]","short_value":"[\"\",\"string\"]","script":"[\"operation_icarien.rb\",\"string\"]"}
       querystring = querystring.collect{|k,vs| "#{k}=#{URI.encode(vs)}"}.join('&')
-      puts "querystring: #{querystring}"
       goto('_lib/ajax/ajax.rb?'+querystring)
       screenshot('geek-force-actualite')
       expect(TActualites).not_to have_actualite(after: start_time, type: 'SIMPLEMESS', user_id: phil.id)
