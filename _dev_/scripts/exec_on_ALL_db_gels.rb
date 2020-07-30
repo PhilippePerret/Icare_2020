@@ -3,8 +3,19 @@
   Script permettant d'effectuer un changement dans les données DB de tous les
   gels.
 =end
+PV = ';'.freeze unless defined?(PV)
 DB_REQUEST = <<-SQL.strip.freeze
--- UPDATE users SET options = "70100000000000004010000011000000" WHERE id = 1
+DROP TABLE IF EXISTS `unique_usage_ids`;
+CREATE TABLE `unique_usage_ids`
+(
+  user_id     INT(11) DEFAULT NULL,
+  session_id  VARCHAR(32) NOT NULL,
+  uuid        SMALLINT NOT NULL,
+  scope       VARCHAR(32) DEFAULT NULL,
+  created_at  INT(10) NOT NULL,
+  updated_at  INT(10) NOT NULL,
+  PRIMARY KEY (uuid)
+);
 SQL
 
 
@@ -22,3 +33,5 @@ Dir["#{GELS_FOLDER_PATH}/*"].each do |gel_folder|
   # On dumpe les données
   `mysqldump -u root icare_test > "#{sql_file}"`
 end
+
+puts "\n\n=== TRAITEMENT TERMINÉ AVEC SUCCÈS ==="

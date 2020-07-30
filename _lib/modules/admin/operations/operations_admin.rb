@@ -15,6 +15,7 @@ class << self
   def exec operation, params = nil
     new(operation).__exec(params)
   end #/ exec operation
+
   # Dossier contenant les opérations (hors de ce dossier)
   def folder
     @folder ||= File.join(MODULES_FOLDER,'admin_operations')
@@ -42,6 +43,18 @@ def __path
   @__path ||= File.join(self.class.folder,"#{__name}.rb")
 end #/ __path
 
+def admin_required
+  unless user.admin?
+    log("Administrateur requis")
+    raise "#{user.pseudo} #{user.id} n'est pas un administrateur"
+  end
+end #/ admin_required
+
+# Quand c'est par Ajax, on doit prendre l'utilisateur courant défini par
+# __uid dans les paramètres transmis (sauf fraude)
+def user
+  @user ||= User.get(Ajax.param(:__uid))
+end #/ user
 # ---------------------------------------------------------------------
 #
 #   Les méthodes utiles pour les opérations icariens

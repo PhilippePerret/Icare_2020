@@ -1554,7 +1554,15 @@ end #/HTML
 > [1] La définition de back_to ci-dessus est nécessaire uniquement si la route à rejoindre après identification doit être différente de celle demandée OU si des paramètres sont nécessaire (car à l'origine, back_to ne reprend que la route, pas le query-string — ce qui pourrait changer à l'avenir).
 
 
+### Barrière de sécurité ajax
 
+Le script ajax ouvre une vulnérabilité sur le site. Il faut pouvoir empêcher quiconque, autre que les administrateurs et les utilisateurs ponctuellement autorisés, d'envoyer n'importe quelle requête.
+
+Pour ce faire, on utilise ce que j'appelle un « id à usage unique ». C'est un nombre aléatoire affecté à chaque utilisateur qui ne peut être utilisé qu'une seule fois (même lors de requête ajax).
+
+Ce nombre est calculé à chaque chargement et enregistré dans la table `unique_usage_ids` avec l'identifiant de l'user — qui doit être identifié pour certaines requêtes — et son numéro de session.
+
+Pour les requêtes ajax elles-mêmes, ce numéro est à chaque fois recalculé et réengistré. Cf. le module indépendant [unique_usage_ids.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/unique_usage_ids.rb).
 
 
 ---

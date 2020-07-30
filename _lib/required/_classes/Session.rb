@@ -3,6 +3,8 @@
   Class Session
   Pour la gestion des sessions
 =end
+require 'cgi'
+require 'cgi/session'
 class Session
 class << self
   attr_accessor :current
@@ -56,11 +58,11 @@ def session
   end
 end
 
-def delete_last_session
-  sess = CGI::Session.new(cgi, 'new_session' => false)
-  sess.delete
-rescue ArgumentError
-  # S'il n'y a pas encore de session
-end
+# def delete_last_session
+#   sess = CGI::Session.new(cgi, 'new_session' => false)
+#   sess.delete
+# rescue ArgumentError
+#   # S'il n'y a pas encore de session
+# end
 
 end #/Session

@@ -6,6 +6,9 @@ class Ajax {
   **/
   static send(script, hdata = {}){
     Object.assign(hdata, {script: script})
+    // On ajoute l'UUID défini pour le visiteur courant
+    if ( 'undefined' != typeof(UUID) ) Object.assign(hdata, {"__uuid":UUID})
+    if ( 'undefined' != typeof(UID)  ) Object.assign(hdata, {"__uid":UID})
     hdata = this.prepareData(hdata)
     return new Promise((ok,ko)=>{
       var data = {

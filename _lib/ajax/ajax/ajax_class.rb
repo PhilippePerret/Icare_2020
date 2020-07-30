@@ -5,22 +5,41 @@ require 'json'
 class Ajax
   class << self
 
-    def treate_request
-      STDOUT.write "Content-type: application/json; charset:utf-8;\n\n"
+    def init
+      Session.init
+    end #/ init
+
+    # Vérifie que la requête soit conforme et autorisée
+    def check
+      # La requête doit posséder un paramètre uuid
+      uuid = param(:__uuid) || raise("Pas de __uuid dans la requête")
+      uid  = param(:__uid)  || raise("Pas de __uid dans le requête")
+      # Cet uuid doit correspondre à l'user courant
+      UUID.check(uuid, uid, Session.current.id, param(:__scope)) || raise("Le check UUID est invalide")
 
       # Le script doit exister
-      self << {
-        script: param(:script)
-      }
+      self << { script: param(:script) }
       script_fullpath = File.expand_path(File.join('.','ajax','_scripts',param(:script)))
       if File.exists?(script_fullpath)
-          begin
-            require_relative "./_scripts/#{param(:script)}"
-          rescue Exception => e
-            raise e # pour le moment
-          end
+        return true
       else
         self << {error: "Le script '#{script_fullpath}' est introuvable…"}
+        return false
+      end
+    rescue Exception => e
+      log("STOP PIRATE (#{e.message})")
+      return false
+    end #/ check
+
+    def treate_request
+      STDOUT.write "Content-type: application/json; charset:utf-8;\n\n"
+      init
+      if check
+        begin
+          require_relative "./_scripts/#{param(:script)}"
+        rescue Exception => e
+          raise e # pour le moment
+        end
       end
 
       # On ajoute au retour, le script joué et les clés envoyés en

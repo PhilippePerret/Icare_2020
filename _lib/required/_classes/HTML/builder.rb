@@ -61,7 +61,10 @@ class HTML
   <link rel="shortcut icon" href="./img/favicon.png?2020" type="image/png">
   <link rel="icon" href="./img/favicon.png?2020" type="image/png">
   #{css_tags}
-  <script type="text/javascript">#{@raw_js}</script>
+  <script type="text/javascript">
+    #{@raw_js}
+    #{protection_injection}
+  </script>
 </head>
     HTML
   end
@@ -135,4 +138,17 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
     return '' if user.nil?
     Tag.div(text:user.pastille_notifications_non_vues({linked:true}), class:'notification-tool')
   end #/ tools_block_notifications
+
+
+  private
+
+    # Retourne le code Javascript à écrire pour éviter les intrusions par
+    # ajax par exemple
+    def protection_injection
+      data_uuid = UUID.create(user_id: user.id, session_id: session.id)
+      <<-JAVASCRIPT.strip.freeze
+const UUID = #{data_uuid[:uuid]};
+const UID  = #{user.id};
+      JAVASCRIPT
+    end #/ protection_injection
 end

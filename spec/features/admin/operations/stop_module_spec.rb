@@ -2,26 +2,16 @@
 =begin
   Test de l'ajout d'une actualité
 =end
-feature "Operation Ajout d'une actualité" do
+feature "Operation Arrêt d'un module d'apprentissage (forcé ou non)" do
   before(:all) do
     require './_lib/pages/admin/tools/constants'
   end
 
   context 'Un visiteur quelconque' do
-    scenario 'ne peut pas ajouter une actualité (par les outils administrateur)' do
+    scenario 'ne peut pas ajouter stopper de force un module d’apprentissage' do
       goto('admin/tools')
       expect(page).not_to have_titre('Outils')
       expect(page).to have_titre('Identification')
-    end
-
-    scenario 'ne peut pas forcer l’ajout d’une actualité (par URL)', only:true do
-      start_time = Time.now
-      querystring = {"icarien":"[\"1\",\"string\"]","operation":"[\"add_actualite\",\"string\"]","long_value":"[\"C'est à voir ?\",\"string\"]","medium_value":"[\"SIMPLEMESS\",\"string\"]","short_value":"[\"\",\"string\"]","script":"[\"operation_icarien.rb\",\"string\"]"}
-      querystring = querystring.collect{|k,vs| "#{k}=#{URI.encode(vs)}"}.join('&')
-      puts "querystring: #{querystring}"
-      goto('_lib/ajax/ajax.rb?'+querystring)
-      screenshot('geek-force-actualite')
-      expect(TActualites).not_to have_actualite(after: start_time, type: 'SIMPLEMESS', user_id: phil.id)
     end
   end
 
@@ -35,7 +25,11 @@ feature "Operation Ajout d'une actualité" do
       click_on('OUTILS')
       expect(page).to have_titre('Outils')
     end
-    scenario 'peut ajouter une actualité' do
+
+    scenario 'ne peut pas stopper un module d’apprentissage déjà arrêté' do
+      pending
+    end
+    scenario 'peut stopper un module d’apprentissage', only:true do
       phil.rejoint_le_site # pour ne pas charger le bureau avec toutes ses images
       goto('admin/tools')
       expect(page).to have_titre('Outils')

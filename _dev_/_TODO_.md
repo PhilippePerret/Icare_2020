@@ -9,9 +9,6 @@ Pour mettre le site en conformité avec le Règlement Général de Protection de
 * Une page "Politique de Confidentialité du Site"
   * Mettre un lien vers cette page depuis le formulaire de paiement
 
+# Command pour HOME
 
-7010000000
-0000004000
-00011033300
-
-7010000000000000400000011033300
+open -a Safari "http://localhost/AlwaysData/Icare_2020"; cd "/Users/philippeperret/Sites/AlwaysData/Icare_2020";open -a Typora "./_dev_/Manuel/Manuel_developper.md";open -a Aperçu "./_dev_/Manuel/Manuel_developper.pdf"
