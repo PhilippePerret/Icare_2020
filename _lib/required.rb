@@ -22,6 +22,7 @@ if not String.respond_to?(:match?)
   Dir["#{LIB_FOLDER}/xtra_old_ruby_versions/**/*.rb"].each{|m|require m}
 end
 
+log("Version ruby #{RUBY_VERSION}")
 log("ONLINE: #{ONLINE.inspect} (OFFLINE est #{OFFLINE.inspect})")
 log("DATABASE: #{MyDB.DBNAME.inspect}")
 log("ENV['REMOTE_ADDR'] = #{ENV['REMOTE_ADDR'].inspect}")

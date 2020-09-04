@@ -13,7 +13,7 @@ feature "Commande d'un module" do
       within('section#header'){click_on('en savoir plus')}
       click_on('modules d’apprentissage et de développement')
       expect(page).to have_titre(UI_TEXTS[:modules_apprentissage])
-      first('a', text: (UI_TEXTS[:btn_commander_module] % 'Structure')).click
+      first('a', text: (UI_TEXTS[:btn_commander_module])).click
       expect(page).to have_content("vous devez au préalable poser votre candidature")
       expect(page).to have_link(UI_TEXTS[:btn_canditater])
     end
@@ -30,7 +30,7 @@ feature "Commande d'un module" do
       goto('plan')
       click_on(UI_TEXTS[:les_modules])
       expect(page).to have_titre(UI_TEXTS[:modules_apprentissage])
-      first('a', text: (UI_TEXTS[:btn_commander_module] % 'Structure')).click
+      first('a', text: (UI_TEXTS[:btn_commander_module])).click
       expect(page).to have_titre(UI_TEXTS[:titre_commande_module])
       expect(page).not_to have_content('Merci de confirmer votre option'.freeze)
       expect(page).to have_content('vous ne pouvez pas commander')

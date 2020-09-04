@@ -93,10 +93,21 @@ div.warning, p.warning, span.warning {
 .mr3 {margin-right:24px}
 .mr4 {margin-right:32px}
 
-.mg1 {margin-left:1em}
-.mg2 {margin-left:2em}
-.mg3 {margin-left:3em}
-.mg4 {margin-left:4em}
+
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  .mg1 {margin-left:1em}
+  .mg2 {margin-left:2em}
+  .mg3 {margin-left:3em}
+  .mg4 {margin-left:4em}
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  .mg1 {margin-left:none}
+  .mg2 {margin-left:none}
+  .mg3 {margin-left:none}
+  .mg4 {margin-left:none}
+}
 
 .mb1 {margin-bottom:1em}
 .mb2 {margin-bottom:2em}

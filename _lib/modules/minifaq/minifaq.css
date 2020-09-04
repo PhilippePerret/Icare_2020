@@ -1,6 +1,16 @@
-div.minifaq-block {
-  margin-left:4em;
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.minifaq-block {
+    margin-left:4em;
+  }
 }
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.minifaq-block {
+    margin-left:none;
+  }
+}
+
 div.minifaq-block div.minifaq-qr {
   border:1px solid #999999;
   padding:1em;

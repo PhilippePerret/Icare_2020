@@ -42,8 +42,8 @@ class AbsModule < ContainerClass
   def ligne_boutons
     @ligne_boutons ||= begin
       <<-HTML
-<div class="right mt1 mb1">
-  <a href="modules/commande?mid=#{id}" class="btn main">#{UI_TEXTS[:btn_commander_module] % name}</a>
+<div class="btn-command-module mt1 mb1">
+  <a href="modules/commande?mid=#{id}" class="btn main">#{UI_TEXTS[:btn_commander_module]}</a>
 </div>
       HTML
     end

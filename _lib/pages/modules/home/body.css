@@ -2,3 +2,16 @@
 .absmodule img.emoji {
   vertical-align:baseline!important;
 }
+
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.btn-command-module {
+    text-align:right;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.btn-command-module {
+    text-align:center;
+  }
+}
