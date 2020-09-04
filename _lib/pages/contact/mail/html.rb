@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_modules(['form','mail'])
 MESSAGES.merge!({
   confirme_envoi: 'Votre message a bien été transmis à %s.'
@@ -20,7 +21,7 @@ class HTML
 
   # Construit et retourne le formulaire
   def formulaire
-    form = Form.new(id:'contact-form', size:700, route:route.to_s, libelle_size:100, value_size:600)
+    form = Form.new(id:'contact-form', route:route.to_s, class:'form-value-600 form-libelle-100')
     rows = {
       'Titre'   => {name:'envoi_titre', type:'text', value:param(:envoi_titre)},
       'Message' => {name:'envoi_message', type:'textarea', height:260, value:param(:envoi_message)}

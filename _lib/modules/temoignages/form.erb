@@ -1,6 +1,6 @@
 <%
 require_module('form')
-form = Form.new(id:'temoignage-form', route:route.to_s, class:'noborder nomargin nopadding nobackground', libelle_size:20, value_size:500)
+form = Form.new(id:'temoignage-form', route:route.to_s, class:'noborder nomargin nopadding nobackground form-libval-20-500')
 form.rows = {
   'operation' => {type:'hidden', name:'op', value:'create-temoignage'},
   '<Temoignage/>' => {name:'temoignage_content', type:'textarea', height:400}

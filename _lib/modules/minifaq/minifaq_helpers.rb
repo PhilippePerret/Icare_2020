@@ -21,7 +21,7 @@ class << self
   # +target_id+     Identifiant du module ou de l'étape
   def form(target_type, target_id)
     require_module('form')
-    form = Form.new(id:'form-minifaq', route:route.to_s, value_size: '100%', class:'nolibelle noborder nomargin')
+    form = Form.new(id:'form-minifaq', route:route.to_s, class:'nolibelle noborder nomargin')
     rows = {
       'ope-minifaq' => {name:'ope', type:'hidden', value: 'minifaq-add-question'},
       'target-type' => {name:'minifaq_target_type', value:target_type, type:'hidden'},

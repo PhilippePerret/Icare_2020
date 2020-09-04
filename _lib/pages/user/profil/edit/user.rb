@@ -1,7 +1,8 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class User
   def formulaire_profil
-    form = Form.new({id:'profil-form', route:'user/profil/edit', size:600})
+    form = Form.new({id:'profil-form', route:'user/profil/edit', class:'form-width-600'})
     form.rows = {
       'Votre mail':   {name:'user_mail', type:'text', value:data[:mail]},
       'Votre pseudo': {name: 'user_pseudo', type:'text', default: data[:pseudo]}

@@ -14,7 +14,7 @@ class << self
 
   # Retourne l'instance Form pour le formulaire d'identification
   def login_form
-    @form = Form.new({id:'user-login', action:'user/login', value_size:300})
+    @form = Form.new({id:'user-login', action:'user/login', class:'form-width-300 form-value-300'})
     @form.rows = {
       'Mail'          => {name:'user_mail',     type:'text'},
       'Mot de passe'  => {name:'user_password', type:'password'},

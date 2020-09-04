@@ -76,64 +76,19 @@ class Form
         " style=\"#{data[:style]}\""
       else
         sty = []
-        sty << "width:#{form_size};" unless form_size.nil?
         sty.empty? ? '' : " style=\"#{sty.join(';')}\""
       end
     end
   end #/ form_style
 
   # La dimension du formulaire
-  # Elle sera calculée en fonction de la définition ou non des libelle_size,
-  # et :value_size ou de sa définition explicite
-  def form_size
-    @form_size ||= begin
-      if no_libelle?
-        if data[:value_size] == '100%'
-          '100%;box-sizing:border-box'
-        else
-          'auto'
-        end
-      elsif data.key?(:size)
-        "#{data[:size]}px"
-      elsif libelle_size || value_size
-        "calc(#{libelle_size||DEFAULT_LIBELLE_WIDTH} + #{value_size||'auto'})"
-      else
-        nil
-      end
-    end
-  end #/ form_size
-  def libelle_size
-    @libelle_size ||= begin
-      # Quand défini dans les arguments d'instanciation (data)
-      "#{data[:libelle_size]}px" unless data[:libelle_size].nil? # si défini explicitement
-    end
-  end #/ libelle_size
-  def libelle_size= value
-    @libelle_size = value.is_a?(Integer) ? "#{value}px" : value
-  end #/ libelle_size
-  def value_size
-    @value_size ||= begin
-      if no_libelle?
-        '100%'
-      elsif data[:value_size].nil?
-        DEFAULT_VALUE_WIDTH
-      else
-        # Quand défini dans les arguments d'instanciation (data)
-        "#{data[:value_size]}px"
-      end
-    end
-  end #/ value_size
-  def value_size= value
-    @value_size = value.is_a?(Integer) ? "#{value}px" : value
-  end #/ value_size=
+  # OBSOLÈTE : il faut absolument passer par les css pour les responsive
+  # design
+  # def form_size
+  # end #/ form_size
 
   # Pour voir s'il faut ajouter du style au .libelle
-  def libelle_style
-    @libelle_style ||= begin
-      sty = []
-      sty.empty? ? '' : " style=\"#{sty.join(';')}\""
-    end
-  end #/ libelle_style
+  def libelle_style; @libelle_style end #/ libelle_style
 
   # Retourne la class CSS du formulaire (tag form)
   def css
@@ -228,15 +183,10 @@ class Form
     EXPLICATION_TAG % {text: dfield[:explication], style:''}
   end #/ explication_field
 
-  # Maintenant que le div.row est un display:grid, on peut définir la largeur
-  # des libellés et des champs value par libelle_size et value_size, mais ils
-  # affecteront la propriété :grid-template-columns du row
   def row_style(dfield)
     sty = []
     if dfield[:nogrid] || no_libelle?
       sty << 'grid-template-columns:auto;'
-    elsif libelle_size || value_size
-      sty << "grid-template-columns:#{libelle_size||'auto'} #{value_size||'auto'};"
     end
     sty.empty? ? EMPTY_STRING : " style=\"#{sty.join('')}\""
   end #/ row_style

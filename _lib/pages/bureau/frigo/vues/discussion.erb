@@ -1,4 +1,6 @@
+<%# frozen_string_literal: true %>
 <%
+
   discussion = FrigoDiscussion.new(param(:disid))
   listing_messages = discussion.out(for: user, last_check: user.last_check_discussion(param(:disid)))
 
@@ -70,7 +72,7 @@ end #/ fi param(:disid)
 #   FORMULAIRE EN BAS DE PAGE
 #
 # ---------------------------------------------------------------------
-form = Form.new(id:'discussion-form', route:route.to_s, class:'noborder nopadding nomargin nolibelle', style:'width:140%')
+form = Form.new(id:'discussion-form', route:route.to_s, class:'noborder nopadding nomargin nolibelle form-width-140pct')
 form.rows = {
   '<message/>'    => {name:'frigo_message', type:'textarea', height:120, value:param(:frigo_message), placeholder:'Votre réponse'.freeze},
   '<op/>'         => {name:'op', type:'hidden', value:'add'},

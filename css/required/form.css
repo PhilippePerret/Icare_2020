@@ -68,16 +68,37 @@ form div.row:not(.nogrid) {
   grid-template-rows: auto;
   margin-bottom:0.7em;
 }
+/*
+  La largeur de la colonne span.libelle ou span.value peut être modifiée
+  par les classes des type "form-libelle-xxx" et "form-value-xxx" quand on
+  est sur un écran (sur un smartphone, ça prend toujours toute la place)
+*/
+@media only screen and (min-width: 767px) {
+  form.form-libelle-100 div.row {grid-template-columns: 100px auto!important}
+  form.form-libelle-180 div.row {grid-template-columns: 180px auto!important}
+  form.form-libelle-240 div.row {grid-template-columns: 240px auto!important}
+  form.form-libelle-250 div.row {grid-template-columns: 250px auto!important}
+  form.form-libelle-300 div.row {grid-template-columns: 300px auto!important}
+
+  form.form-value-300 div.row {grid-template-columns: auto 300px!important}
+  form.form-value-600 div.row {grid-template-columns: auto 600px!important}
+
+  form.form-libval-20-500 div.row {grid-template-columns: 20px 500px!important}
+
+  form.form-width-300 {width:300px!important}
+  form.form-width-600 {width:600px!important}
+  form.form-width-140pct {width:140%!important}
+}
 
 form.inline div.buttons,
 form.inline div.row {display: inline}
 
 form:not(.noform) div.row:not(.nogrid) span.libelle {
-  grid-columns:1;
+  grid-column:1;
   grid-row:1;
 }
 form:not(.noform) div.row:not(.nogrid) span.value {
-  grid-columns:2;
+  grid-column:2;
   grid-row:1
 }
 

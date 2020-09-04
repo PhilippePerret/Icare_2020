@@ -1,5 +1,6 @@
+<%# frozen_string_literal: true %>
 <%
-form = Form.new(id:'form-change-password'.freeze, route:route.to_s, libelle_size:240)
+form = Form.new(id:'form-change-password'.freeze, route:route.to_s, class:'form-libelle-240')
 form.rows = {
   'Mot de passe courant'.freeze => {name: 'old_password'.freeze},
   'Nouveau mot de passe'.freeze => {name: 'new_password'.freeze}

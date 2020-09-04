@@ -1,6 +1,5 @@
 <%
-  form = Form.new(id:"qdd-depot-form-etape-#{icetape.id}", route:route.to_s, watcher:id)
-  form.libelle_size = 180
+  form = Form.new(id:"qdd-depot-form-etape-#{icetape.id}", route:route.to_s, watcher:id, class:'form-libelle-180')
   rows = {}
   # On doit proposer des formulaires en fonction des documents
   icetape.documents.each do |document|

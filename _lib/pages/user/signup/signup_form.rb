@@ -4,7 +4,7 @@
 =end
 class HTML
   def signup_form
-    form = Form.new(id:'signup-form', route:'user/signup', libelle_size:250)
+    form = Form.new(id:'signup-form', route:'user/signup', class:'form-libelle-250')
     form.rows = rows
     form.submit_button = "Candidater"
     form.out

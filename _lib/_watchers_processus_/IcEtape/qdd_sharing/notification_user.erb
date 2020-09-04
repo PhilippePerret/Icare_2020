@@ -13,7 +13,7 @@ icetape.documents.each do |document|
   end
 end
 
-form = Form.new(id: "sharing-form-etape-#{icetape.id}", watcher:id, route:route.to_s, libelle_size:300)
+form = Form.new(id: "sharing-form-etape-#{icetape.id}", watcher:id, route:route.to_s, class: 'form-libelle-300')
 form.rows = rows
 form.submit_button = "Appliquer ce partage".freeze
 form.submit_button_class = 'mt2 main'
