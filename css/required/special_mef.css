@@ -154,13 +154,25 @@ div.float-tdm {
   padding:1em 2em;
 }
 
-div.float-tdm:not(.left) {
-  float:right;
-  margin:3em 0 2em 3em;
+@media only screen and (max-width: 768px) {
+  /* SMARTPHONE */
+  div.float-tdm > a {
+    /* Pour que les liens soient assez espacés */
+    margin:1em 0;
+  }
 }
-div.float-tdm.left {
-  margin:3em 3em 2em 0;
+@media only screen and (min-width: 768px) {
+  /* LARGE */
+  div.float-tdm:not(.left) {
+    float:right;
+    margin:3em 0 2em 3em;
+  }
+  div.float-tdm.left {
+    margin:3em 3em 2em 0;
+  }
 }
+
+
 div.float-tdm > a {
   display:block;
   color: var(--contre-color-normal);

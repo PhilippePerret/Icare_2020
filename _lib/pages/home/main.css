@@ -53,14 +53,14 @@ div#legende {
 }
 
 section#header {
-  text-align:right;
 }
 section#header a {
   font-size:13pt;
   padding:0.1em 1em 0.1em;
   border:1px solid;
   border-radius:0.5em;
-  color:white;
+  color:stealblue;
+  /* color:white; */
   font-variant:small-caps;
 }
 section#header a:hover {
@@ -81,6 +81,7 @@ section#header a:hover {
 
   section#header {
     background: linear-gradient(to right, #ffffff 25%, rgb(70, 130, 180,0.4));
+    text-align:right;
   }
 
   div#air-sous-bandeau {
@@ -106,8 +107,14 @@ section#header a:hover {
   */
   section#header {
     background: rgb(70, 130, 180,0.4);
+    text-align:center;
   }
-
+  section#header a {
+    display:block;
+    margin: 12px 0;
+    font-size:16pt;
+    /* background-color:red!important; */
+  }
   section#body.home div#bandeau {
     padding:0;
   }

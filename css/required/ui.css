@@ -171,8 +171,14 @@ section#header div.notification-tool {
 
 section#body {
   min-height:280px;
-  margin-bottom:15em;
 }
+
+@media only screen and (min-width: 767px) {
+  section#body {
+    margin-bottom:15em;
+  }
+}
+
 section#body:not(.home) {
   margin-top:2em;
 }
@@ -211,12 +217,7 @@ section#footer {
   margin-top:4em;
   padding:.2em 1em;
   margin-bottom:0;
-
-  position:fixed;
-  bottom:0;
-  left:0;
   width:100%;
-
 }
 
 pre#debug {
@@ -236,11 +237,30 @@ section#footer {
   text-align:center;
 }
 section#footer a {
-  font-size:11.8pt;
-  margin-right:1em;
   color:var(--inverse-dark-color-normal);
 }
 
+@media only screen and (max-width: 768px) {
+  /* SMARTPHONE */
+  section#footer a {
+    font-size:16pt;
+    width: 80%;
+    margin:1.3em 0;
+    display:block;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* LARGE */
+  section#footer {
+    position:fixed;
+    bottom:0;
+    left:0;
+  }
+  section#footer a {
+    font-size:11.8pt;
+    margin-right:1em;
+  }
+}
 
 
 /*
