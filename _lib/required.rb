@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require 'rubygems'
 require 'json'
 require 'cgi'
 require 'cgi/session'
@@ -16,6 +17,10 @@ require './config'
 Dir["#{LIB_FOLDER}/required/__first/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/_classes/**/*.rb"].each{|m|require m}
 Dir["#{LIB_FOLDER}/required/then/**/*.rb"].each{|m|require m}
+
+if not String.respond_to?(:match?)
+  Dir["#{LIB_FOLDER}/xtra_old_ruby_versions/**/*.rb"].each{|m|require m}
+end
 
 log("ONLINE: #{ONLINE.inspect} (OFFLINE est #{OFFLINE.inspect})")
 log("DATABASE: #{MyDB.DBNAME.inspect}")
