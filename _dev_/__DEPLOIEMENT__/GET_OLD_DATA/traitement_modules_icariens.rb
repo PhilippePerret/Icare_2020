@@ -42,5 +42,11 @@ puts "🗄️ Dumping des icmodules opéré avec succès".vert
 db_exec(<<-SQL.strip.freeze)
 ALTER TABLE `paiements` CHANGE COLUMN `facture` `facture_id` VARCHAR(30) DEFAULT NULL;
 SQL
+now = Time.now
+ilya_trois_ans = Time.new(now.year - 3, now.month, now.day).to_i
+db_exec(<<-SQL.strip.freeze)
+DELETE FROM `paiements` WHERE created_at < #{ilya_trois_ans};
+SQL
+puts "* Suppression des paiements supérieurs à 3 ans"
 `mysqldump -u root icare paiements > "#{FOLDER_GOODS_SQL}/paiements.sql"`
 puts "🗄️ Dumping des paiements opéré avec succès".vert

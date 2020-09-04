@@ -1,6 +1,9 @@
 
 # Modifications à faire dans la base de données
 
+> Toutes ces modifications seront faites automatiquement en utilisant le script
+> GET_OLD_DATA_SITE.rb
+
 * Dans `temoignages`
   ~~~SQL
   ALTER TABLE `temoignages` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) DEFAULT NULL;
