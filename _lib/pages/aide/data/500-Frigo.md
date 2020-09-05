@@ -46,7 +46,7 @@ Les formatages les plus usuels et les plus pratiques sont les suivants :
 
 * les italiques en entourant de deux astérisques : *\*texte en italic\**,
 * les gras en entourant de quatre astéristiques : **\*\*texte en gras\*\***,
-* les liens avec \[le texte du lien\](*l'URL*), par exemple `[atelier Icare](http://www.atelier-icare.net)` qui donnera : [atelier Icare](http://www.atelier-icare.net),
+* les liens avec \[le texte du lien\](*l'URL*), par exemple `[atelier Icare](https://www.atelier-icare.net)` qui donnera : [atelier Icare](https://www.atelier-icare.net),
 * les listes de définition :
 
   ~~~markdown

@@ -2,7 +2,7 @@
 
 
 
-# Introduction
+## Introduction
 
 Il s’agit ici de la version produite en 2020 de l’Atelier Icare. Elle vise à simplifier le code au maximum.
 
@@ -10,7 +10,7 @@ Il s’agit ici de la version produite en 2020 de l’Atelier Icare. Elle vise �
 
 <a name="principes"></a>
 
-# Principes fondateurs
+## Principes fondateurs
 
 * Tout ce qui est après le `/` du domaine et avant le `?` du query-string est appelé `route`. La route brute s’obtient par `Route.current.route`. On l’obtient grâce à `route.to_s` (qui retourne par exemple `bureau/home`. La seule modification faite est de transformer une chaine vide en `home`.
 * Quand une route est définie (par exemple `section/page`) la première chose que fait le programme de construction de la page est de voir si le dossier `./_lib/pages/section/page` existe. Si c’est le cas, on le charge entièrement, c’est-à-dire le ruby, le css et le javascript. C’est donc dans `_lib/pages/` principalement qu’on va trouver la définition des pages et c’est vraiment dans ce dossier qu’il faut s’arranger pour tout mettre.

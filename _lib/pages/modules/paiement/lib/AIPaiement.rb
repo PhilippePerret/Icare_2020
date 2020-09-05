@@ -85,7 +85,7 @@ def facture
     <td>Délivrée le</td><td>#{formate_date(created_at)}</td>
   </tr>
   <tr>
-    <td>Délivrée par</td><td>Atelier Icare (atelier d’écriture en ligne : http://www.atelier-icare.net)</td>
+    <td>Délivrée par</td><td>Atelier Icare (atelier d’écriture en ligne : https://www.atelier-icare.net)</td>
   </tr>
   <tr>
     <td>À l'ordre de</td><td>#{owner.patronyme||owner.pseudo} (#{owner.mail})</td>
@@ -114,7 +114,7 @@ def facture_mail
 . DÉLIVRÉ LE   : #{formate_date}
 .
 .         PAR  : Atelier Icare (atelier d'écriture en
-.                ligne : http://www.atelier-icare.net)
+.                ligne : https://www.atelier-icare.net)
 .
 . OBJET        : Module d'apprentissage
 .

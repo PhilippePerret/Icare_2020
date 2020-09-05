@@ -54,10 +54,10 @@ STDOUT.write <<-HTML
       #{backtrace}
     </div>
     <div class="center mt2 big">
-      <img src="http://www.atelier-icare.net/img/Emojis/humain/femme-pompier.png" alt="femme-pompier" style="width:40px;">
-      <img src="http://www.atelier-icare.net/img/Emojis/humain/homme-chalumeau.png" alt="homme-chalumeau" style="width:40px;">
-      <img src="http://www.atelier-icare.net/img/Emojis/humain/homme-pompier.png" alt="homme-pompier" style="width:40px;">
-      <img src="http://www.atelier-icare.net/img/Emojis/humain/femme-chalumeau.png" alt="femme-chalumeau" style="width:40px;">
+      <img src="https://www.atelier-icare.net/img/Emojis/humain/femme-pompier.png" alt="femme-pompier" style="width:40px;">
+      <img src="https://www.atelier-icare.net/img/Emojis/humain/homme-chalumeau.png" alt="homme-chalumeau" style="width:40px;">
+      <img src="https://www.atelier-icare.net/img/Emojis/humain/homme-pompier.png" alt="homme-pompier" style="width:40px;">
+      <img src="https://www.atelier-icare.net/img/Emojis/humain/femme-chalumeau.png" alt="femme-chalumeau" style="width:40px;">
     </div>
     <p class="explication red">#{message_avertissement}</p>
     <p style="text-align:center"><a href="home">Retourner à l’accueil</p>

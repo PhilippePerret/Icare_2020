@@ -236,7 +236,7 @@ def for_download(options = nil)
     lines << "#{message.auteur.pseudo.upcase}, #{formate_date(message.created_at,{hour:true})}#{RC}#{message.content}#{RC}"
   end
   lines << RC2
-  lines << "==== ©#{Time.now.year} Atelier Icare http://www.atelier-icare.net ==="
+  lines << "==== ©#{Time.now.year} Atelier Icare https://www.atelier-icare.net ==="
   return lines.join(RC)
 end #/ for_download
 

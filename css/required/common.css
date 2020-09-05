@@ -48,9 +48,21 @@ div.warning, p.warning, span.warning {
 .blue {color:blue}
 
 .tiny {
-  font-size:0.35em !important;
   line-height:0.9em;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  .tiny {
+    font-size:0.35em !important;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  .tiny {
+    font-size:0.65em !important;
+  }
+}
+
 .small {
   font-size:0.75em;
   line-height:1.2em;

@@ -39,7 +39,7 @@
 @media only screen and (max-width: 767px) {
   section#body {
     padding:8px;
-    text-align:center;
+    /* text-align:center; */
   }
   section#body div.row,
   section#body form,

@@ -96,7 +96,7 @@ def formated_subject
   @formated_subject ||= begin
     "🦋ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
     # Il faudrait pouvoir utiliser l'image comme ça :
-    # "<img src='http://www.atelier-icare.net/img/Emojis/animaux/papillon.png' style='width:20px;'/> ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "<img src='https://www.atelier-icare.net/img/Emojis/animaux/papillon.png' style='width:20px;'/> ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
   end
 end #/ formated_subject
 

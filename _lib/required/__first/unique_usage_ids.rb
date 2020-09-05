@@ -1,6 +1,7 @@
 # encoding: UTF-8
 =begin
   Module pour les IDs à usage unique
+  Utilisé pour les requêtes Ajax
 =end
 unless defined?(MyDB)
   unless defined?(OFFLINE)

@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Module qui permet de gérer les émojis comme des émojis (alors que pour
   windows, qui en possède des affreuses, on est contraint d'utiliser des
@@ -20,7 +21,7 @@
 class Emoji
 IMG_TAG = '<img src="%s" alt="%s" class="emoji %s" />'.freeze
 IMG_TAG_STYLED = '<img src="%s" alt="%s" class="emoji" style="%s" />'.freeze
-ABSOLUTE_PATH = 'http://www.atelier-icare.net/img/Emojis/%s'.freeze
+ABSOLUTE_PATH = 'https://www.atelier-icare.net/img/Emojis/%s'.freeze
 # ---------------------------------------------------------------------
 #
 #   CLASSE
