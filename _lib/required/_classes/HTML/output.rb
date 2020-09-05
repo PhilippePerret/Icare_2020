@@ -8,7 +8,7 @@ class HTML
 # ---------------------------------------------------------------------
   attr_reader :page, :head, :header, :body, :footer, :messages
   def out
-    THREADS.each(&:join) if defined?(THREADS)
+    # THREADS.each(&:join) if defined?(THREADS)
     cgi.out{page}
   end #/out
 

@@ -1,6 +1,17 @@
-div.cb-module {
-  display:inline-block;
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.cb-module {
+    display:inline-block;
+    width:49%;
+  }
 }
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.cb-module {
+    margin-top:1em;
+  }
+}
+
 
 form div.row {
   margin-bottom: 1em;

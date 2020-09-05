@@ -64,11 +64,23 @@ H4 {
 
 h2.page-title {
   font-weight:normal;
-  /* color:var(--dark-color-normal); */
-  font-size:1.7em;
-  margin:0;
-  margin-left:1em;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  h2.page-title {
+    font-size:1.7em;
+    margin-left:1em;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  h2.page-title {
+    font-size:1.2em;
+    margin-left:0.5em;
+    margin-top:1.5em;
+  }
+}
+
 
 /* Les titres en général */
 .titre {
@@ -125,10 +137,20 @@ section#header {
 }
 section#header:not(.home) {
   box-shadow:6px 6px 6px 1px #d2d2d2;
-  margin-bottom:3.5em;
-  /* background-color:var(--dark-color-normal); */
   background:linear-gradient(to right, white, var(--dark-color-normal));
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  section#header:not(.home) {
+    margin-bottom:3.5em;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+
+}
+
+
 section#header div#div-logo {
   font-size:1.4em;
   /* color:var(--inverse-dark-color-normal); */
@@ -177,11 +199,11 @@ section#body {
   section#body {
     margin-bottom:15em;
   }
+  section#body:not(.home) {
+    margin-top:2em;
+  }
 }
 
-section#body:not(.home) {
-  margin-top:2em;
-}
 
 div#to-top-button-div {
   position:fixed;
@@ -214,10 +236,9 @@ section#body > fieldset {
 section#footer {
   background-color:var(--dark-color-normal);
   color:white;
-  margin-top:4em;
   padding:.2em 1em;
-  margin-bottom:0;
-  width:100%;
+  margin:4em 0 0 0;
+  width:calc(100% - 2em);
 }
 
 pre#debug {

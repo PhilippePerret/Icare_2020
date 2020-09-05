@@ -158,7 +158,7 @@ class Form
       else
         #
         <<-HTML
-<div class="row"#{row_style(dfield)}>
+<div class="#{dfield[:norow] ? '' : 'row'}"#{row_style(dfield)}>
   #{span_libelle(style: libelle_style, label: label)}
   <span class="value#{" file" if dfield[:type] == 'file'}">
     #{value_field_for(dfield)}
@@ -186,7 +186,7 @@ class Form
   def row_style(dfield)
     sty = []
     if dfield[:nogrid] || no_libelle?
-      sty << 'grid-template-columns:auto;'
+      sty << 'grid-template-columns:auto!important;'
     end
     sty.empty? ? EMPTY_STRING : " style=\"#{sty.join('')}\""
   end #/ row_style

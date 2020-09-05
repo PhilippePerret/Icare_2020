@@ -6,16 +6,34 @@ div.div-reussite {
   text-align:justify
 }
 div.div-reussite div.date {
-  float:left;
   color:#777;
   margin-right:2em;
   font-family:Helvetica;
-  font-size:11pt;
   color:#6495ed;
-  font-weight:bold
+  font-weight:bold;
 }
-div.div-reussite div.content {
-  margin-left:8em
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  h2.page-title {
+    margin-top:1em!important;
+    margin-bottom:2em!important;
+  }
+  div.div-reussite div.date {
+    float:left;
+    font-size:11pt;
+  }
+  div.div-reussite div.content {
+    margin-left:8em
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.div-reussite div.date {
+    font-size:11pt;
+  }
+  div.div-reussite div.content {
+    font-size:13pt;
+  }
 }
 div.div-reussite div.content p {
   margin:13px 0

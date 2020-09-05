@@ -78,7 +78,7 @@
     padding:1em;
   }
 
-  section#messages {
+  body:not(.home) section#messages {
     margin:1em 0;
   }
   section#messages img.emoji.page_title {

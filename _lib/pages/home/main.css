@@ -19,12 +19,25 @@ div#main-cadre {
 }
 
 div#main-cadre div#papillon {
-  font-size:40pt;
   margin-top:-2pt;
-  /* text-shadow:5px 5px 4px #777; */
 }
-div#main-cadre div#titre {
-  font-size:50pt;
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div#main-cadre {
+  }
+  div#main-cadre div#titre {
+    font-size:50pt;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div#main-cadre div#titre {
+    font-size:40pt;
+  }
+  div#main-cadre {
+    left:8%;
+    right:8%;
+  }
 }
 
 div#main-cadre a {
@@ -47,6 +60,7 @@ div.citation {
 }
 
 div#legende {
+  font-family:Arial, Helvetica !important;
   font-size:0.71em;
   color:#777777;
   padding:0.1em 2em;
@@ -78,22 +92,20 @@ section#header a:hover {
   /*
     --- Écran large ---
   */
-
   section#header {
     background: linear-gradient(to right, #ffffff 25%, rgb(70, 130, 180,0.4));
     text-align:right;
   }
-
   div#air-sous-bandeau {
     height:100px;
   }
-
   section#body.home div#main-cadre {
-    width:400px;
+    width:450px;
     padding:2em;
     top:9%;
     right:10%;
-    background:rgba(255, 255, 255, 0.1);
+    /* background:rgba(255, 255, 255, 0.1); */
+    background:rgba(0, 31, 28, 0.1);
   }
 
   section#body.home div#main-cadre div#papillon {
@@ -119,7 +131,8 @@ section#header a:hover {
     padding:0;
   }
   section#body.home div#main-cadre {
-    background:rgba(255, 255, 255, 0.6);
+    /* background:rgba(255, 255, 255, 0.6); */
+    background:rgba(58, 51, 52, 0.5);
     top:2em;
     margin:auto 3%;
     padding:1em;
