@@ -2,8 +2,23 @@ div.state-list {
   position:relative;
   display:inline-block;
   border:1px solid #CCCCCC;
-  padding:1em 2em;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.state-list {
+    padding:1em 2em;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.state-list {
+    padding:1em 0;
+  }
+  div.state-list div.row span.value {
+    margin-left:1em;
+  }
+}
+
 
 div.state-list a.btn-modify {
   position:absolute;

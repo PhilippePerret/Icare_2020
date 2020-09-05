@@ -1,4 +1,6 @@
 # encoding: UTF-8
+# frozen_string_literal: true
+
 ERRORS.merge!({
   unfound_aide_file: 'Le fichier d’aide est introuvable, malheureusement…'.freeze
 })
@@ -51,21 +53,16 @@ end #/ fpath
 
 # Méthode qui recherche le fichier d'aide d'après son id
 def find
-  @fname = Dir.glob("#{id}-*\.{md,erb}", base:self.class.folder).first
-  @fname || raise(ERRORS[:unfound_aide_file])
-  @fpath = File.join(self.class.folder, @fname)
-  @fextension = File.extname(@fname)
-  {fname: @fname, fpath: @fpath, fextension: @fextension}
+  log("id: #{id} / self.class.folder: #{self.class.folder.inspect}")
+  if RUBY_VERSION > "2.3.7"
+    @fname = Dir.glob("#{id}-*\.{md,erb}", base: self.class.folder).first || raise(ERRORS[:unfound_aide_file])
+    @fpath = File.join(self.class.folder, @fname)
+  else
+    @fpath = Dir.glob("#{self.class.folder}/#{id}-*\.{md,erb}").first || raise(ERRORS[:unfound_aide_file])
+  end
+  @fextension = File.extname(@fpath)
+  {fname: File.basename(@fpath), fpath: @fpath, fextension: @fextension}
 
-  # Dir["#{}/*.{md,erb}"].each do |path|
-  #   afx = File.basename(path, File.extname(path))
-  #   if afx == id || afx.start_with?(id)
-  #     @fname = File.basename(path)
-  #     @fextension = File.extname(path)
-  #     @fpath = path
-  #     break
-  #   end
-  # end
 end #/ find
 
 end #/AideFile

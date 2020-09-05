@@ -97,8 +97,12 @@ form:not(.noform) div.row:not(.nogrid) span.libelle {
   grid-column:1;
   grid-row:1;
 }
-form:not(.noform) div.row:not(.nogrid) span.value {
+form:not(.noform):not(.nolibelle) div.row:not(.nogrid) span.value {
   grid-column:2;
+  grid-row:1
+}
+form:not(.noform).nolibelle div.row:not(.nogrid) span.value {
+  grid-column:1;
   grid-row:1
 }
 

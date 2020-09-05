@@ -42,12 +42,20 @@ span.libelle {
   display:inline-block;
 }
 .libelle {
-  padding:0 12px;
   color:#555555;
   font-size:0.86em;
   font-family:Arial,Helvetica,Geneva;
   font-style:italic;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  .libelle {padding:0 12px;}
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  .libelle {padding:0;}
+}
+
 /*
   Pour un div contenant un message qui doit se trouver tout seul (ou presque)
   dans la page (section#content)
