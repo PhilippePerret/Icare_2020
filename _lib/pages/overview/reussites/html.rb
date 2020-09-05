@@ -1,5 +1,4 @@
 # encoding: UTF-8
-# frozen_string_literal: true
 
 class HTML
   def titre
@@ -7,7 +6,9 @@ class HTML
   end
   # Code à exécuter avant la construction de la page
   def exec
-    update_data_erb if first_is_older_than('data.erb', 'data.yaml', true)
+    if first_is_older_than('data.erb', 'data.yaml', true)
+      update_data_erb
+    end
   end
   # Fabrication du body
   def build_body

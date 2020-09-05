@@ -52,10 +52,8 @@ end #/ deyaml
 
 def first_is_older_than(file1, file2, default_if_not_exist)
   file1 = fromCaller(file1, Kernel.caller) unless File.exists?(file1)
-  log("=== file1 = #{file1}")
   file2 = fromCaller(file2, Kernel.caller) unless File.exists?(file2)
   return default_if_not_exist unless File.exists?(file1) && File.exists?(file2)
-  log("=== file2 = #{file2}")
   File.stat(file1).mtime < File.stat(file2).mtime
 end #/ fisrt_is_older_than
 
