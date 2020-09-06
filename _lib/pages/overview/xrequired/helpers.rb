@@ -56,7 +56,7 @@ class HTML
   end #/ lien_narration
 
   def lien_modules(titre = 'modules pédagogiques')
-    Tag.lien(route:'modules/list', titre: titre)
+    Tag.lien(route:'modules/home', titre: titre)
   end #/ lien_modules(titre)
 
 end #/HTML

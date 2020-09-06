@@ -81,7 +81,7 @@ L'apprenti·e-auteur·e peut définir ou modifier à tout moment toutes ces info
 
 ### Conservation du mail d'un visiteur quelconque
 
-Les visiteurs quelconque ont la possibilité, lorsque l’icarien·ne l’autorise, de déposer [un message sur le frigo](aide/fiche/50) d’un·e apprenti·e auteur·e. Pour ce faire, le visiteur doit laisser son adresse email afin de pouvoir être contacté par l’icarien·ne. Cette adresse n’est ni conservée ni transmise à un tiers, sous aucun prétexte. Elle est détruite sitôt que l’icarien·ne a répondu au-dit message ou l’a détruit.
+Les visiteurs quelconque ont la possibilité, lorsque l’icarien·ne l’autorise, de déposer [un message sur le frigo](aide/fiche?aid=50) d’un·e apprenti·e auteur·e. Pour ce faire, le visiteur doit laisser son adresse email afin de pouvoir être contacté par l’icarien·ne. Cette adresse n’est ni conservée ni transmise à un tiers, sous aucun prétexte. Elle est détruite sitôt que l’icarien·ne a répondu au-dit message ou l’a détruit.
 
 ### Mini-FAQ
 

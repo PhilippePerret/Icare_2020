@@ -22,7 +22,7 @@ class << self
     }
     @form.submit_button = 'S’identifier'
     @form.other_buttons = [
-      {text: 'Mot de passe oublié'.freeze, route: 'user/password_forgotten'.freeze},
+      {text: 'Mot de passe oublié'.freeze, route: 'user/forgot_password'.freeze},
       {text: 'S’inscrire'.freeze, route: 'user/signup'.freeze}
     ]
     @form

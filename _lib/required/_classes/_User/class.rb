@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Module général User
   -------------------
@@ -10,18 +11,22 @@ class << self
   attr_accessor :current
 
   def table
-    @table ||= 'users'.freeze
+    @table ||= 'users'
   end #/ table
 
   def get_by_pseudo(pseudo)
-    res = db_exec("SELECT id FROM users WHERE pseudo = ?".freeze, [pseudo]).first
+    res = db_exec("SELECT id FROM users WHERE pseudo = ?", [pseudo]).first
     res.nil? ? nil : self.get(res[:id])
   end #/ get_by_pseudo
+  def get_by_mail(umail)
+    res = db_exec("SELECT id FROM users WHERE mail = ?", [umail]).first
+    res.nil? ? nil : self.get(res[:id])
+  end #/ get_by_mail
 
   # Initialisation de l'utilisateur courant
   # Soit c'est l'utilisateur reconnu par la session, soit c'est un invité
   def init
-    log("session['user_id'] = #{session['user_id'].inspect}".freeze)
+    log("session['user_id'] = #{session['user_id'].inspect}")
     reconnect_user unless session['user_id'].nil_if_empty.nil?
     self.current ||= User.instantiate(DATA_GUEST)
     # Si l'utilisateur est un administrateur, on le traite tel quel
@@ -44,7 +49,7 @@ class << self
     duser || raise(ERRORS[:unfound_user_with_id] % [session['user_id']])
     duser[:session_id] == session.id || raise(ERRORS[:alert_intrusion])
     self.current = self.get(duser[:id])
-    log "USER RECONNECTED : #{current.pseudo} (##{current.id})".freeze
+    log "USER RECONNECTED : #{current.pseudo} (##{current.id})"
   rescue Exception => e
     erreur e.message
     session.delete('user_id') # pour ne plus avoir le problème

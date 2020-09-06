@@ -4,6 +4,12 @@ Au départ, Page Checker est un vérificateur de lien, pour trouver les "broken 
 
 C'est un outil totalement autonome qu'on doit pouvoir utiliser sur n'importe quel site.
 
+## TODO
+
+* un bon site traite ses adresses inatteignable. Il faut pouvoir définir quand ça se produit
+* checker la présence des images (img/src)
+* traiter l'attente des pages (ce qu'on doit trouver dans une url précise, avec le fichier pages_data.yaml)
+
 ## Synopsis
 
 PageChecker parcourt les liens définis dans les pages à partir d'une page donnée, vérifie si la cible existe et si elle est conforme à la définition qu'on en a fait.
@@ -23,3 +29,11 @@ On peut définir la conformité d'une page à l'aide de :
 ## Fonctionnement
 
 PageChecker fonctionne avec un fichier `pages_data.yaml` qui définit les données des pages, un fichier `config.yaml` qui définit la configuration. On utilise ensuite le Terminal ou la Console pour lancer le fichier racine `PageChecker.rb` qui se trouve à la racine du dossier en lui fournissant l'adresse URL à checker et quelques options.
+
+## Check d'une adresse seule
+
+On peut tester une adresse seule en utilisant l'option `--not-deep`.
+
+~~~
+./PageChecker.rb http://mon/url --not-deep
+~~~

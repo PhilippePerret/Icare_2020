@@ -1,0 +1,16 @@
+<%# frozen_string_literal: true %>
+
+<p>Indiquez votre adresse mail pour recevoir un lien vous permettant de changer de mot de passe (*).</p>
+
+<%
+
+form = Form.new(id:'form-password-forgotten', action: 'user/forgot_password', lass:'form-libelle-120')
+form.rows = {
+  'Votre mail' => {name: 'user_mail'}
+}
+form.submit_button = UI_TEXTS[:btn_send_mail]
+%>
+
+<%= form.out %>
+
+<p class="explication">(*) En effet, il est impossible de vous transmettre votre mot de passe dans le sens où il est enregistré de façon cryptée dans notre base de donnée et nous n'y avons donc pas accès nous-mêmes.</p>
