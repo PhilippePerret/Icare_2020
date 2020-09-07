@@ -10,7 +10,22 @@ feature "Mot de passe oublié" do
   end
   context 'un faux icarien' do
     scenario "ne peut pas recouvrer son mot de passe" do
-      pending "à implémenter"
+      pitch("Une visiteur quelconque ne peut pas obtenir un nouveau mot de passe")
+      goto("user/login")
+      expect(page).to have_css('a', text: "Mot de passe oublié")
+      click_link("Mot de passe oublié")
+      expect(page).to have_titre(UI_TEXTS[:titre_password_forgotten])
+      expect(page).to have_css('form#form-password-forgotten')
+
+      ["monmail@faux.com", "autre.mail@gmail.com", "ardoise@icare.net"
+      ].each do |umail|
+        within('#form-password-forgotten') do
+          fill_in('user_mail', with: umail)
+          click_on(UI_TEXTS[:btn_send_mail])
+        end
+        expect(page).to have_erreur(ERRORS[:mail_valide_required])
+      end
+
     end
   end
 
