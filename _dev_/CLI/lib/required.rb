@@ -8,6 +8,7 @@ require 'tty-prompt'
 Q = TTY::Prompt.new
 
 LIB_FOLDER = File.join(APP_FOLDER, '_lib') # NOTE ATTENTION : celui du site
+DEV_FOLDER = File.join(APP_FOLDER, '_dev_')
 REQUIRED_FOLDER = File.join(CLI_FOLDER,'lib','required')
 COMMANDS_FOLDER = File.join(CLI_FOLDER,'lib','commands')
 

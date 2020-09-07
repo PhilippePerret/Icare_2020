@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Méthode pour "nourrir" la base de données locale (icare_test)
 =end
@@ -8,10 +9,12 @@ MESSAGES = {
 }
 
 DATA_WHAT_READ = [
-  {name:'Journal (log)'.freeze, value: :log},
-  {name:'Traceur'.freeze, value: :tracer},
-  {name:'Dossier…'.freeze, value: :folder},
-  {name:'Fichier…'.freeze, value: :file}
+  {name:'Journal (log)', value: :log},
+  {name:'Traceur', value: :tracer},
+  {name:'Manuel (pdf)', value: :manuel_dev},
+  {name:'Manuel (md)', value: :manuel_dev_md},
+  {name:'Dossier…', value: :folder},
+  {name:'Fichier…', value: :file}
 ]
 
 SSH_SERVER = 'icare@ssh-icare.alwaysdata.net'
@@ -49,10 +52,17 @@ class << self
     path = "./www/#{dossier}"
     read_it(path)
   end #/ read_folder
-
+  # Pour ouvrir le manuel développeur
+  def read_manuel_dev
+    `open "#{File.join(DEV_FOLDER,'Manuel','Manuel_developper.pdf')}"`
+  end #/ manuel_dev
+  # Pour ouvrir la version modifiable du mode d'emploi
+  def read_manuel_dev_md
+    `open -a Typora "#{File.join(DEV_FOLDER,'Manuel','Manuel_developper.md')}"`
+  end #/ manuel_dev_md
 
   def read_it(path)
-    cmd = <<-CMD.strip.freeze
+    cmd = <<-CMD.strip
     ssh icare@ssh-icare.alwaysdata.net ruby <<SSH
 if !File.exists?('#{path}')
   puts "L'élément '#{path}' est introuvable…"

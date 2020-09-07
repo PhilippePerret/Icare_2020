@@ -192,6 +192,7 @@ def id        ; @id       ||= data[:id]       end
 def pseudo    ; @pseudo   ||= data[:pseudo]   end
 def mail      ; @mail     ||= data[:mail]     end
 def options   ; @options  ||= data[:options]  end
+def cpassword ; @cpassword||= data[:cpassword]end
 def password
   @password ||= begin
     pwd = data[:password]
@@ -211,6 +212,7 @@ def reset
   @pseudo = nil
   @mail = nil
   @password = nil
+  @cpassword = nil
   @options = nil
 end #/ reset
 

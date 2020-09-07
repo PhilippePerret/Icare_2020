@@ -5,7 +5,7 @@ require_module('form')
 
 class HTML
   def titre
-    "Oubli du mot de passe"
+    UI_TEXTS[:titre_password_forgotten]
   end #/titre
 
   # Code à exécuter avant la construction de la page
