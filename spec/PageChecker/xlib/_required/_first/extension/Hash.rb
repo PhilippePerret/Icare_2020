@@ -7,7 +7,9 @@ class Hash
       if deep
         v = case v
         when Hash
-          v.to_sym
+          v.to_sym(deep = true)
+        when Array
+          v.to_sym(deep = true)
         else
           v
         end
@@ -21,6 +23,7 @@ end #/Hash
 
 if __FILE__ == $0
   require 'minitest/autorun'
+  require_relative 'Array'
   describe "Hash extension" do
     it "répond à la méthode to_sym" do
       hash = {}
@@ -35,6 +38,10 @@ if __FILE__ == $0
       refute_equal hash.to_sym(false), {pour: {voir: 'en'}, profondeur: 'du hash'}
       assert_equal hash.to_sym(false), {pour: {'voir' => 'en'}, profondeur: 'du hash'}
       assert_equal hash.to_sym(true), {pour: {voir: 'en'}, profondeur: 'du hash'}
+    end
+    it "la méthode :to_sym traite aussi les listes Array" do
+      hash = [{"pour" => "voir"}]
+      assert_equal hash.to_sym(true), [{pour: "voir"}]
     end
   end
 end

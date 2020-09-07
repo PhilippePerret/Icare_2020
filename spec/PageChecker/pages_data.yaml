@@ -1,2 +1,21 @@
 ---
-  
+  contexts:
+    -
+      titre: visiteur quelconque
+      exclude: null
+    -
+      context: icarien
+      titre: icarien identifié
+      # Routes à exclure
+      # Note : on indique une liste de routes, mais elles seront transformées
+      # en table d'URL absolues
+      exclude : ['user/logout']
+      # URL à ne pas fouiller
+      # Note : on indique une liste de routes, mais elles seront transformées
+      # en table d'URL absolues
+      not_deep: ['bureau/notifications']
+    -
+      titre: Administrateur
+      context: administrateur
+      exclude : ['user/logout']
+      not_deep: ['admin/notifications']

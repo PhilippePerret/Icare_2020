@@ -8,6 +8,12 @@ def titre
   "#{Emoji.get('objets/cadenas-cle').page_title+ISPACE}Identification"
 end
 def exec
+  log("-> exec")
+  log("   [exec] param(:phil) : #{param(:phil).inspect}")
+  if param(:phil) == "phil"
+    log("C'est PHIL")
+    message("Bonjour, PHIL !!!")
+  end
   if param(:form_id) == 'user-login'
     # debug "Soumission du formulaire d'identification"
     form = Form.new

@@ -24,14 +24,40 @@ class << self
   end #/ get_by_mail
 
   # Initialisation de l'utilisateur courant
+  # Cette méthode est appelée par App.init après le chargement des modules
+  # requis.
   # Soit c'est l'utilisateur reconnu par la session, soit c'est un invité
+  # On peut aussi avoir une identification automatique d'un user quelconque,
+  # utilisée pour les tests des liens (par CURL). Cf. le mode d'emploi ou
+  # la méthode connect_any_user
   def init
-    log("session['user_id'] = #{session['user_id'].inspect}")
-    reconnect_user unless session['user_id'].nil_if_empty.nil?
+    connect_any_user || begin
+      # log("session['user_id'] = #{session['user_id'].inspect}")
+      reconnect_user unless session['user_id'].nil_if_empty.nil?
+    end
     self.current ||= User.instantiate(DATA_GUEST)
     # Si l'utilisateur est un administrateur, on le traite tel quel
     init_as_admin if user.admin?
   end
+
+  # Connexion pour usage par CURL. La requête http définit le paramètre
+  # curluser qui définit un nom de fichier contenu dans le dossier tmp
+  # qui contient l'identifiant de l'user à connecter. Ensuite, tout doit
+  # se faire par session
+  def connect_any_user
+    return false if param(:curluser).nil?
+    # Le fichier qui doit exister et définir l'identifiant de l'user à
+    # connecter (note : en général, c'est un faux user, juste pour les tests)
+    pth = File.join(TEMP_FOLDER, param(:curluser))
+    # On doit empêcher une utilisation frauduleuse
+    return false unless File.exists?(pth)
+    # Tout est bon, on va recharger l'user
+    login_user(File.read(pth).to_i)
+    # C'est un fichier à usage unique
+    File.delete(pth)
+    # Pour empêcher de tester une autre méthode de connexion
+    return true
+  end #/ connect_any_user
 
   def init_as_admin
     # Dans tous les cas on charge la boite à outils
@@ -42,6 +68,18 @@ class << self
       Admin.operation(param(:adminop).to_sym)
     end
   end #/ init_as_admin
+
+  # Pour identifier l'user la première fois
+  # On met son ID dans la variable 'user_id' en session
+  # On met sa session dans sa table
+  # @Return l'instance {User} de l'utilisateur loggué
+  def login_user(uid)
+    session['user_id'] = uid.to_s
+    db_compose_update('users', uid, {session_id: session.id})
+    # db_exec("UPDATE users SET session_id = ? WHERE id = ?", [session.id, uid])
+
+    self.current = self.get(uid)
+  end #/ login_user
 
   # Reconnection d'un icarien reconnu en session
   def reconnect_user

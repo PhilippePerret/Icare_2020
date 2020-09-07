@@ -20,5 +20,6 @@ class CLI
     'h'   => 'help',
     'q'   => 'quiet',
     'v'   => 'verbose',
+    'r'   => 'referer', # ajouter pour voir les référents des liens
   }
 end #/CLI

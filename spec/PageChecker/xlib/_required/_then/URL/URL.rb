@@ -44,7 +44,10 @@ class URL
     if url.end_with?('.pdf')
     end
 
-    @html_content = `cUrl -s #{url}`
+    # Note : les cookies sont là, notamment pour maintenir les sessions
+    # quand il y a identification (cf. les contextes)
+    @html_content = `cUrl -s --cookie cookies.txt --cookie-jar cookies.txt #{url}`
+
     # -s    Pour ne pas avoir l'entête de progression, mais seulement le
     #       contenu de la page en retour
 

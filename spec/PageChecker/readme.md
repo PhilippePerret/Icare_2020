@@ -6,9 +6,14 @@ C'est un outil totalement autonome qu'on doit pouvoir utiliser sur n'importe que
 
 ## TODO
 
-* un bon site traite ses adresses inatteignable. Il faut pouvoir définir quand ça se produit
-* checker la présence des images (img/src)
-* traiter l'attente des pages (ce qu'on doit trouver dans une url précise, avec le fichier pages_data.yaml)
+* traitement dans différents contextes, par exemple avec un utilisateur identifié
+* traiter l'aspect des pages (ce qu'on doit trouver dans une url précise, avec le fichier pages_data.yaml)
+* checker la présence/existence des images (img/src). Est-ce qu'il faut le faire par SSH ?
+
+
+## Pour essayer du code
+
+On peut utiliser la commande `./PageChecker.rb --try` pour jouer le code défini dans la méthode `[PageChecker#try_something](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/PageChecker/xlib/_required/_then/PageChecker/page_checker_class.rb:74)`
 
 ## Synopsis
 

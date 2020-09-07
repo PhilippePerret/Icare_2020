@@ -20,7 +20,8 @@ class << self
       'Mot de passe'  => {name:'user_password', type:'password'},
       'back_to'       => {name:'back_to',       type:'hidden', value: session['back_to']}
     }
-    @form.submit_button = 'S’identifier'
+    @form.submit_button = 'Sidentifier'
+    # @form.submit_button = 'S’identifier'
     @form.other_buttons = [
       {text: 'Mot de passe oublié'.freeze, route: 'user/forgot_password'.freeze},
       {text: 'S’inscrire'.freeze, route: 'user/signup'.freeze}
@@ -51,9 +52,7 @@ class << self
   # pouvoir le reconnaitre au prochain chargement.
   # On met également sa session en données pour comparer les deux.
   def authentify_user
-    session['user_id'] = @dbuser[:id].to_s
-    db_exec("UPDATE users SET session_id = ? WHERE id = ?".freeze, [session.id, @dbuser[:id]])
-    User.current = User.get(@dbuser[:id])
+    login_user(@dbuser[:id])
     notice "Soyez #{user.fem(:la)} bienvenu#{user.fem(:e)}, #{user.pseudo} !"
   end
 
