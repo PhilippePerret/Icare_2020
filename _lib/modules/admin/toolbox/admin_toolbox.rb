@@ -2,6 +2,7 @@
 =begin
   Boite à outils de l'administration
 =end
+require 'uri'
 class Admin
 class << self
 

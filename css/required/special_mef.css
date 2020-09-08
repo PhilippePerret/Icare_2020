@@ -74,17 +74,34 @@ div.only-message {
   chaque section
 */
 div.goto {
-  display:inline-block;
   position:relative;
   padding:1.5em;
-  width:200px;
-  min-width:200px;
-  max-width:200px;
   text-align:center;
   margin-top:1em;
-  margin-right:12px;
   border:1px solid #DDDDDD;
 }
+
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.goto {
+    display:inline-block;
+    width:200px;
+    min-width:200px;
+    max-width:200px;
+    margin-right:12px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.goto {
+    display:block;
+    margin-right:12px;
+    margin-right:12px;
+  }
+}
+
+
+
 div.goto.empty {visibility:hidden;}
 
 div.goto a {

@@ -2,7 +2,7 @@
 
 class HTML
   def titre
-    "#{EMO_PAPILLON.page_title+ISPACE}Les 10 bonnes raisons de choisir l’atelier Icare".freeze
+    "#{EMO_POUCEUP.page_title+ISPACE}Les 10 bonnes raisons de choisir l’atelier Icare".freeze
   end
   # Code à exécuter avant la construction de la page
   def exec
