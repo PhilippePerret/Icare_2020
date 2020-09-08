@@ -54,7 +54,7 @@ end #/ fpath
 # Méthode qui recherche le fichier d'aide d'après son id
 def find
   log("id: #{id} / self.class.folder: #{self.class.folder.inspect}")
-  if RUBY_VERSION > "2.3.7"
+  if RUBY_VERSION > "2.5.7"
     @fname = Dir.glob("#{id}-*\.{md,erb}", base: self.class.folder).first || raise(ERRORS[:unfound_aide_file])
     @fpath = File.join(self.class.folder, @fname)
   else

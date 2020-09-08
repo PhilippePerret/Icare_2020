@@ -6,3 +6,4 @@ gem "rspec"
 gem "capybara"
 gem "mysql2"
 gem 'selenium-webdriver'
+gem 'kramdown'
