@@ -42,6 +42,8 @@ class << self
   end #/ run
 
   def rapport_complet_final
+    puts "\n\n\n=========================================================="
+    puts       "================= RAPPORT FINAL COMPLET =================="
     contexts.each do |context|
       next if context.tableau_resultats.nil?
       puts context.tableau_resultats

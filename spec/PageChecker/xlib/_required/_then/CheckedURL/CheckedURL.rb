@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+class Error404 < StandardError; def message; 'Erreur 404 (page introuvable)' end end
 =begin
   Class CheckedURL
   ----------------

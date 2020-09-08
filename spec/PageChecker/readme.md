@@ -52,5 +52,6 @@ On peut tester une adresse seule en utilisant l'option `--not-deep`.
   -o/--online     Check du site distant
   --not-deep      Pour checker seulement l'adresse fournie en premier argument,
                   mais sans checker ses liens (juste son existence)
-
+  --max=XXX       Pour ne traiter que ce nombre de liens (pour les expérimenta-
+                  tions principalement)
 ~~~

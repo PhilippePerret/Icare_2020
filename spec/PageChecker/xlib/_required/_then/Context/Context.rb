@@ -58,7 +58,7 @@ private
     @table_not_deep ||= begin
       h = {}
       (data[:not_deep]||[]).each do |route|
-        h.merge!( "#{pagechecker.base}/#{route}" => true)
+        h.merge!( fullurl(route) => true)
       end; h;
     end
   end #/ table_not_deep
@@ -68,9 +68,18 @@ private
     @table_exclusion ||= begin
       h = {}
       (data[:exclude]||[]).each do |route|
-        h.merge!("#{pagechecker.base}/#{route}" => true)
+        h.merge!(fullurl(route) => true)
       end; h;
     end
   end #/ table_exclusion
+
+  def fullurl(route)
+    @full_url_template ||= begin
+      ck = pagechecker.base.dup
+      ck += '/' unless ck.end_with?('/')
+      ck << '%s'
+    end
+    @full_url_template % route
+  end #/ fullurl
 
 end #/Context

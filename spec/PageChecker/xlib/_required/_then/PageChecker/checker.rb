@@ -19,7 +19,7 @@ class << self
     elsif PAGES_DATA[:contexts]
       # On traite dans tous les contextes
       PAGES_DATA[:contexts].each do |idcontext, dcontext|
-        traite_context(Context.new(self, dcontext))
+        traite_context(Context.new(self, dcontext)) || break
       end
     else
       # Sans contexte
@@ -37,16 +37,20 @@ class << self
     end
     remove_cookie_file
     context.initiate
-    traite_urls_in_context
+    ok_suite = traite_urls_in_context
     remove_cookie_file
+
+    return ok_suite
   end #/ traite_context
 
   def traite_urls_in_context
     @urls       = {}
     @urls_list  = []
     add_url(base_url, nil, '--base--')
-    check_all_urls
+    ok_suite = check_all_urls
     display_report
+
+    return ok_suite
   end #/ traite_urls_in_context
 
   def check_all_urls
@@ -57,14 +61,17 @@ class << self
     while iurl = urls_list.pop
       iurl.check
       itimes += 1
-      # break if itimes > 10
+      if CLI.option?(:max) && itimes >= CLI.option(:max)
+        return false # pour arrêter
+      end
     end
     puts RC*2 + "=== FIN (#{itimes} pages contrôlées) ===".bleu
+
+    return true
   end #/ check_all_urls
 
   def display_report
     tableau = ["#{RC*3}==== RAPPORT Contexte #{self.current_context.titre} ===="]
-    tableau << ["="]
     tableau << ["="]
     tableau << "= Nombre de liens checkés : #{urls.count}"
     nombre_erreurs = 0
@@ -110,8 +117,6 @@ class << self
       @urls[url].add_referrer(referrer) unless referrer.nil?
       puts " NO".rouge if CLI.option?(:verbose)
       return
-    else
-      puts " OUI".vert if CLI.option?(:verbose)
     end
     # puts "-> ajout de #{url.inspect}"
     iurl = CheckedURL.new(self, url, {title: title})
@@ -119,8 +124,10 @@ class << self
     # On doit le mettre ici car la méthode exclude? essaye avec l'url telle
     # quelle est aussi avec l'URL sans query-string ni ancre
     if self.current_context.exclude?(iurl)
-      puts "<-> EXCLUDED URL: #{url}".jaune
+      puts " EXCLUDED".jaune
       return
+    else
+      puts " OUI".vert if CLI.option?(:verbose)
     end
     iurl.add_referrer(referrer)
     @urls.merge!(url => iurl)
