@@ -1,8 +1,11 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Module pour les IDs à usage unique
   Utilisé pour les requêtes Ajax
 =end
+require 'securerandom'
+
 unless defined?(MyDB)
   unless defined?(OFFLINE)
     ONLINE  = ENV['HTTP_HOST'] != "localhost"
@@ -18,7 +21,7 @@ class << self
   # = main =
   # Méthode principale pour créer un nouvel enregistrement dans la table
   def create(data)
-    data.merge!(uuid: rand(32700))
+    data.merge!(uuid: SecureRandom.hex(10)) # 52750b30ffbc7de3b362
     db_compose_insert(table, data)
     if MyDB.error
       raise MyDB.error.inspect
