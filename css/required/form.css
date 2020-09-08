@@ -128,15 +128,29 @@ form div.row span.value > *:not(.explication) {
   font-size:inherit;
   font-style:inherit;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  form:not(.noform) div.row span.value > *:not(select):not(input[type="checkbox"]) {
+    width:100%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  /* form:not(.noform) div.row span.value > input[type="text"],
+  form:not(.noform) div.row span.value > input[type="password"]
+  {
+    width:90%;
+  }
+  form:not(.noform) div.row span.value textarea {
+    width:90%;
+  } */
+}
+
 
 form:not(.noform) div.row span.value > input[type="text"],
 form:not(.noform) div.row span.value > input[type="password"]
 {
   width:95%;
-}
-
-form:not(.noform) div.row span.value > *:not(select):not(input[type="checkbox"]) {
-  width:100%;
 }
 form:not(.noform) div.row span.value textarea {
   width:95%;

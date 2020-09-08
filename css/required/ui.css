@@ -12,11 +12,19 @@ head title:after {
 
 body {
   font-family:"Times new Roman", serif, Avenir;
-  font-size:16pt;
   color:#555555;
   margin:0;
   padding:0;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  body {font-size:16pt;}
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  body {font-size:12pt;}
+}
+
 body:not(.home) {
   max-width: 1200px;
 }

@@ -53,7 +53,7 @@
 
   section#body form {
     /* Pour surclasser toutes les autres dimensions (un formulaire prend toujours toute la page) */
-    width:fit-content !important;
+    /* width:fit-content !important; */
     padding:2px!important;
     margin:unset!important;
   }
