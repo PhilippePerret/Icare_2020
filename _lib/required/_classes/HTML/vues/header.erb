@@ -1,8 +1,9 @@
 <div id="header-tools">
   <%= tools_block_notifications %>
-  <%= MainLink[:aide].simple %>
-  <%= MainLink[user.guest? ? :login : :logout].simple %>
-  <%= user.guest? ? MainLink[:signup].simple : Tag.lien_bureau %>
+  <div><a href="plan">Plan</a></div>
+  <div><%= MainLink[:aide].simple %></div>
+  <div><%= MainLink[user.guest? ? :login : :logout].simple %></div>
+  <div><%= user.guest? ? MainLink[:signup].simple : Tag.lien_bureau %></div>
 </div>
 
 <div id="div-logo">

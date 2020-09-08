@@ -171,9 +171,22 @@ section#header div#div-logo img#logo-papillon {
   width:40px;
   vertical-align:top;
 }
-section#header div#header-tools {
-  float:right;
+
+section#header:not(.home) div#header-tools {
+  position:fixed;
+  width:100%;
+  background:inherit;
+  top:-9em;
+  text-align:right;
+  transition:0.5s;
 }
+section#header:not(.home):hover div#header-tools {
+  top:0;
+  transition:0.5s;
+}
+/* section#header div#header-tools {
+  float:right;
+} */
 section#header div#header-tools a {
   display:inline-block;
   width:130px;
@@ -182,6 +195,11 @@ section#header div#header-tools a {
   font-family:Arial,Geneva,Helvetica;
   font-size:12.8pt;
   padding:5px 8px 3px;
+  border:1px solid;
+  border-radius:4px;
+  margin-top:0.5em;
+  margin-bottom:0.5em;
+  margin-right:2em;
   background-color:var(--lighter-color-normal);
   color:var(--inverse-lighter-color-normal);
 }
