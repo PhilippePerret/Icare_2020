@@ -42,3 +42,15 @@ On peut tester une adresse seule en utilisant l'option `--not-deep`.
 ~~~
 ./PageChecker.rb http://mon/url --not-deep
 ~~~
+
+## Options
+
+~~~
+
+  -r/--referrer   Inscrire le référent, c'est-à-dire la page qui contient
+                  la première mention du lien.
+  -o/--online     Check du site distant
+  --not-deep      Pour checker seulement l'adresse fournie en premier argument,
+                  mais sans checker ses liens (juste son existence)
+
+~~~

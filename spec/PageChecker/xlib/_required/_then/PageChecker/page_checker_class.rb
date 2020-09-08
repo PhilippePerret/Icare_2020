@@ -7,6 +7,9 @@ PAGES_DATA = {}
 class PageChecker
 class << self
 
+  # Les contextes qui seront traités
+  attr_accessor :contexts
+
   # = main =
   #
   # Main méthode appelée au lancement l'application
@@ -32,18 +35,36 @@ class << self
     if CLI.option?(:try)
       try_something
     else
-      # On lance le check du site
-      check_url
+      @contexts = []
+      check_website
+      rapport_complet_final
     end
   end #/ run
 
+  def rapport_complet_final
+    contexts.each do |context|
+      next if context.tableau_resultats.nil?
+      puts context.tableau_resultats
+    end
+  end #/ rapport_complet_final
+
+  # ---------------------------------------------------------------------
+  #
+  #   Méthodes d'état
+  #
+  # ---------------------------------------------------------------------
+  def online?
+    CLI.option?(:online)
+  end #/ online?
+  def offline?
+    not(CLI.option?(:online))
+  end #/ offline?
 
   # ---------------------------------------------------------------------
   #
   #   Méthodes fonctionnelles
   #
   # ---------------------------------------------------------------------
-
 
   # Vérifie que le testeur soit bien défini
   def check_application
@@ -85,26 +106,18 @@ class << self
     not(CONFIG[:url][confkey].nil?) || raise(ERRORS[:url_required])
   end #/ define_url
 
-  # ---------------------------------------------------------------------
-  #
-  #   Pour des essais
-  #
-  # ---------------------------------------------------------------------
 
-  def try_something
-    # On essaie d'appeler le formulaire une première fois
-    # res = `cUrl -s --data "user_mail=phil@atelier-icare.net&user_password=19ElieSalome64&press=S’identifier&form_id=user-login" http://localhost/AlwaysData/Icare_2020/user/login`
-    require 'securerandom'
-    curluser = SecureRandom.hex(10)
-    pth = File.join('.','tmp', curluser)
-    File.open(pth,'wb'){|f| f.write(1)}
-    res = `cUrl -s --cookie-jar cookies.txt http://localhost/AlwaysData/Icare_2020/?curluser=#{curluser}`
-    puts "#{RC*4}---- res: #{res}"
-    res = `cUrl -s --cookie cookies.txt --cookie-jar cookies.txt http://localhost/AlwaysData/Icare_2020/bureau/home`
-    puts "#{RC*4}---- res: #{res}"
-    res = `cUrl -s --cookie cookies.txt --cookie-jar cookies.txt http://localhost/AlwaysData/Icare_2020/user/logout`
-    puts "#{RC*4}---- res: #{res}"
-  end #/ try_something
+  # Pour exécuter une commande shell distante
+  # Par exemple PageChecker.ssh_exec("cd www\nls -la")
+  def ssh_exec(cmd)
+    @ssh_cmd ||= <<-END
+ssh -T #{CONFIG[:ssh]} bash <<ENDSSH
+%s
+ENDSSH
+    END
+    system(@ssh_cmd % cmd)
+  end #/ ssh_exec
+
   # ---------------------------------------------------------------------
   #
   #   PATHS

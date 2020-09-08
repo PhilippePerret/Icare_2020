@@ -1,10 +1,17 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 #
-# CLI 1.3.1
+# CLI 1.3.2
 #
 # Versions
 # --------
+# 
+# 1.3.2
+#   * Ajout de l'alias CLI.option (alias de CLI.option?) pour une méthode
+#     au nom plus sémantique pour récupèrer la valeur de l'option.
+#   * Transformation systématique de la clé en symbole dans la méthode
+#     CLI.option? (et son alias CLI.option(...))
+#
 # 1.3.1
 #   Identique à version 1.3.0, mais avec plus d'explications dans les
 #   commentaires.
@@ -34,7 +41,9 @@
 #
 #     Le premier argument trouvé est mis dans CLI.command
 #     Les paramètres suivants (hors option) se trouvent dans CLI.params
-#     Les options sont définies dans CLI.options
+#     Les options sont définies dans CLI.options, elles peuvent être définies
+#     soit sans valeur soit avec valeur par "--option=valeur". On récupère
+#     la valeur par CLI.option(:<clé>)
 #
 # Messages de débug
 # -----------------
@@ -112,10 +121,14 @@ class CLI
       return true
     end #/analyse_command_line
 
-
+    # Return TRUE ou sa valeur si l'option +key+ existe
+    # Rappel : les clés sont toujours des symboles.
+    # Donc cette méthode sert autant à tester la présence d'une option qu'à
+    # voir sa valeur. Mais on utilisera plutôt CLI.option pour avoir la valeur
     def option?(key)
-      options[key]
+      options[key.to_sym]
     end #/ option?
+    alias :option :option?
 
 
     # Pour benchmarker l'application

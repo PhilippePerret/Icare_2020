@@ -1,6 +1,11 @@
 ---
   url:
-    online: https://www.atelier-icare.net
+    online: https://www.atelier-icare.net/
     offline: http://localhost/AlwaysData/Icare_2020/
+  ssh: icare@ssh-icare.alwaysdata.net
+  # On définit ici la condition qui fait qu'une page n'a pas été trouvée,
+  # quand elle ne produit pas d'erreur 404. Ici, par exemple, c'est la
+  # présence de l'image (img) d'identifiant (#) "voie-sans-issue" qui
+  # indique que la page recherchée n'existe pas.
   unfound_if:
     css: img#voie-sans-issue

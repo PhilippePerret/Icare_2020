@@ -7,6 +7,10 @@
 class Context
   attr_reader :data
   attr_reader :pagechecker # pour le moment, c'est la classe PageChecker
+
+  # Tableau des résultats pour le contexte donné
+  attr_accessor :tableau_resultats
+
   # +data+ Table des données à l'initialisation
   #   :titre      Le titre humain du contexte. P.e. "Administrateur"
   #   :context    L'ID du contexte (doit posséder sa méthode context_<context>)
@@ -33,15 +37,16 @@ class Context
     end
   end #/ initiate
 
-  # Return TRUE si dans le contexte donné l'URL +url+ ne doit pas être
-  # fouillée profondément (mais l'URL sera checkée)
+  # Return TRUE si dans le contexte donné l'URL +url+ doit être
+  # fouillée profondément (l'URL sera toujours checkée, mais ses liens seront
+  # passés si deep? retourne false)
   def deep?(iurl)
-    not(table_not_deep.key?(iurl.href)) && not(table_not_deep.key?(iurl.pure_url))
+    not(table_not_deep.key?(iurl.full_url)) && not(table_not_deep.key?(iurl.href)) && not(table_not_deep.key?(iurl.qs_url))
   end #/ deep?
 
   # Return TRUE si, dans le contexte donné, l'URL +url+ doit être exclue
   def exclude?(iurl)
-    table_exclusion.key?(iurl.href) || table_exclusion.key?(iurl.pure_url)
+    table_exclusion.key?(iurl.href) || table_exclusion.key?(iurl.qs_url)
   end #/ exclude?
 
   def titre

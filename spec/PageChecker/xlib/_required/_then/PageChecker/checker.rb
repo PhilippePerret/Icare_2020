@@ -8,53 +8,54 @@ class << self
   # = main =
   #
   # Méthode principale appelée pour checker l'url voulue
-  def check_url
-    if PAGES_DATA[:contexts]
-      PAGES_DATA[:contexts].each do |dcontext|
-        context = Context.new(self, dcontext)
-        self.current_context = context
-        puts "=== CONTEXTE : #{context.titre} ==="
-        remove_cookie_file
-        context.initiate
-        traite_url
+  def check_website
+    puts "=== Check du site ".bleu + base.vert + " ===".bleu
+    if PAGES_DATA[:contexts] && CLI.option?(:context)
+      if PAGES_DATA[:contexts].key?(CLI.option(:context).to_sym)
+        traite_context(Context.new(self, PAGES_DATA[:contexts][CLI.option(:context).to_sym]))
+      else
+        erreur("Je ne connais pas le context :#{CLI.option(:context)} (les contextes sont : #{PAGES_DATA[:contexts].keys.join(', ')}).")
+      end
+    elsif PAGES_DATA[:contexts]
+      # On traite dans tous les contextes
+      PAGES_DATA[:contexts].each do |idcontext, dcontext|
+        traite_context(Context.new(self, dcontext))
       end
     else
       # Sans contexte
-      self.current_context = Context.new(self, {})
-      traite_url
+      traite_context(Context.new(self, {}))
+    end
+  end #/ check_website
+
+  # Pour traiter le site dans un certain contexte (par exemple celui d'un
+  # utilisateur identifié ou d'un administrateur)
+  def traite_context(context)
+    PageChecker.contexts << context
+    self.current_context = context
+    if context.titre
+      puts "=== Contexte : ".bleu + context.titre.vert + "#{} ===".bleu
     end
     remove_cookie_file
-  end #/ check_url
+    context.initiate
+    traite_urls_in_context
+    remove_cookie_file
+  end #/ traite_context
 
-  def traite_url
-    @urls = nil
-    @urls_list = nil
-    add_url(base_url, '--base--')
+  def traite_urls_in_context
+    @urls       = {}
+    @urls_list  = []
+    add_url(base_url, nil, '--base--')
     check_all_urls
     display_report
-  end #/ traite_url
-
-  def remove_cookie_file
-    File.delete('./cookies.txt') if File.exists?('./cookies.txt')
-  end #/ remove_cookie_file
-
+  end #/ traite_urls_in_context
 
   def check_all_urls
     itimes = 0
-    puts RC*2 + "=== DÉBUT ===".bleu
+    puts RC*2 + "=== CHECK START ===".bleu
     deep = not(CLI.option?(:not_deep))
-    write_referrer = CLI.option?(:referrer)
     itimes = 0
     while iurl = urls_list.pop
-      puts "*** CHECK #{iurl.href} (reste #{urls_list.count})".bleu
-      if write_referrer
-        puts "     From: #{iurl.referrers.first}"
-      end
-      deep_search_in_context = self.current_context.deep?(iurl)
-      if not deep_search_in_context
-        puts "   Not Deep Search in context #{self.current_context.titre}".jaune
-      end
-      URL.new(iurl).check( deep: deep && in_domain?(iurl.href) && deep_search_in_context )
+      iurl.check
       itimes += 1
       # break if itimes > 10
     end
@@ -62,26 +63,33 @@ class << self
   end #/ check_all_urls
 
   def display_report
-    puts "#{RC*3}==== RAPPORT PageChecker ===="
-    puts RC*2
-    puts "Nombre de liens checkés : #{urls.count}"
+    tableau = ["#{RC*3}==== RAPPORT Contexte #{self.current_context.titre} ===="]
+    tableau << ["="]
+    tableau << ["="]
+    tableau << "= Nombre de liens checkés : #{urls.count}"
     nombre_erreurs = 0
     erreurs = []
     urls.each do |hr, iurl|
       if iurl.errors
         nombre_erreurs += 1
-        erreurs << "  ⛑  #{iurl.href}#{RC}#{iurl.formated_referrers("    ↲ ")}"
+        erreurs << "  ⛑  #{iurl.href}#{RC}= #{iurl.formated_referrers("=     ↲ ")}"
       end
     end
     if nombre_erreurs > 0
       # S'il y a des erreurs, on les affiche en mettant le détail
-      puts "Nombre d'erreurs de liens : #{nombre_erreurs}"
-      puts "Liens erronnés et pages d'appel".rouge
-      puts "-------------------------------".rouge
-      puts erreurs.join(RC).rouge
+      tableau << "= Nombre d'erreurs de liens : #{nombre_erreurs}"
+      tableau << "= Liens erronnés et pages d'appel".rouge
+      tableau << "=-------------------------------".rouge
+      tableau << "= #{erreurs.join(RC+'= ')}".rouge
     else
-      puts "Aucune erreur de lien !".vert
+      tableau << "= Aucune erreur de lien !".vert
     end
+
+    tableau = tableau.join(RC)
+    # On l'écrit à la fin de ce check
+    puts tableau
+    # On l'enregistre dans le contexte pour l'affichage final
+    self.current_context.tableau_resultats = tableau
   end #/ display_report
 
   # Ajoute l'URL +url+ mais seulement si elle n'existe pas
@@ -90,17 +98,23 @@ class << self
   # Quand on ajoute une url, il faut aussi mémoriser son referrer pour
   # savoir où il faudra faire des corrections
   def add_url(url, referrer, title =  nil)
-    url || return # balise <A> sans href
+    url || begin
+      # QUESTION Faut-il mettre en erreur les liens avec href null ou
+      # faut-il vérifier avant s'il s'agit d'une ancre.
+      return # balise <A> sans href
+    end
+    STDOUT.write "    -> add_url(#{url.inspect})" if CLI.option?(:verbose)
     url = url.split('#').first
-    @urls ||= {}
-    @urls_list ||= []
     if @urls.key?(url)
       #  Si cet URL existe déjà, on ajoute simplement le referrer
-      @urls[url].add_referrer(referrer)
+      @urls[url].add_referrer(referrer) unless referrer.nil?
+      puts " NO".rouge if CLI.option?(:verbose)
       return
+    else
+      puts " OUI".vert if CLI.option?(:verbose)
     end
     # puts "-> ajout de #{url.inspect}"
-    iurl = URLHref.new(url, title)
+    iurl = CheckedURL.new(self, url, {title: title})
     # S'il faut exclure l'URL dans le contexte donné
     # On doit le mettre ici car la méthode exclude? essaye avec l'url telle
     # quelle est aussi avec l'URL sans query-string ni ancre
@@ -124,32 +138,29 @@ class << self
   end #/ base_url
   alias :base :base_url
 
+private
+
+  # ---------------------------------------------------------------------
+  #
+  #   Fichier cookies
+  #
+  # ---------------------------------------------------------------------
+
+  # Détruit le fichier cookie
+  # Note : que ce soit en local ou en distant, le fichier est toujours
+  # enregistré localement puisque c'est la commande CURL qui l'utilise.
+  def remove_cookie_file
+    remove_cookie_file_local
+  end #/ remove_cookie_file
+
+  def remove_cookie_file_local
+    File.delete('./cookies.txt') if File.exists?('./cookies.txt')
+  end #/ remove_cookie_file_local
+
+  # Obsolète (le fichier est toujours local)
+  def remove_cookie_file_distant
+    PageChecker.ssh_exec('rm ./www/cookie.txt')
+  end #/ remove_cookie_file_distant
+
 end # /<< self
 end #/PageChecker
-
-URLHref = Struct.new(:href, :title) do
-  attr_reader :errors, :referrers
-
-  def pure_url
-    @pure_url ||= href.split('#').first.split('?').first
-  end #/ pure_url
-
-  def add_error(str)
-    @errors ||= []
-    @errors << str
-  end #/ error=
-  def add_referrer(referrer)
-    @referrers ||= []
-    @referrers << referrer
-  end #/ add_referrer
-
-  # Mise en forme des référants
-  def formated_referrers(prefix)
-    @formated_referrers ||= begin
-      referrers.collect do |ref|
-        "#{prefix}#{ref.url}"
-      end.join(RC)
-    end
-  end #/ formated_referrers
-
-end
