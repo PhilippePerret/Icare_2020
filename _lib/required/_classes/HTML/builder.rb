@@ -147,7 +147,7 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
     def protection_injection
       data_uuid = UUID.create(user_id: user.id, session_id: session.id)
       <<-JAVASCRIPT.strip.freeze
-const UUID = #{data_uuid[:uuid]};
+const UUID = "#{data_uuid[:uuid]}";
 const UID  = #{user.id};
       JAVASCRIPT
     end #/ protection_injection
