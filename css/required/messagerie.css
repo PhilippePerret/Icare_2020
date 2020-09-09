@@ -1,0 +1,30 @@
+section#messages {}
+
+section#messages > div {
+  display:inline-block;
+  padding:0.2em 1em 0em;
+  position:relative;
+  min-height:2.5em;
+  padding-left:4em;
+  padding-top:1em;
+  padding-bottom:1em;
+}
+section#messages .errors {
+  background-color:#FFCCCC;
+  color:red;
+}
+section#messages .notices {
+  background-color:#ccffcd;
+  color:rgb(0, 136, 45);
+}
+
+
+/* Pour le picto */
+span.picto-message {
+  position:absolute;
+  left:8px;
+  top:8px;
+}
+span.picto-message img {
+  width:45px;
+}

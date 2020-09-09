@@ -1,7 +1,8 @@
 # encoding: UTF-8
 
-CSS_TAG = '<link rel="stylesheet" type="text/css" href="%{css}" />'.freeze
-JAVASCRIPT_TAG = '<script src="%{js}" type="text/javascript" charset="utf-8"></script>'.freeze
+# Modifier ci-dessous le "?v=X" pour forcer l'actualisation
+CSS_TAG = '<link rel="stylesheet" type="text/css" href="%{css}?v=3" />'.freeze
+JAVASCRIPT_TAG = '<script src="%{js}?v=3" type="text/javascript" charset="utf-8"></script>'.freeze
 
 class HTML
   # Retourne les lignes de tag <link> pour les css

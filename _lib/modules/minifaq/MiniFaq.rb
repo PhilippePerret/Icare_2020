@@ -29,7 +29,7 @@ class << self
     user_mail = param(:minifaq_user_mail)
     user_id = param(:minifaq_user_id)&.to_i
     dquestion = {
-      question:   param(:minifaq_question).safetize.nil_if_empty,
+      question:   param(:minifaq_question)&.safetize,
       user_id:    user_id
     }
     for_etape = param(:minifaq_target_type) == 'absetape'
@@ -68,6 +68,9 @@ class << self
       msg << "Pour lire la réponse, repassez sur le site dans quelques jours."
     end
     message(msg)
+  rescue Exception => e
+    log(e)
+    erreur(e.message)
   end #/ add_question
 end # /<< self
 # ---------------------------------------------------------------------

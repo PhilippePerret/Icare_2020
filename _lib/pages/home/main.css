@@ -32,11 +32,15 @@ div#main-cadre div#papillon {
 @media only screen and (max-width: 767px) {
   /* SMARTPHONE */
   div#main-cadre div#titre {
-    font-size:40pt;
+    font-size:36pt;
   }
   div#main-cadre {
     left:8%;
     right:8%;
+  }
+  div#main-cadre div#papillon img {
+    float:left;
+    width:40pt;
   }
 }
 

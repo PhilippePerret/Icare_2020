@@ -2,7 +2,7 @@
 require_relative 'handies/messages'
 class Messager
 
-DIV_OUT = '<div class="%{css}"><span class="emoji fleft">%{picto}</span>%{str}</div>'.freeze
+DIV_OUT = '<div class="%{css}"><span class="picto-message">%{picto}</span>%{str}</div>'.freeze
 
 class << self
   def add msg

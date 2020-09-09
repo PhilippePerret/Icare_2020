@@ -1,4 +1,5 @@
 @media only screen and (min-width: 768px) {
+  /* *** GRAND ÉCRAN *** */
   section#body {
     padding:0 4em;
   }
@@ -19,24 +20,19 @@
   section#messages {
     position: fixed;
     top: 60px;
-    max-height: 200px;
+    max-height: 400px;
     max-width: 60%;
     left: calc(20%);
     left: calc(60% - attr(width) / 2);
     overflow-y: auto;
   }
   section#messages > div {
-    padding-left:68px;
     box-sizing:border-box;
-  }
-  section#messages img.emoji.page_title {
-    position:absolute;
-    top:4px;
-    left:12px;
   }
 }
 
 @media only screen and (max-width: 767px) {
+  /* *** SMARTPHONE *** */
   section#body {
     padding:8px;
     /* text-align:center; */
@@ -80,10 +76,6 @@
 
   body:not(.home) section#messages {
     margin:1em 0;
-  }
-  section#messages img.emoji.page_title {
-    position:block;
-    text-align:center;
   }
 
 }
