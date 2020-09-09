@@ -8,11 +8,11 @@
 def divGoto(inner, options = {})
   css = ['goto']
   css << 'exergue' if options[:exergue]
-  css << options[:class] if options.key?(:class)
+  css << options[:class] if not(options[:class].nil?)
   <<-HTML
-<div class="#{css.join(' ')}">
+<a id="#{options[:id]}" class="#{css.join(' ')}" href="#{options[:route]}">
   #{inner}
-</div>
+</a>
   HTML
 end #/ divGoto
 

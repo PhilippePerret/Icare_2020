@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class MainLink
   --------------
@@ -7,15 +8,15 @@
 
 class MainLink
 DATA_KEY = {
-  signup:     {route:'user/signup'.freeze,  text:'s’inscrire'.freeze, picto:''},
-  login:      {route:'user/login'.freeze,   text:'s’identifier'.freeze},
-  logout:     {route:'user/logout'.freeze,  text:'se déconnecter'.freeze},
-  aide:       {route:'aide/home'.freeze,    text:'aide'.freeze,     picto:'objets/gyrophare'.freeze},
-  bureau:     {route:'bureau/home'.freeze,  text:'bureau'.freeze,   picto:'objets/bureau'.freeze},
-  frigo:      {route:'bureau/frigo'.freeze, text:'porte de frigo',  picto:'objets/thermometre'.freeze},
-  contact:    {route:'contact/mail'.freeze, text:'contact', picto:'objets/lettre-mail'.freeze},
-  plan:       {route:'plan'.freeze, text:'plan', picto:'objets/boussole'.freeze},
-  reussites:  {route:'overview/reussites'.freeze, text:'belles réussites', picto:'objets/paquet-cadeau'.freeze},
+  signup:     {route:'user/signup',  text:'s’inscrire', picto:''},
+  login:      {route:'user/login',   text:'s’identifier'},
+  logout:     {route:'user/logout',  text:'se déconnecter'},
+  aide:       {route:'aide/home',    text:'aide',     picto:'objets/gyrophare'},
+  bureau:     {route:'bureau/home',  text:'bureau',   picto:'objets/bureau'},
+  frigo:      {route:'bureau/frigo', text:'porte de frigo',  picto:'objets/thermometre'},
+  contact:    {route:'contact/mail', text:'contact', picto:'objets/lettre-mail'},
+  plan:       {route:'plan', text:'plan', picto:'objets/boussole'},
+  reussites:  {route:'overview/reussites', text:'belles réussites', picto:'objets/paquet-cadeau'},
 }
 # ---------------------------------------------------------------------
 #
@@ -66,7 +67,7 @@ def with(params)
   ftext = ftext.capitalize if params[:titleize]
   ftext = ftext % {non_vus:params[:pastille]} if params.key?(:pastille)
   ftext = emoji+ISPACE+ftext if params[:picto]
-  build_tag(text: ftext)
+  build_tag(text: ftext, class:params[:class])
 end #/ with
 
 # ---------------------------------------------------------------------
@@ -82,7 +83,7 @@ end #/ emoji
 # ---------------------------------------------------------------------
 
 def id
-  @id ||= data[:id] || "btn-#{key}".freeze
+  @id ||= data[:id] || "btn-#{key}"
 end #/ id
 def css
   @css

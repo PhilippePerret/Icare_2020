@@ -1,23 +1,9 @@
+<%# frozen_string_literal: true %>
 <p>Bienvenue dans votre bureau de travail à l'atelier Icare, <%= pseudo %>.</p>
-<div id="goto-travail" class="goto">
-  <%= EMO_TRAVAIL+ISPACE+Tag.link(route:'bureau/travail'.freeze, text:'Travail courant'.freeze) %>
-</div>
-<div id="goto-notifications" class="goto">
-  <%= EMO_PUNAISE+ISPACE+Tag.link(route:'bureau/notifications'.freeze,text:('Notifications%{non_vus}' % {non_vus: pastille_notifications_non_vues}).freeze) %>
-</div>
-
-<div id="goto-frigo" class="goto">
-  <%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, picto:true ) %>
-</div>
-
-<div id="goto-documents" class="goto">
-  <%= EMO_PILE_LIVRES.regular + ISPACE %><a href="bureau/documents">Documents</a>
-</div>
-
-<div id="goto-profil" class="goto">
-  <%= femme? ? EMO_ETUDIANTE.regular : EMO_ETUDIANT.regular %> <a href="user/profil">Profil</a>
-</div>
-
-<%= divGoto(('<a href="bureau/preferences">'+EMO_ROUE_DENTEE+ISPACE+'Préférences</a>').freeze) %>
-
-<%= divGoto(('<a href="bureau/historique">'+EMO_CALENDAR+ISPACE+'Historique</a>').freeze) %>
+<%= divGoto(EMO_TRAVAIL+ISPACE+'Travail courant', route:'bureau/travail', id:'goto-travail') %>
+<%= divGoto(EMO_PUNAISE+ISPACE+('Notifications%{non_vus}' % {non_vus: pastille_notifications_non_vues}), route:'bureau/notifications', id:'goto-notifications') %>
+<%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, id:'goto-frigo', picto:true, class:'goto' ) %>
+<%= divGoto(EMO_PILE_LIVRES.regular+ISPACE+'Documents', id:'goto-documents', route:'bureau/documents') %>
+<%= divGoto((femme? ? EMO_ETUDIANTE.regular : EMO_ETUDIANT.regular)+ISPACE+'Profil', id:'goto-profil', route:'user/profil') %>
+<%= divGoto(EMO_ROUE_DENTEE+ISPACE+'Préférences', route:'bureau/preferences', id:'goto-preferences') %>
+<%= divGoto(EMO_CALENDAR+ISPACE+'Historique', route:'bureau/historique', id:'goto-historique') %>

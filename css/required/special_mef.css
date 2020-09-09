@@ -73,7 +73,7 @@ div.only-message {
   Les cadres-liens qui permettent de rejoindre les grosses parties dans
   chaque section
 */
-div.goto {
+.goto {
   position:relative;
   padding:1.5em;
   text-align:center;
@@ -83,7 +83,7 @@ div.goto {
 
 @media only screen and (min-width: 767px) {
   /* ÉCRAN */
-  div.goto {
+  .goto {
     display:inline-block;
     width:200px;
     min-width:200px;
@@ -93,7 +93,7 @@ div.goto {
 }
 @media only screen and (max-width: 767px) {
   /* SMARTPHONE */
-  div.goto {
+  .goto {
     display:block;
     margin-right:12px;
     margin-right:12px;
@@ -102,38 +102,38 @@ div.goto {
 
 
 
-div.goto.empty {visibility:hidden;}
+.goto.empty {visibility:hidden;}
 
-div.goto a {
+.goto {
   font-family:Geneva, Helvetica, Arial;
   letter-spacing:0.2px;
   font-size:0.9em;
 }
 
 /* Couleur du fond (3 : normal, simple et exergue) */
-div.goto:not(.exergue):not(.simple) {
+.goto:not(.exergue):not(.simple) {
   background-color: rgba(174, 217, 210, 1);
 }
-div.goto.simple {
+.goto.simple {
   background-color:transparent;
 }
-div.goto.exergue {
+.goto.exergue {
   background:linear-gradient(to right,#74babc,#397d7f);
 }
 
 /* Couleur du lien = texte */
-div.goto:not(.exergue) a {
+.goto:not(.exergue) {
   color: #555555;
 }
-div.goto.exergue a {
+.goto.exergue {
   color: white;
 }
 /* Survol du lien */
-div.goto:hover a { transition:0.1s; }
-div.goto:not(.exergue) a:hover {
+.goto:hover { transition:0.1s; }
+.goto:not(.exergue):hover {
   color:#000000;
 }
-div.goto.exergue a:hover {
+.goto.exergue:hover {
   color:#000000;
 }
 
@@ -154,13 +154,13 @@ span.pastille a {
 }
 span.pastille a:hover {all:unset!important}
 /* Quand la pastille est dans un bloc goto */
-div.goto span.pastille {
+.goto span.pastille {
   position:absolute;
   top:-8px;
   right:-8px;
   z-index:10;
 }
-div.goto:hover span.pastille {
+.goto:hover span.pastille {
   background-color:red!important;
   color:white!important;
 }

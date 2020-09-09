@@ -1,26 +1,22 @@
+<%# frozen_string_literal: true %>
 
-<div id="goto-notifications" class="goto">
-   <%= (EMO_PORTE_VOIX+ISPACE+Tag.link(route:'admin/notifications'.freeze, text:('Notifications%{non_vus}' % {non_vus: pastille_notifications_non_vues}).freeze)).freeze %>
-</div>
+<%= divGoto(EMO_PORTE_VOIX+ISPACE+('Notifications%{non_vus}' % {non_vus: pastille_notifications_non_vues}), route:'admin/notifications', id:'goto-notifications') %>
+<%= divGoto(Emoji.get('machine/validator').regular+ISPACE+'Inspecteur', route:'admin/validator_pages') %>
 
-<%= divGoto((Emoji.get('machine/validator').regular+ISPACE+Tag.lien(route:'admin/validator_pages'.freeze,text:'Inspecteur'.freeze)).freeze) %>
+<%= divGoto(EMO_OUTILS+ISPACE+'OUTILS', route:'admin/tools') %>
 
-<%= divGoto((EMO_OUTILS+ISPACE+'<a href="admin/tools">OUTILS</a>').freeze) %>
+<%= divGoto(EMO_ECRAN+ISPACE+ISPACE+'Console', route:'admin/console') %>
 
-<%= divGoto((EMO_ECRAN+ISPACE+ISPACE+'<a href="admin/console">Console</a>').freeze) %>
+<%= divGoto(EMO_ARMOIRE+ISPACE+'Base de données', route:'admin/database') %>
 
-<%= divGoto((EMO_ARMOIRE+ISPACE+'<a href="admin/database">Base de données</a>').freeze) %>
+<%= divGoto(EMO_ESPIONNE+ISPACE+'Traceur site', route:'admin/espion') %>
 
-<%= divGoto((EMO_ESPIONNE+ISPACE+'<a href="admin/espion">Traceur site</a>').freeze) %>
+<%= divGoto(EMO_RAPPORT+ISPACE+'Aperçu', route:'admin/overview') %>
 
-<%= divGoto((EMO_RAPPORT+ISPACE+'<a href="admin/overview">Aperçu</a>').freeze) %>
+<%= divGoto(EMO_TOOLBOX+ISPACE+'Modules', route:'admin/modules') %>
 
-<%= divGoto((EMO_TOOLBOX+ISPACE+'<a href="admin/modules">Modules</a>').freeze) %>
+<%= divGoto(EMO_ROUE_DENTEE+ISPACE+'Préférences', route:'bureau/preferences') %>
 
-<%= divGoto((EMO_ROUE_DENTEE+ISPACE+'<a href="bureau/preferences">Préférences</a>').freeze) %>
+<%= divGoto(Emoji.get('humain/etudiant').reg+ISPACE+'Profil', route:'user/profil') %>
 
-<%= divGoto((Emoji.get('humain/etudiant').reg+ISPACE+'<a href="user/profil">Profil</a>').freeze) %>
-
-<div id="goto-frigo" class="goto">
-  <%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, picto:true ) %>
-</div>
+<%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, id:'goto-frigo', class:'goto', picto:true ) %>
