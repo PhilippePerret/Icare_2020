@@ -13,20 +13,19 @@ GEM
       xpath (~> 3.2)
     childprocess (3.0.0)
     diff-lcs (1.4.4)
+    kramdown (2.3.0)
+      rexml
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     mysql2 (0.5.3)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
-    passenger (6.0.6)
-      rack
-      rake (>= 0.8.1)
     public_suffix (4.0.6)
     rack (2.2.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rake (13.0.1)
     regexp_parser (1.7.1)
+    rexml (3.2.4)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -52,9 +51,10 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  kramdown
   mysql2
-  passenger (>= 5.0.25)
   rspec
+  rubyzip
   selenium-webdriver
 
 BUNDLED WITH

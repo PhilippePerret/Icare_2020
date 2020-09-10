@@ -35,10 +35,11 @@ def goto_login_form
 end #/ goto_login_form
 
 def login_in_form(data)
+  require './_lib/pages/user/login/constants.rb'
   within("form#user-login") do
     fill_in('user_mail', with: data[:mail])
     fill_in('user_password', with:data[:password])
-    click_on('S’identifier')
+    click_on(UI_TEXTS[:btn_login])
   end
 end #/ login
 
@@ -52,6 +53,7 @@ end #/ login_icarien
 
 # Pour se déconnecter
 def logout
+  find('section#header').hover # Pour faire apparaitre les boutons
   click_on(id:'btn-logout')
   Capybara.reset_sessions!
 end #/ logout

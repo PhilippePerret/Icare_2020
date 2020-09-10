@@ -32,7 +32,9 @@
 }
 
 @media only screen and (max-width: 767px) {
+
   /* *** SMARTPHONE *** */
+
   section#body {
     padding:8px;
     /* text-align:center; */
@@ -57,14 +59,7 @@
   div.citation {
     margin:2%;
   }
-  section#header {
-    text-align:center;
-  }
-  section#header div#header-tools {
-    display:none;
-    float:none;
-    text-align:center;
-  }
+
   form:not(.inline) {
     margin:2%;
     width:calc(100% - 4%);

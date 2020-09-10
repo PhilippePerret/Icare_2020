@@ -1,12 +1,14 @@
+<div id="div-logo">
+  <a href="home" style="vertical-align:middle;"><%= EMO_PAPILLON.logo %></a>
+  <a href="plan">Atelier Icare</a>
+</div>
+
+<img id="icone-menu" src="<%= App.url %>/img/icones/menu.png" alt="Picto menus principaux">
+
 <div id="header-tools">
-  <%= tools_block_notifications %>
   <div><a href="plan">Plan</a></div>
   <div><%= MainLink[:aide].simple %></div>
   <div><%= MainLink[user.guest? ? :login : :logout].simple %></div>
   <div><%= user.guest? ? MainLink[:signup].simple : Tag.lien_bureau %></div>
-</div>
-
-<div id="div-logo">
-  <a href="home" style="vertical-align:middle;"><%= EMO_PAPILLON.logo %></a>
-  <a href="plan">Atelier Icare</a>
+  <%= tools_block_notifications %>
 </div>

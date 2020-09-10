@@ -7,7 +7,7 @@ require './_lib/pages/modules/paiement/lib/constants'
 require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
 require './_lib/_watchers_processus_/_constants_'
 
-feature "Paiement d'un module d'apprentissage" do
+feature "Paiement d'un module d'apprentissage avec les différents modes de paiement" do
 
   scenario 'juste pour produire le gel marion_avec_paiement', gel:true do
     # On modifie la date de paiement pour que la notification apparaisse.
@@ -45,6 +45,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
     start_time = Time.now.to_i
 
     marion.rejoint_ses_notifications
+    # sleep 20
     params = {unread:true, user_id:marion.id, wtype:'paiement_module'}
     expect(page).to have_notification(params),
       "La page des notifications devrait contenir la notification pour le paiement."

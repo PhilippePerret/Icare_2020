@@ -20,7 +20,7 @@ class HTML
 <html lang="fr" dir="ltr">
   #{head}
   <body class="#{css}" id="top">
-    <section id="header" class="#{css}">#{header}</section>
+    <section id="header" class="#{css}" onclick="this.classList[this.classList.contains('opened')?'remove':'add']('opened');">#{header}</section>
     <section id="messages">#{messages}</section>
     #{@titre}
     <section id="body" class="#{css}">#{body}</section>

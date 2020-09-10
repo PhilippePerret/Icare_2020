@@ -144,7 +144,32 @@ fieldset > fieldset > legend {
 
 section#header {
   padding:4px 24px;
+  height:30px;
+  overflow:hidden;
+  transition:0.3s; /* décision de Marion M. */
 }
+
+section#header.opened {
+  transition:0.3s; /* décision de Marion M. */
+  height:auto;
+}
+
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+}
+
+section#header:not(.home) img#icone-menu {
+  position:absolute;
+  top:4px;
+  right:4px;
+  width:30px;
+  cursor:pointer;
+}
+section#header.home img#icone-menu {display:none}
+
 section#header:not(.home) {
   box-shadow:6px 6px 6px 1px #d2d2d2;
   background:linear-gradient(to right, white, var(--dark-color-normal));
@@ -154,10 +179,15 @@ section#header:not(.home) {
   section#header:not(.home) {
     margin-bottom:3.5em;
   }
+  section#header div#header-tools > div {
+    display:inline-block;
+  }
 }
 @media only screen and (max-width: 767px) {
   /* SMARTPHONE */
-
+  section#header div#header-tools > div {
+    display:block;
+  }
 }
 
 
@@ -175,23 +205,13 @@ section#header div#div-logo img#logo-papillon {
 }
 
 section#header:not(.home) div#header-tools {
-  position:fixed;
+  margin-top:30px;
   width:100%;
-  background:inherit;
-  top:-9em;
   text-align:right;
-  transition:0.5s;
 }
-section#header:not(.home):hover div#header-tools {
-  top:0;
-  transition:0.5s;
+section#header:not(.home).opened div#header-tools {
 }
-/* section#header div#header-tools {
-  float:right;
-} */
 section#header div#header-tools a {
-  display:inline-block;
-  width:130px;
   vertical-align:-webkit-baseline-middle;
   text-align:center;
   font-family:Arial,Geneva,Helvetica;
@@ -201,10 +221,27 @@ section#header div#header-tools a {
   border-radius:4px;
   margin-top:0.5em;
   margin-bottom:0.5em;
-  margin-right:2em;
+  margin-right:0.5em;
   background-color:var(--lighter-color-normal);
   color:var(--inverse-lighter-color-normal);
 }
+
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  section#header div#header-tools a {
+    display:inline-block;
+    width:130px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  section#header div#header-tools a {
+    display:block;
+  }
+}
+
+
+
 section#header div#header-tools a:hover {
   background-color:#DDDDDD;
   color:var(--dark-color-normal);
@@ -213,10 +250,8 @@ section#header div#header-tools a:hover {
 
 /* Bloc indiquant dans l'entête le nombre de notifications non lues */
 section#header div.notification-tool {
-  float:right;
-  display:inline-block;
-  width:40px;
   text-align:right;
+  margin-bottom:1em;
 }
 
 section#body {

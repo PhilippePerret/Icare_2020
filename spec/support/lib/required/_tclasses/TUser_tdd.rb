@@ -6,11 +6,16 @@ class TUser
   include ::RSpec::Matchers # pour pouvoir utiliser expect
   include Capybara::DSL
 
+  def survol_header
+    find('section#header').hover
+  end #/ survol_header
+
   # L'user doit déjà être identifié
   def revient_dans_son_bureau
     unless page.has_css?('a', text: 'Bureau')
       click_on 'bureau' # home page vraie
     end
+    survol_header
     click_on 'Bureau'
   end #/ revient_dans_son_bureau
 
@@ -58,13 +63,14 @@ end #/ click
 private
 
   def loginit
+    require './_lib/pages/user/login/constants.rb'
     Capybara.reset_sessions!
     goto_login_form
     expect(page).to have_selector('form#user-login')
     within("form#user-login") do
       fill_in('user_mail',    with: mail)
       fill_in('user_password', with: password)
-      click_on('S’identifier')
+      click_on(UI_TEXTS[:btn_login])
     end
   end #/ login_it
 

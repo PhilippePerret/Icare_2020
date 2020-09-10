@@ -15,7 +15,7 @@
   - télécharger les commentaires (icarien)
   - télécharger des documents Quai des docs
 =end
-require 'zip' # rubyzip
+require 'zip' # pour l'obtenir : gem install rubyzip
 
 class Downloader
 class << self

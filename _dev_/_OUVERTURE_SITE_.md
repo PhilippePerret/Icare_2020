@@ -28,6 +28,10 @@
 
 ## À faire APRÈS l'ouverture
 
+### Actualiser les gems
+
+En SSH, jouer `bundle install` pour installer tous les gems.
+
 ### Envoi d'un mail d'annonce
 
 ~~~html

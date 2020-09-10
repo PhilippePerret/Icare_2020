@@ -1,13 +1,8 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Module pour identifier le user
 =end
-
-ERRORS.merge!({
-  unkown_user:    'Je ne vous reconnais pas. Merci de ré-essayer.'.freeze,
-  mail_required:  'Pour vous identifier, il faut fournir votre mail.'.freeze,
-  pwd_required:   'Pour vous identifier, votre mot de passe est requis (celui utilisé pour candidater à l’atelier).'.freeze
-})
 
 class User
 class << self
@@ -20,11 +15,11 @@ class << self
       'Mot de passe'  => {name:'user_password', type:'password'},
       'back_to'       => {name:'back_to',       type:'hidden', value: session['back_to']}
     }
-    @form.submit_button = 'Sidentifier'
+    @form.submit_button = UI_TEXTS[:btn_login]
     # @form.submit_button = 'S’identifier'
     @form.other_buttons = [
-      {text: 'Mot de passe oublié'.freeze, route: 'user/forgot_password'.freeze},
-      {text: 'S’inscrire'.freeze, route: 'user/signup'.freeze}
+      {text: UI_TEXTS[:btn_forgottent_password], route: 'user/forgot_password'},
+      {text: UI_TEXTS[:btn_singup], route: 'user/signup'}
     ]
     @form
   end
