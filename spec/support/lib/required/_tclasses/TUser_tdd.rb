@@ -63,7 +63,7 @@ end #/ click
 private
 
   def loginit
-    require './_lib/pages/user/login/constants.rb'
+    require "#{FOLD_REL_PAGES}/user/login/constants.rb"
     Capybara.reset_sessions!
     goto_login_form
     expect(page).to have_selector('form#user-login')

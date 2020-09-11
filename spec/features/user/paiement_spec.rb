@@ -3,7 +3,7 @@
   Module de test du paiement
 =end
 # Pour les constantes
-require './_lib/pages/modules/paiement/lib/constants'
+require "#{FOLD_REL_PAGES}/modules/paiement/lib/constants"
 require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
 require './_lib/_watchers_processus_/_constants_'
 

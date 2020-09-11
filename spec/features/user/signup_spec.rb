@@ -66,7 +66,7 @@ end #/ expect_a_valid_candidat_with
 
 feature 'Inscription à l’atelier Icare' do
   before :all do
-    require './_lib/pages/user/signup/constants_messages'
+    require "#{FOLD_REL_PAGES}/user/signup/constants_messages"
   end
 
   # Test d'inscriptions invalides à cause de mauvaises données

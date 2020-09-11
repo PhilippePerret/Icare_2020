@@ -1,9 +1,10 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Test de démarrage de module d'apprentissage
 =end
 require './_lib/_watchers_processus_/_constants_'
-require './_lib/pages/bureau/travail/constants'
+require "#{FOLD_REL_PAGES}/bureau/travail/constants"
 
 feature "Test du démarrage de module" do
   before(:all) do

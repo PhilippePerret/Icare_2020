@@ -5,7 +5,7 @@
 =end
 feature "Mot de passe oublié" do
   before(:all) do
-    require './_lib/pages/user/forgot_password/constants'
+    require "#{FOLD_REL_PAGES}/user/forgot_password/constants"
     degel('define_sharing')
   end
   context 'un faux icarien' do

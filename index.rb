@@ -1,5 +1,6 @@
 #!/usr/bin/ruby
 # encoding: UTF-8
+# frozen_string_literal: true
 begin
   require './_lib/required'
   App.run
@@ -13,7 +14,7 @@ rescue Exception => e
     f.write("#{Time.now} --- FATAL ERROR:\n    #{e.message}\n    #{e.backtrace.join("\n    ")}")
   end rescue nil
   send_error(e) rescue nil
-  require './_lib/pages/errors/systemique'
+  require "#{FOLD_REL_PAGES}/errors/systemique"
 end
 ###############!/usr/bin/env ruby
 ##########!/Users/philippeperret/.rbenv/versions/2.6.3/bin/ruby

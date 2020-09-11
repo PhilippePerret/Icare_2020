@@ -572,7 +572,7 @@ def marion_paie_son_module
   degel_or_gel('marion_paie_son_module') do
     marion_envoie_deux_autres_documents_cycle_complet
     puts "Fabrication du gel 'marion_paie_son_module'".vert
-    require './_lib/pages/modules/paiement/lib/user_paiement'
+    require "#{FOLD_REL_PAGES}/modules/paiement/lib/user_paiement"
     marion.add_paiement(marion.icmodule.id)
   end
 end #/ marion_paie_son_module

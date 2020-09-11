@@ -10,5 +10,5 @@ rescue Exception => e
     f.write("#{Time.now} --- FATAL ERROR:\n    #{e.message}\n    #{e.backtrace.join("\n    ")}")
   end rescue nil
   send_error(e) rescue nil
-  require './_lib/pages/errors/systemique'
+  require "#{FOLD_REL_PAGES}/errors/systemique"
 end

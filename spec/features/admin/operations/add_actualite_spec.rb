@@ -4,7 +4,7 @@
 =end
 feature "Operation Ajout d'une actualité" do
   before(:all) do
-    require './_lib/pages/admin/tools/constants'
+    require "#{FOLD_REL_PAGES}/admin/tools/constants" 
   end
 
   context 'Un visiteur quelconque' do

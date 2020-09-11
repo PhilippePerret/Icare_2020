@@ -6,7 +6,9 @@
 
 Le meilleur moyen pour payer un module — ou votre échéance mensuelle si vous êtes en suivi de projet — est de passer par **PayPal**. **PayPal** est une solution sécurisée utilisée depuis plusieurs dizaines d'années par des millions d'utilisateurs sans le moindre problème. C'est donc une solution tout à fait sure.
 
-Pour ce faire, il suffit de cliquer sur le bouton “Payer votre module” (ou similaire) lorsque ce bouton apparait sur [votre bureau](bureau/home) dans la [section des notifications](bureau/notifications), puis de suivre la procédure indiquée.
+Pour ce faire, il suffit de cliquer sur le bouton “Payer votre module” (ou similaire) lorsque ce bouton apparait sur [votre bureau](bureau/home) (*) dans la [section des notifications](bureau/notifications), puis de suivre la procédure indiquée.
+
+<p class="small">(*) Si c'est votre premier module, ce bouton apparait une quinzaine de jours après son commencement, c’est-à-dire après une période d'essai où l’on s’assure que l’entente se fait bien entre vous et nous.</p>
 
 ### Vous n'avez pas de compte PayPal
 

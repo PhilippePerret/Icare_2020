@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Test de l'historique de l'icarien.
 
@@ -6,7 +7,7 @@
   atteignable que par ceux qui peuvent en fonction des différents réglages.
 
 =end
-require './_lib/pages/overview/icariens/lib/constants'
+require "#{FOLD_REL_PAGES}/overview/icariens/lib/constants"
 
 class TUser
 

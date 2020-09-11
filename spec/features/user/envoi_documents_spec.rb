@@ -1,8 +1,9 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 feature "Envoi des documents de travail" do
   before(:all) do
-    require './_lib/pages/bureau/travail/constants'
-    require './_lib/pages/bureau/sender/constants'
+    require "#{FOLD_REL_PAGES}/bureau/travail/constants"
+    require "#{FOLD_REL_PAGES}/bureau/sender/constants"
   end
 
   context 'un visiteur quelconque' do

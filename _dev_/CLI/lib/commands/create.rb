@@ -1,9 +1,10 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Extension de IcareCLI pour les créations
 =end
 WATCHERS_FOLDER = File.expand_path('./_lib/_watchers_processus_')
-PAGES_FOLDER = File.expand_path('./_lib/pages')
+PAGES_FOLDER = File.expand_path(FOLD_REL_PAGES)
 
 MESSAGES = {
   question_creer: 'Que souhaitez-vous créer ?'.freeze,

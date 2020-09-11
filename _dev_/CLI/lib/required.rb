@@ -12,6 +12,8 @@ DEV_FOLDER = File.join(APP_FOLDER, '_dev_')
 REQUIRED_FOLDER = File.join(CLI_FOLDER,'lib','required')
 COMMANDS_FOLDER = File.join(CLI_FOLDER,'lib','commands')
 
+FOLD_REL_PAGES = './_lib/_pages_'
+
 Dir["#{REQUIRED_FOLDER}/**/*.rb"].each do |m|
   require m
 end

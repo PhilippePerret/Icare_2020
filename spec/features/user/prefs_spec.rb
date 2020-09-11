@@ -6,7 +6,7 @@ feature "Préférences" do
   before(:all) do
     degel('validation_inscription')
     # Les messages et erreur de la section préférences
-    require './_lib/pages/bureau/preferences/constants_public'
+    require "#{FOLD_REL_PAGES}/bureau/preferences/constants_public"
     # Les valeurs des routes after-login
     require './_lib/required/__first/constants/routes'
     # => Route::REDIRECTIONS

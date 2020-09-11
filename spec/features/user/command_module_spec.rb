@@ -4,7 +4,7 @@
 =end
 feature "Commande d'un module" do
   before(:all) do
-    require './_lib/pages/modules/xrequired/constants'
+    require "#{FOLD_REL_PAGES}/modules/xrequired/constants"
   end
   context 'un visiteur quelconque' do
     scenario 'ne peut pas commander directement un module' do
@@ -21,7 +21,7 @@ feature "Commande d'un module" do
 
   context 'un icarien actif', only:true do
     before(:all) do
-      require './_lib/pages/plan/constants'
+      require "#{FOLD_REL_PAGES}/plan/constants"
       degel('define_sharing')
     end
     scenario 'ne peut pas commander un nouveau module tant qu’il suit le sien' do

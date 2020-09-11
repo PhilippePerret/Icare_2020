@@ -35,7 +35,7 @@ def goto_login_form
 end #/ goto_login_form
 
 def login_in_form(data)
-  require './_lib/pages/user/login/constants.rb'
+  require "#{FOLD_REL_PAGES}/user/login/constants.rb"
   within("form#user-login") do
     fill_in('user_mail', with: data[:mail])
     fill_in('user_password', with:data[:password])

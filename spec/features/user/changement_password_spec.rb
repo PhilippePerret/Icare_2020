@@ -1,11 +1,12 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Méthode pour tester le changement de mot de passe
 =end
 feature "Changement du mot de passe" do
   before(:all) do
-    require './_lib/pages/user/profil/constants'
-    require './_lib/pages/user/change_password/constants'
+    require "#{FOLD_REL_PAGES}/user/profil/constants"
+    require "#{FOLD_REL_PAGES}/user/change_password/constants"
     require './_lib/modules/user/utils/constants'
     degel('define_sharing')
   end

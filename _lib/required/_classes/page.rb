@@ -2,7 +2,7 @@
 class Page
 class << self
 
-  # Charge la page de chemin relatif +relpath+ (dans lib/pages)
+  # Charge la page de chemin relatif +relpath+ (dans lib/_pages_)
   def load(relpath)
     relpath = relpath.route if relpath.instance_of?(Route)
     page = self.new(relpath)
@@ -33,7 +33,7 @@ end
 # de la route
 def load_xrequired
   the_path = path.dup
-  while the_path && File.basename(the_path) != 'pages'
+  while the_path && File.basename(the_path) != '_pages_'
     the_path = File.dirname(the_path)
     path_xrequired = File.join(the_path,'xrequired')
     if File.exists?(path_xrequired)
