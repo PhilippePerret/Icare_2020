@@ -54,5 +54,19 @@ div.discussion div.messages-discussion div.fmessage.exergue:before {
 
 form#discussion-form {
   position:fixed!important;
-  bottom:40px;
+}
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  form#discussion-form {
+    bottom:40px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  form#discussion-form {
+    bottom:0px;
+    left:0px;
+    width:100%;
+    border-radius:0;
+  }
 }

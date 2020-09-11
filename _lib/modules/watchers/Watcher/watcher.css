@@ -25,6 +25,19 @@
   background-color:white;
   opacity:0;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  .watcher.unread span.pastille-rouge:after {
+    width:300px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  .watcher.unread span.pastille-rouge:after {
+    width:150px;
+  }
+}
+
 .watcher.unread span.pastille-rouge:hover:after {
   opacity:0.8;
   transition:0.5s;

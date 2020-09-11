@@ -284,8 +284,21 @@ div.cases-line {
 }
 div.cases-line > span {
   margin:0;
-  padding: 0 24px;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.cases-line > span {
+    padding: 0 24px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.cases-line > span {
+    padding: 0 10px;
+  }
+}
+
+
 div.cases-line span.case-libelle {
   background-color:#CCCCCC;
   border-left:1px solid;

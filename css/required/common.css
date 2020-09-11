@@ -59,7 +59,7 @@ div.warning, p.warning, span.warning {
 @media only screen and (max-width: 767px) {
   /* SMARTPHONE */
   .tiny {
-    font-size:0.35em !important;
+    font-size:0.55em !important;
   }
 }
 
