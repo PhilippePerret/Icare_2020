@@ -4,7 +4,7 @@
 =end
 # Copier ici le chemin relatif du fichier à transformer
 # (note : le nom du fichier transformé sera le même avec l'extension md)
-SRC_PATH = './_lib/pages/overview/home/body-ERB.erb'
+SRC_PATH = './_lib/_pages_/overview/home/body-ERB.erb'
 # Nombre de niveau à retirer aux titres (H3 => H1)
 LEVEL_TITLE_MOINS = 0 # 1 par défaut
 

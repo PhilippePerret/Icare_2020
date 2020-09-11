@@ -3,7 +3,7 @@
 =begin
   Constantes pour le changement de mot de passe
 =end
-require './_lib/pages/user/signup/constants_messages'
+require "#{FOLD_REL_PAGES}/user/signup/constants_messages"
 
 UI_TEXTS.merge!({
   btn_change_password: "Changer le mot de passe",

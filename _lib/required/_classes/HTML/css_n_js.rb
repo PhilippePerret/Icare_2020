@@ -1,8 +1,10 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 # Modifier ci-dessous le "?v=X" pour forcer l'actualisation
-CSS_TAG = '<link rel="stylesheet" type="text/css" href="%{css}?v=4" />'.freeze
-JAVASCRIPT_TAG = '<script src="%{js}?v=4" type="text/javascript" charset="utf-8"></script>'.freeze
+CSS_JS_VERSION = '6'
+CSS_TAG = '<link rel="stylesheet" type="text/css" href="%{css}?v='+CSS_JS_VERSION+'" />'
+JAVASCRIPT_TAG = '<script src="%{js}?v='+CSS_JS_VERSION+'" type="text/javascript" charset="utf-8"></script>'
 
 class HTML
   # Retourne les lignes de tag <link> pour les css

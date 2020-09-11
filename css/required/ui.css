@@ -143,10 +143,13 @@ fieldset > fieldset > legend {
 --------------------------------------------------------------------- */
 
 section#header {
+  position:relative;
   padding:4px 24px;
-  height:30px;
   overflow:hidden;
   transition:0.3s; /* décision de Marion M. */
+}
+section#header:not(.home) {
+  height:30px;
 }
 
 section#header.opened {

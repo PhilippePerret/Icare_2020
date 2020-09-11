@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class QDD
   ---------
@@ -39,12 +40,18 @@ def documents_filtred
   @documents_filtred ||= begin
     # On commence par faire une liste des documents qui sont partagés,
     # originaux ou commentaires.
-    where ['( SUBSTRING(options,1,1) = "1" OR SUBSTRING(options,9,1) = "1")'.freeze]
+    where = ['( SUBSTRING(doc.options,1,1) = "1" OR SUBSTRING(doc.options,9,1) = "1")']
     if filtre.key?(:absetape_id)
-      where << "absetape_id = #{filtre[:absetape_id]}".freeze
+      where << "eta.id = #{filtre[:absetape_id]}"
     end
-    where = where.join(' AND ')
-    request = "SELECT * FROM icdocuments WHERE #{where}".freeze
+    where = where.join(AND)
+    request = <<-SQL
+SELECT *
+FROM icdocuments doc
+INNER JOIN icetapes eta ON doc.icetape_id = eta.id
+WHERE #{where}
+    SQL
+    log("request: #{request.inspect}")
     candidats = db_exec(request)
     liste_qdocs_ok = []
     candidats.each do |ddoc|
@@ -74,7 +81,7 @@ def filtre_formated
   end
 
   data =  if f.empty?
-            {text:"Aucun filtre appliqué".freeze, class:'small italic'}
+            {text:"Aucun filtre appliqué", class:'small italic'}
           else
             {text:divRow('Filtre appliqué', f.join(VG)), class:'mb2'}
           end

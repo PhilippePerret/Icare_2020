@@ -7,8 +7,8 @@ puts "QDD_FOLDER : #{QDD_FOLDER}"
 
 
 require './_lib/required'
-require_folder('./_lib/pages/qdd/xrequired/Qdd')
-require './_lib/pages/qdd/download/QddDoc'
+require_folder("#{FOLD_REL_PAGES}/qdd/xrequired/Qdd")
+require "#{FOLD_REL_PAGES}/qdd/download/QddDoc"
 
 MyDB.DBNAME = 'icare'
 

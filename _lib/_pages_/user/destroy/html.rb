@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_module('form')
 class HTML
   def titre
@@ -21,7 +22,7 @@ class HTML
 
   # Méthode principale de destruction de l'user
   def destroy_user
-    require './_lib/pages/user/login/user.rb'
+    require "#{FOLD_REL_PAGES}/user/login/user.rb"
     pseudo = user.pseudo
     param(:user_password) || raise(ERRORS[:password_required])
     User.password_valid?({pwd:param(:user_password), owner:user})  || raise(ERRORS[:unkown_user])

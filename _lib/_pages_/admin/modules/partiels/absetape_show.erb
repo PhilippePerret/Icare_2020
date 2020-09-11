@@ -1,7 +1,8 @@
 <%
+# frozen_string_literal: true
 # Affichage de l'étape pour visualisation
 require_module('minifaq')
-require './_lib/pages/bureau/travail/work/helpers'
+require "#{FOLD_REL_PAGES}/bureau/travail/work/helpers"
 %>
 <p class="explication">Affichage de l'étape <%= numero %>. “<%= titre %>” du module “<%= absmodule.name %>”</p>
 <%= section_etape_work %>

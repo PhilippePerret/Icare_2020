@@ -1,3 +1,4 @@
+<%# frozen_string_literal: true %>
 <form method="POST" class="noborder nomargin">
   <input type="hidden" name="op" value="show">
   <input type="hidden" name="route" value="<%= route.to_s %>">
@@ -8,7 +9,7 @@
 
 <%
   if absmodule
-    require_folder('./_lib/pages/bureau/travail/work')
+    require_folder("#{FOLD_REL_PAGES}/bureau/travail/work")
 %>
   <div class="right">
     <a href="admin/modules?op=create-etape&mid=<%= absmodule.id %>" class="btn small">Nouvelle étape</a>

@@ -1,7 +1,8 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class HTML
   def titre
-    require './_lib/pages/bureau/xrequired/required'
+    require "#{FOLD_REL_PAGES}/bureau/xrequired/required"
     "#{RETOUR_BUREAU}#{Emoji.get("humain/etudiant#{user.fem(:e)}".freeze).page_title}#{ISPACE}Votre profil"
   end
   def exec

@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Constantes pour les outils icariens.
 =end
@@ -6,7 +7,7 @@ require 'json'
 require './_lib/required/_classes/Actualite'
 
 DATA_OPERATIONS_ICARIENS = {
-  'add_actualite'   => {id:'add_actualite',   name:'Ajouter actualité'.freeze,  for: :all,      required: [:long_value, :medium_value], medium_value:('Type de l’actualité, parmi %s.'.freeze % Actualite.types_explained), long_value: "Message d'actualité à attribuer à l'icarien sélectionné. Le message sera évalué, donc on peut utiliser des `\#{icarien.pseudo}` à l'intérieur (code ruby évalué comme dans un String normal)."},
+  'add_actualite'   => {id:'add_actualite',   name:'Ajouter actualité',  for: :all,      required: [:long_value, :medium_value], medium_value:('Type de l’actualité, parmi %s.' % Actualite.types_explained), long_value: "Message d'actualité à attribuer à l'icarien sélectionné. Le message sera évalué, donc on peut utiliser des `\#{icarien.pseudo}` à l'intérieur (code ruby évalué comme dans un String normal)."},
   'free_days'       => {id:'free_days',       name:'Jours gratuits',            for: :actif,    required: [:short_value, :icarien], short_value: "Nombre de jours gratuits", long_value: "Raison éventuelle du don de jours gratuits (format ERB)."},
   'travail_propre'  => {id:'travail_propre',  name:'Travail propre',            for: :actif,    required: [:long_value, :icarien], short_value: nil, long_value: "Description du travail propre (format ERB).<br>Laisser vide et cliquez sur “Exécuter” pour charger le travail qui peut déjà exister."},
   'inject_document' => {id:'inject_document', name:'Document par mail',         for: :actif,    required: [:medium_value, :icarien], medium_value: 'Nom du fichier'},
@@ -25,7 +26,7 @@ DATA_OPERATIONS_ICARIENS = {
 
 # On doit préparer ces données pour javascript
 # On les met dans le fichier data.js s'il n'est pas à jour
-DATA_JS_PATH = './_lib/pages/admin/tools/data.js'
+DATA_JS_PATH = "#{FOLD_REL_PAGES}/admin/tools/data.js"
 if !File.exists?(DATA_JS_PATH) || File.stat(__FILE__).mtime > File.stat(DATA_JS_PATH).mtime
   datajs = 'const DATA_OPERATIONS = {'+RC
   DATA_OPERATIONS_ICARIENS.each do |opid, dope|
@@ -37,5 +38,5 @@ end
 
 # Les constantes de l'UI
 UI_TEXTS.merge!({
-  btn_execute_operation: 'Exécuter l’opération'.freeze,
+  btn_execute_operation: 'Exécuter l’opération',
 })

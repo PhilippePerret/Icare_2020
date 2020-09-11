@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class QddDoc
   ------------
@@ -6,8 +7,8 @@
 =end
 class QddDoc
 
-LINK_DOWNLOAD_PDF = '<a href="%s" target="_blank" class="fleft"><img src="img/icones/pdf%s.jpg" class="vmiddle mr1" /></a>'.freeze
-DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'.freeze
+LINK_DOWNLOAD_PDF = '<a href="%s" target="_blank" class="fleft"><img src="img/icones/pdf%s.jpg" class="vmiddle mr1" /></a>'
+DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'
 
 
 # ---------------------------------------------------------------------
@@ -24,7 +25,7 @@ def cards
   ary << card(:comments) if shared?(:comments)
   return ary.join
 rescue Exception => e # pour mode sans erreur
-  err_mess = "[QDD] Problème d'affichage avec le document ##{id} : #{e.message}".freeze
+  err_mess = "[QDD] Problème d'affichage avec le document ##{id} : #{e.message}"
   send_error(err_mess, self.data.merge(backtrace: e.backtrace.join(RC))) #rescue nil
   "<div class='qdd-card'><div class='bold'>[#{err_mess}]</div></div>"
 end #/ cards

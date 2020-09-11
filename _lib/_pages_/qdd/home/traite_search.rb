@@ -1,10 +1,11 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_module('qdd')
 
 class HTML
 
   def traite_formulaire_search(form)
-    require_folder('./_lib/pages/qdd/xrequired/Qdd')
+    require_folder("#{FOLD_REL_PAGES}/qdd/xrequired/Qdd")
 
     MyDB.DBNAME = 'icare' if OFFLINE
 

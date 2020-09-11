@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class QddDoc
   ------------
@@ -7,8 +8,8 @@
 require_modules(['user/modules', 'icmodules', 'absmodules'])
 class QddDoc
 
-LINK_DOWNLOAD_PDF = '<a href="%s" target="_blank" class="fleft"><img src="img/icones/pdf%s.jpg" class="vmiddle mr1" /></a>'.freeze
-DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'.freeze
+LINK_DOWNLOAD_PDF = '<a href="%s" target="_blank" class="fleft"><img src="img/icones/pdf%s.jpg" class="vmiddle mr1" /></a>'
+DOWNLOAD_ROUTE = 'qdd/download?qid=%i&qdt=%s'
 
 # ---------------------------------------------------------------------
 #
@@ -125,7 +126,7 @@ def path(dtype = nil)
   end
 end #/ path
 
-QDD_FILE_NAME = '%{module}_etape_%{etape}_%{pseudo}_%{doc_id}_%{dtype}.pdf'.freeze
+QDD_FILE_NAME = '%{module}_etape_%{etape}_%{pseudo}_%{doc_id}_%{dtype}.pdf'
 def name(dtype = nil)
   dtype ||= doctype
   @name ||= begin

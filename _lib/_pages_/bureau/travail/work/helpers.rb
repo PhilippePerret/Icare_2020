@@ -1,4 +1,5 @@
 # encoding: UTF-8
+#### NON frozen_string_literal: true
 =begin
   Méthodes d'helper pour construire le travail de l'étape et toutes ses
   sections, minifaq et quai des docs compris
@@ -58,7 +59,7 @@ class AbsEtape
     if has_liens?
       safe(instances_liens.collect { |lien| lien.out }.join)
     else
-      Tag.div(text:'Aucun lien utile pour cette étape.'.freeze, class:'italic small'.freeze)
+      Tag.div(text:'Aucun lien utile pour cette étape.', class:'italic small')
     end
   end #/ section_etape_liens
 
@@ -66,7 +67,7 @@ class AbsEtape
     unless methode.nil?
       deserb_or_markdown(methode, self)
     else
-      Tag.div(text:'Aucun élément de méthode pour cette étape.'.freeze, class:'italic small'.freeze)
+      Tag.div(text:'Aucun élément de méthode pour cette étape.', class:'italic small')
     end
   end #/ section_methode_formated
 
@@ -90,8 +91,8 @@ class AbsEtape
     # La logique pour récupérer le nombre :
     # Il faut trouver le nombre d'icetapes qui ont pour étapes absolues absetape_id
     # Et récolter tous les documents de ces étapes
-    request = <<-SQL.freeze
-SELECT COUNT(id)
+    request = <<-SQL
+SELECT COUNT(*)
   FROM icetapes ice
   INNER JOIN absetapes abe ON abe.id = ice.absetape_id
   INNER JOIN icdocuments doc ON doc.icetape_id = abe.id
@@ -107,9 +108,9 @@ SELECT COUNT(id)
     if nombre.nil?
       Tag.div(text:"Il n'y a aucun document partagé pour cette étape.", class:'small italic')
     else
-      nombre = nombre[0][:"COUNT(id)"]
+      nombre = nombre[0][:"COUNT(*)"]
       s = nombre > 1 ? 's' : ''
-      Tag.div(text:"Les icarien·ne·s ont déjà produit et partagé <strong>#{nombre} document#{s} pour cette étape</strong>.<div class=\"center\"><a href=\"qdd/list?aet=#{id}\" class=\"btn\">Voir/lire les documents</a></div>")
+      Tag.div(text:"Les icarien·ne·s ont déjà produit et partagé <strong>#{nombre} document#{s} pour cette étape</strong>.<div class=\"center mt2\"><a href=\"qdd/list?aet=#{id}\" class=\"btn\">Voir/lire les documents</a></div>")
     end
   end #/ liste_documents_qdd
 
@@ -153,7 +154,7 @@ LienEtape = Struct.new(:dataline) do
   # Sortie pour affichage
   def out
     parse_line
-    lk = Tag.lien(titre:titre, route:"http://www.scenariopole.fr/narration/#{cible}/#{page_id}".freeze, new: true)
+    lk = Tag.lien(titre:titre, route:"http://www.scenariopole.fr/narration/#{cible}/#{page_id}", new: true)
     Tag.li(lk)
   end #/ out
 

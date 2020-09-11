@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_modules(['form', 'absmodules'])
 class HTML
 
@@ -8,16 +9,16 @@ class HTML
   def titre
     tit = case param(:op)
           when NilClass, 'show'
-            "Étapes des modules".freeze
+            "Étapes des modules"
           when 'edit-etape', 'create-etape', 'save-etape'
-            "Édition d’étape".freeze
+            "Édition d’étape"
           when 'show-etape'
-            "Visualisateur d’étape".freeze
+            "Visualisateur d’étape"
           else
             "OP inconnue à régler (#{param(:op)})"
           end
     # Le titre complet
-    "#{RETOUR_MODULE unless param(:op).nil?}#{tit}".freeze
+    "#{RETOUR_MODULE unless param(:op).nil?}#{tit}"
   end
   # Code à exécuter avant la construction de la page
   def exec
@@ -44,9 +45,9 @@ class HTML
       # La dernière étape affiche toujours le formulaire de témoignage,
       # on passe ici si on l'essaie
       if ONLINE
-        erreur "Sur le site distant, on ne peut pas enregistrer de témoignage de cette façon".freeze
+        erreur "Sur le site distant, on ne peut pas enregistrer de témoignage de cette façon"
       else
-        message "Sur le site local (et le site local seulement), on peut enregister un témoignage par l'édition des modules.".freeze
+        message "Sur le site local (et le site local seulement), on peut enregister un témoignage par l'édition des modules."
         require_module('temoignages')
       end
     end
@@ -84,7 +85,7 @@ class HTML
   # [1] Ici, on ne fait pas le formatage spécial (special_formating) parce
   #     qu'il sera exécuté plus tard avec l'évalution de la page complète.
   def work_of(absetape)
-    deserb('./_lib/pages/bureau/travail/work/work.erb', absetape, {formate:false}) # [1]
+    deserb("#{FOLD_REL_PAGES}/bureau/travail/work/work.erb", absetape, {formate:false}) # [1]
   end #/ work_of
 
   # Bouton, dans la liste des étapes du module, qui permet d'éditer

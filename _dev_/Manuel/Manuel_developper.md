@@ -13,7 +13,7 @@ Il s’agit ici de la version produite en 2020 de l’Atelier Icare. Elle vise �
 ## Principes fondateurs
 
 * Tout ce qui est après le `/` du domaine et avant le `?` du query-string est appelé `route`. La route brute s’obtient par `Route.current.route`. On l’obtient grâce à `route.to_s` (qui retourne par exemple `bureau/home`. La seule modification faite est de transformer une chaine vide en `home`.
-* Quand une route est définie (par exemple `section/page`) la première chose que fait le programme de construction de la page est de voir si le dossier `./_lib/pages/section/page` existe. Si c’est le cas, on le charge entièrement, c’est-à-dire le ruby, le css et le javascript. C’est donc dans `_lib/pages/` principalement qu’on va trouver la définition des pages et c’est vraiment dans ce dossier qu’il faut s’arranger pour tout mettre.
+* Quand une route est définie (par exemple `section/page`) la première chose que fait le programme de construction de la page est de voir si le dossier `./_lib/_pages_/section/page` existe. Si c’est le cas, on le charge entièrement, c’est-à-dire le ruby, le css et le javascript. C’est donc dans `_lib/_pages_/` principalement qu’on va trouver la définition des pages et c’est vraiment dans ce dossier qu’il faut s’arranger pour tout mettre.
 * Si un module ruby de la page ci-dessus définit la méthode `HTML#exec`, cette méthode est appelée avant la fabrication de la page. Cela permet par exemple de traiter les formulaires.
 * Les pages ci-dessus surclassent les méthodes générale `HTML#build_header` etc. et en tout premier lieu la méthode générale **`HTML#build_body`** qui construit le corps de la page.
 * Dès qu’un dossier contient des fichiers `.css` ou `.js`, ils sont automatiquement chargés par la méthode générale `require_module`. « Chargés » signifie que leur balise est insérée dans la page.
@@ -44,11 +44,11 @@ index.rb
 HTML#build_page
 	Chargement de la route. (`Page::load`)
 		Par exemple 'ma/route' va charger le dossier
-		./_lib/pages/ma/route/ qui contient certainement un fichier 
+		./_lib/_pages_/ma/route/ qui contient certainement un fichier
 		`html.rb` définissant :
 			HTML#exec					Méthode qui sera appelée tout de suite après le
 												chargement de la page.
-			HTML#build_body		qui sera appelée ensuite pour construire 
+			HTML#build_body		qui sera appelée ensuite pour construire
 												le @body
 			HTML#titre				qui sera appelée plus tard aussi pour obtenir le
 												titre de la page (+ TITLE)
@@ -69,13 +69,13 @@ HTML#build_page
 
 Les trois dossiers où il faut chercher les choses sont :
 
-### _lib/pages/
+### _lib/_pages_/
 
-C’est là où sont définies toutes les routes. Si on appelle l’url `bureau/home`, c’est le dossier `./lib/pages/bureau/home/` qu’on chargera et qui contiendra tous les éléments (HTML, CSS et Javascript) propres à cette route.
+C’est là où sont définies toutes les routes. Si on appelle l’url `bureau/home`, c’est le dossier `./lib/_pages_/bureau/home/` qu’on chargera et qui contiendra tous les éléments (HTML, CSS et Javascript) propres à cette route.
 
 ### _lib/required/
 
-Contient tous les codes chargés chaque fois. 
+Contient tous les codes chargés chaque fois.
 
 Définit notamment les grandes classes que sont `User` (pour gérer l’utilisateur) ou `HTML` pour la construction de la page à afficher.
 
@@ -84,7 +84,7 @@ Définit aussi toutes les extensions de classe.
 Les éléments notables de ce dossier :
 
 * **`constants/`**. Dossier qui définit les constantes générales, String, Path, etc.
-* **`Tag.rb`** qui permet de construire facilement toutes les balises (tags) HTML. 
+* **`Tag.rb`** qui permet de construire facilement toutes les balises (tags) HTML.
 
 ### \_lib/\_watchers_processus\_/
 
@@ -165,7 +165,7 @@ Pour voir **comment écrire la page** (son texte, son contenu), rejoindre la sec
 
 <a name="dossierroute"></a>
 
-Grâce à l’assistant en ligne de commande `> icare create route`, on va pouvoir créer le dossier de la nouvelle route dans `./_lib/pages/`. Par exemple, si la route est `user/pourvoir`,  on doit créer le dossier `./_lib/pages/user/pourvoir/`. Ce dossier sera  appelé **dossier de la route** dans la suite.
+Grâce à l’assistant en ligne de commande `> icare create route`, on va pouvoir créer le dossier de la nouvelle route dans `./_lib/_pages_/`. Par exemple, si la route est `user/pourvoir`,  on doit créer le dossier `./_lib/_pages_/user/pourvoir/`. Ce dossier sera  appelé **dossier de la route** dans la suite.
 
 **Attention** : une route ne doit pas être créée dans une autre, puisque tout le dossier d’une route est entièrement chargé, ruby, css, javascript quand elle est appelée (donc le dossier de l’autre route à l’intérieur serait lui aussi chargé…).
 
@@ -233,7 +233,7 @@ Le « principe des xrequired » signifie que lorsqu’on charge un dossier (à l
 Par exemple, si la route à atteindre est `admin/icariens/outils`, cela fait appel à un dossier se trouvant dans :
 
 ~~~
-LIB/pages/admin/icariens/outils/
+LIB/_pages_/admin/icariens/outils/
 ~~~
 
 > Pour la suite, le dossier `lib` étant amené à changer de nom, j’utiliserai `LIB` pour le désigner.
@@ -241,9 +241,9 @@ LIB/pages/admin/icariens/outils/
 En appelant cette route, l’application cherche donc à charger les dossiers suivants :
 
 ~~~
-LIB/pages/admin/icariens/outils/xrequired
-LIB/pages/admin/icariens/xrequired
-LIB/pages/admin/xrequired
+LIB/_pages_/admin/icariens/outils/xrequired
+LIB/_pages_/admin/icariens/xrequired
+LIB/_pages_/admin/xrequired
 ~~~
 
 Cela, on le comprend, permet donc de partager des méthodes et des modules dans un même lieu.
@@ -351,13 +351,13 @@ redirect_to('<route>')
 
 ##  Les icariens
 
-Les icariens et les icariennes sont des `User`s. 
+Les icariens et les icariennes sont des `User`s.
 
 Le visiteur courant est toujours accessible dans le programme par `user`.
 
 > Note : il ne faut donc jamais utiliser ce nom comme variable. Préférer `_user` ou même `icarien`. Dans beaucoup de cas, `owner` est la meilleure solution, en sachant que c’est un mot réservé pour beaucoup de classes.
 
-Un visiteur non identifié répond positivement à **`user.guest?`**. 
+Un visiteur non identifié répond positivement à **`user.guest?`**.
 
 
 
@@ -743,7 +743,7 @@ MainLink[:contact].with(titleize: true)
 # Pour mettre une capitale au titre du lien ('contact' -> 'Contact')
 
 MainLink[:contact].with(pastille: 'la pastille')
-# Cas d'utilisation unique, pour remplace '%{non_vus}' par le 
+# Cas d'utilisation unique, pour remplace '%{non_vus}' par le
 # texte fourni
 ~~~
 
@@ -1251,18 +1251,18 @@ form.rows = {
 text					Pour un input text simple
 textarea			Pour un champ textarea
 password			Pour un mot de passe
-select				Pour un menu select. Les valeurs doivent être fournies par 
+select				Pour un menu select. Les valeurs doivent être fournies par
 							:values
 checkbox			Une case à cocher
 file					Pour choisir un fichier
 date					Pour obtenir trois menus qui permettent de définir une date
-raw						Pour un code qui sera inséré tel quel (par exemple une 
-							liste de cbs). On 
-							renseigne alors la propriété :content, :value ou :name avec 
+raw						Pour un code qui sera inséré tel quel (par exemple une
+							liste de cbs). On
+							renseigne alors la propriété :content, :value ou :name avec
 							le contenu.
 titre					Un titre (le label est le titre)
-explication		Une explication discrète pour un champ. Mettre un label 
-							unique mais quelconque. Note : il est préférable de régler 
+explication		Une explication discrète pour un champ. Mettre un label
+							unique mais quelconque. Note : il est préférable de régler
 							la propriété :explication dans la définition du champ, ce
 							qui permettra d'avoir l'explication bien sous le champ.
 
@@ -1273,14 +1273,14 @@ explication		Une explication discrète pour un champ. Mettre un label
 
 ~~~
 :type					Le type (cf. ci-dessus)
-:name					NAME pour le formulaire. Cette propriété est obligatoire, 
+:name					NAME pour le formulaire. Cette propriété est obligatoire,
 							sauf pour certains types comme 'raw'
 :id						IDentifiant éventuel pour le champ
 :value				Valeur à donner au champ, à sa construction
 :values				Pour un select, le Array des valeurs
 :options			Pour un select, les options, en String
-:explication	Texte de l'explication si le champ est expliqué. Tip : le 
-							mettre en message dans MESSAGES (celui propre à la section 
+:explication	Texte de l'explication si le champ est expliqué. Tip : le
+							mettre en message dans MESSAGES (celui propre à la section
 							courante).
 ~~~
 
@@ -1409,7 +1409,7 @@ form = Form.new 		# pour récupérer le formulaire à la soumission
 ladate = form.get_date('<property name>')
 # => <#Date ...>
 
-# Ou l'alias 
+# Ou l'alias
 ladate = form.data_field_value('<name property>')
 ~~~
 
@@ -1482,7 +1482,7 @@ Par défaut, la table des matières flotte à droite. Pour la faire flotter à g
 
 Dans la méthode `html#build_body` — ou tout autre module d’un *dossier de route*, peut utiliser très efficacement la méthode générale `deserb` en lui donnant en paramètre la vue à utiliser et la `bindee`.
 
-Par exemple, dans le dossier de la route `user/logout` (`./lib/pages/user/logout/`), on trouve la méthode `build_body`suivante :
+Par exemple, dans le dossier de la route `user/logout` (`./lib/_pages_/user/logout/`), on trouve la méthode `build_body`suivante :
 
 ~~~ruby
 def build_body
@@ -1699,9 +1699,9 @@ data_watcher = {
 	objet_id: {Integer} # ID de l'objet visé, dont la classe est définie
 											# dans la définition du watcher.
 	# Optionnellement
-	triggered_at: {Integer} # Le timestamp de déclenchement du watcher 
+	triggered_at: {Integer} # Le timestamp de déclenchement du watcher
 													# (moment où il doit s'afficher)
-													
+
 	params: {JsonString}		# Données éventuelles à transmettre.
 }
 ~~~
@@ -2099,7 +2099,7 @@ Pour créer une nouvelle actualité, on crée une nouvelle donnée dans `Actuali
 
 ## Aide du site
 
-L'aide du site est située dans le dossier/route `./_lib/pages/aide/`. Toutes les pages d'aide sont dans le dossier `./_lib/pages/aide/data/`.
+L'aide du site est située dans le dossier/route `./_lib/_pages_/aide/`. Toutes les pages d'aide sont dans le dossier `./_lib/_pages_/aide/data/`.
 
 ### Lien vers un fichier d'aide
 
@@ -2115,14 +2115,14 @@ Tag.aide(<id>, 'titre du lien')
 Tag.aide(id: <id>, titre: "<titre>", class:"<css>")
 ~~~
 
-Avec `<id>` est le nombre défini dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb), qui sert aussi de début de nom au fichier.
+Avec `<id>` est le nombre défini dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/aide/xrequired/tdm.rb), qui sert aussi de début de nom au fichier.
 
 
 
 ### Création d’un nouveau fichier d'aide
 
-* Lui attribuer un numéro/id unique dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb),
-* ajouter son titre et ce numéro/id dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/aide/xrequired/tdm.rb),
+* Lui attribuer un numéro/id unique dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/aide/xrequired/tdm.rb),
+* ajouter son titre et ce numéro/id dans la [table des matières de l’aide](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/aide/xrequired/tdm.rb),
 * créer son fichier dans le dossier `data` de l’aide, avec un nom commençant par son identifiant unique (la suite du nom importe peu) au format `md`, `erb` ou `html` (de préférence en Markdown).
 
 
@@ -2515,7 +2515,7 @@ La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` 
 
 À présent le paiement est extrêmement facilité, il suffit de poser un bouton et un script pour que tout se fasse en coulisse.
 
-Voir le [dossier contenant le fichier principal dans module/paiment](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/html.rb) et la classe [AIPaiement](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/modules/paiement/lib/AIPaiement.rb) (attention, cette classe se trouve dans le dossier `modules/paiement`, pas dans un dossier module — qui serait un peu superfétatoire).
+Voir le [dossier contenant le fichier principal dans module/paiment](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/modules/paiement/html.rb) et la classe [AIPaiement](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/modules/paiement/lib/AIPaiement.rb) (attention, cette classe se trouve dans le dossier `modules/paiement`, pas dans un dossier module — qui serait un peu superfétatoire).
 
 
 ---
@@ -2548,7 +2548,7 @@ Admin::Operation.exec(:operation[, {params}])
 
 ### Création d'une nouvelle opération
 
-Il faut la définir dans la constante ruby `DATA_OPERATIONS` dans le [fichier des constantes des outils](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/pages/admin/tools/constants.rb) (noter que la modification de ce fichier entrainera automatique, au prochain chargement de la page, l'actualisation du fichier `data.js` qui contient les données des opérations pour javascript).
+Il faut la définir dans la constante ruby `DATA_OPERATIONS` dans le [fichier des constantes des outils](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/admin/tools/constants.rb) (noter que la modification de ce fichier entrainera automatique, au prochain chargement de la page, l'actualisation du fichier `data.js` qui contient les données des opérations pour javascript).
 
 Pour la créer s'inspirer des autres opérations, tout est self-explained.
 
@@ -2607,7 +2607,7 @@ On charge ces modules de cette manière :
 feature "Mon test" do
 	scenario "Le scénario" do
 		extend <nom du module>
-		
+
 	end
 end
 ~~~
@@ -2639,7 +2639,7 @@ feature "mon test" do
 end
 
 feature "mon test" do
-	before(:all) do 
+	before(:all) do
 		degel("<nom_du_gel>")
 	end
 	scenario "le scénario" do
@@ -2660,11 +2660,11 @@ feature "Ma fonctionnalité" do
 		degel('letat-de-depart')
 
 		# ... le test ici
-		
+
 		# === ON PRODUIT LE GEL ICI ===
 		gel('mon_premier_gel')
 	end
-	
+
 end
 ~~~
 
@@ -2922,7 +2922,7 @@ Avec `params` qui peut contenir :
 params = {
 	id: 		Integer, 			# l'identifiant de la notification
 	ids:		Array of Int 	# la liste des identifiants à trouver
-	# Par des données définissant le ou les watchers, permettant de 
+	# Par des données définissant le ou les watchers, permettant de
 	# relever leur(s) id(s)
 	user_id:	Integer,		# Identifiant du possesseur du watcher
 	wtype:		String			# Le watcher-type (qui est son id, en fait)
@@ -2932,7 +2932,7 @@ params = {
 	after:		Time				# Les notifications produites après ce temps
 	before:		Time				# Les notifications produites avant ce temps
 	unread:		Boolean			# Si true, les notifications doivent être non lue
-												# Noter que ça ne fonctionne pas avec false. On 
+												# Noter que ça ne fonctionne pas avec false. On
 												# ne peut pas connaitre les notifications lues de
 												# cette manière.
 }
