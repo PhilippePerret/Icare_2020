@@ -28,7 +28,7 @@ class User
       Tag.hidden(value:'echeance', name:'ope') +
       user.icetape.f_expected_end +
       BR +
-      Tag.submit_button('Modifier l’échéance', class:'tiny') +
+      Tag.submit_button(UI_TEXTS[:btn_modify_echeance], class:'small') +
       Tag.span(text:'  (après l’avoir ajustée)'.freeze, class:'small') +
     '</form>'
   end
