@@ -38,7 +38,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
 
 
-  scenario "un icarien peut payer par virement bancaire", only:true do
+  scenario "un icarien peut payer par virement bancaire" do
     degel('marion_avec_paiement')
     pitch("Marion va rejoindre son bureau pour payer son module d'apprentissage.")
 
@@ -154,7 +154,42 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
 
 
+  context 'Un icarien avec un module de suivi de projet' do
+    before(:all) do
+      degel('elie_demarre_son_module')
+    end
 
+    scenario 'peut payer son module et avoir une nouvelle date d’échéance de paiement', only:true do
+      pitch("Élie, qui suit le module de suivi de projet intensif vient payer son module, ce qui lui affecte une nouvelle date d'échéance de paiement.")
+
+      start_time = Time.now.to_i
+
+      # *** opérations préliminaires ***
+      # Il faut régler le watcher de telle sorte que la notification de paiement
+      # sera visible par Élie.
+      expect(elie).to have_watcher(wtype:'paiement_module'),
+        "Élie devrait avoir un watcher de paiement pour son module."
+      watcher_id = $watcher_id
+      dwatcher_paiement = db_get('watchers', watcher_id)
+      db_compose_update('watchers', watcher_id, {triggered_at: Time.now.to_i - 1})
+
+      elie.rejoint_ses_notifications
+      params = {unread:true, user_id:elie.id, wtype:'paiement_module'}
+      expect(page).to have_notification(params),
+        "La page des notifications devrait contenir la notification pour le paiement."
+      expect(page).to have_link('procéder au paiement')
+
+      pitch("Élie clique sur “procéder au paiement” pour rejoindre la section des paiements et clique sur le bouton Paypal.")
+      click_on('procéder au paiement')
+      screenshot('elie-procede-paiement')
+      expect(page).to have_titre('Paiement')
+
+      # Pour simuler le clic sur le bouton de paiement
+      expect(page).to have_css("div#buttons-container div.paypal-button")
+      find("div#buttons-container div.paypal-button").click
+
+    end
+  end
 
 
 

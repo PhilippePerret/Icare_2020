@@ -7,7 +7,9 @@ class TUser
   include Capybara::DSL
 
   def survol_header
-    find('section#header').hover
+    # En fait, maintenant, il faut cliquer sur l'entête
+    # find('section#header').hover
+    find('section#header').click
   end #/ survol_header
 
   # L'user doit déjà être identifié

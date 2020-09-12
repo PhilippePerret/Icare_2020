@@ -53,7 +53,7 @@ end #/ login_icarien
 
 # Pour se déconnecter
 def logout
-  find('section#header').hover # Pour faire apparaitre les boutons
+  find('section#header').click # Pour faire apparaitre les boutons
   click_on(id:'btn-logout')
   Capybara.reset_sessions!
 end #/ logout
