@@ -51,6 +51,7 @@ RSpec::Matchers.alias_matcher :have_erreur, :have_error
 RSpec::Matchers.define :have_message do |msg|
   match do |page|
     msg || raise("Il faut fournir le message à trouver !".freeze)
+    msg = msg.strip_tags
     if page.has_css?('section#messages div.notices')
       # if page.has_css?('div.errors', text: /#{Regexp.escape(msg)}/)
       if page.has_css?('section#messages div.notices', text: msg.gsub(/ /,' '))

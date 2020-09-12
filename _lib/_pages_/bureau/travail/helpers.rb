@@ -23,7 +23,7 @@ end #/IcEtape < ContainerClass
 
 class User
   def echeance_field
-    '<form method="POST" class="inline">' +
+    '<form id="change-echeance" method="POST" class="inline">' +
       Tag.hidden(value:'bureau/travail', name:'route') +
       Tag.hidden(value:'echeance', name:'ope') +
       user.icetape.f_expected_end +

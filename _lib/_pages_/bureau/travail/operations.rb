@@ -17,20 +17,23 @@ class HTML
 end #/HTML
 
 
-class IcEtape < ContainerClass
+class IcEtape
 
   # Procéder au changement d'échéance
   def modify_echeance
     old_eche = Time.at(data[:expected_end])
     new_eche = Form.date_field_value('echeance')
     now_eche = Time.now
+    # Pour vérification
+    old_jour = Time.new(old_eche.year, old_eche.month, old_eche.day)
+    new_jour = Time.new(new_eche.year, new_eche.month, new_eche.day)
     # On vérifie que la valeur soit bonne
-    old_eche != new_eche  || raise("Il faut choisir une autre date !")
-    new_eche > now_eche   || raise("Il faut choisir une échéance dans le futur, voyons…")
+    old_jour != new_jour  || raise(ERRORS[:same_echeance])
+    new_eche > now_eche   || raise(ERRORS[:bad_echeance])
     # On peut sauver la nouvelle échéance (en indiquand le nombre de jours
     # restants)
     save(expected_end: new_eche.to_i)
-    message("L’échéance a été mise au #{formate_date(new_eche, duree:true)}.")
+    message(MESSAGES[:echeance_changed] % formate_date(new_eche, duree:true))
   rescue Exception => e
     erreur e.message
     log(e)

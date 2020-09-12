@@ -197,7 +197,6 @@ def password
   @password ||= begin
     pwd = data[:password]
     if pwd.nil?
-      puts "data: #{data.inspect}"
       # raise("Le mot de passe ne devrait pas pouvoir être nil")
       pwd = 'motdepasse'
     end
@@ -207,8 +206,12 @@ end
 
 def reset
   @data = nil
+  @icmodule = nil
   @icmodule_id = nil
   @data_icmodule_id = nil
+  @icetape = nil
+  @data_icetape = nil
+  @icetape_id = nil
   @pseudo = nil
   @mail = nil
   @password = nil
@@ -261,11 +264,41 @@ def project_name
 end #/ project_name
 
 def icmodule_id
-  @icmodule_id ||= data[:icmodule_id]
+  @icmodule_id ||= begin
+    unless data.key?(:icmodule_id)
+      # Pour forcer la relecture des données, qui ont peut-être été définies
+      # de façon partielle (ce qui est un tort, mais bon…)
+      @data = nil
+    end
+    data[:icmodule_id]
+  end
 end #/ icmodule_id
 
 def data_icmodule_id
   @data_icmodule_id ||= db_get('icmodules', icmodule_id)
 end #/ data_icmodule_id
+
+def icetape
+  @icetape ||= begin
+    unless icetape_id.nil?
+      TICEtape.new(data_icetape)
+    end
+  end
+end #/ icetape
+def icetape_id
+  @icetape_id ||= begin
+    unless icmodule_id.nil? # il faut qu'il y ait un module
+      data_icmodule_id[:icetape_id]
+    end
+  end
+end #/ icetape_id
+def data_icetape
+  @data_icetape ||= begin
+    unless icetape_id.nil?
+      db_get('icetapes', icetape_id)
+    end
+  end
+end #/ data_icetape
+
 
 end #/TUser
