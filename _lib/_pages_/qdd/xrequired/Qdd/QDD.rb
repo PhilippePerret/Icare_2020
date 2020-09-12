@@ -46,7 +46,7 @@ def documents_filtred
     end
     where = where.join(AND)
     request = <<-SQL
-SELECT *
+SELECT doc.*
 FROM icdocuments doc
 INNER JOIN icetapes eta ON doc.icetape_id = eta.id
 WHERE #{where}

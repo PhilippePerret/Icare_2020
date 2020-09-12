@@ -126,3 +126,6 @@ Chargement des modules
 --- [2020-07-30 20:32:22 +0200] Entrée dans ajax.rb
 [Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
 Chargement des modules
+--- [2020-09-12 08:05:06 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+Chargement des modules
