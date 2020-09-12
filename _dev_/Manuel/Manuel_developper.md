@@ -69,7 +69,7 @@ HTML#build_page
 
 Les trois dossiers où il faut chercher les choses sont :
 
-### _lib/_pages_/
+### _lib/\_pages\_/
 
 C’est là où sont définies toutes les routes. Si on appelle l’url `bureau/home`, c’est le dossier `./lib/_pages_/bureau/home/` qu’on chargera et qui contiendra tous les éléments (HTML, CSS et Javascript) propres à cette route.
 
@@ -328,6 +328,23 @@ LIB/modules/
 ~~~
 
 
+
+## Charger un fichier au même niveau (chemin absolu à partir d'un chemin relatif)
+
+Si on veut charger un fichier se trouvant au même niveau que le module appelant, on peut utiliser la méthode `full_path`.
+
+Soit deux fichiers dans le même dossier :
+
+~~~bash
+dossier/fichier.rb
+        fichier.yaml
+~~~
+
+On  peut charger le fichier `yaml` dans le module ruby à l'aide de :
+
+~~~ruby
+data = YAML.load_file(full_path('fichier.yaml'))
+~~~
 
 ---
 
@@ -1009,7 +1026,7 @@ options = {
 #### Les blocs « GoTo »
 
 ~~~ruby
-divGoto("... inner ...")
+divGoto("... inner ...", route:'la/route')
 ~~~
 
 Pour écrire un lien dans un « bloc » comme ceux qu’on peut trouver sur la page de plan ou sur les accueils de bureau.
@@ -1029,7 +1046,7 @@ Quand il y en a plusieurs et qu’on veut en mettre en exergue, on peut ajouter 
 Avec la méthode divGoto :
 
 ~~~ruby
-div = divGoto('<inner>', exergue: true)
+div = divGoto('<inner>', route: 'vers/endroit', exergue: true)
 ~~~
 
 <a name="infosbulles"></a>

@@ -13,7 +13,7 @@ DB_TEST_NAME    = 'icare_test'
 
 APP_FOLDER      = File.dirname(LIB_FOLDER) unless defined?(APP_FOLDER)
 PAGES_FOLDER    = File.join(LIB_FOLDER,'_pages_'.freeze) unless defined?(PAGES_FOLDER)
-FOLD_REL_PAGES = './_lib/_pages_'
+FOLD_REL_PAGES = './_lib/_pages_' unless defined?(FOLD_REL_PAGES)
 PROCESSUS_WATCHERS_FOLDER = File.join(LIB_FOLDER,'_watchers_processus_'.freeze)
 DATA_FOLDER     = File.join(LIB_FOLDER,'data'.freeze) unless defined?(DATA_FOLDER)
 MODULES_FOLDER  = File.join(LIB_FOLDER,'modules'.freeze)

@@ -1,0 +1,12 @@
+div.update {
+}
+div.update .date {
+  display:block;
+  margin-top:1em;
+  font-size:0.65em;
+  font-family:Georgia;
+  width:150px;
+}
+div.update .lien {
+  font-size:0.7em;
+}

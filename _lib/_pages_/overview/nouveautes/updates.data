@@ -1,0 +1,9 @@
+# Ce fichier contient les données des actualisations. Les dernières doivent
+# apparaitre en premier car le fichier est lu séquentiellement jusqu'à la
+# date une semaine avant.
+
+20 09 2020::Concours de synopsis::concours/home
+14 09 2020::Porte de frigo améliorée, avec possibilité de discuter avec plusieurs personnes.::bureau/frigo
+14 09 2020::Historique complet et détaillé.::bureau/historique
+14 09 2020::Possibilité de partager son historique de travail avec les autres icarien·ne·s ou le reste du monde.::bureau/preferences
+14 09 2020::Actualisation complète du site de l'atelier Icare.
