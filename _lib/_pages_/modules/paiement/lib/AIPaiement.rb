@@ -8,7 +8,7 @@
   de pouvoir s'en servir par exemple dans les outils administrateurs quand
   on doit marquer un paiement effectué.
 =end
-require_module('icmodules')
+require_modules(['icmodules'])
 
 class AIPaiement < ContainerClass
 # ---------------------------------------------------------------------
@@ -41,7 +41,9 @@ def date_next_paiement
   end
 end #/ date_next_paiement
 
-# Traitement du paiement APRÈS retour de paypal où le module a été
+# Traitement du paiement APRÈS retour de paypal
+# ---------------------------------------------
+# où le module a été
 # réglé ou bien après confirmation de bonne réception pour un
 # virement.
 # La méthode :
@@ -51,13 +53,18 @@ end #/ date_next_paiement
 #     qui produit une actualité)
 def traite
   log("-> AIPaiement#traite")
-  # Marquer le paiement effectué
-  # En fait, il n'y a rien de particulier à faire
+
+  # On détruit le watcher de paiement courant
+  # NOTE Noter que si, à l'avenir, on permet plusieurs modules en même temps,
+  # il y aura une confusion ici, le premier watcher de paiement sera détruit.
+  # Il faudrait appeler la méthode remove_watcher_paiement avec l'identifiant
+  # du module concerné.
+  dwatcher = owner.remove_watcher_paiement
 
   # Si c'est un suivi de projet, faire le prochain watcher
   if icmodule.suivi?
-    next_paiement =  Time.now.to_i + 31.days
-    owner.add_watcher('paiement_module', {objet_id: id, triggered_at:next_paiement})
+    next_paiement =  dwatcher[:triggered_at] + 31.days
+    owner.watchers.add('paiement_module', {objet_id: icmodule.id, triggered_at: next_paiement, vu_user:false})
     @date_next_paiement = formate_date(next_paiement)
   end
 

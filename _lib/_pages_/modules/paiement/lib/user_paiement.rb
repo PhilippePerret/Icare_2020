@@ -1,6 +1,6 @@
 # encoding: UTF-8
-require_relative('AIPaiement')
-require_relative('constants')
+require_relative 'AIPaiement'
+require_relative 'constants'
 class User
 
   attr_reader :paiement # Instance AIPaiement (quand on revient du paiement)
@@ -18,6 +18,7 @@ class User
   # en argument, dans le cas d'un paiement par virement qui serait enregistré
   # plus tard par moi alors qu'un autre module serait déjà en cours.
   def add_paiement(icmodule_id = nil)
+    log("-> User#add_paiement(icmodule_id=#{icmodule_id})")
     icmod = icmodule_id.nil? ? icmodule : IcModule.get(icmodule_id)
     data = {
       user_id:      self.id,
@@ -43,11 +44,16 @@ class User
     message(MESSAGES[:annonce_new_notif_virement])
   end #/ simple_watcher_pour_virement
 
+  def remove_watcher_paiement
+    dwatcher = db_get('watchers', {user_id: id, wtype:'paiement_module'})
+    db_delete('watchers', dwatcher[:id])
+    return dwatcher
+  end #/ remove_watcher_paiement
+
   # Cette méthode est commune au chargement de l'IBAN et au simple signalement
   # de paiement
   def add_watcher_pour_virement
-    dwatcher = db_get('watchers', {user_id: id, wtype:'paiement_module'})
-    db_delete('watchers', dwatcher[:id])
+    dwatcher = remove_watcher_paiement
     self.watchers.add('annonce_virement', objet_id: dwatcher[:objet_id], vu_user:false)
   end #/ add_watcher_pour_virement
 
