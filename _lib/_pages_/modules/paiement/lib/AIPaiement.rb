@@ -77,6 +77,12 @@ def traite
     subject: MESSAGES[:votre_facture],
     message: deserb('mail_user', self)
   })
+
+  # M'avertir qu'un nouveau paiement a été effectué
+  phil.send_mail({
+    subject: MESSAGES[:nouveau_paiement_icarien],
+    message: deserb('mail_admin', self)
+  })
 end #/ traite
 
 # Retourne la facture pour le paiement

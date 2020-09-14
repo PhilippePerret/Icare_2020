@@ -144,6 +144,8 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       "Marion ne devrait plus avoir de matcher de paiement"
     pitch("Comme le module n'est pas à durée indéterminée, il n'est pas à repayer, pas de nouveau matcher de paiement")
 
+    logout
+
   end
 
 
@@ -196,7 +198,6 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       require './_lib/data/secret/benoit' # => BENOIT
       within_window(paypal_window) do
         # similar, just couple of extra steps and calling reusable method for details
-        `say "Je suis prête"`
         Capybara.using_wait_time(5) do
           # accept cookies
           click_button("Accepter les cookies") if page.has_button?("Accepter les cookies")
@@ -223,12 +224,14 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       expect(new_watcher_paiement).not_to eq(nil),
         "Le nouveau watcher paiement pour le module d'Élie (##{elie.icmodule_id}) devrait avoir été créé"
       pitch("Le watcher de paiement initial a été supprimé et remplacé par un nouveau")
-      expect(new_watcher_paiement[:triggered_at]).to be_greater_than(Time.now.to_i + 29.days)
+      expect(new_watcher_paiement[:triggered_at]).to be > (Time.now.to_i + 29.days)
       pitch("Le nouveau watcher de paiement possède un bon trigger")
       expect(elie).to have_mail(after: start_time, subject:MESSAGES[:votre_facture])
       pitch("Élie a reçu un mail de confirmation avec sa facture")
-      expect(phil).to have_mail(after: start_time, to: elie.email)
+      expect(phil).to have_mail(after: start_time, subject:MESSAGES[:nouveau_paiement_icarien], message:"un paiement vient d’être effectué")
       pitch("J'ai reçu un mail m'annonçant le paiement")
+
+      logout
 
     end
   end
