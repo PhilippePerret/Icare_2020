@@ -94,7 +94,20 @@ end #/ formated_message
 
 def formated_subject
   @formated_subject ||= begin
-    "🦋ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "🦋 >< ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "U+1F98B ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "#{"\u1F98B".encode('utf-8')} ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "#{"U+1F98B".encode('utf-8')} ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "#{"\ua564".encode('utf-8')} Icare #{"\ua564".encode('utf-8')} #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "#{"\ua564".encode('utf-8')}Icare #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "#{"\ua564".encode('utf-8')}ICARE#{"\ua564".encode('utf-8')} #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+    # "#{"\ua564".encode('utf-8')}icare#{"\ua564".encode('utf-8')} #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+
+    # Fonctionne :
+    # "Icare #{"\ua564".encode('utf-8')} #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
+
+    # "=f0=9f=a6=8b"
+    "#{data[:subject]||'Communiqué de l’atelier Icare'}"
     # Il faudrait pouvoir utiliser l'image comme ça :
     # "<img src='https://www.atelier-icare.net/img/Emojis/animaux/papillon.png' style='width:20px;'/> ICARE | #{data[:subject]||'Communiqué de l’atelier Icare'}".freeze
   end
