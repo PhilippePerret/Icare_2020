@@ -2307,22 +2307,27 @@ Toutes les méthodes suivantes peuvent définir un filtre pour filtrer les enreg
 
 **Un string explicite**
 
-	~~~ruby
-	"id = 12 ORDER BY created_at DESC"
-	~~~
+```ruby
+"id = 12 ORDER BY created_at DESC"
+```
 
 **Un hash de propriétés**
 
-	~~~ruby
-	{id:12, completed:true}
-	~~~
+~~~ruby
+{id:12, completed:true}
+~~~
 
 **Un hash de propriétés et précision pour la requête**
 
-	~~~ruby
-	{id: 12, order:'created_at DESC'}
-	~~~
+~~~ruby
+{id: 12, order:'created_at DESC'}
+~~~
 
+**Un hash avec définition explicite de la clause Where et de l'ordre**
+
+~~~ruby
+{order: 'pseudo', where:'SUBSTRING(options,17,1) IN (2,3,7) AND created_at > 23876945'}
+~~~
 
 
 

@@ -7,9 +7,6 @@
 require 'net/smtp'
 require './_lib/required/__first/Deserb'
 
-TEMP_FOLDER = File.expand_path(File.join('.','tmp')) unless defined?(TEMP_FOLDER)
-DATA_FOLDER = File.expand_path(File.join('.','_lib','data')) unless defined?(DATA_FOLDER)
-
 class Mail
 class << self
 
@@ -31,11 +28,7 @@ class << self
 
   # Dossier temporaire dans lequel sont enregistrés les messages
   def folder
-    @folder ||= begin
-      pd = File.join(TEMP_FOLDER,'mails')
-      `mkdir -p "#{pd}"` unless File.exists?(pd)
-      pd
-    end
+    @folder ||= MAILS_FOLDER
   end #/ folder
 end # /<< self
 

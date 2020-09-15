@@ -1,0 +1,35 @@
+<%# frozen_string_literal: true %>
+<%
+form = Form.new(id:'contact-form', route:route.to_s, class:'form-value-600 form-libelle-100')
+rows = {
+  'Titre'   => {name:'envoi_titre', type:'text', value:param(:envoi_titre)},
+  'Message' => {name:'envoi_message', type:'textarea', height:260, value:param(:envoi_message)}
+}
+if user.guest?
+  rows.merge!('Votre mail' => {name:'envoi_mail', type:'text'})
+  rows.merge!('Confirmation' => {name:'envoi_mail_confirmation', type:'text'})
+elsif mailing_list?
+  rows.merge!('Pour' => {content:liste_statuts, type:'raw'})
+  rows.merge!('Format' => {name:'message_format', type:'select', default: param(:message_format), values: [['md', 'Markdown'],['erb','Erb'],['html','HTML']]})
+  rows.merge!('Signature' => {name:'mail_signature', type:'select', default:param(:mail_signature), values:[['bot','Bot de l’atelier'],['phil','Phil'], ['none','Aucune']]})
+end
+
+form.rows = rows
+form.submit_button = mailing_list? ? UI_TEXTS[:btn_apercu] : UI_TEXTS[:btn_envoyer]
+
+%>
+
+<% if user.admin? && MailingList.procedure_current %>
+  <%= MailingList.procedure_current.resultat %>
+<% else %>
+
+  <% if user.admin? && MailingList.apercu_current %>
+    <%= MailingList.apercu_current.apercu %>
+  <% elsif user.admin? && File.exists?(MailingList.data_path) %>
+    <%= MailingList.box_procedure %>
+  <% end %>
+
+  <%= form.out %>
+
+
+<% end %>

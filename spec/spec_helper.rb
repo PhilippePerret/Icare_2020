@@ -10,9 +10,9 @@ require 'capybara/rspec'
 # Capybara.default_driver = :selenium
 # driver = Selenium::WebDriver.for :chrome
 # Capybara.default_driver = :selenium
-Capybara.save_path = './spec/tmp/screenshots'
 Capybara.run_server = false
 Capybara.default_driver = :selenium
+Capybara.save_path = './spec/tmp/screenshots'
 
 # Les requisitions pour les tests
 require './spec/support/lib/required'

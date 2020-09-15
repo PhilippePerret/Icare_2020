@@ -5,35 +5,41 @@ MESSAGES.merge!({
   confirme_envoi: 'Votre message a bien été transmis à %s.'
 })
 class HTML
+  def mailing_list?
+    !!user.admin?
+  end #/ mailing_list?
   def titre
-    "#{Emoji.get('objets/lettre-mail').page_title+ISPACE}Contact".freeze
+    "#{Emoji.get('objets/lettre-mail').page_title+ISPACE}#{titre_per_user}"
   end
+  def titre_per_user
+    mailing_list? ? 'Mailing-list' : 'Contact'
+  end #/ titre_per_user
   # Code à exécuter avant la construction de la page
   def exec
-    if param(:form_id) == 'contact-form'
-      traite_envoi
+    if user.admin?
+      setup_mailing_list
+    end
+    if param(:op) == 'traite_mailing_list'
+      # On passe ici quand on confirme l'envoi du mail en mailing list
+      # Seul un administrateur pourra faire ça
+      admin_required
+      MailingList.traite
+    elsif param(:op) == 'detruire_mailing_list'
+      admin_required
+      MailingList.destroy_saved_mailing
+    elsif param(:form_id) == 'contact-form'
+      if mailing_list?
+        require_relative 'mailing_list'
+        MailingList.apercu
+      else
+        traite_envoi
+      end
     end
   end
   def build_body
     # Construction du body
-    @body = formulaire
+    @body = deserb('body', self)
   end
-
-  # Construit et retourne le formulaire
-  def formulaire
-    form = Form.new(id:'contact-form', route:route.to_s, class:'form-value-600 form-libelle-100')
-    rows = {
-      'Titre'   => {name:'envoi_titre', type:'text', value:param(:envoi_titre)},
-      'Message' => {name:'envoi_message', type:'textarea', height:260, value:param(:envoi_message)}
-    }
-    if user.guest?
-      rows.merge!('Votre mail' => {name:'envoi_mail', type:'text'})
-      rows.merge!('Confirmation' => {name:'envoi_mail_confirmation', type:'text'})
-    end
-    form.rows = rows
-    form.submit_button = 'Envoyer'.freeze
-    form.out
-  end #/ formulaire
 
   def traite_envoi
     dmail = {
@@ -49,10 +55,17 @@ class HTML
       dmail.merge!(to: phil.mail)
     end
     # On envoie le message
-    log("Envoi du message avec dmail = #{dmail.inspect}")
     Mail.send(dmail)
     destinataire = 'Phil'
     message(MESSAGES[:confirme_envoi] % destinataire)
     param({envoi_titre:nil, envoi_message:nil, envoi_mail:nil, envoi_mail_confirmation:nil})
   end #/ traite_envoi
+
+
+  # Méthode appelée quand le formulaire de contact est utilisé comme formulaire
+  # de mailing-list par un administrateur
+  def setup_mailing_list
+    require_module 'user/helpers/menus'
+
+  end #/ setup_mailing_list
 end #/HTML
