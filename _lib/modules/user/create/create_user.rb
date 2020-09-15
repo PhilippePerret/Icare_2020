@@ -66,7 +66,7 @@ class << self
   # choix, pour référence.
   def options_new_icarien
     o = "0"*32
-    o[4]  = '1' # Mail quotidien
+    o[4]  = '0' # Mail quotidien
     o[16] = '3' # Statut candidat
     o[18] = '0' # Après l'identification, l'icarien rejoint son bureau
     o[22] = '1' # l'icarien est averti par mail en cas de message frigo

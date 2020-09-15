@@ -1,52 +1,55 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Constantes String pratiques (et freezées)
 =end
 STRINGS = {
-  body: 'body'.freeze,
-  destroy: 'destroy'.freeze,
-  discussion: 'discussion'.freeze,
-  download: 'download'.freeze,
-  explication:'explication'.freeze,
-  home: 'home'.freeze,
-  inviter: 'inviter'.freeze,
-  small:'small'.freeze,
-  titre:'titre'.freeze,
-  users:'users'.freeze,
+  body: 'body',
+  destroy: 'destroy',
+  discussion: 'discussion',
+  download: 'download',
+  explication:'explication',
+  home: 'home',
+  inviter: 'inviter',
+  small:'small',
+  titre:'titre',
+  users:'users',
 }
 
-AND = ' AND '.freeze
+AND = ' AND '
 
-BR = '<br/>'.freeze
+BR = '<br/>'
 
-CHECKED = ' CHECKED'.freeze
+CHECKED = ' CHECKED'
 
-EMPTY_STRING = ''.freeze
-ESPACE_FINE = "<this />".freeze
-ESPERLUETTE = '&'.freeze
-ET = ' et '.freeze
+EMPTY_STRING = ''
+ESPACE_FINE = "<this />"
+ESPERLUETTE = '&'
+ET = ' et '
 
 FLECHE  = '➵'
 
-ISPACE    = ' '.freeze # espace insécable
-ISPACE_H  = '&nbsp;'.freeze #insécable HTML
+ISPACE    = ' ' # espace insécable
+ISPACE_H  = '&nbsp;' #insécable HTML
 
-PV = ';'.freeze # PV pour Point Virgule
+PV = ';' # PV pour Point Virgule
 
 RC = '
-'.freeze unless defined?(RC)
-RC2 = (RC*2).freeze
-RC3 = (RC*3).freeze
-RETOUR    = '<span style="vertical-align:sub;">↩︎</span>'.freeze
+' unless defined?(RC)
+RC2 = (RC*2)
+RC3 = (RC*3)
+RETOUR    = '<span style="vertical-align:sub;">↩︎</span>'
 
-SELECT    = 'select'.freeze
-SELECTED  = ' SELECTED'.freeze
+SELECT    = 'select'
+SELECTED  = ' SELECTED'
 SPACE     = ' '
 
-TAB       = '    '.freeze
-TAB2      = (TAB*2).freeze
-TAB3      = (TAB*3).freeze
-TEXT      = 'text'.freeze
+TAB       = '    '
+TAB2      = (TAB*2)
+TAB3      = (TAB*3)
+TEXT      = 'text'
 TIRET     = '<span class="tiret">–</span>'
 
-VG = ', '.freeze # VG pour VirGule
+VG  = ', ' # VG pour VirGule
+VGE = ', ' # VG pour VirGule E pour espace
+# Note : VG et VGE sont identiques, c'est pour la compatibilité

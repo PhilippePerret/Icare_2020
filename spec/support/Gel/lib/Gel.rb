@@ -24,6 +24,11 @@ end #/ gel
 
 # Pour procéder à un dégel
 def degel(name)
+  # On doit supprimer les données JSON conservées des users, modules et
+  # étapes enregistrées par le seed User
+  require './spec/support/data/user_seed'
+  UserSeed.reset
+  # On peut dégeler
   Gel.get(name).degel
 end #/ degel
 

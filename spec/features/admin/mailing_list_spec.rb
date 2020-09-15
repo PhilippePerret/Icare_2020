@@ -50,7 +50,7 @@ describe 'Mailing-list d’administration' do
 
 
 
-  context 'Un icarien identifié', only: true do
+  context 'Un icarien identifié' do
     let(:datapath) { './tmp/mails/mailing.json' }
     before(:each) do
       File.open(datapath,'wb'){|f| f.write('{"uuid":"DGFTY456DFG"}')}
@@ -59,7 +59,13 @@ describe 'Mailing-list d’administration' do
       File.delete(datapath)
     end
 
-    scenario 'ne peut pas utiliser le mailing-list pour envoyer des messages' do
+    scenario 'ne peut pas utiliser le mailing-list pour envoyer des messages', only: true do
+
+      require './spec/support/data/user_seed'
+      UserSeed.feed(status:{actif:2, inactif:2})
+      return
+
+
       expect(File.exists?(datapath)).to eq(true)
       benoit.rejoint_son_bureau
       goto('contact/mail')
