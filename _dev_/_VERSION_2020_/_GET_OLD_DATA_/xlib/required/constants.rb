@@ -12,3 +12,5 @@ FOLDER_GOODS_SQL        = File.join(ALWAYSDATA_FOLDER,'xbackups','Goods_for_2020
 FOLDER_CURRENT_ONLINE   = File.join(ALWAYSDATA_FOLDER,'xbackups','Version_current_online')
 
 SERVEUR_SSH = "icare@ssh-icare.alwaysdata.net"
+
+TABU = "     "

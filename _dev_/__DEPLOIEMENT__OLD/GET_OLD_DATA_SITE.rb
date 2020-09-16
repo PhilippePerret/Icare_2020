@@ -43,12 +43,6 @@ GET_OLD_DATA_FOLDER = File.join(THISFOLDER,'GET_OLD_DATA')
 ERRORS_TRANS_DATA = []
 
 SCRIPT_LIST = [
-  # Récupération de toutes les données du site distant
-  # Note : peut être ex-commenté si les données viennent d'être chargées avec succès
-  'get_all_tables_from_icare',
-  # Vérifications préliminaires pour savoir si on peut exécuter l'opération
-  # Note : ex-commenter si les vérifications ont été faites
-  'checks_preliminary',
   # Dump simple de tables qui doivent rester telles quelles
   'dumps_simples',
   # Conformisation des options des icariens

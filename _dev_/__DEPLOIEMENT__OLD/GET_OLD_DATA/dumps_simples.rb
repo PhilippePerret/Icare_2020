@@ -2,24 +2,6 @@
 =begin
   Dumps simples
 =end
-# temoignages         OK    icare > online
-# Il faut s'assurer que la colonne `prebiscites TINYINT` existe bien (elle
-# disparait si on utilise l'ancienne table online)
-`mysqldump -u root icare temoignages > "#{FOLDER_GOODS_SQL}/temoignages.sql"`
-puts "🗄️ Dumping des témoignages effectué avec succès".vert
-
-# actualites          OK    online > Faire une sauvegarde pour les garder
-#                           On repart à zéro en ajoutant l'actualité du nouveau site
-db_exec(change_columns_at('actualites'))
-if MyDB.error then puts "ERREUR SQL: #{MyDB.error.inspect}".rouge; exit end
-`mysqldump -d -u root icare actualites > "#{FOLDER_GOODS_SQL}/actualites.sql"`
-puts "🗄️ Dumping de la table actualites effectué avec succès".vert
-
-# checkform           OK    À détruire
-
-# connexions          OK    Repartir de zéro (structure only)
-`mysqldump -d -u root icare connexions > "#{FOLDER_GOODS_SQL}/connexions.sql"`
-puts "🗄️ Dumping de la table connexions effectué avec succès".vert
 
 # tickets             OK    Repartir de zéro (structure only)
 `mysqldump -d -u root icare tickets > "#{FOLDER_GOODS_SQL}/tickets.sql"`

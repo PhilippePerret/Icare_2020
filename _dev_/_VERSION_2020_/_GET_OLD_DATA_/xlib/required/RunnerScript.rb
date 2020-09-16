@@ -1,5 +1,15 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+
+# Liste des scripts à jouer
+SCRIPTS_LIST = [
+  # '2_temoignages',
+  # '3_check_processus_watchers', # simple vérification des processus # TODO Traiter en une seule fois
+  # '4_actualites',
+  # '5_connexions',
+  '6_tickets'
+]
+
 class RunnerScript
 # ---------------------------------------------------------------------
 #
@@ -60,20 +70,25 @@ end #/ initialize
 # = main =
 # Pour lancer le script
 def proceed_if_necessary
-  proceed if script_must_be_proceed?
-  self.class.add_success(self)
+  puts "---> ./xlib/db_scripts/#{name}".gris
+  File.exists?(path) || raise("SCRIPT INEXISTANT")
+  if script_must_be_proceed?
+    proceed
+    self.class.add_success(self)
+  else
+    puts TABU + 'OK'.gris
+  end
 rescue ErreurFatale => e
   raise e
 rescue Exception => e
-  puts e.message.rouge
+  puts "#    #{e.message.rouge}"
   puts e.backtrace.join(RC).rouge
 end #/ proceed_if_necessary
 
 # Pour jouer vraiment le script
 def proceed
-  puts "---> #{name}".bleu
   load path
-  puts "     OK".vert
+  puts "<--- SCRIPT SUCCESS".vert
 end #/ proceed
 
 

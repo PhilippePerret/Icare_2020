@@ -1,10 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-# Liste des scripts à jouer
-SCRIPTS_LIST = [
-  '1_get_all_distant_tables'
-]
 class Runner
 class << self
   def run
@@ -16,7 +12,9 @@ class << self
   end #/ run
 
   def run_all_scripts
-
+    SCRIPTS_LIST.each do |script_name|
+      run_script(script_name)
+    end
   end #/ run_all_scripts
 
   # Pour jouer le script de nom +script_name+

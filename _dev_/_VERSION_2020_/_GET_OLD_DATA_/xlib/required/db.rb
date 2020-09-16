@@ -38,6 +38,7 @@ REQUEST_UPDATE = 'UPDATE %{table} SET %{columns} WHERE id = ?'.freeze
 # une exception en cas d'erreur. Inutile de faire un test sur MyDB.error
 # Il faut simplement capter l'erreur MyDBError
 def db_exec request, values = nil
+  request = request.strip
   while request.end_with?(';')
     request = request[0...-1]
   end

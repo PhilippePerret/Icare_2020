@@ -17,15 +17,15 @@ require_relative '../required' # si lancé seul
 # NOTE Quand :table ne correspond pas à :dst_table, la table sera renommée
 # par :dst_table dans le fichier.
 DATA_TABLES_DISTANTES = [
-  {base:'icare_users', table:'users', dst_table:'users'},
-  {base:'icare_users', table:'paiements', dst_table:'paiements'},
-  {base:'icare_hot', table:'watchers', dst_table:'current_watchers'},
-  {base:'icare_modules', table:'absetapes', dst_table:'current_absetapes'},
-  {base:'icare_modules', table:'mini_faq', dst_table:'minifaq'},
-  {base:'icare_modules', table:'icdocuments', dst_table:'current_icdocuments'},
-  {base:'icare_modules', table:'icmodules', dst_table:'icmodules'},
-  {base:'icare_modules', table:'icetapes', dst_table:'icetapes'},
-  {base:'icare_modules', table:'lectures_qdd', dst_table:'current_lectures_qdd'}
+  {base:'icare_users',    table:'users', dst_table:'users'},
+  {base:'icare_users',    table:'paiements', dst_table:'paiements'},
+  {base:'icare_hot',      table:'watchers', dst_table:'current_watchers'},
+  {base:'icare_modules',  table:'absetapes', dst_table:'current_absetapes'},
+  {base:'icare_modules',  table:'mini_faq', dst_table:'minifaq'},
+  {base:'icare_modules',  table:'icdocuments', dst_table:'current_icdocuments'},
+  {base:'icare_modules',  table:'icmodules', dst_table:'icmodules'},
+  {base:'icare_modules',  table:'icetapes', dst_table:'icetapes'},
+  {base:'icare_modules',  table:'lectures_qdd', dst_table:'current_lectures_qdd'}
 ]
 GET_TABLE_REQUEST = <<-SQL.strip.freeze
 ssh #{SERVEUR_SSH} bash <<BASH
@@ -34,13 +34,7 @@ BASH
 SQL
 COMMAND_DOWNLOAD = "scp #{SERVEUR_SSH}:\"deploiement/db_out/%{table}.sql\" \"#{FOLDER_CURRENT_ONLINE}/%{table}.sql\""
 # --- On commence à opérer ---
-# On s'assure qu'un dossier distant existe pour recevoir les fichiers
-# des tables dumpées (qui seront ensuite downloadées en local) et on le
-# vide.
-`ssh #{SERVEUR_SSH} bash <<BASH
-rm -rf "deploiement/db_out"
-mkdir -p "deploiement/db_out"
-BASH`
+
 # On vide le dossier local qui va recevoir toutes les tables distantes
 FileUtils.rm_rf(FOLDER_CURRENT_ONLINE) if File.exists?(FOLDER_CURRENT_ONLINE)
 `mkdir -p "#{FOLDER_CURRENT_ONLINE}"`
