@@ -37,6 +37,7 @@ DATA_TABLES_DISTANTES = [
   {base:'icare_hot',      table:'tickets',          dst_table:'tickets'},
   {base:'',               table:'unique_usage_ids', dst_table:'unique_usage_ids'},
   {base:'icare_users',    table:'users',            dst_table:'users'},
+  {base:'',               table:'validations_pages',dst_table:'validations_pages'},
   {base:'icare_hot',      table:'watchers',         dst_table:'current_watchers'}
 ]
 

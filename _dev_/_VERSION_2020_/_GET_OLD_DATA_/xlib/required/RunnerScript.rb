@@ -17,8 +17,10 @@ SCRIPTS_LIST = [
   '15_icdocuments',
   '16_modules_icariens',
   '17_watchers',
-  '18_unique_usage_ids'
+  '18_unique_usage_ids',
   '20_users',
+  '30_paiements',
+  '31_validations_pages',
   '90_upload_all_tables',
   '95_build_gel_icare'
 ]
@@ -101,7 +103,7 @@ end #/ proceed_if_necessary
 # Pour jouer vraiment le script
 def proceed
   load path
-  puts "<--- SCRIPT SUCCESS".vert
+  operation("<--- SCRIPT SUCCESS")
 end #/ proceed
 
 
