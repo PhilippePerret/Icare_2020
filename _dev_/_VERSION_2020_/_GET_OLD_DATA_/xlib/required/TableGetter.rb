@@ -18,19 +18,24 @@ end
 #   Quand :table ne correspond pas à :dst_table, la table sera renommée
 #   par :dst_table dans le fichier.
 DATA_TABLES_DISTANTES = [
-  {base:'icare_modules',  table:'absetapes',    dst_table:'current_absetapes'},
-  {base:'icare_hot',      table:'actualites',   dst_table:'actualites'},
-  {base:'icare_hot',      table:'connexions',   dst_table:'connexions'},
-  {base:'icare_modules',  table:'icetapes',     dst_table:'icetapes'},
-  {base:'icare_modules',  table:'icdocuments',  dst_table:'current_icdocuments'},
-  {base:'icare_modules',  table:'icmodules',    dst_table:'icmodules'},
-  {base:'icare_modules',  table:'lectures_qdd', dst_table:'current_lectures_qdd'},
-  {base:'icare_modules',  table:'mini_faq',     dst_table:'minifaq'},
-  {base:'icare_users',    table:'paiements',    dst_table:'paiements'},
-  {base:'icare_cold',     table:'temoignages',  dst_table:'temoignages'},
-  {base:'icare_hot',      table:'tickets',      dst_table:'tickets'},
-  {base:'icare_users',    table:'users',        dst_table:'users'},
-  {base:'icare_hot',      table:'watchers',     dst_table:'current_watchers'}
+  {base:'icare_modules',  table:'absetapes',        dst_table:'current_absetapes'},
+  {base:'icare_modules',  table:'absmodules',       dst_table:'absmodules'},
+  {base:'icare_modules',  table:'abstravauxtypes',  dst_table:'abstravauxtypes'},
+  {base:'icare_hot',      table:'actualites',       dst_table:'actualites'},
+  {base:'icare_hot',      table:'connexions',       dst_table:'connexions'},
+  {base:'icare_users',    table:'frigo_users',      dst_table:'frigo_users'},
+  {base:'icare_users',    table:'frigo_messages',   dst_table:'frigo_messages'},
+  {base:'icare_users',    table:'frigo_discussions',dst_table:'frigo_discussions'},
+  {base:'icare_modules',  table:'icetapes',         dst_table:'icetapes'},
+  {base:'icare_modules',  table:'icdocuments',      dst_table:'current_icdocuments'},
+  {base:'icare_modules',  table:'icmodules',        dst_table:'icmodules'},
+  {base:'icare_modules',  table:'lectures_qdd',     dst_table:'current_lectures_qdd'},
+  {base:'icare_modules',  table:'mini_faq',         dst_table:'minifaq'},
+  {base:'icare_users',    table:'paiements',        dst_table:'paiements'},
+  {base:'icare_cold',     table:'temoignages',      dst_table:'temoignages'},
+  {base:'icare_hot',      table:'tickets',          dst_table:'tickets'},
+  {base:'icare_users',    table:'users',            dst_table:'users'},
+  {base:'icare_hot',      table:'watchers',         dst_table:'current_watchers'}
 ]
 
 # Pour pouvoir traiter table par table. Il suffit d'appeler :

@@ -3,11 +3,15 @@
 
 # Liste des scripts à jouer
 SCRIPTS_LIST = [
-  # '2_temoignages',
-  # '3_check_processus_watchers', # simple vérification des processus # TODO Traiter en une seule fois
-  # '4_actualites',
-  # '5_connexions',
-  '6_tickets'
+  # '02_temoignages',
+  # '03_check_processus_watchers', # simple vérification des processus # TODO Traiter en une seule fois
+  # '04_actualites',
+  # '05_connexions',
+  # '06_tickets',
+  # '07_abs_modules',
+  # '08_abs_etapes',
+  # '09_abs_travaux_type',
+  # '10_frigo'
 ]
 
 class RunnerScript
