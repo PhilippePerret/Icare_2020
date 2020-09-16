@@ -11,6 +11,7 @@
 unless defined?(DATA_MYSQL)
   require './_lib/data/secret/mysql'
 end
+require_relative 'constants'
 
 
 # Toutes les tables qui vont être traitées
@@ -26,14 +27,15 @@ DATA_TABLES_DISTANTES = [
   {base:'icare_users',    table:'frigo_users',      dst_table:'frigo_users'},
   {base:'icare_users',    table:'frigo_messages',   dst_table:'frigo_messages'},
   {base:'icare_users',    table:'frigo_discussions',dst_table:'frigo_discussions'},
-  {base:'icare_modules',  table:'icetapes',         dst_table:'icetapes'},
   {base:'icare_modules',  table:'icdocuments',      dst_table:'current_icdocuments'},
+  {base:'icare_modules',  table:'icetapes',         dst_table:'icetapes'},
   {base:'icare_modules',  table:'icmodules',        dst_table:'icmodules'},
   {base:'icare_modules',  table:'lectures_qdd',     dst_table:'current_lectures_qdd'},
-  {base:'icare_modules',  table:'mini_faq',         dst_table:'minifaq'},
+  {base:'icare_modules',  table:'mini_faq',         dst_table:'minifaq', final_table:'minifaq'},
   {base:'icare_users',    table:'paiements',        dst_table:'paiements'},
   {base:'icare_cold',     table:'temoignages',      dst_table:'temoignages'},
   {base:'icare_hot',      table:'tickets',          dst_table:'tickets'},
+  {base:'',               table:'unique_usage_ids', dst_table:'unique_usage_ids'},
   {base:'icare_users',    table:'users',            dst_table:'users'},
   {base:'icare_hot',      table:'watchers',         dst_table:'current_watchers'}
 ]
@@ -44,6 +46,7 @@ TABLES_DISTANTES = {}
 DATA_TABLES_DISTANTES.each do |dtable|
   TABLES_DISTANTES.merge!(dtable[:table] => dtable)
 end
+
 
 class TableGetter
 # ---------------------------------------------------------------------
@@ -86,15 +89,43 @@ class << self
   # Export de la table de nom +table_name+ dans le dossier qui contient toutes
   # les bonnes tables finales
   def export(table_name) # dump
-    pth = File.join(FOLDER_GOODS_SQL, "#{table_name}.sql")
-    `mysqldump -u root icare #{table_name} > "#{pth}"`
-    if File.exists?(pth)
-      puts "🗄️#{ISPACE*2}Dumping de la table '#{table_name}' effectué avec succès.".vert
-    else
-      raise ErreurFatale.new("Impossible de dumper la table finale '#{table_name}'…")
+    @tables_to_export ||= []
+    data_table = TABLES_DISTANTES[table_name]
+    tbname = data_table[:final_table] || data_table[:table]
+    @tables_to_export << tbname unless @tables_to_export.include?(tbname)
+
+    if data_table[:dst_table].start_with?('current_')
+      db_exec("DROP TABLE IF EXISTS `#{data_table[:dst_table]}`")
+      success("#{TABU}Suppression de la table provisoire '#{data_table[:dst_table]}'.")
     end
   end #/ export
   alias :dump :export
+
+  # Exporter toutes les tables modifiées
+  def export_all_tables
+    @tables_to_export ||= get_tables_to_export # si traitement partiel
+    @tables_to_export.each do |tbname|
+      pth = File.join(FOLDER_GOODS_SQL, "#{tbname}.sql")
+      `mysqldump -u root icare #{tbname} > "#{pth}"`
+      if File.exists?(pth)
+        puts "🗄️#{ISPACE*2}Dumping de la table '#{tbname}' effectué avec succès.".vert
+      else
+        raise ErreurFatale.new("Impossible de dumper la table finale '#{tbname}'…")
+      end
+    end
+  end #/ export_all_tables
+
+  # Méthode qui permet, à la fin du traitement, de copier tous les fichiers
+  # .sql des fichiers de table sur le site distant
+  def upload_all_tables
+    DATA_TABLES_DISTANTES.each do |data_table|
+      itable = new(data_table)
+      itable.upload
+      itable.import_distant
+    end
+    success("🚀 Copie de tous les fichiers .sql vers deploiement/db")
+    success("🎉 TABLES IMPORTÉES DANS icare_db DISTANT")
+  end #/ upload_all_tables
 
   # Retourne TRUE si la table +table_name+ existe dans la base `icare`
   # locale
@@ -119,6 +150,12 @@ BASH
     SSH
     `#{ssh_request}`
   end #/ reset
+
+  # Retourne la liste des toutes les tables définies dans le fichier
+  # contenant les bons fichier .sql
+  def get_tables_to_export
+    Dir["#{FOLDER_GOODS_SQL}/*.sql"].collect {|f| File.basename(f, File.extname(f) ) }
+  end #/ get_tables_to_export
 end # /<< self
 # ---------------------------------------------------------------------
 #
@@ -154,9 +191,14 @@ end #/ dump_online
 
 # Procède au rapatriement de la table
 def download
-  cmd = COMMAND_DOWNLOAD % data
-  `#{cmd}`
+  `#{SCP_DOWNLOAD_COMMAND % data}`
 end #/ download
+
+# Copie le fichier .sql local vers le dossier distant, afin de l'injecter
+# dans la base distante
+def upload
+  `#{SCP_UPLOAD_COMMAND % data}`
+end #/ upload
 
 # Procède au changement de nom de la table si nécessaire
 def change_table_name
@@ -177,6 +219,12 @@ def import
   # On importe la nouvelle table
   `mysql -u root icare < "#{local_final_path}"`
 end #/ import
+
+# Importer le fichier distant dans la table distante
+def import_distant
+  result = `#{SSH_COMMAND_LOAD_TABLE % {table_name: table_name}}`
+  puts "result de import_distant '#{table_name}' : #{result.inspect}"
+end #/ import_distant
 
 # Méthode qui s'assure que la table a été correctement dumpée
 def dumped?
@@ -242,11 +290,17 @@ GET_TABLE_REQUEST = <<-SQL
 ssh #{SERVEUR_SSH} bash << BASH
 mysqldump -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} %{base} %{table} > "%{distant_path}"
 BASH
-
 SQL
 
 # Commande qui va rapatrier le fichier .sql de la table en local
-COMMAND_DOWNLOAD = "scp #{SERVEUR_SSH}:\"%{distant_path}\" \"%{local_path}\""
+SCP_DOWNLOAD_COMMAND  = "scp #{SERVEUR_SSH}:\"%{distant_path}\" \"%{local_path}\""
+SCP_UPLOAD_COMMAND    = "scp \"%{local_path}\" #{SERVEUR_SSH}:%{distant_path}"
+
+SSH_COMMAND_LOAD_TABLE = <<SSH
+ssh #{SERVEUR_SSH} bash <<BASH
+mysql -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} icare_db < deploiement/db/%{table_name}
+BASH
+SSH
 
 TableGetter.reset
 # TableGetter.proceed # pour les faire toutes

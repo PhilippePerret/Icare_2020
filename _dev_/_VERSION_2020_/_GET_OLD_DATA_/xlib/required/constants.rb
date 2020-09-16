@@ -14,3 +14,18 @@ FOLDER_CURRENT_ONLINE   = File.join(ALWAYSDATA_FOLDER,'xbackups','Version_curren
 SERVEUR_SSH = "icare@ssh-icare.alwaysdata.net"
 
 TABU = "     "
+
+# Liste des tables qui contiennent des `user_id`
+TABLES_WITH_USER_ID = [
+  ['actualites'],
+  ['connexions', 'id'],
+  ['icdocuments'],
+  ['icetapes'],
+  ['icmodules'],
+  ['lectures_qdd'],
+  ['minifaq'],
+  ['paiements'],
+  ['temoignages'],
+  ['tickets'],
+  ['watchers']
+]
