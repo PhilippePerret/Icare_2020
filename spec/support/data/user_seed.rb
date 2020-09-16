@@ -83,16 +83,16 @@ def feed(options = nil)
   @uid = db_exec("SELECT id FROM users ORDER BY id DESC LIMIT 1").first[:id]
   log "@uid = #{@uid.inspect}"
   # Le premier identifiant pour un module
-  @module_id = db_exec("SELECT id FROM icmodules ORDER BY id LIMIT 1").first[:id]
+  @module_id = db_exec("SELECT id FROM icmodules ORDER BY id DESC LIMIT 1").first[:id]
   log "@module_id = #{@module_id.inspect}"
   # Le premier identifiant libre pour une étape
-  @etape_id = db_exec("SELECT id FROM icetapes ORDER BY id LIMIT 1").first[:id]
+  @etape_id = db_exec("SELECT id FROM icetapes ORDER BY id DESC LIMIT 1").first[:id]
   log "@etape_id = #{@etape_id.inspect}"
 
   # *** Fabrication de toutes les données ***
   all_data_users    = []
   all_data_modules  = []
-  @all_data_etapes  = [] # instance variable car sera peuplé dans les méthodes 
+  @all_data_etapes  = [] # instance variable car sera peuplé dans les méthodes
 
   # On boucle sur chaque statut pour créer autant d'icariennes et d'icariens
   # qu'il le faut.
@@ -103,11 +103,18 @@ def feed(options = nil)
       case status
       when :actif, :inactif, :en_pause
         # Il leur faut de 1 à 3 modules d'apprentissage
-        mod_total = 1 + rand(3)
-        mod_total.times do |mod_idx|
-          dmodule = random_data_module(duser, status, mod_idx, mod_total)
+        nombre_modules = 1 + rand(3)
+        # On compte les durées de chaque module
+        duree_each_module = (Time.now.to_i - 1.days) / nombre_modules
+        nombre_modules.times do |mod_idx|
+          is_last_module = mod_idx + 1 == nombre_modules
+          dmodule = {
+            started_at: duser[:created_at] + (mod_idx * duree_each_module),
+            ended_at:   is_last_module ? nil : (duser[:created_at] + (mod_idx * duree_each_module) - 1000)
+          }
+          dmodule = random_data_module(dmodule, duser, status, is_last_module)
           all_data_modules << dmodule
-          if status != :inactif && mod_idx + 1 == mod_total
+          if status != :inactif && mod_idx + 1 == nombre_modules
             # Le dernier module
             duser[:icmodule_id] = dmodule[:id]
           end
@@ -116,7 +123,9 @@ def feed(options = nil)
     end
   end
 
-  # *** On peut procéder à la création dans la base ***
+  # puts "\n\n++++ all_data_modules: #{all_data_modules}"
+
+  # *** On peut procéder à la création dans la base de toutes les données ***
   columns = [:id, :pseudo, :patronyme, :naissance, :sexe, :mail, :salt, :cpassword, :options, :icmodule_id, :created_at, :updated_at]
   interros = Array.new(columns.count, '?').join(VGE)
   values = []
@@ -124,8 +133,43 @@ def feed(options = nil)
     values << columns.collect { |key| duser[key] }
   end
   db_exec("INSERT INTO users (#{columns.join(VGE)}) VALUES (#{interros})", values)
+  if MyDB.error
+    puts MyDB.error.inspect
+    raise "ERREUR SQL"
+  end
 
-  # *** Il faut enregistrer toutes les données ***
+  # Les modules
+  columns = all_data_modules.first.keys
+  interros = Array.new(columns.count, '?').join(VGE)
+  values = all_data_modules.collect { |dmod| dmod.values }
+  db_exec("INSERT INTO icmodules (#{columns.join(VGE)}) VALUES (#{interros})", values)
+  # db_exec("START TRANSACTION;")
+  # values.each do |dvalue|
+  #   db_exec("INSERT INTO icmodules (#{columns.join(VGE)}) VALUES (#{interros})", dvalue)
+  #   if MyDB.error
+  #     puts MyDB.error.inspect
+  #     raise "ERREUR SQL"
+  #   end
+  # end
+  # db_exec("COMMIT;")
+
+  # Les étapes
+  columns = @all_data_etapes.first.keys
+  interros = Array.new(columns.count, '?').join(VGE)
+  values = @all_data_etapes.collect { |da| da.values }
+  db_exec("INSERT INTO icetapes (#{columns.join(VGE)}) VALUES (#{interros})", values)
+  # db_exec("START TRANSACTION;")
+  # values.each do |dvalue|
+  #   db_exec("INSERT INTO icetapes (#{columns.join(VGE)}) VALUES (#{interros})", dvalue)
+  #   if MyDB.error
+  #     puts MyDB.error.inspect
+  #     raise "ERREUR SQL"
+  #   end
+  # end
+  # db_exec("COMMIT;")
+
+
+  # *** Il faut enregistrer toutes les données users en JSON ***
   # Au-delà du mot de passe en clair, cela permet de voir quels sont les
   # années de naissance, les dates s'inscriptions, etc.
   all_data =
@@ -135,11 +179,11 @@ def feed(options = nil)
       {"users" => [], "modules" => [], "etapes" => []}
     end
   all_data['users']   += all_data_users
-  all_data['modules'] += all_data_modules
-  all_data['etapes']  += @all_data_etapes
+  # all_data['modules'] += all_data_modules
+  # all_data['etapes']  += @all_data_etapes
   File.open(data_path,'wb'){|f|f.write all_data.to_json}
 
-  puts "\n\n\nAll data:\n#{all_data}"
+  # puts "\n\n\nAll data:\n#{all_data}"
 end #/ feed
 
 def data_path
@@ -183,41 +227,67 @@ def random_data_user(status)
 end #/ data_user
 
 
-def random_data_module(duser, status, mod_idx, mod_total)
+def random_data_module(dmodule, duser, status, is_last_module)
+  # Pour mettre les données des étapes du module
+  data_etapes = []
+
   # Date de début du module
   # ------------------------
   # En fonction de la date d'inscription de l'user
-  creat = duser[:created_at] + 1.days
-  updat = Time.now.to_i
+  @ids_absmodules_good ||= [4,5,6,7,8,12]
+  dmodule.merge!({
+    id: @module_id += 1,
+    user_id: duser[:id],
+    absmodule_id: @ids_absmodules_good.shuffle.shuffle.first,
+    pauses: nil,
+    updated_at: Time.now.to_i,
+    created_at: dmodule[:started_at] - 1000
+  })
 
-  is_last_module = mod_idx + 1 == mod_total
+  # On crée le étapes
+  start = dmodule[:started_at]
+  stop  = dmodule[:ended_at] || Time.now.to_i
+  # On relève les étapes possibles du module (pour faire simple, on va
+  # toujours prendre les 8 premières)
+  request = "SELECT id FROM absetapes WHERE absmodule_id = #{dmodule[:absmodule_id]} ORDER BY numero ASC LIMIT 8"
+  absetapes_ids = db_exec(request)
 
-  endat = if is_last_module
-    nil
-  else
-    # Ce n'est pas le dernier module => Il est fini
-    creat + 100.days # TODO Il faudra affiner
-    # TODO Lui créer 8 étapes
+  nombre_etapes = is_last_module ? 4 : 8 ;
+
+  if absetapes_ids.count < nombre_etapes
+    raise "Pas assez d'étapes dans le module absolu #{dmodule[:absmodule_id]} (il en faudrait #{nombre_etapes}) : #{absetapes_ids.collect{|d|d[:id]}.join(VGE)}."
+  end
+
+  # Un module forcément fini (donc avec ses 8 étapes)
+  duree_each_etape = (stop - start) / nombre_etapes
+  (0...nombre_etapes).each do |ietape|
+    data_etape = {
+      id:           @etape_id += 1,
+      absetape_id:  absetapes_ids[ietape][:id],
+      user_id:      duser[:id],
+      icmodule_id:  dmodule[:id],
+      status:       ( is_last_module && (ietape + 1 == nombre_etapes) ) ? 1 : 8,
+      started_at:   (start + (ietape * duree_each_etape)),
+      ended_at:     (start + ((ietape + 1) * duree_each_etape) - 1000),
+    }
+    data_etape.merge!({
+      expected_end: data_etape[:started_at] + 7.days,
+      expected_comments: data_etape[:started_at] + 3.days,
+      updated_at: data_etape[:started_at] + 6.days,
+      created_at: data_etape[:started_at]
+    })
+    @all_data_etapes << data_etape
   end
 
   icetapid = if is_last_module
+    @all_data_etapes.last[:id]
   else
     nil
   end
 
-  {
-    id: @module_id += 1,
-    user_id: duser[:id],
-    absmodule_id: (1 + rand(10)),
-    next_paiement_at: nil,
-    started_at: creat,
-    ended_at:   endat,
-    options: "0"*16,
-    pauses: nil,
-    icetape_id: icetapid,
-    created_at: creat,
-    updated_at: updat
-  }
+  dmodule.merge!(icetape_id: icetapid)
+
+  return dmodule
 end #/ random_data_module
 
 

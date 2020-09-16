@@ -4,6 +4,7 @@
 
 ### Modifications à faire dans la base de données
 
+* Vérifier que toutes les colonnes de temps (created_at, updated_at, started_at, etc.) soient bien au format 'VARCHAR(10)'.
 * Dans les témoignages, il y a une erreur : 'désormais partie d\'une vraie communauté : <a href=\"./icariens\">les Icariens</a>'. Il faut remplacer l'href par 'overview/icariens'
 
 ### Avant de faire l'annonce, détruire les users suivant :

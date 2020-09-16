@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # encoding: UTF-8
 =begin
 
@@ -18,8 +19,9 @@ UPDATE_ICARE_TEST_DB  = true # pour que toutes les données soient chargées dan
 PRODUCE_GEL_ICARE     = true # pour produire le gel real-icare
 DEBUG = 1 # Niveau de retour (jusqu'à 6)
 
+SELF_LOADED = true # pour le dire au required normal du site
 
-require_relative 'required'
+require './_dev_/__DEPLOIEMENT__/required'
 
 MyDB.DBNAME = 'icare'
 GET_OLD_DATA_FOLDER = File.join(THISFOLDER,'GET_OLD_DATA')
@@ -39,14 +41,6 @@ GET_OLD_DATA_FOLDER = File.join(THISFOLDER,'GET_OLD_DATA')
 # Note : ici, ce sont des erreurs non fatales qui n'ont pas empêché de
 # faire le traitement des données.
 ERRORS_TRANS_DATA = []
-
-# ---------------------------------------------------------------------
-# VIDAGE DU DOSSIER DES TABLES
-# C'est le dossier qui va contenir, au final, toutes les tables à
-# charger sur le site distant, dans la base de données `icare_db`
-# ---------------------------------------------------------------------
-FileUtils.rm_rf(FOLDER_GOODS_SQL) if File.exists?(FOLDER_GOODS_SQL)
-`mkdir -p "#{FOLDER_GOODS_SQL}"`
 
 SCRIPT_LIST = [
   # Récupération de toutes les données du site distant

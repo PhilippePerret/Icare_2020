@@ -5,7 +5,7 @@
 =end
 puts "📥 Récupération des données depuis le site distant (ancien site)".bleu
 puts "  (⏳ this can take a while…)".bleu
-require_relative '../required'
+require_relative '../required' # si lancé seul
 
 # ---------------------------------------------------------------------
 # RÉCUPÉRATION DES DONNÉES DISTANTES

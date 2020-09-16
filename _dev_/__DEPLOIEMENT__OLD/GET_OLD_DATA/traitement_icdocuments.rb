@@ -62,6 +62,8 @@ end
 puts "Nombre de lectures créées : #{nombre_lectures_creees}".vert
 # On peut injecter toutes les données dans icdocuments
 db_exec('TRUNCATE `icdocuments`')
+db_exec(change_columns_at('icdocuments')) # created_at, updated_at
+if MyDB.error then puts "ERREUR SQL: #{MyDB.error.inspect}".rouge; exit end
 interro = Array.new(COLUMNS_ICDOC.count, '?').join(VG)
 request = "INSERT INTO `icdocuments` (#{COLUMNS_ICDOC.join(VG)}) VALUES (#{interro})".freeze
 db_exec(request, values)
@@ -70,6 +72,8 @@ puts "🗄️ Dumping des icdocuments opéré avec succès".vert
 db_exec("DROP TABLE `current_icdocuments`".freeze)
 
 # On peut exporter la table lectures_qdd
+db_exec(change_columns_at('lectures_qdd'))
+if MyDB.error then puts "ERREUR SQL: #{MyDB.error.inspect}".rouge; exit end
 `mysqldump -u root icare lectures_qdd > "#{FOLDER_GOODS_SQL}/lectures_qdd.sql"`
 puts "🗄️ Dumping des lectures_qdd opéré avec succès".vert
 db_exec("DROP TABLE `current_lectures_qdd`".freeze)

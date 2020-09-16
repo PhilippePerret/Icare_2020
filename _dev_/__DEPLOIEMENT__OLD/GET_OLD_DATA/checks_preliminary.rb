@@ -3,6 +3,8 @@
   Checks préliminaires une fois que les données ont été rapatriées depuis
   le site distant.
 =end
+SELF_LOADED = true unless defined?(SELF_LOADED)
+require_relative '../required' # si lancé seul
 
 # ---------------------------------------------------------------------
 # VÉRIFICATIONS PRÉLIMINAIRES
@@ -12,14 +14,19 @@
 # Table témoignages
 #  1. elle doit contenir la colonne `plebiscites TINYINT`
 #  2. tous les témoignages doivent être validés (confirmed)
-fields_temoignages = db_exec('SHOW COLUMNS FROM temoignages').collect{|dc|dc[:Field]}
+fields_temoignages = db_exec('SHOW COLUMNS FROM temoignages;')
+if MyDB.error then puts "ERREUR SQL: #{MyDB.error.inspect}".rouge; exit end
+
+fields_temoignages = fields_temoignages.collect{|dc|dc[:Field]}
 fields_temoignages.include?('plebiscites') || begin
-  request = "ALTER TABLE `temoignages` ADD COLUMN plebiscites TINYINT DEFAULT 0 AFTER confirmed"
-  cb_exec(request)
-  if MyDB.error
-    puts "ERREUR SQL: #{MyDB.error.inspect}".rouge
-    exit
-  end
+  request = <<-SQL
+START TRANSACTION;
+ALTER TABLE `temoignages` ADD COLUMN `plebiscites` TINYINT DEFAULT 0 AFTER `confirmed`;
+#{change_columns_at('temoignages')}
+COMMIT;
+  SQL
+  db_exec(request)
+  if MyDB.error then puts "ERREUR SQL: #{MyDB.error.inspect}".rouge; exit end
   puts "La colonne `plebiscites TINYINT` a été ajoutée à la table `temoignages`.".bleu
 end
 # On confirme tous les témoignages
@@ -46,7 +53,10 @@ TABLECORS_WATCHERS = {
 }
 cors_missing = {}
 `mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/current_watchers.sql"`
-db_exec("SELECT objet, processus FROM `current_watchers`".freeze).each do |dwatcher|
+res = db_exec("SELECT objet, processus FROM `current_watchers`".freeze)
+if MyDB.error then puts "ERREUR SQL: #{MyDB.error.inspect}".rouge; exit end
+
+res.each do |dwatcher|
   keychecked = "#{dwatcher[:objet]}::#{dwatcher[:processus]}".freeze
   next if TABLECORS_WATCHERS.key?(keychecked)
   cors_missing.merge!(keychecked => true) unless cors_missing.key?(keychecked)

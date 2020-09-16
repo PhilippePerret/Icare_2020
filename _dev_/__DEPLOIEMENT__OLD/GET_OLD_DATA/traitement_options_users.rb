@@ -15,9 +15,12 @@ puts "Traitement des options des users".bleu
 `mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/users.sql"`
 values = []
 db_exec(<<-SQL.strip.freeze)
+START TRANSACTION;
 ALTER TABLE `users` DROP COLUMN `adresse`;
 ALTER TABLE `users` DROP COLUMN `telephone`;
 ALTER TABLE `users` MODIFY COLUMN `naissance` SMALLINT(4) DEFAULT NULL;
+#{change_columns_at('users', ['date_sortie'])}
+COMMIT;
 SQL
 if MyDB.error
   puts MyDB.error.inspect.rouge

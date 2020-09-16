@@ -16,6 +16,9 @@ describe 'Mailing-list d’administration' do
   before(:all) do
     require './_lib/_pages_/contact/mail/constants'
     degel('marion-et-elie-invites-discussion-benoit-phil') # Pour avoir trois icariens
+    require './spec/support/data/user_seed'
+    UserSeed.feed(status:{recu:7, candidat:6, actif:5, en_pause:4, inactif:3})
+
   end
 
 
@@ -60,11 +63,6 @@ describe 'Mailing-list d’administration' do
     end
 
     scenario 'ne peut pas utiliser le mailing-list pour envoyer des messages', only: true do
-
-      require './spec/support/data/user_seed'
-      UserSeed.feed(status:{actif:2, inactif:2})
-      return
-
 
       expect(File.exists?(datapath)).to eq(true)
       benoit.rejoint_son_bureau

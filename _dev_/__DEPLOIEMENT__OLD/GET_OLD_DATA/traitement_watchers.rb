@@ -40,6 +40,7 @@ unless values.empty?
   interro = Array.new(WATCHER_COLS.count,'?').join(VG)
   request = "INSERT INTO `watchers` (#{WATCHER_COLS.join(VG)}) VALUES (#{interro})".freeze
   db_exec(request, values)
+  db_exec(change_columns_at('watchers', ['triggered_at']))
   `mysqldump -u root icare watchers > "#{FOLDER_GOODS_SQL}/watchers.sql"`
   puts "🗄️ Dumping des watchers opéré avec succès".vert
 end

@@ -14,9 +14,12 @@ puts "Conformisation des icmodules et icetapes, modules d'icariens…".bleu
 #       - exporter pour online
 `mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/icetapes.sql"`
 db_exec(<<-SQL.strip.freeze)
+START TRANSACTION;
 ALTER TABLE `icetapes` DROP COLUMN `numero`;
 ALTER TABLE `icetapes` DROP COLUMN `documents`;
 ALTER TABLE `icetapes` CHANGE COLUMN `abs_etape_id` `absetape_id` INT(2) NOT NULL;
+#{change_columns_at('icetapes')}
+COMMIT;
 SQL
 `mysqldump -u root icare icetapes > "#{FOLDER_GOODS_SQL}/icetapes.sql"`
 puts "🗄️ Dumping des icetapes opéré avec succès".vert
@@ -27,11 +30,14 @@ puts "🗄️ Dumping des icetapes opéré avec succès".vert
 #         (supprimer colonnes `icetapes` et `paiements`)
 `mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/icmodules.sql"`
 db_exec(<<-SQL.strip.freeze)
+START TRANSACTION;
 ALTER TABLE `icmodules` DROP COLUMN `icetapes`;
 ALTER TABLE `icmodules` DROP COLUMN `paiements`;
 ALTER TABLE `icmodules` DROP COLUMN `next_paiement`;
 ALTER TABLE `icmodules` DROP COLUMN `options`;
 ALTER TABLE `icmodules` CHANGE COLUMN `abs_module_id` `absmodule_id` INT(2) NOT NULL;
+#{change_columns_at('icmodules')}
+COMMIT;
 SQL
 `mysqldump -u root icare icmodules > "#{FOLDER_GOODS_SQL}/icmodules.sql"`
 puts "🗄️ Dumping des icmodules opéré avec succès".vert
@@ -40,7 +46,10 @@ puts "🗄️ Dumping des icmodules opéré avec succès".vert
 # paiements
 `mysql -u root icare < "#{FOLDER_CURRENT_ONLINE}/paiements.sql"`
 db_exec(<<-SQL.strip.freeze)
+START TRANSACTION;
 ALTER TABLE `paiements` CHANGE COLUMN `facture` `facture_id` VARCHAR(30) DEFAULT NULL;
+#{change_columns_at('paiements')}
+COMMIT;
 SQL
 now = Time.now
 ilya_trois_ans = Time.new(now.year - 3, now.month, now.day).to_i
