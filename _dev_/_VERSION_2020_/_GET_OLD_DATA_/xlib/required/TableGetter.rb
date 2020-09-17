@@ -45,7 +45,8 @@ DATA_TABLES_DISTANTES = [
 #   TableGetter.import(<nom table>)
 TABLES_DISTANTES = {}
 DATA_TABLES_DISTANTES.each do |dtable|
-  TABLES_DISTANTES.merge!(dtable[:table] => dtable)
+  keytable = dtable[:final_table] || dtable[:table]
+  TABLES_DISTANTES.merge!(keytable => dtable)
 end
 
 

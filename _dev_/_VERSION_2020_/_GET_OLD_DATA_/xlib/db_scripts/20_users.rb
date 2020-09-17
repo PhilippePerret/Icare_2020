@@ -74,7 +74,7 @@ unless duser9.nil? # déjà traité
   db_compose_update('users', 9, data_anonymous)
   # On remet l'user 9
   new_user_id = db_compose_insert('users', duser9)
-  puts "#{TABU}ID Anonymous: #{new_user_id}"
+  puts "#{TABU}ID Anonymous: #{new_user_id}" if VERBOSE
 
   # Il faut remplacer user_id ou owner_id partout où ça peut être utilisé
   # dans toutes les tables.
@@ -88,7 +88,6 @@ START TRANSACTION;
 #{lines_update}
 COMMIT;
   SQL
-  puts "request:#{RC}#{request}#{RC}"
   db_exec(request)
   success("#{TABU}Icarien anonyme modifié dans toutes les tables.")
 end
@@ -106,7 +105,7 @@ db_get_all('users', 'id > 2 AND id < 9').each do |duser|
   db_exec(REQUEST_DELETE_USER % {id: user_old_id})
   # On insert le nouvel user placé
   new_user_id = db_compose_insert('users', duser)
-  puts "#{TABU}Nouvel ID pour user ##{user_old_id} : #{new_user_id}"
+  puts "#{TABU}Nouvel ID pour user ##{user_old_id} : #{new_user_id}" if VERBOSE
   # Il faut remplacer user_id ou owner_id partout où ça peut être utilisé
   # dans toutes les tables.
   TABLES_WITH_USER_ID.each do |table, prop_name|

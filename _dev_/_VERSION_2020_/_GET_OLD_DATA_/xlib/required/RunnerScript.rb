@@ -18,7 +18,7 @@ class << self
       SCRIPTS_LIST << File.basename(f, File.extname(f))
     end
   end #/ init
-  
+
   # Pour ajouter un succès de script, c'est-à-dire un script qui
   # est aller jusqu'au bout
   def add_success(script)
@@ -90,7 +90,6 @@ end #/ proceed_if_necessary
 # Pour jouer vraiment le script
 def proceed
   load path
-  operation("<--- SCRIPT SUCCESS")
 end #/ proceed
 
 

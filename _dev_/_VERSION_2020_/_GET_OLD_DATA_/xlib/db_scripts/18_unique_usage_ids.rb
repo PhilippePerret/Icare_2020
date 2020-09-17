@@ -1,7 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-# Il faut vider la table avant de l'exporter
+operation("📥#{ISPACE}Table 'unique_usage_ids' : création")
 
 request = <<-SQL
 START TRANSACTION;
@@ -17,5 +17,5 @@ CREATE TABLE `unique_usage_ids` (
 COMMIT;
 SQL
 db_exec(request)
-success("#{TABU}Modification des colonnes.")
+success("#{TABU}Création complète de la table 'unique_usage_ids'.")
 TableGetter.export('unique_usage_ids')
