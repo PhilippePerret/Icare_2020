@@ -28,9 +28,13 @@ unless defined? ICARE_FOLDER
   File.exists?(ICARE_FOLDER) || raise("Impossible de trouver le dossier '#{ICARE_FOLDER}'. Or j'en ai besoin pour exécuter le gel des données Icare.")
 end
 
-require './_lib/required/__first/db'
-MyDB.DBNAME = 'icare_test'
+unless defined?(MyDB)
+  require './_lib/required/__first/db'
+else
+  MyDB.online = false
+end
 
+MyDB.DBNAME = 'icare_test'
 
 # Maintenant, on doit modifier tous les users
 # pour pouvoir les utiliser (tous les mots de passe sont mis à 'motdepasse')
@@ -55,4 +59,4 @@ SQL
 puts "Tables initialisées".vert
 
 `mysqldump -u root icare_test > ./spec/support/Gel/gels/real-icare/icare_test.sql`
-puts "Dump effectué dans 'real-icare' (jouer `icare degel real-icare` quand on voudra le retrouver)".vert
+puts "Dump effectué dans 'real-icare' (jouer `icare degel real-icare` quand on voudra le retrouver — ou `degel('real-icare')` dans les tests)".vert

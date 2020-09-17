@@ -21,6 +21,8 @@ end
 # -----------------------------------
 # Pour s'assurer que ça s'est bien passé, on détruit la table
 # unique_usage_uuid qui doit être reconstruite
+MyDB.DBNAME   = 'icare_test'
+MyDB.online = false
 db_exec("DROP TABLE IF EXISTS `unique_usage_ids`")
 `mysql -u root icare_test < #{PATH_TOTAL_DUMP_ICARE}`
 tables = db_exec("SHOW TABLES;").collect { |d| d.values.first }
@@ -34,4 +36,4 @@ end
 File.delete('./tmp/icare.sql')
 
 load './_dev_/scripts/GEL_REAL_ICARE.rb'
-puts "Le gel real-icare a été produit avec succès".vert
+success("🔬#{ISPACE}Le gel real-icare a été produit avec succès")

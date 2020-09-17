@@ -124,9 +124,29 @@ end
 class MyDB
 class << self
   attr_accessor :error
+
+  # Pour définir à la volée si on doit jouer les requêtes sur la table locale
+  # ou distante.
+  # @usage      MyDB.online = true/false
+  #
+  attr_accessor :online
+
   def db
     @db ||= Database.new(self)
   end
+
+  def online?
+    if @online === nil
+      ONLINE
+    else
+      @online === true
+    end
+  end #/ online?
+
+  def online=(valeur)
+    @online = valeur
+    @data_client = nil # pour forcer la réinitialisation
+  end #/ online=
 
   def DBNAME
     @dbname ||= SANDBOX ? DB_TEST_NAME : DB_NAME
@@ -148,7 +168,7 @@ class << self
     @db_prefix ||= ''
   end
   def data_client
-    @data_client ||= DATA_MYSQL[ONLINE ? :distant : :local]
+    @data_client ||= DATA_MYSQL[online? ? :distant : :local]
   end
 end # << self
 
