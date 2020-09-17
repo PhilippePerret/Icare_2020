@@ -41,7 +41,7 @@ WIDTH_DATES = 15
 UNDEF = ('-undef-'.ljust(WIDTH_DATES))
 
 def date_for(time)
-  ti = Time.at(time)
+  ti = Time.at(time.to_i)
   da = ti.strftime('%d %m %Y').ljust(WIDTH_DATES)
   return [da, ti.to_i]
 end #/ date_for
@@ -83,7 +83,7 @@ cur_absetapes.each do |detape|
 
   titre = detape[:titre]
   titre = titre[0...WIDTH_TITRE - 1]+'…' if titre.length > WIDTH_TITRE
-  puts "#{titre.ljust(WIDTH_TITRE)}   #{curre_date} #{icare_date} #{tests_date}  #{res}"
+  puts "#{titre.ljust(WIDTH_TITRE)}   #{curre_date} #{icare_date} #{tests_date}  #{res}" if VERBOSE
   case res
   when 'ICARE'
     # Rien à faire, elle est bonne au bon endroit

@@ -80,7 +80,7 @@ class << self
     export(table_name)
   end #/ traite
 
-  # Pour importer seulement une table
+  # Pour importer seulement la table +table_name+
   def import(table_name)
     puts "📥#{ISPACE}TABLE '#{table_name}' — Récupération des données distantes…".bleu
     puts "#{TABU}(⏳ Ça peut prendre un moment)".bleu
@@ -95,6 +95,8 @@ class << self
     tbname = data_table[:final_table] || data_table[:table]
     @tables_to_export << tbname unless @tables_to_export.include?(tbname)
 
+    # Si elle existe, on détruit la table provisoire (qui commence toujours
+    # par 'current_')
     if data_table[:dst_table].start_with?('current_')
       db_exec("DROP TABLE IF EXISTS `#{data_table[:dst_table]}`")
       success("#{TABU}Suppression de la table provisoire '#{data_table[:dst_table]}'.")
@@ -102,28 +104,39 @@ class << self
   end #/ export
   alias :dump :export
 
-  # Exporter toutes les tables modifiées
-  def export_all_tables
-    @tables_to_export ||= get_tables_to_export # si traitement partiel
+  def export_tables
     @tables_to_export.each do |tbname|
       pth = File.join(FOLDER_GOODS_SQL, "#{tbname}.sql")
       `mysqldump -u root icare #{tbname} > "#{pth}"`
       if File.exists?(pth)
-        puts "🗄️#{ISPACE*2}Dumping de la table '#{tbname}' effectué avec succès.".vert
+        success("🗄️#{ISPACE*2}Dumping de la table '#{tbname}' effectué avec succès.")
       else
         raise ErreurFatale.new("Impossible de dumper la table finale '#{tbname}'…")
       end
     end
+  end #/ export_tables
+
+  def upload_tables
+    @tables_to_export.each do |tbname|
+      data_table = TABLES_DISTANTES[tbname]
+      itable = new(data_table)
+      itable.upload
+      itable.import_distant
+      success("📲#{ISPACE}Import distant de la table '#{tbname}'")
+    end
+  end #/ upload_tables
+
+  # Exporter toutes les tables modifiées
+  def export_all_tables
+    @tables_to_export = TABLES_DISTANTES.keys # si traitement partiel
+    export_tables
   end #/ export_all_tables
 
   # Méthode qui permet, à la fin du traitement, de copier tous les fichiers
   # .sql des fichiers de table sur le site distant
   def upload_all_tables
-    DATA_TABLES_DISTANTES.each do |data_table|
-      itable = new(data_table)
-      itable.upload
-      itable.import_distant
-    end
+    @tables_to_export = TABLES_DISTANTES.keys
+    upload_tables
     success("🚀 Copie de tous les fichiers .sql vers deploiement/db")
     success("🎉 TABLES IMPORTÉES DANS icare_db DISTANT")
   end #/ upload_all_tables
@@ -143,14 +156,21 @@ class << self
     # des tables dumpées (qui seront ensuite downloadées en local) et on le
     # vide. Noter que même si ça n'est pas une réinitialisation complète,
     # on doit faire cette opération pour obtenir un dossier vierge.
+    empty_distant_folder_deployment
+  end #/ reset
+
+  # Vide complètement le dossier deploiement/db sur le site
+  # distant.
+  def empty_distant_folder_deployment
     ssh_request = <<-SSH
     ssh #{SERVEUR_SSH} bash << BASH
-rm -rf "deploiement/db_out"
-mkdir -p "deploiement/db_out"
+rm -rf "deploiement/db"
+mkdir -p "deploiement/db"
 BASH
     SSH
     `#{ssh_request}`
-  end #/ reset
+  end #/ empty_distant_folder_deployment
+
 
   # Retourne la liste des toutes les tables définies dans le fichier
   # contenant les bons fichier .sql
@@ -166,7 +186,7 @@ end # /<< self
 attr_reader :data
 def initialize(data)
   @data = data
-  @data.merge!(distant_path:distant_path, local_path:local_path)
+  @data.merge!(distant_path:distant_path, local_path:local_path, local_good_path:local_good_path)
 end #/ initialize
 
 def proceed
@@ -197,9 +217,23 @@ end #/ download
 
 # Copie le fichier .sql local vers le dossier distant, afin de l'injecter
 # dans la base distante
+# Note : avant de le copier, on détruit le fichier qui existe peut-être
 def upload
-  `#{SCP_UPLOAD_COMMAND % data}`
+  erase_distant_table_file
+  command = SCP_UPLOAD_COMMAND % data
+  result = `#{command} 2>&1`
+  # puts "result de upload (#{command}) : #{result.inspect}"
 end #/ upload
+
+def erase_distant_table_file
+  ssh_request = <<-SSH
+ssh #{SERVEUR_SSH} bash << BASH
+rm -f "#{distant_path}"
+BASH
+SSH
+  result = `#{ssh_request} 2>&1`
+  # puts "result de erase-distant : #{result.inspect}"
+end #/ erase_distant_table_file
 
 # Procède au changement de nom de la table si nécessaire
 def change_table_name
@@ -223,8 +257,9 @@ end #/ import
 
 # Importer le fichier distant dans la table distante
 def import_distant
-  result = `#{SSH_COMMAND_LOAD_TABLE % {table_name: table_name}}`
-  puts "result de import_distant '#{table_name}' : #{result.inspect}"
+  command = SSH_COMMAND_LOAD_TABLE % data
+  result = `#{command} 2>&1`
+  # puts "result de import_distant '#{table_name}' (#{command}) : #{result.inspect}"
 end #/ import_distant
 
 # Méthode qui s'assure que la table a été correctement dumpée
@@ -253,7 +288,7 @@ def imported?
 end #/ imported?
 
 def distant_path
-  @distant_path ||= "deploiement/db_out/#{table_name}.sql"
+  @distant_path ||= "deploiement/db/#{table_file_name}"
 end #/ distant_path
 
 def local_final_path
@@ -261,8 +296,16 @@ def local_final_path
 end #/ local_final_path
 
 def local_path
-  @local_path ||= File.join(FOLDER_CURRENT_ONLINE, "#{table_name}.sql")
+  @local_path ||= File.join(FOLDER_CURRENT_ONLINE, "#{table_file_name}")
 end #/ local_path
+
+def local_good_path
+  @local_good_path ||= File.join(FOLDER_GOODS_SQL, "#{table_file_name}")
+end #/ local_good_path
+
+def table_file_name
+  @table_file_name ||= "#{table_name}.sql"
+end #/ table_file_name
 
 # Le nom final si la table doit changer de nom
 def local_dst_path
@@ -286,7 +329,7 @@ end #/TableGetter
 
 # Commande exécutée ONLINE qui va dumper la table voulue (%{table}) prise
 # dans la base %{base} et en faire un fichier .sql dans le dossier distant
-# ./deploiement/db_out/
+# ./deploiement/db/
 GET_TABLE_REQUEST = <<-SQL
 ssh #{SERVEUR_SSH} bash << BASH
 mysqldump -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} %{base} %{table} > "%{distant_path}"
@@ -294,12 +337,14 @@ BASH
 SQL
 
 # Commande qui va rapatrier le fichier .sql de la table en local
-SCP_DOWNLOAD_COMMAND  = "scp #{SERVEUR_SSH}:\"%{distant_path}\" \"%{local_path}\""
-SCP_UPLOAD_COMMAND    = "scp \"%{local_path}\" #{SERVEUR_SSH}:%{distant_path}"
+# NOte : option `-p` pour conserver les dates de modifications et permissions,
+# etc.
+SCP_DOWNLOAD_COMMAND  = "scp -p #{SERVEUR_SSH}:\"%{distant_path}\" \"%{local_path}\""
+SCP_UPLOAD_COMMAND    = "scp -p \"%{local_good_path}\" #{SERVEUR_SSH}:%{distant_path}"
 
 SSH_COMMAND_LOAD_TABLE = <<SSH
 ssh #{SERVEUR_SSH} bash <<BASH
-mysql -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} icare_db < deploiement/db/%{table_name}
+mysql -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} icare_db < %{distant_path}
 BASH
 SSH
 

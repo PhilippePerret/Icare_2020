@@ -18,12 +18,6 @@ class MyDBError < StandardError
 end #/MyDBError < StandardError
 
 SANDBOX = false unless defined?(SANDBOX)
-# On line ou off line
-# -------------------
-# Par défaut, et pour éviter les erreurs, on considère que si ONLINE n'est
-# pas défini, on est offline. Ajouter ONLINE = true dans le module utilisant
-# ce module, avant le require, pour changer ce comportement.
-ONLINE  = false unless defined?(ONLINE)
 
 unless defined?(DATA_MYSQL)
   require './_lib/data/secret/mysql'

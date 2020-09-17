@@ -2,28 +2,7 @@
 # frozen_string_literal: true
 
 # Liste des scripts à jouer
-SCRIPTS_LIST = [
-  '02_temoignages',
-  '03_check_processus_watchers', # simple vérification des processus # TODO Traiter en une seule fois
-  '04_actualites',
-  '05_connexions',
-  '06_tickets',
-  '07_abs_modules',
-  '08_abs_etapes',
-  '09_abs_travaux_type',
-  '10_frigo',
-  '11_mini_faq',
-  '14_lectures_qdd_1',
-  '15_icdocuments',
-  '16_modules_icariens',
-  '17_watchers',
-  '18_unique_usage_ids',
-  '20_users',
-  '30_paiements',
-  '31_validations_pages',
-  '90_upload_all_tables',
-  '95_build_gel_icare'
-]
+SCRIPTS_LIST = []
 
 class RunnerScript
 # ---------------------------------------------------------------------
@@ -32,6 +11,14 @@ class RunnerScript
 #
 # ---------------------------------------------------------------------
 class << self
+
+  def init
+    # On fait la liste des scripts
+    Dir["#{GOD_SCRIPTS_FOLDER}/*.rb"].sort.each do |f|
+      SCRIPTS_LIST << File.basename(f, File.extname(f))
+    end
+  end #/ init
+  
   # Pour ajouter un succès de script, c'est-à-dire un script qui
   # est aller jusqu'au bout
   def add_success(script)
@@ -115,3 +102,7 @@ def path
   @path ||= File.join(GOD_SCRIPTS_FOLDER, "#{name}.rb")
 end #/ path
 end #/RunnerScript
+
+
+RunnerScript.init
+# Notamment pour faire la liste des scripts

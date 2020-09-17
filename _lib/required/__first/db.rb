@@ -37,6 +37,7 @@ end #/ db_compose_update
 
 # Handy methods
 def db_exec request, values = nil
+  request = request.strip
   while request.end_with?(';')
     request = request[0...-1]
   end
@@ -387,10 +388,13 @@ end # << self
 
     # Initialise le client MySql courant
     def init_client
-      require 'mysql2'
-      cl = Mysql2::Client.new(data_client||DATA_MYSQL[:local])
-      cl.query_options.merge!(:symbolize_keys => true)
-      return cl
+      # require 'mysql2'
+      # cl = Mysql2::Client.new(data_client||DATA_MYSQL[:local])
+      # cl.query_options.merge!(:symbolize_keys => true)
+      Mysql2::Client.new(data_client||DATA_MYSQL[:local]).tap do |cl|
+        cl.query_options.merge!(:symbolize_keys => true)
+      end
+      # return cl
     end
 
     def data_client ; @data_client ||= site.data_client end

@@ -6,7 +6,7 @@
 =end
 
 
-ONLINE  = ENV['HTTP_HOST'] != "localhost"
+ONLINE  = ENV['HTTP_HOST'] != "localhost" unless defined?(ONLINE)
 OFFLINE = !ONLINE
 DB_NAME         = ONLINE ? 'icare_db' : 'icare'
 DB_TEST_NAME    = 'icare_test'

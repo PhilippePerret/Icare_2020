@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
 
   Gel Icare permet d'utiliser les données réelles en local.
@@ -15,23 +16,25 @@
 =end
 # On se place dans l'atelier (on y est puisqu'on lance le script d'ici)
 
-require './_lib/required'
-require './_dev_/CLI/lib/required/String' # notamment pour les couleur
+require './_dev_/CLI/lib/required/String' # notamment pour les couleurs
 require 'digest/md5'
 
 unless defined? ALWAYSDATA_FOLDER
-  ALWAYSDATA_FOLDER = '/Users/philippeperret/Sites/AlwaysData'.freeze
+  ALWAYSDATA_FOLDER = '/Users/philippeperret/Sites/AlwaysData'
+  File.exists?(ALWAYSDATA_FOLDER) || raise("Impossible de trouver le dossier '#{ALWAYSDATA_FOLDER}'. Or j'en ai besoin pour exécuter le gel des données Icare.")
 end
 unless defined? ICARE_FOLDER
-  ICARE_FOLDER = File.join(ALWAYSDATA_FOLDER, 'Icare_2020').freeze
+  ICARE_FOLDER = File.join(ALWAYSDATA_FOLDER, 'Icare_2020')
+  File.exists?(ICARE_FOLDER) || raise("Impossible de trouver le dossier '#{ICARE_FOLDER}'. Or j'en ai besoin pour exécuter le gel des données Icare.")
 end
 
-
+require './_lib/required/__first/db'
 MyDB.DBNAME = 'icare_test'
 
+
 # Maintenant, on doit modifier tous les users
-# pour pouvoir les utiliser (mot de passe unique mis à 'motdepasse')
-REQUEST_UPDATE_PASSWORD = 'UPDATE `users` SET cpassword = ? WHERE id = ?'.freeze
+# pour pouvoir les utiliser (tous les mots de passe sont mis à 'motdepasse')
+REQUEST_UPDATE_PASSWORD = 'UPDATE `users` SET cpassword = ? WHERE id = ?'
 values = []
 db_exec("SELECT id, pseudo, mail, salt FROM users WHERE id > 8").each do |duser|
   # print "Traitement de #{duser[:pseudo]}… "
@@ -43,7 +46,7 @@ db_exec(REQUEST_UPDATE_PASSWORD, values)
 puts "Mot de passe des users uniformisés (mis à 'motdepasse').".vert
 
 # Il faut vider certaines tables
-db_exec(<<-SQL.strip.freeze)
+db_exec(<<-SQL)
 TRUNCATE `frigo_messages`
 TRUNCATE `frigo_discussions`
 TRUNCATE `frigo_users`

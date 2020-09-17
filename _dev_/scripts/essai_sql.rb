@@ -1,7 +1,26 @@
+# encoding: UTF-8
+# frozen_string_literal: true
+ONLINE = true
 require_relative 'required'
 
-MyDB.DBNAME = 'icare_test'
-# MyDB.DBNAME = 'icare'
+puts "ONLINE = #{ONLINE.inspect}"
+
+if ONLINE
+  MyDB.DBNAME = 'icare_db'
+else
+  MyDB.DBNAME = 'icare_test'
+  # MyDB.DBNAME = 'icare'
+end
+
+# req = "SELECT created_at, updated_at FROM `users` LIMIT 1"
+req = <<-SQL
+START TRANSACTION;
+UPDATE absetapes SET created_at = CONVERT(created_at, CHAR);
+SHOW COLUMNS FROM absetapes;
+SELECT created_at, updated_at FROM absetapes LIMIT 1;
+COMMIT;
+SQL
+
 # req = <<-SQL
 # SELECT
 #   doc.id, icet.id AS icetape, doc.icetape_id,
