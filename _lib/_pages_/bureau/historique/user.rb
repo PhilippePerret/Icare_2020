@@ -65,28 +65,29 @@ class User
       # INNER JOIN users as u ON fd.user_id = u.id
       # WHERE fd.user_id = #{id}
       # SQL
-      discuss = db_exec(<<-SQL.strip.freeze)
-      SELECT
-        fd.id         AS id,
-        fd.titre      AS titre,
-        uo.pseudo     AS owner_pseudo,
-        uo.id         AS owner_id,
-        fd.created_at AS create_time
-      FROM frigo_users AS fu
-      INNER JOIN frigo_discussions AS fd ON fu.discussion_id = fd.id
-      INNER JOIN users AS uo ON fd.user_id = uo.id
-      WHERE fu.user_id = #{id}
+      request = <<-SQL
+SELECT
+  fd.id         AS id,
+  fd.titre      AS titre,
+  uo.pseudo     AS owner_pseudo,
+  uo.id         AS owner_id,
+  fd.created_at AS create_time
+FROM frigo_users AS fu
+INNER JOIN frigo_discussions AS fd ON fu.discussion_id = fd.id
+INNER JOIN users AS uo ON fd.user_id = uo.id
+WHERE fu.user_id = #{id}
       SQL
-      if MyDB.error
-        log(MyDB.error.inspect)
-        raise "Une erreur"
+      begin
+        discuss = db_exec(request)
+      rescue MyDBError => e
+        raise e.message
       end
       # D'abord, on rassemble les informations dans la discussion
       hdiscuss = {}
       discuss.each do |ddis|
         # log("ddis: #{ddis.inspect}")
         hdiscuss.key?(ddis[:id]) || hdiscuss.merge!(ddis[:id] => {id: ddis[:id], created_at:ddis[:create_time], owner:{id:ddis[:owner_id], pseudo:ddis[:owner_pseudo]}, titre:ddis[:titre], participants:[]})
-        parts = db_exec(<<-SQL.strip.freeze)
+        request = <<-SQL
         SELECT
           u.pseudo,
           fu.created_at AS join_time
@@ -94,8 +95,10 @@ class User
           INNER JOIN users AS u ON u.id = fu.user_id
           WHERE fu.discussion_id = #{ddis[:id]}
         SQL
-        if MyDB.error
-          raise MyDB.error
+        begin
+          parts = db_exec(request)
+        rescue MyDBError => e
+          raise e
         end
         parts.each do |duser|
           hdiscuss[ddis[:id]][:participants] << {pseudo: duser[:pseudo], join_time:duser[:join_time]}

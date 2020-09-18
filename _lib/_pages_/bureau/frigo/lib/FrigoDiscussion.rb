@@ -12,9 +12,10 @@ class << self
   # +user_id+   {Integer|User} Soit l'identifiant de l'utilisateur soit lui-même
   def discussions_of user_id
     user_id = user_id.id if user_id.is_a?(User)
-    infos_discussions = db_exec(REQUEST_DISCUSSIONS_USER % [user_id])
-    if MyDB.error
-      return log(MyDB.error)
+    begin
+      infos_discussions = db_exec(REQUEST_DISCUSSIONS_USER % [user_id])
+    rescue MyDBError => e
+      return
     end
     infos_discussions.collect do |ddis|
       has_new_messages = ddis[:has_new_messages] == 1

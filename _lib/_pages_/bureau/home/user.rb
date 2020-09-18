@@ -5,7 +5,7 @@ class User
   end
   def nombre_messages_frigo_non_vus
     @nombre_messages_frigo_non_vus ||= begin
-      request = <<-SQL.strip.freeze
+      request = <<-SQL
       SELECT
         COUNT(mes.id)
         FROM `frigo_messages` AS mes
@@ -14,12 +14,12 @@ class User
           fu.user_id = #{id}
           AND mes.created_at > fu.last_checked_at
       SQL
-      res = db_exec(request)
-      if MyDB.error
-        log(MyDB.error.inspect)
-        erreur('ERREUR SQL - Consulter le journal d’erreurs.')
+      begin
+        res = db_exec(request)
+        res = res.first
+      rescue MyDBError => e
+        erreur(e.message)
       end
-      res = res.first
       if res.nil? then 0 else res.values.first end
     end
   end #/ nombre_messages_frigo_non_vus

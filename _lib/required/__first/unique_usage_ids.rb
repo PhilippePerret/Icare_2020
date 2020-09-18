@@ -22,11 +22,11 @@ class << self
   # Méthode principale pour créer un nouvel enregistrement dans la table
   def create(data)
     data.merge!(uuid: SecureRandom.hex(10)) # 52750b30ffbc7de3b362
-    db_compose_insert(table, data)
-    if MyDB.error
-      raise MyDB.error.inspect
-    else
+    begin
+      db_compose_insert(table, data)
       return data
+    rescue MyDBError => e
+      raise e
     end
   end #/ create
   # = main =

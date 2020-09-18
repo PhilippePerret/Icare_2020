@@ -28,11 +28,13 @@ class << self
       created_at:   now.to_s,
       updated_at:   now.to_s
     }
-    db_compose_insert('users', newdata)
-    if MyDB.error
-      log("MyDB.error: #{MyDB.error.inspect}")
-      raise "Une erreur SQL est malheureusement survenue…"
+
+    begin
+      db_compose_insert('users', newdata)
+    rescue MyDBError => e
+      raise e.message
     end
+
     newid = db_last_id
     newu = User.get(newid)
 

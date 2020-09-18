@@ -55,12 +55,11 @@ class << self
       message(MESSAGES[:no_page_modified])
     else
       request = 'UPDATE validations_pages SET specs = ? WHERE id = ?'.freeze
-      db_exec(request, values)
-      if MyDB.error
-        log("ERREUR SQL : #{MyDB.error.inspect}")
-        erreur(MyDB.error[:error])
-      else
+      begin
+        db_exec(request, values)
         message(MESSAGES[:save_success])
+      rescue MyDBError => e
+        erreur(e.message)
       end
     end
   end #/ save

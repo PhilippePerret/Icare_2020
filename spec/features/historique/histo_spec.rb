@@ -49,9 +49,10 @@ feature "Section Historique du bureau de l'icarien" do
     [[10,9],[11,1],[12,0]].each do |uid, valbit|
       opts = db_exec("SELECT options FROM users WHERE id = #{uid}").first[:options]
       opts[21] = valbit.to_s
-      db_exec("UPDATE users SET options = '#{opts}' WHERE id = #{uid}")
-      if MyDB.error
-        raise MyDB.error.inspect
+      begin
+        db_exec("UPDATE users SET options = '#{opts}' WHERE id = #{uid}")
+      rescue MyDBError => e
+        raise e
       end
     end
   end

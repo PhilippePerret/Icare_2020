@@ -26,19 +26,18 @@ class << self
   end #/ all
 
   # Méthode qui relève tous les users (sans aucun filtre mais à partir de 10)
+  # @Return La liste Array des instances User
   def get_all
-    request = "SELECT id, pseudo, mail, options FROM users WHERE id > 9"
-    all_users = db_exec(request)
     @items = {}
-    unless all_users.nil?
-      all_users.collect do |duser|
-        new(duser).tap do |u|
-          @items.merge!(u.id => u)
-        end
-      end
-    else
-      puts "MYSQL_ERROR: #{MyDB.error.inspect}"
-      []
+    request = "SELECT id, pseudo, mail, options FROM users WHERE id > 9"
+    begin
+      all_users = db_exec(request)
+    rescue MyDBError => e
+      puts e.message
+      return []
+    end
+    all_users.collect do |duser|
+      new(duser).tap { |u| @items.merge!(u.id => u) }
     end
   end #/ get_all
 

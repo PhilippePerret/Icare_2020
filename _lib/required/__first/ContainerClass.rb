@@ -70,21 +70,17 @@ class ContainerClass
     def collect(filtre = nil)
       order_by = filtre && (filtre.delete(:order) || filtre.delete(:order_by))
       where = where_clausize(filtre)
-      unless order_by.nil?
-        where << " ORDER BY #{order_by}".freeze
+      where << " ORDER BY #{order_by}".freeze unless order_by.nil?
+      begin
+        allcollect = db_exec("SELECT * FROM #{table}#{where}".freeze)
+      rescue MyDBError => e
+        erreur(e.message)
+        return []
       end
-      request = "SELECT * FROM #{table}#{where}".freeze
-      allcollect = db_exec(request)
-      unless allcollect.nil?
-        allcollect.collect do |ditem|
-          item = new(ditem[:id])
-          item.data = ditem
-          yield item
-        end
-      else
-        log("ERROR dans ContainerClass::collect (l.#{__LINE__}) avec la requête : #{request}")
-        log("ERROR MyDB.error: #{MyDB.error.inspect}")
-        []
+      allcollect.collect do |ditem|
+        item = new(ditem[:id])
+        item.data = ditem
+        yield item
       end
     end #/ collect
 
@@ -101,23 +97,29 @@ class ContainerClass
     def each(filtre = nil)
       where = where_clausize(filtre)
       request = "SELECT * FROM #{table}#{where}".freeze
-      alleach = db_exec(request)
-      unless alleach.nil?
-        alleach.each do |ditem|
-          item = new(ditem[:id])
-          item.data = ditem
-          yield item
-        end
-      else
-        log("ERROR: Problème avec la requête : ''#{request}''")
-        log("ERROR (MyDB.error) : #{MyDB.error.inspect}")
-        []
+      begin
+        alleach = db_exec(request)
+      rescue MyDBError => e
+        erreur(e.message)
+        return []
+      end
+      alleach.each do |ditem|
+        item = new(ditem[:id])
+        item.data = ditem
+        yield item
       end
     end #/ each
 
     def each_with_index(filtre = nil)
       where = where_clausize(filtre)
-      db_exec("SELECT * FROM #{table}#{where}".freeze).each_with_index do |ditem, idx|
+      request = "SELECT * FROM #{table}#{where}".freeze
+      begin
+        result = db_exec(request)
+      rescue MyDBError => e
+        erreur(e.message)
+        return
+      end
+      result.each_with_index do |ditem, idx|
         item = new(ditem[:id])
         item.data = ditem
         yield item, idx
@@ -202,11 +204,10 @@ class ContainerClass
 
   def save(new_data)
     new_data = {new_data => get(new_data)} if new_data.is_a?(Symbol)
-    db_compose_update(self.class.table, id, new_data)
-    if MyDB.error
-      log("SQL ERREUR : #{MyDB.error.inspect}")
-      erreur "ERREUR DB : #{MyDB.error[:error]}"
-      raise MyDB.error
+    begin
+      db_compose_update(self.class.table, id, new_data)
+    rescue MyDBError => e
+      raise e
     end
     # On peut affecter les nouvelles valeurs à l'instance
     new_data.each { |k, v| self.data[k] = v }

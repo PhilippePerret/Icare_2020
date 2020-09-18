@@ -91,12 +91,11 @@ def add wtype, data = nil
   columns = dwatcher.keys.join(VG)
   interro = Array.new(valeurs.count, '?').join(VG)
   request = "INSERT INTO watchers (#{columns}) VALUES (#{interro})"
-  db_exec(request, valeurs)
-  if MyDB.error
-    log(MyDB.error)
-    erreur("Une erreur est survenue… Consultez le journal de bord.")
-  else
+  begin
+    db_exec(request, valeurs)
     return db_last_id
+  rescue MyDBError => e
+    erreur(e.message)
   end
 end #/ add
 

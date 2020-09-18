@@ -74,13 +74,10 @@ class << self
 
   # Retourne les LASTS_COUNT dernières instances
   def lasts
-    lasts_in_db = db_exec(REQUEST_LASTS)
-    if !lasts_in_db.nil?
+    begin
+      lasts_in_db = db_exec(REQUEST_LASTS)
       lasts_in_db.collect { |dactu| new(dactu) }
-    elsif MyDB.error
-      log(MyDB.error.inspect)
-      []
-    else
+    rescue MyDBError => e
       []
     end
   end #/ lasts

@@ -146,10 +146,11 @@ RSpec::Matchers.define :have_discussion_with do |users|
       WHERE fu.user_id IN (#{users_ids})
         AND fu.discussion_id = fd.id
     SQL
-    nombre = db_exec(request)
-    if MyDB.error
-      erreur(MyDB.error.inspect)
-      raise MyDB.error.inspect
+    begin
+      nombre = db_exec(request)
+    rescue MyDBError => e
+      erreur(e.message)
+      raise e
     end
     nombre = nombre.first.values.first
     return nombre == users.count # Autant de frigo_users que de participants

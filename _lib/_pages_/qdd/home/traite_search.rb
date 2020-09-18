@@ -9,11 +9,13 @@ class HTML
 
     MyDB.DBNAME = 'icare' if OFFLINE
 
-    # On fabrique la requête
+    # On fabrique la requête et on la soumet
     request, values, specs = build_request(form)
-
-    log("+++ request: #{request}")
-    founds = db_exec(request, values)
+    begin
+      founds = db_exec(request, values)
+    rescue MyDBError => e
+      raise e
+    end
 
     @count = founds.count
 
@@ -25,13 +27,10 @@ class HTML
     end
     @specs =
     Tag.div(text:"SPÉCIFICITÉS DE LA RECHERCHE#{ISPACE}: #{specs.join(VG)}.", class:'small mt2 mb1') +
-    Tag.div(text:"<a href='qdd/home'>Autre recherche</a>".freeze, class:'right')+
+    Tag.div(text:"<a href='qdd/home'>Autre recherche</a>", class:'right')+
     message_nombre
 
-    if MyDB.error
-      log(MyDB.error)
-      erreur("ERREUR SQL: #{MyDB.error[:error]}")
-    elsif founds.count == 0
+    if founds.count == 0
       @listing = Tag.div(text:MESSAGES[:no_document_with_params], class:'explication')
     else
       @listing = founds.collect do |found|

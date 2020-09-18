@@ -54,9 +54,6 @@ def vide_table dbtable, from_id = nil, reset_auto_incremente = true
   request = "DELETE FROM icare_test.#{dbtable}"
   request << " WHERE id >= #{from_id}" unless from_id.nil?
   db_exec(request)
-  if MyDB.error
-    raise "Une erreur SQL est survenue : #{MyDB.error.inspect}"
-  end
   if reset_auto_incremente
     request = "ALTER TABLE icare_test.#{dbtable} AUTO_INCREMENT = #{from_id||0}"
     db_exec(request)
