@@ -37,7 +37,7 @@ def db_exec request, values = nil
     request = request[0...-1]
   end
   if request =~ /;/
-    request = request.split(PV).reject{|i|i.to_s.empty?}
+    request = request.split(PV).collect{|i|i.strip}.reject { |i| i.to_s.empty? }
   end
   begin
     res = MyDB.db.execute(request, values)

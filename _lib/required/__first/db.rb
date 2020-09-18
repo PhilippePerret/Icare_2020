@@ -1,6 +1,39 @@
 # encoding: UTF-8
 require 'mysql2'
 
+# L'erreur qui sera levée en cas d'erreur de la méthode db_exec, pour
+# ne plus avoir à utiliser tout le temps if MyDB.error
+class MyDBError < StandardError
+  attr_reader :data
+
+  def initialize(data)
+    @data = data
+    trace_db_error
+  end #/ initialize
+
+  def trace_db_error
+    err_msg = <<-TXT
+############################################################
+# MYSQL ERROR : #{data[:error]}
+# REQUEST : #{data[:request]}
+# VALUES : #{data[:values].inspect}
+############################################################
+    TXT
+    log(err_msg)
+    if user.admin?
+      erreur(err_msg)
+    end
+  end #/ trace_db_error
+
+  # S'il faut vraiment afficher un message. Mais normalement,
+  # on traitement simplement l'erreur, silencieusement (sauf
+  # pour l'administrateur)
+  def message
+    "Une erreur SQL est survenue. Impossible d’exécuter la requête."
+  end #/ message
+
+end #/MyDBError < StandardError
+
 SANDBOX = false unless defined?(SANDBOX)
 # On line ou off line
 # -------------------
@@ -13,9 +46,32 @@ unless defined?(DATA_MYSQL)
   require './_lib/data/secret/mysql'
 end
 
-REQUEST_INSERT = 'INSERT INTO %{table} (%{columns}) VALUES (%{interro})'.freeze
-REQUEST_UPDATE = 'UPDATE %{table} SET %{columns} WHERE id = ?'.freeze
+# = main method =
+#
+# Méthode principale qui permet d'exécuter une requête, de retourner le
+# résultat ou de lever une exception MyDBError
+#
+def db_exec request, values = nil
+  request = request.strip
+  while request.end_with?(';')
+    request = request[0...-1]
+  end
+  if request =~ /;/
+    request = request.split(PV).collect{|i|i.strip}.reject { |i| i.to_s.empty? }
+  end
+  begin
+    res = MyDB.db.execute(request, values)
+    raise MyDBError.new(MyDB.error) if MyDB.error
+    return res
+  rescue Exception => e
+    raise MyDBError.new(error:e, request:request, values:values)
+  end
+end
 
+
+
+# Pour insérer (INSERT) de façon simple (cf. le manuel)
+REQUEST_INSERT = 'INSERT INTO %{table} (%{columns}) VALUES (%{interro})'.freeze
 def db_compose_insert table, data
   data.merge!(created_at:Time.now.to_i.to_s) unless data.key?(:created_at)
   data.merge!(updated_at:Time.now.to_i.to_s) unless data.key?(:updated_at)
@@ -27,6 +83,8 @@ def db_compose_insert table, data
   return db_last_id
 end #/ db_compose_insert
 
+# Pour updater (UPDATE) de façon simple (cf. le manuel)
+REQUEST_UPDATE = 'UPDATE %{table} SET %{columns} WHERE id = ?'.freeze
 def db_compose_update table, id, data
   data.merge!(updated_at: Time.now.to_i)
   valeurs = data.values << id
@@ -35,35 +93,7 @@ def db_compose_update table, id, data
   db_exec(request, valeurs)
 end #/ db_compose_update
 
-# Handy methods
-def db_exec request, values = nil
-  request = request.strip
-  while request.end_with?(';')
-    request = request[0...-1]
-  end
-  if request =~ /;/
-    request = request.split(PV).reject{|i|i.to_s.empty?}
-  end
-  begin
-    res = MyDB.db.execute(request, values)
-    if MyDB.error
-      log(MyDB.error)
-      # erreur("ERREUR SQL : #{MyDB.error[:error]} (consulter la console pour le détail)")
-    end
-    return res
-  rescue Exception => e
-    MyDB.error = {error:e, request:request, values:values}
-    if respond_to?(:erreur)
-      erreur("MYSQL ERROR: #{e.message} (cf. journal.log)")
-    end
-    if respond_to?(:log)
-      log("   REQUEST: #{request}")
-      log("    VALUES: #{values.inspect}") unless values.nil?
-      log e.message
-      log e.backtrace.join("\n")
-    end
-  end
-end
+
 # Retourne le dernier ID
 def db_last_id
   MyDB.db.last_id_of(MyDB.DBNAME)

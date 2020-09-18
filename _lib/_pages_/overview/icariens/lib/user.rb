@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_relative 'constants'
 
 =begin
@@ -12,17 +13,17 @@ require_relative 'constants'
 
 class User
 
-  BOUTON_FRIGO  = '<span class="tool"><a href="contact/frigo?op=contact&touid=%i" class="small btn discret">'+UI_TEXTS[:btn_message_frigo]+'</a></span>'.freeze
-  BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i" class="small btn discret">'+UI_TEXTS[:btn_lui_ecrire]+'</a></span>'.freeze
-  BOUTON_HISTO  = '<span class="tool"><a href="bureau/historique?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_voir_historique]+'</a></span>'.freeze
-  BOUTON_EDIT   = '<span class="tool"><a href="admin/icarien?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_edit]+'</a></span>'.freeze
+  BOUTON_FRIGO  = '<span class="tool"><a href="contact/frigo?op=contact&touid=%i" class="small btn discret">'+UI_TEXTS[:btn_message_frigo]+'</a></span>'
+  BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i" class="small btn discret">'+UI_TEXTS[:btn_lui_ecrire]+'</a></span>'
+  BOUTON_HISTO  = '<span class="tool"><a href="bureau/historique?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_voir_historique]+'</a></span>'
+  BOUTON_EDIT   = '<span class="tool"><a href="admin/icarien?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_edit]+'</a></span>'
 
   # = main =
   #
   # Méthode d'affichage principal de l'icarien dans la salle des icariens.
   # Prépare sa "carte" en fonction de son statut.
   #
-  CARD_ACTIF = <<-HTML.strip.freeze
+  CARD_ACTIF = <<-HTML.strip
 <div id="icarien-%{id}" class="icarien">
   <span class="pseudo big">%{picto} %{pseudo}</span> est à l’atelier depuis le
   <span class="date-signup">%{date_signup}</span> (<span class="duree">%{duree}</span>).
@@ -35,11 +36,11 @@ class User
 </div>
   HTML
 
-  SPAN_PRECEDEMMENT = <<-HTML.strip.freeze
+  SPAN_PRECEDEMMENT = <<-HTML.strip
 <span> Précédemment, %{pseudo} a suivi %{modules_suivis}.</span>
   HTML
 
-  CARD_INACTIF = <<-HTML.strip.freeze
+  CARD_INACTIF = <<-HTML.strip
 <div id="icarien-%{id}" class="icarien">
   <span class="pseudo big">%{picto} %{pseudo}</span> a travaillé à l’atelier du
   <span class="date-signup">%{date_signup}</span> au <span class="date signout">%{date_signout}</span>
@@ -49,24 +50,24 @@ class User
 </div>
   HTML
 
-  CARD_CANDIDAT = <<-HTML.strip.freeze
+  CARD_CANDIDAT = <<-HTML.strip
 <div id="icarien-%{id}" class="icarien">
   <span class="pseudo big">%{picto} %{pseudo}</span> vient de déposer sa candidature. %{Elle} est en attente de réponse.
 </div>
   HTML
 
-  CARD_RECU_INACTIF = <<-HTML.strip.freeze
+  CARD_RECU_INACTIF = <<-HTML.strip
 <div id="icarien-%{id}" class="icarien">
   <span class="pseudo big">%{picto} %{pseudo}</span> vient d’être reçu%{e} à l’atelier.
   %{modules_suivis}
   %{div_tools}
 </div>
   HTML
-  SPAN_MODULES_SUIVIS = <<-HTML.strip.freeze
+  SPAN_MODULES_SUIVIS = <<-HTML.strip
 %{pseudo} a suivi le%{s} module%{s} %{modules}
   HTML
 
-  SPAN_PAUSE = '<span class="pause"> Actuellement %{pseudo} est en pause.</span>'.freeze
+  SPAN_PAUSE = '<span class="pause"> Actuellement %{pseudo} est en pause.</span>'
 
   def out
 
@@ -171,22 +172,13 @@ class User
 def date_last_activite
   @date_last_activite ||= begin
     # Date de dernier document
-    request = "SELECT updated_at FROM icdocuments WHERE user_id = #{id} ORDER BY updated_at DESC LIMIT 1".freeze
-    res = db_exec(request)
-    if res.nil?
-      if MyDB.error
-        if OFFLINE || user.admin?
-          erreur("Une erreur est survenue : #{MyDB.error[:error]}")
-        else
-          # muet
-        end
-        trace(id:'MYSQL ERROR'.freeze, message:MyDB.error[:error].to_s)
-      else
-      end
-      Time.now.to_i
-    else
+    request = "SELECT updated_at FROM icdocuments WHERE user_id = #{id} ORDER BY updated_at DESC LIMIT 1"
+    begin
+      res = db_exec(request)
       last_document = res.first
-      last_document.nil? ? Time.now.to_i : last_document[:updated_at]
+      (last_document.nil? ? Time.now : last_document[:updated_at]).to_i
+    rescue MyDBError => e
+      Time.now.to_i
     end
   end
 end #/ date_last_activite
@@ -241,7 +233,7 @@ class << self
     @listes[:recu]
   end #/ recus
   def all_but_users_out
-    @all_but_users_out ||= find("SUBSTRING(options,1,1) = 0 AND id != 9 AND SUBSTRING(options,4,1) = '0'".freeze).values
+    @all_but_users_out ||= find("SUBSTRING(options,1,1) = 0 AND id != 9 AND SUBSTRING(options,4,1) = '0'").values
   end #/ all_but_users_out
 end #/<< self
 end #/User
