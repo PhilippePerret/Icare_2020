@@ -20,8 +20,8 @@ class HTML
 <html lang="fr" dir="ltr">
   #{head}
   <body class="#{css}" id="top">
-    <section id="header" class="#{css}" onclick="this.classList[this.classList.contains('opened')?'remove':'add']('opened');">#{header}</section>
-    <section id="messages">#{messages}</section>
+    <section id="header" class="#{css}" onclick="document.querySelector('section#messages').innerHTML='';this.classList[this.classList.contains('opened')?'remove':'add']('opened');">#{header}</section>
+    <section id="messages" onclick="this.innerHTML=''">#{messages}</section>
     #{@titre}
     <section id="body" class="#{css}">#{body}</section>
     <div style="clear:both"></div>
