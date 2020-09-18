@@ -7,9 +7,11 @@ TableGetter.traite('actualites') do
   request = <<-SQL
   START TRANSACTION;
   ALTER TABLE `actualites`
+    ADD COLUMN `type` VARCHAR(20) AFTER `id`,
     MODIFY COLUMN `created_at` VARCHAR(10) DEFAULT NULL,
     MODIFY COLUMN `updated_at` VARCHAR(10) DEFAULT NULL,
-    DROP COLUMN `status`;
+    DROP COLUMN `status`,
+    DROP COLUMN `data`;
   COMMIT;
   SQL
   db_exec(request)
