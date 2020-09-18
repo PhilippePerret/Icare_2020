@@ -6,7 +6,7 @@
 
 # Conservation du log
 # -------------------
-# Constante permettant de définir si le log (journal.log) doit être
+# Constante permettant de définir si le log (journal2020.log) doit être
 # réinitialiser à chaque fois, ou conserver.
 # RESET_LOG = OFFLINE && true # => En online, il est toujours conservé
 RESET_LOG = false # en mode test, pour le moment, on met comme ça

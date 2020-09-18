@@ -36,6 +36,7 @@ class << self
   # Lire le fichier journal
   def read_log
     path = './www/tmp/logs/journal.log'
+    path = './www/tmp/logs/journal2020.log'
     read_it(path)
   end #/ read_actualites
   def read_tracer

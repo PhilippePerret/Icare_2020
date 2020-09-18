@@ -10,7 +10,7 @@ require './_lib/required/__first/ContainerClass'
 class Actualite < ContainerClass
 
 LASTS_COUNT = 20
-REQUEST_LASTS   = "SELECT * FROM actualites ORDER BY created_at LIMIT #{LASTS_COUNT}"
+REQUEST_LASTS   = "SELECT * FROM actualites ORDER BY created_at DESC LIMIT #{LASTS_COUNT}"
 REQUEST_CREATE  = "INSERT INTO actualites (type, user_id, message, created_at, updated_at) VALUES (?, ?, ?, ?, ?)"
 DIV_ACTU = '<div class="actu"><span class="date">%{date}</span><span class="message">%{message}</span></div>'
 
@@ -76,7 +76,7 @@ class << self
   def lasts
     begin
       lasts_in_db = db_exec(REQUEST_LASTS)
-      lasts_in_db.collect { |dactu| new(dactu) }
+      lasts_in_db.reverse.collect { |dactu| new(dactu) }
     rescue MyDBError => e
       []
     end

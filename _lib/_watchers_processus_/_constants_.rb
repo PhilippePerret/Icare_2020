@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Constantes pour les watchers
 
@@ -19,8 +20,8 @@
 DATA_WATCHERS = {
   # --- USER ---
   validation_adresse_mail: {
-    titre: 'Validation de votre adresse mail'.freeze,
-    relpath: 'User/valid_mail'.freeze
+    titre: 'Validation de votre adresse mail',
+    relpath: 'User/valid_mail'
   },
   validation_inscription: {
     titre: 'Validation inscription',
@@ -34,69 +35,69 @@ DATA_WATCHERS = {
     actu_id: 'STARTMOD'
   },
   paiement_module: {
-    titre: 'Paiement du module'.freeze,
-    relpath: 'IcModule/paiement'.freeze,
+    titre: 'Paiement du module',
+    relpath: 'IcModule/paiement',
     actu_id: nil
   },
   annonce_virement: {
-    titre: 'Annonce de virement IBAN'.freeze,
-    relpath: 'IcModule/annonce_virement'.freeze,
+    titre: 'Annonce de virement IBAN',
+    relpath: 'IcModule/annonce_virement',
     actu_id: nil,
-    next: 'confirm_virement'.freeze
+    next: 'confirm_virement'
   },
   confirm_virement: {
-    titre: 'Confirmation du virement IBAN'.freeze,
-    titre_mail_user: 'Votre facture'.freeze,
-    relpath: 'IcModule/confirm_virement'.freeze,
+    titre: 'Confirmation du virement IBAN',
+    titre_mail_user: 'Votre facture',
+    relpath: 'IcModule/confirm_virement',
     actu_id: nil,
     next: nil
   },
   # --- Parcours des documents d'une icétape ---
   send_work: {
-    titre: 'Envoi des documents de travail'.freeze,
-    relpath: 'IcEtape/send_work'.freeze,
+    titre: 'Envoi des documents de travail',
+    relpath: 'IcEtape/send_work',
     actu_id: "SENDWORK",
     next: 'download_work'
   },
   download_work: {
-    titre: 'Chargement du travail de l’étape'.freeze,
-    relpath: 'IcEtape/download_work'.freeze,
+    titre: 'Chargement du travail de l’étape',
+    relpath: 'IcEtape/download_work',
     next: 'send_comments',
     actu_id: nil
   },
   send_comments: {
-    titre: 'Travail à l’étude'.freeze,
-    relpath: 'IcEtape/send_comments'.freeze,
-    next: 'download_comments'.freeze,
+    titre: 'Travail à l’étude',
+    relpath: 'IcEtape/send_comments',
+    next: 'download_comments',
     actu_id: "COMMENTS"
   },
   changement_etape: {
-    titre: 'Changement d’étape'.freeze,
-    relpath: 'IcEtape/change'.freeze,
+    titre: 'Changement d’étape',
+    relpath: 'IcEtape/change',
     actu_id: "CHGETAPE",
     next: nil
   },
   download_comments: {
-    titre: 'Chargement des commentaires'.freeze,
-    relpath: 'IcEtape/download_comments'.freeze,
+    titre: 'Chargement des commentaires',
+    relpath: 'IcEtape/download_comments',
     actu_id: nil,
-    next: 'qdd_depot'.freeze
+    next: 'qdd_depot'
   },
   qdd_depot: {
-    titre: 'Dépôt sur le Quai des docs'.freeze,
-    relpath: 'IcEtape/qdd_depot'.freeze,
+    titre: 'Dépôt sur le Quai des docs',
+    relpath: 'IcEtape/qdd_depot',
     actu_id: "QDDDEPOT",
-    next: 'qdd_sharing'.freeze
+    next: 'qdd_sharing'
   },
   qdd_sharing: {
-    titre: 'Définition du partage des documents'.freeze,
-    relpath: 'IcEtape/qdd_sharing'.freeze,
+    titre: 'Définition du partage des documents',
+    relpath: 'IcEtape/qdd_sharing',
     actu_id: "QDDSHARING",
     next: nil
   },
   qdd_coter: {
-    titre: 'Coter et commenter'.freeze,
-    relpath: 'IcDocument/cotes_n_comments'.freeze,
+    titre: 'Coter et commenter',
+    relpath: 'IcDocument/cotes_n_comments',
     actu_id: nil,
     next: nil
   },
@@ -108,16 +109,16 @@ DATA_WATCHERS = {
   },
   # --- Question mini-faq ---
   question_faq: {
-    titre: 'Question mini-faq'.freeze,
-    relpath: 'MiniFaq/answer_question'.freeze,
+    titre: 'Question mini-faq',
+    relpath: 'MiniFaq/answer_question',
     actu_id: nil,
     next: nil
   },
 
   # --- DIVERS ---
   destroy_discussion: {
-    titre:    'Destruction d’une discussion'.freeze,
-    relpath:  'FrigoDiscussion/destroy'.freeze,
+    titre:    'Destruction d’une discussion',
+    relpath:  'FrigoDiscussion/destroy',
     actu_id: nil,
     next: nil
   },

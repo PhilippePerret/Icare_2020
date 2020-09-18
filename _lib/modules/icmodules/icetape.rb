@@ -74,7 +74,11 @@ def titre   ; @titre  ||= absetape.titre    end
 def numero  ; @numero ||= absetape.numero   end
 
 def absetape
-  @absetape ||= AbsEtape.get(data[:absetape_id])
+  @absetape ||= begin
+    log("ID: #{id}")
+    log("data : #{data.inspect}")
+    AbsEtape.get(data[:absetape_id])
+  end
 end #/ absetape
 
 def absmodule

@@ -69,7 +69,7 @@ class << self
     end
   end
   def path
-    @path ||= File.join(LOGS_FOLDER,'journal.log')
+    @path ||= File.join(LOGS_FOLDER,'journal2020.log')
   end
 end #/<< self
 end #/Logger
