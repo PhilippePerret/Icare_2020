@@ -13,6 +13,7 @@ class MyDBError < StandardError
 
   def trace_db_error
     err_msg = <<-TXT
+ERREUR MYSQL - Impossible d'exécuter la requête suivante :
 ############################################################
 # MYSQL ERROR : #{data[:error]}
 # REQUEST : #{data[:request]}
