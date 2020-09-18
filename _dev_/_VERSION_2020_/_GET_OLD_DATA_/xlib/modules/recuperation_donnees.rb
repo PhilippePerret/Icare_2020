@@ -43,14 +43,15 @@ class << self
     run_all_scripts(SCRIPTS_LIST[from_idx..to_idx])
     # Faut-il exporter et uploader les tables ?
     if to_script_number.to_i < 90
-      TableGetter.export_tables
-      TableGetter.upload_tables
+      TableGetter.export_tables # seulement celles traitées
+      TableGetter.upload_tables # idem
     end
 
     stop_time = Time.now.to_f
-    duree = ((stop_time - start_time).round(2)
-    
+    duree = (stop_time - start_time).round(2)
+
     success("#{RC*3}=== OPÉRATION EXÉCUTÉE AVEC SUCCÈS (#{duree}) ===#{RC*3}")
+
   end #/ proceed_recuperation
 
 

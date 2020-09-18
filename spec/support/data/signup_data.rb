@@ -46,8 +46,8 @@ DATA_SPEC_SIGNUP_VALID = [
   },
   # UNE seconde candidate valide (index 1 - et rester index 1 pour les gels)
   {
-    pseudo:         {value:'Marion'},
-    patronyme:      {value:'Marion Michel'},
+    pseudo:         {value:'MarionM'},
+    patronyme:      {value:'Marion De Michel'},
     naissance:      {value:'1992', type:'select'},
     sexe:           {value:'une femme', type:'select'},
     mail:           {value:'marion.michel31@gmail.com'},

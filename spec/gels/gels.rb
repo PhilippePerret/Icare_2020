@@ -30,8 +30,9 @@ def validation_mail
     puts "Fabrication du gel 'validation_mail'".vert
     data = DATA_SPEC_SIGNUP_VALID[1]
     user_mail = data[:mail][:value]
-    candidat = db_get('users', {mail: user_mail})
-    dticket = db_get('tickets', {user_id: candidat[:id]})
+    candidat  = db_get('users', {mail: user_mail})
+    raise "#{__FILE__}:#{__LINE__}: Impossible de db_get(ter) l'user de mail '#{user_mail}'…" if candidat.nil?
+    dticket   = db_get('tickets', {user_id: candidat[:id]})
     visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
     login_in_form(mail: user_mail, password:data[:password][:value])
     screenshot('marion-valide-mail')

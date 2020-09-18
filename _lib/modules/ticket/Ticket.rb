@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   class Ticket
   ------------
@@ -39,7 +40,7 @@ def save
   valeurs = data.values
   columns = data.keys.join(VG)
   interro = Array.new(valeurs.count,'?').join(VG)
-  request = "INSERT INTO tickets (#{columns}) VALUES (#{interro})".freeze
+  request = "INSERT INTO tickets (#{columns}) VALUES (#{interro})"
   db_exec(request, valeurs)
   @data.merge!(id: db_last_id)
 end #/ save

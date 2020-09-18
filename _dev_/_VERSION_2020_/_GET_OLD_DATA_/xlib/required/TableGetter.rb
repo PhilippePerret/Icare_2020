@@ -282,7 +282,7 @@ end #/ import
 def import_distant
   command = SSH_COMMAND_LOAD_TABLE % data
   result = `#{command} 2>&1`
-  success("📲#{ISPACE}Import distant de la table '#{tbname}'#{ISPACE}👍")
+  success("📲#{ISPACE}Import distant de la table '#{new_tbname}'#{ISPACE}👍")
 end #/ import_distant
 
 # Méthode qui returne TRUE si le fichier .sql de la table existe bien en
