@@ -43,7 +43,7 @@ class ContainerClass
     # Retourne l'instance créée.
     def create_with_data(data)
       now = Time.now.to_i
-      data.merge!({created_at:now, updated_at:now})
+      data.merge!({created_at:now.to_s, updated_at:now.to_s})
       new_id = db_compose_insert(table, data)
       return get(new_id)
     end #/ create_with_data

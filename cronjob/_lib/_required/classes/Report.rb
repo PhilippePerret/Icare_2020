@@ -79,7 +79,7 @@ def initialize msg, params
 end #/ initialize msg
 
 def out
-  cont = LINE_CONT % [Time.at(time).to_s(simple:true), content]
+  cont = LINE_CONT % [Time.at(time.to_i).to_s(simple:true), content]
   sty = case type
   when :titre       then 'font-weight:bold;'.freeze
   when :error       then 'color:red;'.freeze

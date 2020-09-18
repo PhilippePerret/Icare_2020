@@ -7,12 +7,12 @@ class IcEtape < ContainerClass
   def f_expected_end
     @f_expected_end ||= begin
       now = Time.now
-      ti  = Time.at(data[:expected_end])
+      ti  = Time.at(data[:expected_end].to_i)
       fti = formate_date(ti)
       css = ti < now ? 'warning' : nil ;
       first_year = (ti < Time.now ? ti : now).year
       Form.date_field({
-        default:data[:expected_end],
+        default:data[:expected_end].to_i,
         prefix_id: 'echeance',
         class:css
       })

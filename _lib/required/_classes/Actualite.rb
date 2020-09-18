@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   class Actualite
   ---------------
@@ -9,22 +10,22 @@ require './_lib/required/__first/ContainerClass'
 class Actualite < ContainerClass
 
 LASTS_COUNT = 20
-REQUEST_LASTS   = "SELECT * FROM actualites ORDER BY created_at LIMIT #{LASTS_COUNT}".freeze
-REQUEST_CREATE  = "INSERT INTO actualites (type, user_id, message, created_at, updated_at) VALUES (?, ?, ?, ?, ?)".freeze
-DIV_ACTU = '<div class="actu"><span class="date">%{date}</span><span class="message">%{message}</span></div>'.freeze
+REQUEST_LASTS   = "SELECT * FROM actualites ORDER BY created_at LIMIT #{LASTS_COUNT}"
+REQUEST_CREATE  = "INSERT INTO actualites (type, user_id, message, created_at, updated_at) VALUES (?, ?, ?, ?, ?)"
+DIV_ACTU = '<div class="actu"><span class="date">%{date}</span><span class="message">%{message}</span></div>'
 
 DATA_ACTU = {
-  'SIMPLEMESS'  => {name:'Simple message'.freeze},
-  'FIRSTPAIE'   => {name:'Premier paiement'.freeze},
-  'SIGNUP'      => {name:'Nouvelle inscription'.freeze},
-  'SENDWORK'    => {name:'Envoi de travail'.freeze},
-  'REALICARIEN' => {name:'Vrai icarien/icarienne'.freeze},
-  'STARTMOD'    => {name:'Démarrage de module'.freeze},
-  'QDDDEPOT'    => {name:'Dépôt sur le Quai des docs'.freeze},
-  'COMMENTS'    => {name:'Envoi des commentaires sur documents'.freeze},
-  'CHGETAPE'    => {name:'Changement d’étape'.freeze},
-  'ENDMODULE'   => {name:'Fin de module'.freeze},
-}.freeze
+  'SIMPLEMESS'  => {name:'Simple message'},
+  'FIRSTPAIE'   => {name:'Premier paiement'},
+  'SIGNUP'      => {name:'Nouvelle inscription'},
+  'SENDWORK'    => {name:'Envoi de travail'},
+  'REALICARIEN' => {name:'Vrai icarien/icarienne'},
+  'STARTMOD'    => {name:'Démarrage de module'},
+  'QDDDEPOT'    => {name:'Dépôt sur le Quai des docs'},
+  'COMMENTS'    => {name:'Envoi des commentaires sur documents'},
+  'CHGETAPE'    => {name:'Changement d’étape'},
+  'ENDMODULE'   => {name:'Fin de module'},
+}
 
 # ---------------------------------------------------------------------
 #

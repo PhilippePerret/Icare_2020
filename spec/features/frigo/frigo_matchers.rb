@@ -72,8 +72,8 @@ RSpec::Matchers.define :have_message do |dmessage|
     # puts "sujet.messages: #{sujet.messages.inspect}"
     @goods = []
     sujet.messages.each do |message|
-      next if dmessage.key?(:after) && message.created_at < dmessage[:after]
-      next if dmessage.key?(:before) && message.created_at > dmessage[:before]
+      next if dmessage.key?(:after) && message.created_at.to_i < dmessage[:after]
+      next if dmessage.key?(:before) && message.created_at.to_i > dmessage[:before]
       if dmessage.key?(:user_id)
         ok = ok && (message.user_id == dmessage[:user_id])
       end

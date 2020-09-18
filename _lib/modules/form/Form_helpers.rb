@@ -24,7 +24,7 @@ class << self
     now = Time.now
     if params[:default] # Si une date est fournie
       defaut = params[:default]
-      defaut = Time.at(defaut) unless defaut.is_a?(Time)
+      defaut = Time.at(defaut.to_i) unless defaut.is_a?(Time)
       params.merge!(default_day:    defaut.day)
       params.merge!(default_month:  defaut.month)
       params.merge!(default_year:   defaut.year)

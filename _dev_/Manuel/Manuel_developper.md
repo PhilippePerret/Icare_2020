@@ -505,7 +505,7 @@ db_compose_insert('table', {<data>})
 … va produire la même chose que :
 
 ~~~ruby
-valeurs.merge!(updated_at: Time.now.to_i, created_at:Time.now.to_i)
+valeurs.merge!(updated_at: Time.now.to_i.to_s, created_at:Time.now.to_i.to_s)
 valeurs = data.values
 columns = data.keys.join(VG)
 interro = Array.new(valeurs.count,'?').join(VG)
@@ -528,7 +528,7 @@ db_compose_update('<table>', <id>, <data>)
 … va produire la même chose que :
 
 ~~~ruby
-data.merge!(updated_at: Time.now.to_i)
+data.merge!(updated_at: Time.now.to_i.to_s)
 valeurs = data.values << id
 columns = data.keys.collect{|c|"c = ?"}.join(VG)
 request = "INSERT <table> SET #{columns} WHERE id = ?"
@@ -2326,7 +2326,7 @@ Toutes les méthodes suivantes peuvent définir un filtre pour filtrer les enreg
 **Un hash avec définition explicite de la clause Where et de l'ordre**
 
 ~~~ruby
-{order: 'pseudo', where:'SUBSTRING(options,17,1) IN (2,3,7) AND created_at > 23876945'}
+{order: 'pseudo', where:'SUBSTRING(options,17,1) IN (2,3,7) AND created_at > "1496771846"'}
 ~~~
 
 

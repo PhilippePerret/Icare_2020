@@ -24,7 +24,7 @@ def rand_actu
   pseudo  = u[:pseudo]
   amsg  = "<span>Actualité de <strong>#{pseudo}</strong> le #{Time.at(time)}</span>"
   time  = time.to_i
-  [uid, atype, amsg, time, time]
+  [uid, atype, amsg, time.to_s, time.to_s]
 end #/ rand_actu
 
 DATA_ACTUALITES = []

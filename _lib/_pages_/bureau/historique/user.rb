@@ -12,7 +12,7 @@ class User
       if date_sortie
         histo << LineHisto.new(date_sortie 'Fin du travail à l’atelier'.freeze, 0)
       else
-        histo << LineHisto.new(Time.now.to_i, 'Officiellement, toujours en activité.'.freeze, 1)
+        histo << LineHisto.new(Time.now, 'Officiellement, toujours en activité.'.freeze, 1)
       end
 
       # Les modules
@@ -37,7 +37,7 @@ class User
 
       # Les icetapes
       IcEtape.collect(user_id: id) do |icetape|
-        histo << LineHisto.new(icetape.started_at + 100, (EMO_BLASON_T+ISPACE+"Démarrage de l’<b>étape #{icetape.numero}</b> “#{icetape.titre}”").freeze, 2)
+        histo << LineHisto.new(icetape.started_at.to_i + 100, (EMO_BLASON_T+ISPACE+"Démarrage de l’<b>étape #{icetape.numero}</b> “#{icetape.titre}”").freeze, 2)
         unless icetape.ended_at.nil?
           histo << LineHisto.new(icetape.ended_at, (EMO_DRAPEAU_GOLF_T+ISPACE+"Fin de l'<b>étape #{icetape.numero}</b> “#{icetape.titre}”").freeze, 2)
         end
@@ -47,7 +47,7 @@ class User
       IcDocument.collect(user_id: id) do |icdocument|
         histo << LineHisto.new(icdocument.time_original, (EMO_PORTE_DOCUMENT_T+ISPACE+"Envoi du document “#{icdocument.name}”").freeze, 4)
         unless icdocument.time_comments.nil?
-          histo << LineHisto.new(icdocument.time_comments + 100, (EMO_DOCUMENT_CRAYON_T+ISPACE+"Réception des commentaires sur “#{icdocument.name}”.").freeze, 4)
+          histo << LineHisto.new(icdocument.time_comments.to_i + 100, (EMO_DOCUMENT_CRAYON_T+ISPACE+"Réception des commentaires sur “#{icdocument.name}”.").freeze, 4)
         end
       end
 
@@ -105,7 +105,7 @@ class User
       # chaque discussion, on peut définir les évènements
       hdiscuss.each do |discuss_id, ddis|
         # log("ddis: #{ddis.inspect}")
-        create_time = ddis[:created_at]
+        create_time = ddis[:created_at].to_i
         userisowner = ddis[:owner][:id] == user.id
         auteur_discussion = userisowner ? 'vous' : ddis[:owner][:pseudo]
         # L'évènement de création
@@ -142,7 +142,12 @@ end #/User
 #
 # ---------------------------------------------------------------------
 
-LineHisto = Struct.new(:time, :description, :level, :css) do
+LineHisto = Struct.new(:time_str, :description, :level, :css) do
+# Le temps en entier (depuis que les temps sont enregistrés en string)
+# Noter que parfois :time_str est un {Time}.
+def time
+  @time ||= time_str.to_i
+end #/ time
 def out(last_date)
   added_classes = css.nil? ? '': " #{css}"
   <<-HTML.strip.freeze

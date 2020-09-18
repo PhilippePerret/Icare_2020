@@ -88,7 +88,7 @@ end #/ download
 # Retourne TRUE si le document a été émis un autre jour (plus tard)
 # que +time+
 def older_than(time)
-  Time.at(created_at).strftime('%Y%m%d') < Time.at(time).strftime('%Y%m%d')
+  Time.at(created_at.to_i).strftime('%Y%m%d') < Time.at(time.to_i).strftime('%Y%m%d')
 end #/ older_than
 
 

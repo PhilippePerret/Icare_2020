@@ -24,7 +24,7 @@ def formate_date(time = nil, options = nil)
   options ||= {}
   options.key?(:mois) || options.merge!(mois: :long)
   time ||= Time.now
-  time = Time.at(time) unless time.is_a?(Time)
+  time = Time.at(time.to_i) unless time.is_a?(Time)
   mois = MOIS[time.month][options[:mois]]
   temp = "%-d #{mois} %Y"
   temp << " %H:%M".freeze if options[:time] || options[:hour]
@@ -53,8 +53,8 @@ end #/ formate_date
 #   :nojours      Si TRUE, on n'indique que les années et les mois
 #   :long         idem
 def formate_duree(date1, date2, options = nil)
-  date1   ||= Time.now.to_i
-  date2   ||= Time.now.to_i
+  date1   = (date1||Time.now).to_i
+  date2   = (date2||Time.now).to_i
   options ||= {}
   duree_secondes = date2 - date1
   nombre_annees = duree_secondes / 365.days

@@ -65,7 +65,7 @@ feature "Changement de l'échéance de travail" do
 
 
     scenario 'ne peut pas choisir la même échéance comme nouvelle échéance' do
-      new_eche = Time.at(marion.icetape.expected_end)
+      new_eche = Time.at(marion.icetape.expected_end.to_i)
       pitch("Marion ne peut pas mettre son échéance à la même date.")
       marion.rejoint_son_bureau
       click_on('Travail courant')

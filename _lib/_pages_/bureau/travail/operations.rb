@@ -21,7 +21,7 @@ class IcEtape
 
   # Procéder au changement d'échéance
   def modify_echeance
-    old_eche = Time.at(data[:expected_end])
+    old_eche = Time.at(data[:expected_end].to_i)
     new_eche = Form.date_field_value('echeance')
     now_eche = Time.now
     # Pour vérification
@@ -32,7 +32,7 @@ class IcEtape
     new_eche > now_eche   || raise(ERRORS[:bad_echeance])
     # On peut sauver la nouvelle échéance (en indiquand le nombre de jours
     # restants)
-    save(expected_end: new_eche.to_i)
+    save(expected_end: new_eche.to_i.to_s)
     message(MESSAGES[:echeance_changed] % formate_date(new_eche, duree:true))
   rescue Exception => e
     erreur e.message

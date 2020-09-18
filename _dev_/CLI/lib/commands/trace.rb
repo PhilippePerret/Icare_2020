@@ -99,7 +99,7 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :datastr) do
   attr_accessor :seen
   def out
     msg = []
-    msg << Time.at(time).strftime('%d %m %H:%M'.freeze)
+    msg << Time.at(time.to_i).strftime('%d %m %H:%M'.freeze)
     msg << ip_formated
     msg << id.ljust(15)
     msg << pseudo_if_identified

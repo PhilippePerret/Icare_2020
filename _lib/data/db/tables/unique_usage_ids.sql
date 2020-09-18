@@ -5,7 +5,7 @@ CREATE TABLE `unique_usage_ids`
   session_id  VARCHAR(32) NOT NULL, -- obligatoire
   uuid        SMALLINT NOT NULL,    -- obligatoire
   scope       VARCHAR(32) DEFAULT NULL, -- champ d'application, pour limiter l'autorisation
-  created_at INT(10) NOT NULL,
-  updated_at INT(10) NOT NULL,
+  created_at VARCHAR(10) NOT NULL,
+  updated_at VARCHAR(10) NOT NULL,
   PRIMARY KEY (uuid)
 );

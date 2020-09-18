@@ -83,8 +83,8 @@ def add wtype, data = nil
     vu_user:    vu_user,
     triggered_at: data[:triggered_at],
     params:     (data[:params].to_json if data[:params]),
-    updated_at: now,
-    created_at: now
+    updated_at: now.to_s,
+    created_at: now.to_s
   }
   # On procède à l'enregistrement dans la table
   valeurs = dwatcher.values

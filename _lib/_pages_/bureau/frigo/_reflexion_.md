@@ -10,7 +10,7 @@ La date de dernière consultation d'une discussion par un user est consignée da
     FROM `frigo_messages` AS mes
     INNER JOIN `frigo_discussions` AS dis ON mes.discussion_id = dis.id
     INNER JOIN `frigo_users` AS u ON dis.user_id = user_id &&
-    WHERE mes.created_at > last_checked_at
+    WHERE mes.created_at > "last_checked_at"
       AND u.user_id = user_id
     GROUP BY dis.user_id
   ~~~

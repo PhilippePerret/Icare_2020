@@ -121,7 +121,7 @@ GABARIT_MAIL_HEBDOMADAIRE = <<-HTML.strip.freeze
       request = <<-SQL.strip.freeze
   SELECT id, user_id, message, type, created_at
     FROM actualites
-    WHERE created_at > #{Time.veille.to_i}
+    WHERE created_at > "#{Time.veille.to_i}"
     ORDER BY user_id
       SQL
       db_exec(request).collect { |dactu| new(dactu, :veille) }
@@ -134,7 +134,7 @@ GABARIT_MAIL_HEBDOMADAIRE = <<-HTML.strip.freeze
       request = <<-SQL.strip.freeze
   SELECT user_id, message, type, created_at
     FROM actualites
-    WHERE created_at > #{from_time}
+    WHERE created_at > "#{from_time}"
     ORDER BY user_id
       SQL
       db_exec(request).collect { |dactu| new(dactu, :hebdo) }
@@ -164,7 +164,7 @@ end #/ initialize
 # La table de données qui sera utilisée pour composer les lignes des
 # mails d'actualité.
 def line_data
-  @line_data ||= {message:message, date:Time.at(created_at).to_s(simple:true)}
+  @line_data ||= {message:message, date:Time.at(created_at.to_i).to_s(simple:true)}
 end #/ line_data
 
 def owner

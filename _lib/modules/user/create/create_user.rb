@@ -25,8 +25,8 @@ class << self
       cpassword:    Digest::MD5.hexdigest("#{chuser.password}#{chuser.mail}#{salt}"),
       options:      options_new_icarien,
       session_id:   session.id,
-      created_at:   now,
-      updated_at:   now
+      created_at:   now.to_s,
+      updated_at:   now.to_s
     }
     db_compose_insert('users', newdata)
     if MyDB.error

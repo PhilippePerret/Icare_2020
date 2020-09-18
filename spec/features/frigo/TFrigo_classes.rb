@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Classes pour les tests
 =end
@@ -34,7 +35,7 @@ class << self
   def get_by_titre(titre)
     @items_by_titre ||= {}
     @items_by_titre[titre] ||= begin
-      @req_by_titre ||= "SELECT id FROM `frigo_discussions` WHERE titre = ?".freeze
+      @req_by_titre ||= "SELECT id FROM `frigo_discussions` WHERE titre = ?"
       get(db_exec(@req_by_titre, [titre]).first[:id])
     end
   end #/ get_by_titre
@@ -44,7 +45,7 @@ class << self
   # y avoir plusieurs discussions)
   def between(users, index = 0)
     users_ids = users.collect{|u|u.id}.join(', ')
-    request = <<-SQL.freeze
+    request = <<-SQL
     SELECT fd.id, fd.titre, fd.last_message_id, fd.created_at, fd.updated_at
       FROM `frigo_discussions` AS fd
       INNER JOIN `frigo_users` AS fu ON fu.discussion_id = fd.id
@@ -100,8 +101,8 @@ end #/ la_chose
 
 def titre       ; @titre      ||= data[:titre]      end
 def user_id     ; @user_id    ||= data[:user_id]    end
-def created_at  ; @created_at ||= data[:created_at] end
-def updated_at  ; @updated_at ||= data[:updated_at] end
+def created_at  ; @created_at ||= data[:created_at].to_i end
+def updated_at  ; @updated_at ||= data[:updated_at].to_i end
 def last_message_id ; @last_message_id ||= data[:last_message_id] end #/ titre
 
 def owner
@@ -122,7 +123,7 @@ end #/ messages
 # Retourne la liste Array des {TUser} participants
 def participants
   @participants ||= begin
-    db_exec("SELECT user_id FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze).collect do |ddis|
+    db_exec("SELECT user_id FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}").collect do |ddis|
       TUser.get(ddis[:user_id])
     end
   end
@@ -143,9 +144,16 @@ class TUser
 
   # Retourne les instances {TFMessage} des messages de l'icarien
   def messages
-    request = "SELECT id, discussion_id, content, user_id, created_at, updated_at FROM `frigo_messages` WHERE user_id = #{id}".freeze
+    request = "SELECT id, discussion_id, content, user_id, created_at, updated_at FROM `frigo_messages` WHERE user_id = #{id}"
     db_exec(request).collect { |dm| TFMessage.new(*dm.values) }
   end #/ messages
 end #/TUser
 
-TFMessage = Struct.new(:id, :discussion_id, :content, :user_id, :created_at, :updated_at)
+TFMessage = Struct.new(:id, :discussion_id, :content, :user_id, :created_at_str, :updated_at_str) do
+  def created_at
+    @created_at ||= created_at_str.to_i
+  end #/ created_at
+  def updated_at
+    @updated_at ||= updated_at_str.to_i
+  end #/ created_at
+end

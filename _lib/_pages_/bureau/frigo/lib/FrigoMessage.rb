@@ -29,7 +29,7 @@ def out(options)
   @user_is_auteur = user_id == options[:for].id
   css = ['fmessage'.freeze]
   css << (user_auteur? ? 'mright' : 'mleft')
-  if !user_auteur? && created_at > options[:last_check]
+  if !user_auteur? && created_at.to_i > options[:last_check].to_i
     css << 'exergue'.freeze
     # Incrémenter le nombre de messages non lu
     discussion.nombre_non_lus += 1

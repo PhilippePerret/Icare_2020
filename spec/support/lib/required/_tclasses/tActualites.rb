@@ -53,11 +53,11 @@ class << self
       pr = pr >> proc { |tactu| tactu if tactu && tactu.contains?(params[:contains])}
     end
     if params.key?(:after)
-      params[:after] = Time.at(params[:after]) if params[:after].is_a?(Integer)
+      params[:after] = Time.at(params[:after].to_i) unless params[:after].is_a?(Time)
       pr = pr >> proc { |tactu| tactu if tactu && tactu.time > params[:after]}
     end
     if params.key?(:before)
-      params[:before] = Time.at(params[:before]) if params[:before].is_a?(Integer)
+      params[:before] = Time.at(params[:before].to_i) unless params[:before].is_a?(Time)
       pr = pr >> proc { |tactu| tactu if tactu && tactu.time < params[:before]}
     end
     # On filtre les watchers et on les retourne
@@ -84,7 +84,7 @@ end #/Mails
 
 TActualite = Struct.new(:id, :user_id, :type, :message, :created_at, :updated_at) do
   def time
-    @time ||= Time.at(created_at)
+    @time ||= Time.at(created_at.to_i)
   end #/ time
   def contains?(searched)
     message.include?(searched)

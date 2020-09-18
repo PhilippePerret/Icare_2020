@@ -17,8 +17,8 @@ REQUEST_INSERT = 'INSERT INTO %{table} (%{columns}) VALUES (%{interro})'.freeze
 REQUEST_UPDATE = 'UPDATE %{table} SET %{columns} WHERE id = ?'.freeze
 
 def db_compose_insert table, data
-  data.merge!(created_at:Time.now.to_i) unless data.key?(:created_at)
-  data.merge!(updated_at:Time.now.to_i) unless data.key?(:updated_at)
+  data.merge!(created_at:Time.now.to_i.to_s) unless data.key?(:created_at)
+  data.merge!(updated_at:Time.now.to_i.to_s) unless data.key?(:updated_at)
   valeurs = data.values
   columns = data.keys.join(VG)
   interro = Array.new(valeurs.count,'?').join(VG)
@@ -252,8 +252,8 @@ end # << self
         hdata.delete(:__strict)
       else
         now = Time.now.to_i
-        hdata[:created_at] || hdata.merge!(created_at: now)
-        hdata[:updated_at] || hdata.merge!(updated_at: now)
+        hdata[:created_at] || hdata.merge!(created_at: now.to_s)
+        hdata[:updated_at] || hdata.merge!(updated_at: now.to_s)
       end
       colonnes  = []
       values    = []

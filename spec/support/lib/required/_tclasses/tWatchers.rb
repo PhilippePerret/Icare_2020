@@ -49,10 +49,10 @@ class << self
       pr = pr >> proc {|obj| obj if obj && obj.wtype == params[:wtype]}
     end
     if params.key?(:after)
-      pr = pr >> proc { |obj| obj if obj && obj.created_at > params[:after]}
+      pr = pr >> proc { |obj| obj if obj && obj.created_at.to_i > params[:after]}
     end
     if params.key?(:before)
-      pr = pr >> proc { |obj| obj if obj && obj.created_at < params[:before]}
+      pr = pr >> proc { |obj| obj if obj && obj.created_at.to_i < params[:before]}
     end
     # On filtre les watchers
     @founds = self.for(params).select do |obj|
@@ -86,6 +86,6 @@ end #/Mails
 
 TWatcher = Struct.new(:id, :user_id, :wtype, :objet_id, :params, :created_at, :updated_at, :triggered_at) do
   def time
-    @time ||= Time.at(created_at)
+    @time ||= Time.at(created_at.to_i)
   end #/ time
 end

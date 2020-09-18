@@ -99,10 +99,10 @@ RSpec::Matchers.define :have_notification do |params|
         end
         candidats = db_get_all('watchers', datasearch).select do |dwat|
           if params.key?(:after)
-            next false if dwat[:created_at] < params[:after]
+            next false if dwat[:created_at].to_i < params[:after]
           end
           if params.key?(:before)
-            next false if dwat[:created_at] > params[:before]
+            next false if dwat[:created_at].to_i > params[:before]
           end
           true
         end.collect { |dwat| dwat[:id] }

@@ -58,7 +58,7 @@ class << self
   def detruire_facture_3_ans
     now = Time.now
     ilya3ans = Time.new(now.year - 3, now.month, now.day).to_i
-    request = "DELETE FROM paiements WHERE created_at < #{ilya3ans}"
+    request = "DELETE FROM paiements WHERE created_at < '#{ilya3ans}'"
     nombre_avant = db_count('paiements')
     db_exec(request)
     nombre_apres = db_count('paiements')
@@ -73,7 +73,7 @@ class << self
   def detruire_ids_a_usage_unique
     now = Time.now
     laveille = Time.new(now.year, now.month, now.day - 1).to_i
-    request = "DELETE FROM unique_usage_ids WHERE created_at < #{laveille}"
+    request = "DELETE FROM unique_usage_ids WHERE created_at < '#{laveille}'"
     nombre_avant = db_count('unique_usage_ids')
     db_exec(request)
     nombre_apres = db_count('unique_usage_ids')

@@ -35,7 +35,7 @@ end #/ initialize
 
 def save
   now = Time.now.to_i
-  data.merge!(created_at: now, updated_at:now)
+  data.merge!(created_at: now.to_s, updated_at:now.to_s)
   valeurs = data.values
   columns = data.keys.join(VG)
   interro = Array.new(valeurs.count,'?').join(VG)

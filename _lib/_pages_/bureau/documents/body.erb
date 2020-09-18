@@ -7,7 +7,7 @@
   <% last_date = Time.now.to_i + 1 %>
   <% documents.each do |document| %>
     <% if document.older_than(last_date) %>
-      <% last_date = document.created_at %>
+      <% last_date = document.created_at.to_i %>
       <%= document.date_jour %>
     <% end %>
     <%= document.as_card %>

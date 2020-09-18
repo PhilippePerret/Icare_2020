@@ -7,17 +7,7 @@
 
 # Le traitement qu'il faut appliquer
 DB_REQUEST = <<-SQL.strip
--- ALTER TABLE `unique_usage_ids` CHANGE COLUMN `uuid` `uuid` VARCHAR(20) NOT NULL UNIQUE;
-ALTER TABLE `icmodules` CHANGE COLUMN `started_at` `started_at` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icmodules` CHANGE COLUMN `created_at` `created_at` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icmodules` CHANGE COLUMN `updated_at` `updated_at` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icmodules` CHANGE COLUMN `ended_at` `ended_at` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icetapes` CHANGE COLUMN `started_at` `started_at` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icetapes` CHANGE COLUMN `expected_end` `expected_end` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icetapes` CHANGE COLUMN `expected_comments` `expected_comments` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icetapes` CHANGE COLUMN `ended_at` `ended_at` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icetapes` CHANGE COLUMN `created_at` `created_at` VARCHAR(10) DEFAULT NULL;
-ALTER TABLE `icetapes` CHANGE COLUMN `updated_at` `updated_at` VARCHAR(10) DEFAULT NULL;
+
 SQL
 
 

@@ -31,8 +31,8 @@ class << self
     now = Time.now.to_i
     data.merge!(
       options:    '0'*16,
-      created_at: now,
-      updated_at: now
+      created_at: now.to_s,
+      updated_at: now.to_s
     )
     new_id = db_compose_insert('icmodules', data)
     return new_id
