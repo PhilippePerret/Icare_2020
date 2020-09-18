@@ -11,7 +11,13 @@ class << self
     puts "=".bleu
     puts "=   Exécution du script #{from_script_number} au script #{to_script_number}.#{RC*2}".bleu
 
-    if from_script_number == number_first_script
+    # Pour compter le temps
+    start_time = Time.now.to_f
+
+    # Si on procède à toutes les opérations, on peut resetter complètement
+    # depuis ici (même si la procédure n'est plus aussi nécessaire pour que les
+    # tables sont toutes traitées de façon indépendantes maintenant).
+    if from_script_number == number_first_script && to_script_number == number_last_script
       reset_all if RESET_ALL
       reset
     end
@@ -40,6 +46,11 @@ class << self
       TableGetter.export_tables
       TableGetter.upload_tables
     end
+
+    stop_time = Time.now.to_f
+    duree = ((stop_time - start_time).round(2)
+    
+    success("#{RC*3}=== OPÉRATION EXÉCUTÉE AVEC SUCCÈS (#{duree}) ===#{RC*3}")
   end #/ proceed_recuperation
 
 

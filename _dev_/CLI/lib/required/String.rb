@@ -3,6 +3,7 @@ require 'date'
 
 # Les constantes string utiles
 require './_lib/required/__first/constants/String'
+require_relative 'String_CLI'
 
 class String
 

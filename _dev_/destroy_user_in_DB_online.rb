@@ -3,6 +3,10 @@
   Ce script permet de détruire complètement un utilisateur dans la base
   distante par son identifiant. Tous les éléments le concernant seront
   détruits de la même manière, c'est une destruction en profondeur.
+
+  TODO
+  Récupérer cette procédure, et notamment la liste des tables, pour fabriquer
+  un outil distant (administrateur) performant pour nettoyer un user indésirable
 =end
 
 USER_ID = 114

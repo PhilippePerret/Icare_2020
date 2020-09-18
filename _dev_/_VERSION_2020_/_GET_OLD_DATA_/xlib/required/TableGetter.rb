@@ -19,34 +19,32 @@ require_relative 'constants'
 #   Quand :table ne correspond pas à :dst_table, la table sera renommée
 #   par :dst_table dans le fichier.
 DATA_TABLES_DISTANTES = [
-  {base:'icare_modules',  table:'absetapes',        dst_table:'current_absetapes'},
-  {base:'icare_modules',  table:'absmodules',       dst_table:'absmodules'},
-  {base:'icare_modules',  table:'abstravauxtypes',  dst_table:'abstravauxtypes'},
-  {base:'icare_hot',      table:'actualites',       dst_table:'actualites'},
-  {base:'icare_hot',      table:'connexions',       dst_table:'connexions'},
-  {base:'icare_users',    table:'frigo_users',      dst_table:'frigo_users'},
-  {base:'icare_users',    table:'frigo_messages',   dst_table:'frigo_messages'},
-  {base:'icare_users',    table:'frigo_discussions',dst_table:'frigo_discussions'},
-  {base:'icare_modules',  table:'icdocuments',      dst_table:'current_icdocuments'},
-  {base:'icare_modules',  table:'icetapes',         dst_table:'icetapes'},
-  {base:'icare_modules',  table:'icmodules',        dst_table:'icmodules'},
-  {base:'icare_modules',  table:'lectures_qdd',     dst_table:'current_lectures_qdd'},
-  {base:'icare_modules',  table:'mini_faq',         dst_table:'minifaq', final_table:'minifaq'},
-  {base:'icare_users',    table:'paiements',        dst_table:'paiements'},
-  {base:'icare_cold',     table:'temoignages',      dst_table:'temoignages'},
-  {base:'icare_hot',      table:'tickets',          dst_table:'tickets'},
-  {base:'',               table:'unique_usage_ids', dst_table:'unique_usage_ids'},
-  {base:'icare_users',    table:'users',            dst_table:'users'},
-  {base:'',               table:'validations_pages',dst_table:'validations_pages'},
-  {base:'icare_hot',      table:'watchers',         dst_table:'current_watchers'}
+  {base: 'icare_modules',   new_tbname:'absetapes',                               as_current:true},
+  {base: 'icare_modules',   new_tbname:'absmodules'},
+  {base: 'icare_modules',   new_tbname:'abstravauxtypes'},
+  {base: 'icare_hot',       new_tbname:'actualites'},
+  {base: 'icare_hot',       new_tbname:'connexions'},
+  {base: nil,               new_tbname:'frigo_users'},
+  {base: nil,               new_tbname:'frigo_messages'},
+  {base: nil,               new_tbname:'frigo_discussions'},
+  {base: 'icare_modules',   new_tbname:'icdocuments',                             as_current:true},
+  {base: 'icare_modules',   new_tbname:'icetapes'},
+  {base: 'icare_modules',   new_tbname:'icmodules'},
+  {base: 'icare_modules',   new_tbname:'lectures_qdd',                            as_current:true},
+  {base: 'icare_modules',   new_tbname:'minifaq',       old_tbname:'mini_faq'},
+  {base: 'icare_users',     new_tbname:'paiements'},
+  {base: 'icare_cold',      new_tbname:'temoignages'},
+  {base: 'icare_hot',       new_tbname:'tickets'},
+  {base: nil,               new_tbname:'unique_usage_ids'},
+  {base: 'icare_users',     new_tbname:'users'},
+  {base: nil,               new_tbname:'validations_pages'},
+  {base: 'icare_hot',       new_tbname:'watchers',                                as_current:true}
 ]
-
 # Pour pouvoir traiter table par table. Il suffit d'appeler :
 #   TableGetter.import(<nom table>)
 TABLES_DISTANTES = {}
 DATA_TABLES_DISTANTES.each do |dtable|
-  keytable = dtable[:final_table] || dtable[:table]
-  TABLES_DISTANTES.merge!(keytable => dtable)
+  TABLES_DISTANTES.merge!(dtable[:new_tbname] => dtable)
 end
 
 
@@ -75,32 +73,32 @@ class << self
   #   TableGetter.traite('<nom table>') do
   #     ... code à exécuter ...
   #   end
-  def traite(table_name, &block)
-    import(table_name)
+  def traite(tbname, &block)
+    import(tbname)
     yield if block_given?
-    export(table_name)
+    export(tbname)
   end #/ traite
 
-  # Pour importer seulement la table +table_name+
-  def import(table_name)
-    puts "📥#{ISPACE}TABLE '#{table_name}' — Récupération des données distantes…".bleu
+  # Pour importer seulement la table +tbname+
+  def import(tbname)
+    puts "📥#{ISPACE}TABLE '#{tbname}' — Récupération des données distantes…".bleu
     puts "#{TABU}(⏳ Ça peut prendre un moment)".bleu
-    new(TABLES_DISTANTES[table_name]).proceed
+    new(TABLES_DISTANTES[tbname]).proceed
   end #/ import
 
-  # Export de la table de nom +table_name+ dans le dossier qui contient toutes
+  # Export de la table de nom +tbname+ dans le dossier qui contient toutes
   # les bonnes tables finales
-  def export(table_name) # dump
+  # +tbname+ EST TOUJOURS LE NOM EXACT DE LA TABLE FINALE.
+  def export(tbname) # dump
     @tables_to_export ||= []
-    data_table = TABLES_DISTANTES[table_name]
-    tbname = data_table[:final_table] || data_table[:table]
     @tables_to_export << tbname unless @tables_to_export.include?(tbname)
 
     # Si elle existe, on détruit la table provisoire (qui commence toujours
     # par 'current_')
-    if data_table[:dst_table].start_with?('current_')
-      db_exec("DROP TABLE IF EXISTS `#{data_table[:dst_table]}`")
-      success("#{TABU}Suppression de la table provisoire '#{data_table[:dst_table]}'.")
+    data_table = TABLES_DISTANTES[tbname]
+    if data_table[:as_current] === true
+      db_exec("DROP TABLE IF EXISTS `current_#{data_table[:new_tbname]}`")
+      success("#{TABU}Suppression de la table provisoire 'current_#{data_table[:new_tbname]}'.")
     end
   end #/ export
   alias :dump :export
@@ -123,7 +121,6 @@ class << self
       itable = new(data_table)
       itable.upload
       itable.import_distant
-      success("📲#{ISPACE}Import distant de la table '#{tbname}'")
     end
   end #/ upload_tables
 
@@ -142,11 +139,11 @@ class << self
     success("🎉 TABLES IMPORTÉES DANS icare_db DISTANT")
   end #/ upload_all_tables
 
-  # Retourne TRUE si la table +table_name+ existe dans la base `icare`
+  # Retourne TRUE si la table +tbname+ existe dans la base `icare`
   # locale
-  def table_exists?(table_name)
+  def table_exists?(tbname)
     db_exec("SHOW TABLES;").each do |h|
-      return true if table_name == h.values.first
+      return true if tbname == h.values.first
     end
     return false
   end #/ table_exists?
@@ -179,6 +176,17 @@ BASH
     Dir["#{FOLDER_GOODS_SQL}/*.sql"].collect {|f| File.basename(f, File.extname(f) ) }
   end #/ get_tables_to_export
 end # /<< self
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
@@ -187,144 +195,187 @@ end # /<< self
 attr_reader :data
 def initialize(data)
   @data = data
-  @data.merge!(distant_path:distant_path, local_path:local_path, local_good_path:local_good_path)
+  @data.merge!({
+    distant_path:distant_path,
+    local_path:local_path,
+    local_good_path:local_good_path,
+    old_tbname: old_tbname,
+    new_tbname: new_tbname
+  })
 end #/ initialize
 
 def proceed
   if RESET_ALL || !downloaded?
     dump_online
-    dumped? || raise(ErreurFatale.new("Impossible de dumper la table #{table_name}"))
     download
-    downloaded? || raise(ErreurFatale.new("Impossible de rapatrier la table #{table_name} dumpée."))
-    change_table_name if table_name != data[:dst_table]
+    change_table_name if old_tbname != new_tbname
     import
-    imported? || raise(ErreurFatale.new("La table '#{base_name}.#{table_name}' n'a pas été importée dans la base locale…"))
-    puts "#{TABU}Données de la table '#{base_name}.#{table_name}' rapatriées et importées avec succès dans '#{table_final_name}'".vert
+    success("#{TABU}Données de la table '#{base_name}.#{old_tbname}' rapatriées et importées avec succès dans '#{loc_tbname}'")
   else
-    puts "#{TABU}Table '#{base_name}.#{table_name}' déjà rapatriée.".vert
+    success("#{TABU}Table '#{base_name}.#{loc_tbname}' déjà rapatriée.")
   end
 end #/ proceed
 
 # Procède au dump distant de la table
+# -----------------------------------
+# Fonctionne en quatre temps :
+#   1. Détruit le fichier .sql distant s'il existe
+#   2. S'assure que le fichier .sql distant n'existe pas
+#   3. Dump les données distantes de la table
+#   4. S'assure que le fichier .sql distant existe.
+#
 def dump_online
-  request = GET_TABLE_REQUEST % data
-  res = `#{request}`
+  erase_distant_sql_file
+  command = GET_TABLE_REQUEST % data
+  res = `#{command}`
+  ensure_distant_file_exists(distant_path, "Impossible de dumper la table #{old_tbname} (dans #{distant_path})…")
 end #/ dump_online
 
-# Procède au rapatriement de la table
+# Procède au rapatriement de la table, c'est-à-dire que le fichier .sql distant
+# est ramené en local.
+# La méthode s'assure que le fichier a bien été rapatrié
 def download
-  `#{SCP_DOWNLOAD_COMMAND % data}`
+  # On s'assure toujours de détruire l'éventuel fichier existant
+  File.delete(local_path) if File.exists?(local_path)
+  command = SCP_DOWNLOAD_COMMAND % data
+  result = `#{command} 2>&1`
+  downloaded? || raise(ErreurFatale.new("Impossible de rapatrier la table #{old_tbname} dumpée."))
 end #/ download
 
 # Copie le fichier .sql local vers le dossier distant, afin de l'injecter
 # dans la base distante
 # Note : avant de le copier, on détruit le fichier qui existe peut-être
 def upload
-  erase_distant_table_file
+  erase_distant_sql_file
   command = SCP_UPLOAD_COMMAND % data
   result = `#{command} 2>&1`
   # puts "result de upload (#{command}) : #{result.inspect}"
 end #/ upload
 
-def erase_distant_table_file
-  ssh_request = <<-SSH
-ssh #{SERVEUR_SSH} bash << BASH
-rm -f "#{distant_path}"
-BASH
-SSH
-  result = `#{ssh_request} 2>&1`
-  # puts "result de erase-distant : #{result.inspect}"
-end #/ erase_distant_table_file
+def erase_distant_sql_file
+  command = REQUEST_ERASE_DISTANT_FILE % {path: distant_path}
+  result = `#{command} 2>&1`
+  ensure_distant_file_not_exists(distant_path, "Le fichier distant '#{distant_path}' ne devrait plus exister…")
+end #/ erase_distant_sql_file
 
 # Procède au changement de nom de la table si nécessaire
+# Cela est nécessaire lorsque old_tbname et new_tbname ne sont pas
+# égaux.
 def change_table_name
-  find = /`#{table_name}`/
-  repl = "\`#{data[:dst_table]}\`"
-  dst_file = File.open(local_dst_path,'a')
+  find = /`#{old_tbname}`/
+  repl = "\`#{new_tbname}\`"
+  dst_file = File.open(local_final_path,'a')
   File.foreach(local_path) { |line| dst_file.write(line.gsub(find,repl)) }
   File.delete(local_path)
-  puts "#{TABU}Nom de la table `#{table_name}` mis à `#{data[:dst_table]}`.".vert
+  success("#{TABU}Nom de la table `#{old_tbname}` mis à `#{new_tbname}`.")
 ensure
   dst_file.close
 end #/ change_table_name
 
 # Méthode qui importe la table dans la base locale après l'avoir détruite
 def import
-  # On détruit la table existante
-  db_exec('DROP TABLE IF EXISTS `final_table_name`;')
-  # On importe la nouvelle table
   `mysql -u root icare < "#{local_final_path}"`
+  imported? || raise(ErreurFatale.new("La table '#{base_name}.#{loc_tbname}' n'a pas été importée dans la base locale…"))
 end #/ import
 
 # Importer le fichier distant dans la table distante
 def import_distant
   command = SSH_COMMAND_LOAD_TABLE % data
   result = `#{command} 2>&1`
-  # puts "result de import_distant '#{table_name}' (#{command}) : #{result.inspect}"
+  success("📲#{ISPACE}Import distant de la table '#{tbname}'#{ISPACE}👍")
 end #/ import_distant
-
-# Méthode qui s'assure que la table a été correctement dumpée
-def dumped?
-  request = <<-SSH
-ssh #{SERVEUR_SSH} ruby <<RBCODE
-STDOUT.write File.exists?('#{distant_path}').inspect
-RBCODE
-  SSH
-  `#{request}` == 'true'
-end #/ dumped?
 
 # Méthode qui returne TRUE si le fichier .sql de la table existe bien en
 # fin de procédure
 def downloaded?
-  if table_name != data[:dst_name]
-    File.exists?(local_dst_path)
-  else
-    File.exists?(local_path)
-  end
+  File.exists?(local_path)
 end #/ downloaded?
 
 # Retourne true si la table a bien été importée
 def imported?
-  self.class.table_exists?(final_table_name)
+  self.class.table_exists?(loc_tbname)
 end #/ imported?
 
+def new_tbname
+  @new_tbname ||= data[:new_tbname]
+end #/ new_tbname
+
+def old_tbname
+  @old_tbname ||= data[:old_tbname] || data[:new_tbname]
+end #/ old_tbname
+
+# Le nom local pour la table qui peut être :
+#   - le nom définitif, final
+#   - le nom avec préfixe 'current_' pour être traité en parallèle d'une autre
+def loc_tbname
+  @loc_tbname ||= begin
+    n = new_tbname
+    n = "current_#{n}" if as_current?
+    n
+  end
+end #/ loc_tbname
+
+def as_current?
+  data[:as_current] === true
+end #/ as_current?
+
+# Le chemin d'accès au fichier .sql distant
+# Note : quelle que soit le nom initial de la table (mini_faq ou minifaq),
+# ce chemin d'accès est toujours le même, fabriqué avec le nom de la table
+# finale (minifaq.sql)
 def distant_path
-  @distant_path ||= "deploiement/db/#{table_file_name}"
+  @distant_path ||= "deploiement/db/#{new_tbname}.sql"
 end #/ distant_path
 
+# Le chemin au fichier d'accès local final, c'est-à-dire construit
+# avec le nom final de la table
 def local_final_path
-  @local_final_path ||= File.join(FOLDER_CURRENT_ONLINE,"#{final_table_name}.sql")
+  @local_final_path ||= File.join(FOLDER_CURRENT_ONLINE,"#{local_final_name}")
 end #/ local_final_path
+def local_final_name
+  @local_final_name ||= begin
+    n = new_tbname
+    n = "current_#{n}" if as_current?
+    "#{n}.sql"
+  end
+end #/ local_final_name
 
+# Le path local du fichier .sql quand il est rappatrié.
+# Il porte l'affixe du nom ancien de la table (p.e. 'mini_faq')
+#     ./xbackup/current_online/matable.sql  (si :table = "matable")
+#     ou
+#     ./xbackup/current_online/ma_table.sql  (si :final_table = ma_table)
 def local_path
-  @local_path ||= File.join(FOLDER_CURRENT_ONLINE, "#{table_file_name}")
+  @local_path ||= File.join(FOLDER_CURRENT_ONLINE, "#{old_tbname}.sql")
 end #/ local_path
 
 def local_good_path
-  @local_good_path ||= File.join(FOLDER_GOODS_SQL, "#{table_file_name}")
+  @local_good_path ||= File.join(FOLDER_GOODS_SQL, "#{new_tbname}.sql")
 end #/ local_good_path
-
-def table_file_name
-  @table_file_name ||= "#{table_name}.sql"
-end #/ table_file_name
-
-# Le nom final si la table doit changer de nom
-def local_dst_path
-  @local_dst_path ||= File.join(FOLDER_CURRENT_ONLINE, "#{data[:dst_table]}.sql")
-end #/ local_dst_path
-
-def final_table_name
-  @final_table_name ||= data[:dst_table]
-end #/ final_table_name
-alias :table_final_name :final_table_name
-
-def table_name
-  @table_name ||= data[:table]
-end #/ table_name
 
 def base_name
   @base_name ||= data[:base]
 end #/ base_name
+
+
+private
+
+  # S'assure que le fichier distant de path +dpath+ existe bien ou raise
+  # une erreur fatale avec le message +err_msg+
+  def ensure_distant_file_exists(dpath, err_msg)
+    command = REQUEST_CHECK_EXISTENCE_DISTANT % {path: dpath}
+    evalute = `#{command}`
+    evalute == 'true' || raise(ErreurFatale.new(err_msg))
+  end #/ ensure_distant_file_exists
+
+  # S'assure que le fichier distant de path +dpath+ n'existe pas.
+  # Raise une Erreur Fatale dans le cas contraire
+  def ensure_distant_file_not_exists(dpath, err_msg)
+    command = REQUEST_CHECK_EXISTENCE_DISTANT % {path: dpath}
+    evalute = `#{command}`
+    evalute == 'false' || raise(ErreurFatale.new(err_msg))
+  end #/ ensure_distant_file_not_exists
+
 
 end #/TableGetter
 
@@ -333,15 +384,28 @@ end #/TableGetter
 # ./deploiement/db/
 GET_TABLE_REQUEST = <<-SQL
 ssh #{SERVEUR_SSH} bash << BASH
-mysqldump -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} %{base} %{table} > "%{distant_path}"
+mysqldump -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} %{base} %{old_tbname} > "%{distant_path}"
 BASH
 SQL
 
 # Commande qui va rapatrier le fichier .sql de la table en local
 # NOte : option `-p` pour conserver les dates de modifications et permissions,
 # etc.
-SCP_DOWNLOAD_COMMAND  = "scp -p #{SERVEUR_SSH}:\"%{distant_path}\" \"%{local_path}\""
-SCP_UPLOAD_COMMAND    = "scp -p \"%{local_good_path}\" #{SERVEUR_SSH}:%{distant_path}"
+SCP_DOWNLOAD_COMMAND  = "scp -pv #{SERVEUR_SSH}:%{distant_path} \"%{local_path}\""
+SCP_UPLOAD_COMMAND    = "scp -pv \"%{local_good_path}\" #{SERVEUR_SSH}:%{distant_path}"
+
+# Requête pour vérifier l'existence d'un fichier distant
+REQUEST_CHECK_EXISTENCE_DISTANT = <<-SSH
+ssh #{SERVEUR_SSH} ruby <<RBCODE
+STDOUT.write File.exists?('%{path}').inspect
+RBCODE
+SSH
+
+REQUEST_ERASE_DISTANT_FILE = <<-SSH
+ssh #{SERVEUR_SSH} bash << BASH
+rm -f "%{path}"
+BASH
+SSH
 
 SSH_COMMAND_LOAD_TABLE = <<SSH
 ssh #{SERVEUR_SSH} bash <<BASH

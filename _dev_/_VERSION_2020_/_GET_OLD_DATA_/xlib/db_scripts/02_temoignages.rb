@@ -21,5 +21,19 @@ COMMIT;
 SQL
 db_exec(request)
 
+# *** Opérations spéciales ***
+
+# Correction d'un lien erroné dans un témoignage
+request = "SELECT id, content FROM temoignages WHERE content LIKE '%./icariens%';"
+dtemoin = db_exec(request)
+unless dtemoin.nil?
+  dtemoin = dtemoin.first
+  searched = 'href="./icariens"'
+  replaced = 'href="overview/icariens"'
+  dtemoin[:content].gsub!(searched, replaced)
+  db_compose_update('temoignages', dtemoin[:id], {content: dtemoin[:content]})
+  success("#{TABU}Remplacement de l'URL erronée icariens dans le témoignage ##{dtemoin[:id]}.")
+end
+
 
 TableGetter.export('temoignages')

@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 
-TableGetter.traite('mini_faq') do
+TableGetter.traite('minifaq') do
   request = <<-SQL
 START TRANSACTION;
 ALTER TABLE `minifaq`

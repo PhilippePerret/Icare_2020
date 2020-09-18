@@ -51,10 +51,12 @@ puts "Mot de passe des users uniformisés (mis à 'motdepasse').".vert
 
 # Il faut vider certaines tables
 db_exec(<<-SQL)
-TRUNCATE `frigo_messages`
-TRUNCATE `frigo_discussions`
-TRUNCATE `frigo_users`
-TRUNCATE `tickets`
+START TRANSACTION;
+TRUNCATE `frigo_messages`;
+TRUNCATE `frigo_discussions`;
+TRUNCATE `frigo_users`;
+TRUNCATE `tickets`;
+COMMIT;
 SQL
 puts "Tables initialisées".vert
 

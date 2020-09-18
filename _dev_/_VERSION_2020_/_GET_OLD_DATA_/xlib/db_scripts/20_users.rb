@@ -124,4 +124,13 @@ db_exec(request)
 
 success("#{TABU}Icariens ID #3 à #8 déplacés avec succès.")
 
+
+# *** Opérations spéciales ***
+# Destruction de "Naja"
+naja = db_get('users', {pseudo: 'Naja'})
+unless naja.nil?
+  naja[:options][3] = "1"
+  db_compose_update('users', naja[:id], {options: naja[:options]})
+end
+
 TableGetter.export('users')
