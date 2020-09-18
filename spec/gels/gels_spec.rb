@@ -52,6 +52,11 @@ feature 'Préparation en live' do
     recupere_comments
   end
 
+  scenario 'jusqu’au dépôt changement d’étape', change_etape: true do
+    Gel.remove('change_etape') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    change_etape
+  end
+
   scenario 'jusqu’au dépôt des documents par moi', depot_qdd: true do
     Gel.remove('depot_qdd') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
     depot_qdd
@@ -142,9 +147,9 @@ feature 'Préparation en live' do
     marion_paie_son_module
   end
 
-  scenario 'marion termine son module (devient inactive)', marion_devient_inactive: true do
-    Gel.remove('marion_devient_inactive') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
-    marion_devient_inactive
+  scenario 'marion termine son module (devient inactive)', phil_arrete_module_marion: true do
+    Gel.remove('phil_arrete_module_marion') if ENV[GEL_REMOVE_LAST] || ENV[GEL_FORCE]
+    phil_arrete_module_marion
   end
 
 end

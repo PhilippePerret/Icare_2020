@@ -27,7 +27,7 @@ def arret_module
     db_delete('watchers', {wtype:'paiement_module', user_id: owner.id, objet_id: owner.icmodule.id})
   end
   # L'icarien devient inactif
-  owner.option(16, 4, false)
+  owner.set_option(16, 4, false)
   downer = {options:owner.options, icmodule_id:nil}
   owner.save(downer)
   # Une actualité pour annoncer la fin du module

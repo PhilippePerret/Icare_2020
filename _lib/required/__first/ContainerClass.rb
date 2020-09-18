@@ -258,5 +258,6 @@ class ContainerClass
     data[:options] = data[:options].ljust(bit+1,'0') unless data[:options].length > bit
     data[:options][bit] = value.to_s
     save(options: data[:options]) if saving
+    @options = nil
   end #/ set_option
 end #/ContainerClass

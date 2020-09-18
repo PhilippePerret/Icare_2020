@@ -2747,7 +2747,9 @@ Pour forcer la re-création d'un gel, il suffit d'ajouter la variable d'environn
 GEL_FORCE=true rspec spec/gels -t mon_premier_gel  # Réinitialise TOUS LES GELS
 ~~~
 
-> Noter que la commande ci-dessus va refaire TOUS LES GELS. Pour ne traiter qu’un seul gel, utiliser la commande ci-dessous.
+> Noter que la commande ci-dessus va refaire TOUS LES GELS jusqu’à 'mon_premier_gel'. Pour ne traiter qu’un seul gel, utiliser la commande ci-dessous.
+>
+> Pour trouver le nom du gel, voir le fichier [`./spec/gels/gels.rb`](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/gels/gels.rb).
 
 
 
@@ -2775,6 +2777,8 @@ On peut jouer la même commande que pour produire le gel :
 ~~~bash
 rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
 ~~~
+
+> Pour trouver le nom du gel (ici 'mon_premier_gel' qui est juste un exemple), voir le fichier [`./spec/gels/gels.rb`](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/gels/gels.rb).
 
 L’inconvénient de cette méthode est qu’on passera forcément par tous les gels précédents.
 

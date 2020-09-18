@@ -8,7 +8,7 @@
   de pouvoir s'en servir par exemple dans les outils administrateurs quand
   on doit marquer un paiement effectué.
 =end
-require_modules(['icmodules'])
+require_module('icmodules')
 
 class AIPaiement < ContainerClass
 # ---------------------------------------------------------------------

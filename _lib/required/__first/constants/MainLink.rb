@@ -13,7 +13,7 @@ DATA_KEY = {
   logout:     {route:'user/logout',  text:'se déconnecter'},
   aide:       {route:'aide/home',    text:'aide',     picto:'objets/gyrophare'},
   bureau:     {route:'bureau/home',  text:'bureau',   picto:'objets/bureau'},
-  frigo:      {route:'bureau/frigo', text:'porte de frigo',  picto:'objets/thermometre'},
+  frigo:      {route:'bureau/frigo', text:'Porte de frigo',  picto:'objets/thermometre'},
   contact:    {route:'contact/mail', text:'contact', picto:'objets/lettre-mail'},
   plan:       {route:'plan', text:'plan', picto:'objets/boussole'},
   reussites:  {route:'overview/reussites', text:'belles réussites', picto:'objets/paquet-cadeau'},

@@ -4,13 +4,6 @@
 
   Note : d'autres constante peuvent être définies dans le fichier /config.rb
 =end
-
-
-ONLINE  = ENV['HTTP_HOST'] != "localhost" unless defined?(ONLINE)
-OFFLINE = !ONLINE
-DB_NAME         = ONLINE ? 'icare_db' : 'icare'
-DB_TEST_NAME    = 'icare_test'
-
 APP_FOLDER      = File.dirname(LIB_FOLDER) unless defined?(APP_FOLDER)
 PAGES_FOLDER    = File.join(LIB_FOLDER,'_pages_'.freeze) unless defined?(PAGES_FOLDER)
 FOLD_REL_PAGES = './_lib/_pages_' unless defined?(FOLD_REL_PAGES)

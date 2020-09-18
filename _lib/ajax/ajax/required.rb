@@ -9,25 +9,43 @@ def user
   @user ||= User.get(Ajax.param(:__uid) || 0)
 end #/ user
 
-
 # Le dossier de l'application
 # ---------------------------
 # Contient quelque chose comme '/Users/moi/Sites/MonApplication'
 #
-APP_FOLDER = File.dirname(File.dirname(File.dirname(File.dirname(__FILE__))))
+APP_FOLDER = File.dirname(File.dirname(File.dirname(__dir__)))
 log("[Ajax] APP_FOLDER = #{APP_FOLDER.inspect}")
 require_relative 'ajax_class'
 
-log("Chargement des modules")
+log("=> Chargement des modules")
 Dir["#{APP_FOLDER}/ajax/ajax/required/**/*.rb"].each do |m|
   log("[Ajax] Chargement module '#{m}'")
   require m
 end
+log("<= Chargement des modules")
 
-
+log("ENV['HTTP_HOST'] = #{ENV['HTTP_HOST'].inspect}")
+OFFLINE = ENV['HTTP_HOST'] == 'localhost'
+ONLINE  = !OFFLINE
+TEST_ON = File.exists?('../../TESTS_ON')
+DATABASE = ONLINE ? 'icare_db' : (TEST_ON ? 'icare_test' : 'icare')
+log("DATABASE = #{DATABASE}")
+erreur_required = nil
 Dir.chdir(APP_FOLDER) do
-  # Le module pour gérer les sessions
-  require './_lib/required/_classes/Session' # => Session
-  # Le module pour gérer les UUID
-  require './_lib/required/__first/unique_usage_ids' # => UUID
+  begin
+    # Le module pour gérer les sessions
+    require './_lib/required/__first/db'
+    MyDB.DBNAME = DATABASE
+    require './_lib/required/_classes/Session' # => Session
+    require './_lib/required/__first/unique_usage_ids' # => UUID
+  rescue Exception => e
+    erreur_required = e
+  end
 end
+if erreur_required
+  log("# ERREUR : #{erreur_required.message}")
+  log(erreur_required.backtrace.join(RC))
+end
+log("Chargement module Session et unique_usage_ids")
+
+log("<- required.rb")

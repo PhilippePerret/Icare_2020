@@ -2,7 +2,6 @@
 =begin
   Opérations administrateur
 =end
-class PiratageError < StandardError; end
 
 class Admin
 class << self

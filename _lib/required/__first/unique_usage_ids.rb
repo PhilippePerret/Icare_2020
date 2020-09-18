@@ -62,12 +62,4 @@ class << self
     @table ||= 'unique_usage_ids'.freeze
   end #/ table
 end # /<< self
-# ---------------------------------------------------------------------
-#
-#   INSTANCE
-#
-# ---------------------------------------------------------------------
-def initialize
-
-end #/ initialize
 end #/UUID

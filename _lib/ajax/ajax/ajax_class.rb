@@ -2,6 +2,8 @@
 require 'cgi'
 require 'json'
 
+class PiratageError < StandardError; end
+
 class Ajax
   class << self
 
@@ -55,8 +57,11 @@ class Ajax
       STDOUT.write "Content-type: application/json; charset:utf-8;\n\n"
       STDOUT.write data.to_json+"\n"
     rescue PiratageError => e
-      STDOUT.write "Content-type: text/html; charset: utf-8;\n\n"
-      STDOUT.write "{\"Ce que j'en pense\":\"PIRATE!\"}"
+      # STDOUT.write "Content-type: text/html; charset: utf-8;\n\n"
+      # STDOUT.write "{\"Ce que j'en pense\":\"PIRATE!\"}"
+      log("--- Pirate ---")
+      STDOUT.write "Content-type: application/json; charset:utf-8;\n\n"
+      STDOUT.write '{"error":"Pirate!", "message":"Pirate !"}'+"\n"
     rescue Exception => e
       STDOUT.write "Content-type: application/json; charset:utf-8;\n\n"
       error = Hash.new

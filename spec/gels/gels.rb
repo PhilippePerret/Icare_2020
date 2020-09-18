@@ -112,8 +112,9 @@ def envoi_comments
     goto('admin/notifications')
     # On doit donner les documents commentés
     path_doc_comments  = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail_comsPhil.rtf')
+    # sleep 30
     within("form#send-comments-form") do
-      attach_file('document1-comments', path_doc_comments)
+      attach_file('document-1-comments', path_doc_comments)
       click_on('Envoyer les commentaires')
     end
     screenshot('envoi_comments')
@@ -158,9 +159,9 @@ def depot_qdd
     path_doc1_comments = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail_comsPhil.pdf')
     path_doc2_original = File.join(SPEC_FOLDER_DOCUMENTS, 'autre_doc.pdf')
     within("form#qdd-depot-form-etape-1") do
-      attach_file("document1-original", path_doc1_original)
-      attach_file("document1-comments", path_doc1_comments)
-      attach_file("document2-original", path_doc2_original)
+      attach_file("document-1-original", path_doc1_original)
+      attach_file("document-1-comments", path_doc1_comments)
+      attach_file("document-2-original", path_doc2_original)
       click_on('Déposer ces documents'.freeze)
     end
     screenshot('depot-qdd')
@@ -325,6 +326,7 @@ def phil_marion_elie_repondent_benoit
     Capybara.reset_sessions!
     # Phil répond au message
     login_admin
+    find('section#header').click # pour ouvrir le menu
     click_on('Bureau')
     click_on('Porte de frigo')
     click_on('Titre discussion avec Phil')
@@ -519,8 +521,8 @@ def marion_envoie_deux_autres_documents_cycle_complet
     path_doc_comments  = File.join(SPEC_FOLDER_DOCUMENTS,'final1_comsPhil.pdf')
     path_doc_comments2 = File.join(SPEC_FOLDER_DOCUMENTS,'final2_comsPhil.pdf')
     within("form#send-comments-form") do
-      attach_file('document3-comments', path_doc_comments)
-      attach_file('document4-comments', path_doc_comments)
+      attach_file('document-3-comments', path_doc_comments)
+      attach_file('document-4-comments', path_doc_comments)
       click_on('Envoyer les commentaires')
     end
     screenshot('phil-envoie-seconds-commentaires-a-marion')
@@ -543,10 +545,10 @@ def marion_envoie_deux_autres_documents_cycle_complet
     path_doc2_original = File.join(SPEC_FOLDER_DOCUMENTS, 'final1_comsPhil.pdf')
     path_doc2_comments = File.join(SPEC_FOLDER_DOCUMENTS, 'final2_comsPhil.pdf')
     within("form#qdd-depot-form-etape-2") do
-      attach_file("document3-original", path_doc1_original)
-      attach_file("document3-comments", path_doc1_comments)
-      attach_file("document4-original", path_doc2_original)
-      attach_file("document4-comments", path_doc2_original)
+      attach_file("document-3-original", path_doc1_original)
+      attach_file("document-3-comments", path_doc1_comments)
+      attach_file("document-4-original", path_doc2_original)
+      attach_file("document-4-comments", path_doc2_original)
       click_on('Déposer ces documents'.freeze)
     end
     screenshot('depot-qdd')
@@ -561,7 +563,7 @@ def marion_envoie_deux_autres_documents_cycle_complet
       select(DATA_SHARING[1][:name], from: "partage-4-comments")
       click_on('Appliquer ce partage'.freeze)
     end
-    screenshot('marion-partage-tout-ses-seconds-documents')
+    screenshot('marion-partage-ses-seconds-documents')
     logout
   end
 end #/ marion_envoie_deux_autres_documents_cycle_complet
@@ -573,22 +575,30 @@ def marion_paie_son_module
   degel_or_gel('marion_paie_son_module') do
     marion_envoie_deux_autres_documents_cycle_complet
     puts "Fabrication du gel 'marion_paie_son_module'".vert
-    require "#{FOLD_REL_PAGES}/modules/paiement/lib/user_paiement"
-    marion.add_paiement(marion.icmodule.id)
+    # Note : en fait, on simule simplement le paiement en ajoutant un
+    # record dans la table et en détruisant le watcher.
+    marion.add_paiement
   end
 end #/ marion_paie_son_module
 
-def marion_devient_inactive
-  degel_or_gel('marion_paie_son_module') do
+def phil_arrete_module_marion
+  degel_or_gel('phil_arrete_module_marion') do
     marion_paie_son_module # le précédent
-    puts "Fabrication du gel 'marion_devient_inactive'".vert
+    puts "Fabrication du gel 'phil_arrete_module_marion'".vert
     login_phil
-    goto('bureau/tools')
-    # Je choisis
+    goto('admin/tools')
+    # Je choisis les actifs
+    find('input#cb-statut-actif').click
+    # Je choisis Marionm
+    select("Marionm", from:'icariens')
+    # Je choisis l'opération 'Arrêt module'
+    select("Arrêt module", from: 'operations')
+    # Je clique sur "Exécuter l’opération"
+    click_on("Exécuter l’opération")
     sleep 10
   end
 
-end #/ marion_devient_inactive
+end #/ phil_arrete_module_marion
 
 # Réponse de 2 icariens aux messages frigo
 # TODO

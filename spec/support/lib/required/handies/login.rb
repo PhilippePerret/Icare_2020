@@ -53,6 +53,9 @@ end #/ login_icarien
 
 # Pour se déconnecter
 def logout
+  # On ferme les éventuels messages qui pourraient couvrir le bouton (normale-
+  # ment ils ont tous été traités dans le test)
+  execute_script("document.querySelector('section#messages').remove();")
   find('section#header').click # Pour faire apparaitre les boutons
   click_on(id:'btn-logout')
   Capybara.reset_sessions!

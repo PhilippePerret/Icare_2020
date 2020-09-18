@@ -240,6 +240,14 @@ end #/ deconnect
 #
 # ---------------------------------------------------------------------
 
+def add_paiement
+  request = "DELETE FROM watchers WHERE wtype = 'paiement_module' AND user_id = #{id}"
+  db_exec(request)
+  nowstr = Time.now.to_i.to_s
+  dpaiement = {user_id:id, icmodule_id:icmodule_id, objet:"Paiement module ##{icmodule_id}", montant:115, created_at:nowstr, updated_at:nowstr}
+  db_compose_insert('paiements', dpaiement)
+end #/ add_paiement
+
 # Les options
 def options
   @options ||= begin
@@ -273,6 +281,12 @@ def icmodule_id
     data[:icmodule_id]
   end
 end #/ icmodule_id
+
+# def icmodule
+#   @icmodule ||= begin
+#
+#   end
+# end #/ icmodule
 
 def data_icmodule_id
   @data_icmodule_id ||= db_get('icmodules', icmodule_id)
