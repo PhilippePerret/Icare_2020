@@ -44,6 +44,12 @@ class HTML
 
   # Pour ajouter des feuilles de style à la volée
   def add_js path, before = false
+    @table_js ||= {}
+    if @table_js.key?(path)
+      return
+    else
+      @table_js.merge!(path => true)
+    end
     log("-> add_js(#{path})")
     @all_js ||= []
     path = path.sub(/#{APP_FOLDER}/,'.')
