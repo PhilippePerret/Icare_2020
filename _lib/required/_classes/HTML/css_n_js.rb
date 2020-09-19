@@ -37,6 +37,9 @@ class HTML
 
   # Pour ajouter des feuilles de style à la volée
   def add_css path
+    @table_css ||= {}
+    return if @table_css.key?(path)
+    @table_css.merge!(path => true)
     @all_css ||= []
     @all_css << path.sub(/#{APP_FOLDER}/,'.')
     debug "[CSS] Ajout de #{path.sub(/#{APP_FOLDER}/,'.')}"
