@@ -185,10 +185,13 @@ div.float-tdm {
     margin-top:1em;
     margin-bottom:1em;
     float:unset;
+    font-variant:small-caps;
+    background-color:steelblue;
   }
   div.float-tdm > a {
     /* Pour que les liens soient assez espacés */
     margin:1.5em 0;
+    color:white!important;
   }
 }
 @media only screen and (min-width: 768px) {

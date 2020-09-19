@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Module qui sera chargé par toutes les sections et sous-sections
   de l'aperçu de l'atelier.
@@ -11,14 +12,14 @@ class HTML
   def tdm(current_route = nil)
     current_route ||= route.to_s
     liens = [
-      {route:'overview/home'.freeze, titre: 'Description de l’atelier'.freeze},
-      {route:'overview/phil'.freeze, titre: 'Philippe Perret, pédagogue de l’atelier'.freeze},
-      {route:'overview/reussites'.freeze, titre: 'Les belles réussites'.freeze},
-      {route:'overview/temoignages'.freeze, titre: 'Témoignages d’icarien·ne·s'.freeze},
-      {route:'overview/parcours'.freeze, titre: 'Parcours fictif de 3 icarien·ne·s'.freeze},
-      {route:'overview/raisons'.freeze, titre: 'Les dix bonnes raisons de choisir l’atelier Icare'.freeze},
-      {route:'overview/policy'.freeze, titre:'Politique de confidentialité des données'.freeze},
-      {route:'overview/activity'.freeze, titre:'Activité au jour le jour'.freeze}
+      {route:'overview/home', titre: 'Description de l’atelier'},
+      {route:'overview/phil', titre: 'Philippe Perret, pédagogue de l’atelier'},
+      {route:'overview/reussites', titre: 'Les belles réussites'},
+      {route:'overview/temoignages', titre: 'Témoignages d’icarien·ne·s'},
+      {route:'overview/parcours', titre: 'Parcours fictif de 3 icarien·ne·s'},
+      {route:'overview/raisons', titre: 'Les dix bonnes raisons de choisir l’atelier Icare'},
+      {route:'overview/policy', titre:'Politique de confidentialité des données'},
+      {route:'overview/activity', titre:'Activité au jour le jour'}
     ]
     FloatTdm.new(liens, right:true).out
   end #/ tdm
