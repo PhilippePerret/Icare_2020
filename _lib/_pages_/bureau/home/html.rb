@@ -10,6 +10,10 @@ class HTML
   end
   def exec
     icarien_required
+    if param(:op) == 'visitas'
+      admin_required
+      User.visit_as(param(:touid))
+    end
   end
   def build_body
     @body = deserb('body', user)

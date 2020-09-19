@@ -7,7 +7,7 @@
 
 <%= divGoto(EMO_ECRAN+ISPACE+ISPACE+'Console', route:'admin/console') %>
 
-<%= divGoto(EMO_ARMOIRE+ISPACE+'Base de données', route:'admin/database') %>
+<%= divGoto(EMO_ARMOIRE+ISPACE+'Database', route:'admin/database') %>
 
 <%= divGoto(EMO_ESPIONNE+ISPACE+'Traceur site', route:'admin/espion') %>
 
@@ -20,3 +20,5 @@
 <%= divGoto(Emoji.get('humain/etudiant').reg+ISPACE+'Profil', route:'user/profil') %>
 
 <%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, id:'goto-frigo', class:'goto', picto:true ) %>
+
+<%= divGoto(Emoji.get('humain/etudiante').reg+ISPACE+'Visit As…', route:'overview/icariens') %>

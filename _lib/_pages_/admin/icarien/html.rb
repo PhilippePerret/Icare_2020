@@ -1,16 +1,17 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_modules(['form', 'user/modules', 'icmodules'])
 class HTML
   def titre
     tit = "#{EMO_ETUDIANT.page_title}#{EMO_ETUDIANTE.page_title}#{ISPACE}Édition d’icarien"
-    tit.prepend(BUTTON_RETOUR) if param('op') == 'edit-objet'
-    tit.freeze
+    tit = "#{BUTTON_RETOUR}#{tit}" if param('op') == 'edit-objet'
+    tit
   end #/titre
 
   # Liste des liens utiles en regard du titre
   def usefull_links
     [
-      Tag.lien(route:'overview/icariens'.freeze, text:'Salle des icariens'.freeze)
+      Tag.lien(route:'overview/icariens', text:'Salle des icariens')
     ]
   end #/ usefull_links
 
@@ -22,6 +23,8 @@ class HTML
   def exec
     admin_required
     case param('op')
+    when 'visit-as'
+      # Opération appelée pour visiter le site comme l'icarien choisi
     when 'change-user'
       # param(:uid) contient soit le pseudo soit l'id
       if param(:uid).numeric?
@@ -47,9 +50,9 @@ class HTML
   def build_body
     @body = case param(:op)
             when 'edit-objet'
-              deserb("vues/#{param(:objet)}".freeze, self)
+              deserb("vues/#{param(:objet)}", self)
             else
-              deserb("vues/icarien".freeze, self)
+              deserb("vues/icarien", self)
             end
   end # /build_body
 
@@ -65,7 +68,7 @@ class HTML
     cur_value = icarien.send(prop)
     if new_value != cur_value
       # message("la propriété #{prop.inspect} a changé : #{cur_value.inspect} -> #{new_value.inspect}")
-      msg_success = "Propriété #{prop.inspect} mise à #{new_value.inspect} avec succès.".freeze
+      msg_success = "Propriété #{prop.inspect} mise à #{new_value.inspect} avec succès."
       if icarien.respond_to?("set_#{prop}".to_sym)
         icarien.send("set_#{prop}".to_sym, new_value)
         message(msg_success)

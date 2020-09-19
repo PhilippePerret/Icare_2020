@@ -17,6 +17,7 @@ class User
   BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i" class="small btn discret">'+UI_TEXTS[:btn_lui_ecrire]+'</a></span>'
   BOUTON_HISTO  = '<span class="tool"><a href="bureau/historique?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_voir_historique]+'</a></span>'
   BOUTON_EDIT   = '<span class="tool"><a href="admin/icarien?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_edit]+'</a></span>'
+  BOUTON_VISIT_AS  = '<span class="tool"><a href="bureau/home?op=visitas&touid=%i" class="btn">Visiter comme lui</a></span>'
 
   # = main =
   #
@@ -72,6 +73,7 @@ class User
   def out
 
     divcontact = []
+    divcontact << BOUTON_VISIT_AS % id if user.admin?
     divcontact << BOUTON_HISTO % id if histo_enabled?
     divcontact << BOUTON_FRIGO % id if frigo_enabled?
     divcontact << BOUTON_MAIL  % id if mail_enabled?
@@ -87,6 +89,7 @@ class User
       duree: formate_duree(created_at, date_sortie, {nojours: true}),
       s: plusieurs_modules? ? 's' : '',
       e: fem(:e),
+      Elle:fem(:Elle),
       Il:fem(:Elle),
       modules_suivis: modules_suivis,
       span_pause: span_pause,
@@ -96,10 +99,10 @@ class User
     when actif?
       datacard.merge!(precedemment: precedemment(datacard), module_courant: icmodule.name_with_project)
       CARD_ACTIF % datacard
-    when inactif?   then CARD_INACTIF % datacard
+    when inactif?       then CARD_INACTIF % datacard
     when recu_inactif?  then CARD_RECU_INACTIF % datacard
-    when candidat?  then CARD_CANDIDAT % datacard
-    when en_pause?  then CARD_ACTIF % datacard
+    when candidat?      then CARD_CANDIDAT % datacard
+    when en_pause?      then CARD_ACTIF % datacard
     else '' # au cas où
       # raise "Impossible de traiter #{pseudo} qui n'est ni actif, ni inactif, ni candidat (en pause ?) (#{data.inspect})"
     end
