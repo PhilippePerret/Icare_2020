@@ -147,14 +147,20 @@ end #/ path
 QDD_FILE_NAME = '%{module}_etape_%{etape}_%{pseudo}_%{doc_id}_%{dtype}.pdf'
 def name(dtype = nil)
   dtype ||= doctype
-  @name ||= begin
+  @template ||= begin
     QDD_FILE_NAME % {
       module: absmodule.module_id.camelize,
       etape:  absetape.numero,
       pseudo: pseudo_auteur.dup.titleize,
       doc_id: id,
-      dtype: dtype
+      dtype: '%s'
     }
+  end
+  case dtype
+  when :original
+    @name_original ||= @template % dtype.to_s
+  when :comments
+    @name_comments ||= @template % dtype.to_s
   end
 end #/ name
 

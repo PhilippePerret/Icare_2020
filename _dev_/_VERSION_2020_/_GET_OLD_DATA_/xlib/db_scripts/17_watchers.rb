@@ -65,7 +65,7 @@ db_exec("SELECT * FROM `current_watchers`").each do |dwatcher|
     next
   end
   # Traitement spécial pour le dépot des qdd
-  if dwatcher[:processus] == 'depot_qdd'
+  if ['define_partage', 'depot_qdd', 'user_download_comments'].include?(dwatcher[:processus])
     # Il faut trouver l'icetape du document concerné. Note : cela implique
     # que la table des documents soit préparées convenablement
     ddoc = db_get('icdocuments', dwatcher[:objet_id])
@@ -76,8 +76,8 @@ db_exec("SELECT * FROM `current_watchers`").each do |dwatcher|
     end
     # L'icetape de ce document a déjà été traité, donc on n'a plus
     # besoin de le faire
-    next if data_watchers_speciaux[ice].key?('depot_qdd')
-    data_watchers_speciaux[ice].merge!('depot_qdd' => ice)
+    next if data_watchers_speciaux[ice].key?(dwatcher[:processus])
+    data_watchers_speciaux[ice].merge!(dwatcher[:processus] => ice)
     dwatcher.merge!(objet_id:ice)
   end
   dwatcher.merge!({

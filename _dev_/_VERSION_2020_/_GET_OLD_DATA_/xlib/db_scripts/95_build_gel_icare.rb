@@ -11,7 +11,7 @@ PATH_TOTAL_DUMP_ICARE = "./tmp/icare.sql"
 # On dumpe toutes les données de icare
 `mysqldump -u root icare > #{PATH_TOTAL_DUMP_ICARE}`
 if File.exists?(PATH_TOTAL_DUMP_ICARE)
-  success("Données icare exportées avec succès.")
+  success("#{TABU}Données icare exportées avec succès.")
 else
   failure("Impossible de trouver le fichier #{PATH_TOTAL_DUMP_ICARE}")
   exit

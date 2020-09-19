@@ -1,1 +1,32 @@
-<p>Notification à afficher sur le bureau</p>
+<%# frozen_string_literal: true %>
+<%
+docqdd = QddDoc.get(objet_id)
+%>
+<%
+require_module('form')
+form = Form.new(id:"cote-n-comments-#{objet_id}", route:route.to_s)
+rows = {}
+cotes_values = ['*****', '****', '***', '**', '*', 'aucune']
+
+name_generique =
+if docqdd.shared_sharing(:original) && docqdd.shared_sharing(:comments)
+  docqdd.name(:original).sub('_original', '_...')
+elsif docqdd.shared_sharing(:comments)
+  docqdd.name(:comments)
+else
+  docqdd.name(:original)
+end
+
+rows.merge!('<titre>' => {type:'raw', content: "Coter et commenter <b>#{name_generique}</b>."})
+if docqdd.shared_sharing(:original)
+  rows.merge!('Cote original' => {type:'select', name:'cote-original', values: cotes_values, class:'short center'})
+end
+if docqdd.shared_sharing(:comments)
+  rows.merge!('Cote commentaire' => {type:'select', name:'cote-comments', values: cotes_values, class:'short center'})
+end
+rows.merge!('Commentaire' => {type:'textarea', name:'comment'})
+form.rows = rows
+form.submit_button = UI_TEXTS[:btn_appliquer_cote]
+
+%>
+<%= form.out %>

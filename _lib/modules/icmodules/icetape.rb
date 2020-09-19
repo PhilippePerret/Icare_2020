@@ -57,7 +57,7 @@ class IcEtape
 # ---------------------------------------------------------------------
 
 def ref
-  log("---data:#{data.inspect}")
+  # log("--- [dans ref] data:#{data.inspect}")
   @ref ||= "étape #{numero}. “#{titre}”#{f_id}</span> du #{icmodule.ref}".freeze
 end #/ ref
 
@@ -75,9 +75,27 @@ def numero  ; @numero ||= absetape.numero   end
 
 def absetape
   @absetape ||= begin
-    log("ID: #{id}")
-    log("data : #{data.inspect}")
-    AbsEtape.get(data[:absetape_id])
+    # log("[absetape] ID: #{id}")
+    # log("[absetape] data : #{data.inspect}")
+    if data.nil?
+      err = <<-LOG
+
+Problème avec l'icetape ##{id} qui n'a pas de data.
+
+      LOG
+      log(err)
+    end
+    ae = AbsEtape.get(data[:absetape_id])
+    if ae.nil?
+      err = <<-LOG
+
+Problème avec l'icetape ##{data[:absetape_id]} qui est introuvable.
+
+      LOG
+      log(err)
+
+    end
+    ae
   end
 end #/ absetape
 

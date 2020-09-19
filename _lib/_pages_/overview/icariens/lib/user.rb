@@ -17,7 +17,7 @@ class User
   BOUTON_MAIL   = '<span class="tool"><a href="contact?ui=%i" class="small btn discret">'+UI_TEXTS[:btn_lui_ecrire]+'</a></span>'
   BOUTON_HISTO  = '<span class="tool"><a href="bureau/historique?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_voir_historique]+'</a></span>'
   BOUTON_EDIT   = '<span class="tool"><a href="admin/icarien?uid=%i" class="small btn discret">'+UI_TEXTS[:btn_edit]+'</a></span>'
-  BOUTON_VISIT_AS  = '<span class="tool"><a href="bureau/home?op=visitas&touid=%i" class="btn">Visiter comme lui</a></span>'
+  BOUTON_VISIT_AS  = '<span class="tool"><a href="bureau/home?op=visitas&touid=%i" class="btn">Visiter comme %s</a></span>'
 
   # = main =
   #
@@ -73,7 +73,7 @@ class User
   def out
 
     divcontact = []
-    divcontact << BOUTON_VISIT_AS % id if user.admin?
+    divcontact << BOUTON_VISIT_AS % [id, fem(:elle)] if user.admin?
     divcontact << BOUTON_HISTO % id if histo_enabled?
     divcontact << BOUTON_FRIGO % id if frigo_enabled?
     divcontact << BOUTON_MAIL  % id if mail_enabled?
