@@ -6,8 +6,8 @@ rows = {
   'Message' => {name:'envoi_message', type:'textarea', height:260, value:param(:envoi_message)}
 }
 if user.guest?
-  rows.merge!('Votre mail' => {name:'envoi_mail', type:'text'})
-  rows.merge!('Confirmation' => {name:'envoi_mail_confirmation', type:'text'})
+  rows.merge!('Votre mail' => {name:'envoi_mail', type:'text', placeholder:"votre@mail.com"})
+  rows.merge!('<Confirmation>' => {name:'envoi_mail_confirmation', type:'text', placeholder:'Confirmation du mail'})
 elsif mailing_list?
   rows.merge!('Pour' => {content:liste_statuts, type:'raw'})
   rows.merge!('Format' => {name:'message_format', type:'select', default: param(:message_format), values: [['md', 'Markdown'],['erb','Erb'],['html','HTML']]})

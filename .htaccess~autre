@@ -1,0 +1,19 @@
+AddHandler cgi-script .rb
+Options +ExecCGI
+Options -Indexes
+
+# TODO REMETTRE index.rb QUAND SITE OK
+DirectoryIndex index.html
+
+Options +FollowSymlinks
+RewriteEngine on
+
+# Pour ne pas rediriger l'appel au script ajax
+RewriteCond %{REQUEST_FILENAME} !.+ajax\.rb$
+
+# Pour ne pas rediriger les css, js, png et autres pdf
+RewriteCond %{REQUEST_FILENAME} !\.(css|js|png|jpg|pdf|ico)$
+
+
+RewriteCond %{REMOTE_ADDR} ^2a01:cb1c:98:2e00:.+$
+RewriteRule ^(.*)$ index.rb?route_init=$1 [QSA,L]

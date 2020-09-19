@@ -51,13 +51,14 @@ class HTML
     "<script type=\"text/javascript\">window.location='#{route.to_s}?tik=#{param(:tikd)}';</script>"
   end #/ relocation_if_download
 
+  #
   def build_head
     @head = <<-HTML.freeze
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <base href="#{App::URL}/">
   <title>Atelier Icare#{@raw_titre ? " | #{@raw_titre}" : ""}</title>
+  <base href="#{App::URL}/">
   <link rel="shortcut icon" href="https://www.atelier-icare.net/img/favicon.png?2020" type="image/png">
   <link rel="icon" href="https://www.atelier-icare.net/img/favicon.png?2020" type="image/png">
   #{css_tags}

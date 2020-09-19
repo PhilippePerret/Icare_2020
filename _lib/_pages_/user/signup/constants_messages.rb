@@ -18,7 +18,7 @@ ERRORS.merge!({
   password_invalid: 'Votre mot de passe ne doit contenir que des lettres, des chiffres et des ponctuations',
   conf_password_doesnt_match: 'La confirmation de votre mot de passe ne correspond pas',
   # CGU
-  cgu_required: 'Vous devez approuver les <a href="https://www.atelier-icare.net/CGU_Atelier_ICARE.pdf" target="_blank">Conditions Générales d’Utilisation</a> de l’atelier Icare.',
+  cgu_required: 'Vous devez approuver les <a href="https://www.atelier-icare.net/public/CGU_Atelier_ICARE.pdf" target="_blank">Conditions Générales d’Utilisation</a> de l’atelier Icare.',
   rgpd_required: 'Vous devez approuver la <a href="overview/policy" target="_blank">politique de confidentialité</a> de l’atelier Icare.',
   # DOCUMENTS
   presentation_required: 'Le document de votre présentation est requis',

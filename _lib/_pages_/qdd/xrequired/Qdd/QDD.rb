@@ -21,12 +21,17 @@ end #/ filtre=
 
 # Retourne l'affichage des documents filtrés
 def documents_filtred_formated
-  cards = []
-  documents_filtred.each do |ddoc|
-    doc, doctype = ddoc
-    cards << doc.card(doctype)
+  if documents_filtred.count > 0
+    cards = []
+    documents_filtred.each do |ddoc|
+      doc, doctype = ddoc
+      cards << doc.card(doctype)
+    end
+    cards.join
+  else
+    # Si aucun document n'a été trouvé
+    Tag.div(text:"Aucun document trouvé.", class:'red')
   end
-  cards.join
 end #/ documents_filtred_formated
 
 # Liste des documents (instances {QddDoc}) filtrés

@@ -218,7 +218,7 @@ class String
   end
 
   def titleize
-    t = self.downcase
+    t = self.dup.downcase
     t[0] = t[0].upcase
     return t
   end

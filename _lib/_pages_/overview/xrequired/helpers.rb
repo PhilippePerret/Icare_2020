@@ -40,7 +40,7 @@ class HTML
   end #/ lien_reussites
 
   def lien_documents_candidature
-    @lien_documents_candidature ||= Tag.lien(route:'user/signup', titre:'documents de candidature')
+    @lien_documents_candidature ||= Tag.aide(100, 'documents de candidature')
   end #/ lien_documents_candidature
 
   def lien_signup(titre = 's’inscrire')

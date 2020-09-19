@@ -22,6 +22,8 @@ BR = '<br/>'
 
 CHECKED = ' CHECKED'
 
+DIESE = '#'
+
 EMPTY_STRING = ''
 ESPACE_FINE = "<this />"
 ESPERLUETTE = '&'

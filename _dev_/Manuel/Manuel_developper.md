@@ -920,7 +920,7 @@ On peut citer notamment ces méthodes et classes indispensables.
 
 ### `Tag`, builder de balises
 
-La classe `Tag`, définies dans [./_lib/required/__first/helpers/Tags.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tags.rb), permet de créer très facilement des liens à l’aide de la méthode :
+La classe `Tag`, définies dans [helpers/Tags.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tag.rb), permet de créer très facilement des liens à l’aide de la méthode :
 
 ~~~ruby
 Tag.<type tage>({<params>})

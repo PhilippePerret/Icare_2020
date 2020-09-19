@@ -32,6 +32,10 @@
 
 En SSH, jouer `bundle install` pour installer tous les gems.
 
+### Modifications diverses
+
+* Changer la date de prochain paiement de Charlotte
+
 ### Envoi d'un mail d'annonce
 
 ~~~html

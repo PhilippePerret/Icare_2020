@@ -71,7 +71,7 @@ class HTML
       ['Confirmer mail*', TEXT, 'umail_conf'],
       ['Mot de passe<span class="small"> (MdP)</span>*', 'password', 'upassword'],
       ['Confirmer MdP*', 'password', 'upassword_conf'],
-      ['CGU*', 'checkbox', 'ucgu', '<span class="small">J’accepte les <a href="http://www.atelier-icare.net/CGU_Atelier_ICARE.pdf" target="_blank">Conditions Générales d’Utilisation</a> de l’atelier Icare.</span>'],
+      ['CGU*', 'checkbox', 'ucgu', '<span class="small">J’accepte les <a href="http://www.atelier-icare.net/public/CGU_Atelier_ICARE.pdf" target="_blank">Conditions Générales d’Utilisation</a> de l’atelier Icare.</span>'],
       ['RGPD*', 'checkbox', 'urgpd', '<span class="small">En cochant cette case vous approuvez la <a href="overview/policy" target="_blank">Politique de confidentialité</a> de l’atelier en matière de protection et d’utilisation des données.</span>'],
       [(Emoji.get('objets/porte-document').page_title+ISPACE+'Documents de présentation'), STRINGS[:titre]],
       ary_presentation,

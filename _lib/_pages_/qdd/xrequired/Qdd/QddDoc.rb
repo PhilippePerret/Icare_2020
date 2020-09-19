@@ -36,12 +36,12 @@ def card(dtype = :original)
   for_original = dtype == :original
   suftype = for_original ? '' : '-comments'
   droute  = DOWNLOAD_ROUTE % [id, dtype]
-  inner = ''
+  inner = []
   inner << Tag.div(text:(LINK_DOWNLOAD_PDF % [droute, suftype]), class:'fleft')
   inner << Tag.div(text: "#{original_name} <span class='small'>(#{for_original ? 'original' : 'commentaires'})</span>", class:'filename')
   msg = "<label>par</label> #{auteur.pseudo.capitalize}, <label>module</label> “#{etape.module.name}” #{etape.ref}, <label>le</label> #{formated_date(dtype)}."
   inner << Tag.div(text:msg)
-  Tag.div(text:inner, class:'qdd-card')
+  Tag.div(text:inner.join(EMPTY_STRING), class:'qdd-card')
 end #/ card
 
 end #/QddDoc

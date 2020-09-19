@@ -86,7 +86,7 @@ end #/User
 # Une classe pour checker l'user, avec ses paramètres
 class CheckedUser
 REG_MAIL = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-z]{1,6})$/
-REG_PASSWORD = /^[a-zA-Z0-9\!\?\;\:\.\…]+$/
+REG_PASSWORD = /^[a-zA-Z0-9\!\?\;\:\.\…\-]+$/
 
 PROPERTIES = [
   :pseudo, :patronyme, :mail, :naissance, :sexe, :mail_conf, :password, :password_conf,

@@ -1,11 +1,12 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class App
 
 ONLINE = ENV['HTTP_HOST'] != "localhost" unless defined?(ONLINE)
-URL_ONLINE  = 'www.atelier-icare.net'.freeze
-URL_OFFLINE = 'localhost/AlwaysData/Icare_2020'.freeze
-FULL_URL_ONLINE   = "https://#{URL_ONLINE}".freeze
-FULL_URL_OFFLINE  = "http://#{URL_OFFLINE}".freeze
+URL_ONLINE  = 'www.atelier-icare.net'
+URL_OFFLINE = 'localhost/AlwaysData/Icare_2020'
+FULL_URL_ONLINE   = "https://#{URL_ONLINE}"
+FULL_URL_OFFLINE  = "http://#{URL_OFFLINE}"
 
 # L'url courante
 # @usage    App::URL
@@ -34,10 +35,10 @@ class << self
 
   # Pour finir
   def finish
-    log("-> App::finish".freeze)
+    log("-> App::finish")
     Route.last = route.to_s.dup
     Session.finish
-    log("<- App::finish#{RC2}".freeze)
+    log("<- App::finish#{RC2}")
   rescue Exception => e
     log("ERREUR DANS finish: #{e.message}")
     log(e)

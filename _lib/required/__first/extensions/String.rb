@@ -4,7 +4,7 @@ class String
   def numeric?
     Float(self) != nil rescue false
   end
-    
+
   def nil_if_empty
     if self == ''
       nil
@@ -18,7 +18,7 @@ class String
   end #/ sanitize
 
   def titleize
-    str = self.downcase
+    str = self.dup.downcase
     str[0] = str[0].upcase
     str
   end #/ titleize

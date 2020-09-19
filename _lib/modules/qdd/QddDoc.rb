@@ -114,6 +114,24 @@ def auteur
   @auteur ||= User.get(user_id)
 end #/ auteur
 
+def pseudo_auteur
+  @pseudo_auteur ||= begin
+    auteur.pseudo.gsub(/[^a-zA-Z0-9]/,'')
+  rescue Exception => e
+    # Impossible d'obtenir le pseudo
+    err = <<-ERROR
+# ERREUR DANS [pseudo_auteur] (#{__FILE__}:#{__LINE__})
+# AVEC user_id = #{user_id}
+# AVEC auteur = #{auteur.inspect}
+# MESSAGE : #{e.message}
+# BACKTRACE :
+# #{e.backtrace.join(RC+DIESE+SPACE)}
+# RÉPARATION PROVISOIRE : mis à "indéfini"
+    ERROR
+    "indéfini"
+  end
+end #/ pseudo_auteur
+
 # Le chemin d'accès au fichier
 # Note : attention, ici, il s'agit bien d'un document unique, déterminé
 # par le 'doctype' qui dit que c'est un original ou un commentaire
@@ -133,7 +151,7 @@ def name(dtype = nil)
     QDD_FILE_NAME % {
       module: absmodule.module_id.camelize,
       etape:  absetape.numero,
-      pseudo: auteur.pseudo.gsub(/[^a-zA-Z0-9]/,'').titleize,
+      pseudo: pseudo_auteur.dup.titleize,
       doc_id: id,
       dtype: dtype
     }

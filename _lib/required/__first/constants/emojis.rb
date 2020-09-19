@@ -18,10 +18,11 @@
 
 
 =end
+require_relative '../../_classes/App'
 class Emoji
-IMG_TAG = '<img src="%s" alt="%s" class="emoji %s" />'.freeze
-IMG_TAG_STYLED = '<img src="%s" alt="%s" class="emoji" style="%s" />'.freeze
-ABSOLUTE_PATH = 'https://www.atelier-icare.net/img/Emojis/%s'.freeze
+IMG_TAG = '<img src="%s" alt="%s" class="emoji %s" />'
+IMG_TAG_STYLED = '<img src="%s" alt="%s" class="emoji" style="%s" />'
+ABSOLUTE_PATH = "#{App::URL}/img/Emojis/%s" #'https://www.atelier-icare.net/img/Emojis/%s'
 # ---------------------------------------------------------------------
 #
 #   CLASSE
@@ -46,7 +47,7 @@ attr_reader :init_relpath
 attr_reader :options # les options envoyéees pour formatage
 def initialize relpath
   relpath = File.join(File.dirname(relpath), File.basename(relpath,File.extname(relpath)) )# enlever .png
-  @init_relpath = relpath.freeze
+  @init_relpath = relpath
 end #/ initialize
 # ---------------------------------------------------------------------
 #   Méthodes publiques
