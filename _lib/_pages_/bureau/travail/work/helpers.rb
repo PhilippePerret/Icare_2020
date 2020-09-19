@@ -97,18 +97,22 @@ SELECT COUNT(*)
   INNER JOIN absetapes abe ON abe.id = ice.absetape_id
   INNER JOIN icdocuments doc ON doc.icetape_id = abe.id
   WHERE
-    ice.absetape_id = #{id}
+      ice.absetape_id = #{id}
+    AND
+      (doc.options LIKE '2%' OR doc.options LIKE '_________2%')
     SQL
-    # -- AND doc.options LIKE '2%' OR doc.options LIKE '_________2%'
+    # -- AND (doc.options LIKE '2%' OR doc.options LIKE '_________2%')
     # Ajouter la ligne ci-dessus si on veut exclure les documents
     # non partagés (mais normalement, lorsque l'on est sur une étape, on peut
     # voir tous les documents, même les documents non partagés, à partir du
     # moment où ils sont sur le QdD).
     nombre = db_exec(request)
-    if nombre.nil?
-      Tag.div(text:"Il n'y a aucun document partagé pour cette étape.", class:'small italic')
-    else
+    unless nombre.nil?
       nombre = nombre[0][:"COUNT(*)"]
+    end
+    if nombre.to_i == 0
+      Tag.div(text:"Aucun document produit ou partagé pour cette étape.", class:'red italic')
+    else
       s = nombre > 1 ? 's' : ''
       Tag.div(text:"Les icarien·ne·s ont déjà produit et partagé <strong>#{nombre} document#{s} pour cette étape</strong>.<div class=\"center mt2\"><a href=\"qdd/list?aet=#{id}\" class=\"btn\">Voir/lire les documents</a></div>")
     end
