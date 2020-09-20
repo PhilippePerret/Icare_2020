@@ -13,12 +13,9 @@ else
 end
 
 # req = "SELECT created_at, updated_at FROM `users` LIMIT 1"
+MyDB.DBNAME = "icare_modules"
 req = <<-SQL
-START TRANSACTION;
-UPDATE absetapes SET created_at = CONVERT(created_at, CHAR);
-SHOW COLUMNS FROM absetapes;
-SELECT created_at, updated_at FROM absetapes LIMIT 1;
-COMMIT;
+SELECT pauses FROM icmodules;
 SQL
 
 # req = <<-SQL

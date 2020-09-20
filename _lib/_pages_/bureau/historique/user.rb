@@ -27,6 +27,7 @@ class User
           histo << LineHisto.new(icmodule.ended_at, (EMO_REVEIL_ROUGE_T+ISPACE+"Fin du module “#{icmodule.absmodule.name}”").freeze, 1)
         end
         if icmodule.pauses
+          log("icmodule.pauses: #{icmodule.pauses.inspect}")
           JSON.parse(icmodule.pauses).each do |dpause|
             dpause = JSON.parse(dpause) if dpause.is_a?(String) # ça arrive…
             histo << LineHisto.new(dpause['start'], (EMO_MINUTEUR_T+ISPACE+"Mise en pause du module “#{icmodule.absmodule.name}”").freeze, 1) if dpause['start']

@@ -70,4 +70,18 @@ def montant_humain
   @montant_humain ||= "#{absmodule.tarif}#{ISPACE}€"
 end #/ montant_humain
 
+# Retourne la valeur corrigées des pauses. Certaines, pour une raison inconnue,
+# sont enregistrées comme "[{". On passe donc  par ici pour corriger cette
+# erreur si elle est détectée.
+def pauses
+  @pauses ||= begin
+    if data[:pauses] == '[{'
+      db_compose_update('icmodules', id, {pauses: nil})
+      nil
+    else
+      data[:pauses]
+    end
+  end
+end #/ pauses
+
 end #/IcModule
