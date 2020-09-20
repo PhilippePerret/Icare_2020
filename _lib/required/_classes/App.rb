@@ -49,5 +49,14 @@ class << self
     OFFLINE ? FULL_URL_OFFLINE : FULL_URL_ONLINE
   end
 
+  # Version de l'application
+  #
+  # Cette version sert notamment à forcer l'actualisation des javascript et
+  # des CSS. Pour forcer une une version version, on peut utiliser la commande
+  # > icare next_version
+  def version
+    @version ||= File.read(File.join(APP_FOLDER,'VERSION'))
+  end #/ versionØ
+
 end #/ << self
 end #/App

@@ -18,3 +18,6 @@ MESSAGES.merge!({
   HTML
   subject_mailadmin_unshared_doc: 'Dé-partage de document'.freeze
 })
+
+
+EMO_DOCUMENTS = Emoji.new('objets/pile-livres')

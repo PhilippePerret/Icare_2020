@@ -21,8 +21,20 @@ div.timeline div.day-div {
   margin-top:2em;
   margin-bottom:1em;
   z-index:1;
-  width:var(--text-max-width);
 }
+
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  width: var(--text-max-width);
+}
+
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  width: auto;
+}
+
+
+
 div.timeline div.day-div span.day {
   border:1px solid;
   font-family:Georgia;

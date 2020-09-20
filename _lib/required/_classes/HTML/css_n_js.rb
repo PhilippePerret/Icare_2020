@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Modifier ci-dessous le "?v=X" pour forcer l'actualisation
-CSS_JS_VERSION = '?v=9'
+CSS_JS_VERSION = "?v=#{App.version}"
 # CSS_JS_PREFIX  = App::URL
 CSS_JS_PREFIX  = '.'
 # CSS_JS_VERSION = ''
