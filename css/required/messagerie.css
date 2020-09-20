@@ -1,4 +1,6 @@
-section#messages {}
+section#messages {
+  overflow:hidden;
+}
 
 section#messages > div {
   display:inline-block;
