@@ -151,8 +151,20 @@ div.warning, p.warning, span.warning {
 }
 .nooverflow {overflow:hidden}
 
-.nolimit {
-  max-width:auto;
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  .nolimit {
+    max-width:100%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  .nolimit {
+    width:calc(100%);
+  }
+}
+
+.maxlength {
   width:calc(100%);
 }
 

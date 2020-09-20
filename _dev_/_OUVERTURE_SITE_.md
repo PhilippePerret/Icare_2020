@@ -1,27 +1,11 @@
 # Ouverture du nouveau site Icare 2020
 
-## À faire AVANT l'ouverture
-
-### Modifications à faire dans la base de données
-
-* Dans les témoignages, il y a une erreur : 'désormais partie d\'une vraie communauté : <a href=\"./icariens\">les Icariens</a>'. Il faut remplacer l'href par 'overview/icariens'
-
-### Avant de faire l'annonce, détruire les users suivant :
-
-* Naja (chrystèle) + paiement
-
 ---------------------------------------------------------------------
 
 ## À faire POUR l'ouverture (le déploiement)
 
-* Récupérer toutes les données DB en lançant le script de déploiement
-* Mettre le site hors service (pour tout le monde sauf moi)
-* Détruire tout ce qui appartenait à l'ancien site (peut-être tout, pour être plus sûr, sauf le fichier HTML d'information de mise en chantier)
-* Uploader tous les fichiers
-* Utiliser le script [\_dev\_/destroy_user_in_DB_online](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/destroy_user_in_DB_online.rb) pour détruire Naja (Chystèle).
 * Checks à faire
   - [ ] Lancer le PageChecker en online
-  - [ ] Vérifier la justesse des actualités sur la home page
 
 
 ---------------------------------------------------------------------
