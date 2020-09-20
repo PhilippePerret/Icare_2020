@@ -35,6 +35,7 @@ ALTER TABLE `icmodules`
   MODIFY COLUMN `ended_at` VARCHAR(10) DEFAULT NULL,
   MODIFY COLUMN `created_at` VARCHAR(10) DEFAULT NULL,
   MODIFY COLUMN `updated_at` VARCHAR(10) DEFAULT NULL;
+UPDATE `icmodules` SET pauses = NULL WHERE pauses = "[{";
 COMMIT;
   SQL
   db_exec(request)

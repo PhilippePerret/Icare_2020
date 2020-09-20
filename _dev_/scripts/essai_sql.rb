@@ -13,8 +13,9 @@ else
 end
 
 # req = "SELECT created_at, updated_at FROM `users` LIMIT 1"
-MyDB.DBNAME = "icare_modules"
+# MyDB.DBNAME = "icare_modules"
 req = <<-SQL
+UPDATE icmodules SET pauses = NULL WHERE pauses = "[{";
 SELECT pauses FROM icmodules;
 SQL
 

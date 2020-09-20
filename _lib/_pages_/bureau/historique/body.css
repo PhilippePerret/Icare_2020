@@ -1,3 +1,16 @@
 div#historique {
 
 }
+
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.line-histo div.level1 {margin-left:16px}
+  div.line-histo div.level2 {margin-left:32px}
+  div.line-histo div.level3 {margin-left:48px}
+  div.line-histo div.level4 {margin-left:64px}
+  div.line-histo div.level5 {margin-left:80px}
+  div.line-histo div.level6 {margin-left:96px}
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+}

@@ -47,13 +47,26 @@ div.timeline div.day-div span.day {
 }
 
 div.timeline div.step.format1 {
-  font-size: 14pt;
-  padding:1em;
-  box-shadow:5px 5px 5px 4px #e2e2e2;
   background-color:#FCFCFC;
   border:1px solid #EEECEC;
-  margin-bottom: 1em;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.timeline div.step.format1 {
+    font-size: 14pt;
+    padding:1em;
+    margin-bottom: 1em;
+    box-shadow:5px 5px 5px 4px #e2e2e2;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.timeline div.step.format1 {
+    padding:0.5em;
+    margin-bottom: 0.6em;
+  }
+}
+
 /* Sauf si l'étape a la class nooverflow, on ne permet qu'une seule ligne */
 div.timeline div.step:not(.nooverflow) {
   white-space:nowrap;
