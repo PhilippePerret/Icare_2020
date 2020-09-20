@@ -7,7 +7,7 @@
 
 # Le traitement qu'il faut appliquer
 DB_REQUEST = <<-SQL.strip
-
+TRUNCATE TABLE `temoignages`
 SQL
 
 

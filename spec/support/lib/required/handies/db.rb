@@ -17,6 +17,7 @@ def vide_db
   vide_tickets
   vide_actualites
   vide_paiements
+  vide_temoignages
   vide_frigos
 end #/ vide_db
 
@@ -41,6 +42,9 @@ end #/ vide_tickets
 def vide_actualites
   vide_table('actualites')
 end #/ vide_actualites
+def vide_temoignages
+  vide_table('temoignages')
+end #/ vide_temoignages
 def vide_paiements
   vide_table('paiements')
 end #/ vide_paiements
