@@ -8,15 +8,9 @@ Options +FollowSymlinks
 RewriteEngine on
 
 # Pour ne pas rediriger les images, fichiers css, fonts, etc.
-RewriteCond %{REQUEST_FILENAME} !.+\.(css|js|png|jpg|pdf|ico|ttf|woff|woff2)$
+RewriteCond %{REQUEST_FILENAME} !.+\.(css|js|png|jpg|pdf|ico)$
 
 # Pour ne pas rediriger l'appel au script ajax
 RewriteCond %{REQUEST_FILENAME} !.+ajax\.rb$
 
-#RewriteCond %{REMOTE_ADDR} ::1
-#RewriteCond %{REMOTE_ADDR} 2a01:cb1c:98:2e00:890:fc7d:2811:3506
-#RewriteCond %{REMOTE_ADDR} ^2a01:cb1c:98:2e00:.+$
-#RewriteRule ^(.*)$ index.rb?route_init=$1 [QSA,L]
-
-#RewriteRule ^(.*)$ index.html [QSA,L]
 RewriteRule ^(.*)$ index.rb?route_init=$1 [QSA,L]

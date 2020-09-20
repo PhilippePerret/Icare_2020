@@ -12,8 +12,9 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !.+ajax\.rb$
 
 # Pour ne pas rediriger les css, js, png et autres pdf
-RewriteCond %{REQUEST_FILENAME} !\.(css|js|png|jpg|pdf|ico)$
+RewriteCond %{REQUEST_FILENAME} !.+\.(css|js|png|jpg|pdf|ico)$
 
-
+# SUPPRIMER QUAND OK
 RewriteCond %{REMOTE_ADDR} ^2a01:cb1c:98:2e00:.+$
+
 RewriteRule ^(.*)$ index.rb?route_init=$1 [QSA,L]

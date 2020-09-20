@@ -167,7 +167,7 @@ end #/ uuid
 def boite_confirmation
   <<-HTML
 <fieldset id="liste-destinataires">
-  <legend>Destinataires</legend>
+  <legend>Destinataires (#{destinataires.count})</legend>
   #{destinataires.collect{|u|u.pseudo}.pretty_join}
 </fieldset>
 <div class="mt2 right">
@@ -248,7 +248,11 @@ end #/ mail_signature
 def destinataires
   @destinataires ||= begin
     wheres = []
-    wheres << "SUBSTRING(options,1,1) = '0'" # pas admin
+    if groupes_destinataires.include?(:admin)
+      wheres << "SUBSTRING(options,1,1) > 0" # admin
+    else
+      wheres << "SUBSTRING(options,1,1) = '0'" # pas admin
+    end
     wheres << "SUBSTRING(options,4,1) = '0'" # pas détruit
     liste_statuts = []
     liste_statuts << 2 if groupes_destinataires.include?(:actif)
@@ -257,13 +261,16 @@ def destinataires
     liste_statuts << 6 if groupes_destinataires.include?(:recu)
     liste_statuts << 8 if groupes_destinataires.include?(:pause)
     if liste_statuts.count == 0
-      raise("Il faut absolument choisir un groupe de destinataire.")
+      unless groupes_destinataires.include?(:admin)
+        raise("Il faut absolument choisir un groupe de destinataire.")
+      end
     elsif liste_statuts.count == 1
       wheres << "SUBSTRING(options,17,1) = '#{liste_statuts.first}'"
     else
       wheres << "SUBSTRING(options,17,1) IN (#{liste_statuts.join(VG)})"
     end
     wheres = wheres.join(AND)
+    log("wheres destinataires : #{wheres}")
     User.get_instances(order: 'pseudo', where: wheres) << phil
   end
 end #/ destinataires
@@ -271,7 +278,9 @@ end #/ destinataires
 # Les groupes de destinataires, par statut
 def groupes_destinataires
   @groupes_destinataires ||= begin
-    User::DATA_STATUT.collect do |statut_id, dstatut|
+    table = User::DATA_STATUT.dup
+    table.merge!(admin: {icarien: true, value:9, name:'admin'})
+    table.collect do |statut_id, dstatut|
       next if dstatut.is_a?(Symbol)
       next if not(dstatut[:icarien])
       statut_id if param(statut_id) == 'on'

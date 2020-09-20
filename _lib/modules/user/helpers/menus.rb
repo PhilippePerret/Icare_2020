@@ -28,7 +28,9 @@ class HTML
   end #/ build_menu_icariens
 
   def build_types_icarien
-    cbs_statuts = User::DATA_STATUT.collect do |k, v|
+    table = User::DATA_STATUT.dup
+    table.merge!(admin: {icarien: true, value:9, name:'admin'})
+    cbs_statuts = table.collect do |k, v|
       next unless k.is_a?(Symbol)
       next unless v[:icarien]
       cb = TAG_CHECKBOX_C % {titre: v[:name], id:"cb-statut-#{k}", name:k.to_s, class_cb:'cb-statut', class:STRINGS[:small], checked:param(k.to_sym) ? CHECKED : ''}

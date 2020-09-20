@@ -1,5 +1,5 @@
 # encoding: UTF-8
-
+require_relative '../App'
 class HTML
   include StringHelpersMethods
 
@@ -53,12 +53,13 @@ class HTML
 
   #
   def build_head
+    log("+++ Je construis le head (build_head) App::URL = #{App::URL.inspect}")
     @head = <<-HTML.freeze
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Atelier Icare#{@raw_titre ? " | #{@raw_titre}" : ""}</title>
-  <base href="#{App::URL}/">
+  <base href="https://www.atelier-icare.net/">
   <link rel="shortcut icon" href="https://www.atelier-icare.net/img/favicon.png?2020" type="image/png">
   <link rel="icon" href="https://www.atelier-icare.net/img/favicon.png?2020" type="image/png">
   #{css_tags}
