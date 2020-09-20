@@ -3,10 +3,32 @@ div.icarien {
   box-shadow: 1px 4px 10px 2px #DDDDDD;
   padding:1em;
 }
-div.icarien div.tools {
-  margin-top:0.7em;
-  text-align: right;
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.icarien div.tools a {
+    font-size:11pt
+    padding:0;
+    margin-left:1em;
+  }
+  div.icarien div.tools {
+    margin-top:0.7em;
+    text-align: right;
+  }
 }
-div.icarien div.tools a {
-  margin-left:1em;
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.icarien div.tools {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    margin-top:1em;
+    margin-bottom:1em;
+    text-align: center;
+  }
+  div.icarien div.tools a {
+    font-size: 11pt !important;
+    padding:2.5px 9.8px !important;
+    white-space:nowrap;
+    line-height:2.5em;
+  }
 }
