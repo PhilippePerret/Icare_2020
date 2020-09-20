@@ -13,13 +13,18 @@ class << self
   attr_accessor :apercu_current
   attr_accessor :procedure_current
 
+  # = main =
+  #
+  # Pour afficher le mail tel qu'il apparaitra dans les messages femmes/hommes.
   def apercu
     self.apercu_current = new
   end #/ apercu
+
   # = main =
   #
   # La procédure a été confirmée après affichage des messages, on procède
-  # véritablement à l'envoi
+  # véritablement à l'envoi en se servant du fichier 'tmp/mails/mailing.json'
+  # qui a été enregistré.
   def traite
     if not File.exists?(data_path)
       return erreur("Aucun fichier de mailing n'est défini. Je ne peux pas procéder au mailing.")
@@ -71,14 +76,21 @@ class << self
   end #/ data_path
 
 end # /<< self
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
 #   (un envoi à tous les users choisis est une instance MailingList)
 # ---------------------------------------------------------------------
 
-def initialize
-end #/ initialize
 
 # = main =
 def proceed
@@ -154,12 +166,12 @@ end #/ uuid
 # Simple "boite" HTML pour confirmer l'envoi, après affichage de l'aperçu
 def boite_confirmation
   <<-HTML
-<fieldset>
+<fieldset id="liste-destinataires">
   <legend>Destinataires</legend>
   #{destinataires.collect{|u|u.pseudo}.pretty_join}
 </fieldset>
 <div class="mt2 right">
-  <a href="contact/mail?op=traite_mailing_list&uuid=#{uuid}" class="main btn">Procéder à l'envoi</a>
+  <a href="contact/mail?op=traite_mailing_list&uuid=#{uuid}" class="main btn">#{UI_TEXTS[:proceed_envoi]}</a>
 </div>
 <div class="explication">Si vous ne procédez pas à l'envoi immédiatement, il sera enregistré et pourra être transmis une prochaine fois, en repassant par ce formulaire de contact.</div>
   HTML
@@ -176,7 +188,7 @@ end #/ message_per_format
 def apercu_message_homme
   @apercu_message_homme ||= begin
     <<-HTML
-<fieldset>
+<fieldset id="mail-version-homme">
   <legend>Message homme (format : #{mail_format})</legend>
   <div class="bold">#{mail_subject}</div>
   #{message_per_format(user: phil)}
@@ -188,7 +200,7 @@ end #/ apercu_message_homme
 def apercu_message_femme
   @apercu_message_femme ||= begin
     <<-HTML
-<fieldset>
+<fieldset id="mail-version-femme">
   <legend>Message femme (format : #{mail_format})</legend>
 <div class="bold">#{mail_subject}</div>
 #{message_per_format(user: User.get(10))}
@@ -243,8 +255,14 @@ def destinataires
     liste_statuts << 3 if groupes_destinataires.include?(:candidat)
     liste_statuts << 4 if groupes_destinataires.include?(:inactif)
     liste_statuts << 6 if groupes_destinataires.include?(:recu)
-    liste_statuts << 8 if groupes_destinataires.include?(:en_pause)
-    wheres << "SUBSTRING(options,17,1) IN (#{liste_statuts.join(VG)})"
+    liste_statuts << 8 if groupes_destinataires.include?(:pause)
+    if liste_statuts.count == 0
+      raise("Il faut absolument choisir un groupe de destinataire.")
+    elsif liste_statuts.count == 1
+      wheres << "SUBSTRING(options,17,1) = '#{liste_statuts.first}'"
+    else
+      wheres << "SUBSTRING(options,17,1) IN (#{liste_statuts.join(VG)})"
+    end
     wheres = wheres.join(AND)
     User.get_instances(order: 'pseudo', where: wheres) << phil
   end

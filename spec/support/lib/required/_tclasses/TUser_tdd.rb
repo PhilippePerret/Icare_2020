@@ -15,10 +15,11 @@ class TUser
   # L'user doit déjà être identifié
   def revient_dans_son_bureau
     survol_header
-    unless page.has_css?('a', text: 'Bureau')
+    if page.has_css?('a', text: 'Bureau')
+      click_on 'Bureau'
+    else
       click_on 'bureau' # home page vraie
     end
-    click_on 'Bureau'
   end #/ revient_dans_son_bureau
 
   # Rejoint le site (signifie qu'il va s'identifier)

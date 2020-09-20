@@ -5,3 +5,4 @@ Dir["./spec/support/lib/required/**/*.rb"].each{|m|require m}
 
 require './_lib/required/__first/handies/string' # par exemple 'safe'
 require './_lib/required/__first/extensions/Integer' # par exemple X.days
+require './_lib/required/__first/extensions/Formate_helpers.rb' # par exemple pour formate_date

@@ -4,9 +4,9 @@ docqdd = QddDoc.get(objet_id)
 %>
 <%
 require_module('form')
-form = Form.new(id:"cote-n-comments-#{objet_id}", route:route.to_s)
+form = Form.new(id:"cote-n-comments-#{objet_id}", route:route.to_s, watcher:id)
 rows = {}
-cotes_values = ['*****', '****', '***', '**', '*', 'aucune']
+cotes_values = [['5','*****'], ['4','****'], ['3','***'], ['2','**'], ['1','*'], ['0','aucune']]
 
 name_generique =
 if docqdd.shared_sharing(:original) && docqdd.shared_sharing(:comments)
@@ -19,10 +19,10 @@ end
 
 rows.merge!('<titre>' => {type:'raw', content: "Coter et commenter <b>#{name_generique}</b>."})
 if docqdd.shared_sharing(:original)
-  rows.merge!('Cote original' => {type:'select', name:'cote-original', values: cotes_values, class:'short center'})
+  rows.merge!('Cote original' => {type:'select', name:'cote_original', values: cotes_values, class:'short center'})
 end
 if docqdd.shared_sharing(:comments)
-  rows.merge!('Cote commentaire' => {type:'select', name:'cote-comments', values: cotes_values, class:'short center'})
+  rows.merge!('Cote commentaire' => {type:'select', name:'cote_comments', values: cotes_values, class:'short center'})
 end
 rows.merge!('Commentaire' => {type:'textarea', name:'comment'})
 form.rows = rows

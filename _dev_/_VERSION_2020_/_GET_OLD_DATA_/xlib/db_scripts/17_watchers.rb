@@ -64,6 +64,18 @@ db_exec("SELECT * FROM `current_watchers`").each do |dwatcher|
     ERRORS_TRANS_DATA << datawatcher[:error]
     next
   end
+
+  # Traitement spécial pour les cotes à donner aux documents. S'il existe
+  # une lecture correspondant à à ce watcher, il faut supprimer le watcher
+  if dwatcher[:processus] == 'cote_et_commentaire'
+    nombre_lectures = db_count('lectures_qdd', {user_id: dwatcher[:user_id], icdocument_id: dwatcher[:objet_id]})
+    # On passe ce watcher s'il existe déjà une lecture
+    if nombre_lectures > 0
+      puts "#{TABU}Une lecture existe déjà pour #{dwatcher.inspect}. On le passe."
+      next
+    end
+  end
+
   # Traitement spécial pour le dépot des qdd
   if ['define_partage', 'depot_qdd', 'user_download_comments'].include?(dwatcher[:processus])
     # Il faut trouver l'icetape du document concerné. Note : cela implique

@@ -14,13 +14,12 @@ bouton_refus = "<a href='mailto:#{owner.mail}' class='btn-notify-refus' data-wid
 bouton_destroy  = button_unrun('Détruire la candidature'.freeze, {class:'warning nodisplay'})
 
 # Formulaire pour choisir ou confirmer son module
-form = Form.new(id:"validation-candidature-#{owner.id}-form", class:'inline', route:route.to_s)
+form = Form.new(id:"validation-candidature-#{owner.id}-form", class:'inline', route:route.to_s, watcher:id)
 values = AbsModule.collect do |absmodule|
   [absmodule.id, "#{selected_module?(absmodule) ? '📌 ' : '  '}#{absmodule.name}"]
 end
 form.rows = {
   'Module' => {type: 'select', values: values, name:'module_id', id:"module_id-#{owner.id}", size:160},
-  '<watcher>' => {type:'hidden', name:'wid', value:id},
   '<operation>' => {type:'hidden', name:'op', value:'run'}
 }
 form.submit_button = "Attribuer ce module"

@@ -1,6 +1,10 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
+UI_TEXTS.merge!({
+  proceed_envoi: "Procéder à l’envoi"
+})
+
 ERRORS.merge!({
   groupe_destinataires_required: "Il est impératif de choisir les destinataires.",
   no_saved_mailing: 'Il n’existe aucun mailing enregistré…',
