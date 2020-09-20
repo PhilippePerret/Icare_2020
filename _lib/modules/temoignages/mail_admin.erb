@@ -5,7 +5,7 @@
   <%= ticket_validation.lien('Valider directement ce témoignage'.freeze) %>
 </center>
 <p>Le témoignage :</p>
-<pre><%= content %></div>
+<pre><%= content %></pre>
 <p>
   <%= Tag.lien(route:"admin/temoignages?temid=#{id}", full:true, text:"L'éditer pour le corriger") %>
 </p>

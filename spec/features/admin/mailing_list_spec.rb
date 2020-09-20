@@ -253,18 +253,18 @@ describe 'Mailing-list d’administration' do
 
 
     scenario 'peut envoyer un mailing-list enregistré avant' do
-      implementer("#{__FILE__}:#{__LINE__}")
+      implementer(__FILE__, __LINE__)
     end
 
 
     scenario 'ne peut pas transmettre deux fois un même mailing-list (en rechargeant la page)' do
-      implementer("#{__FILE__}:#{__LINE__}")
+      implementer(__FILE__, __LINE__)
     end
 
 
 
     scenario 'peut procéder à la destruction d’un mailing enregistré' do
-      implementer("#{__FILE__}:#{__LINE__}")
+      implementer(__FILE__, __LINE__)
     end
   end # / fin context administrateur
 end

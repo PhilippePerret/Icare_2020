@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Module pour la gestion des témoignages
 
@@ -6,11 +7,12 @@
   aussi la dernière étape de chaque module (990).
 
 =end
+require_relative 'constants'
 require_module('user/modules')
 class Temoignage < ContainerClass
 class << self
   def table
-    @table ||= 'temoignages'.freeze
+    @table ||= 'temoignages'
   end #/ table
 
   # Affichage du formulaire pour laisser un témoignage. On ne le met
@@ -28,18 +30,21 @@ class << self
   def check_and_create
     icarien_required # barrière sécurité
     require_module('mail')
+    content = param(:temoignage_content)&.strip.nil_if_empty
+    content || raise("Il faut écrire votre témoignage, voyons !")
     dtem = {
       user_id: user.id,
       absmodule_id: user.actif? ? user.absmodule.id : nil,
-      content: param(:temoignage_content)&.strip.nil_if_empty,
+      content: content.gsub(/\r\n/,"\n"),
       confirmed: false
     }
-    dtem[:content] || raise("Il faut écrire votre témoignage, voyons !".freeze)
     tem = create_with_data(dtem)
-    message("Votre témoignage a été enregistré#{tem.f_id} ! Merci à vous !")
     # M'envoyer un mail pour m'informer du nouveau témoignage et pouvoir
     # le confirmer.
-    Mail.send({from:user.mail, subjectf:'Témoignage à valider', message:deserb('mail_admin', tem)})
+    data_mail = {from:user.mail, subject: MESSAGES[:tem_subject_mail_validation], message:deserb('mail_admin', tem)}
+    # log("Données pour le mail : #{data_mail.inspect}")
+    Mail.send(data_mail)
+    message("Votre témoignage a été enregistré#{tem.f_id} ! Merci à vous. Il sera affiché dès qu'il aura été validé.")
   rescue Exception => e
     log(e)
     erreur(e.message)
@@ -69,22 +74,22 @@ end #/ out
 
 def lien_plebiscite
   if user.guest?
-    "#{Emoji.get('gestes/pouceup').texte+ISPACE}(#{plebiscites})".freeze
+    "#{Emoji.get('gestes/pouceup').texte+ISPACE}(#{plebiscites})"
   else
-    Tag.lien(route:"#{route.to_s}?op=plebisciter&temid=#{id}", text:"+ #{Emoji.get('gestes/pouceup').texte+ISPACE}(#{plebiscites})".freeze, class:'small')
+    Tag.lien(route:"#{route.to_s}?op=plebisciter&temid=#{id}", text:"+ #{Emoji.get('gestes/pouceup').texte+ISPACE}(#{plebiscites})", class:'small')
   end
 end #/ lien_plebiscite
 
 # Retourne l'instance Ticket du ticket pour valider le témoignage directement
 def ticket_validation
   require_module('ticket')
-  Ticket.create(user_id:1, code:"require_module('temoignages');Temoignage.get(#{id}).validate".freeze)
+  Ticket.create(user_id:1, code:"require_module('temoignages');Temoignage.get(#{id}).validate")
 end #/ ticket_validation
 
 # Méthode appelée par le ticket pour valider le témoignage
 def validate
   set(confirmed: true)
-  message "Le témoignage ##{id} a été validé. <a href='overview/temoignages' class='small'>Voir les témoignages</a>.".freeze
+  message "Le témoignage ##{id} a été validé. <a href='overview/temoignages' class='small'>Voir les témoignages</a>."
 end #/ validate
 
 def user_pseudo

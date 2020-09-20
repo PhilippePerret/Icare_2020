@@ -294,11 +294,16 @@ end #/ data_icmodule_id
 
 def icetape
   @icetape ||= begin
-    unless icetape_id.nil?
-      TICEtape.new(data_icetape)
-    end
+    TICEtape.new(data_icetape) unless icetape_id.nil?
   end
 end #/ icetape
+
+def icmodule
+  @icmodule ||= begin
+    TICModule.new(data_icmodule) unless icmodule_id.nil?
+  end
+end #/ icmodule
+
 def icetape_id
   @icetape_id ||= begin
     unless icmodule_id.nil? # il faut qu'il y ait un module
@@ -308,11 +313,14 @@ def icetape_id
 end #/ icetape_id
 def data_icetape
   @data_icetape ||= begin
-    unless icetape_id.nil?
-      db_get('icetapes', icetape_id)
-    end
+    db_get('icetapes', icetape_id) unless icetape_id.nil?
   end
 end #/ data_icetape
+def data_icmodule
+  @data_icmodule ||= begin
+    db_get('icmodules', icmodule_id) unless icmodule_id.nil?
+  end
+end #/ data_icmodule
 
 
 end #/TUser

@@ -40,8 +40,8 @@ end
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
 
-  def implementer(msg)
-    puts "Implémenter le test #{msg}".jaune
+  def implementer(path, line)
+    puts "Implémenter le test #{path}:#{line}".jaune
   end #/ pending
 
   # rspec-expectations config goes here. You can use an alternate
