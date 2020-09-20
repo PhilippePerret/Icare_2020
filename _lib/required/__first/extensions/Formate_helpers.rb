@@ -1,6 +1,7 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
-JOUR = (3600 * 24).freeze
+JOUR = (3600 * 24)
 MOIS = {
   1 => {court: 'jan', long: 'janvier'},
   2 => {court: 'fév', long: 'février'},
@@ -26,21 +27,19 @@ def formate_date(time = nil, options = nil)
   time ||= Time.now
   time = Time.at(time.to_i) unless time.is_a?(Time)
   mois = MOIS[time.month][options[:mois]]
-  temp = "%-d #{mois} %Y"
-  temp << " %H:%M".freeze if options[:time] || options[:hour]
-  d = time.strftime(temp)
-  if options[:jour] || options[:day]
-    d.prepend(DAYNAMES[time.wday]+SPACE)
-  end
+  temp = ["%-d #{mois} %Y"]
+  temp << "%H:%M" if options[:time] || options[:hour]
+  temp = temp.join(SPACE)
+  d = "#{options[:jour] || options[:day] ? DAYNAMES[time.wday]+' ' : ''}#{time.strftime(temp)}"
   if options[:duree]
     now = Time.now
-    mot = now > time ? 'il y a' : 'dans' ;
     jours = ((now - time).abs.to_f / JOUR).round
     laps =  if jours == 0
-              'aujourd’hui'.freeze
+              'aujourd’hui'
             else
               s = jours > 1 ? 's' : '' ;
-              "#{mot} #{jours} jour#{s}".freeze
+              mot = now > time ? 'il y a' : 'dans' ;
+              "#{mot} #{jours} jour#{s}"
             end
     d << " <span class=\"small\">(#{laps})</span>"
   end
