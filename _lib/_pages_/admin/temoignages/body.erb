@@ -1,0 +1,11 @@
+<%
+non_confirmeds = Temoignage.non_confirmeds
+%>
+<% if non_confirmeds.empty? %>
+  <p class="explication">Aucun témoignage à valider.</p>
+<% else %>
+  <h2>Témoignages à confirmer : <%= non_confirmeds.count %></h2>
+  <% non_confirmeds.each do |tem| %>
+    <%= tem.out_to_confirm %>
+  <% end %>
+<% end %>

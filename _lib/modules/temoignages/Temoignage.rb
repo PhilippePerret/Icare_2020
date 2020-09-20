@@ -58,7 +58,7 @@ end #/ plebiscite
 # Pour l'affichage des témoignages
 def out
   <<-HTML
-<div class="temoignage">
+<div class="temoignage#{confirmed? ? '' : ' to_confirm'}">
   <div class="right infos">
     <span class="pseudo">- #{user_pseudo}</span>,
     <span class="date">#{formate_date(created_at)} -</span>
@@ -72,8 +72,10 @@ def out
   HTML
 end #/ out
 
+# Lien pour plébisciter le témoignage. On ne peut le faire que si on n'est
+# un icarien, mais pas l'auteur du témoignage.
 def lien_plebiscite
-  if user.guest?
+  if user.guest? || user_id == user.id
     "#{Emoji.get('gestes/pouceup').texte+ISPACE}(#{plebiscites})"
   else
     Tag.lien(route:"#{route.to_s}?op=plebisciter&temid=#{id}", text:"+ #{Emoji.get('gestes/pouceup').texte+ISPACE}(#{plebiscites})", class:'small')
@@ -95,5 +97,9 @@ end #/ validate
 def user_pseudo
   @user_pseudo ||= db_get('users', {id: user_id}, ['pseudo'])[:pseudo]
 end #/ user_pseudo
+
+def confirmed?
+  confirmed == 0
+end #/ confirmed?
 
 end #/Temoignage < ContainerClass

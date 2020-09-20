@@ -151,7 +151,10 @@ div.warning, p.warning, span.warning {
 }
 .nooverflow {overflow:hidden}
 
-.nolimit {max-width:auto;}
+.nolimit {
+  max-width:auto;
+  width:calc(100%);
+}
 
 .vmiddle {
   vertical-align:middle;

@@ -15,6 +15,7 @@ UI_TEXTS.merge!({
   btn_edit:  'éditer',
   btn_envoyer: 'Envoyer',
   modules_apprentissage: 'Les Modules d’apprentissage',
+  btn_valider: 'Valider'
 })
 
 ERRORS.merge!({

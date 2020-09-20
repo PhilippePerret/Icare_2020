@@ -126,7 +126,7 @@ form div.row span.value > *:not(.explication) {
 }
 @media only screen and (min-width: 767px) {
   /* ÉCRAN */
-  form:not(.noform) div.row span.value > *:not(select):not(input[type="checkbox"]) {
+  form:not(.noform) div.row span.value > *:not(select):not(input[type="checkbox"]):not(.short) {
     width:100%;
   }
 }
@@ -143,7 +143,7 @@ form div.row span.value > *:not(.explication) {
 }
 
 
-form:not(.noform) div.row span.value > input[type="text"],
+form:not(.noform) div.row span.value > input[type="text"]:not(.short),
 form:not(.noform) div.row span.value > input[type="password"]
 {
   width:95%;

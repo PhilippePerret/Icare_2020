@@ -83,13 +83,60 @@ liste des témoignages.
     end
 
 
-    scenario 'ne peut pas valider un témoignage', only:true do
+    scenario 'ne peut pas valider un témoignage' do
       pitch("Marion revient sur le site et essaie de forcer la validation de son témoignage. Elle n'y parvient pas.")
       degel("marion-avec-un-temoignage")
       marion.rejoint_son_bureau
-      goto('overview/temoignages')
-      sleep 10
+      # Elle trouve son témoignage à valider sur la page des témoignages
+      goto("overview/temoignages")
+      expect(page).to have_css("fieldset#temoignage-a-valider")
+      # Mais elle ne peut pas le valider en forcer l'url
+      tem_id = db_get('temoignages', {user_id:marion.id, confirmed:false})[:id]
+      goto("admin/temoignages?operation=valider-temoignage&temid=#{tem_id}")
+      # Marion ne doit pas voir son témoignage (ou plutôt si : mais en indiquant qu'il n'est pas validé)
+      # Le témoignage reste à valider
+      tem2validate = db_get('temoignages', {user_id:marion.id, confirmed:false})
+      expect(tem2validate).not_to eq(nil)
+      logout
     end
 
   end
+
+
+  context 'Un icarien quelconque (hors auteur témoignage)' do
+    scenario 'ne peut pas voir le témoignage à valider' do
+      benoit.rejoint_le_site
+      goto("overview/temoignages")
+      expect(page).not_to have_css("fieldset#temoignage-a-valider")
+      logout
+    end
+  end
+
+
+  context 'Un administrateur' do
+
+
+    scenario 'peut valider un témoignage enregistré', only:true do
+      pitch("Un administrateur peut valider un témoignage depuis son bureau.")
+      degel("marion-avec-un-temoignage")
+      phil.rejoint_son_bureau
+      goto('admin/temoignages')
+      sleep 10
+      expect(page).to have_titre("Administration des témoignages")
+      # Je dois trouver le témoignage à valider
+      expect(page).to have_css('div.temoignage.to_confirm')
+      logout
+    end
+
+
+  end
+
+
+  context 'Un autre icarien' do
+    scenario 'peut plébisciter un témoignage' do
+      implementer(__FILE__, __LINE__)
+    end
+  end
+
+
 end

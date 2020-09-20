@@ -1,5 +1,15 @@
 <%= tdm %>
 
+<%
+  avalider = db_get('temoignages', {confirmed:false, user_id:user.id})
+  unless avalider.nil?
+%>
+  <fieldset id="temoignage-a-valider">
+    <legend>Témoignage à valider</legend>
+    <%= Temoignage.get(avalider[:id]).out %>
+  </fieldset>
+<% end %>
+
 <% Temoignage.each(confirmed: true) do |tem| %>
   <%= tem.out %>
 <% end %>
