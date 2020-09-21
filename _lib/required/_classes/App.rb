@@ -16,13 +16,14 @@ class << self
 
   # = Main method =
   def run
-    log("-> App::run")
+    log("#{RC*2}")
+    log("------> App::run")
     self.init
     User.init
     html.build_page
     html.out
     self.finish
-    log("<- App::run")
+    log("<------ App::run")
   end
 
   # Initialisation de l'atelier
@@ -38,7 +39,7 @@ class << self
     log("-> App::finish")
     Route.last = route.to_s.dup
     Session.finish
-    log("<- App::finish#{RC2}")
+    log("<- App::finish")
   rescue Exception => e
     log("ERREUR DANS finish: #{e.message}")
     log(e)

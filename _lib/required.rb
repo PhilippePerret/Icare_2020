@@ -14,6 +14,7 @@ require 'erb'
 require 'yaml'
 
 LIB_FOLDER = File.dirname(__FILE__)
+TESTS       = File.exists?('./TESTS_ON') # réglé par spec_helper.rb
 
 require_relative 'required/__first/constants/paths'
 
@@ -33,13 +34,13 @@ log("Version ruby #{RUBY_VERSION}")
 log("ONLINE: #{ONLINE.inspect} (OFFLINE est #{OFFLINE.inspect})")
 log("DATABASE: #{MyDB.DBNAME.inspect}")
 log("ENV['REMOTE_ADDR'] = #{ENV['REMOTE_ADDR'].inspect}")
-
-# On trace ce chargement
-trace(id:"LOADING", message:route.to_s,data:Tracer.params_added()) unless SELF_LOADED
-
-TESTS = File.exists?('./TESTS_ON') # réglé par spec_helper.rb
 log("TESTS : #{TESTS.inspect}")
-log("ROUTE : #{route.to_s}") unless SELF_LOADED
+unless SELF_LOADED
+  log("ROUTE : #{route.to_s}")
+  # On trace ce chargement
+  trace(id:"LOADING", message:route.to_s,data:Tracer.params_added())
+end
+
 
 # NOTE Dans ce required.rb, user n'est pas encore défini. Il le sera seulement
 # dans User.init appelé par App.init

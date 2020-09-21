@@ -31,13 +31,12 @@ class << self
   # utilisée pour les tests des liens (par CURL). Cf. le mode d'emploi ou
   # la méthode connect_any_user
   def init
+    log("-> User::init")
     connect_any_user || begin
       # log("session['user_id'] = #{session['user_id'].inspect}")
       reconnect_user unless session['user_id'].nil_if_empty.nil?
     end
     self.current ||= User.instantiate(DATA_GUEST)
-    # Si l'utilisateur est un administrateur, on le traite tel quel
-    init_as_admin if user.admin?
   end
 
   # Connexion pour usage par CURL. La requête http définit le paramètre
@@ -60,6 +59,7 @@ class << self
   end #/ connect_any_user
 
   def init_as_admin
+    log("-> User::init_as_admin")
     # Dans tous les cas on charge la boite à outils
     require_module('admin/toolbox')
     # Si une opération administrateur est demandée
@@ -79,6 +79,8 @@ class << self
     # db_exec("UPDATE users SET session_id = ? WHERE id = ?", [session.id, uid])
 
     self.current = self.get(uid)
+    # Si l'utilisateur est un administrateur, on le traite tel quel
+    init_as_admin if current.admin?
   end #/ login_user
 
   # Reconnection d'un icarien reconnu en session
@@ -88,6 +90,8 @@ class << self
     duser[:session_id] == session.id || raise(ERRORS[:alert_intrusion])
     self.current = self.get(duser[:id])
     log "USER RECONNECTED : #{current.pseudo} (##{current.id})"
+    # Si l'utilisateur est un administrateur, on le traite tel quel
+    init_as_admin if current.admin?
   rescue Exception => e
     erreur e.message
     session.delete('user_id') # pour ne plus avoir le problème
