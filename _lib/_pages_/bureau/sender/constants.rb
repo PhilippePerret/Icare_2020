@@ -1,22 +1,24 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Constantes pour la partie bureau/sender
 =end
 UI_TEXTS.merge!({
-  btn_transmettre_documents: 'Transmettre les documents'.freeze,
+  btn_transmettre_documents: 'Transmettre les documents',
 })
 MESSAGES.merge!({
   # Pour les titres de page possible
-  titre_:           'Transmission de documents non définie'.freeze,
-  titre_send_work_form:  'Envoi des documents de travail'.freeze,
-  titre_sent_work_confirmation: 'Bonne réception des documents'.freeze,
-  actualite_send_work: '<span><strong>%{pseudo}</strong> transmet ses documents pour l’étape %{numero} de son module “%{module}”</span>'.freeze
+  titre_:           'Transmission de documents non définie',
+  titre_send_work_form:  'Envoi des documents de travail',
+  titre_sent_work_confirmation: 'Bonne réception des documents',
+  actualite_send_work: '<span><strong>%{pseudo}</strong> transmet ses documents pour l’étape %{numero} de son module “%{module}”</span>'
 })
 
 ERRORS.merge!({
-  sent_documents_required: 'Il faut choisir le document à transmettre !'.freeze,
-  unable_document_treatment: 'Impossible de traiter le document %{name} : %{error}.'.freeze,
-  note_required: 'vous devez définir la note estimative de ce document'.freeze
+  sent_documents_required: 'Il faut choisir le document à transmettre !',
+  unable_document_treatment: 'Impossible de traiter le document %{name} : %{error}.',
+  note_required: 'vous devez définir la note estimative de ce document',
+  nothing_to_send: 'Vous n’avez rien à envoyer !'
 })
 
 # Le temps approximatif pour commenter une page de document

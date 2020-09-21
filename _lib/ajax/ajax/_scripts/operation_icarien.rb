@@ -2,7 +2,6 @@
 =begin
   Module permettant de jouer les opérations icariens
 =end
-log('-> operation_icarien.rb')
 begin
   Dir.chdir(APP_FOLDER) do
     # On se place toujours dans le dossier de l'application

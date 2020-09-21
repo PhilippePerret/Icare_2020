@@ -24,6 +24,10 @@ class HTML
 
   # Fabrication du body
   def build_body
+    param(:rid) || begin
+      erreur(ERRORS[:nothing_to_send])
+      redirect_to('bureau/home')
+    end
     @body = deserb(param(:rid), self)
   end
 

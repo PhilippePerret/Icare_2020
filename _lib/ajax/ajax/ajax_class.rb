@@ -2,6 +2,8 @@
 require 'cgi'
 require 'json'
 
+
+
 class PiratageError < StandardError; end
 
 class Ajax

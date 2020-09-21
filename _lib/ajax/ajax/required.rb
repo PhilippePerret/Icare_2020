@@ -28,7 +28,8 @@ log("ENV['HTTP_HOST'] = #{ENV['HTTP_HOST'].inspect}")
 OFFLINE = ENV['HTTP_HOST'] == 'localhost'
 ONLINE  = !OFFLINE
 TEST_ON = File.exists?('../../TESTS_ON')
-DATABASE = ONLINE ? 'icare_db' : (TEST_ON ? 'icare_test' : 'icare')
+DATABASE = ONLINE ? 'icare_db' : 'icare_test'
+  # Noter qu'on travaille toujours avec la table icare_test
 log("DATABASE = #{DATABASE}")
 erreur_required = nil
 Dir.chdir(APP_FOLDER) do
@@ -46,6 +47,3 @@ if erreur_required
   log("# ERREUR : #{erreur_required.message}")
   log(erreur_required.backtrace.join(RC))
 end
-log("Chargement module Session et unique_usage_ids")
-
-log("<- required.rb")

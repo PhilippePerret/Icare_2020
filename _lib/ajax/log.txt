@@ -1,148 +1,30 @@
---- [2020-09-18 17:28:05 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
---- [2020-09-18 17:28:45 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-Chargement module Session et unique_usage_ids
-<- required.rb
-STOP PIRATE (uninitialized constant #<Class:Ajax>::UUID)
---- [2020-09-18 17:29:01 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-Chargement module Session et unique_usage_ids
-<- required.rb
-ERREUR MYSQL - Impossible d'exécuter la requête suivante :
-############################################################
-# MYSQL ERROR : uninitialized constant #<Class:MyDB>::DB_NAME
-# REQUEST : SELECT * FROM unique_usage_ids WHERE uuid = ? LIMIT 1
-# VALUES : ["e8395652fe5d2d29b5e1"]
-############################################################
-
-STOP PIRATE (uninitialized constant User)
---- [2020-09-18 17:29:07 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-Chargement module Session et unique_usage_ids
-<- required.rb
-ERREUR MYSQL - Impossible d'exécuter la requête suivante :
-############################################################
-# MYSQL ERROR : uninitialized constant #<Class:MyDB>::DB_NAME
-# REQUEST : SELECT * FROM unique_usage_ids WHERE uuid = ? LIMIT 1
-# VALUES : ["e8395652fe5d2d29b5e1"]
-############################################################
-
-STOP PIRATE (uninitialized constant User)
---- [2020-09-18 17:31:55 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-ENV['HTTP_HOST'] = "localhost"
-Chargement module Session et unique_usage_ids
-<- required.rb
-ERREUR MYSQL - Impossible d'exécuter la requête suivante :
-############################################################
-# MYSQL ERROR : uninitialized constant #<Class:MyDB>::DB_NAME
-# REQUEST : SELECT * FROM unique_usage_ids WHERE uuid = ? LIMIT 1
-# VALUES : ["e8395652fe5d2d29b5e1"]
-############################################################
-
-STOP PIRATE (uninitialized constant User)
---- [2020-09-18 17:35:14 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-ENV['HTTP_HOST'] = "localhost"
---- [2020-09-18 17:37:11 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-ENV['HTTP_HOST'] = "localhost"
-DATABASE = icare
-Chargement module Session et unique_usage_ids
-<- required.rb
-UUID Bad uuid (inexistant)
-STOP PIRATE (Le check UUID est invalide)
---- [2020-09-18 17:37:41 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-ENV['HTTP_HOST'] = "localhost"
-DATABASE = icare
-Chargement module Session et unique_usage_ids
-<- required.rb
-UUID Bad uuid (inexistant)
-STOP PIRATE (Le check UUID est invalide)
---- [2020-09-18 17:41:31 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-ENV['HTTP_HOST'] = "localhost"
-DATABASE = icare
-Chargement module Session et unique_usage_ids
-<- required.rb
-UUID Bad uuid (inexistant)
-STOP PIRATE (Le check UUID est invalide)
---- [2020-09-18 17:43:07 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-ENV['HTTP_HOST'] = "localhost"
-DATABASE = icare
-Chargement module Session et unique_usage_ids
-<- required.rb
-UUID Bad uuid (inexistant)
-STOP PIRATE (Le check UUID est invalide)
---- [2020-09-18 17:44:13 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-ENV['HTTP_HOST'] = "localhost"
-DATABASE = icare
-Chargement module Session et unique_usage_ids
-<- required.rb
-UUID Bad uuid (inexistant)
-STOP PIRATE (Le check UUID est invalide)
---- Pirate ---
---- [2020-09-18 17:47:46 +0200] Entrée dans ajax.rb
-[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
-=> Chargement des modules
-<= Chargement des modules
-ENV['HTTP_HOST'] = "localhost"
-DATABASE = icare
-Chargement module Session et unique_usage_ids
-<- required.rb
-UUID Bad uuid (inexistant)
-STOP PIRATE (Le check UUID est invalide)
---- Pirate ---
---- [2020-09-18 17:48:35 +0200] Entrée dans ajax.rb
+--- [2020-09-21 10:40:50 +0200] Entrée dans ajax.rb
 [Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
 => Chargement des modules
 <= Chargement des modules
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
-Chargement module Session et unique_usage_ids
-<- required.rb
--> operation_icarien.rb
---- [2020-09-18 18:01:43 +0200] Entrée dans ajax.rb
+--- [2020-09-21 10:41:30 +0200] Entrée dans ajax.rb
 [Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
 => Chargement des modules
 <= Chargement des modules
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
-Chargement module Session et unique_usage_ids
-<- required.rb
--> operation_icarien.rb
---- [2020-09-18 18:05:29 +0200] Entrée dans ajax.rb
+--- [2020-09-21 10:42:09 +0200] Entrée dans ajax.rb
 [Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
 => Chargement des modules
 <= Chargement des modules
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
-Chargement module Session et unique_usage_ids
-<- required.rb
--> operation_icarien.rb
+--- [2020-09-21 10:48:58 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-09-21 10:49:35 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test

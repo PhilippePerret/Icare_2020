@@ -6,7 +6,7 @@ class String
   end
 
   def nil_if_empty
-    if self == ''
+    if self.strip == ''
       nil
     else
       self

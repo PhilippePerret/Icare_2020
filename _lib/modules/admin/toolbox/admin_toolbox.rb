@@ -2,7 +2,6 @@
 =begin
   Boite à outils de l'administration
 =end
-log('-> requires admin_toolbox')
 require 'uri'
 class Admin
 class << self
@@ -33,4 +32,3 @@ class << self
 end # /<< self
 end #/Toolbox
 end #/Admin
-log('<- requires admin_toolbox')
