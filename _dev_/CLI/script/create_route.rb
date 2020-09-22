@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   On peut utiliser maintenant `icare create route`
 =end
@@ -86,14 +87,15 @@ end #/ create_constants_file
 def html_code_type
   ulinks = ''
   if DATA_PAGE[:usefull_links]
-    ulinks = "\ndef usefull_links\n\t\t[\n\t\t\t# Ici les liens\n\t\t]\n\tend\n".freeze
+    ulinks = "\ndef usefull_links\n\t\t[\n\t\t\t# Ici les liens\n\t\t]\n\tend\n"
   end
   <<-RUBY.freeze
 # encoding: UTF-8
+# frozen_string_literal: true
 #{'require_module(\'form\')' if DATA_PAGE[:form]}
 class HTML
   def titre
-    "#{DATA_PAGE[:titre]||"TITRE MANQUANT"}".freeze
+    "#{DATA_PAGE[:titre]||"TITRE MANQUANT"}"
   end #/titre
   #{ulinks}
   # Code à exécuter avant la construction de la page
@@ -103,7 +105,7 @@ class HTML
 
   # Fabrication du body
   def build_body
-    @body = #{DATA_PAGE[:body_erb] ? 'deserb(STRINGS[:body], self)' : "<<-HTML#{RC2}    HTML"}
+    @body = #{DATA_PAGE[:body_erb] ? 'deserb(\'body\', self)' : "<<-HTML#{RC2}    HTML"}
   end # /build_body
 
 end #/HTML

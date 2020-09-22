@@ -44,6 +44,8 @@ class HTML
 
 #{aGoto(Emoji.get('objets/pile-livres').regular+' Quai de docs', route:'qdd/home')}
 
+#{aGoto(EMO_OUTILS+ISPACE++' Outils d’écriture', route:'outils/home')}
+
 #{MainLink[:aide].with(picto: true, titleize:true, class:'goto')}
 
 #{divGoto(Emoji.get('objets/tableau-soleil').regular+' Témoignages', route:'overview/temoignages')}

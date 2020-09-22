@@ -3,6 +3,7 @@
 <%= divGoto(EMO_TRAVAIL+ISPACE+'Travail courant', route:'bureau/travail', id:'goto-travail') %>
 <%= divGoto(EMO_PUNAISE+ISPACE+('Notifications%{non_vus}' % {non_vus: pastille_notifications_non_vues}), route:'bureau/notifications', id:'goto-notifications') %>
 <%= MainLink[:frigo].with(pastille:pastille_messages_frigo_non_vus, id:'goto-frigo', picto:true, class:'goto' ) %>
+<%= divGoto(EMO_OUTILS+ISPACE++' Outils d’écriture', route:'outils/home') %>
 <%= divGoto(EMO_PILE_LIVRES.regular+ISPACE+'Documents', id:'goto-documents', route:'bureau/documents') %>
 <%= divGoto((femme? ? EMO_ETUDIANTE.regular : EMO_ETUDIANT.regular)+ISPACE+'Profil', id:'goto-profil', route:'user/profil') %>
 <%= divGoto(EMO_ROUE_DENTEE+ISPACE+'Préférences', route:'bureau/preferences', id:'goto-preferences') %>
