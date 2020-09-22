@@ -55,6 +55,7 @@ class Aide
     410 => {hname: 'Échéance du travail'},
     35  => {hname: 'Transmission des documents de travail'},
     36  => {hname: 'Comment recharger ses commentaires ?'},
+    710 => {hname: 'Les outils d’écriture'},
 
     # ---------------------------------------------------------------------
     'documents'     => {hname: 'Les documents de travail', titre: true},

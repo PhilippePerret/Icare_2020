@@ -52,7 +52,7 @@ class HTML
 
 #{divGoto(Emoji.get('objets/sablier-coule').regular+' Activité', route:'overview/activity')}
 
-#{divGoto('Nouveautés', route:'overview/nouveautes')}
+#{divGoto(Emoji.get('machine/validator').regular+' Nouveautés', route:'overview/nouveautes')}
     HTML
   end
 end #/HTML
