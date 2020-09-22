@@ -14,7 +14,7 @@ class Admin::Operation
     opts[3]   = '1'
     opts[16]  = '5'
     db_compose_update('users', owner.id, {options: opts})
-    Ajax << {message: "#{owner.pseudo} a été marqué détruit#{owner.fem(:e)}."}
+    Ajax << {message: "#{owner.pseudo} a été marqué#{owner.fem(:e)} détruit#{owner.fem(:e)}."}
   rescue Exception => e
     Ajax << {error: e.message + " --- short_value: #{short_value.inspect}"}
     log(e)
