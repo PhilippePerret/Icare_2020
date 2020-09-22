@@ -37,14 +37,22 @@
     <div id="short_value-txt" class="small"></div>
     <input type="text" id="short_value" value="" class="short errorizable" />
   </div>
+
   <div id="medium_value-div" class="hidden">
     <div id="medium_value-txt" class="small"></div>
     <input type="text" id="medium_value" value="" class="errorizable" />
   </div>
+
+  <div id="select_value-div" class="hidden">
+    <div id="select_value-txt" class="small"></div>
+    <select class="errorizable" name="select_value" id="select_value"></select>
+  </div>
+
   <div id="long_value-div" class="hidden">
     <div id="long_value-txt" class="small"></div>
     <textarea id="long_value" rows="8" cols="80" class="errorizable"></textarea>
   </div>
+  
   <div id="" class="row buttons">
     <button type="button" class="main btn" onclick="executeOperation()"><%= UI_TEXTS[:btn_execute_operation] %></button>
   </div>

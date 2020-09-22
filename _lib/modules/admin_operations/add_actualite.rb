@@ -6,7 +6,13 @@
 class Admin::Operation
   def add_actualite
     self.admin_required
-    Actualite.add(type:medium_value, user_id:owner.id, message:long_value)
-    Ajax << {message: "Actualité “#{long_value}” de type #{medium_value} ajoutée pour #{owner.pseudo}."}
+    data_actu = {type:select_value, user_id:(owner||phil).id, message:long_value}
+    if short_value # une date différente de maintenant
+      j, m, a = short_value.split(/[\/ ]/)
+      a ||= Time.now.year
+      data_actu.merge!(date: Time.new(a.to_i, m.to_i, j.to_i))
+    end
+    Actualite.add(data_actu)
+    Ajax << {message: "Actualité “#{data_actu[:message]}” de type #{data_actu[:type]} ajoutée pour #{(owner||phil).pseudo}."}
   end #/ add_actualite
 end #/Admin::Operation

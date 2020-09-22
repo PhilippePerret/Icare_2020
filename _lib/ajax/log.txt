@@ -34,3 +34,39 @@ DATABASE = icare_test
 <= Chargement des modules
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
+--- [2020-09-22 08:51:23 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-09-22 08:54:14 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-09-22 08:55:04 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-09-22 09:42:53 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-09-22 09:50:07 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-09-22 09:50:44 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test

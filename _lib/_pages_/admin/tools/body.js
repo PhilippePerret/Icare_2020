@@ -2,13 +2,16 @@
 /*
   Module très important pour la partie administration.
 */
-const OPES_KEYS = ['long_value', 'medium_value','short_value']
+const OPES_KEYS = ['long_value', 'medium_value','short_value', 'select_value'];
 
 // Appelé pour exécuter l'opération
 function executeOperation(){
   const data = {}
   // User choisi
   data.icarien = Number(document.querySelector('#icariens').value);
+  if (data.icarien == 0) {// pas d'icarien choisi
+    delete data.icarien
+  }
   // Opération choisie
   data.operation = document.querySelector('#operations').value
   // Valeurs transmises
@@ -97,20 +100,35 @@ function onToggleCbStatut(cb, ev) {
 }
 
 /*
-  Méthode appelée quand on choisit un
+  Méthode appelée quand on choisit une opération
 */
 function onChooseOperation(menu_operations){
   const opid = menu_operations.value
   const opdata = DATA_OPERATIONS[opid]
   document.querySelector('#div-fields').classList.remove('hidden');
   OPES_KEYS.forEach(key => {
+    console.log("Traitement clé '%s'", key)
     const div = document.querySelector(`#${key}-div`) ;
     const txt = document.querySelector(`#${key}-txt`) ;
     const fld = document.querySelector(`#${key}`) ;
     fld.value = "";
     if ( opdata[key] ) {
       div.classList.remove('hidden')
-      txt.innerHTML = opdata[key]
+      if (key == 'select_value'){
+        // Traitement spécial d'un menu de valeurs (sa donnée contient :values,
+        // :default et :message)
+        txt.innerHTML = opdata[key].message;
+        fld.innerHTML = '';
+        opdata[key].values.forEach( paire => {
+          var option = document.createElement('OPTION')
+          option.innerHTML = paire[1];
+          option.value = paire[0];
+          fld.appendChild(option)
+        })
+      } else {
+        // Traitement des champs textes (short, medium, long)
+        txt.innerHTML = opdata[key]
+      }
     } else {
       div.classList.add('hidden')
     }

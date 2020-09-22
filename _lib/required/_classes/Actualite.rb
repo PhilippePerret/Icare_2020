@@ -59,15 +59,18 @@ class << self
   #             ou Hash         Si c'est une table, elle doit contenir :type, :user, :message
   # +user_id+   Integer|User    L'icarien ou son identifiant
   # +message+   String          Le message à enregistrer
-  def add(type, user_id = nil, message = nil)
+  # +date+      Time            La date de l'actualité, si autre que maintenant
+  def add(type, user_id = nil, message = nil, date = Time.now)
     if type.is_a?(Hash)
       user_id = type[:user]||type[:user_id]
       message = type[:message]
+      date    = type[:date]
       type    = type[:type]
     else
       user_id = user_id.id if user_id.is_a?(User)
     end
-    valeurs = [type, user_id, message, now = Time.now.to_i, now]
+    date = date.to_i.to_s
+    valeurs = [type, user_id, message, date, date]
     db_exec(REQUEST_CREATE, valeurs)
   end #/ add
   alias :create :add

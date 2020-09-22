@@ -3,8 +3,13 @@
 =begin
   Constantes pour les outils icariens.
 =end
+TYPES_ACTUS = Actualite::DATA_ACTU.collect do |typ, dactu|
+  [typ, dactu[:name]]
+end
 DATA_OPERATIONS_ICARIENS = {
-  'add_actualite'   => {id:'add_actualite',   name:'Ajouter actualité',         for: :all,      required: [:long_value, :medium_value], medium_value:('Type de l’actualité, parmi %s.' % Actualite.types_explained), long_value: "Message d'actualité à attribuer à l'icarien sélectionné. Le message sera évalué, donc on peut utiliser des `\#{icarien.pseudo}` à l'intérieur (code ruby évalué comme dans un String normal)."},
+  # Dans 'required', il ne faut mettre que les champs absolument requis.
+  # Pour les autres, la simple définition du texte du champ l'ajoutera
+  'add_actualite'   => {id:'add_actualite',   name:'Ajouter actualité',         for: :all,      required: [:long_value], short_value:"Date JJ/MM (si différente d’aujourd’hui)", select_value: {values: TYPES_ACTUS, default:"SIMPLEMESS", message:"Type de l’actualité"}, long_value: "Message d'actualité à attribuer à l'icarien sélectionné (ou à Phil si aucun). Le message sera évalué, donc on peut utiliser des `\#{icarien.pseudo}` à l'intérieur (code ruby évalué comme dans un String normal)."},
   'arret_module'    => {id:'arret_module',    name:'Arrêt module',              for: :actif,    required: [:icarien], long_value: 'Si un texte (en HTML) est écrit ci-dessous, il sera considéré comme le supplément d’un mail à envoyer à l’icarien du module l’informant de l’arrêt/la fin de son module. Dans le cas contraire, le module sera simplement arrêté.'},
   'change_module'   => {id:'change_module',   name:'Changement module',         for: :actif,    required: [:short_value, :icarien, :medium], short_value: 'ID du nouveau module absolu d’apprentissage (on peut le trouver avec l’outils Bureau > Édition des étapes, c’est le nombre entre parenthèses après le nom du module)', medium_value: 'Numéro de la nouvelle étape dans le nouveau module (on peut l’obtenir avec l’outil Burea > Édition des étapes)'},
   'code_sur_table'  => {id:'code_sur_table',  name:'Exec code on data',         for: :all,      required: [:long_value], short_value: nil, medium_value: nil, long_value: "Code à exécuter <strong>sur chaque icarien de la table</strong>, sur la table #{ONLINE ? 'ONLINE' : 'OFFLINE'} puisse que vous êtes #{ONLINE ? 'ONLINE' : 'OFFLINE'}.<br><br><code>User.each do |cu|<br>&nbsp;&nbsp;cu.&lt;what&gt;</code>"},

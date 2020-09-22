@@ -62,8 +62,13 @@ end #/ user
 #
 # ---------------------------------------------------------------------
 def owner
-  @owner ||= User.get(Ajax.param(:icarien))
+  @owner ||= begin
+    User.get(Ajax.param(:icarien)) if Ajax.param(:icarien)
+  end
 end #/ owner
+def select_value
+  @select_value ||= Ajax.param(:select_value)
+end #/ select_value
 def short_value
   @short_value ||= Ajax.param(:short_value)
 end #/ short_value
