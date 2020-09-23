@@ -129,7 +129,7 @@ def name
   @name ||= File.basename(init_relpath)
 end #/ name
 def relpath
-  @relpath ||= "#{init_relpath}#{@is_shadowed ? '-shadowed' : ''}.png"
+  @relpath ||= "#{init_relpath}#{@is_shadowed ? '-shadowed' : ''}.jp2"
 end #/ relpath
 def path
   @path ||= File.join('.','img','Emojis',relpath)
