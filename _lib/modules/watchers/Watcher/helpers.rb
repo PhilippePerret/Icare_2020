@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Helpers pour construire les notifications
 =end
@@ -85,25 +86,27 @@ class Watcher < ContainerClass
   # Entête de la notification à afficher
   def bande_infos
     inf = []
-    inf << "<span class='user'><strong>#{owner.pseudo}</strong> <span class='small'>(##{owner.id})</span></span>" if user.admin?
+    if user.admin?
+      inf << "<span class='user'><strong>#{owner.linked}</strong> <span class='small'>(##{owner.id})</span></span>"
+    end
     inf << Tag.span(text:titre, class:'titre')
     inf.join
   end #/ bande_infos
 
   # Corps de la notification
   def body(erbpath)
-    b = deserb(erbpath, self)
+    b = [deserb(erbpath, self)]
     # Si c'est l'administrateur qui visite, on ajoute un bouton pour
     # détruire ou éditer le watcher
     if user.admin?
       btns = []
-      btns << '<div style="clear:both"></div>'.freeze
+      btns << '<div style="clear:both"></div>'
       btns << Tag.lien(route:"#{route.to_s}?op=destroy&wid=#{id}", titre:'détruire', class:'btn tiny warning')
       btns << Tag.lien(route:"#{route.to_s}?op=edit&wid=#{id}", titre:'éditer', class:'btn tiny')
-      btns = "<div class='discret-tool small right mt2'>#{btns.join}</div>".freeze
-      b += btns
+      btns = "<div class='discret-tool small right mt2'>#{btns.join}</div>"
+      b << btns
     end
-    return b
+    return b.join
   end #/ body
 
 end #/Watcher < ContainerClass

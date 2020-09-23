@@ -1,7 +1,8 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class HTML
   def titre
-    "#{RETOUR_ADMIN}#{EMO_PORTE_VOIX.page_title}#{ISPACE}Notifications".freeze
+    "#{RETOUR_ADMIN}#{EMO_PORTE_VOIX.page_title}#{ISPACE}Notifications"
   end
   # Code à exécuter avant la construction de la page
   def exec

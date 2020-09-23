@@ -1,11 +1,17 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Module User pour les helpers methods
 =end
 class User
 
+  # Retourne le pseudo de l'icarien lié à son profil
+  def linked
+    @linked ||= "<a href=\"user/profil?uid=#{id}\" target=\"_blank\">#{pseudo}</a>"
+  end #/ linked
+
   def ref
-    @ref ||= "#{pseudo} <span class='small'>(##{id})</span>".freeze
+    @ref ||= "#{pseudo} <span class='small'>(##{id})</span>"
   end #/ ref
 
   # Permet d'envoyer un message mail à l'icarien

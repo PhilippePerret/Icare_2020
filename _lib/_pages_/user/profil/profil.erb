@@ -2,7 +2,7 @@
   <%= StateList.button_modify('user/profil/edit',{title:'Modifier les données du profil'}) %>
   <% [
     ['Pseudo', pseudo],
-    ['Mail', data[:mail]],
+    ['Mail', TAG_MAILTO % {mail:data[:mail], pseudo:data[:mail]}],
     ['Inscription', formate_date(data[:created_at])],
     ['Mot de passe', ('<a href="user/change_password">'+UI_TEXTS[:btn_lien_change_password]+'</a>').freeze],
     ['Module courant', module_courant_name],
