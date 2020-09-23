@@ -9,6 +9,10 @@ class User
       histo = []
 
       # Inscription et fin
+      # ------------------
+      # 23 09 2020 Ici il s'est produit une erreur avec le +created_at+ qui
+      # n'était pas défini, comme si c'était un user avec des données raccourcies
+      # ce qui normalement ne peut pas arriver quand on est dans cette partie.
       histo << LineHisto.new(created_at, (EMO_PAPILLON.texte+ISPACE+'Inscription à l’atelier Icare'), 0)
       if date_sortie
         histo << LineHisto.new(date_sortie 'Fin du travail à l’atelier', 0)

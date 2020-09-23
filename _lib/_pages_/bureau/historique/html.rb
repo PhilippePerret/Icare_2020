@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
 
   [1] Cette page/section est un peu particulière dans le sens où elle est
@@ -11,7 +12,7 @@
 
 class HTML
   def titre
-    "#{RETOUR_BUREAU}#{EMO_CALENDAR.page_title+ISPACE}Historique de travail#{user_is_owner? ? '' : " de #{owner.pseudo}"}".freeze
+    "#{RETOUR_BUREAU}#{EMO_CALENDAR.page_title+ISPACE}Historique de travail#{user_is_owner? ? '' : " de #{owner.pseudo}"}"
   end
   # Code à exécuter avant la construction de la page
   def exec
