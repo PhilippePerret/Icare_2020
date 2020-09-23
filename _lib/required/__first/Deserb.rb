@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class Deserb
 =end
@@ -7,7 +8,7 @@ require './_lib/required/__first/handies/files'
 
 ERRORS = {} unless defined?(ERRORS)
 ERRORS.merge!(
-  erb_error_with: 'ERB ERROR AVEC %s'.freeze,
+  erb_error_with: 'ERB ERROR AVEC %s',
 )
 
 # Déserbe le fichier de chemin relatif +relpath+ (par rapport à dossier courant)
@@ -24,13 +25,12 @@ class << self
   #   {String}  Le chemin relatif au fichier ERB, dans +dossier+
   #   {String}  Ou le code à évaluer, s'il contient '<%='
   def deserb(path, owner, dossier = nil)
-    # log("Deserb::deserb(path:#{path}, dossier:#{dossier.inspect})")
     if path.include?('<%')
       code = path
     else
-      path || raise("Il faut fournir le chemin relatif à la vue !".freeze)
+      path || raise("Il faut fournir le chemin relatif à la vue !")
       path = path.to_s
-      path += '.erb' unless path.end_with?('.erb')
+      path = "#{path}.erb" unless path.end_with?('.erb')
       path = File.join(dossier, path) unless File.exists?(path)
       code = file_read(path)
     end
@@ -39,11 +39,11 @@ class << self
     log(ERRORS[:erb_error_with] % path)
     log(e)
     if defined?(Tag)
-      return Tag.div(text: "#{e.message} (#{File.basename(path)})".freeze, class:'warning')
+      return Tag.div(text: "#{e.message} (#{File.basename(path)})", class:'warning')
     else
       # Le cronjob, par exemple
       puts ERRORS[:erb_error_with] % path
-      puts e.backtrace.join("\n")
+      puts e.backtrace.join(RC)
     end
   end
 
