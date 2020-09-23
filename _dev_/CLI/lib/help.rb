@@ -14,11 +14,14 @@ AIDE = <<-BASH
       Pour dégeler un gel (un état de l'atelier particulier)
       Ne pas mettre d'argument pour voir la liste de tous les gels.
 
-  #{'icare feed[ <what>]'.jaune}
+  #{'icare read[ <what>]'.jaune}
 
-      Pour "nourrir" la base de données icare_test avec des
-      valeurs appropriées.
+      Pour lire le journal.log, le traceur, le manuel, etc.
 
+  #{'icare goto la/route'.jaune}
+
+      Pour rejoindre la route voulue dans un navigateur. Ajouter l'option
+      -o/--online pour la rejoindre sur le site distant.
 
   LISTE DES COMMANDES
   -------------------
