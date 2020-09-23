@@ -1,30 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-=begin
-  Script de traitement des images, pour obtenir une meilleur conformité
-  avec les performances. L'idée est de produire plusieurs tailles pour
-  chaque image afin de permettre un choix par le browser.
-  L'idée est d'utiliser une balise :
-    <img src="..." srcset="..., ..., ..." size />
-=end
-
-FOLDER_IMAGES = File.join('./img')
-
-DATA_SIZES = {
-  huge:         {name: 'huge',        width: 4000,  height: 2000},
-  extra_large:  {name: 'extra-large', width: 2560,  height: 1600},
-  very_large:   {name: 'very-large',  width: 1680,  height: 1050},
-  large:        {name: 'large',       width: 1080,  height: 680},
-  bigger:       {name: 'bigger',      width: 500,   height: 500},
-  big:          {name: 'big',         width: 250,   height: 250},
-  regular:      {name: 'regular',     width: 100,   height: 100},
-  small:        {name:'small',        width: 32,    height: 32},
-  very_small:   {name: 'very-small',  width: 20,    height: 20},
-}
-# Comme une liste (pour être sûr du classement), celle qui servira
-# à savoir les tailles qui doivent être faites.
-DATA_SIZES_ARRAY = DATA_SIZES.collect{|ids, ds| ds.merge(id: ids)}.sort_by{|ds| ds[:width]}.reverse
-
+require_relative 'constants'
 class Image
 class << self
 
@@ -74,6 +50,27 @@ def sizes_required
     ary
   end
 end #/ sizes_required
+
+# ---------------------------------------------------------------------
+#
+#   Méthodes d'helper
+#
+# ---------------------------------------------------------------------
+
+# Retourne la tag complexe pour l'image
+def tag
+  src_set = sizes_required.collect do |size_id|
+    data_size = DATA_SIZES[size_id]
+    "#{path_size(data_size[:name])} #{data_size[:width]}w"
+  end.join(', ')
+  t = "<img src=\"#{path}\" srcset=\"#{src_set}\" />"
+  puts t
+end #/ tag
+# ---------------------------------------------------------------------
+#
+#   Data utiles
+#
+# ---------------------------------------------------------------------
 
 # La propriété (:width ou :height) qu'il faut prendre en référence
 def ref_prop
@@ -148,18 +145,3 @@ def init_folder
   @init_folder ||= File.dirname(path)
 end #/ init_folder
 end #/Image
-
-Dir["#{FOLDER_IMAGES}/**/*.{png,jpg}"].each do |imgpath|
-  img = Image.new(imgpath)
-  STDOUT.write "🌅 IMAGE #{img.affixe}… "
-  if img.all_exists?
-    puts "déjà traitée."
-    next
-  end
-  # On commence par transformer l'image au format jpeg2000
-  img.convert_to_jpeg2000
-  # Ensuite, on en fait différents formats (tailles)
-  img.product_sizes
-  puts "Tailles produites : #{img.sizes_required.join(', ')}"
-  # break # Pour essayer une seule
-end

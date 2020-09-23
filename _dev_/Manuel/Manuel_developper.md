@@ -766,6 +766,25 @@ MainLink[:contact].with(pastille: 'la pastille')
 
 > Pour la gestion des faux Émojis, cf. [faux émojis](#faux-emojis)
 
+
+
+
+
+### Les images
+
+Les images doivent toutes être au format JPEG 2000 (qui permet la transparence comme les PNG). Elles doivent comporter plusieurs tailles pour permettre au browser de choisir la meilleure taille.
+
+Balise à utiliser : 
+
+~~~html
+<img src="path/to/originale" srcset="originale-<size-name>.jp2 <size>w"
+~~~
+
+Voir le dossier `_div_/Image/` qui contient des scripts et de l'aide pour les images (en attendant de les basculer en CLI).
+
+
+
+
 ### Méthodes d'helpers générales
 
 Le module `LIB/required/__start/helpers/string_helpers_module.rb` qui définit le module `StringHelpersMethods` permet d'ajouter les méthodes d'helpers générales à toutes les classes qui en ont besoin.
