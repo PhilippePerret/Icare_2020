@@ -128,8 +128,11 @@ end #/ get_initial_size
 #
 # ---------------------------------------------------------------------
 def path_size(size_name)
-  File.join(folder, "#{affixe}-#{size_name}.jp2")
+  File.join(folder, "#{affixe}-#{size_name}.png")
 end #/ path_size
+# def path_size(size_name)
+#   File.join(folder, "#{affixe}-#{size_name}.jp2")
+# end #/ path_size
 def jpg2000_path
   @jpg2000_path ||= File.join(folder,"#{affixe}.jp2")
 end #/ jpg2000_path

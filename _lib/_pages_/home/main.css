@@ -10,19 +10,19 @@ div#bandeau {
   background-size:cover;
   height:15em;
 }
-@media only screen and (max-width: 250px) {
+@media only screen and (max-width:250px) {
   div#bandeau {background-image: url('//www.atelier-icare.net/img/fond-home/fond-home-big.jpg')}
 }
-@media only screen and (max-width: 500px) {
+@media only screen and (min-width:250px) and (max-width:500px) {
   div#bandeau {background-image: url('//www.atelier-icare.net/img/fond-home/fond-home-bigger.jpg')}
 }
-@media only screen and (max-width: 1080px) {
+@media only screen and (min-width:500px) and (max-width:1080px) {
   div#bandeau {background-image: url('//www.atelier-icare.net/img/fond-home/fond-home-large.jpg')}
 }
-@media only screen and (max-width: 1680px) {
+@media only screen and (min-width:1080px) and (max-width:1680px) {
   div#bandeau {background-image: url('//www.atelier-icare.net/img/fond-home/fond-home-very-large.jpg')}
 }
-@media only screen and (min-width: 1680px) {
+@media only screen and (min-width:1680px) {
   div#bandeau {background-image: url('//www.atelier-icare.net/img/fond-home/fond-home.jpg')}
 }
 

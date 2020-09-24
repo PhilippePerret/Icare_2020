@@ -115,27 +115,52 @@ end #/ full?
 TAILLES = {
   mini: 10, small:20, texte: 'height:1.3em;', regular:30, title:60, page_title:45, large:120, big:240, logo:30
 }
+# NEW_TAILLES correspond à TAILLES ci-dessous mais tient compte du nouveau
+# traitement par images de tailles différentes (pour optimisation du
+# chargement). Donc, ici, chaque "taille" (:mini, :small, etc.) renvoie à deux
+# chose :
+# {
+#   width:    {Integer} La width qui devra être appliquée
+#   suffix:   {String|Symbol} La taille string de l'image ("large", "bigger", etc.)
+# }
+NEW_TAILLES = {
+  mini:       {width: 10,   size_name: 'very-small'},
+  small:      {width: 20,   size_name: 'very-small'},
+  texte:      {width: 'height:1.3em;', size_name: 'small'},
+  regular:    {width: 30,   size_name: 'small'},
+  logo:       {width: 30,   size_name: 'small'},
+  title:      {width: 60,   size_name: 'regular'},
+  none:       {width: nil,  size_name: 'regular'},
+  page_title: {width: 45,   size_name: 'regular'},
+  large:      {width: 120,  size_name: 'big'},
+  big:        {width: 240,  size_name: 'big'},
+}
 def build taille
+  log("Taille : #{taille.inspect}")
+  data_taille = NEW_TAILLES[(taille.to_s.nil_if_empty||'none').to_sym]
+  size_name = data_taille[:size_name]
   if full?
     # En format full, il faut appliquer les tailles. C'est pour les mails par exemple
-    sty = TAILLES[taille]
-    sty = "width:#{sty}px" unless sty.is_a?(String)
-    IMG_TAG_STYLED % [absolute_path, name, sty]
+    sty = data_taille[:width]
+    sty = "width:#{sty}px" if sty && sty.is_a?(Integer)
+    IMG_TAG_STYLED % [absolute_path(size_name), name, sty]
   else
-    Emoji::IMG_TAG % [absolute_path, name, taille.to_s]
+    Emoji::IMG_TAG % [absolute_path(size_name), name, taille.to_s]
   end
 end #/ build
 def name
   @name ||= File.basename(init_relpath)
 end #/ name
-def relpath
-  @relpath ||= "#{init_relpath}#{@is_shadowed ? '-shadowed' : ''}/#{name}#{@is_shadowed ? '-shadowed' : ''}.jp2"
+def relpath(size_name)
+  @relpath ||= begin
+    "#{init_relpath}#{@is_shadowed ? '-shadowed' : ''}/#{name}#{@is_shadowed ? '-shadowed' : ''}#{size_name ? "-#{size_name}" : ""}.png"
+  end
 end #/ relpath
 def path
   @path ||= File.join('.','img','Emojis',relpath)
 end #/ path
-def absolute_path
-  @absolute_path ||= ABSOLUTE_PATH % relpath
+def absolute_path(size_name)
+  @absolute_path ||= ABSOLUTE_PATH % relpath(size_name)
 end #/ absolute_path
 end #/Emoji
 

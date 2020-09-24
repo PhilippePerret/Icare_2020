@@ -4,6 +4,16 @@ Options -Indexes
 
 DirectoryIndex index.rb
 
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 7200 seconds"
+ExpiresByType image/png "access plus 31536000 seconds"
+ExpiresByType image/jpeg "access plus 31536000 seconds"
+ExpiresByType image/jpeg "access plus 31536000 seconds"
+ExpiresByType text/css "access plus 2592000 seconds"
+ExpiresByType text/javascript "access plus 2592000 seconds"
+</IfModule>
+
 Options +FollowSymlinks
 RewriteEngine on
 
