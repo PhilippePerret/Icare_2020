@@ -129,11 +129,11 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :datastr) do
   end #/ pseudo_if_identified
 
   def ip_formated
-    if ip.length > 15
-      ip[0...15] + '…'
+    if ip.length > 25
+      ip[0...25] + '…'
     else
       ip
-    end.ljust(16)
+    end.ljust(26)
   end #/ ip_formated
   def formated_message
     if error?
