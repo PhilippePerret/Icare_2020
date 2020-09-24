@@ -102,10 +102,10 @@ class HTML
 
     # Chemin d'accès au fichier contenant tous les CSS
     def all_css_path
-      @all_css_path ||= File.join(APP_FOLDER,'css','all.css')
+      @all_css_path ||= File.join(APP_FOLDER,'css_all.css')
     end #/ all_css_path
     def all_css_relpath
-      @all_css_relpath ||= './css/all.css'
+      @all_css_relpath ||= './css_all.css'
     end #/ all_css_relpath
     def variables_css_path
       @variables_css_path ||= File.join(APP_FOLDER,'css','_variables.css')
