@@ -60,8 +60,8 @@ class HTML
   <meta name="google-site-verification" content="V_QWKRM4k87RFk3b4UnHnW5k37ev7NJGZSULi_5_dDk" />
   <title>Atelier Icare#{@raw_titre ? " | #{@raw_titre}" : ""}</title>
   <base href="#{App::URL}/">
-  <link rel="shortcut icon" href="https://www.atelier-icare.net/img/favicon.png?2020" type="image/png">
-  <link rel="icon" href="https://www.atelier-icare.net/img/favicon.png?2020" type="image/png">
+  <link rel="shortcut icon" href="https://www.atelier-icare.net/img/favicon.png?v=#{App.version}" type="image/png">
+  <link rel="icon" href="https://www.atelier-icare.net/img/favicon.png?v=#{App.version}" type="image/png">
   #{css_tags}
   <script type="text/javascript">
     #{@raw_js}
