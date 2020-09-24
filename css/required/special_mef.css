@@ -176,6 +176,7 @@ div.float-tdm {
   /* border:1px solid var(--dark-color-normal); */
   border-radius:1em;
   padding:1em 2em;
+  z-index:100;
 }
 
 @media only screen and (max-width: 768px) {
