@@ -8,6 +8,7 @@
 class Ticket
 class << self
 
+  # Return l'instance {Ticket} du ticket d'identifiant +tid+
   # Retourne NIL si le ticket n'existe pas/plus
   def get tid
     dticket = db_get('tickets', {id: tid.to_i})
@@ -37,11 +38,7 @@ end #/ initialize
 def save
   now = Time.now.to_i
   data.merge!(created_at: now.to_s, updated_at:now.to_s)
-  valeurs = data.values
-  columns = data.keys.join(VG)
-  interro = Array.new(valeurs.count,'?').join(VG)
-  request = "INSERT INTO tickets (#{columns}) VALUES (#{interro})"
-  db_exec(request, valeurs)
+  db_compose_insert('tickets', data)
   @data.merge!(id: db_last_id)
 end #/ save
 

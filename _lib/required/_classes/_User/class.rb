@@ -91,7 +91,12 @@ class << self
     self.current = self.get(duser[:id])
     log "USER RECONNECTED : #{current.pseudo} (##{current.id})"
     # Si l'utilisateur est un administrateur, on le traite tel quel
-    init_as_admin if current.admin?
+    if current.admin?
+      init_as_admin
+    else
+      # Un utilisateur normal
+      current.mail_has_been_confirmed? || erreur(MESSAGES[:confirmation_mail_required] % current.pseudo)
+    end
   rescue Exception => e
     erreur e.message
     session.delete('user_id') # pour ne plus avoir le problème
@@ -105,4 +110,20 @@ class << self
   end
 
 end #/<<self
+# ---------------------------------------------------------------------
+#
+#   INSTANCE
+#
+# ---------------------------------------------------------------------
+# Return TRUE si le mail a été confirmé OU si l'user joue un ticket pour
+# confirmer ce mail.
+# La tournure est assez compliquée pour savoir si le ticket concerne la
+# confirmation du mail, mais cet bout de code ne sera joué QUE lorsque le mail
+# de l'icarien n'aura pas encore été validé, donc très rarement.
+def mail_has_been_confirmed?
+  options[2] == '1' || begin
+    require_module('user/validation_mail')
+    want_to_run_ticket_validation_mail?
+  end
+end #/ mail_confirmed?
 end #/User

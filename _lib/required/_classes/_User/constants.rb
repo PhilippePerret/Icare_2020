@@ -18,3 +18,7 @@ DATA_STATUT = {
   pause:      {value:8, name:'en pause',  icarien:true}
 }
 end #/User
+
+MESSAGES.merge!({
+  confirmation_mail_required: "%s, vous devez confirmer votre adresse mail à l’aide du lien qui vous a été transmis par mail.<br>Vous avez perdu ce mail ? Rejoignez la <a href=\"bureau/notifications\">section de vos notifications</a> pour vous renvoyer ce mail."
+})

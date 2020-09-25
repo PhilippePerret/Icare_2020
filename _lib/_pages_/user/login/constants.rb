@@ -12,7 +12,3 @@ UI_TEXTS.merge!({
   btn_singup: 'S’inscrire',
   btn_forgottent_password: 'Mot de passe oublié',
 })
-
-MESSAGES.merge!({
-  confirmation_mail_required: "%s, vous devez confirmer votre adresse mail à l’aide du lien qui vous a été transmis par mail."
-})

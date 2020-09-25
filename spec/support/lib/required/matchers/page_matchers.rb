@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Matchers de page (Capybara::Session)
 =end
@@ -13,10 +14,10 @@ RSpec::Matchers.define :have_no_erreur do
     end
   end
   description do
-    "La page ne contient aucun message d'erreur.".freeze
+    "La page ne contient aucun message d'erreur."
   end
   failure_message do
-    "La page ne devrait contenir aucune erreur. Elle contient : #{@erreurs_messages}".freeze
+    "La page ne devrait contenir aucune erreur. Elle contient : #{@erreurs_messages}"
   end
 end
 RSpec::Matchers.alias_matcher :have_aucune_erreur, :have_no_erreur
@@ -24,7 +25,8 @@ RSpec::Matchers.alias_matcher :have_aucune_erreur, :have_no_erreur
 
 RSpec::Matchers.define :have_error do |err_msg|
   match do |page|
-    err_msg || raise("Il faut fournir le message d'erreur à trouver !".freeze)
+    err_msg || raise("Il faut fournir le message d'erreur à trouver !")
+    err_msg = err_msg.gsub(/<br ?>/,"\n").strip_tags
     if page.has_css?('div.errors')
       # if page.has_css?('div.errors', text: /#{Regexp.escape(err_msg)}/)
       if page.has_css?('div.errors', text: err_msg.gsub(/ /,' '))
@@ -35,23 +37,23 @@ RSpec::Matchers.define :have_error do |err_msg|
         return false
       end
     else
-      @ajout = "Elle ne contient aucun message d’erreur.".freeze
+      @ajout = "Elle ne contient aucun message d’erreur."
       return false
     end
   end
   failure_message do
-    "La page devrait contenir le message d’erreur “#{err_msg}”. #{@ajout}".freeze
+    "La page devrait contenir le message d’erreur “#{err_msg}”. #{@ajout}"
   end
   description do
-    "La page contient bien le message d’erreur “#{err_msg}”.".freeze
+    "La page contient bien le message d’erreur “#{err_msg}”."
   end
 end
 RSpec::Matchers.alias_matcher :have_erreur, :have_error
 
 RSpec::Matchers.define :have_message do |msg|
   match do |page|
-    msg || raise("Il faut fournir le message à trouver !".freeze)
-    msg = msg.strip_tags
+    msg || raise("Il faut fournir le message à trouver !")
+    msg = msg.gsub(/<br ?>/,"\n").strip_tags
     if page.has_css?('section#messages div.notices')
       # if page.has_css?('div.errors', text: /#{Regexp.escape(msg)}/)
       if page.has_css?('section#messages div.notices', text: msg.gsub(/ /,' '))
@@ -62,15 +64,15 @@ RSpec::Matchers.define :have_message do |msg|
         return false
       end
     else
-      @ajout = "Elle ne contient aucun message.".freeze
+      @ajout = "Elle ne contient aucun message."
       return false
     end
   end
   failure_message do
-    "La page devrait contenir le message “#{msg}”. #{@ajout}".freeze
+    "La page devrait contenir le message “#{msg}”. #{@ajout}"
   end
   description do
-    "La page contient bien le message  “#{msg}”.".freeze
+    "La page contient bien le message  “#{msg}”."
   end
 end
 

@@ -5,8 +5,6 @@ class << self
   # L'instance Route courante
   def current
     @current ||= begin
-      log("cgi.params['route_init'] = #{cgi.params['route_init'].inspect}")
-      log("cgi.params['ri'] = #{cgi.params['ri'].inspect}")
       new(cgi.params['route_init'][1]||cgi.params['ri'][1])
     end
   end
