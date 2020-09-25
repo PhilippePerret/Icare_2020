@@ -10,6 +10,7 @@ MESSAGES = {
 
 DATA_WHAT_READ = [
   {name:'Journal (log)', value: :log},
+  {name:'Journal (cron)', value: :cronjob},
   {name:'Traceur', value: :tracer},
   {name:'Manuel (pdf)', value: :manuel_dev},
   {name:'Manuel (md)', value: :manuel_dev_md},
@@ -35,10 +36,15 @@ class << self
 
   # Lire le fichier journal
   def read_log
-    path = './www/tmp/logs/journal.log'
+    # path = './www/tmp/logs/journal.log'
     path = './www/tmp/logs/journal2020.log'
     read_it(path)
-  end #/ read_actualites
+  end #/ read_log
+  def read_cronjob
+    path = './www/cronjob/journal.log'
+    # path = './www/tmp/logs/cronjob.log'
+    read_it(path)
+  end #/ read_cronjob
   def read_tracer
     path = './www/tmp/logs/tracer.log'
     read_it(path)
@@ -64,7 +70,7 @@ class << self
 
   def read_it(path)
     cmd = <<-CMD.strip
-    ssh icare@ssh-icare.alwaysdata.net ruby <<SSH
+    ssh icare@ssh-icare.alwaysdata.net ruby << SSH
 if !File.exists?('#{path}')
   puts "L'élément '#{path}' est introuvable…"
 elsif File.directory?('#{path}')
@@ -72,9 +78,11 @@ elsif File.directory?('#{path}')
 else
   puts File.open('#{path}','rb'){|f|f.read}
 end
-    SSH
+SSH
     CMD
+    puts "#{RC*2}= Lecture du fichier… ="
     puts `#{cmd}`
+    puts "= / fin lecture fichier =#{RC*2}"
   end #/ read_it
 end # /<< self
 end #/IcareCLI
