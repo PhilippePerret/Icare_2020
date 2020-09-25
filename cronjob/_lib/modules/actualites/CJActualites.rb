@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class CJActualites
   ------------------
@@ -19,7 +20,7 @@ class << self
       rapport("Nombre d'actualités pour la veille : #{actualites_veille.count}")
     end
     # Les données pour le mail
-    datamail = {subject:"Activité du #{Time.veille.to_s(heure:false)}".freeze, message: nil}
+    datamail = {subject:"Activité du #{Time.veille.to_s(heure:false)}", message: nil}
     # puts "datamail quotidien : #{datamail.inspect}"
 
     # Envoyer le mail à l'administrateur
@@ -45,7 +46,7 @@ class << self
       rapport("Nombre d'actualités pour la semaine passée : #{actualites_semaine.count}")
     end
     # Les données d'envoi
-    datamail = {subject:'Activités de la semaine'.freeze, message: nil, to: nil}
+    datamail = {subject:'Activités de la semaine', message: nil, to: nil}
     # puts "datamail hebdo : #{datamail.inspect}"
 
     # Il m'est toujours envoyé
@@ -63,7 +64,7 @@ class << self
     rapport("Nombre d'envois du rapport d'activités hebdomadaire : #{nombre_envois_hebdo}")
   end #/ mail_hebdomadaire
 
-  GABARIT_MAIL_QUOTIDIEN = <<-HTML.strip.freeze
+  GABARIT_MAIL_QUOTIDIEN = <<-HTML.strip
 <p>%{pseudo},</p>
 <p>Veuillez trouver ci-joint la liste des activités du %{date}.</p>
 %{actualites}
@@ -71,7 +72,7 @@ class << self
 <p>🤖 Le bot de l’atelier</p>
   HTML
 
-GABARIT_MAIL_HEBDOMADAIRE = <<-HTML.strip.freeze
+GABARIT_MAIL_HEBDOMADAIRE = <<-HTML.strip
 <p>Veuillez trouver ci-joint la liste des activités de la semaine.</p>
 %{actualites}
 <p>Bien à vous,</p>
@@ -118,7 +119,7 @@ GABARIT_MAIL_HEBDOMADAIRE = <<-HTML.strip.freeze
   # Retourne les actualités de la veille
   def actualites_veille
     @actualites_veille ||= begin
-      request = <<-SQL.strip.freeze
+      request = <<-SQL.strip
   SELECT id, user_id, message, type, created_at
     FROM actualites
     WHERE created_at > "#{Time.veille.to_i}"
@@ -131,7 +132,7 @@ GABARIT_MAIL_HEBDOMADAIRE = <<-HTML.strip.freeze
   def actualites_semaine
     @actualites_semaine ||= begin
       from_time = NOW_S - 7.days
-      request = <<-SQL.strip.freeze
+      request = <<-SQL.strip
   SELECT user_id, message, type, created_at
     FROM actualites
     WHERE created_at > "#{from_time}"
