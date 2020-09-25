@@ -11,8 +11,9 @@ Le Cronjob permet d’effectuer des tâches répétitives sur l’atelier, de fa
 * prévenir l’administration lorsque des erreurs sont survenus à des heures sans surveillance,
 * etc.
 
-Pour ce faire, un `crontab -e` a été réglé sur le site distant pour appeler toutes les heures, entre 22 heures et 4 heures du matin, le fichier [./cronjob/cronjob.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb).
+Pour ce faire, un `crontab -e` a été réglé sur le site distant pour appeler toutes les heures, entre 0 et 4 heures du matin, le fichier [./cronjob/cronjob.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/cronjob.rb).
 
+Le résultat de ce cronjob est enregistré dans `./tmp/logs/cronjog.log` dont il suffit d'utiliser `puts` pour enregistrer des messages.
 
 
 ## Grands Principes
