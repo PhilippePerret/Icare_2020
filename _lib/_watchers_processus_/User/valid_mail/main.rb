@@ -1,8 +1,8 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class Watcher < ContainerClass
   def valid_mail
     user.valide_mail
-    # Noter que le watcher sera automatiquement détruit
   end # / valid_mail
 
   # Méthode appelée pour envoyer à nouveau le message de demande de
@@ -14,7 +14,7 @@ end #/Watcher < ContainerClass
 
 class User
   def valide_mail
-    set_option(2,1)
-    message("Votre mail a été confirmé, merci à vous.".freeze)
+    set_option(2,1,{save:true})
+    message("Votre mail a été confirmé, merci à vous.")
   end #/ valide_mail
 end #/User

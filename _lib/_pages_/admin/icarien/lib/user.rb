@@ -10,7 +10,6 @@ class User
   def statut=(val)
     set_option(16, DATA_STATUT[val][:value])
     @statut = val
-    save(:options)
   end #/ statut=
 
   # ---------------------------------------------------------------------

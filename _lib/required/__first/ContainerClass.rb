@@ -254,10 +254,14 @@ class ContainerClass
   end #/ option?
 
   # Définit la valeur de bit de l'option et l'enregistre si nécessaire
-  def set_option(bit, value, saving = false)
+  # +params+
+  #   :save     true/false      default: true
+  def set_option(bit, value, params = nil)
+    params ||= {}
+    params.key?(:save) || params.merge!(save: true)
     data[:options] = data[:options].ljust(bit+1,'0') unless data[:options].length > bit
     data[:options][bit] = value.to_s
-    save(options: data[:options]) if saving
+    save(options: data[:options]) if params[:save]
     @options = nil
   end #/ set_option
 end #/ContainerClass

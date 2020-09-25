@@ -136,7 +136,6 @@ NEW_TAILLES = {
   big:        {width: 240,  size_name: 'big'},
 }
 def build taille
-  log("Taille : #{taille.inspect}")
   data_taille = NEW_TAILLES[(taille.to_s.nil_if_empty||'none').to_sym]
   size_name = data_taille[:size_name]
   if full?

@@ -39,6 +39,14 @@ class TUser
     click_on 'Notifications'
   end #/ rejoint_ses_notifications
 
+  def fill_and_submit_login_form
+    within("form#user-login") do
+      fill_in('user_mail',    with: mail)
+      fill_in('user_password', with: password)
+      click_on(UI_TEXTS[:btn_login])
+    end
+  end #/ fill_and_submit_login_form
+
 # ---------------------------------------------------------------------
 #
 #   Méthodes d'interaction avec la page
@@ -70,11 +78,7 @@ private
     Capybara.reset_sessions!
     goto_login_form
     expect(page).to have_selector('form#user-login')
-    within("form#user-login") do
-      fill_in('user_mail',    with: mail)
-      fill_in('user_password', with: password)
-      click_on(UI_TEXTS[:btn_login])
-    end
+    fill_and_submit_login_form
   end #/ login_it
 
 end #/TUser

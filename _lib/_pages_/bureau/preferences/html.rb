@@ -30,7 +30,7 @@ class HTML
       if dpref.key?(:bit)
         log("--- Ancienne et nouvelle valeur : #{user.option(dpref[:bit]).inspect} / #{new_value.to_i}")
         next if user.option(dpref[:bit]) == new_value.to_i
-        user.set_option(dpref[:bit], new_value, false)
+        user.set_option(dpref[:bit], new_value)
         options_have_been_modified = true
       elsif kpref == :project_name
         next if new_value == user.project_name

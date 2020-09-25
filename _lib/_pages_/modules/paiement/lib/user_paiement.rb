@@ -35,7 +35,7 @@ class User
   # devient réel, donc un "vrai" icarien. On le marque dans ses
   # options et on produit une actualité
   def set_real
-    set_option(24, 1, true)
+    set_option(24, 1, {save: true})
     Actualite.add('REALICARIEN', self.id, MESSAGES[:actu_real] % {pseudo:pseudo, e:fem(:e), ne:fem(:ne)})
   end #/ set_real
 

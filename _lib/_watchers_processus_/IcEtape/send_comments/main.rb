@@ -46,7 +46,7 @@ class Watcher < ContainerClass
       FileUtils.mkdir_p(path_dossier)
       path_file = File.join(path_dossier, docfile_name)
       File.open(path_file,'wb'){|f|f.write docfile_comments.read}
-      document.set_option(8, 1, true)
+      document.set_option(8, 1, {save: true})
       nombre_commentaires += 1
     end
 

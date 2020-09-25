@@ -10,7 +10,7 @@ class Watcher < ContainerClass
     icmodule = objet
 
     modul_data = {started_at: now}
-    owner.set_option(16, 2, false) # actif (ne pas enregistrer)
+    owner.set_option(16, 2, {save:false})
     owner_data = {icmodule_id: objet_id, options: owner.options}
 
     # Watcher de paiement

@@ -40,7 +40,7 @@ end #/ shared?
 def share(fordoc, shareit)
   bit = fordoc == :original ? 1 : 9
   val = shareit ? 1 : 2
-  set_option(bit, val, true)
+  set_option(bit, val, {save:true})
   unless shareit
     # Dans le cas d'un dé-partage de document, on avertit Phil de l'opération
     # Noter que normalement on ne passe pas par ici quand on définit le partage

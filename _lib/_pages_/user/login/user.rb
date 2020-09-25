@@ -36,6 +36,7 @@ class << self
     password_valid? || raise(ERRORS[:unkown_user])
     log("IDENTIFICATION RÉUSSIE")
     authentify_user
+    user.mail_confirmed? || erreur(MESSAGES[:confirmation_mail_required] % user.pseudo)
     redirect_user
     return true
   rescue Exception => e
@@ -74,4 +75,15 @@ class << self
   end
 
 end #/<< self
+
+# ---------------------------------------------------------------------
+#
+#   INSTANCE
+#
+# ---------------------------------------------------------------------
+# Return TRUE si le mail a été confirmé
+def mail_confirmed?
+  options[2] == '1'
+end #/ mail_confirmed?
+
 end #/ User

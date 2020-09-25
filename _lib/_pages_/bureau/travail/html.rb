@@ -11,7 +11,7 @@ class HTML
   end
   def build_body
     # Construction du body
-    # user.set_option(16,2)
+    # user.set_option(16,2, {save: false})
     require_module(:travail) if user.actif?
     # log("user.statut: #{user.statut}")
     @body = deserb("vues/icarien_#{user.statut}", user)
