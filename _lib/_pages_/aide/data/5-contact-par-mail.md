@@ -1,6 +1,6 @@
 ## Contact par les icariens
 
-Dans les [préférences](bureau/preferences) de [votre bureau](bureau/home), vous pouvez définir comment les autres icarien·ne·s peuvent vous contacter (pour voir comme les visiteurs quelconques peuvent vous contacter, [voir plutôt ici](aide/fiche?aid=6)).
+Dans les [préférences](bureau/preferences) de [votre bureau](bureau/home), vous pouvez définir comment les autres icarien·ne·s peuvent vous contacter.
 
 Les choix sont les suivants :
 
