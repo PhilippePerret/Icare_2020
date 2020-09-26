@@ -1,6 +1,9 @@
 # encoding: UTF-8
 require 'date'
 
+MESSAGES  = {}
+ERRORS    = {}
+
 # Les constantes string utiles
 require './_lib/required/__first/constants/String'
 require_relative 'String_CLI'

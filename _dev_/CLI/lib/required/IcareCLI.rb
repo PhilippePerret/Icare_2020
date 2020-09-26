@@ -10,8 +10,11 @@
 class IcareCLI
   OPTIONS_DIM_TO_REAL = {
     'e' => :errors_only,
+    'i' => :infos,
     'k' => :keep,
+    'l' => :local,
     'o' => :online,
+    'v' => :verbose,
   }
 # ---------------------------------------------------------------------
 #
@@ -20,6 +23,7 @@ class IcareCLI
 # ---------------------------------------------------------------------
 class << self
   attr_reader :command, :params, :options
+  attr_accessor :verbose
   attr_reader :delim # une ligne pour la console
   def analyse_command
     @command = ARGV[0]&.to_sym
@@ -56,6 +60,14 @@ class << self
   def option?(key)
     !options[key].nil?
   end #/ option?
+
+  def verbose?
+    if self.verbose === nil
+      option?(:verbose)
+    else
+      self.verbose
+    end
+  end #/ verbose?
 
 end # /<< self
 end #/IcareCLI

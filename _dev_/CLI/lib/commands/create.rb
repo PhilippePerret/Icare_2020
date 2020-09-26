@@ -6,7 +6,7 @@
 WATCHERS_FOLDER = File.expand_path('./_lib/_watchers_processus_')
 PAGES_FOLDER = File.expand_path(FOLD_REL_PAGES)
 
-MESSAGES = {
+MESSAGES.merge!({
   question_creer: 'Que souhaitez-vous créer ?'.freeze,
   ask_id_whatcher: 'Identifiant (son wtype dans les données)'.freeze,
   ask_titre_watcher: 'Titre (sera affiché sur la notification)'.freeze,
@@ -30,15 +30,15 @@ MESSAGES = {
   ask_if_icarien_required: 'L’accès est-il réservé à un icarien ?'.freeze,
   ask_if_admin_required: 'L’accès est-il réservé à un administrateur ?'.freeze,
   confirm_route: 'Confirmez-vous la création de cette nouvelle route ?'.freeze
-}
-ERRORS = {
+})
+ERRORS.merge!({
   id_watcher_exists: 'Cet identifiant de watcher existe déjà !'.freeze,
   titre_watcher_exists: 'Ce titre de watcher existe déjà'.freeze,
   relpath_watcher_exists: 'Le processus %s existe déjà !'.freeze,
   actu_id_exists: "Cet identifiant actualité existe déjà !".freeze,
   route_exists: 'Cette route existe déjà !'.freeze,
   route_invalid: 'Le nom de cette route est invalide'.freeze,
-}
+})
 
 DATA_CREATE = [
   {name: 'un watcher',  value: :watcher},

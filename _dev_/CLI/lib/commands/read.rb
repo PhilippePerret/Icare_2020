@@ -4,9 +4,9 @@
   Méthode pour "nourrir" la base de données locale (icare_test)
 =end
 
-MESSAGES = {
+MESSAGES.merge!({
   question_read: 'Que voulez-vous lire sur le site distant ?'
-}
+})
 
 DATA_WHAT_READ = [
   {name:'Journal (log)', value: :log},

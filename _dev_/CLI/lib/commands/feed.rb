@@ -4,9 +4,9 @@
 =end
 require_relative './feed/Actualites'
 
-MESSAGES = {
+MESSAGES.merge!({
   question_feed: 'Que dois-je nourrir dans la base de données ?'
-}
+})
 
 # Les choses qu'on peut alimenter (tables qu'on peut nourrir)
 DATA_FEED = [
