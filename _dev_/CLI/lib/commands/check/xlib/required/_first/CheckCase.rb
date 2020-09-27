@@ -49,8 +49,23 @@ class << self
     msg = []
     msg << RC * 2
     msg << "=== RAPPORT FINAL ===#{RC*2}".bleu
-    msg << "Tests #{@items.count} (hors condition : #{@nombre_hors_condition}) - Succès #{@nombre_success} - Échec #{@nombre_failure}".send(method_couleur)
     msg << RC * 2
+    if @nombre_failure > 2
+      @items.each do |checkcase|
+        next if checkcase.success? || not(checkcase.conditions_remplies?)
+        msg << checkcase.formate_message(checkcase.failure_message).rouge
+      end
+    end
+    msg << RC * 2
+    msg << "Tests #{@items.count} (hors condition : #{@nombre_hors_condition}) - Succès #{@nombre_success} - Failures #{@nombre_failure}".send(method_couleur)
+    msg << RC * 2
+    if @nombre_failure == 0
+      msg << "√ Tout est OK avec ces données".vert
+    elsif reparer?
+      msg << "Des données erronnées ont été réparées. Relancer le check pour vous assurer du résultat.".bleu
+    else
+      msg << "# Des données doivent être réparées".rouge
+    end
     puts msg.join(RC)
   end #/ report
 
@@ -67,24 +82,21 @@ class << self
   end #/ add_case
 
   def reparer?
-    @reparer_erreurs ||= begin
+    (@reparer_erreurs ||= begin
       IcareCLI.option?(:reparer) ? :true : :false
-    end
-    @reparer_erreurs == :true
+    end) == :true
   end #/ reparer?
 
   def simuler?
-    @simuler_seulement ||= begin
+    (@simuler_seulement ||= begin
       IcareCLI.option?(:simuler) ? :true : :false
-    end
-    @simuler_seulement == :true
+    end) == :true
   end #/ simuler?
 
   def fail_fast?
-    @failing_fast ||= begin
+    (@failing_fast ||= begin
       IcareCLI.option?(:fail_fast) ? :true : :false
-    end
-    @failing_fast == :true
+    end) == :true
   end #/ fail_fast?
 
 end # /<< self
@@ -159,21 +171,38 @@ def proceed
   if not conditions_remplies?
     return
   end
+  if VERBOSE
+    STDOUT.write "#{TABU}#{description} sur #{objet.ref}\r".bleu
+  end
   if success?
-    STDOUT.write (VERBOSE ? (success_message % data_message) : '.').vert
+    STDOUT.write (VERBOSE ? formate_message("√ #{success_message}") : '.').vert
   else # failure
-    STDOUT.write (VERBOSE ? (failure_message % data_message) : '.').rouge
+    STDOUT.write (VERBOSE ? formate_message("X #{failure_message}") : '.').rouge
     if reparer?
       if simuler?
-        STDOUT.write "#{RC}#{TABU}SIMULATION : #{simulation % data_message}"
+        if reparation == :reparation_manuelle
+          msg = "#{RC}#{TABU}LA RÉPARATION DOIT ÊTRE MANUELLE".rouge
+        else
+          msg = simulation.is_a?(Proc) ? simulation.call(objet) : simulation
+          msg = "#{RC}#{TABU}SIMULATION : #{msg % data_message}".rouge
+        end
+        STDOUT.write msg
       else
-        reparation.call(objet)
-        STDOUT.write " -RÉPARÉ- ".vert
+        if reparation == :reparation_manuelle
+          "#{RC}#{TABU}LA RÉPARATION DOIT ÊTRE MANUELLE".rouge
+        else
+          reparation.call(objet)
+          STDOUT.write " -RÉPARÉ- ".vert
+        end
       end
     end
   end
   STDOUT.write(RC) if VERBOSE
 end #/ proceed
+
+def formate_message(msg)
+  (TABU+(msg % data_message)).ljust(90)
+end #/ formate_message
 
 def data_message
   @data_message ||= objet.data.merge(ref: objet.ref)
@@ -181,11 +210,13 @@ end #/ data_message
 
 # Retourne TRUE si le test de l'objet est un succès
 def success?
-  @is_success = check.call(objet)
+  (@is_success ||= begin
+    check.call(objet) ? :true : :false
+  end) == :true
 end #/ success?
 
 def failure?
-  @is_success === false
+  success? === false
 end #/ failure?
 
 # Pour tenir à jour le journal de travail du cas. Il contient le détail
@@ -201,10 +232,9 @@ end #/ log
 # et que l'objet est un CheckedUser, CheckedUser#not_destroyed doit retourner
 # true quand l'user n'est pas détruit.
 def conditions_remplies?
-  @conditions_sont_remplies ||= begin
+  (@conditions_sont_remplies ||= begin
     teste_conditions ? :true : :false
-  end
-  @conditions_sont_remplies == :true
+  end) == :true
 end #/ conditions_remplies?
 
 private

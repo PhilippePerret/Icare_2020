@@ -13,6 +13,15 @@ CHECKCASES = [
   failure_message: "%{ref} n'est pas actif, son icmodule_id devrait être nil",
   reparation: -> (objet) { objet.set(icmodule_id: nil) },
   simulation: "icmodule_id de %{ref} mis à NULL"
+},
+{
+  description: "Un icarien inactif ne peut pas avoir de module courant",
+  condition: [:not_destroyed, :is_inactif],
+  check: -> (objet) { objet.icmodule_id === nil },
+  success_message: "%{ref} est inactif, son icmodule_id est bien nil",
+  failure_message: "%{ref} est inactif, son icmodule_id devrait être à nil",
+  reparation: -> (objet) { objet.set(icmodule_id: nil) },
+  simulation: "icmodule_id de %{ref} mis à NULL"
 }
 ]
 end #/CheckedUser

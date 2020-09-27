@@ -1,33 +1,29 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-class CheckedModules < ContainerClass
-  include HelpersWritingMethods
+class CheckedModule < ContainerClass
+include HelpersWritingMethods
 class << self
 
   # = main =
   #
-  # Check des icmodules
+  # Check des icmodules ou de l'icmodule +mid+
   #
-  def check
-
-    # return # pour faire les suivants TODO SUPPRIMER QUAND FINI
-
-    puts "=== Check des IcModules ===".bleu
-    IcareCLI.verbose = true if IcareCLI.option?(:infos)
-    db_exec("SELECT * FROM icmodules ORDER BY created_at ASC").each_with_index do |dmodule, idx|
-      icmodule = instantiate(dmodule)
-      resultat = icmodule.check
-      if !resultat && IcareCLI.option?(:fail_fast)
-        return false
-      end
-      # break if idx > 3
-      IcareCLI.verbose = false if idx < 1 && IcareCLI.option?(:infos)
-    end
-    return true
+  def check(mid = nil)
+    (mid.nil? ? allmodules.values : [get(mid)]).each { |m| m.check }
   end #/ check
 
+  def allmodules
+    @allmodules ||= begin
+      h = {}
+      db_exec("SELECT * FROM icmodules ORDER BY created_at ASC").each do |dmodule|
+        icmodule = instantiate(dmodule)
+        h.merge!(icmodule.id => icmodule)
+      end;h
+    end
+  end #/ allmodules
+
   def exists?(mid)
-    get(mid) != nil
+    allmodules.key?(mid)
   end #/ exists?
 
   def table
@@ -40,43 +36,10 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 
-# = main =
-# Check principal DU module
-def check
-  DataCheckedError.current_owner = self
-  header
-  # Son propriétaire est défini ?
-  user_id_defined
-  # Son propriétaire existe ?
-  owner_exists
-  # Son identifiant de module absolu est défini
-  absmodule_defined
-  # Son module absolu existe
-  absmodule_exists
-  # Son état (fini ou non) est le bon
-  state_absmodule_correct
-  # Il a au moins une étape
-  has_one_etape
-  # Si la dernière étape est fini, le module doit être fini
-  finished_if_last_etape_ended
-  # N'est pas le module courant s'il est fini TODO
-  # OK
-  mark_success
-  return true
-rescue DataCheckedError => e
-  mark_failure
-  puts e.full_message.rouge
-  return false
-end #/ check
 
-def inspect
-  @inspect ||= begin
-    m = "Module Icarien icmodules##{id} “#{absmodule&.name}”"
-    unless owner.nil?
-      " (owner: #{owner.pseudo} (##{owner.id}))"
-    end
-  end
-end #/ inspect
+def ref
+  @ref ||= "IcModule ##{id}"
+end #/ ref
 
 # ---------------------------------------------------------------------
 #
@@ -145,11 +108,6 @@ end #/ finished_if_last_etape_ended
 #
 # ---------------------------------------------------------------------
 
-# Entête du check du module
-def header
-  STDOUT.write "Check du module icarien ##{id}#{IcareCLI.verbose? ? RC : ''}"
-end #/ header
-
 # ---------------------------------------------------------------------
 #
 #   Méthodes d'état
@@ -189,4 +147,42 @@ def last_etape
   @last_etape ||= icetapes.last
 end #/ last_etape
 
-end #/CheckedModules
+# ---------------------------------------------------------------------
+#
+#   Méthodes de condition
+#
+# Pour la propriété :condition de la définition des CheckCases
+# ---------------------------------------------------------------------
+
+def has_user_id
+  (@it_has_user_id ||= begin
+    (user_id != nil && user_id > 0) ? :true : :false
+  end) == :true
+end #/ has_user_id
+
+def has_owner
+  (@it_has_owner ||= begin
+    (has_user_id && CheckedUser.exists?(user_id)) ? :true : :false
+  end) == :true
+end #/ has_owner
+
+def has_absmodule_id
+  absmodule_id != nil
+end #/ has_absmodule_id
+
+def is_current_module_of_user
+  (@is_current_module_of_user ||= begin
+    (has_owner && owner.icmodule_id == id) ? :true : :false
+  end) == :true
+end #/ is_current_module_of_user
+def not_current_module_of_user
+  not(is_current_module_of_user)
+end #/ not_current_module_of_user
+
+def is_started
+  (@it_is_started ||= begin
+    (started_at != nil) ? :true : :false
+  end) == :true
+end #/ is_started
+
+end #/CheckedModule

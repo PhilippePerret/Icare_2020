@@ -41,7 +41,7 @@ class << self
   end #/ proceed_check_user
 
   def proceed_check_module(who)
-
+    CheckedModule.check(who)
   end #/ proceed_check_module
 
   # ---------------------------------------------------------------------

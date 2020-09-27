@@ -1,6 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class CheckedUser < ContainerClass
+include HelpersWritingMethods
 class << self
 
   # = main =
@@ -45,12 +46,6 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 
-# = main =
-# Procède au check de l'icarien
-def check
-  CHECKCASES.each { |cc| CheckCase.new(self, cc).proceed }
-end #/ check
-
 def ref
   @ref ||= "#{pseudo} (##{id})"
 end #/ ref
@@ -65,6 +60,10 @@ end #/ ref
 def not_destroyed
   options[3] != '1'
 end #/ not_destroyed
+
+def is_inactif
+  options[16] == '4'
+end #/ is_inactif
 
 # Retourne TRUE si l'icarien a un icmodule_id défini
 def has_icmodule_id

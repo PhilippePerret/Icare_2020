@@ -458,6 +458,157 @@ Note : c’est le bit 18 des options ci-dessus.
 ---
 
 
+## Modules et étapes de l'icarien
+
+### Modules de travail
+
+Le module courant de l'icarien est défini dans sa propriété `icmodule_id`.
+
+#### Options du module de travail
+
+Les options du module de travail est un string de 16 bits (`options`). Pour le moment, ces options ne servent à rien.
+
+
+### Étapes de travail
+
+
+
+#### Statut de l'étape
+
+C’est la propriété `:status` qui définit l’état de l’étape de travail. La propriété porte le même nom.
+
+Les valeurs sont les suivantes :
+
+
+
+| Bit  | Statut                                                       |
+| ---- | ------------------------------------------------------------ |
+| 0    | Non utilisé, ne devrait pas arriver                          |
+| 1    | L’étape est en cours, l’icarien travaille dessus. <br />Note : ce statut provoque la création automatique du watcher `send-work`. |
+| 2    | L’icarien a transmis ses documents mais ils n’ont pas encore été downloadés par Phil.<br />Ce statut provoque la création automatique du watcher `download-work`. |
+| 3    | Phil a downloadé les documents de travail de l’icarien.<br />Ce statut provoque la création automatique du watcher `send-comments`. |
+| 4    | Phil a transmis les commentaires, mais l’icarien ne les a pas encore downloadés.<br />Ce statut provoque la création automatique du watcher `download-comments` |
+| 5    | L’icarien a downloadé ses commentaires.<br />Ce statut génère automatiquement le watcher qui permet à Phil de déposer les documents sur le Quai des docs (`depot-qdd`). |
+| 6    | Phil a déposé les documents de l’étape sur le Quai des docs.<br />Ce statut génère automatiquement le watcher qui permet à l’icarien de définir le partage de ses documents `qdd-define-sharing`. |
+| 7    | L’icarien a défini le partage de chacun de ses documents.    |
+| 8    | Fin de cycle de l'étape                                      |
+
+
+
+### Édition d'une étape de travail de module d'apprentissage
+
+* Rejoindre la **section « Modules » de l'administration** (depuis le bureau/tableau de bord),
+* choisir le module d'apprentissage de la nouvelle étape,
+* cliquer sur le titre de l'étape à modifier,
+* cliquer sur le bouton "Éditer" de l'étape (en tenant le bouche ⌘ appuyée si on veut l'éditer dans une nouvelle fenêtre),
+* remplir le formulaire et le soumettre.
+
+
+
+
+### Création d'une nouvelle étape de travail
+
+* Rejoindre la **section « Modules » de l'administration** (depuis le bureau/tableau de bord),
+* choisir le module d'apprentissage de la nouvelle étape,
+* bien repérer le nouveau numéro à créer,
+* cliquer sur le bouton "Nouvelle étape",
+* remplir le formulaire et le soumettre.
+
+
+
+### Helpers pour les étapes de travail
+
+Avant tout, précisons que les étapes se définissent dans la **section « Modules » de l'administration**. Il suffit de choisir un module, d'afficher l'étape voulue et de cliquer sur le bouton “Éditer” pour éditer l'étape en question.
+
+
+
+#### Méthodes d'helper
+
+Toutes les méthodes du module [./_lib/required/__first/helpers/string_helpers_module.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/string_helpers_module.rb) sont accessible depuis les travaux et les méthodes des étapes.
+
+> Rappel : cela tient simplement au fait que toute classe qui hérite de `ContainerClass` hérite aussi de ces méthodes.
+
+
+
+#### Section document
+
+Une “section document” dans le travail d'une étape de travail permet d'illustrer ce travail par un exemple de document ou un modèle. On définit cet exemple ainsi :
+
+~~~markdown
+
+<!document>
+
+... ici le document ...
+
+<!/document>
+~~~
+
+À l'intérieur de ce document, les titres commencent à un seul dièse :
+
+~~~markdown
+
+<!document>
+
+# Un grand titre de page
+
+## Titre dans le document
+
+[Contenu]
+
+## Autre titre du document
+
+[Contenu]
+
+<!/document>
+~~~
+
+
+
+### Travaux types
+
+On peut insérer les travaux-types dans une étape de travail grâce à :
+
+~~~
+
+#{travail_type('<rub>','<name>')}  <%= travail_type('<rub>','<name>') %>
+
+~~~
+
+> Noter que maintenant il est impératif de mettre les parenthèss dans les deux formats.
+
+
+
+### Documents icariens (`icdocuments`)
+
+Le travail au sein de l'atelier se fait sur la base de documents qui sont envoyés par l'icarien et commentés par Phil.
+
+#### Options des documents
+
+Les options de l'icdocument tiennent sur un mot de 16 bits qui peuvent prendre une valeur entre 0 et 9. Les 8 premiers bits concernent le document original (non commenté) les 8 bits suivant concernant le document commenté.
+
+| Bit  | Description de la valeur du bit             |
+| ---- | ------------------------------------------------------------ |
+| 0    | 1 => Le document original existe                 |
+| 1 | **Partage de l'original**<br/>0: partage non défini, 1: partagé, 2: non partagé |
+| 2 | 1 => le document a été téléchargé par l'administrateur |
+| 3 | 1 => le document original a été déposé sur le Quai des docs |
+| 4 | 1 => le partage du document a été défini |
+| 5 | 1=> le document original a achevé son cycle complet |
+| 8    | 1=> Le document commentaires existe                       |
+| 9 | **Partage du document commenté**<br/>0: partage non défini, 1: partagé, 2: non partagé |
+| 10 | 1=> le document commenté a été téléchargé par l'auteur |
+| 11 | 1=> le document commentaire a été déposé sur le Quai des docs |
+| 12 | 1=> le partage du document commentaires a été défini |
+| 13 | 1=> le document commentaire a achevé son cycle complet |
+| ---- | ------------------------------------------------------------ |
+
+
+
+
+
+---
+
+
 
 ## Base de données
 
@@ -3126,148 +3277,6 @@ TActualites.founds
 # => Array des instances TActualite trouvées
 ~~~
 
-
-
----
-
-
-
-## Travail de l'icarien
-
-
-
-### Étapes de travail
-
-
-
-#### Statut de l'étape
-
-C’est la propriété `:status` qui définit l’état de l’étape de travail. La propriété porte le même nom.
-
-Les valeurs sont les suivantes :
-
-
-
-| Bit  | Statut                                                       |
-| ---- | ------------------------------------------------------------ |
-| 0    | Non utilisé, ne devrait pas arriver                          |
-| 1    | L’étape est en cours, l’icarien travaille dessus. <br />Note : ce statut provoque la création automatique du watcher `send-work`. |
-| 2    | L’icarien a transmis ses documents mais ils n’ont pas encore été downloadés par Phil.<br />Ce statut provoque la création automatique du watcher `download-work`. |
-| 3    | Phil a downloadé les documents de travail de l’icarien.<br />Ce statut provoque la création automatique du watcher `send-comments`. |
-| 4    | Phil a transmis les commentaires, mais l’icarien ne les a pas encore downloadés.<br />Ce statut provoque la création automatique du watcher `download-comments` |
-| 5    | L’icarien a downloadé ses commentaires.<br />Ce statut génère automatiquement le watcher qui permet à Phil de déposer les documents sur le Quai des docs (`depot-qdd`). |
-| 6    | Phil a déposé les documents de l’étape sur le Quai des docs.<br />Ce statut génère automatiquement le watcher qui permet à l’icarien de définir le partage de ses documents `qdd-define-sharing`. |
-| 7    | L’icarien a défini le partage de chacun de ses documents.    |
-| 8    | Fin de cycle de l'étape                                      |
-
-
-
-### Édition d'une étape de travail de module d'apprentissage
-
-* Rejoindre la **section « Modules » de l'administration** (depuis le bureau/tableau de bord),
-* choisir le module d'apprentissage de la nouvelle étape,
-* cliquer sur le titre de l'étape à modifier,
-* cliquer sur le bouton "Éditer" de l'étape (en tenant le bouche ⌘ appuyée si on veut l'éditer dans une nouvelle fenêtre),
-* remplir le formulaire et le soumettre.
-
-
-
-
-### Création d'une nouvelle étape de travail
-
-* Rejoindre la **section « Modules » de l'administration** (depuis le bureau/tableau de bord),
-* choisir le module d'apprentissage de la nouvelle étape,
-* bien repérer le nouveau numéro à créer,
-* cliquer sur le bouton "Nouvelle étape",
-* remplir le formulaire et le soumettre.
-
-
-
-### Helpers pour les étapes de travail
-
-Avant tout, précisons que les étapes se définissent dans la **section « Modules » de l'administration**. Il suffit de choisir un module, d'afficher l'étape voulue et de cliquer sur le bouton “Éditer” pour éditer l'étape en question.
-
-
-
-#### Méthodes d'helper
-
-Toutes les méthodes du module [./_lib/required/__first/helpers/string_helpers_module.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/string_helpers_module.rb) sont accessible depuis les travaux et les méthodes des étapes.
-
-> Rappel : cela tient simplement au fait que toute classe qui hérite de `ContainerClass` hérite aussi de ces méthodes.
-
-
-
-#### Section document
-
-Une “section document” dans le travail d'une étape de travail permet d'illustrer ce travail par un exemple de document ou un modèle. On définit cet exemple ainsi :
-
-~~~markdown
-
-<!document>
-
-... ici le document ...
-
-<!/document>
-~~~
-
-À l'intérieur de ce document, les titres commencent à un seul dièse :
-
-~~~markdown
-
-<!document>
-
-# Un grand titre de page
-
-## Titre dans le document
-
-[Contenu]
-
-## Autre titre du document
-
-[Contenu]
-
-<!/document>
-~~~
-
-
-
-### Travaux types
-
-On peut insérer les travaux-types dans une étape de travail grâce à :
-
-~~~
-
-#{travail_type('<rub>','<name>')}  <%= travail_type('<rub>','<name>') %>
-
-~~~
-
-> Noter que maintenant il est impératif de mettre les parenthèss dans les deux formats.
-
-
-
-### Documents icariens (`icdocuments`)
-
-Le travail au sein de l'atelier se fait sur la base de documents qui sont envoyés par l'icarien et commentés par Phil.
-
-#### Options des documents
-
-Les options de l'icdocument tiennent sur un mot de 16 bits qui peuvent prendre une valeur entre 0 et 9. Les 8 premiers bits concernent le document original (non commenté) les 8 bits suivant concernant le document commenté.
-
-| Bit  | Description de la valeur du bit             |
-| ---- | ------------------------------------------------------------ |
-| 0    | 1 => Le document original existe                 |
-| 1 | **Partage de l'original**<br/>0: partage non défini, 1: partagé, 2: non partagé |
-| 2 | 1 => le document a été téléchargé par l'administrateur |
-| 3 | 1 => le document original a été déposé sur le Quai des docs |
-| 4 | 1 => le partage du document a été défini |
-| 5 | 1=> le document original a achevé son cycle complet |
-| 8    | 1=> Le document commentaires existe                       |
-| 9 | **Partage du document commenté**<br/>0: partage non défini, 1: partagé, 2: non partagé |
-| 10 | 1=> le document commenté a été téléchargé par l'auteur |
-| 11 | 1=> le document commentaire a été déposé sur le Quai des docs |
-| 12 | 1=> le partage du document commentaires a été défini |
-| 13 | 1=> le document commentaire a achevé son cycle complet |
-| ---- | ------------------------------------------------------------ |
 
 
 

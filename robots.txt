@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /_lib/
+Disallow: /cronjob/
+Disallow: /sound/
+Disallow: /staves/
+Disallow: /tmp/
