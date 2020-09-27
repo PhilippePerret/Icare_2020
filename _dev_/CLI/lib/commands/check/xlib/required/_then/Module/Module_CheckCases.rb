@@ -73,7 +73,6 @@ CHECKCASES = [
   },
   simulation: -> (objet) {
     last_etape = objet.icetapes.last
-    puts "last_etape.data = #{last_etape.data.inspect}"
     adate = last_etape.ended_at || last_etape.expected_end || ((last_etape.created_at || last_etape.updated_at).to_i + 4.days)
     return "L'ended_at du %{ref} doit être mis à la date de fin de sa dernière étape : #{adate}."
   }

@@ -26,6 +26,7 @@ class << self
     @nombre_success = 0
     @nombre_failure = 0
     @nombre_hors_condition = 0
+    @nombre_reparations = 0
     # *** Message d'introduction ***
     puts header
   end #/ init
@@ -45,21 +46,26 @@ class << self
 
   # Affiche le rapport final de test
   def report
-    method_couleur = @nombre_failure > 0 ? :rouge : :vert
     msg = []
     msg << RC * 2
     msg << "=== RAPPORT FINAL ===#{RC*2}".bleu
     msg << RC * 2
-    if @nombre_failure > 2
+    @nombre_reparations = 0
+    if @nombre_failure > 0
       @items.each do |checkcase|
         next if checkcase.success? || not(checkcase.conditions_remplies?)
         msg << checkcase.formate_message(checkcase.failure_message).rouge
+        if simuler?
+          msg << TABU + checkcase.message_simulation.jaune
+        end
+        @nombre_reparations += 1 if checkcase.repared?
       end
     end
     msg << RC * 2
+    method_couleur = (@nombre_failure - @nombre_reparations) > 0 ? :rouge : :vert
     msg << "Tests #{@items.count} (hors condition : #{@nombre_hors_condition}) - Succès #{@nombre_success} - Failures #{@nombre_failure}".send(method_couleur)
-    msg << RC * 2
-    if @nombre_failure == 0
+    msg << RC
+    if @nombre_failure - @nombre_reparations == 0
       msg << "√ Tout est OK avec ces données".vert
     elsif reparer?
       msg << "Des données erronnées ont été réparées. Relancer le check pour vous assurer du résultat.".bleu
@@ -67,6 +73,7 @@ class << self
       msg << "# Des données doivent être réparées".rouge
     end
     puts msg.join(RC)
+    puts RC * 2
   end #/ report
 
   # Ajouter un test à la liste des tests effectué
@@ -171,38 +178,50 @@ def proceed
   if not conditions_remplies?
     return
   end
+
   if VERBOSE
     STDOUT.write "#{TABU}#{description} sur #{objet.ref}\r".bleu
   end
+  msg =
   if success?
-    STDOUT.write (VERBOSE ? formate_message("√ #{success_message}") : '.').vert
+    (VERBOSE ? formate_message("√ #{success_message}") : '.').vert
   else # failure
-    STDOUT.write (VERBOSE ? formate_message("X #{failure_message}") : '.').rouge
-    if reparer?
+    if not(reparer?)
+      (VERBOSE ? formate_message("X #{failure_message}") : '.').rouge
+    else # reparer?
       if simuler?
-        if reparation == :reparation_manuelle
-          msg = "#{RC}#{TABU}LA RÉPARATION DOIT ÊTRE MANUELLE".rouge
-        else
-          msg = simulation.is_a?(Proc) ? simulation.call(objet) : simulation
-          msg = "#{RC}#{TABU}SIMULATION : #{msg % data_message}".rouge
+        if not(VERBOSE)
+          '.'.jaune
+        elsif
+          RC + TABU + message_simulation.rouge
         end
-        STDOUT.write msg
-      else
+      else # réparation effective
         if reparation == :reparation_manuelle
           "#{RC}#{TABU}LA RÉPARATION DOIT ÊTRE MANUELLE".rouge
         else
           reparation.call(objet)
-          STDOUT.write " -RÉPARÉ- ".vert
+          " -RÉPARÉ- ".vert
+          @is_repared = true
         end
       end
     end
   end
+  STDOUT.write msg
   STDOUT.write(RC) if VERBOSE
 end #/ proceed
 
 def formate_message(msg)
   (TABU+(msg % data_message)).ljust(90)
 end #/ formate_message
+
+def message_simulation
+  if reparation == :reparation_manuelle
+    "LA RÉPARATION DOIT SE FAIRE MANUELLEMENT"
+  else
+    msg = simulation.is_a?(Proc) ? simulation.call(objet) : simulation
+    "SIMULATION : #{msg % data_message}"
+  end
+end #/ message_simulation
 
 def data_message
   @data_message ||= objet.data.merge(ref: objet.ref)
@@ -218,6 +237,10 @@ end #/ success?
 def failure?
   success? === false
 end #/ failure?
+
+def repared?
+  @is_repared === true
+end #/ repared?
 
 # Pour tenir à jour le journal de travail du cas. Il contient le détail
 # du détail de l'opération de check.
