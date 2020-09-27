@@ -199,9 +199,14 @@ def proceed
         if reparation == :reparation_manuelle
           "#{RC}#{TABU}LA RÉPARATION DOIT ÊTRE MANUELLE".rouge
         else
-          reparation.call(objet)
-          " -RÉPARÉ- ".vert
-          @is_repared = true
+          resultat = reparation.call(objet)
+          if not(resultat == :reparation_manuelle)
+            # La réparation a pu se faire correctement
+            @is_repared = true
+            " -RÉPARÉ- ".vert
+          else
+            "#{RC}#{TABU}LA RÉPARATION N'A PAS PU SE FAIRE, ELLE DOIT ÊTRE MANUELLE".rouge
+          end
         end
       end
     end
@@ -215,10 +220,18 @@ def formate_message(msg)
 end #/ formate_message
 
 def message_simulation
-  if reparation == :reparation_manuelle
+
+  msg = if reparation == :reparation_manuelle
+          :reparation_manuelle
+        elsif reparation.is_a(Proc)
+          simulation.call(objet)
+        else
+          simulation
+        end
+  # Message à afficher en fin de compte
+  if msg == :reparation_manuelle
     "LA RÉPARATION DOIT SE FAIRE MANUELLEMENT"
   else
-    msg = simulation.is_a?(Proc) ? simulation.call(objet) : simulation
     "SIMULATION : #{msg % data_message}"
   end
 end #/ message_simulation

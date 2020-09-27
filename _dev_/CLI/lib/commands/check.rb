@@ -20,6 +20,7 @@ class << self
         q.per_page DATA_WHAT_CHECK.count
       end
     end
+    return if what == :cancel
     # Le check de qui/quoi est à faire
     who  = params[2]
     who = who.to_i unless who.nil?
@@ -34,6 +35,7 @@ class << self
   def proceed_check_all
     proceed_check_user(nil)
     proceed_check_module(nil)
+    proceed_check_etape(nil)
   end #/ proceed_check_all
 
   def proceed_check_user(who)
@@ -43,6 +45,10 @@ class << self
   def proceed_check_module(who)
     CheckedModule.check(who)
   end #/ proceed_check_module
+
+  def proceed_check_etape(who)
+    CheckedEtape.check(who)
+  end #/ proceed_check_etape
 
   # ---------------------------------------------------------------------
   #

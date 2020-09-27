@@ -495,7 +495,7 @@ Les valeurs sont les suivantes :
 
 
 
-### Édition d'une étape de travail de module d'apprentissage
+#### Édition d'une étape de travail de module d'apprentissage
 
 * Rejoindre la **section « Modules » de l'administration** (depuis le bureau/tableau de bord),
 * choisir le module d'apprentissage de la nouvelle étape,
@@ -506,7 +506,7 @@ Les valeurs sont les suivantes :
 
 
 
-### Création d'une nouvelle étape de travail
+#### Création d'une nouvelle étape de travail
 
 * Rejoindre la **section « Modules » de l'administration** (depuis le bureau/tableau de bord),
 * choisir le module d'apprentissage de la nouvelle étape,
@@ -516,13 +516,13 @@ Les valeurs sont les suivantes :
 
 
 
-### Helpers pour les étapes de travail
+#### Helpers pour les étapes de travail
 
 Avant tout, précisons que les étapes se définissent dans la **section « Modules » de l'administration**. Il suffit de choisir un module, d'afficher l'étape voulue et de cliquer sur le bouton “Éditer” pour éditer l'étape en question.
 
 
 
-#### Méthodes d'helper
+##### Méthodes d'helper
 
 Toutes les méthodes du module [./_lib/required/__first/helpers/string_helpers_module.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/string_helpers_module.rb) sont accessible depuis les travaux et les méthodes des étapes.
 
@@ -530,7 +530,7 @@ Toutes les méthodes du module [./_lib/required/__first/helpers/string_helpers_m
 
 
 
-#### Section document
+##### Section document
 
 Une “section document” dans le travail d'une étape de travail permet d'illustrer ce travail par un exemple de document ou un modèle. On définit cet exemple ainsi :
 

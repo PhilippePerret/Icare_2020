@@ -108,16 +108,6 @@ end #/ finished_if_last_etape_ended
 #
 # ---------------------------------------------------------------------
 
-# ---------------------------------------------------------------------
-#
-#   Méthodes d'état
-#
-# ---------------------------------------------------------------------
-
-# Retourne TRUE si ce module est en cours de travail
-def courant?
-  owner.icmodule_id == id
-end #/ courant?
 
 # ---------------------------------------------------------------------
 #
@@ -138,7 +128,7 @@ end #/ absmodule
 def icetapes
   @icetapes ||= begin
     db_exec("SELECT * FROM icetapes WHERE icmodule_id = #{id} ORDER BY created_at ASC").collect do |de|
-      CheckedEtapes.instantiate(de)
+      CheckedEtape.instantiate(de)
     end
   end
 end #/ icetapes
@@ -147,24 +137,22 @@ def last_etape
   @last_etape ||= icetapes.last
 end #/ last_etape
 
+# Retourne l'étape suivante de l'étape +icetape+ si elle existe
+def next_etape_for(icetape)
+  icetapes.values.each_with_index do |ice, idx|
+    if ice.id == icetape.id
+      return icetapes.values[idx+1]
+    end
+  end
+  return nil # non trouvée (normalement, ne peut pas arriver)
+end #/ next_etape_for
+
 # ---------------------------------------------------------------------
 #
 #   Méthodes de condition
 #
 # Pour la propriété :condition de la définition des CheckCases
 # ---------------------------------------------------------------------
-
-def has_user_id
-  (@it_has_user_id ||= begin
-    (user_id != nil && user_id > 0) ? :true : :false
-  end) == :true
-end #/ has_user_id
-
-def has_owner
-  (@it_has_owner ||= begin
-    (has_user_id && CheckedUser.exists?(user_id)) ? :true : :false
-  end) == :true
-end #/ has_owner
 
 def has_absmodule_id
   absmodule_id != nil
@@ -178,6 +166,7 @@ end #/ is_current_module_of_user
 def not_current_module_of_user
   not(is_current_module_of_user)
 end #/ not_current_module_of_user
+alias :courant? :is_current_module_of_user
 
 def is_started
   (@it_is_started ||= begin
