@@ -10,16 +10,45 @@ require_relative './check/xlib/required'
 class IcareCLI
 class << self
   def proceed_check
+    # Quel check est à faire ?
     what = params[1]
-    what = nil if not(File.exists?(File.join(__dir__,'check',"#{what}.rb")))
+    what = what[0...-1] if what.end_with?('s')
+    what = nil if not(respond_to?("proceed_check_#{what}".to_sym))
     what ||= begin
       Q.select(MESSAGES[:question_read], required: true) do |q|
         q.choices DATA_WHAT_CHECK
         q.per_page DATA_WHAT_CHECK.count
       end
     end
-    require_relative "./check/#{what}"
-    send("proceed_check_#{what}".to_sym)
+    # Le check de qui/quoi est à faire
+    who  = params[2]
+    who = who.to_i unless who.nil?
+
+    # On procède au test
+    CheckCase.init
+    send("proceed_check_#{what}".to_sym, who)
+    CheckCase.report
+
   end #/ proceed_check
+
+  def proceed_check_all
+    proceed_check_user(nil)
+    proceed_check_module(nil)
+  end #/ proceed_check_all
+
+  def proceed_check_user(who)
+    CheckedUser.check(who) # seulement who ou tous si who == nil
+  end #/ proceed_check_user
+
+  def proceed_check_module(who)
+
+  end #/ proceed_check_module
+
+  # ---------------------------------------------------------------------
+  #
+  #   Options
+  #
+  # ---------------------------------------------------------------------
+
 end # /<< self
 end #/IcareCLI

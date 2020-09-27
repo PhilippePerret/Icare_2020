@@ -1,20 +1,22 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-require_relative 'module_helpers'
-
-class CheckedEtapes < ContainerClass
+class CheckedDocuments < ContainerClass
   include HelpersWritingMethods
 class << self
 
   # = main =
   #
-  # Check des IcEtapes
+  # Check des documents
   #
   def check
-    puts "=== Check des IcEtapes ==="
+    puts "=== Check des Documents ==="
 
   end #/ check
 
+
+  def table
+    @table ||= 'icdocuments'
+  end #/ table
 
 end # /<< self
 # ---------------------------------------------------------------------
@@ -23,8 +25,9 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 
+
 def la_chose
-  @la_chose ||= "l'étape icarien"
+  @la_chose ||= "le document"
 end #/ la_chose
 
-end #/CheckedEtapes
+end #/CheckedDocuments

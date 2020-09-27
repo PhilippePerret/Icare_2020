@@ -5,5 +5,9 @@ class << self
   def exists?(aid)
     get(aid) != nil
   end #/ exists?
+
+  def table
+    @table ||= 'absmodules'
+  end #/ table
 end # /<< self
 end #/AbsModule < ContainerClass

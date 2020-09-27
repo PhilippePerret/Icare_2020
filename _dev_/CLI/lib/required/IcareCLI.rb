@@ -14,6 +14,8 @@ class IcareCLI
     'k' => :keep,
     'l' => :local,
     'o' => :online,
+    'r' => :reparer,
+    's' => :simuler,
     'v' => :verbose,
   }
 # ---------------------------------------------------------------------

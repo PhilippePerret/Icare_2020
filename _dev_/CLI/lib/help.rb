@@ -23,10 +23,20 @@ AIDE = <<-BASH
       Pour rejoindre la route voulue dans un navigateur. Ajouter l'option
       -o/--online pour la rejoindre sur le site distant.
 
-  #{'icare check[ <what>]'.jaune}
+  #{'icare check[ <what>][ <id>]'.jaune}
 
       Pour procéder à des checks de l'atelier, à commencer par les données
       des modules d'apprentissage des icariens.
+
+      <what>
+      ------
+        all         Tout checker, les users, les modules, les étapes, les
+                    documents.
+        user[s]     Checker les users. Si un identifiant est ajouté, on checke
+                    seulement cet user-là.
+        module[s]   Checker les modules ou le module dont l'identifiant est
+                    fourni. Ça comprend le check des étapes et des documents.
+                    
       Options
       -------
         -l/--local    Faire le check sur les données locales (par défaut c'est
@@ -34,6 +44,9 @@ AIDE = <<-BASH
         -v/--verbose  Afficher tous les messages
         -i/--infos    Afficher une seule fois les choses checkées et mettre la
                       formule réduite pour le reste.
+        -r/--reparer  Pour réparer les erreurs rencontrées
+        -s/--simuler  Pour seulement simuler les réparations, mais ne pas les
+                      faire.
 
   LISTE DES COMMANDES
   -------------------
