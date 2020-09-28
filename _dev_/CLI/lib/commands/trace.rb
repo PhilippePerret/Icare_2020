@@ -130,7 +130,17 @@ TracerLine = Struct.new(:time, :ip, :id, :message, :datastr) do
   end #/ pseudo_if_identified
 
   def ip_formated
-    if ip.length > 25
+    # Est-ce une IP connue ?
+    icarien_found = nil
+    KNOWN_IPS.each do |relip, data_ip|
+      if ip.start_with?(relip)
+        icarien_found = data_ip
+        break
+      end
+    end
+    if icarien_found
+      icarien_found[:pseudo]
+    elsif ip.length > 25
       ip[0...25] + '…'
     else
       ip
