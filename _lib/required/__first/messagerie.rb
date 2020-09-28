@@ -1,11 +1,13 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_relative 'handies/messages'
 class Messager
 
-DIV_OUT = '<div class="%{css}"><span class="picto-message">%{picto}</span>%{str}</div>'.freeze
+DIV_OUT = '<div class="%{css}"><span class="picto-message">%{picto}</span>%{str}</div>'
 
 class << self
   def add msg
+    return if msg.nil?
     @messages ||= []
     @messages << msg.strip
   end
@@ -26,7 +28,7 @@ class << self
     end
   end
   def session_id
-    @session_id ||= "messages_#{self.name}".freeze
+    @session_id ||= "messages_#{self.name}"
   end
   def no_messages?
     @messages.nil? || @messages.empty?
@@ -40,11 +42,11 @@ class Debugger < Messager
 end #/Debug
 class Errorer < Messager
   def self.css_class;'errors' end
-  def self.picto ; Emoji.get('panneau/attention').page_title.freeze end
+  def self.picto ; Emoji.get('panneau/attention').page_title end
 end #/Errorer
 class Noticer < Messager
   def self.css_class;'notices' end
-  def self.picto ; Emoji.get('gestes/parle').page_title.freeze end
+  def self.picto ; Emoji.get('gestes/parle').page_title end
 end #/Errorer
 
 class Logger
@@ -52,7 +54,7 @@ class << self
   def add msg
     if msg.respond_to?(:message)
       # Une erreur par exemple
-      msg = "ERROR: #{msg.message}".freeze + RC + msg.backtrace.join(RC)
+      msg = "ERROR: #{msg.message}" + RC + msg.backtrace.join(RC)
     elsif msg.is_a?(Hash)
       msg = msg.collect {|k,v| "=== #{k} = #{v.inspect}"}.join(RC)
     end
