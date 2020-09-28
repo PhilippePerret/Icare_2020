@@ -68,6 +68,7 @@ def documents
     db_exec(request).collect { |ddoc| IcDocument.instantiate(ddoc) }
   end
 end #/ documents
+alias :icdocuments :documents
 
 # Raccourcis (d'absetape)
 def titre   ; @titre  ||= absetape.titre    end

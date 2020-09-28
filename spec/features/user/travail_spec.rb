@@ -75,7 +75,7 @@ feature "Travail d'un icarien" do
       before(:all) do
         degel('envoi_travail')
       end
-      scenario 'trouve la mention de sa date d’envoi et de possible retour', only:true do
+      scenario 'trouve la mention de sa date d’envoi et de possible retour' do
         pitch("Quand marion rejoint son travail courant, elle ne trouve plus le bouton pour remettre son travail mais une date d'envoi et une date de retour des commentaires.")
         marion.rejoint_son_bureau
         marion.click_on("Travail courant")
@@ -84,7 +84,13 @@ feature "Travail d'un icarien" do
         expect(page).to have_css("span.date-expected-comments")
       end
       scenario 'ne peut pas rejoindre le formulaire d’envoi des documents' do
-        implementer(__FILE__,__LINE__)
+        pitch("Quand Marion rejoint son bureau, elle ne peut rejoindre la section d'envoi des documents même en forçant l'adresse.")
+        marion.rejoint_son_bureau
+        marion.click_on("Travail courant")
+        expect(page).not_to have_link(UI_TEXTS[:btn_remettre_travail])
+        goto("bureau/sender?rid=send_work_form")
+        expect(page).not_to have_css('form#send-work-form')
+        expect(page).to have_content("vous avez déjà transmis le travail de votre étape courante")
       end
     end
 

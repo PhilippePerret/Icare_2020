@@ -20,7 +20,7 @@ log("--- icetape.status: #{icetape.status.inspect}")
     <%= StateList.row('<remettre>', Tag.lien(route:'bureau/sender?rid=send_work_form', text:UI_TEXTS[:btn_remettre_travail], class:'main btn'), {class:'right mt2'}) %>
   <% else %>
     <%= StateList.row("Remis le", icetape.f_work_sent_at) %>
-    <%= StateList.row("Retours",  icetape.f_comments_expected_date) %>
+    <%= StateList.row("Commentaires",  icetape.f_comments_expected_date) %>
   <% end %>
 </div>
 

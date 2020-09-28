@@ -2914,7 +2914,7 @@ rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
 Pour forcer la re-création d'un gel, il suffit d'ajouter la variable d'environnement `GEL_FORCE` à true :
 
 ~~~bash
-GEL_FORCE=true rspec spec/gels -t mon_premier_gel  # Réinitialise TOUS LES GELS
+GEL_FORCE=true bundle exec rspec spec/gels -t mon_premier_gel  # Réinitialise TOUS LES GELS
 ~~~
 
 > Noter que la commande ci-dessus va refaire TOUS LES GELS jusqu’à 'mon_premier_gel'. Pour ne traiter qu’un seul gel, utiliser la commande ci-dessous.
@@ -2926,7 +2926,7 @@ GEL_FORCE=true rspec spec/gels -t mon_premier_gel  # Réinitialise TOUS LES GELS
 **Pour forcer seulement le dernier gel**
 
 ~~~bash
-GEL_REMOVE_LAST=true rspec spec/gels -t mon_premier_gel
+GEL_REMOVE_LAST=true bundle exec rspec spec/gels -t mon_premier_gel
 ~~~
 
 Mais pour que ça fonctionne, il ne faut pas oublier la ligne marquée `[*]` ci-dessous :
@@ -2945,7 +2945,7 @@ end
 On peut jouer la même commande que pour produire le gel :
 
 ~~~bash
-rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
+bundle exec rspec spec/gels -t mon_premier_gel # on ne joue que ce gel-là
 ~~~
 
 > Pour trouver le nom du gel (ici 'mon_premier_gel' qui est juste un exemple), voir le fichier [`./spec/gels/gels.rb`](/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/gels/gels.rb).

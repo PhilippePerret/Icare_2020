@@ -1,6 +1,19 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_module('form')
 class IcEtape < ContainerClass
+
+  # Retourne le span qui contient la date d'envoi des documents de travail
+  # lorsqu'ils ont été envoyés
+  def f_work_sent_at
+    "<span class=\"date-sent-work\">#{formate_date(icdocuments.first.created_at)}</span>"
+  end #/ f_work_sent_at
+
+  # Retourne le span qui contient la date de retour préconisé pour les
+  # commentaires (la données expected_comments de l'étape)
+  def f_comments_expected_date
+    "<span>Approximativement prévus pour le <span class=\"date-expected-comments\">#{formate_date(expected_comments)}</span></span>"
+  end #/ f_comments_expected_date
 
   # Retourne la date de fin attendue, avec une alerte en
   # cas de retard

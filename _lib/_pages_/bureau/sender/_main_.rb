@@ -20,6 +20,9 @@ class HTML
       # On passe par ici lorsque l'icarien soumet le formulaire avec
       # ses documents (pour les transmettre)
       check_documents_and_save
+    elsif user.icetape.status > 1
+      message("#{user.pseudo}, vous avez déjà transmis le travail de votre étape courante…")
+      redirect_to(:bureau)
     end
   end
 
