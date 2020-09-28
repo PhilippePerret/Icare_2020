@@ -41,7 +41,7 @@ def formate_date(time = nil, options = nil)
               mot = now > time ? 'il y a' : 'dans' ;
               "#{mot} #{jours} jour#{s}"
             end
-    d << " <span class=\"small\">(#{laps})</span>"
+    d = "#{d} <span class=\"small\">(#{laps})</span>"
   end
   return d
 end #/ formate_date

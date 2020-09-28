@@ -131,6 +131,78 @@ def next_etape
   @next_etape ||= icmodule.next_etape_for(self)
 end #/ next_etape
 
+def icdocuments
+  @icdocuments ||= begin
+    h = {}
+    db_exec("SELECT * FROM icdocuments WHERE icetape_id = ?", id).each do |dd|
+      doc = CheckedDocument.instantiate(dd)
+      h.merge!(h.id => h)
+    end;h
+  end
+end #/ icdocuments
+
+# Retourne les données de tous les watchers de l'icétape
+# C'est une table qui contient le wtype en clé (entendu qu'il doit être
+# unique, pour chaque étape donnée)
+def whatchers
+  @watchers ||= begin
+    h = {}
+    request = "SELECT * FROM watchers WHERE objet_id = ? AND user_id = ? AND wtype IN ('send_work','download_work','send_comments','changement_etape','download_comments','qdd_depot','qdd_sharing','qdd_coter')"
+    db_exec(request, [id, user_id]).each do |dw|
+      h.merge!( dw[:wtype] => dw )
+    end; h
+  end
+end #/ whatchers
+
+def has_watcher?(wtype)
+  watchers.key?(wtype)
+end #/ has_watcher?
+
+# ---------------------------------------------------------------------
+#
+#   Méthodes de check
+#
+# ---------------------------------------------------------------------
+
+# Méthode qui s'assure que le statut de l'étape de module possède un
+# statut cohérent avec ses données.
+# Pour le savoir, on se sert de la méthode qui doit aussi servir à la
+# réparation et qui renvoie le statut par rapport à l'état de l'étape.
+def check_status_value
+  status == status_considering_data
+end #/ check_status_value
+
+
+# Retourne le statut en fonction des données trouvées
+# Algorithme de recherche :
+#   On se sert des watchers pour connaitre le statut et l'état des
+#   documents à la fin.
+def status_considering_data
+  if icdocuments.count == 0
+    if has_watcher?('send_work')
+      1
+    end
+  else # Il y a des documents
+    if has_watcher?('download_work')
+      2
+    elsif has_watcher?('send_comments')
+      3
+    elsif has_watcher?('download_comments')
+      4
+    elsif has_watcher?('qdd_depot')
+      5
+    elsif has_watcher?('qdd_sharing')
+      6
+    elsif documents_sharing_defined?
+      7
+    else
+      false # ça doit provoquer une erreur de réparation manuelle à faire
+    end
+  end
+end #/ status_considering_data
+
+
+
 # ---------------------------------------------------------------------
 #
 #   Méthodes de réparation
@@ -148,53 +220,38 @@ end #/ reparer_ended_at
 # On regarde l'état des documents de l'étape. L'idée est que si tous les
 # documents sont déposés dans le QDD (6) ou même si leur partage est défini (7)
 def can_reparer_status?
-  new_statut_possible ? "La réparation peut mettre le statut à #{new_statut_possible}" : false
+  status_considering_data ? "La réparation peut mettre le statut à #{new_statut_possible}" : false
 end #/ can_reparer_status?
 
 def reparer_status(options = nil)
-  set(status: new_statut_possible(options))
+  set(status: status_considering_data)
 end #/ reparer_status
 
-def new_statut_possible(options)
-  @new_statut_possible = calc_new_statut(options) if @new_statut_possible === nil || not(options.nil?)
-  @new_statut_possible
-end
-
-def calc_new_statut(options)
-  if options && options[:any]
-    # Calcul du statut possible, n'importe quelle valeur
-    raise "Il faut calculer"
-  else
-    # Calcul du statut possible entre 7 ou 6
-    status_can_be = 7
-    icdocuments.each do |icdocument|
-      if icdocument[0] == '1'
-        # Si le partage n'a pas été défini pour ce document original qui existe,
-        # on aura un status possible forcément de 6 seulement
-        status_can_be = 6 if icdocument[4] == '0'
-        # Si le document original n'a pas été déposé sur le QDD, on ne peut pas
-        # réparer le statut
-        if icdocument.options[3] == '0'
-          status_can_be = nil
-          break
-        end
-      end
-      if icdocument[8] == '1'
-        # Si le partage n'a pas été défini pour le document commentaires qui
-        # existe, on aura un status possible forcément de 6 seulement
-        status_can_be = 6 if icdocument[12] == '0'
-        # Si le document commentaires qui existe n'a pas été déposé sur le
-        # QDD, on ne peut pas updater le statut.
-        if icdocument.options[11] == '0'
-          status_can_be = nil
-          break
-        end
-      end
-      break if status_can_be.nil?
+# Retourne TRUE si les documents définissent leur partage
+#
+# Noter que ces données peuvent être modifiées par la réparation des
+# documents. Peut-être qu'il vaut mieux la lancer avant.
+def documents_sharing_defined?
+  icdocuments.each do |icdocument|
+    if icdocument[0] == '1' # si le document original existe (déposé)
+      # Si le document original n'a pas été déposé sur le QDD, la partage,
+      # forcément, n'est pas défini
+      return false if icdocument.options[3] == '0'
+      # Si le partage n'a pas été défini pour ce document original qui existe,
+      # on aura un status possible forcément de 6 seulement
+      return false if icdocument[4] == '0'
+    end
+    if icdocument[8] == '1'
+      # Si le document commentaires qui existe n'a pas été déposé sur le
+      # QDD, le partage ne peut pas être défini.
+      return false if icdocument.options[11] == '0'
+      # Si le partage n'a pas été défini pour le document commentaires qui
+      # existe, on aura un status possible forcément de 6 seulement
+      return false if icdocument[12] == '0'
     end
   end
-  status_can_be
-end #/ new_statut_possible
+  return true
+end #/ documents_sharing_defined?
 
 
 

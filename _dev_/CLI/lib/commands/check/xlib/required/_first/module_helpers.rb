@@ -26,10 +26,8 @@ end #/ check
 # Retourne le propriétaire de la chose (de l'icmodule, du document, etc.)
 def owner
   @owner ||= begin
-    unless user_id.nil?
-      usr = CheckedUser.get(user_id)
-      usr = nil if usr.data.nil?
-      usr
+    if not(user_id.nil?) && CheckedUser.exists?(user_id)
+      CheckedUser.get(user_id)
     end
   end
 end #/ owner

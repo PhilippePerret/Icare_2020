@@ -57,17 +57,20 @@ class << self
         msg << checkcase.formate_message(checkcase.failure_message).rouge
         if simuler?
           msg << TABU + checkcase.message_simulation.jaune
+        elsif checkcase.repared?
+          msg[-1] = "#{msg.last}#{' -- RÉPARÉ'.vert}"
         end
         @nombre_reparations += 1 if checkcase.repared?
       end
     end
-    msg << RC * 2
     method_couleur = (@nombre_failure - @nombre_reparations) > 0 ? :rouge : :vert
     msg << "Tests #{@items.count} (hors condition : #{@nombre_hors_condition}) - Succès #{@nombre_success} - Failures #{@nombre_failure}".send(method_couleur)
     msg << RC
     if @nombre_failure - @nombre_reparations == 0
-      msg << "√ Tout est OK avec ces données".vert
-    elsif reparer?
+      msg_success = "√ Tout est OK avec ces données"
+      msg_success = "#{msg_success} (réparations : #{@nombre_reparations})" if @nombre_reparations > 0
+      msg << msg_success.vert
+    elsif reparer? && not(simuler?)
       msg << "Des données erronnées ont été réparées. Relancer le check pour vous assurer du résultat.".bleu
     else
       msg << "# Des données doivent être réparées".rouge
@@ -203,7 +206,8 @@ def proceed
           if not(resultat == :reparation_manuelle)
             # La réparation a pu se faire correctement
             @is_repared = true
-            " -RÉPARÉ- ".vert
+            msg = (VERBOSE && resultat.is_a?(String)) ? "#{TABU}#{resultat}".ljust(90) : " -RÉPARÉ- "
+            msg.vert
           else
             "#{RC}#{TABU}LA RÉPARATION N'A PAS PU SE FAIRE, ELLE DOIT ÊTRE MANUELLE".rouge
           end
@@ -221,9 +225,9 @@ end #/ formate_message
 
 def message_simulation
 
-  msg = if reparation == :reparation_manuelle
+  msg = if simulation.nil? && reparation == :reparation_manuelle
           :reparation_manuelle
-        elsif reparation.is_a(Proc)
+        elsif simulation.is_a?(Proc)
           simulation.call(objet)
         else
           simulation
@@ -237,7 +241,14 @@ def message_simulation
 end #/ message_simulation
 
 def data_message
-  @data_message ||= objet.data.merge(ref: objet.ref)
+  @data_message ||= objet.data.merge({
+    # Toutes les données ajoutées, qu'on peut utiliser dans les templates
+    # de messages
+    ref: objet.ref,
+    owner_ref:objet&&objet.owner&&objet.owner.ref,
+    owner_pseudo: objet.owner && objet.owner.pseudo,
+    icetape_user_id:objet.icetape&&objet.icetape.user_id,
+  })
 end #/ data_message
 
 # Retourne TRUE si le test de l'objet est un succès

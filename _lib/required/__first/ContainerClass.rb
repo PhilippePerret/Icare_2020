@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class ContainerClass
   --------------------
@@ -14,7 +15,7 @@ class ContainerClass
 
   class << self
     def get item_id
-      item_id || raise("Il faut fournir l'ID".freeze)
+      item_id || raise("Il faut fournir l'ID")
       item_id = item_id.to_i
       @items ||= {}
       @items.key?(item_id) || @items.merge!(item_id => new(item_id))
@@ -50,12 +51,14 @@ class ContainerClass
 
     # Charge tous les items en appliquant le filtre +filtre+ si défini
     # Les mets dans @items en réinitialisant la liste si +reset_items+ est
-    # true et la renvoie. La méthode a un alias : find
+    # true et la renvoie.
+    # @alias : find
+    # @retourne : Table Hash avec l'identifiant en clé
     def get_all(filtre = nil, reset_items = false)
       @items = {} if reset_items
       @items ||= {}
       where = where_clausize(filtre)
-      db_exec("SELECT * FROM #{table}#{where}".freeze).each do |ditem|
+      db_exec("SELECT * FROM #{table}#{where}").each do |ditem|
         item = new(ditem[:id])
         item.data= ditem
         @items.merge!(item.id => item)
@@ -70,9 +73,9 @@ class ContainerClass
     def collect(filtre = nil)
       order_by = filtre && (filtre.delete(:order) || filtre.delete(:order_by))
       where = where_clausize(filtre)
-      where << " ORDER BY #{order_by}".freeze unless order_by.nil?
+      where = "#{where} ORDER BY #{order_by}" unless order_by.nil?
       begin
-        allcollect = db_exec("SELECT * FROM #{table}#{where}".freeze)
+        allcollect = db_exec("SELECT * FROM #{table}#{where}")
       rescue MyDBError => e
         erreur(e.message)
         return []
@@ -96,7 +99,7 @@ class ContainerClass
 
     def each(filtre = nil)
       where = where_clausize(filtre)
-      request = "SELECT * FROM #{table}#{where}".freeze
+      request = "SELECT * FROM #{table}#{where}"
       begin
         alleach = db_exec(request)
       rescue MyDBError => e
@@ -112,7 +115,7 @@ class ContainerClass
 
     def each_with_index(filtre = nil)
       where = where_clausize(filtre)
-      request = "SELECT * FROM #{table}#{where}".freeze
+      request = "SELECT * FROM #{table}#{where}"
       begin
         result = db_exec(request)
       rescue MyDBError => e
@@ -134,7 +137,25 @@ class ContainerClass
           if filtre.key?(:where)
             filtre = filtre[:where]
           else
-            filtre = filtre.collect{|k,v| "#{k} = #{v.inspect}"}.join(' AND ').freeze
+            # Étude complexe du filtre
+            filtre = filtre.collect do |k,v|
+              case k
+              when :created_after
+                "created_at > #{v}"
+              when :created_before
+                "created_at < #{v}"
+              when :updated_after
+                "updated_at > #{v}"
+              when :updated_before
+                "updated_at < #{v}"
+              when :ended_after
+                "ended_at > #{v}"
+              when :ended_before
+                "ended_at < #{v}"
+              else
+                "#{k} = #{v.inspect}"
+              end
+            end.join(AND)
           end
         end
         return " WHERE #{filtre}"
@@ -170,7 +191,7 @@ class ContainerClass
   end #/ method_missing
 
   def f_id
-    @f_id ||= user.admin? ? "#{ISPACE}<span class='small'>(##{id})</span>".freeze : EMPTY_STRING
+    @f_id ||= user.admin? ? "#{ISPACE}<span class='small'>(##{id})</span>" : EMPTY_STRING
   end #/ f_id
 
   def data
@@ -216,7 +237,7 @@ class ContainerClass
 
   # Pour détruire la donnée dans la base de données
   def destroy
-    db_exec("DELETE FROM `#{self.class.table}` WHERE id = #{id}".freeze)
+    db_exec("DELETE FROM `#{self.class.table}` WHERE id = #{id}")
   end #/ destroy
 
   # Date formatée de démarrage

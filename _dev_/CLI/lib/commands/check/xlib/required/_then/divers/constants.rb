@@ -14,6 +14,7 @@ DATA_WHAT_CHECK = [
   {name: "Tout (user, modules, etc.)", value: :all},
   {name: "Les icariens", value: :users},
   {name: "Les modules", value: :modules},
+  {name: "Les documents", value: :documents},
   {name: "Les étapes", value: :etapes},
   {name: "Renoncer", value: :cancel}
 ]

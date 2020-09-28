@@ -93,11 +93,7 @@ CHECKCASES = [
       objet.reparer_ended_at
     end
     if objet.status < 6
-      if new_statut_possible
-        reparer_status
-      else
-        :reparation_manuelle
-      end
+      reparer_status || :reparation_manuelle
     end
   },
   simulation: -> (objet) {
@@ -113,6 +109,10 @@ CHECKCASES = [
   failure_message: "L'étape courante (%{ref}) du module courant ne devrait pas être marquée finie…",
   reparation: -> (objet) { objet.set(ended_at: nil)},
   simulation: "Mise à nil de l'ended_at de l'étape."
+},
+{
+  description: "L'étape ne doit pas avoir de watchers incohérents",
+  condition:[]
 }
 ]
 end #/CheckedEtape < ContainerClass

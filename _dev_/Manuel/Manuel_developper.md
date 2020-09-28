@@ -484,11 +484,11 @@ Les valeurs sont les suivantes :
 | Bit  | Statut                                                       |
 | ---- | ------------------------------------------------------------ |
 | 0    | Non utilisé, ne devrait pas arriver                          |
-| 1    | L’étape est en cours, l’icarien travaille dessus. <br />Note : ce statut provoque la création automatique du watcher `send-work`. |
-| 2    | L’icarien a transmis ses documents mais ils n’ont pas encore été downloadés par Phil.<br />Ce statut provoque la création automatique du watcher `download-work`. |
-| 3    | Phil a downloadé les documents de travail de l’icarien.<br />Ce statut provoque la création automatique du watcher `send-comments`. |
-| 4    | Phil a transmis les commentaires, mais l’icarien ne les a pas encore downloadés.<br />Ce statut provoque la création automatique du watcher `download-comments` |
-| 5    | L’icarien a downloadé ses commentaires.<br />Ce statut génère automatiquement le watcher qui permet à Phil de déposer les documents sur le Quai des docs (`depot-qdd`). |
+| 1    | L’étape est en cours, l’icarien travaille dessus. <br />Note : ce statut provoque la création automatique du watcher de wtype `send_work`. |
+| 2    | L’icarien a transmis ses documents mais ils n’ont pas encore été downloadés par Phil.<br />Ce statut provoque la création automatique du watcher de wtype `download_work`. |
+| 3    | Phil a downloadé les documents de travail de l’icarien.<br />Ce statut provoque la création automatique du watcher de wtype `send_comments`. |
+| 4    | Phil a transmis les commentaires, mais l’icarien ne les a pas encore downloadés.<br />Ce statut provoque la création automatique du watcher de wtype `download_comments` |
+| 5    | L’icarien a downloadé ses commentaires.<br />Ce statut génère automatiquement le watcher qui permet à Phil de déposer les documents sur le Quai des docs (wtype `depot_qdd`). |
 | 6    | Phil a déposé les documents de l’étape sur le Quai des docs.<br />Ce statut génère automatiquement le watcher qui permet à l’icarien de définir le partage de ses documents `qdd-define-sharing`. |
 | 7    | L’icarien a défini le partage de chacun de ses documents.    |
 | 8    | Fin de cycle de l'étape                                      |

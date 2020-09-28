@@ -4,6 +4,7 @@
 =end
 FREQUENCE_CHECK = 10 # nombre de secondes
 require './_lib/required/__first/Tracer'
+require './_lib/data/secret/known_ips' # => KNOWN_IPS
 class IcareCLI
 class << self
   attr_accessor :all_lines

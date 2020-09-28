@@ -21,12 +21,16 @@ class << self
       end
     end
     return if what == :cancel
+
     # Le check de qui/quoi est à faire
     who  = params[2]
     who = who.to_i unless who.nil?
 
     # On procède au test
     CheckCase.init
+    if what.to_sym == :etape
+      puts "Le check des documents devrait être lancé avant le check des étapes.".jaune
+    end
     send("proceed_check_#{what}".to_sym, who)
     CheckCase.report
 
@@ -34,6 +38,7 @@ class << self
 
   def proceed_check_all
     proceed_check_user(nil)
+    proceed_check_document(nil)
     proceed_check_module(nil)
     proceed_check_etape(nil)
   end #/ proceed_check_all
@@ -49,6 +54,10 @@ class << self
   def proceed_check_etape(who)
     CheckedEtape.check(who)
   end #/ proceed_check_etape
+
+  def proceed_check_document(who)
+    CheckedDocument.check(who)
+  end #/ proceed_check_document
 
   # ---------------------------------------------------------------------
   #
