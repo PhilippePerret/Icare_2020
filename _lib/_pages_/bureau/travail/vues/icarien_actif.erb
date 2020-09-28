@@ -1,4 +1,5 @@
 <%
+# frozen_string_literal: true
 # Gabarit pour afficher le travail de l'icarien, lorsqu'il est actif
 %>
 
@@ -8,14 +9,19 @@
 <div id="etat-des-lieux" class="state-list mg2">
   <%= StateList.row('Module', absmodule.name) %>
   <%= StateList.row('Commencé le', icmodule.f_started_at, {css:'small'}) %>
-  <%
-log("iceatpe:#{icetape.inspect}")
-   %>
   <%= StateList.row('Étape', "#{icetape.numero}. #{icetape.titre}") %>
   <%= StateList.row('Commencé le', icetape.f_started_at, {css:'small'}) %>
   <hr>
-  <%= StateList.row('À remettre le', echeance_field) %>
-  <%= StateList.row('<remettre>', Tag.lien(route:'bureau/sender?rid=send_work_form', text:UI_TEXTS[:btn_remettre_travail], class:'main btn'), {class:'right mt2'}) %>
+  <%
+log("--- icetape.status: #{icetape.status.inspect}")
+  %>
+  <% if icetape.status < 2 %>
+    <%= StateList.row('À remettre le', echeance_field) %>
+    <%= StateList.row('<remettre>', Tag.lien(route:'bureau/sender?rid=send_work_form', text:UI_TEXTS[:btn_remettre_travail], class:'main btn'), {class:'right mt2'}) %>
+  <% else %>
+    <%= StateList.row("Remis le", icetape.f_work_sent_at) %>
+    <%= StateList.row("Retours",  icetape.f_comments_expected_date) %>
+  <% end %>
 </div>
 
 <%

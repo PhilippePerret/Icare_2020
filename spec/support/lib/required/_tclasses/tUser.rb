@@ -89,6 +89,10 @@ def has_mail?(params)
   TMails.has_mails?(params.merge(destinataire: self))
 end #/ has_mail?
 
+def has_document?(data)
+  TDocuments.has_one?(data.merge(user_id: self.id))
+end #/ has_document?
+
 def has_etape?(detape)
   icmodule_id || raise("#{pseudo} n'a pas de module, donc pas d'étape")
   detape.merge!({user_id: self.id, icmodule_id: icmodule_id})

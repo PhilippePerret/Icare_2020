@@ -19,8 +19,7 @@ values = AbsModule.collect do |absmodule|
   [absmodule.id, "#{selected_module?(absmodule) ? '📌 ' : '  '}#{absmodule.name}"]
 end
 form.rows = {
-  'Module' => {type: 'select', values: values, name:'module_id', id:"module_id-#{owner.id}", size:160},
-  '<operation>' => {type:'hidden', name:'op', value:'run'}
+  'Module' => {type: 'select', values: values, name:'module_id', id:"module_id-#{owner.id}", size:160}
 }
 form.submit_button = "Attribuer ce module"
 

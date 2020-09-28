@@ -11,6 +11,7 @@ include SpecModuleFormulaire
 def inscription_marion
   degel_or_gel('inscription_marion') do
     puts "Fabrication du gel 'inscription_marion'".vert
+    vide_db
     def clic_signup_button
       find('#btn-signup').click
     end #/ clic_signup_button

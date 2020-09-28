@@ -1,5 +1,12 @@
 # encoding: UTF-8
+# frozen_string_literal: true
+
 feature "Travail d'un icarien" do
+  before(:all) do
+    require './_lib/_pages_/bureau/travail/constants'
+    require './_lib/_pages_/bureau/sender/constants'
+  end
+
   scenario "Un icarien en activité trouve son travail sur son bureau" do
     degel('demarrage_module')
     pitch('Après avoir démarré son module, Marion rejoint son travail courant…'.freeze)
@@ -40,4 +47,49 @@ feature "Travail d'un icarien" do
     pitch("… un bouton pour remettre son travail")
 
   end
+
+
+
+  context 'Un icarien en activité' do
+    context 'qui n’a pas encore envoyé son travail' do
+      before(:all) do
+        degel('demarrage_module')
+      end
+      scenario 'trouve un bouton pour envoyer le travail' do
+        pitch("Marion trouve un bouton pour envoyer son travail (i.e. pour rejoindre la section d'envoi des documents).")
+        marion.rejoint_son_bureau
+        marion.click_on("Travail courant")
+        expect(page).to have_link(UI_TEXTS[:btn_remettre_travail])
+      end
+      scenario 'peut rejoindre la section d’envoi des documents' do
+        pitch("Marion peut rejoindre la section d'envoi des documents et trouver un formulaire pour envoyer le travail.")
+        marion.rejoint_son_bureau
+        marion.click_on("Travail courant")
+        marion.click_on(UI_TEXTS[:btn_remettre_travail])
+        expect(page).to have_titre(MESSAGES[:titre_send_work_form])
+        expect(page).to have_css('form#send-work-form')
+      end
+    end
+
+    context 'qui a envoyé son travail' do
+      before(:all) do
+        degel('envoi_travail')
+      end
+      scenario 'trouve la mention de sa date d’envoi et de possible retour', only:true do
+        pitch("Quand marion rejoint son travail courant, elle ne trouve plus le bouton pour remettre son travail mais une date d'envoi et une date de retour des commentaires.")
+        marion.rejoint_son_bureau
+        marion.click_on("Travail courant")
+        expect(page).not_to have_link(UI_TEXTS[:btn_remettre_travail])
+        expect(page).to have_css("span.date-sent-work")
+        expect(page).to have_css("span.date-expected-comments")
+      end
+      scenario 'ne peut pas rejoindre le formulaire d’envoi des documents' do
+        implementer(__FILE__,__LINE__)
+      end
+    end
+
+  end
+
+
+
 end

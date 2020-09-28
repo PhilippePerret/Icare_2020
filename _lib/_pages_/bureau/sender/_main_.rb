@@ -1,17 +1,18 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_modules(['form','user/modules','absmodules'])
 html.add_js('./js/modules/form_with_files.js')
 
 class HTML
   def titre
     # Note : le titre est dynamique en fonction de la chose à envoyer
-    "#{RETOUR_BUREAU+Emoji.get('objets/parabole').page_title+ISPACE}#{MESSAGES["titre_#{param(:rid)}".to_sym]}".freeze
+    "#{RETOUR_BUREAU+Emoji.get('objets/parabole').page_title+ISPACE}#{MESSAGES["titre_#{param(:rid)}".to_sym]}"
   end
 
   # Code à exécuter avant la construction de la page
   def exec
     unless user.actif?
-      message("Vous n’êtes pas acti#{user.fem(:ve)}, vous ne pouvez donc pas envoyer de documents.".freeze)
+      message("Vous n’êtes pas acti#{user.fem(:ve)}, vous ne pouvez donc pas envoyer de documents.")
       redirect_to(:bureau)
     end
     icarien_required
@@ -99,13 +100,13 @@ class HTML
     @documents_ids_n_names = @documents_ids_n_names.join(VG)
 
     Mail.send({
-      subject: 'Envoi de documents de travail',
+      subject: MESSAGES[:subject_mail_envoi_documents],
       from: user.mail,
       message: deserb('mail_admin', self)
     })
     s = @plusieurs ? 's' : ''
     Mail.send({
-      subject: "Document#{s} de travail bien reçu#{s}".freeze,
+      subject: (MESSAGES[:subject_mail_document_recus] % {s: s}),
       to: user.mail,
       message: deserb('mail_user', self)
       })
@@ -157,8 +158,8 @@ def init_icdocument
   log(" ---- data_doc: #{data_doc.inspect}")
 
   # DEBUG
-  log("CREATION DOCUMENT AVEC DONNÉES : ")
-  log(data_doc.inspect)
+  # log("CREATION DOCUMENT AVEC DONNÉES : ")
+  # log(data_doc.inspect)
   # return
 
   @id = db_compose_insert('icdocuments', data_doc) # => ID
@@ -215,10 +216,9 @@ class User
     # log("Il faudrait donc les terminer pour : #{formate_date(Time.now.to_i + duree_totale_commentaire)}")
 
     # Les nouvelles data pour l'étape
-    log("--- DATA ÉTAPE")
     data_etape = {
       expected_comments: Time.now.to_i + duree_totale_commentaire,
-      status: 1
+      status: 2
     }
     icetape.set(data_etape)
 

@@ -11,7 +11,9 @@ MESSAGES.merge!({
   titre_:           'Transmission de documents non définie',
   titre_send_work_form:  'Envoi des documents de travail',
   titre_sent_work_confirmation: 'Bonne réception des documents',
-  actualite_send_work: '<span><strong>%{pseudo}</strong> transmet ses documents pour l’étape %{numero} de son module “%{module}”</span>'
+  actualite_send_work: '<span><strong>%{pseudo}</strong> transmet ses documents pour l’étape %{numero} de son module “%{module}”</span>',
+  subject_mail_envoi_documents: "Envoi de documents de travail",
+  subject_mail_document_recus: "Document%{s} de travail bien reçu%{s}"
 })
 
 ERRORS.merge!({

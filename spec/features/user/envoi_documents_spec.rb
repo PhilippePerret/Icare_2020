@@ -36,6 +36,7 @@ feature "Envoi des documents de travail" do
 
   context 'un icarien inactif' do
     scenario 'ne peut pas envoyer de documents' do
+      implementer(__FILE__,__LINE__)
     end
   end
 
@@ -56,6 +57,9 @@ feature "Envoi des documents de travail" do
         # l'on a choisi un premier document.
         expect(page).not_to have_button(UI_TEXTS[:btn_transmettre_documents])
       end
+
+      start_time = Time.now.to_i
+
       # Les trois documents à transmettre
       path_doc_work1 = File.join(SPEC_FOLDER_DOCUMENTS,'extrait.odt')
       path_doc_work2 = File.join(SPEC_FOLDER_DOCUMENTS,'document_travail.rtf')
@@ -87,17 +91,34 @@ feature "Envoi des documents de travail" do
       end
       screenshot('marion-envoie-trois-documents-travail')
 
+      marion.reset
+
       # --- VÉRIFICATIONS ---
       # Enregistrement des fichiers physiques des documents
       # TODO
+
       # Création valide des instances icdocuments (associés à l'étape)
-      # TODO
+      (1..3).each do |idoc|
+        oname = File.basename(eval("path_doc_work#{idoc}"))
+        expect(marion).to have_document(after: start_time, icetape_id: marion.icetape.id, original_name: oname)
+      end
+
       # Envoi d'un message à l'administration
-      # TODO
+      expect(phil).to have_mail(after: start_time, subject: MESSAGES[:subject_mail_envoi_documents])
+      # Envoi de confirmation de documents reçus
+      expect(marion).to have_mail(after: start_time, subject: MESSAGES[:subject_mail_document_recus] % {s: "s"})
+
       # Création d'un notification (watcher) pour charger les documents
-      # TODO
+      expect(marion).to have_watcher(wtype: 'download_work', after: start_time),
+        "Marion devrait avoir un watcher download-work"
+
       # Changement du statut de l'étape courante
-      # TODO
+      expect(marion.icetape.status).to eq(2),
+        "Le statut de l'étape de Marion devrait être à 2"
+
+      # Actualité pour annoncer l'envoi des documents
+      expect(TActualites).to have_actualite(after: start_time, type: 'SENDWORK', user_id: marion.id),
+        "Une actualité devrait annoncer l'envoi de documents"
 
     end #/scénario envoi de trois documents par marion
 

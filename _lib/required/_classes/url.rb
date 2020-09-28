@@ -58,7 +58,9 @@ def params
       value = value[0] if value.count == 1
       value = nil if value == ''
       h.merge!(key.to_sym => value)
-    end;h
+    end
+    log("---- params : #{h.inspect}")
+    h
   end
 end #/params
 end #/URL

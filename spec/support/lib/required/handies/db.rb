@@ -19,7 +19,24 @@ def vide_db
   vide_paiements
   vide_temoignages
   vide_frigos
+  vide_lectures_qdd
+  vide_minifaq
+  vide_connexions
+  vide_unique_usage_ids
+  vide_validation_pages
 end #/ vide_db
+
+def vide_validation_pages
+  vide_table('validations_pages')
+end #/ vide_validation_pages
+
+def vide_connexions
+  vide_table('connexions')
+end #/ vide_connexions
+
+def vide_unique_usage_ids
+  vide_table('unique_usage_ids')
+end #/ vide_unique_usage_ids
 
 def vide_users
   vide_table('users', 10)
@@ -53,6 +70,14 @@ def vide_frigos
   vide_table('frigo_discussions')
   vide_table('frigo_messages')
 end #/ vide_paiements
+
+def vide_lectures_qdd
+  vide_table('lectures_qdd')
+end #/ vide_lectures_qdd
+
+def vide_minifaq
+  vide_table('minifaq')
+end #/ vide_minifaq
 
 def vide_table dbtable, from_id = nil, reset_auto_incremente = true
   request = "DELETE FROM icare_test.#{dbtable}"
