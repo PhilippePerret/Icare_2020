@@ -3287,6 +3287,20 @@ TActualites.founds
 ## Annexe
 
 
+### z-index
+
+| z-index | Élément                  | Description              | Class                                    |
+| ------- | ------------------------ | ------------------------------------------------------------ | --------------|
+| 500     | Toolbox d'administration | Elle apparait en bas à gauche quand c’est un administrateur qui s’identifie. | div#admin-toolbox |
+| 200 | Messages principaux | Les messages d’interaction et d’information avec l’icarien. | div#messages |
+| 100 | Table des matières<br />Les infos bulles | Les tables des matières flottantes dans le texte<br />Les infos bulles qui s’affiche en survolant le texte | div.float-tdm<br />span.info-bulle |
+| 10      | Pastilles                | Les pastilles qui indiquent le nombre de notifications ou de messages frigo. | .goto span.pastille |
+| 1 | Les dates sur timeline | Les dates sur la ligne de temps dans les historiques | div.timeline div.day-div |
+| -1 | Ligne verticale de la Timeline | La ligne de temps, verticale, qui permet d'« accrocher » les dates. | div.timeline div.vertical-timeline |
+
+
+
+
 ### Paramètres URL
 
 Pour voir les paramètres, on peut utiliser `URL.current.params` qui retourne une table avec les paramètres de l'url.

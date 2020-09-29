@@ -1,5 +1,6 @@
 section#messages {
   overflow:hidden;
+  z-index: 200;
 }
 
 section#messages > div {
