@@ -16,6 +16,7 @@ class IcareCLI
     'o' => :online,
     'r' => :reparer,
     's' => :simuler,
+    'u' => :interactive,
     'v' => :verbose,
   }
 # ---------------------------------------------------------------------

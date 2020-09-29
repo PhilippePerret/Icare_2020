@@ -29,6 +29,11 @@ DATA_WATCHERS = {
     actu_id: 'SIGNUP'
   },
   # --- LES MODULES ---
+  commande_module:    {
+    titre: 'Commande de module',
+    relpath:'AbsModule/commande',
+    actu_id: nil
+  },
   start_module:  {
     titre:  'Démarrage du module d’apprentissage',
     relpath:'IcModule/start',
@@ -95,17 +100,12 @@ DATA_WATCHERS = {
     actu_id: "QDDSHARING",
     next: nil
   },
+  # --- Documents ---
   qdd_coter: {
     titre: 'Coter et commenter',
     relpath: 'IcDocument/cotes_n_comments',
     actu_id: nil,
     next: nil
-  },
-  # --- Modules ---
-  commande_module:    {
-    titre: 'Commande de module',
-    relpath:'AbsModule/commande',
-    actu_id: nil
   },
   # --- Question mini-faq ---
   question_faq: {

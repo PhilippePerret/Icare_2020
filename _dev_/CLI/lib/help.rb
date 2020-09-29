@@ -36,7 +36,7 @@ AIDE = <<-BASH
                     seulement cet user-là.
         module[s]   Checker les modules ou le module dont l'identifiant est
                     fourni. Ça comprend le check des étapes et des documents.
-                    
+
       Options
       -------
         -l/--local    Faire le check sur les données locales (par défaut c'est
@@ -47,6 +47,10 @@ AIDE = <<-BASH
         -r/--reparer  Pour réparer les erreurs rencontrées
         -s/--simuler  Pour seulement simuler les réparations, mais ne pas les
                       faire.
+        -u/--interactive  Pour que la commande demande le détail des options
+                      ci-dessus de façon interactive. Note : on passe aussi
+                      dans ce mode quand on ne définit pas d'objet d'étude (pas
+                      de 'module', 'user', etc.)
 
   LISTE DES COMMANDES
   -------------------

@@ -87,6 +87,14 @@ CHECKCASES = [
   simulation: -> (objet) {
     "Le nom “#{original_name_composed}” va lui être affecté."
   }
-}
+},
+{
+  description: "Si le document est déposé sur le QDD, on doit le trouver",
+  condition: [:has_status_on_qdd],
+  check: -> (objet) { objet.document_exists_on_qdd },
+  success_message: "Le %{ref} existe sur le quai des docs.",
+  failure_message: "Le %{ref} devrait exister sur le quai des docs…",
+  reparation: :reparation_manuelle
+},
 ]
 end #/CheckedDocument < ContainerClass

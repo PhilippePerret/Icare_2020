@@ -220,7 +220,7 @@ def proceed
 end #/ proceed
 
 def formate_message(msg)
-  (TABU+(msg % data_message)).ljust(90)
+  (TABU+(msg % data_message)).ljust(110)
 end #/ formate_message
 
 def message_simulation
@@ -247,7 +247,8 @@ def data_message
     ref: objet.ref,
     owner_ref:objet&&objet.owner&&objet.owner.ref,
     owner_pseudo: objet.owner && objet.owner.pseudo,
-    icetape_user_id:objet.icetape&&objet.icetape.user_id,
+    icetape_user_id:objet.respond_to?(:icetape)&&objet.icetape&&objet.icetape.user_id,
+    error:objet.error
   })
 end #/ data_message
 

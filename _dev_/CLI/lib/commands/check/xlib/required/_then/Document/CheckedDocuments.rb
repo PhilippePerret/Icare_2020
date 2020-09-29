@@ -22,6 +22,29 @@ class << self
     end
   end #/ alldocuments
 
+  def existe_sur_le_qdd?(name)
+    all_documents_on_qdd.key?(name)
+  end #/ existe_sur_le_qdd?
+
+  # Retourne tous les documents existants sur le QDD (pour ne pas à
+  # envoyer une requête chaque fois)
+  def all_documents_on_qdd
+    @all_documents_on_qdd ||= begin
+      request = <<-SSH
+ssh #{SSH_SERVER} ruby << CODE
+require 'json'
+puts Dir["www/_lib/data/qdd/**/*.pdf"].collect{|p|File.basename(p)}.to_json
+CODE
+      SSH
+      res = `#{request}`
+      h = {}
+      JSON.parse(res).each do |fname|
+        h.merge!(fname => true)
+      end
+      h # return
+    end
+  end #/ all_documents_on_qdd
+
   def table
     @table ||= 'icdocuments'
   end #/ table
@@ -57,6 +80,24 @@ def icetape
   end
 end #/ icetape
 
+def qdd_path(dtype)
+  "_lib/data/qdd/#{qdd_filename(dtype)}"
+end #/ qdd_path
+
+QDD_FILE_NAME = '%{module}_etape_%{etape}_%{pseudo}_%{doc_id}_%{dtype}.pdf'
+def qdd_filename(dtype)
+  @template ||= begin
+    QDD_FILE_NAME % {
+      module: icetape.icmodule.absmodule.module_id.camelize,
+      etape:  icetape.absetape.numero,
+      pseudo: has_owner && owner.pseudo.dup.titleize,
+      doc_id: id,
+      dtype: '%s'
+    }
+  end
+  @template % dtype.to_s
+end #/ qdd_filename
+
 # ---------------------------------------------------------------------
 #
 #   Méthodes de condition
@@ -70,6 +111,48 @@ end #/ has_icetape_id
 def has_icetape
   icetape_id && CheckedEtape.exists?(icetape_id)
 end #/ has_icetape
+
+# Retourne TRUE si le document est marqué déposé sur le QDD
+def has_status_on_qdd
+  (@it_has_status_on_qdd ||= begin
+    (
+      (original_exists? || comments_exists?) &&
+      (original_exists? == original_deposed?) &&
+      (comments_exists? == comments_deposed?)
+    ) ? :true : :false
+  end) == :true
+end #/ has_status_on_qdd
+
+def original_exists?
+  options[0] == '1'
+end #/ original_exists?
+def original_deposed?
+  options[3] == '1'
+end #/ original_deposed?
+def comments_exists?
+  options[8] == '1'
+end #/ comments_exists?
+def comments_deposed?
+  options[11] == '1'
+end #/ comments_deposed?
+
+# ---------------------------------------------------------------------
+#
+#   Méthode de check
+#
+# ---------------------------------------------------------------------
+
+def document_exists_on_qdd
+  if original_exists?
+    # res = `ssh #{SSH_SERVER} test -f "www/#{qdd_path(:original)}" && echo "YES" || echo "NO"`
+    CheckedDocument.existe_sur_le_qdd?(qdd_filename(:original)) || return
+  end
+  if comments_exists?
+    # res = `ssh #{SSH_SERVER} test -f "www/#{qdd_path(:comments)}" && echo "YES" || echo "NO"`
+    CheckedDocument.existe_sur_le_qdd?(qdd_filename(:comments)) || return
+  end
+  return true
+end #/ document_exists_on_qdd
 
 
 # ---------------------------------------------------------------------

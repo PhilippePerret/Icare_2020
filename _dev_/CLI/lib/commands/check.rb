@@ -12,7 +12,8 @@ class << self
   def proceed_check
     # Quel check est à faire ?
     what = params[1]
-    what = what[0...-1] if what.end_with?('s')
+    what_not_defined = what === nil
+    what = what[0...-1] if what && what.end_with?('s')
     what = nil if not(respond_to?("proceed_check_#{what}".to_sym))
     what ||= begin
       Q.select(MESSAGES[:question_read], required: true) do |q|
@@ -21,6 +22,19 @@ class << self
       end
     end
     return if what == :cancel
+
+    # Pour demander le détail des options, si what n'était pas défini ou
+    # que l'on demande le mode interactif
+    if what_not_defined || option?(:interactive)
+      DATA_INTERACTIVE.each do |datai|
+        puts "datai: #{datai.inspect}"
+        choix = Q.select("#{datai[:question]} :", default: datai[:default]) do |q|
+          q.choices datai[:values]
+          q.per_page datai[:values].count
+        end
+        IcareCLI.options.merge!(datai[:optionkey] => true) if choix
+      end
+    end
 
     # Le check de qui/quoi est à faire
     who  = params[2]
@@ -36,7 +50,7 @@ class << self
 
   end #/ proceed_check
 
-  def proceed_check_all
+  def proceed_check_all(who)
     proceed_check_user(nil)
     proceed_check_document(nil)
     proceed_check_module(nil)

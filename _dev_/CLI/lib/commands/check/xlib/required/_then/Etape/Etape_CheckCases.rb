@@ -112,7 +112,12 @@ CHECKCASES = [
 },
 {
   description: "L'étape ne doit pas avoir de watchers incohérents",
-  condition:[]
+  condition:[:has_watchers, :has_status],
+  check: -> (objet) { objet.watchers_are_coherents },
+  success_message: "Les watchers de %{ref} sont cohérents.",
+  failure_message: "Les watchers de %{ref} ne sont pas cohérents : %{error}…",
+  reparation: -> (objet) { objet.reparer_watchers(simuler=false) },
+  simulation: -> (objet) { objet.reparer_watchers(simuler=true) }
 }
 ]
 end #/CheckedEtape < ContainerClass

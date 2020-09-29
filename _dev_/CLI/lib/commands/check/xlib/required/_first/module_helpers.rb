@@ -3,6 +3,15 @@
 
 module HelpersWritingMethods
 
+# Pour une erreur particulière à mettre dans le message d'erreur
+# Mais en général, puisque chaque check doit être pensé précis, ce message
+# n'est pas utile. Il a été inauguré pour le check des watchers d'étape, où
+# le retour doit préciser par exemple les watchers qui manquent ou qui sont en
+# trop
+# @usage : on utile "%{error}" dans le message de retour et on définit @error
+# au cours du check
+attr_reader :error
+
 # = main =
 # Procède au check de l'icarien
 def check
@@ -26,7 +35,7 @@ end #/ check
 # Retourne le propriétaire de la chose (de l'icmodule, du document, etc.)
 def owner
   @owner ||= begin
-    if not(user_id.nil?) && CheckedUser.exists?(user_id)
+    if has_owner
       CheckedUser.get(user_id)
     end
   end
@@ -40,7 +49,7 @@ end #/ owner
 
 def has_user_id
   (@it_has_user_id ||= begin
-    (user_id != nil && user_id > 0) ? :true : :false
+    (respond_to?(:user_id) && user_id != nil && user_id > 0) ? :true : :false
   end) == :true
 end #/ has_user_id
 
@@ -50,6 +59,12 @@ def has_owner
   end) == :true
 end #/ has_owner
 
+# Retourne true si l'objet possède des watchers
+def has_watchers
+  (@it_has_watchers ||= begin
+    (respond_to?(:watchers) && watchers.count > 0) ? :true : :false
+  end) == :true
+end #/ has_watchers
 
 
 end #/HelpersWritingMethods

@@ -41,32 +41,17 @@ end # /<< self
 def ref
   @ref ||= "icetape ##{id}"
 end #/ ref
-
-#   # Son étape absolue est définie
-#   absetape_id_defined
-#   # Son étape absolue existe
-#   abs_etape_exists
-#   # Son propriétaire est défini ?
-#   user_id_defined
-#   # Son propriétaire existe ?
-#   owner_exists
-#   # Le module icarien est défini
-#   icmodule_id_defined
-#   # Le module icarien existe
-#   icmodule_exists
 #   # Le module icarien a le même propriétaire
 #   module_and_etape_same_owner
 #   # Si ce n'est pas la dernière étape, sa date de fin doit être définie TODO
 #   date_fin_defined_if_not_last_etape
-#   # OK
-#   mark_success
-#   return true
-# rescue DataCheckedError => e
-#   mark_failure
-#   puts e.full_message.rouge
-#   return false
-# end #/ check
 
+
+# ---------------------------------------------------------------------
+#
+#   Méthodes de condition
+#
+# ---------------------------------------------------------------------
 
 
 # ---------------------------------------------------------------------
@@ -102,7 +87,35 @@ def date_fin_defined_if_not_last_etape
   result(not(ended_at.nil?), :date_fin_defined_if_not_last, precisions)
 end #/ date_fin_defined_if_not_last_etape
 
-
+# S'assurent que les watchers de l'étape sont cohérents
+# En général, il n'y a qu'un seul watcher par étape et il dépend du status
+# de l'étape.
+def watchers_are_coherents
+  dwatchers = WATCHER_WTYPE_PER_STATUS[status]
+  if dwatchers[:wtype] && watchers.count == 0
+    raise "L’#{ref} devrait posséder au moins 1 watcher."
+  end
+  if dwatchers[:maybe]
+    if watchers.count > 2
+      raise "Trop de watchers (#{watchers.count} — 2 maximum pour l’#{ref})"
+    end
+    if not watchers.key?(dwatchers[:wtype])
+      raise "L’#{ref} devrait avoir le watcher 'dwatchers[:wtype]'"
+    end
+  else
+    if watchers.count > 1
+      raise "Trop de watchers (#{watchers.count} au lieu de 1 seul)"
+    end
+    if not watchers.key?(dwatchers[:wtype])
+      raise "Le watcher devrait avoir le type '#{dwatchers[:wtype]}', il a le type '#{watcher.wtype}'…"
+    end
+  end
+rescue Exception => e
+  @error = e.message
+  return false
+else
+  return true
+end #/ watchers_are_coherents
 
 # ---------------------------------------------------------------------
 #
@@ -136,15 +149,16 @@ def icdocuments
     h = {}
     db_exec("SELECT * FROM icdocuments WHERE icetape_id = ?", id).each do |dd|
       doc = CheckedDocument.instantiate(dd)
-      h.merge!(h.id => h)
-    end;h
+      h.merge!(doc.id => doc)
+    end
+    h
   end
 end #/ icdocuments
 
 # Retourne les données de tous les watchers de l'icétape
 # C'est une table qui contient le wtype en clé (entendu qu'il doit être
 # unique, pour chaque étape donnée)
-def whatchers
+def watchers
   @watchers ||= begin
     h = {}
     request = "SELECT * FROM watchers WHERE objet_id = ? AND user_id = ? AND wtype IN ('send_work','download_work','send_comments','changement_etape','download_comments','qdd_depot','qdd_sharing','qdd_coter')"
@@ -152,7 +166,7 @@ def whatchers
       h.merge!( dw[:wtype] => dw )
     end; h
   end
-end #/ whatchers
+end #/ watchers
 
 def has_watcher?(wtype)
   watchers.key?(wtype)
@@ -253,7 +267,36 @@ def documents_sharing_defined?
   return true
 end #/ documents_sharing_defined?
 
+# Méthode qui doit réparer (ou simuler la réparation) des watchers de
+# l'étape lorsqu'ils ont été reconnus incohérents
+# Deux cas peuvent se présenter :
+#   1) un watcher n'a rien à faire là => il doit être supprimé
+#   2) un watcher devrait être trouvé, il est absent => on le crée
+def reparer_watchers(simuler = false)
+  datawatchers = WATCHER_WTYPE_PER_STATUS[status]
+  lines_sql = []
+  watchers.each do |wid, wdata|
+    next if [datawatchers[:wtype], datawatchers[:maybe]].include?(wdata[:wtype])
+    # Sinon, on doit le supprimer
+    lines_sql << "DELETE FROM watchers WHERE id = #{wid}"
+  end
+  # Si le watcher requis par rapport au statut n'existe pas, on le crée
+  if not watchers.key?(datawatchers[:wtype])
+    lines_sql << "INSERT INTO watchers (wtype, user_id, objet_id, created_at, updated_at) VALUES ('datawatchers[:wtype]', #{user_id}, id, '#{created_at}', '#{created_at}')"
+  end
 
+  # On construit la requête SQL
+  request = <<-SQL
+START TRANSACTION;
+#{lines_sql.join(";\n")};
+COMMIT;
+  SQL
+  if simuler
+    "Je vais jouer les requêtes : #{lines_sql.join(', ')}."
+  else
+    db_exec(request)
+  end
+end #/ reparer_watchers
 
 # ---------------------------------------------------------------------
 #
