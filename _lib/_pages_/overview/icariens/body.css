@@ -6,8 +6,8 @@ div.icarien {
 @media only screen and (min-width: 767px) {
   /* ÉCRAN */
   div.icarien div.tools a {
-    font-size:11pt
-    padding:0;
+    font-size:11pt !important;
+    padding:2px 9.3px !important;
     margin-left:1em;
   }
   div.icarien div.tools {
