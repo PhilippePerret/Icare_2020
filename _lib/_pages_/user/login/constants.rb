@@ -12,3 +12,17 @@ UI_TEXTS.merge!({
   btn_singup: 'S’inscrire',
   btn_forgottent_password: 'Mot de passe oublié',
 })
+
+REDIRECTIONS_AFTER_LOGIN = {
+  # - SIMPLE ICARIEN -
+  0 => {hname: 'Bureau de travail',       route: :bureau},
+  4 => {hname: 'Notifications',           route: 'bureau/notifications'},
+  5 => {hname: 'Travail en cours',        route: 'bureau/travail'},
+  2 => {hname: 'Profil',                  route: :profil},
+  3 => {hname: 'Dernière page consultée', route: :last_page},
+  1 => {hname: 'Accueil du site',         route: :home},
+  # - ADMINISTRATEUR -
+  7 => {hname: 'Tableau de bord', route: 'admin/home', admin: true},
+  8 => {hname: 'Console', route: 'admin/console', admin: true},
+  9 => {hname: 'Notifications', route: 'admin/notifications', admin: true}
+}

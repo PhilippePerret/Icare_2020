@@ -14,6 +14,14 @@ AIDE = <<-BASH
       Pour dégeler un gel (un état de l'atelier particulier)
       Ne pas mettre d'argument pour voir la liste de tous les gels.
 
+  #{'icare infos <what> <id>'}
+
+      Retourne les informations les plus complètes possibles sur l'objet
+      de type <what> (qui peut être 'user','icarien', 'module', 'etape',
+      'document') d'identifiant <id>.
+      Note : pour le moment, les informations sont toujours récupérées sur
+      le site distant.
+
   #{'icare read[ <what>]'.jaune}
 
       Pour lire le journal.log, le traceur, le manuel, etc.
@@ -27,6 +35,9 @@ AIDE = <<-BASH
 
       Pour procéder à des checks de l'atelier, à commencer par les données
       des modules d'apprentissage des icariens.
+
+      Note : utiliser la commande 'infos' pour obtenir des informations pré-
+      cises sur un élément (cf. plus haut).
 
       <what>
       ------
@@ -51,6 +62,17 @@ AIDE = <<-BASH
                       ci-dessus de façon interactive. Note : on passe aussi
                       dans ce mode quand on ne définit pas d'objet d'étude (pas
                       de 'module', 'user', etc.)
+
+      Autres options
+      --------------
+
+        On peut limiter le nombre d'objets checkés avec la variable d'envi-
+        ronnement 'MAX_CHECKS' :
+
+        > MAX_CHECKS=20 icare check etapes -s
+
+        La commande ci-dessus va checker les 20 premières étapes en simulant
+        les corrections qui seront faites.
 
   LISTE DES COMMANDES
   -------------------

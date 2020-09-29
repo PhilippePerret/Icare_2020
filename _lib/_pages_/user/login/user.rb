@@ -51,17 +51,17 @@ class << self
     notice "Soyez #{user.fem(:la)} bienvenu#{user.fem(:e)}, #{user.pseudo} !"
   end
 
+  # Return TRUE si un utilisateur possède le mail fourni
+  def mail_exists?
+    @dbuser = db_get('users', {mail: @user_mail})
+    return @dbuser != nil
+  end
+
   # Après son authentification, on redirige l'user soit vers le back_to
   # enregistré (quand il voulait atteindre une page protégée) soit vers
   # sa destination préférée après le login.
   def redirect_user
     Route.redirect_to(param(:back_to) || user.route_after_login)
-  end
-
-  # Return TRUE si un utilisateur possède le mail fourni
-  def mail_exists?
-    @dbuser = db_get('users', {mail: @user_mail})
-    return @dbuser != nil
   end
 
   # Return TRUE si le mot de passe est valide, c'est-à-dire s'il correspond
@@ -74,4 +74,17 @@ class << self
   end
 
 end #/<< self
+
+
+# ---------------------------------------------------------------------
+#
+#   INSTANCE
+#
+# ---------------------------------------------------------------------
+
+def route_after_login
+  REDIRECTIONS_AFTER_LOGIN[bit_redirection][:route]
+end
+
+
 end #/ User

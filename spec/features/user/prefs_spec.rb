@@ -8,8 +8,8 @@ feature "Préférences" do
     # Les messages et erreur de la section préférences
     require "#{FOLD_REL_PAGES}/bureau/preferences/constants_public"
     # Les valeurs des routes after-login
-    require './_lib/required/__first/constants/routes'
-    # => Route::REDIRECTIONS
+    require './_lib/_pages_/user/login/constants'
+    # => REDIRECTIONS_AFTER_LOGIN
   end
 
   def goto_preferences_as_marion
@@ -78,7 +78,7 @@ feature "Préférences" do
     # --------------------------
     # Les menus doivent être bien réglés
     within('form#preferences-form') do
-      expect(page).to have_select('prefs-after_login',      selected: Route::REDIRECTIONS[after_login][:hname])
+      expect(page).to have_select('prefs-after_login',      selected: REDIRECTIONS_AFTER_LOGIN[after_login][:hname])
       expect(page).to have_select('prefs-freqs_actus',      selected: DATA_FREQ_MAIL[freqs_actus][:name])
       expect(page).to have_select('prefs-contact_admin',    selected: DATA_CONTACTS[contact_admin][:name])
       expect(page).to have_select('prefs-contact_icarien',  selected: DATA_CONTACTS[contact_icarien][:name])
@@ -101,7 +101,7 @@ feature "Préférences" do
       return new_value
     end #/ other_value_in
 
-    new_after_login     = other_value_in(Route::REDIRECTIONS, after_login)
+    new_after_login     = other_value_in(REDIRECTIONS_AFTER_LOGIN, after_login)
     new_freqs_actus     = other_value_in(DATA_FREQ_MAIL, freqs_actus)
     new_contact_admin   = other_value_in(DATA_CONTACTS, contact_admin)
     new_contact_icarien = other_value_in(DATA_CONTACTS, contact_icarien)
@@ -109,7 +109,7 @@ feature "Préférences" do
     new_share_histo     = other_value_in(DATA_SHARINGS, share_histo)
 
     within('form#preferences-form') do
-      select(Route::REDIRECTIONS[new_after_login][:hname], from:'prefs-after_login')
+      select(REDIRECTIONS_AFTER_LOGIN[new_after_login][:hname], from:'prefs-after_login')
       select(DATA_FREQ_MAIL[new_freqs_actus][:name], from:'prefs-freqs_actus')
       select(DATA_CONTACTS[new_contact_admin][:name], from: 'prefs-contact_admin')
       select(DATA_CONTACTS[new_contact_icarien][:name], from: 'prefs-contact_icarien')
@@ -127,11 +127,11 @@ feature "Préférences" do
     # Les menus doivent être bien réglés
     within('form#preferences-form') do
       expect(page).not_to have_select('prefs-after_login',
-        selected: Route::REDIRECTIONS[after_login][:hname]),
-        "La redirection après identification ne devrait plus être #{Route::REDIRECTIONS[after_login][:hname]}"
+        selected: REDIRECTIONS_AFTER_LOGIN[after_login][:hname]),
+        "La redirection après identification ne devrait plus être #{REDIRECTIONS_AFTER_LOGIN[after_login][:hname]}"
       expect(page).to have_select('prefs-after_login',
-        selected: Route::REDIRECTIONS[new_after_login][:hname]),
-        "La redirection après identification devrait être #{Route::REDIRECTIONS[new_after_login][:hname]}"
+        selected: REDIRECTIONS_AFTER_LOGIN[new_after_login][:hname]),
+        "La redirection après identification devrait être #{REDIRECTIONS_AFTER_LOGIN[new_after_login][:hname]}"
 
       expect(page).not_to have_select('prefs-freqs_actus',
         selected: DATA_FREQ_MAIL[freqs_actus][:name]),

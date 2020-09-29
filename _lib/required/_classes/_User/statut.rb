@@ -89,10 +89,6 @@ def no_mail?
   option(17) == 1
 end
 
-def route_after_login
-  Route::REDIRECTIONS[bit_redirection][:route]
-end
-
 def bit_redirection
   option(18)
 end #/ bit_redirection

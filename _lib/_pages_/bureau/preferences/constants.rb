@@ -4,10 +4,11 @@
   peut être chargé par les tests.
 =end
 require_relative 'constants_public'
+require './_lib/_pages_/user/login/constants'
 require_modules(['user/modules'])
 
 VALUES_REDIRECTION_AFTER_LOGIN = []
-Route::REDIRECTIONS.each do |vdir, ddir|
+REDIRECTIONS_AFTER_LOGIN.each do |vdir, ddir|
   next if ddir[:admin] && !user.admin?
   VALUES_REDIRECTION_AFTER_LOGIN << [vdir, ddir[:hname]]
 end
