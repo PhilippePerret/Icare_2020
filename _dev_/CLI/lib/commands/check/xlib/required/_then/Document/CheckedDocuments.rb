@@ -1,16 +1,20 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class CheckedDocument < ContainerClass
-  include HelpersWritingMethods
+extend CheckClassMethods
+include HelpersWritingMethods
 class << self
 
-  # = main =
-  #
-  # Check des icdocument ou de l'icdocument +did+
-  #
-  def check(did = nil)
-    (did.nil? ? alldocuments.values : [get(did)]).each { |m| m.check }
-  end #/ check
+  # # = main =
+  # #
+  # # Check des icdocument ou de l'icdocument +did+
+  # #
+  # def check(did = nil)
+  #   (did.nil? ? alldocuments.values : [get(did)]).each do |m|
+  #     m.check || return # pour s'arrêter
+  #   end
+  #   return true # pour poursuivre
+  # end #/ check
 
   def alldocuments
     @alldocuments ||= begin
@@ -21,6 +25,7 @@ class << self
       end; h
     end
   end #/ alldocuments
+  alias :all_instances :alldocuments
 
   def existe_sur_le_qdd?(name)
     all_documents_on_qdd.key?(name)

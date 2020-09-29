@@ -1,16 +1,20 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class CheckedEtape < ContainerClass
+extend CheckClassMethods
 include HelpersWritingMethods
 class << self
 
-  # = main =
-  #
-  # Check des icetapes ou de l'icetape +eid+
-  #
-  def check(eid = nil)
-    (eid.nil? ? alletapes.values : [get(eid)]).each { |m| m.check }
-  end #/ check
+  # # = main =
+  # #
+  # # Check des icetapes ou de l'icetape +eid+
+  # #
+  # def check(eid = nil)
+  #   (eid.nil? ? alletapes.values : [get(eid)]).each do |m|
+  #     m.check || return
+  #   end
+  #   return true # pour pouvoir poursuivre
+  # end #/ check
 
   def alletapes
     @alletapes ||= begin
@@ -21,6 +25,7 @@ class << self
       end; h
     end
   end #/ alletapes
+  alias :all_instances :alletapes
 
   # Retourne TRUE si l'icetape d'identifiant +eid+ existe.
   def exists?(eid)
@@ -32,6 +37,9 @@ class << self
   end #/ table
 
 end # /<< self
+
+
+
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
@@ -107,7 +115,7 @@ def watchers_are_coherents
       raise "Trop de watchers (#{watchers.count} au lieu de 1 seul)"
     end
     if not watchers.key?(dwatchers[:wtype])
-      raise "Le watcher devrait avoir le type '#{dwatchers[:wtype]}', il a le type '#{watcher.wtype}'…"
+      raise "Le watcher devrait avoir le type '#{dwatchers[:wtype]}', il a le type '#{watchers.values.first[:wtype]}'…"
     end
   end
 rescue Exception => e
@@ -183,7 +191,15 @@ end #/ has_watcher?
 # Pour le savoir, on se sert de la méthode qui doit aussi servir à la
 # réparation et qui renvoie le statut par rapport à l'état de l'étape.
 def check_status_value
-  status == status_considering_data
+  resultat = status == status_considering_data
+  unless resultat
+    if status_considering_data === false
+      @error = "impossible de déterminer le statut attendu d'après les données — le statut actuel de l'étape est #{status.inspect}"
+    else
+      @error = "statut de l'étape : #{status.inspect} / statut d'après les données de l'étape : #{status_considering_data.inspect}"
+    end
+  end
+  return resultat
 end #/ check_status_value
 
 
@@ -195,8 +211,10 @@ def status_considering_data
   if icdocuments.count == 0
     if has_watcher?('send_work')
       1
+    else
+      false
     end
-  else # Il y a des documents
+  else # Il y a des documents ou l'étape n'est pas fini
     if has_watcher?('download_work')
       2
     elsif has_watcher?('send_comments')
@@ -234,7 +252,7 @@ end #/ reparer_ended_at
 # On regarde l'état des documents de l'étape. L'idée est que si tous les
 # documents sont déposés dans le QDD (6) ou même si leur partage est défini (7)
 def can_reparer_status?
-  status_considering_data ? "La réparation peut mettre le statut à #{new_statut_possible}" : false
+  status_considering_data ? "La réparation peut mettre le statut à #{status_considering_data}" : false
 end #/ can_reparer_status?
 
 def reparer_status(options = nil)

@@ -15,6 +15,10 @@ class CheckCase
 # ---------------------------------------------------------------------
 class << self
 
+  attr_reader :nombre_cas
+
+  attr_accessor :nombre_objets_checked
+
   # Initialisation au début du test, quel qu'il soit
   def init
     clear
@@ -22,11 +26,12 @@ class << self
     MyDB.online = true
     # *** Initialisation des nombres ***
     @items = []
-    @nombre_total   = 0
+    @nombre_cas     = 0
     @nombre_success = 0
     @nombre_failure = 0
     @nombre_hors_condition = 0
     @nombre_reparations = 0
+    self.nombre_objets_checked = 0
     # *** Message d'introduction ***
     puts header
   end #/ init
@@ -82,6 +87,7 @@ class << self
   # Ajouter un test à la liste des tests effectué
   def add_case(checkcase)
     @items << checkcase
+    @nombre_cas += 1
     if not checkcase.conditions_remplies?
       @nombre_hors_condition += 1
     elsif checkcase.success?
@@ -91,9 +97,10 @@ class << self
     end
   end #/ add_case
 
+  # Retourne TRUE si l'option --reparer est activée, ou l'option --simuler
   def reparer?
     (@reparer_erreurs ||= begin
-      IcareCLI.option?(:reparer) ? :true : :false
+      (IcareCLI.option?(:reparer)||IcareCLI.option?(:simuler)) ? :true : :false
     end) == :true
   end #/ reparer?
 
@@ -108,6 +115,18 @@ class << self
       IcareCLI.option?(:fail_fast) ? :true : :false
     end) == :true
   end #/ fail_fast?
+
+  # On peut définir le nombre maximum d'objets à checker à l'aide de la
+  # propriété d'environnement MAX_CHECKS.
+  def max_objets_checked
+    @max_objets_checked ||= begin
+      if ENV['MAX_CHECKS']
+        ENV['MAX_CHECKS'].to_i
+      else
+        Integer::INFINITY
+      end
+    end
+  end #/ max_objets_checked
 
 end # /<< self
 # ---------------------------------------------------------------------
@@ -179,7 +198,7 @@ end #/ initialize
 def proceed
   self.class.add_case(self)
   if not conditions_remplies?
-    return
+    return true # pour poursuivre
   end
 
   if VERBOSE
@@ -206,7 +225,7 @@ def proceed
           if not(resultat == :reparation_manuelle)
             # La réparation a pu se faire correctement
             @is_repared = true
-            msg = (VERBOSE && resultat.is_a?(String)) ? "#{TABU}#{resultat}".ljust(90) : " -RÉPARÉ- "
+            msg = VERBOSE ? "#{TABU}#{resultat.is_a?(String) ? resultat : '👩🏽‍⚕️ -RÉPARÉ- '}".ljust(90) : '👩🏽‍⚕️'
             msg.vert
           else
             "#{RC}#{TABU}LA RÉPARATION N'A PAS PU SE FAIRE, ELLE DOIT ÊTRE MANUELLE".rouge
@@ -217,6 +236,8 @@ def proceed
   end
   STDOUT.write msg
   STDOUT.write(RC) if VERBOSE
+  # Pour poursuivre ou s'arrêter
+  return not(failure? && self.class.fail_fast?)
 end #/ proceed
 
 def formate_message(msg)

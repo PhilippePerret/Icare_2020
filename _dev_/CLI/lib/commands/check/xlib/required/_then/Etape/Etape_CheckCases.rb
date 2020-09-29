@@ -78,14 +78,14 @@ CHECKCASES = [
   condition: [:has_status],
   check: -> (objet) { objet.check_status_value },
   success_message: "Le status de %{ref} possède la bonne valeur.",
-  failure_message: "Le status de %{ref} n'est pas conforme aux informations trouvées.",
+  failure_message: "Le status de %{ref} n'est pas conforme aux informations trouvées : %{error}.",
   reparation: -> (objet) { objet.reparer_status(any: true) },
   simulation: "Calcul du bon statut à appliquer à %{ref}."
 },
 {
   description: "Si ce n'est pas la dernière étape, elle doit être marquée finie",
   condition: [:is_not_last_etape],
-  check: -> (objet) { objet.ended_at != nil && objet.status >= 6 },
+  check: -> (objet) { objet.ended_at != nil && objet.status && objet.status >= 6 },
   success_message: "L’%{ref} est bien terminée.",
   failure_message: "L’%{ref} n'est pas bien marquée terminée (ended_at ou status).",
   reparation: -> (objet) {

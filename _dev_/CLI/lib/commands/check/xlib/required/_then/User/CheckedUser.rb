@@ -1,16 +1,17 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class CheckedUser < ContainerClass
+extend CheckClassMethods
 include HelpersWritingMethods
 class << self
 
-  # = main =
-  # Méthode principale qui procède au check des utilisateurs
-  # +uid+ Si défini, on ne check que cet utilisateur, sinon, on les check
-  # tous.
-  def check(uid = nil)
-    (uid.nil? ? all_reduits.values : [get(uid)]).each { |u| u.check }
-  end #/ check
+  # # = main =
+  # # Méthode principale qui procède au check des utilisateurs
+  # # +uid+ Si défini, on ne check que cet utilisateur, sinon, on les check
+  # # tous.
+  # def check(uid = nil)
+  #   (uid.nil? ? all_reduits.values : [get(uid)]).each { |u| u.check }
+  # end #/ check
 
   def exists?(uid)
     all_reduits.key?(uid)
@@ -31,6 +32,7 @@ class << self
       h
     end
   end #/ all_reduits
+  alias :all_instances :all_reduits
 
   def table
     @table ||= 'users'

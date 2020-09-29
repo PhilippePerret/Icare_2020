@@ -1,16 +1,9 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class CheckedModule < ContainerClass
+extend CheckClassMethods
 include HelpersWritingMethods
 class << self
-
-  # = main =
-  #
-  # Check des icmodules ou de l'icmodule +mid+
-  #
-  def check(mid = nil)
-    (mid.nil? ? allmodules.values : [get(mid)]).each { |m| m.check }
-  end #/ check
 
   def allmodules
     @allmodules ||= begin
@@ -21,6 +14,7 @@ class << self
       end;h
     end
   end #/ allmodules
+  alias :all_instances :allmodules
 
   def exists?(mid)
     allmodules.key?(mid)

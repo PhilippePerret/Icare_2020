@@ -1,6 +1,27 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
+# Module à extend
+module CheckClassMethods
+  # = main =
+  #
+  # Check des objets ou de l'objet +mid+
+  #
+  def check(mid = nil)
+    (mid.nil? ? all_instances.values : [get(mid)]).each do |m|
+      CheckCase.nombre_objets_checked += 1
+      m.check || return # pour s'arrêter
+      if CheckCase.nombre_objets_checked >= CheckCase.max_objets_checked
+        puts "#{RC*2}Nombre maximum de checks atteint (#{CheckCase.max_objets_checked})"
+        return false
+      end
+    end
+    return true # pour poursuivre
+  end #/ check
+
+end
+
+# Module à include
 module HelpersWritingMethods
 
 # Pour une erreur particulière à mettre dans le message d'erreur
@@ -12,11 +33,16 @@ module HelpersWritingMethods
 # au cours du check
 attr_reader :error
 
+
+
 # = main =
 # Procède au check de l'icarien
 def check
   puts "🔬 Étude de #{ref}".jaune if VERBOSE
-  self.class::CHECKCASES.each { |cc| CheckCase.new(self, cc).proceed }
+  self.class::CHECKCASES.each do |cc|
+    CheckCase.new(self, cc).proceed || return # fail_fast
+  end
+  return true
 end #/ check
 
 
