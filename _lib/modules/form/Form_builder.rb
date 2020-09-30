@@ -158,7 +158,7 @@ class Form
       else
         #
         <<-HTML
-<div class="#{dfield[:norow] ? '' : 'row'}"#{row_style(dfield)}>
+<div class="#{row_class(dfield)}"#{row_style(dfield)}>
   #{span_libelle(style: libelle_style, label: label)}
   <span class="value#{" file" if dfield[:type] == 'file'}">
     #{value_field_for(dfield)}
@@ -169,6 +169,13 @@ class Form
       end
     end.join(RC)
   end
+
+  def row_class(dfield)
+    c = []
+    c << 'row' unless dfield[:norow]
+    c << dfield[:class] if dfield[:class]
+    c.join(SPACE)
+  end #/ row_class
 
   SPAN_LIBELLE = '<span class="libelle"%{style}>%{label}</span>'.freeze
   # Retourne le span pour la libelle

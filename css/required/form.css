@@ -58,7 +58,7 @@ form:not(.inline):not(.noform){
   padding-top:2em;
   padding-bottom:2em;
 }
-form div.row:not(.nogrid) {
+form div.row:not(.nogrid):not(.libelle_block) {
   display:grid;
   grid-template-columns: 200px auto;
   grid-template-rows: auto;
@@ -89,17 +89,21 @@ form div.row:not(.nogrid) {
 form.inline div.buttons,
 form.inline div.row {display: inline}
 
-form:not(.noform) div.row:not(.nogrid) span.libelle {
+form:not(.noform) div.row:not(.nogrid):not(.libelle_block) span.libelle {
   grid-column:1;
   grid-row:1;
 }
-form:not(.noform):not(.nolibelle) div.row:not(.nogrid) span.value {
+form:not(.noform):not(.nolibelle) div.row:not(.nogrid):not(.libelle_block) span.value {
   grid-column:2;
   grid-row:1
 }
-form:not(.noform).nolibelle div.row:not(.nogrid) span.value {
+form:not(.noform).nolibelle div.row:not(.nogrid):not(.libelle_block) span.value {
   grid-column:1;
   grid-row:1
+}
+
+form div.row.libelle_block > span {
+  display:block;
 }
 
 form div.row span.value div.explication {
