@@ -31,7 +31,11 @@ CHECKCASES = [
   failure_message: "La date de sortie de %{ref} n'est pas valide : %{error}…",
   reparation: -> (objet) { objet.reparer_date_sortie },
   simulation: -> (objet) {
-    "La date de sortie sera mise au #{formate_date(objet.oldest_date)}."
+    if objet.new_date_sortie
+      "La date de sortie sera mise au #{formate_date(objet.new_date_sortie)}."
+    else
+      :reparation_manuelle
+    end
   }
 }
 ]

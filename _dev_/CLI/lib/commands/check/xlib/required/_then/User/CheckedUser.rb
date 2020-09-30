@@ -37,6 +37,12 @@ class << self
   def table
     @table ||= 'users'
   end #/ table
+
+
+  def ilya6mois
+    @ilya6mois ||= Time.ilya(month: 6).to_i
+  end #/ ilya6mois
+
 end # /<< self
 
 
@@ -83,7 +89,7 @@ def oldest_date
       cols += ['created_at']
       request = "SELECT #{cols.join(', ')} FROM #{tbl} WHERE user_id = ? ORDER BY #{cols.join(' DESC, ')} DESC LIMIT 10"
       db_exec(request, [id]).each do |dob|
-        all_times << dob.collect { |k,v| v.to_i }
+        all_times += dob.collect { |k,v| v.to_i }
       end
     end
     # On retourne la plus grande valeur
@@ -136,7 +142,7 @@ def date_sortie_valid?
     @error = "date sortie: #{formate_date(date_sortie)} / plus vieille date : #{formate_date(oldest_date)}" if resultat == false
   else
     resultat = false
-    @error = "date de sortie non "
+    @error = "date de sortie non définie (et pas de plus vieille)"
   end
   return resultat
 end #/ date_sortie_valid?
@@ -148,8 +154,25 @@ end #/ date_sortie_valid?
 #
 # ---------------------------------------------------------------------
 
+def new_date_sortie
+  @new_date_sortie ||= begin
+    if not(oldest_date.nil?)
+      oldest_date.to_s
+    elsif updated_at.to_i < self.class.ilya6mois
+      updated_at.to_s
+    else
+      nil
+    end
+  end
+end #/ new_date_sortie
+
 def reparer_date_sortie
-  set(date_sortie: oldest_date.to_s)
+  if not(new_date_sortie.nil?)
+    set(date_sortie: new_date_sortie.to_s)
+    return true
+  else
+    :reparation_manuelle
+  end
 end #/ reparer_date_sortie
 
 end #/CheckedUser
