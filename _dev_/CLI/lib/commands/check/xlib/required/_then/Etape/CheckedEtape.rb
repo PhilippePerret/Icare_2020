@@ -259,6 +259,55 @@ def reparer_status(options = nil)
   set(status: status_considering_data)
 end #/ reparer_status
 
+
+# Permet de définir le même propriétaire pour l'étape ou pour le module
+def define_good_owner
+  if has_owner && icmodule.has_owner
+    choix = [{name:owner.ref, value:user_id}, {name:icmodule.owner.ref, value:icmodule.user_id}]
+  elsif icmodule.has_owner
+    set(user_id: icmodule.user_id)
+    return
+  elsif has_owner
+    icmodule.set(user_id: user_id)
+    return
+  else
+    # Aucun propriétaire n'est défini, on va chercher tous les icariens
+    # en travail dans la période donnée pour en choisir un.
+    date_from = created_at || started_at
+    date_to   = ended_at || expected_at || (date_from + 4.days)
+    conds = []
+    valus = []
+    conds << "SUBSTRING(options,1,1) = '0'" # non administrateur
+    conds << "SUBSTRING(options,4,1) = '0'" # non détruit
+    conds << "created_at >= ?"
+    valus << date_from
+    conds << "(date_sortie = NULL OR date_sortie <= ?)"
+    valus << date_to
+    conds = conds.join(' AND ')
+    request = "SELECT id, pseudo FROM users WHERE #{conds}"
+    choix = db_exec(request, valus).collect do |du|
+      {name: "#{du[:pseudo]} (##{du[:id]})", value: du[:id]}
+    end
+    if choix.empty?
+      puts "Malheureusement, aucun icarien ne semble pouvoir être propriétaire de l'#{ref}…".rouge
+      return false
+    end
+  end
+  # Si on arrive ici, c'est qu'on a une liste de choix de propriétaires
+  # parmi lesquels il faut choisir.
+  choix << {name:"Aucun", value: :none}
+  new_owner_id = Q.select("Quel propriétaire choisir pour l'#{ref} ?", required: true) do |q|
+    q.choices = choix
+    q.per_page = choix.count
+  end
+  return false if new_owner_id == :none
+  new_owner_id = new_owner_id.to_i
+  # On applique le propriétaire aux deux
+  set(user_id: new_owner_id)
+  icmodule.set(user_id: new_owner_id)
+  return true
+end #/ define_good_owner
+
 # Retourne TRUE si les documents définissent leur partage
 #
 # Noter que ces données peuvent être modifiées par la réparation des

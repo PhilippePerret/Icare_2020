@@ -22,6 +22,17 @@ CHECKCASES = [
   failure_message: "%{ref} est inactif, son icmodule_id devrait être à nil",
   reparation: -> (objet) { objet.set(icmodule_id: nil) },
   simulation: "icmodule_id de %{ref} mis à NULL"
+},
+{
+  description: "La date de sortie est bien définie",
+  condition: [],
+  check: -> (objet) { objet.date_sortie_valid? },
+  success_message: "La date de sortie de %{ref} est valide.",
+  failure_message: "La date de sortie de %{ref} n'est pas valide : %{error}…",
+  reparation: -> (objet) { objet.reparer_date_sortie },
+  simulation: -> (objet) {
+    "La date de sortie sera mise au #{formate_date(objet.oldest_date)}."
+  }
 }
 ]
 end #/CheckedUser

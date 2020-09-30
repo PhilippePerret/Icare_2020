@@ -123,7 +123,7 @@ class << self
       if ENV['MAX_CHECKS']
         ENV['MAX_CHECKS'].to_i
       else
-        Integer::INFINITY
+        Float::INFINITY
       end
     end
   end #/ max_objets_checked
