@@ -73,6 +73,7 @@ class HTML
     # Méthode qui va actualiser le fichier css/all.css qui contient toutes
     # les feuilles de styles de base (dossier./css/required)
     def update_all_css_file
+      File.delete(all_css_path) if File.exists?(all_css_path)
       ref = File.open(all_css_path,'a')
       ref.puts File.read(variables_css_path)
       get_css.each do |csspath|
