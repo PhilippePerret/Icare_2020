@@ -134,6 +134,9 @@ def date_sortie_valid?
   elsif not(oldest_date.nil?) # date_sortie définie
     resultat = date_sortie.to_i >= oldest_date
     @error = "date sortie: #{formate_date(date_sortie)} / plus vieille date : #{formate_date(oldest_date)}" if resultat == false
+  else
+    resultat = false
+    @error = "date de sortie non "
   end
   return resultat
 end #/ date_sortie_valid?
