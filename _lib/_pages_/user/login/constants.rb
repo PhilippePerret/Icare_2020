@@ -15,7 +15,7 @@ UI_TEXTS.merge!({
 
 REDIRECTIONS_AFTER_LOGIN = {
   # - SIMPLE ICARIEN -
-  0 => {hname: 'Bureau de travail',       route: :bureau},
+  0 => {hname: 'Bureau de travail',       route: 'bureau/home'},
   4 => {hname: 'Notifications',           route: 'bureau/notifications'},
   5 => {hname: 'Travail en cours',        route: 'bureau/travail'},
   2 => {hname: 'Profil',                  route: :profil},

@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class Route
 class << self
 
@@ -20,8 +21,13 @@ class << self
     session['last_route'] = route
   end
 
+  SYM2ROUTE = {
+    bureau: 'bureau/home'
+  }
+
   def redirect_to road, options = nil
-    trace({id:"REDIRECTION",message:"--> #{road}", data:{options:options}})
+    road = SYM2ROUTE[road] || road
+    trace({id:"REDIRECTION",message:"--redir--> #{road}", data:{options:options}})
     Errorer.sessionnize
     Noticer.sessionnize
     puts cgi.header('status'=>'REDIRECT', 'location' => "#{App.url}/#{road}")

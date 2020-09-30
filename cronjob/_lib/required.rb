@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Requis en tout premier
 =end
@@ -14,8 +15,8 @@ Dir.chdir(APPFOLDER) do
   [
     './_lib/data/secret/mysql',   # => DATA_MYSQL
     './_lib/required/__first/db'  # pour la base de données
-  ].each do |m|
-    require m
+  ].each do |mod|
+    require(mod)
   end
 end
 

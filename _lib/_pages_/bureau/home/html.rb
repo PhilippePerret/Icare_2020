@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Accueil du bureau
   -----------------
@@ -6,7 +7,7 @@
 =end
 class HTML
   def titre
-    "#{EMO_BUREAU.page_title}#{ISPACE}Votre bureau".freeze
+    "#{EMO_BUREAU.page_title}#{ISPACE}Votre bureau"
   end
   def exec
     icarien_required

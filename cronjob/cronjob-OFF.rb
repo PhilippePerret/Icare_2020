@@ -1,5 +1,6 @@
-#!/usr/bin/env ruby
+#!/Users/philippeperret/.rbenv/versions/2.6.3/bin/ruby
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Cronjob pour effectuer des tâches routinières sur le site, à commencer par :
   - envoyer les mails quotidiens d'activité si nécessaire
@@ -10,8 +11,8 @@
     n'était pas surveillé.
 =end
 
-CRON_FOLDER = File.expand_path(File.dirname(__FILE__)).freeze
-APPFOLDER   = File.dirname(CRON_FOLDER).freeze
+CRON_FOLDER = File.expand_path(__dir__)
+APPFOLDER   = File.dirname(CRON_FOLDER)
 
 # Note : pas de begin ici, pour traiter toutes les erreurs là où elles
 # se produisent afin d'obtenir un mode sans erreur.

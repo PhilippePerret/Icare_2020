@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class Page
 class << self
 
@@ -8,7 +9,7 @@ class << self
     page = self.new(relpath)
     unless page.exists?
       param(:r, CGI.escape(relpath))
-      page = self.new("errors/404".freeze)
+      page = self.new("errors/404")
     end
     page.load()
   end
