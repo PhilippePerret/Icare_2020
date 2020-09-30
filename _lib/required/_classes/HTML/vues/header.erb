@@ -1,14 +1,19 @@
+<%
+# frozen_string_literal: true
+pour_guest = user.nil? || user.guest?
+# Note : user peut être nil en cas d'erreur fatale
+%>
 <div id="div-logo">
   <a href="home" style="vertical-align:middle;"><%= EMO_PAPILLON.logo %></a>
   <a href="plan">Atelier Icare</a>
 </div>
 
-<img id="icone-menu" src="<%= App.url %>/img/icones/menu-blanc.png" alt="Picto menus principaux">
+<img id="icone-menu" src="<%= App.url %>/img/icones/menu-blanc/menu-blanc-small.png" alt="Picto menus principaux">
 
 <div id="header-tools">
   <div><a href="plan">Plan</a></div>
   <div><%= MainLink[:aide].simple %></div>
-  <div><%= MainLink[user.guest? ? :login : :logout].simple %></div>
-  <div><%= user.guest? ? MainLink[:signup].simple : Tag.lien_bureau %></div>
+  <div><%= MainLink[pour_guest ? :login : :logout].simple %></div>
+  <div><%= pour_guest ? MainLink[:signup].simple : Tag.lien_bureau %></div>
   <%= tools_block_notifications %>
 </div>
