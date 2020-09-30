@@ -64,32 +64,6 @@ WATCHER_WTYPE_PER_STATUS = {
   8 => {wtype: nil}
 }
 
-# class DataCheckedError < StandardError
-#   class << self
-#     attr_reader :errors # liste de toutes les erreurs
-#     attr_accessor :current_owner # pour définir le propriétaire courant de l'erreur
-#     def add_error(err)
-#       @errors ||= []
-#       @errors << err
-#     end #/ add_error
-#   end #/<< self
-#
-#   attr_reader :owner # le propriétaire de l'erreur (module, étape, etc.)
-#   attr_reader :message
-#   def initialize err_msg, values = nil
-#     if values.nil?
-#       @message = err_msg
-#     else
-#       @message = err_msg % values
-#     end
-#     @owner = self.class.current_owner
-#     self.class.add_error(self)
-#   end #/ initialize
-#   def full_message
-#     "##{TABU}ERREUR : #{@message}"
-#   end #/ message
-# end
-
 TABU = "    "
 
 # POINT_VERT = ".".vert

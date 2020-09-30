@@ -133,9 +133,9 @@ end #/ last_etape
 
 # Retourne l'étape suivante de l'étape +icetape+ si elle existe
 def next_etape_for(icetape)
-  icetapes.values.each_with_index do |ice, idx|
+  icetapes.each_with_index do |ice, idx|
     if ice.id == icetape.id
-      return icetapes.values[idx+1]
+      return icetapes[idx+1]
     end
   end
   return nil # non trouvée (normalement, ne peut pas arriver)

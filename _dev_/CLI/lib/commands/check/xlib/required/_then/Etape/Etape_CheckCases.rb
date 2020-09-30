@@ -85,7 +85,7 @@ CHECKCASES = [
   check: -> (objet) { objet.status != nil },
   success_message: "%{ref} définit son statut.",
   failure_message: "%{ref} devrait définir son statut.",
-  reparation: -> (objet) { reparer_status(any: true) },
+  reparation: -> (objet) { objet.reparer_status(any: true) },
   simulation: "Calcul du statut à appliquer à %{ref}."
 },
 {
@@ -107,8 +107,10 @@ CHECKCASES = [
     if objet.ended_at
       objet.reparer_ended_at
     end
-    if objet.status < 6
-      reparer_status || :reparation_manuelle
+    if objet.status && objet.status < 6
+      objet.set(status: 8) || :reparation_manuelle
+    else
+      :reparation_manuelle
     end
   },
   simulation: -> (objet) {
@@ -122,7 +124,7 @@ CHECKCASES = [
   check: -> (objet) { objet.status == 8 },
   success_message: "L'%{ref} finie possède bien le statut 8.",
   failure_message: "L’%{ref} est finie, elle devrait posséder le statut 8…",
-  reparation: -> (objet) { objet.status = 8 },
+  reparation: -> (objet) { objet.set(status: 8) },
   simulation: "Le statut de l’%{ref} sera mis à 8."
 },
 {

@@ -2,7 +2,6 @@
 # encoding: UTF-8
 =begin
   icare en ligne de commande
-  Pour le moment, c'est un simple bricolage
 =end
 CLI_FOLDER = File.dirname(__FILE__)
 APP_FOLDER = File.dirname(File.dirname(CLI_FOLDER))

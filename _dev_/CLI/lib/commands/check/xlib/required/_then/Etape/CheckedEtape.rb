@@ -61,6 +61,11 @@ end #/ ref
 #
 # ---------------------------------------------------------------------
 
+def is_finished
+  (@it_is_finished ||= begin
+    ended_at != nil ? :true : :false
+  end) == :true
+end #/ is_finished
 
 # ---------------------------------------------------------------------
 #
@@ -191,12 +196,12 @@ end #/ has_watcher?
 # Pour le savoir, on se sert de la méthode qui doit aussi servir à la
 # réparation et qui renvoie le statut par rapport à l'état de l'étape.
 def check_status_value
-  resultat = status == status_considering_data
+  resultat = status_considering_data.include?(status)
   unless resultat
-    if status_considering_data === false
+    if status_considering_data.empty?
       @error = "impossible de déterminer le statut attendu d'après les données — le statut actuel de l'étape est #{status.inspect}"
     else
-      @error = "statut de l'étape : #{status.inspect} / statut d'après les données de l'étape : #{status_considering_data.inspect}"
+      @error = "statut de l'étape : #{status.inspect} / statuts possibles d'après les données de l'étape : #{status_considering_data.inspect}"
     end
   end
   return resultat
@@ -208,29 +213,28 @@ end #/ check_status_value
 #   On se sert des watchers pour connaitre le statut et l'état des
 #   documents à la fin.
 def status_considering_data
+  maybe_status = []
   if icdocuments.count == 0
     if has_watcher?('send_work')
-      1
-    else
-      false
+      maybe_status << 1
     end
   else # Il y a des documents ou l'étape n'est pas fini
     if has_watcher?('download_work')
-      2
+      maybe_status << 2
     elsif has_watcher?('send_comments')
-      3
+      maybe_status << 3
     elsif has_watcher?('download_comments')
-      4
+      maybe_status << 4
     elsif has_watcher?('qdd_depot')
-      5
+      maybe_status << 5
     elsif has_watcher?('qdd_sharing')
-      6
+      maybe_status << 6
     elsif documents_sharing_defined?
-      7
-    else
-      false # ça doit provoquer une erreur de réparation manuelle à faire
+      maybe_status << 7
+      maybe_status << 8
     end
   end
+  return maybe_status
 end #/ status_considering_data
 
 
@@ -252,11 +256,11 @@ end #/ reparer_ended_at
 # On regarde l'état des documents de l'étape. L'idée est que si tous les
 # documents sont déposés dans le QDD (6) ou même si leur partage est défini (7)
 def can_reparer_status?
-  status_considering_data ? "La réparation peut mettre le statut à #{status_considering_data}" : false
+  status_considering_data.empty? ? false : "La réparation peut mettre le statut à #{status_considering_data}"
 end #/ can_reparer_status?
 
 def reparer_status(options = nil)
-  set(status: status_considering_data)
+  set(status: status_considering_data.last)
 end #/ reparer_status
 
 
@@ -345,7 +349,7 @@ def reparer_watchers(simuler = false)
   watchers.each do |wid, wdata|
     next if [datawatchers[:wtype], datawatchers[:maybe]].include?(wdata[:wtype])
     # Sinon, on doit le supprimer
-    lines_sql << "DELETE FROM watchers WHERE id = #{wid}"
+    lines_sql << "DELETE FROM watchers WHERE wtype = '#{wid}'"
   end
   # Si le watcher requis par rapport au statut n'existe pas, on le crée
   if not watchers.key?(datawatchers[:wtype])

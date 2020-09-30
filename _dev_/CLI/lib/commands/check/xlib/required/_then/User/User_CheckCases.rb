@@ -25,7 +25,7 @@ CHECKCASES = [
 },
 {
   description: "La date de sortie est bien définie",
-  condition: [],
+  condition: [:has_a_module_started],
   check: -> (objet) { objet.date_sortie_valid? },
   success_message: "La date de sortie de %{ref} est valide.",
   failure_message: "La date de sortie de %{ref} n'est pas valide : %{error}…",

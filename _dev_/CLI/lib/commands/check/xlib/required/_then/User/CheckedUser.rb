@@ -26,6 +26,7 @@ class << self
     @all_reduits ||= begin
       h = {}
       db_exec("SELECT * FROM users WHERE SUBSTRING(options,1,1) = '0'").each do |du|
+        next if du[:id] == 9 # Anonyme
         u = new(du[:id]).tap { |u| u.data = du }
         h.merge!(du[:id] => u)
       end
@@ -73,6 +74,14 @@ end #/ ref
 #
 # ---------------------------------------------------------------------
 
+# Retourne la liste {Array} des modules d'apprentissage de l'icarien
+def icmodules
+  @icmodules ||= begin
+    db_exec("SELECT * FROM icmodules WHERE user_id = ?", [id]).collect do |dm|
+      CheckedModule.instantiate(dm)
+    end
+  end
+end #/ icmodules
 # Retourne la date la plus vieille pour l'user, toutes données confondues
 def oldest_date
   @oldest_date ||= begin
@@ -119,6 +128,24 @@ def has_icmodule_id
   icmodule_id != nil
 end #/ has_icmodule_id
 
+def has_a_module
+  icmodules.count > 0
+end #/ has_a_module
+
+# Retourne true si l'icarien a au moins un module démarré (même s'il est
+# fini)
+def has_a_module_started
+  has_a_module && begin
+    res = false
+    icmodules.each do |icmod|
+      if icmod.started_at
+        res = true
+        break
+      end
+    end
+    res
+  end
+end #/ has_a_module_started
 
 # ---------------------------------------------------------------------
 #

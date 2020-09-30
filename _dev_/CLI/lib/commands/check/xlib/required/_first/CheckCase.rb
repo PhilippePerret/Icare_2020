@@ -21,9 +21,14 @@ class << self
 
   # Initialisation au début du test, quel qu'il soit
   def init
-    clear
-    MyDB.DBNAME = 'icare_db'
-    MyDB.online = true
+    if TESTS
+      MyDB.DBNAME = 'icare_test'
+      MyDB.online = false
+    else
+      MyDB.DBNAME = 'icare_db'
+      MyDB.online = true
+    end
+    clear unless TESTS
     # *** Initialisation des nombres ***
     @items = []
     @nombre_cas     = 0
@@ -225,8 +230,8 @@ def proceed
           if not(resultat == :reparation_manuelle)
             # La réparation a pu se faire correctement
             @is_repared = true
-            msg = VERBOSE ? "#{TABU}#{resultat.is_a?(String) ? resultat : '👩🏽‍⚕️ -RÉPARÉ- '}".ljust(90) : '👩🏽‍⚕️'
-            msg.vert
+            msg = VERBOSE ? "#{TABU}#{resultat.is_a?(String) ? resultat : '-RÉPARÉ- '}".ljust(90) : '√'
+            msg.jaune
           else
             "#{RC}#{TABU}LA RÉPARATION N'A PAS PU SE FAIRE, ELLE DOIT ÊTRE MANUELLE".rouge
           end

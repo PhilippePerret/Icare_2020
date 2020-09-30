@@ -8,6 +8,13 @@ require_data('signup_data') # => DATA_SPEC_SIGNUP_VALID
 include SpecModuleNavigation
 include SpecModuleFormulaire
 
+def click_on_bureau
+  find("section#header").click
+  click_on("Bureau")
+end #/ click_on_bureau
+
+
+
 def inscription_marion
   degel_or_gel('inscription_marion') do
     puts "Fabrication du gel 'inscription_marion'".vert
@@ -276,6 +283,7 @@ def validation_deux_inscriptions
   end
 end #/validation_deux_inscriptions
 
+
 def benoit_frigote_phil_marion_et_elie
   degel_or_gel('benoit_frigote_phil_marion_et_elie') do
     validation_deux_inscriptions
@@ -283,7 +291,7 @@ def benoit_frigote_phil_marion_et_elie
     Capybara.reset_sessions!
     goto_login_form
     login_icarien(2)
-    click_on("Bureau")
+    click_on_bureau
     click_on("Porte de frigo")
     click_on("les autres icarien·ne·s")
     within("#icarien-10") do
@@ -328,7 +336,7 @@ def phil_marion_elie_repondent_benoit
     # Phil répond au message
     login_admin
     find('section#header').click # pour ouvrir le menu
-    click_on('Bureau')
+    click_on_bureau
     click_on('Porte de frigo')
     click_on('Titre discussion avec Phil')
     within('form#discussion-form') do
@@ -341,7 +349,7 @@ def phil_marion_elie_repondent_benoit
     # Marion répond au message
     Capybara.reset_sessions!
     login_marion
-    click_on('Bureau')
+    click_on_bureau
     click_on('Porte de frigo')
     click_on('Titre discussion avec Marion')
     within('form#discussion-form') do
@@ -354,7 +362,7 @@ def phil_marion_elie_repondent_benoit
     # Élie répond au message (note : il va laisser deux messages)
     Capybara.reset_sessions!
     login_elie
-    click_on('Bureau')
+    click_on_bureau
     click_on('Porte de frigo')
     click_on('Titre discussion avec Élie')
     within('form#discussion-form') do
@@ -447,7 +455,7 @@ def destroyed_se_detruit
     puts "Fabrication du gel 'destroyed_se_detruit'".vert
     Capybara.reset_sessions!
     login_destroyed
-    click_on 'Bureau'
+    click_on_bureau
     click_on 'Profil'
     click_on 'Détruire le profil'
     data_user = DATA_SPEC_SIGNUP_VALID[4]

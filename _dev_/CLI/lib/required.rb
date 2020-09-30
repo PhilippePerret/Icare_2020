@@ -2,6 +2,7 @@
 =begin
   Requis pour la ligne de commande
 =end
+# require 'rubygems'
 require 'tty-prompt'
 
 

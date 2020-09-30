@@ -8,3 +8,4 @@ gem "mysql2"
 gem 'selenium-webdriver'
 gem 'kramdown'
 gem 'rubyzip' # pas 'zip'
+gem 'tty-prompt'

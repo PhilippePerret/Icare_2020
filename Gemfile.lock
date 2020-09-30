@@ -20,6 +20,8 @@ GEM
     mysql2 (0.5.3)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
+    pastel (0.8.0)
+      tty-color (~> 0.5)
     public_suffix (4.0.6)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -43,6 +45,17 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    tty-color (0.5.2)
+    tty-cursor (0.7.1)
+    tty-prompt (0.22.0)
+      pastel (~> 0.8)
+      tty-reader (~> 0.8)
+    tty-reader (0.8.0)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.8)
+      wisper (~> 2.0)
+    tty-screen (0.8.1)
+    wisper (2.0.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
@@ -56,6 +69,7 @@ DEPENDENCIES
   rspec
   rubyzip
   selenium-webdriver
+  tty-prompt
 
 BUNDLED WITH
    2.1.4
