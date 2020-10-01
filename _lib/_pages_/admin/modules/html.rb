@@ -1,6 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-require_modules(['form', 'absmodules'])
+require_modules(['form', 'absmodules','scenariopole'])
 class HTML
 
   # Le module d'apprentissage courant
@@ -104,24 +104,20 @@ class HTML
 
   def menu_films
     @menu_films ||= begin
-      MyDB.DBNAME = 'scenariopole_biblio'
-      films_options = db_exec("SELECT id AS value, titre FROM filmodico ORDER BY titre").collect do |dfilm|
+      films_options = Scenariopole.db_exec("SELECT id AS value, titre FROM filmodico ORDER BY titre").collect do |dfilm|
         dfilm[:titre] = safe(dfilm[:titre])
         TAG_OPTION % dfilm.merge(selected:EMPTY_STRING)
       end.join
-      MyDB.DBNAME = nil
       TAG_SELECT_SIMPLE % {id:'films-filmodico', name:'film_id', class:'filmodico', options:'<option>Choisir le film…</option>'+films_options}
     end
   end #/ menu_films
 
   def menu_mots
     @menu_mots ||= begin
-      MyDB.DBNAME = 'scenariopole_biblio'
-      mots_options = db_exec("SELECT id AS value, mot AS titre FROM scenodico ORDER BY mot").collect do |dmot|
+      mots_options = Scenariopole.db_exec("SELECT id AS value, mot AS titre FROM scenodico ORDER BY mot").collect do |dmot|
         dmot[:titre] = safe(dmot[:titre]).downcase
         TAG_OPTION % dmot.merge(selected:EMPTY_STRING)
       end.join
-      MyDB.DBNAME = nil
       TAG_SELECT_SIMPLE % {id:'mots-scenodico', name:'mot_id', class:'scenodico', options:'<option>Choisir le mot…</option>'+mots_options}
     end
   end #/ menu_mots

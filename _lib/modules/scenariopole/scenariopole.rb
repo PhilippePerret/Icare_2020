@@ -6,6 +6,23 @@
 =end
 class Scenariopole
 class << self
+  # Pour exécuter une requête sur le site scénariopole
+  def db_exec(request)
+    client = client_scenariopole('scenariopole_biblio')
+    begin
+      all_res = []
+      res = client.query(request, {symbolize_keys: true})
+      res.each { |row| all_res << row } if res
+      return all_res
+    rescue Mysql2::Error => e
+      raise Mysql2::Error.new("PROBLÈME AVEC LA REQUÊTE : `#{request}` : #{e.message}")
+    rescue Exception => e
+      erreur ("PROBLÈME SQL: #{e.message}")
+      log(e)
+      raise Error.new("PROBLÈME AVEC LA REQUÊTE : `#{request}` : #{e.message}")
+    end
+  end #/ db_exec
+
   # RETURN Un hash des données de la citation choisie
   #
   # +options+ Surtout pour l'administration
@@ -31,7 +48,7 @@ class << self
   # Le client ruby qui permet d'intergagir avec la base de
   # données.
   def client_scenariopole db_scenariopole_name
-    @client ||= begin
+    @client_scenariopole ||= begin
       Mysql2::Client.new(client_data_scenariopole.merge(database: db_scenariopole_name))
     end
   end

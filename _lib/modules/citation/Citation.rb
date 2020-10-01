@@ -4,6 +4,7 @@
   --------------
   Gestion des citations
 =end
+require_module('scenariopole')
 class Citation
   class << self
 

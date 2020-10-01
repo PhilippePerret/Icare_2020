@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Extension de la class AbsEtape pour modifier l'étape
 =end
@@ -21,18 +22,18 @@ DEFAULT_DATA = {}
 ABSETAPE_PROPERTIES.each{|k,d| DEFAULT_DATA.merge!(k => nil)}
 
 ERRORS.merge!({
-  numero_etape_required: "Il faut fournir le numéro de l'étape.".freeze,
-  numero_greater_than_zero: 'Le numéro doit être un positif supérieur à zéro'.freeze,
-  numero_etape_exists: 'Ce numéro d’étape existe déjà.'.freeze,
-  titre_etape_required: 'Le titre de l’étape est requis'.freeze,
-  titre_etape_too_long: 'Le titre de l’étape est trop long (200 max / %i)'.freeze,
-  titre_already_exists: 'Ce titre existe déjà dans ce module.'.freeze,
-  duree_required: 'La durée de l’étape est requise'.freeze,
-  duree_too_short: 'La durée de l’étape est trop courte (au moins deux jours)'.freeze,
-  duree_too_long: 'La durée de l’étape est trop longue (moins de deux mois)'.freeze,
-  duree_max_exceeds_duree: 'La durée ne peut excéder la durée maximale.'.freeze,
-  duree_max_required: 'La durée maximale de l’étape est requise'.freeze,
-  travail_required:'Le travail de l’étape est absolument requis'.freeze,
+  numero_etape_required: "Il faut fournir le numéro de l'étape.",
+  numero_greater_than_zero: 'Le numéro doit être un positif supérieur à zéro',
+  numero_etape_exists: 'Ce numéro d’étape existe déjà.',
+  titre_etape_required: 'Le titre de l’étape est requis',
+  titre_etape_too_long: 'Le titre de l’étape est trop long (200 max / %i)',
+  titre_already_exists: 'Ce titre existe déjà dans ce module.',
+  duree_required: 'La durée de l’étape est requise',
+  duree_too_short: 'La durée de l’étape est trop courte (au moins deux jours)',
+  duree_too_long: 'La durée de l’étape est trop longue (moins de deux mois)',
+  duree_max_exceeds_duree: 'La durée ne peut excéder la durée maximale.',
+  duree_max_required: 'La durée maximale de l’étape est requise',
+  travail_required:'Le travail de l’étape est absolument requis',
 
   })
 
