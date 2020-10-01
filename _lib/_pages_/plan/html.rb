@@ -42,7 +42,7 @@ class HTML
 
 #{aGoto(Emoji.get('objets/lettre-mail').regular+' Contact', route:'contact/mail')}
 
-#{aGoto(Emoji.get('objets/pile-livres').regular+' Quai de docs', route:'qdd/home')}
+#{aGoto(Emoji.get('objets/pile-livres').regular+' Quai des Docs', route:'qdd/home')}
 
 #{aGoto(EMO_OUTILS+ISPACE++' Outils d’écriture', route:'outils/home')}
 
@@ -53,6 +53,9 @@ class HTML
 #{divGoto(Emoji.get('objets/sablier-coule').regular+' Activité', route:'overview/activity')}
 
 #{divGoto(Emoji.get('machine/validator').regular+' Nouveautés', route:'overview/nouveautes')}
+
+#{divGoto(Emoji.get('objets/blason').regular+' Concours '+Emoji.get('objets/chronometre').regular, route:'concours/home', exergue:true)}
+
     HTML
   end
 end #/HTML

@@ -1,6 +1,6 @@
 #{tdm}
 
-L'atelier Icare est un atelier d'écriture en ligne, animé par le [scénariste et romancier Philippe PERRET](overview/phil), où s’expriment toutes formes d'écriture, du film au roman en passant par le théâtre ou la BD, pour tous types d’auteurs, du débutant à l’auteur expérimenté.
+L'atelier Icare est un atelier d'écriture en ligne animé par [Philippe PERRET, scénariste et romancier](overview/phil), où s’expriment toutes formes d'écriture, du film au roman en passant par le théâtre ou la BD, pour tous types d’auteurs, du débutant à l’auteur expérimenté.
 
 Par le biais de **[#{FLECHE}#{ISPACE}modules d’apprentissage et de développement](modules/home)**, on y apprend les lois de la narration et l’on y développe sa pratique de l’écriture.
 

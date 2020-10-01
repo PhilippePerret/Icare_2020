@@ -57,7 +57,7 @@ class HTML
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="google-site-verification" content="V_QWKRM4k87RFk3b4UnHnW5k37ev7NJGZSULi_5_dDk" />
-  <title>Atelier Icare#{@raw_titre ? " | #{@raw_titre}" : ""}</title>
+  <title>Atelier Icare#{@raw_titre ? "#{SPACE}|#{SPACE}#{@raw_titre}" : ""}</title>
   <base href="#{App::URL}/">
   <link rel="shortcut icon" href="https://www.atelier-icare.net/img/favicon.png?2020" type="image/png">
   <link rel="icon" href="https://www.atelier-icare.net/img/favicon.png?2020" type="image/png">
