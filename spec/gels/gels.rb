@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Procédures de gels
 =end
@@ -41,7 +42,7 @@ def validation_mail
     candidat  = db_get('users', {mail: user_mail})
     raise "#{__FILE__}:#{__LINE__}: Impossible de db_get(ter) l'user de mail '#{user_mail}'…" if candidat.nil?
     dticket   = db_get('tickets', {user_id: candidat[:id]})
-    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
+    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}"
     login_in_form(mail: user_mail, password:data[:password][:value])
     screenshot('marion-valide-mail')
     logout # pour laisser la place à l'administrateur
@@ -54,8 +55,8 @@ def validation_inscription
     puts "Fabrication du gel 'validation_inscription'".vert
     login_admin
     goto 'admin/notifications'
-    within("#validation-candidature-10-form".freeze) do
-      click_on('Attribuer ce module'.freeze)
+    within("#validation-candidature-10-form") do
+      click_on('Attribuer ce module')
     end
     screenshot('validation_inscription')
     logout
@@ -150,7 +151,7 @@ def change_etape
     puts "Fabrication du gel 'change_etape'".vert
     login_admin
     goto('admin/notifications')
-    click_on('Changer l’étape'.freeze)
+    click_on('Changer l’étape')
     screenshot('change-etape')
     logout
   end
@@ -170,7 +171,7 @@ def depot_qdd
       attach_file("document-1-original", path_doc1_original)
       attach_file("document-1-comments", path_doc1_comments)
       attach_file("document-2-original", path_doc2_original)
-      click_on('Déposer ces documents'.freeze)
+      click_on('Déposer ces documents')
     end
     screenshot('depot-qdd')
     logout
@@ -188,7 +189,7 @@ def define_sharing
       select(DATA_SHARING[1][:name], from: "partage-1-original")
       select(DATA_SHARING[2][:name], from: "partage-1-comments")
       select(DATA_SHARING[2][:name], from: "partage-2-original")
-      click_on('Appliquer ce partage'.freeze)
+      click_on('Appliquer ce partage')
     end
     screenshot('marion-define-sharing-etape-1')
     logout
@@ -240,7 +241,7 @@ def benoit_valide_son_mail
     user_mail = data[:mail][:value]
     candidat  = db_get('users', {mail: user_mail})
     dticket   = db_get('tickets', {user_id: candidat[:id]})
-    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
+    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}"
     login_in_form(mail: user_mail, password:data[:password][:value])
     screenshot('benoit-valide-son-mail')
     logout # pour laisser la place à l'administrateur
@@ -256,7 +257,7 @@ def elie_valide_son_mail
     user_mail = data[:mail][:value]
     candidat  = db_get('users', {mail: user_mail})
     dticket   = db_get('tickets', {user_id: candidat[:id]})
-    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
+    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}"
     login_in_form(mail: user_mail, password:data[:password][:value])
     screenshot('elie-valide-son-mail')
     logout # pour laisser la place à l'administrateur
@@ -270,13 +271,13 @@ def validation_deux_inscriptions
     Capybara.reset_sessions!
     login_admin
     goto 'admin/notifications'
-    within("#validation-candidature-12-form".freeze) do
-      select('Suivi de projet (intensif)'.freeze, from: 'module_id-12')
-      click_on('Attribuer ce module'.freeze)
+    within("#validation-candidature-12-form") do
+      select('Suivi de projet (intensif)', from: 'module_id-12')
+      click_on('Attribuer ce module')
     end
-    within("#validation-candidature-11-form".freeze) do
-      select('Personnages'.freeze, from: 'module_id-11')
-      click_on('Attribuer ce module'.freeze)
+    within("#validation-candidature-11-form") do
+      select('Personnages', from: 'module_id-11')
+      click_on('Attribuer ce module')
     end
     screenshot('valide-signup-elie-benoit')
     logout
@@ -298,8 +299,8 @@ def benoit_frigote_phil_marion_et_elie
       click_on('message sur son frigo')
     end
     within('#frigo-discussion-form') do
-      fill_in('frigo_titre', with: "Titre discussion avec Marion".freeze)
-      fill_in('frigo_message', with: "Hello Marion, est-ce qu'on peut parler ?".freeze)
+      fill_in('frigo_titre', with: "Titre discussion avec Marion")
+      fill_in('frigo_message', with: "Hello Marion, est-ce qu'on peut parler ?")
       click_on("Poser ce message sur le frigo de Marion")
     end
     click_on('Votre frigo') # pour revenir sur le frigo
@@ -308,16 +309,16 @@ def benoit_frigote_phil_marion_et_elie
       click_on('message sur son frigo')
     end
     within('#frigo-discussion-form') do
-      fill_in('frigo_titre', with: "Titre discussion avec Élie".freeze)
-      fill_in('frigo_message', with: "Hello Élie, est-ce qu'on peut parler ?".freeze)
+      fill_in('frigo_titre', with: "Titre discussion avec Élie")
+      fill_in('frigo_message', with: "Hello Élie, est-ce qu'on peut parler ?")
       click_on("Poser ce message sur le frigo de Élie")
     end
     click_on('Votre frigo') # pour revenir sur le frigo
     # Benoit, sur son bureau, section frigo, initie une conversation
     # avec Phil.
     within('#discussion-phil-form') do
-      fill_in('frigo_titre', with: "Titre discussion avec Phil".freeze)
-      fill_in('frigo_message', with: "Hello Phil, est-ce qu'on peut parler ?".freeze)
+      fill_in('frigo_titre', with: "Titre discussion avec Phil")
+      fill_in('frigo_message', with: "Hello Phil, est-ce qu'on peut parler ?")
       click_on("Lancer la discussion avec Phil")
     end
     logout # pour laisser la place
@@ -335,7 +336,6 @@ def phil_marion_elie_repondent_benoit
     Capybara.reset_sessions!
     # Phil répond au message
     login_admin
-    find('section#header').click # pour ouvrir le menu
     click_on_bureau
     click_on('Porte de frigo')
     click_on('Titre discussion avec Phil')
@@ -413,7 +413,7 @@ def destroyed_valide_son_mail
     user_mail = data[:mail][:value]
     candidat  = db_get('users', {mail: user_mail})
     dticket   = db_get('tickets', {user_id: candidat[:id]})
-    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}".freeze
+    visit "#{SpecModuleNavigation::URL_OFFLINE}/bureau/home?tik=#{dticket[:id]}"
     login_in_form(mail: user_mail, password:data[:password][:value])
     screenshot('detruit_valide-son-mail')
     logout # pour laisser la place à l'administrateur
@@ -427,9 +427,9 @@ def phil_valide_inscription_destroyed
     Capybara.reset_sessions!
     login_admin
     goto 'admin/notifications'
-    within("#validation-candidature-13-form".freeze) do
-      select('Analyse de film'.freeze, from: 'module_id-13')
-      click_on('Attribuer ce module'.freeze)
+    within("#validation-candidature-13-form") do
+      select('Analyse de film', from: 'module_id-13')
+      click_on('Attribuer ce module')
     end
     screenshot('phil-valide-signup-destroyed')
     logout
@@ -542,10 +542,10 @@ def marion_envoie_deux_autres_documents_cycle_complet
     screenshot('marion-gets-ses-seconds-commentaires')
     logout
 
-    phil.rejoint_ses_notifications
-    click_on('Changer l’étape'.freeze)
-    screenshot('Phil-change-etape-de-Marion')
-    logout
+    # phil.rejoint_ses_notifications
+    # click_on('Changer l’étape')
+    # screenshot('Phil-change-etape-de-Marion')
+    # logout
 
     phil.rejoint_ses_notifications
     # On doit donner les documents commentés
@@ -558,7 +558,7 @@ def marion_envoie_deux_autres_documents_cycle_complet
       attach_file("document-3-comments", path_doc1_comments)
       attach_file("document-4-original", path_doc2_original)
       attach_file("document-4-comments", path_doc2_original)
-      click_on('Déposer ces documents'.freeze)
+      click_on('Déposer ces documents')
     end
     screenshot('depot-qdd')
     logout
@@ -570,7 +570,7 @@ def marion_envoie_deux_autres_documents_cycle_complet
       select(DATA_SHARING[1][:name], from: "partage-3-comments")
       select(DATA_SHARING[1][:name], from: "partage-4-original")
       select(DATA_SHARING[1][:name], from: "partage-4-comments")
-      click_on('Appliquer ce partage'.freeze)
+      click_on('Appliquer ce partage')
     end
     screenshot('marion-partage-ses-seconds-documents')
     logout
@@ -590,9 +590,25 @@ def marion_paie_son_module
   end
 end #/ marion_paie_son_module
 
+def phil_passe_marion_a_etape_fin
+  degel_or_gel('phil_passe_marion_a_etape_fin') do
+    marion_paie_son_module # le précédent
+    puts "Fabrication du gel 'phil_passe_marion_a_etape_fin'".vert
+    login_admin
+    goto('admin/notifications')
+    # Trouver la notification de marion et choisir la dernière étape
+    within('form#change-etape-form-user-10') do
+      select("990. Fin du module", from: 'absetape_id')
+      click_on('Changer l’étape')
+    end
+    screenshot('passe-etape-fin')
+    logout
+  end
+end #/ phil_passe_marion_a_etape_fin
+
 def phil_arrete_module_marion
   degel_or_gel('phil_arrete_module_marion') do
-    marion_paie_son_module # le précédent
+    phil_passe_marion_a_etape_fin # le précédent
     puts "Fabrication du gel 'phil_arrete_module_marion'".vert
     login_phil
     goto('admin/tools')

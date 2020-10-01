@@ -29,6 +29,10 @@ def degel(name)
 end #/ degel
 
 def degel_or_gel(name, force = false, &block)
+  if ENV['GEL_REMOVE_FROM'] == name
+    ENV['GEL_FORCE'] = 'true' # pour actualiser tous les suivants
+    force = true
+  end
   Gel.get(name).degel_or_gel(force, &block)
 end #/ degel_or_gel
 

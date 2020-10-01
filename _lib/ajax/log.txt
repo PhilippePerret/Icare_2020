@@ -70,3 +70,9 @@ DATABASE = icare_test
 <= Chargement des modules
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
+--- [2020-10-01 14:11:00 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
