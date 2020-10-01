@@ -17,7 +17,7 @@ class HTML
   def css_tags
     if OFFLINE && update_css_required?
       update_all_css_file
-      message("Le fichier all.css a été actualisé, il faut le téléverser.")
+      message("Le fichier css_all.css a été actualisé (ainsi que le patch de version), il faut les téléverser.")
     end
     ([all_css_relpath] + (@all_css||[])).collect do |relcss|
       CSS_TAG % {css: relcss[1..-1]}
@@ -88,8 +88,11 @@ class HTML
       get_css.each do |csspath|
         ref.puts(File.read(csspath))
       end
+      ref.close; ref = nil
+      # On en profite pour incrémenter la version
+      App.incremente_version(:patch)
     ensure
-      ref.close
+      ref.close if ref
     end #/ update_all_css_file
 
     # Méthode qui checke si le fichier ./css/all.css doit être actualisé

@@ -56,8 +56,41 @@ class << self
   # des CSS. Pour forcer une une version version, on peut utiliser la commande
   # > icare next_version
   def version
-    @version ||= File.read(File.join(APP_FOLDER,'VERSION'))
-  end #/ versionØ
+    @version ||= begin
+      if File.exists?(version_path)
+        File.read(version_path)
+      else
+        '0.0.1'
+      end
+    end
+  end #/ version
 
+  # Pour incrémenter la version courante
+  # +ajout+ {Symbol}
+  #   :patch    Augmente de 1 le numéro de patch
+  #   :minor    Augmente le numéro mineur et met le patch à 0
+  #   :major    Augmente le numéro majeur et met les autres à 0
+  #
+  def incremente_version(what)
+    dv = version.split('.').collect{|i|i.to_i}
+    case what
+    when :path
+      dv[2] += 1
+    when :minor
+      dv[1] += 1
+      dv[2]  = 0
+    when :major
+      dv[0] += 1
+      dv[1]  = 0
+      dv[2]  = 0
+    end
+    @version = dv.join('.')
+    File.open(version_path,'wb') { |f| f.write(@version) }
+  end #/ incremente_versio
+
+  def version_path
+    @version_path ||= File.join(APP_FOLDER,'VERSION')
+  end #/ version_path
+  
 end #/ << self
 end #/App
