@@ -9,6 +9,27 @@ AIDE = <<-BASH
 
       Pour obtenir cette aide.
 
+  #{'icare test'.jaune}
+
+      Pour faire un test minimal du fonctionnement du site en online,
+      après une modification du code par exemple.
+
+      Paramètres
+      ----------
+        Un premier paramètre peut déterminer la seule page à vérifier
+        Note : elle doit être définie dans le fichier test/data_urls.yaml
+        Exemple :   #{'icare test user/login'.jaune}
+
+      Options
+      -------
+        -i/--infos  Par défaut, la page ne s'affiche pas (mode headless). En
+                    ajoutant cette option, on peut la voir. En général, on
+                    rajoute une ligne '- :doit: sleep 20' pour avoir le temps
+                    de voir la page (et de chercher le tag).
+
+      Pour ajouter une nouvelle page, voir le fichier :
+      commands/test/data_urls.yaml où tout est expliqué.
+
   #{'icare degel[ <gel_name>]'.jaune}
 
       Pour dégeler un gel (un état de l'atelier particulier)

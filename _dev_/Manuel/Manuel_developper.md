@@ -1419,7 +1419,7 @@ Par exemple :
 
 ~~~ruby
 form.rows = {
-  "Votre pseudo" => {name:'user_pseudo', type:'text', value: "Phil"}
+  "Votre pseudo" => {name:'user_pseudo', type:'text', value: "Phil"[, class: "<class>"]}
   }
 ~~~
 
@@ -1428,6 +1428,8 @@ form.rows = {
 > Ntoe 2 : la propriété `type` est 'text' par défaut.
 >
 > Note 3 : la propriété `:value` peut être remplacée par `:default`.
+
+La class `:class` sera ajoutée au `div.row`. Une classe spécial `libelle_block` permet d’afficher le libellé et la champ de valeur l’un sur l’autre comme pour la version pour téléphone (utile lorsque le libellé peut-être long, comme avec un nom de fichier).
 
 
 
@@ -2774,7 +2776,30 @@ La boite à outils est directement en relation avec les [opérations administrat
 
 ---
 
+## Test du site distant
 
+Utiliser la commande suivante pour faire un site des principales pages du site distant :
+
+~~~bash
+> icare test[ options][ route]
+~~~
+
+`route` doit être une route définie dans le fichier de données [commands/test/data_urls.yaml](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/CLI/lib/commands/test/data_urls.yaml).
+
+Ce fichier de données définit aussi précisément comment créer de nouvelles routes à checker.
+
+#### Options du test du site distant
+
+| Longue    | Courte | Description de l'option                                      |
+| --------- | ------ | ------------------------------------------------------------ |
+| --verbose | -v     | Pour obtenir le détail des vérifications qui sont faites.    |
+| -\-infos  | -i     | Pour voir le check « en direct » dans un navigateur (Firefox, normalement) |
+|           |        |                                                              |
+
+
+
+
+---
 
 ## Test de l'application
 

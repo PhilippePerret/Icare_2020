@@ -1,0 +1,293 @@
+#
+# Données des pages à checker dans une vérification minimale du site
+#
+# Création d'une nouvelle page
+# ----------------------------
+# S'inspirer des autres pages pour définir au minimum :
+#   :name     Le nom de la page pour les messages
+#   :route    La route à emprunter pour atteindre la page
+#   :seek_and_do   Les éléments ordonnés des checks à faire.
+#       On distingue dans cette partie :
+#         - les tags à trouver (définition de :tag et optionnellement :text)
+#         - les opérations à faire (par exemple s'identifier)
+#
+# DÉFINIR LES TAGS
+# ----------------
+# Pour définir les tags, on a souvent besoin de voir le texte. Pour ce faire :
+#   1) Ajouter un ':doit: sleep 30' dans la partie seek_and_do une fois que
+#      la page est affichée comme voulu (par exemple après l'identification).
+#   2) Demander à ne jouer que la route testée en la mettant en premier argument
+#      de la commande. Par exemple : 'icare test user/login'
+#   3) Ajouter l'option -i à la commande pour voir la page :
+#      icare test user/login -i
+#
+# Propriétés courantes
+# --------------------
+#   :tag:     Le selector à trouver
+#   :text:    et/ou le texte à trouver
+#   :not_tag: Le selector à NE PAS trouver dans la page
+#
+# Propriétés optionnelles
+# -----------------------
+#   :silent:    Si true, on ne produit aucun message en cas de succès (mais
+#               on en produit un en cas d'échec)
+#   :success:   Le message propre à écrire en cas de succès
+#   :failure:   Le message propre à écrire en cas d'échec
+#
+# DÉFINIR LES OPÉRATIONS
+# ----------------------
+# Les opérations sont donc du code ruby/capybara valide à exécuter. Par exemple:
+#   -
+#     :doit: |
+#       within("form#monform") do
+#         fill_in("mon-text-field", with: "ma valeur")
+#         click_on("Soumets !")
+#       end
+#
+# Noter que puisque ce code est évalué, on peut obtenir tout ce qu'on
+# obtiendrait avec ruby. Par exemple, pour l'identification, on ajoute :
+#   -
+#     :doit: |
+#       require './_lib/data/secret/phil'
+#
+# … qui va charger la constant PHIL avec mes données secrètes d'identification.
+#
+
+# ---------------------------------------------------------------------
+-
+  :name: Page d'accueil
+  :route: null
+  :seek_and_do:
+    - :tag: div#titre a
+      :text: Atelier Icare
+    - :tag: div#actualites
+
+# ---------------------------------------------------------------------
+#   LES PAGES STATIQUES
+# ---------------------------------------------------------------------
+
+- :name: Page de présentation
+  :route: overview/home
+  :seek_and_do:
+    - :tag: h2.page-title
+      :text: Présentation de l’atelier
+    - :tag: section#body a[href="overview/phil"]
+      :text: Philippe PERRET, scénariste et romancier
+    - :tag: div.float-tdm
+
+# ---------------------------------------------------------------------
+
+- :name: Ma page de présentation
+  :route: overview/phil
+  :seek_and_do:
+    - :tag: h2.page-title
+      :text: Pédagogue de l’atelier
+    - :tag: div.float-tdm
+
+# ---------------------------------------------------------------------
+
+- :name: Page des réussites
+  :route: overview/reussites
+  :seek_and_do:
+    - :tag: h2.page-title
+      :text: Les belles réussites
+    - :tag: div.float-tdm
+    - :tag: div.div-reussite
+    - :tag: div.div-reussite div.date
+      :text: juin 2020
+
+# ---------------------------------------------------------------------
+
+- :name: Page des témoignages
+  :route: overview/temoignages
+  :seek_and_do:
+    - :tag: h2.page-title
+      :text: Témoignages d’icarien·ne·s
+    - :tag: div.temoignage
+    - :tag: div.temoignage div.infos span.pseudo
+      :text: suzelit
+    - :tag: div.temoignage div.content
+      :text: au sein de l’atelier Icare
+
+# ---------------------------------------------------------------------
+
+- :name: Page de plan
+  :route: plan
+  :seek_and_do:
+    - :no_tag: h2.page-title
+      :silent: true
+    - :tag: a.goto[href="overview/home"]
+      :text: L’ATELIER
+      :success: "contient un block menant à la description de l'atelier"
+    - :tag: a.goto[href="overview/reussites"]
+      :text: Belles réussites
+      :success: "contient un block menant aux belles réussites"
+    - :tag: a.goto[href="modules/home"]
+      :text: LES MODULES
+      :success: "contient un block menant aux modules d'apprentissage"
+    - :tag: a.goto[href="user/signup"]
+      :text: S’inscrire
+      :success: "contient un block menant au formulaire d'inscription"
+    - :tag: a.goto[href="user/login"]
+      :text: S’identifier
+      :success: "contient un block menant au formulaire d'identification"
+    - :tag: a.goto[href="overview/icariens"]
+      :success: "contient un block menant à la liste des icariens"
+    - :tag: a.goto[href="contact/mail"]
+      :text: Contact
+      :success: "contient un block menant au formulaire de contact"
+    - :tag: a.goto[href="qdd/home"]
+      :text: Quai des Docs
+      :success: "contient un block menant au Quai des docs"
+    - :tag: a.goto[href="outils/home"]
+      :text: Outils d’écriture
+      :success: "contient un block menant aux outils d'écriture"
+    - :tag: a.goto[href="aide/home"]
+      :text: Aide
+      :success: "contient un block menant à l'aide"
+    - :tag: a.goto[href="overview/temoignages"]
+      :text: Témoignages
+      :success: "contient un block menant aux témoignages"
+    - :tag: a.goto[href="overview/activity"]
+      :text: Activité
+      :success: "contient un block menant aux témoignages"
+    - :tag: a.goto[href="overview/nouveautes"]
+      :text: Nouveautés
+      :success: "contient un block menant aux nouveautés"
+    - :tag: a.goto[href="concours/home"]
+      :text: Concours
+      :success: "contient un block menant au concours de synopsis"
+
+# ---------------------------------------------------------------------
+
+# Tous les boutons depuis la page d'accueil doivent conduire à une
+# page valide.
+
+- :name: Tous les boutons depuis l'accueil
+  :route: /
+  :seek_and_do:
+    # Bouton haut "EN SAVOIR PLUS"
+    - :doit: within('section#header'){click_on("en savoir plus")}
+    - :tag: h2.page-title
+      :text: Présentation de l’atelier
+      :success: "On atteint la présentation depuis le lien “en savoir plus”"
+    - :doit: |
+        within('section#header div#div-logo'){find('img').click}
+        is_page_home_valid
+      :silent: true
+    # # Pour générer une fause erreur
+    # - :tag: div#riendutout
+    #   :text: Faux texte d’erreur
+    # Bouton haut "S'IDENTIFIER"
+    - :doit: within('section#header'){click_on("s’identifier")}
+    - :tag: h2.page-title
+      :text: Identification
+      :success: "On atteint bien le formulaire d'identification depuis le lien “s’identifier”"
+    - :tag: form#user-login
+      :silent: true
+    - :doit: |
+        within('section#header div#div-logo'){find('img').click}
+        is_page_home_valid
+      :silent: true
+    # Bouton haut "S’INSCRIRE"
+    - :doit: within('section#header'){click_on("s’inscrire")}
+    - :tag: h2.page-title
+      :text: Candidater
+      :success: "On atteint le formulaire d'inscription depuis le lien “s’inscrire"
+    - :tag: form#signup-form
+      :silent: true
+    - :doit: |
+        within('section#header div#div-logo'){find('img').click}
+        is_page_home_valid
+      :silent: true
+    # Bouton bas "atelier icare"
+    - :silent: true
+      :doit: |
+        within('section#footer'){click_on("atelier icare")}
+        is_page_home_valid
+      :success: On atteint la présentation depuis le lien “en savoir plus” du pied de page
+    # Bouton bas "en savoir plus"
+    - :doit: within('section#footer'){click_on("en savoir plus")}
+    - :tag: h2.page-title
+      :text: Présentation de l’atelier
+      :success: On atteint la présentation depuis le lien “en savoir plus” du pied de page
+    # Bouton bas "aide"
+    - :doit: within('section#footer'){click_on("aide")}
+    - :doit: has_title('Aide')
+      :silent: true
+    - :tag: div.titre
+      :text: Premiers arrivants
+      :silent: true
+    - :tag: h2.page-title
+      :text: Aide de l’atelier
+      :success: On atteint l'aide depuis le lien “aide” du pied de page
+    # Bouton bas "contact"
+    - :doit: within('section#footer'){click_on("contact")}
+    - :tag: h2.page-title
+      :text: Contact
+      :success: On atteint le formulaire de contact depuis le lien “contact” du pied de page
+    - :tag: form#contact-form
+      :silent: true
+    # Bouton bas "plan"
+    - :doit: within('section#footer'){click_on("plan")}
+    - :not_tag: h2.page-title
+      :success: On atteint le plan depuis le lien “plan” du pied de page
+    - :doit: has_title('Plan')
+      :silent: true
+    - :tag: a[href="overview/home"].goto
+      :text: L’ATELIER
+      :silent: true
+    # Bouton bas "politique de confidentialité"
+    - :doit: within('section#footer'){click_on("politique de confidentialité")}
+    - :tag: h2.page-title
+      :text: "Politique de confidentialité"
+      :success: On atteint la page de politique de confidentialité depuis le lien “politique de confidentialité” du pied de page
+
+
+# ---------------------------------------------------------------------
+
+# Ici, on visite en cliquant sur les liens de la table des matières
+# flottante des pages de description
+- :name: Toutes les pages de description, par liens
+  :route: '/'
+  :seek_and_do:
+    - :doit: |
+        within("section#footer") { click_on "plan" }
+        click_on "L’ATELIER"
+    - :tag: h2.page-title
+      :text: Présentation de l’atelier
+    - :tag: div.float-tdm
+    - :doit: within("div.float-tdm") { click_on "Philippe Perret, pédagogue de l’atelier"}
+    - :tag: h2.page-title
+      :text: Pédagogue de l’atelier
+    - :doit: within("div.float-tdm") { click_on "Les belles réussites"}
+    - :tag: h2.page-title
+      :text: Les belles réussites
+    - :doit: within("div.float-tdm") { click_on "Témoignages d’icarien·ne·s"}
+    - :tag: h2.page-title
+      :text: Témoignages d’icarien·ne·s
+
+
+# ---------------------------------------------------------------------
+#   LES PAGES INTERACTIVES
+# ---------------------------------------------------------------------
+-
+  :name: Page d'identification
+  :route: user/login
+  :seek_and_do:
+    - :tag: form#user-login
+    - :tag: input[type="text"][name="user_mail"]#user_mail
+    - :tag: input[type="password"][name="user_password"]#user_password
+    - :doit: |
+        require './_lib/data/secret/phil'
+        within("form#user-login") do
+          fill_in("user_mail", with: PHIL[:mail])
+          fill_in("user_password", with: PHIL[:password])
+          click_on("S’identifier")
+        end
+    - :tag: section#messages div.notices
+      :text: "Soyez le bienvenu, Phil"
+    - :doit: |
+        find('section#header').click
+        click_on('se déconnecter')
+    - :text: À la prochaine, Phil
