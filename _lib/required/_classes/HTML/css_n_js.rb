@@ -75,6 +75,15 @@ class HTML
     def update_all_css_file
       File.delete(all_css_path) if File.exists?(all_css_path)
       ref = File.open(all_css_path,'a')
+      ref.puts <<-CSS
+/* ---------------------------------------------------------------------
+ *    Code généré automatiquement à partir des feuilles css
+ *    du dossier './css/required'
+ *
+ *    Date dernière modification : #{Time.now}
+ *
+ --------------------------------------------------------------------- */
+      CSS
       ref.puts File.read(variables_css_path)
       get_css.each do |csspath|
         ref.puts(File.read(csspath))
