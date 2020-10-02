@@ -1,5 +1,15 @@
-#
+# ===================================================================
 # Données des pages à checker dans une vérification minimale du site
+# ===================================================================
+#
+# Pour jouer le test de ces pages
+# -------------------------------
+#     > icare test
+#     # => joue toute la suite de test (toutes les pages définies ci-dessous)
+#
+#     > icare test ma/route
+#     > => joue seulement le test de la route "ma/route" qui doit être
+#          définie ci-dessous.
 #
 # Création d'une nouvelle page
 # ----------------------------
@@ -157,6 +167,84 @@
     - :tag: a.goto[href="concours/home"]
       :text: Concours
       :success: "contient un block menant au concours de synopsis"
+    # Après s'être assuré que tous les liens s'y trouvaient, on joue
+    # chaque block
+    - :doit: click_on("L’ATELIER")
+    - :tag: h2.page-title
+      :text: Présentation de l’atelier
+      :success: On peut rejoindre la description de l'atelier
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Belles réussites")
+    - :tag: h2.page-title
+      :text: Les belles réussites
+      :success: On peut rejoindre le hall of fame
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("LES MODULES")
+    - :tag: h2.page-title
+      :text: Les Modules d’apprentissage
+      :success: On peut rejoindre la liste des modules
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("S’inscrire")
+    - :tag: h2.page-title
+      :text: Candidater
+      :success: On peut rejoindre le formulaire d'inscription
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("S’identifier")
+    - :tag: h2.page-title
+      :text: Identification
+      :success: On peut rejoindre le formulaire d'identification
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Contact")
+    - :tag: h2.page-title
+      :text: Contact
+      :success: On peut rejoindre le formulaire de contact
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Quai des Docs")
+    - :tag: h2.page-title
+      :text: Identification
+      :success: On ne peut pas rejoindre le quai des docs sans être identifié
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Outils d’écriture")
+    - :tag: h2.page-title
+      :text: Outils d’écriture
+      :success: On peut rejoindre la liste des outils d’écriture
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Aide")
+    - :tag: h2.page-title
+      :text: Aide
+      :success: On peut rejoindre la section d'aide
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Témoignages")
+    - :tag: h2.page-title
+      :text: Témoignages
+      :success: On peut rejoindre la section des témoignages
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Activité")
+    - :tag: h2.page-title
+      :text: Activité
+      :success: On peut rejoindre la liste des activités
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Nouveautés")
+    - :tag: h2.page-title
+      :text: Modifications & nouveautés
+      :success: On peut rejoindre la section des dernières fonctionnalités
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("Concours")
+    - :tag: h2.page-title
+      :text: Le Concours de l’atelier Icare
+      :success: On peut rejoindre la section du concours
 
 # ---------------------------------------------------------------------
 
