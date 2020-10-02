@@ -26,7 +26,7 @@ class << self
   def link_operation(operation, titre, params = nil)
     params ||= {}
     params.merge!(route: route.to_s)
-    params = params.collect{|k,v| "#{k}=#{URI.encode(v)}"}.join(ESPERLUETTE)
+    params = params.collect{|k,v| "#{k}=#{uri_encode(v)}"}.join(ESPERLUETTE)
     LINK_OPERATION % {op:operation, params:params, titre: titre}
   end #/ link_operation
 end # /<< self

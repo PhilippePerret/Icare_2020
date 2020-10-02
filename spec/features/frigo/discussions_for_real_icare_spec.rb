@@ -6,6 +6,6 @@
 feature "Discussion avec les vrais icariens" do
   scenario "Génération des discussion" do
     degel('_real-icare_')
-    pending "Il faut implémenter ce script-test"
+    implementer(__FILE__, __LINE__)
   end
 end

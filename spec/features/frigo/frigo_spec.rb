@@ -18,8 +18,6 @@ feature "Test du frigo" do
   end
   let(:count_messages) { TFrigo.count_messages }
 
-
-
   scenario "Benoit peut initier une discussion avec Phil" do
     degel('validation_deux_inscriptions')
     # NOTE
@@ -42,7 +40,7 @@ feature "Test du frigo" do
     expect(TFrigo.count_messages).to eq(0),
       "Il devrait y avoir 0 messages, il y en a #{count_messages}"
     # Il n'a aucune discussion
-    expect(benoit).to have_messages(count: 0),
+    expect(benoit).to have_messages_frigo(count: 0),
       "Benoit ne devrait pas avoir de messages en base de données"
 
     expect(page).to have_content('Vous n’avez pas de discussions en cours'),
@@ -66,11 +64,11 @@ feature "Test du frigo" do
       "Il devrait y avoir 1 messages, il y en a #{count_messages}"
     expect(TFrigo).to have_discussion_with([phil,benoit])
     pitch('La discussion est initiée avec Phil.')
-    expect(TDiscussion.between([phil,benoit])).to have_message(user:benoit, count: 1)
+    expect(TDiscussion.between([phil,benoit])).to have_message_frigo(user:benoit, count: 1)
     pitch('• Le message de Benoit pour cette discussion a été enregistré.')
     logout
 
-    expect(phil).to have_messages(count: 0)
+    expect(phil).to have_messages_frigo(count: 0)
     pitch('Phil ne possède aucun message dans la base de données')
 
     TMails.exists?('phil@atelier-icare.net', {after: start_time})
@@ -78,6 +76,7 @@ feature "Test du frigo" do
 
     pitch("Quand Phil rejoint son bureau…".freeze)
     phil.rejoint_son_bureau
+    sleep 20
     expect(phil).to have_pastille_frigo(1)
     pitch("Il trouve une pastille lui indiquant qu'il a un nouveau message.".freeze)
 
@@ -100,7 +99,7 @@ feature "Test du frigo" do
     # = Vérification =
     TMails.exists?(benoit, {after: start_time, only_one:true, subject:'Nouveau message de Phil sur votre frigo'.freeze})
     pitch('Benoit a reçu un mail pour l’avertir du nouveau message (mais seulement 1)')
-    expect(TDiscussion.get_by_titre('Message pour Phil')).to have_messages(count: 3)
+    expect(TDiscussion.get_by_titre('Message pour Phil')).to have_messages_frigo(count: 3)
 
     pitch('Benoit se rend sur son bureau pour trouver les messages')
     benoit.rejoint_son_bureau

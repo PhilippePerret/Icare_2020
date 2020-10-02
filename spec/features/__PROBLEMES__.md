@@ -2,6 +2,4 @@
 
 Pour des raisons inconnues :
 
-* Il faut peut-être ajouter `include Capybara::DSL` en haut de page
-
-* Au lieu de `within`, il faut utiliser `page.within`
+* Penser à utiliser `feature` au lieu de `description` pour ne pas avoir à `include Capybara::DSL`

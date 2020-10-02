@@ -9,10 +9,8 @@
   - supprimer un témoignage (administrateur)
   - modifier un témoignage (administrateur seulement)
 =end
-include Capybara::DSL
 
-
-describe 'Le Témoignages' do
+feature 'Le Témoignages' do
   def prepare_dernier_etape_pour_marion
     degel('change_etape')
     # Et on met son absetape à la dernière étape du module

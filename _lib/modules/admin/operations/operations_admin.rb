@@ -77,17 +77,22 @@ def select_value
   @select_value ||= Ajax.param(:select_value)
 end #/ select_value
 def short_value
-  @short_value ||= Ajax.param(:short_value)
+  @short_value ||= Ajax.param(:short_value).nil_if_empty
 end #/ short_value
 def medium_value
-  @medium_value ||= Ajax.param(:medium_value)
+  @medium_value ||= Ajax.param(:medium_value).nil_if_empty
 end #/ medium_value
 def long_value
-  @long_value ||= Ajax.param(:long_value)
+  @long_value ||= Ajax.param(:long_value).nil_if_empty
 end #/ long_value
 # ---------------------------------------------------------------------
 #   /Fin des informations pour les opérations icariens
 # ---------------------------------------------------------------------
+
+# Pour pouvoir utiliser 'message("... un message...")'
+def message(msg)
+  Ajax << {message:msg}
+end #/ message
 
 # Pour l'utiliser dans un mail à formater par exemple
 def bind; binding() end

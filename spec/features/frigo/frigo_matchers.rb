@@ -58,9 +58,11 @@ RSpec::Matchers.define :have_participants_pseudos do |liste|
   end
 end #/have_new_messages_count
 
-RSpec::Matchers.define :have_message do |dmessage|
+RSpec::Matchers.define :have_message_frigo do |dmessage|
   match do |sujet|
-    dmessage.merge!(user_id: dmessage.delete(:user).id) if dmessage.key?(:user)
+    if dmessage.is_a?(Hash) && dmessage.key?(:user)
+      dmessage.merge!(user_id: dmessage.delete(:user).id)
+    end
     ok = true
     case sujet
     when TDiscussion
@@ -101,7 +103,7 @@ RSpec::Matchers.define :have_message do |dmessage|
     "Le message existe pour #{sujet.la_chose}"
   end
 end
-RSpec::Matchers.alias_matcher(:have_messages, :have_message)
+RSpec::Matchers.alias_matcher(:have_messages_frigo, :have_message_frigo)
 
 # Vérifier que +icarien+ ait bien la discussion sur sa porte de frigo et
 # dans la base de données.

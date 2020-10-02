@@ -3,9 +3,9 @@
 =begin
   Module pour checker la possibilité d'ajouter des jours gratuits à un icarien
 =end
-include Capybara::DSL
+# include Capybara::DSL
 
-describe 'Opération Ajout de jours gratuits' do
+feature 'Opération Ajout de jours gratuits' do
   before(:all) do
     require "#{FOLD_REL_PAGES}/admin/tools/constants"
     degel('elie_demarre_son_module')
@@ -155,7 +155,7 @@ describe 'Opération Ajout de jours gratuits' do
       # IL ne peut pas rejoindre la section des outils
       # + Il ne peut pas forcer une URL
       querystring = {"uid":"[\"1\",\"integer\"]","icarien":"[\"#{elie.id}\",\"string\"]","operation":"[\"free_days\",\"string\"]","long_value":"[\"C'est à voir ?\",\"string\"]","short_value":"[\"30\",\"string\"]","script":"[\"operation_icarien.rb\",\"string\"]"}
-      querystring = querystring.collect{|k,vs| "#{k}=#{URI.encode_www_form_component(vs)}"}.join('&')
+      querystring = querystring.collect{|k,vs| "#{k}=#{uri_encode(vs)}"}.join('&')
       goto('_lib/ajax/ajax.rb?'+querystring)
       # Le watcher n'a pas changé
       new_watcher = db_get('watchers', watcher_paiement[:id])
@@ -173,7 +173,7 @@ describe 'Opération Ajout de jours gratuits' do
       # IL ne peut pas rejoindre la section des outils
       # + Il ne peut pas forcer une URL
       querystring = {"uid":"[\"1\",\"integer\"]","icarien":"[\"#{elie.id}\",\"string\"]","operation":"[\"free_days\",\"string\"]","long_value":"[\"C'est à voir ?\",\"string\"]","short_value":"[\"30\",\"string\"]","script":"[\"operation_icarien.rb\",\"string\"]"}
-      querystring = querystring.collect{|k,vs| "#{k}=#{URI.encode_www_form_component(vs)}"}.join('&')
+      querystring = querystring.collect{|k,vs| "#{k}=#{uri_encode(vs)}"}.join('&')
       goto('_lib/ajax/ajax.rb?'+querystring)
       # Le watcher n'a pas changé
       new_watcher = db_get('watchers', watcher_paiement[:id])

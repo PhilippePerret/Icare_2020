@@ -2,8 +2,11 @@
 =begin
   Validation par l'administration d'une inscription
 =end
-require './_lib/_watchers_processus_/_constants_' # => DATA_MATCHERS
 feature "Validation d'une inscription" do
+  before(:all) do
+    require './_lib/_watchers_processus_/_constants_' # => DATA_MATCHERS
+  end
+
   before(:each) do
     degel('inscription_benoit')
   end
@@ -68,10 +71,13 @@ feature "Validation d'une inscription" do
 
     scenario 'l’inscription peut être refusée' do
 
+      benoit.reset
+
       start_time  = Time.now.to_i
       benoit_id   = benoit.id
 
       # === Vérifications préliminaires ===
+      # puts "benoit.options: #{benoit.options.inspect}"
       expect(benoit).to be_candidat
       expect(benoit).not_to have_watcher(wtype:'start_module', after: start_time),
         "Benoit ne devrait avoir aucun watcher de paiement de module"

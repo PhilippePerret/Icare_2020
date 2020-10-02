@@ -3,11 +3,11 @@
 =begin
   Test de démarrage de module d'apprentissage
 =end
-require './_lib/_watchers_processus_/_constants_'
-require "#{FOLD_REL_PAGES}/bureau/travail/constants"
 
 feature "Test du démarrage de module" do
   before(:all) do
+    require './_lib/_watchers_processus_/_constants_'
+    require "#{FOLD_REL_PAGES}/bureau/travail/constants"
     load('./_lib/modules/watchers/Watcher/constants.rb')
   end
 

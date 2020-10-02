@@ -336,3 +336,359 @@ DATABASE = icare_test
 <= Chargement des modules
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
+--- [2020-10-02 13:46:59 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 13:47:28 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 13:47:40 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 13:47:52 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 13:48:03 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 13:48:03 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 14:12:23 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:12:33 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:12:45 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:12:56 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:12:56 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 14:13:00 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 14:18:15 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 14:25:14 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 14:29:17 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 14:29:31 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:52:36 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 14:52:50 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+UUID Bad uuid (inexistant)
+STOP PIRATE (Le check UUID est invalide)
+--- Pirate ---
+--- [2020-10-02 14:53:01 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:53:11 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:53:21 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:53:32 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 14:53:32 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 15:07:37 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+UUID Bad uuid (inexistant)
+STOP PIRATE (Le check UUID est invalide)
+--- Pirate ---
+--- [2020-10-02 15:07:48 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:07:59 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:08:11 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:08:11 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 15:08:16 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 15:08:27 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:09:11 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:15:33 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:17:52 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:27:50 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:29:41 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:31:53 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:53:18 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:55:17 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:55:31 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:55:43 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:55:53 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:55:54 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 15:55:58 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+STOP PIRATE (Pas de __uuid dans la requête)
+--- Pirate ---
+--- [2020-10-02 15:57:06 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 15:58:22 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:05:41 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:28:20 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:29:26 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:34:45 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:38:28 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:41:13 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:47:24 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:50:05 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+--- [2020-10-02 16:51:36 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules
+<= Chargement des modules
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test

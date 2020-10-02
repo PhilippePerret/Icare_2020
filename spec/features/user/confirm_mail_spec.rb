@@ -8,9 +8,8 @@
   - un inscrit peut valider son mail par le mail qui lui a été envoyé
   - un inscrit peut renvoyer un mail pour valider son mail
 =end
-include Capybara::DSL
 
-describe 'Validation du mail' do
+feature 'Validation du mail' do
   before(:each) do
     degel('inscription_marion')
     require './_lib/required/_classes/_User/constants'

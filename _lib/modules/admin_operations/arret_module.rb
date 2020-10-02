@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Module operation administrateur permettant d'ajouter une actualité
 =end
@@ -16,6 +17,10 @@ class Admin::Operation
 def arret_module
   require_module('user/modules')
   self.admin_required
+
+  # Pour se souvenir du nom du module
+  module_name = owner.icmodule.absmodule.name
+
   # Envoyer le mail
   # Note : il faut commencer par là pour que le message trouve le nom du module
   owner.send_mail(subject:'Fin du module d’apprentissage', message:deserb('mails/arret_module/mail_owner', owner))
@@ -31,8 +36,8 @@ def arret_module
   downer = {options:owner.options, icmodule_id:nil}
   owner.save(downer)
   # Une actualité pour annoncer la fin du module
-  # TODO
+  Actualite.add('ENDMODULE', owner, "#{owner.pseudo} achève son module “#{module_name}”.")
   # La confirmation finale
-  message("le module de #{owner.pseudo} a été correctement arrêté.".freeze)
+  message("le module de #{owner.pseudo} a été correctement arrêté.")
 end #/ add_actualite
 end #/Admin::Operation

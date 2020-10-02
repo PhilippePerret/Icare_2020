@@ -18,7 +18,7 @@ feature "Operation Ajout d'une actualité" do
     scenario 'ne peut pas forcer l’ajout d’une actualité (par URL)' do
       start_time = Time.now
       querystring = {"uid":"[\"1\",\"integer\"]","icarien":"[\"1\",\"string\"]","operation":"[\"add_actualite\",\"string\"]","long_value":"[\"C'est à voir ?\",\"string\"]","medium_value":"[\"SIMPLEMESS\",\"string\"]","short_value":"[\"\",\"string\"]","script":"[\"operation_icarien.rb\",\"string\"]"}
-      querystring = querystring.collect{|k,vs| "#{k}=#{URI.encode(vs)}"}.join('&')
+      querystring = querystring.collect{|k,vs| "#{k}=#{uri_encode(vs)}"}.join('&')
       goto('_lib/ajax/ajax.rb?'+querystring)
       screenshot('geek-force-actualite')
       expect(TActualites).not_to have_actualite(after: start_time, type: 'SIMPLEMESS', user_id: phil.id)
@@ -48,12 +48,12 @@ feature "Operation Ajout d'une actualité" do
       expect(page).to have_css('select#select_value')
       within('div#div-fields') do
         fill_in('long_value', with: 'Ceci est le texte de l’actualité')
-        fill_in('select_value', with: 'SIMPLEMESS')
+        select('Simple message', from: 'select_value')
         click_on(UI_TEXTS[:btn_execute_operation])
       end
       expect(page).to have_message('de type SIMPLEMESS ajoutée pour Marion')
       expect(page).to have_aucune_erreur()
-      expect(TActualites).to have_actualite(after: start_time, type: 'SIMPLEMESS', user: marion)
+      expect(TActualites).to have_actualite(after: start_time.to_i, type: 'SIMPLEMESS', user: marion)
     end
   end
 end

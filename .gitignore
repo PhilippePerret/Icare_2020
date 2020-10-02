@@ -4,6 +4,8 @@
 
 .fatal_errors.log
 
+./spec/tmp/failure_files.txt
+
 _lib/data/secret/
 
 _lib/data/qdd/

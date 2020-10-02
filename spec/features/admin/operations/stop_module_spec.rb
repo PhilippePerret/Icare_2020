@@ -21,9 +21,9 @@ feature "Operation Arrêt d'un module d'apprentissage (forcé ou non)" do
       degel('define_sharing')
     end
     scenario 'ne peut pas stopper un module d’apprentissage déjà arrêté' do
-      pending
+      implementer(__FILE__,__LINE__)
     end
-    scenario 'peut stopper un module d’apprentissage', only:true do
+    scenario 'peut stopper un module d’apprentissage' do
       # --- Vérications préliminaires ---
       expect(marion).to be_actif
       expect(marion.icmodule_id).not_to eq(nil)
@@ -49,7 +49,7 @@ feature "Operation Arrêt d'un module d'apprentissage (forcé ou non)" do
         click_on(UI_TEXTS[:btn_execute_operation])
       end
       expect(page).to have_aucune_erreur()
-      expect(page).to have_message('le module de Marion a été correctement arrêté')
+      expect(page).to have_message('le module de MarionM a été correctement arrêté')
 
       # --- Vérifications ---
       marion.reset
@@ -62,12 +62,12 @@ feature "Operation Arrêt d'un module d'apprentissage (forcé ou non)" do
       # Le module est marqué terminé
       dmodule = db_get('icmodules', icmodule_id)
       expect(dmodule[:ended_at]).not_to eq(nil)
-      expect(dmodule[:ended_at]).to be > start_time.to_i
+      expect(dmodule[:ended_at].to_i).to be > start_time.to_i
       expect(dmodule[:icetape_id]).to eq(nil)
       # Il n'y a plus de watcher de paiement
       expect(TWatchers).not_to have_watcher(wtype:'paiement_module', objet_id: icmodule_id, user:marion)
       # Une actualité a été produit
-      expect(TActualites).to have_actualite(after: start_time, id:'ENDMODULE'.freeze)
+      expect(TActualites).to have_actualite(after: start_time, user:marion, type:'ENDMODULE')
     end
   end
 end

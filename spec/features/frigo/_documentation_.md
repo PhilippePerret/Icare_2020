@@ -4,7 +4,7 @@
 
 ~~~ruby
 
-expect(<discussion>).to have_messages(<prop>)
+expect(<discussion>).to have_message_frigo(<prop>)
 
 ~~~
 

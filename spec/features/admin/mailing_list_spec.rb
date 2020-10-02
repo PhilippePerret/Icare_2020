@@ -5,8 +5,6 @@
   Quand l'administrateur est connecté, le formulaire de contact fonctionne
   comme un mailing list.
 =end
-include Capybara::DSL
-
 def mailing_json_path
   @mailing_json_path ||= File.join(MAILS_FOLDER,'mailing.json')
 end #/ mailing_json_path
@@ -20,7 +18,7 @@ end #/ unicarien
 BTN_PROCEED_ENVOI_MAILING = "Procéder à l’envoi du mailing enregistré"
 BTN_DESTROY_ENVOI_MAILING = "Détruire ce mailing"
 
-describe 'Mailing-list d’administration' do
+feature 'Mailing-list d’administration' do
 
   before(:all) do
     require './_lib/_pages_/contact/mail/constants'

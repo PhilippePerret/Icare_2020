@@ -71,6 +71,7 @@ class << self
     end
     date = date.to_i.to_s
     valeurs = [type, user_id, message, date, date]
+    # log("Valeurs pour création : #{valeurs}")
     db_exec(REQUEST_CREATE, valeurs)
   end #/ add
   alias :create :add

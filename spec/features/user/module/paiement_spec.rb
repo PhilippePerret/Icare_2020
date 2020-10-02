@@ -3,12 +3,13 @@
   Module de test du paiement
 =end
 # Pour les constantes
-require "#{FOLD_REL_PAGES}/modules/paiement/lib/constants"
-require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
-require './_lib/_watchers_processus_/_constants_'
 
 feature "Paiement d'un module d'apprentissage avec les différents modes de paiement" do
-
+  before(:all) do
+    require "#{FOLD_REL_PAGES}/modules/paiement/lib/constants"
+    require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
+    require './_lib/_watchers_processus_/_constants_'
+  end
   scenario 'juste pour produire le gel marion_avec_paiement', gel:true do
     # On modifie la date de paiement pour que la notification apparaisse.
     # Pour ce faire, on doit récupérer le watcher de paiement de Marion

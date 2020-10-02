@@ -99,6 +99,7 @@ class << self
       end
     end
     if options.key?(:after)
+      options[:after] = options[:after].to_i if options[:after].is_a?(Time)
       pr = pr >> proc do |tmail, options|
         if tmail && tmail.time.to_i > options[:after]
           [tmail, options]
@@ -109,6 +110,7 @@ class << self
       end
     end
     if options.key?(:before)
+      options[:before] = options[:before].to_i if options[:before].is_a?(Time)
       pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.time.to_i < options[:before]}
     end
 

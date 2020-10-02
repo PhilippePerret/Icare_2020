@@ -84,7 +84,6 @@ feature "Création d'une étape de module" do
       "Le nouvelle identifiant ne devrait pas être égal à 0…"
     # On prend la nouvelle étape dans la base de données pour la checker
     dnew_etape = db_get('absetapes', new_id)
-    puts "dnew_etape: #{dnew_etape.inspect}"
     # On vérifie les nouvelles données
     data_new_etape.each do |k, v|
       errmsg = safe("La propriété #{k.inspect} devrait valoir “#{v.to_s}”, elle vaut “#{safe(dnew_etape[k].to_s)}”…")

@@ -2,7 +2,8 @@
 =begin
   Constantes propres à la section Frigo du bureau
 =end
-require './_lib/required/__first/helpers/Tag.rb'
+require './_lib/required/__first/helpers/Tag'
+require './_lib/required/__first/constants/emojis'
 
 RETOUR_FRIGO = Tag.retour(route:'bureau/frigo', titre:'Frigo')
 

@@ -44,6 +44,11 @@ RSpec.configure do |config|
     puts "Implémenter le test #{path}:#{line}".jaune
   end #/ pending
 
+  config.include Capybara::DSL, :type => :feature
+
+  # POur se souvenir des tests qui échouent
+  config.example_status_persistence_file_path = './spec/tmp/failure_files.txt'
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -119,6 +124,12 @@ RSpec.configure do |config|
     @screenshot_index ||= 0
     save_screenshot("#{@screenshot_index += 1}-#{affixe}.png")
   end #/ screenshot
+
+
+  def uri_encode(str)
+    URI.encode_www_form_component(str)
+  end #/ uri_encode
+
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.

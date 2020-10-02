@@ -3,6 +3,11 @@
   Méthodes générales utiles pour les strings
 =end
 
+# Pour remplace URI.encode qui est obsolète
+def uri_encode(str)
+  URI.encode_www_form_component(str)
+end #/ uri_encode
+
 # Avant de passer un string à ERB.new, il est bon de le passer par ici
 def safe(str)
   # log("transformation de #{str.inspect}")
