@@ -107,7 +107,7 @@ describe 'Opération Ajout de jours gratuits' do
 
 
 
-    scenario 'il peut recevoir des jours gratuits et être averti avec un message personnalisé', only:true do
+    scenario 'il peut recevoir des jours gratuits et être averti avec un message personnalisé' do
 
       # On prend le watcher de paiement d'Élie
       watcher_paiement = db_get('watchers', {user_id:elie.id, wtype:'paiement_module'})
