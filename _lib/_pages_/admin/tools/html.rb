@@ -1,8 +1,9 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_module('form')
 class HTML
   def titre
-    "#{RETOUR_ADMIN}Outils".freeze
+    "#{RETOUR_ADMIN}Outils"
   end
   # Code à exécuter avant la construction de la page
   def exec

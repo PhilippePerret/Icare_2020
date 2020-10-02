@@ -1,0 +1,14 @@
+<%# frozen_string_literal: true %>
+<p>
+  Bonjour <%= owner.pseudo %>,
+</p>
+<p>
+Ce mail pour vous informer que Phil vient de vous accorder <%= nombre_jours %> jours gratuits.
+</p>
+<% if long_value %>
+<p>Au motif suivant :</p>
+<p><%= deserb(long_value, self) %></p>
+<% end %>
+<p>Votre prochain paiement se fera aux alentours du <%= next_paiement_formated %>.</p>
+<p>Bien à vous,</p>
+<p><%= le_bot %></p>

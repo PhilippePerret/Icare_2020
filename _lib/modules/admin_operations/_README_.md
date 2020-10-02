@@ -39,12 +39,30 @@ Ajax << {message:"J'ai opéré sur vous, #{owner.pseudo} !"}
 
 … va afficher ce message avec le pseudo de l'icarien.
 
-### Utilisation des trois valeurs de champ :
+### Utilisation des valeurs de champ :
 
 ~~~ruby
 short_value # valeur du champ short
 medium_value # => valeur du champ moyen
 long_valur # valeur du champ moyen
+select_value # valeur du menu
+cb_value # valeur de la case à cocher
+~~~
+
+#### Définition de la case à cocher
+
+~~~ruby
+  cb_value: {checked:false/true, message:"Le texte de la case à cocher"}
+~~~
+
+#### Définition du menu
+
+~~~ruby
+  select_value: {
+    values: [ ["val item 1", "titre item 1"], ["val item 2", "titre item 2"], ...],
+    default: "val item défaut",
+    message: "Titre du menu"
+  }
 ~~~
 
 ### Pour afficher un message de suivi
@@ -62,6 +80,10 @@ Erreur normale :
 ~~~ruby
 Ajax << {error: "<le message d'erreur>"}
 ~~~
+
+#### Valeur de la case à cocher
+
+Dans le script ruby de l'outil, `cb_checked` aura la valeur `true` si la case est cochée, `false` dans le cas contraire.
 
 ### Outils réservés à l'administration
 

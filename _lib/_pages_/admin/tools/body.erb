@@ -33,26 +33,31 @@
 %>
 <div style="clear:both;"></div>
 <div id="div-fields" class="mt1 hidden">
-  <div id="short_value-div" class="hidden">
+  <div id="short_value-div" class="hidden errorizable">
     <div id="short_value-txt" class="small"></div>
-    <input type="text" id="short_value" value="" class="short errorizable" />
+    <input type="text" id="short_value" value="" class="short" />
   </div>
 
-  <div id="medium_value-div" class="hidden">
+  <div id="medium_value-div" class="hidden errorizable">
     <div id="medium_value-txt" class="small"></div>
-    <input type="text" id="medium_value" value="" class="errorizable" />
+    <input type="text" id="medium_value" value="" />
   </div>
 
-  <div id="select_value-div" class="hidden">
+  <div id="select_value-div" class="hidden errorizable">
     <div id="select_value-txt" class="small"></div>
-    <select class="errorizable" name="select_value" id="select_value"></select>
+    <select name="select_value" id="select_value"></select>
   </div>
 
-  <div id="long_value-div" class="hidden">
+  <div id="long_value-div" class="hidden errorizable">
     <div id="long_value-txt" class="small"></div>
-    <textarea id="long_value" rows="8" cols="80" class="errorizable"></textarea>
+    <textarea id="long_value" rows="8" cols="80"></textarea>
   </div>
-  
+
+  <div id="cb_value-div" class="hidden errorizable">
+    <input type="checkbox" name="cb_value" id="cb_value" />
+    <label id="cb_value-txt" for="cb_value" class="small"></label>
+  </div>
+
   <div id="" class="row buttons">
     <button type="button" class="main btn" onclick="executeOperation()"><%= UI_TEXTS[:btn_execute_operation] %></button>
   </div>

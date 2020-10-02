@@ -111,6 +111,20 @@ class << self
     if options.key?(:before)
       pr = pr >> proc { |tmail, options| [tmail, options] if tmail && tmail.time.to_i < options[:before]}
     end
+
+    if options.key?(:message)
+      pr = pr >> proc do |tmail, options|
+        [tmail, options] if tmail && begin
+          options[:message] = [options[:message]] if options[:message].is_a?(String)
+          not_found = []
+          options[:message].each do |str|
+            tmail.contains?(str) || not_found << "'#{str}'"
+          end
+          self.raison_exclusion = "Ne contient pas les textes : #{not_found.inspect}."
+          not_found.empty?
+        end
+      end
+    end
     all.select do |tmail|
       choix = pr.call(tmail, options)
       # puts "Raison exclusion: #{raison_exclusion}"

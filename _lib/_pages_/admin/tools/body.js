@@ -2,7 +2,7 @@
 /*
   Module très important pour la partie administration.
 */
-const OPES_KEYS = ['long_value', 'medium_value','short_value', 'select_value'];
+const OPES_KEYS = ['long_value', 'medium_value','short_value', 'select_value', 'cb_value'];
 
 // Appelé pour exécuter l'opération
 function executeOperation(){
@@ -15,7 +15,13 @@ function executeOperation(){
   // Opération choisie
   data.operation = document.querySelector('#operations').value
   // Valeurs transmises
-  OPES_KEYS.forEach(key => data[key] = document.querySelector(`#${key}`).value)
+  OPES_KEYS.forEach(key => {
+    if ( key == 'cb_value' ) {
+      data[key] = document.querySelector(`#${key}`).checked
+    } else {
+      data[key] = document.querySelector(`#${key}`).value
+    }
+  })
   // Données absolues pour cette opération
   const dataOperation = DATA_OPERATIONS[data.operation]
   // Vérification des données
@@ -36,7 +42,7 @@ function executeOperation(){
             selecteur = 'select#icariens'
             break;
           default:
-            selecteur = `#${key}_value`
+            selecteur = `#${key}-div`
         }
         document.querySelector(selecteur).classList.add('error')
       })//Fin de boucle sur toutes les clés manquantes
@@ -103,18 +109,22 @@ function onToggleCbStatut(cb, ev) {
   Méthode appelée quand on choisit une opération
 */
 function onChooseOperation(menu_operations){
-  const opid = menu_operations.value
-  const opdata = DATA_OPERATIONS[opid]
+  const opid    = menu_operations.value
+  const opdata  = DATA_OPERATIONS[opid]
   document.querySelector('#div-fields').classList.remove('hidden');
   OPES_KEYS.forEach(key => {
-    console.log("Traitement clé '%s'", key)
+    // console.log("Traitement clé '%s'", key)
     const div = document.querySelector(`#${key}-div`) ;
     const txt = document.querySelector(`#${key}-txt`) ;
     const fld = document.querySelector(`#${key}`) ;
     fld.value = "";
     if ( opdata[key] ) {
       div.classList.remove('hidden')
-      if (key == 'select_value'){
+      if (key == 'cb_value') {
+        txt.innerHTML = opdata[key].message;
+        fld.checked = opdata[key].checked;
+        fld.value = "ON";
+      } else if (key == 'select_value'){
         // Traitement spécial d'un menu de valeurs (sa donnée contient :values,
         // :default et :message)
         txt.innerHTML = opdata[key].message;

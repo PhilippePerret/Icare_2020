@@ -16,3 +16,10 @@ select#operations
 {
   height:215px;
 }
+
+div.errorizable {
+  border:1px solid transparent;
+}
+div.error {
+  border:1px solid red;
+}

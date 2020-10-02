@@ -70,6 +70,18 @@ def montant_humain
   @montant_humain ||= "#{absmodule.tarif}#{ISPACE}€"
 end #/ montant_humain
 
+# Retourne la date de prochain paiement
+# Noter qu'elle existe dans deux cas :
+# 1) c'est un module à durée déterminée et il n'a pas encore été payé
+# 2) c'est un module de suivi de projet
+def paiement_time
+  watcher_paiement && watcher_paiement[:triggered_at].to_i
+end #/ paiement_time
+
+def watcher_paiement
+  @watcher_paiement ||= db_get('watchers', {objet_id:id, wtype:'paiement_module'})
+end #/ watcher_paiement
+
 # Retourne la valeur corrigées des pauses. Certaines, pour une raison inconnue,
 # sont enregistrées comme "[{". On passe donc  par ici pour corriger cette
 # erreur si elle est détectée.

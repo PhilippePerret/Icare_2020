@@ -12,6 +12,7 @@ class << self
   alias :exec :operation
 end # /<< self
 class Operation
+include StringHelpersMethods
 class << self
   def exec operation, params = nil
     new(operation).__exec(params)
@@ -66,6 +67,12 @@ def owner
     User.get(Ajax.param(:icarien)) if Ajax.param(:icarien)
   end
 end #/ owner
+
+def cb_value
+  @cb_value ||= Ajax.param(:cb_value) == true
+end #/ cb_value
+alias :cb_checked :cb_value
+
 def select_value
   @select_value ||= Ajax.param(:select_value)
 end #/ select_value
@@ -81,5 +88,9 @@ end #/ long_value
 # ---------------------------------------------------------------------
 #   /Fin des informations pour les opérations icariens
 # ---------------------------------------------------------------------
+
+# Pour l'utiliser dans un mail à formater par exemple
+def bind; binding() end
+
 end #/Operation
 end #/Admin

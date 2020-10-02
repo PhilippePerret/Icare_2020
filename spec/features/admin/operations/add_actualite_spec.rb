@@ -1,10 +1,11 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Test de l'ajout d'une actualité
 =end
 feature "Operation Ajout d'une actualité" do
   before(:all) do
-    require "#{FOLD_REL_PAGES}/admin/tools/constants" 
+    require "#{FOLD_REL_PAGES}/admin/tools/constants"
   end
 
   context 'Un visiteur quelconque' do
@@ -41,13 +42,13 @@ feature "Operation Ajout d'une actualité" do
       start_time = Time.now # c'est parti
       # On choisit l'icarien (statut puis icarien)
       phil.click('cb-statut-actif', within: '#div-statuts')
-      select('Marion', from: 'icariens')
+      select('Marionm', from: 'icariens')
       select('Ajouter actualité', from: 'operations')
       expect(page).to have_css('textarea#long_value')
-      expect(page).to have_css('input[type="text"]#medium_value')
+      expect(page).to have_css('select#select_value')
       within('div#div-fields') do
-        fill_in('long_value', with: 'Ceci est le texte de l’actualité'.freeze)
-        fill_in('medium_value', with: 'SIMPLEMESS'.freeze)
+        fill_in('long_value', with: 'Ceci est le texte de l’actualité')
+        fill_in('select_value', with: 'SIMPLEMESS')
         click_on(UI_TEXTS[:btn_execute_operation])
       end
       expect(page).to have_message('de type SIMPLEMESS ajoutée pour Marion')
