@@ -15,7 +15,7 @@ class QDD
 #
 # ---------------------------------------------------------------------
 attr_reader :filtre
-def filtre= filtre
+def filtre=( filtre)
   @filtre = filtre
 end #/ filtre=
 
@@ -80,6 +80,7 @@ end #/ documents_filtred
 # Retourne le filtre appliqué formaté
 def filtre_formated
   f = []
+  @filtre ||= {}
   if filtre.key?(:absetape_id)
     absetape = QddAbsEtape.get(filtre[:absetape_id])
     f << "Étape « #{absetape.titre} » (n°#{absetape.numero})  du module #{absetape.module.name}."
