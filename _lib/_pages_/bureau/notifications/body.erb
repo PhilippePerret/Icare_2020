@@ -1,8 +1,12 @@
 <section class="watchers mb2">
   <div class="infos-watchers cases-line">
     <span class="case-libelle">Total</span><span
-    class="case-value"><%= user.watchers.count %></span><span
-    class="case-libelle">Non lus</span><span
+    class="case-value"><%= user.watchers.count %></span><%
+    if user.watchers.major.count > 0
+      %><span class="case-libelle">Majeures</span><span
+      class="case-value red"><%= user.watchers.major.count %></span><%
+    end
+    %><span class="case-libelle">Non lus</span><span
     class="case-value red"><%= user.watchers.unread.count %></span><span
     class="case-libelle">lus</span><span
     class="case-value"><%= user.watchers.read.count %></span>

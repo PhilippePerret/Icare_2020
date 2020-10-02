@@ -74,6 +74,8 @@ class Watcher < ContainerClass
         # Quand c'est une notification qui n'est pas lue
         css << 'unread'
         body << Tag.span(text:'', class:'pastille-rouge')
+      elsif options && options[:major]
+        css << 'major'
       end
       Tag.div(id:"watcher-#{id}", text:body, class:css.join(' '))
     else '' end

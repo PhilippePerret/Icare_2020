@@ -21,12 +21,14 @@ DATA_WATCHERS = {
   # --- USER ---
   validation_adresse_mail: {
     titre: 'Validation de votre adresse mail',
-    relpath: 'User/valid_mail'
+    relpath: 'User/valid_mail',
+    major: true
   },
   validation_inscription: {
     titre: 'Validation inscription',
     relpath: 'User/signup',
-    actu_id: 'SIGNUP'
+    actu_id: 'SIGNUP',
+    major: true
   },
   # --- LES MODULES ---
   commande_module:    {
@@ -42,7 +44,8 @@ DATA_WATCHERS = {
   paiement_module: {
     titre: 'Paiement du module',
     relpath: 'IcModule/paiement',
-    actu_id: nil
+    actu_id: nil,
+    major: true
   },
   annonce_virement: {
     titre: 'Annonce de virement IBAN',

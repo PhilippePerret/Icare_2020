@@ -112,40 +112,52 @@ def count
   all.count
 end #/ count
 
+# Retourne les notifications prioritaires
+def major
+  @major ||= separate[:major]
+end #/ major
+
 # Retourne la liste des watchers lus par l'user
 def read
-  @read ||= begin
-    filter_key = user.admin? ? :admin : :user
-    all.select do |watcher|
-      next unless watcher.vu_par?(filter_key)
-      watcher
-    end
-  end
+  @read ||= separate[:read]
 end #/ read
 
 def unread
-  # log("-> unread (@unread = #{@unread.inspect})")
-  @unread ||= begin
-    filter_key = user.admin? ? :admin : :user
-    ur = all.select do |watcher|
-      next false if watcher.vu_par?(filter_key)
-      watcher
-    end
-    ur
-  end
+  @unread ||= separate[:unread]
 end #/ read
 
 # Nombre de watchers non vus
 def unread_count
-  log("-> unread_count")
   @unread_count ||= unread.count
 end #/ unread_count
 
+# Pour marquer toutes les notifications comme lues
 def allmarkread
   prop = owner.admin? ? 'vu_admin'.freeze : 'vu_user'.freeze
   request = "UPDATE watchers SET #{prop} = TRUE WHERE #{prop} = FALSE"
   db_exec(request)
   message "Toutes vos notifications ont été marquées lues, #{owner.pseudo}.".freeze
 end #/ allmarkread
+
+private
+
+  # Méthode qui sépare les notifications en prioritaires (major), non lues (unread)
+  # et lu (read)
+  def separate
+    @major  = []
+    @unread = []
+    @read   = []
+    filter_key = user.admin? ? :admin : :user
+    all.each do |watcher|
+      if watcher.major?
+        @major << watcher
+      elsif watcher.vu_par?(filter_key)
+        @read << watcher
+      else
+        @unread << watcher
+      end
+    end
+    return {major:@major, unread:@unread, read:@read} # pour simplifier le code
+  end #/ serapate
 
 end #/MainWatchers

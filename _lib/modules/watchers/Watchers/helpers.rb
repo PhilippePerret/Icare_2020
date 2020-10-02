@@ -6,6 +6,7 @@ class Watchers
   def listing
     [
       bouton_mark_all_read,
+      major.collect { |watcher| watcher.out(major:true)},
       unread.collect { |watcher| watcher.out(unread:true) },
       read.collect { |watcher| watcher.out }
     ].join

@@ -32,6 +32,9 @@
   }
 }
 
+.watcher.major {
+  border:2px dotted red;
+}
 .watcher.unread span.pastille-rouge {
   position:absolute;
   top:-8px;

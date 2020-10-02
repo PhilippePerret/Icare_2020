@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   class Watchers
   --------------
@@ -61,7 +62,7 @@ def next_watcher
   unless absdata[:next].nil?
     owner.watchers.add(wtype:absdata[:next], objet_id:objet_id)
   else
-    erreur "ERREUR SYSTÉMIQUE : la propriété :next du watcher n'est pas définie. impossible d'utiliser next_watcher.".freeze
+    erreur "ERREUR SYSTÉMIQUE : la propriété :next du watcher n'est pas définie. impossible d'utiliser next_watcher."
   end
 end #/ next_watcher
 
@@ -83,7 +84,7 @@ def download_from_watcher(path_folder)
   redirect_to("#{route.to_s}?tikd=#{ticket.id}")
 end #/ download_from_watcher
 
-# Édition du watcher
+# Édition du watcher TODO
 def edit
   admin_required # protection supplémentaire
   message "Je dois éditer le watcher ##{id}"
@@ -113,6 +114,15 @@ def vu_par?(who)
   data["vu_#{who}".to_sym] == 1
 end #/ vu?
 
+# Retourne TRUE si c'est un watcher prioritaire
+# Un watcher prioritaire se retrouve toujours en haut de liste (même s'il est
+# lu, comme par exemple le watcher de paiement)
+def major?
+  (@is_major ||= begin
+    absdata[:major] === true ? :true : :false
+  end) == :true
+end #/ major?
+
 # ---------------------------------------------------------------------
 #
 #   DATA
@@ -132,7 +142,7 @@ end #/ params
 # absolues
 def relpath
   @relpath ||=  if absdata.nil?
-                  erreur("Impossible de trouver le relpath du watcher de wtype #{wtype.inspect} défini par les paramètres #{params.inspect}.".freeze)
+                  erreur("Impossible de trouver le relpath du watcher de wtype #{wtype.inspect} défini par les paramètres #{params.inspect}.")
                 else
                   absdata[:relpath]
                 end
@@ -177,12 +187,12 @@ end #/ add_actualite
 # Retourne le chemin d'accès au template de notification du watcher,
 # pour l'admin ou l'user suivant la valeur de +who+
 def path_notification(who)
-  fname = "notification_#{who}.erb".freeze
+  fname = "notification_#{who}.erb"
   File.join(folder, fname)
 end #/ path_notification
 
 def path_actualite
-  File.join(folder, "actualite.erb".freeze)
+  File.join(folder, "actualite.erb")
 end #/ path_actualite
 
 def path_mail(who)

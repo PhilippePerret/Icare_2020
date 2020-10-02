@@ -46,7 +46,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
     marion.rejoint_ses_notifications
     # sleep 20
-    params = {unread:true, user_id:marion.id, wtype:'paiement_module'}
+    params = {unread:false, major:true, user_id:marion.id, wtype:'paiement_module'}
     expect(page).to have_notification(params),
       "La page des notifications devrait contenir la notification pour le paiement."
     expect(page).to have_link('procéder au paiement')
