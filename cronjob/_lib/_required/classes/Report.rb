@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class Report
   ------------
@@ -7,7 +8,7 @@
 require 'json'
 
 class Report
-DEL_DATA = '§$%°£&'.freeze
+DEL_DATA = '°°°°°'
 class << self
 
   # Ajout d'une ligne au rapport
@@ -55,7 +56,7 @@ class << self
     return if @items.empty? # aucun rapport à faire
     Mail.send({
       to:      PHIL[:mail],
-      subject: "Rapport du #{NOW.to_s(jour:true)}".freeze,
+      subject: "Rapport du #{NOW.to_s(jour:true)}",
       message: GABARIT_MESSAGE_RAPPORT % [@items.collect{|i|i.out}.join]
     })
   end #/ send
@@ -81,10 +82,10 @@ end #/ initialize msg
 def out
   cont = LINE_CONT % [Time.at(time.to_i).to_s(simple:true), content]
   sty = case type
-  when :titre       then 'font-weight:bold;'.freeze
-  when :error       then 'color:red;'.freeze
-  when :operation   then 'font-family:courrier;color:blue;'.freeze
-  when :resultat    then 'color:green;'.freeze
+  when :titre       then 'font-weight:bold;'
+  when :error       then 'color:red;'
+  when :operation   then 'font-family:courrier;color:blue;'
+  when :resultat    then 'color:green;'
   else ''
   end
   cont = LINE_DIV % [sty, cont]
@@ -96,7 +97,7 @@ end #/Report
 #   CONSTANTES
 #
 # ---------------------------------------------------------------------
-GABARIT_MESSAGE_RAPPORT = <<-HTML.strip.freeze
+GABARIT_MESSAGE_RAPPORT = <<-HTML.strip
 <p>Phil,</p>
 <p style="font-size:0.85em;">Voici le rapport quotidien du site de l'atelier Icare.</p>
 %s
@@ -104,5 +105,5 @@ GABARIT_MESSAGE_RAPPORT = <<-HTML.strip.freeze
 <p>Le Bot de l'atelier</p>
 HTML
 
-LINE_CONT = '- %s -- %s'.freeze
-LINE_DIV = '<div style="%s">%s</div>'.freeze
+LINE_CONT = '- %s -- %s'
+LINE_DIV = '<div style="%s">%s</div>'

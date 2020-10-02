@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class CJFolders
   ---------------
@@ -6,9 +7,9 @@
 =end
 MESSAGES = {} unless defined?(MESSAGES)
 MESSAGES.merge!({
-  titre_nettoyage: '* Nettoyage du dossier “%s”'.freeze,
-  nofile_nettoyed: '  = Aucun fichier nettoyé'.freeze,
-  nombre_files_nettoyed: '  = Nombre de fichiers nettoyés : %i'.freeze,
+  titre_nettoyage: '* Nettoyage du dossier “%s”',
+  nofile_nettoyed: '  = Aucun fichier nettoyé',
+  nombre_files_nettoyed: '  = Nombre de fichiers nettoyés : %i',
 })
 
 QUINZE_JOUR_AGO = NOW_S - 15.days
@@ -39,7 +40,7 @@ def initialize path
 end #/ initialize
 def nettoie
   @nombre_removed = 0
-  nombre_elements_init = elements.count.freeze
+  nombre_elements_init = elements.count
   elements.each do |element_path|
     if File.directory?(element_path)
       self.class.nettoie(element_path)
@@ -50,7 +51,7 @@ def nettoie
     end
   end
   @elements = nil
-  nombre_elements_final = elements.count.freeze
+  nombre_elements_final = elements.count
   Dir.delete(path) if nombre_elements_final == 0
   @nombre_removed = nombre_elements_init - nombre_elements_final
 end #/ nettoie

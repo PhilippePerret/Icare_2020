@@ -1,5 +1,5 @@
 # encoding: UTF-8
-
+# frozen_string_literal: true
 
 def require_module(module_name)
   Cronjob.require_app_module(module_name)

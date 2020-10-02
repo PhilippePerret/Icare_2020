@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Méthode Cronjob::run
   C'est la méthode principale

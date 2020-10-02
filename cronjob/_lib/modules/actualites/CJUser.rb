@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Classe CJUser
   -------------
@@ -13,14 +14,14 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 
-LINE_ACTU_VEILLE  = '<div>-&nbsp;%{message}</div>'.freeze
-LINE_ACTU_HEBDO   = '<div>-&nbsp;%{date} %{message}</div>'.freeze
+LINE_ACTU_VEILLE  = '<div>-&nbsp;%{message}</div>'
+LINE_ACTU_HEBDO   = '<div>-&nbsp;%{date} %{message}</div>'
 # Retourne mes actualités de la veille mises en forme
 def actualites_formated(ttype = :veille)
   m = []
   gabarit = ttype == :veille ? LINE_ACTU_VEILLE : LINE_ACTU_HEBDO
   m << '<div class="margin-bottom:2em;">'
-  m << '<div style="font-weight:bold">%s</div>'.freeze % [self.pseudo.capitalize]
+  m << '<div style="font-weight:bold">%s</div>' % [self.pseudo.capitalize]
   m << '<div style="margin-left:2em;">'
   instance_variable_get("@actualites_#{ttype}").each do |actu|
     m << gabarit % actu.line_data
