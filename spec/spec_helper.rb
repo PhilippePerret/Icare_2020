@@ -49,6 +49,9 @@ RSpec.configure do |config|
   # POur se souvenir des tests qui échouent
   config.example_status_persistence_file_path = './spec/tmp/failure_files.txt'
 
+  # Pour ne pas écrire la ligne indiquant les options employées
+  config.silence_filter_announcements = true
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -82,6 +85,13 @@ RSpec.configure do |config|
   config.before :suite do
     # puts "Je commance la suite de tests"
     # À EXÉCUTER AVANT LES TESTS
+    ENV['SPEC_FORMATTER'] = case config.formatters.first.class.name
+    when /DocumentationFormatter$/ then "Documentation"
+    when /ProgressFormatter$/ then "Progress"
+    else config.formatters.first.class.name.split('::').last
+    end
+    # puts "config.formatters.first: #{config.formatters.first.class.name}"
+    # puts "ENV['SPEC_FORMAT']: #{ENV['SPEC_FORMAT'].inspect}"
     vide_all_dossiers
     vide_db
     File.open('./TESTS_ON','wb'){|f|f.write(Time.now.to_i.to_s)}
@@ -98,6 +108,7 @@ RSpec.configure do |config|
   end
 
   def pitch msg
+    return unless ENV['SPEC_FORMATTER'] == 'Documentation'
     puts msg.gsub(/^[\t ]+/,'').bleu
   end #/ pitch
 

@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Test complet du frigo
 =end
@@ -28,7 +29,7 @@ feature "Test du frigo" do
 
     start_time = Time.now.to_i
 
-    pitch <<-TXT.strip.freeze
+    pitch <<-TXT.strip
     Benoit peut initier une conversation avec Phil
     ----------------------------------------------
     TXT
@@ -46,10 +47,10 @@ feature "Test du frigo" do
     expect(page).to have_content('Vous n’avez pas de discussions en cours'),
       "Benoit ne devrait pas avoir de discussion en cours…"
 
-    pitch('… et ne trouve aucune discussion en cours'.freeze)
+    pitch('… et ne trouve aucune discussion en cours')
     expect(page).to have_selector('form#discussion-phil-form'),
       "Benoit devrait avoir un formulaire pour initier une discussion avec Phil"
-    pitch('Dans le formulaire pour initier une conversation avec Phil…'.freeze)
+    pitch('Dans le formulaire pour initier une conversation avec Phil…')
 
     # === TEST : CRÉATION D'UNE DISCUSSION ===
     benoit.start_discussion_with_phil(
@@ -72,23 +73,22 @@ feature "Test du frigo" do
     pitch('Phil ne possède aucun message dans la base de données')
 
     TMails.exists?('phil@atelier-icare.net', {after: start_time})
-    pitch('• Un mail a été envoyé à Phil pour l’avertir'.freeze)
+    pitch('• Un mail a été envoyé à Phil pour l’avertir')
 
-    pitch("Quand Phil rejoint son bureau…".freeze)
+    pitch("Quand Phil rejoint son bureau…")
     phil.rejoint_son_bureau
-    sleep 20
     expect(phil).to have_pastille_frigo(1)
-    pitch("Il trouve une pastille lui indiquant qu'il a un nouveau message.".freeze)
+    pitch("Il trouve une pastille lui indiquant qu'il a un nouveau message.")
 
     click_on 'Porte de frigo'
     expect(phil).to have_discussion('Message pour Phil', {with_new_messages: true})
     pitch("Il trouve la nouvelle discussion avec Benoit sur sa porte de frigo.")
     logout
 
-    pitch("=== Échange de messages divers ===".freeze)
+    pitch("=== Échange de messages divers ===")
     start_time = Time.now.to_i
 
-    pitch('Phil ajoute deux nouveaux messages'.freeze)
+    pitch('Phil ajoute deux nouveaux messages')
     phil.rejoint_la_discussion('Message pour Phil')
     phil.add_message_to_discussion('Message pour Phil', 'La réponse de Phil à Benoit.')
     expect(page).to have_total_messages_count(2)
@@ -97,7 +97,7 @@ feature "Test du frigo" do
     logout
 
     # = Vérification =
-    TMails.exists?(benoit, {after: start_time, only_one:true, subject:'Nouveau message de Phil sur votre frigo'.freeze})
+    TMails.exists?(benoit, {after: start_time, only_one:true, subject:'Nouveau message de Phil sur votre frigo'})
     pitch('Benoit a reçu un mail pour l’avertir du nouveau message (mais seulement 1)')
     expect(TDiscussion.get_by_titre('Message pour Phil')).to have_messages_frigo(count: 3)
 
@@ -112,7 +112,7 @@ feature "Test du frigo" do
     expect(benoit).to have_no_pastille_frigo
     pitch('Benoit ne voit plus la pastille avec l’indication des 2 messages')
 
-    gel('discussion-phil-benoit-3-messages', <<-TEXT.freeze)
+    gel('discussion-phil-benoit-3-messages', <<-TEXT)
 Dans cette discussion instanciée par Benoit avec Phil, 3 messages ont été échangés, les deux derniers émis par Phil et Benoit vient de les lire et de les marquer lus.
 
 * Titre discussion : "Message pour Phil"
@@ -244,7 +244,7 @@ Dans cette discussion instanciée par Benoit avec Phil, 3 messages ont été éc
     pitch("Élie a été correctement invité à la discussion “Message pour Phil”")
 
     # === NOUVEAU GEL ===
-    gel('marion-et-elie-invites-discussion-benoit-phil', <<-TEXT.freeze)
+    gel('marion-et-elie-invites-discussion-benoit-phil', <<-TEXT)
 Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie à rejoindre cette discussion. Ils ont reçus les mails mais n'ont pas encore répondu.
 
 * Titre discussion : "Message pour Phil"
@@ -332,9 +332,9 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
     pitch('Même en forçant l’accès aux invitations…')
     goto("bureau/frigo?op=inviter&did=1")
     screenshot("marion-tente-forcer-invitations")
-    expect(page).to have_titre('Discussion de frigo'.freeze)
+    expect(page).to have_titre('Discussion de frigo')
     expect(page).to have_content(ERRORS[:inviter_requires_owner])
-    pitch("Marion ne parvient pas à atteindre la page des invitations.".freeze)
+    pitch("Marion ne parvient pas à atteindre la page des invitations.")
 
   end
 
@@ -411,8 +411,8 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
     pitch("La discussion existe toujours…")
     watcher = TWatchers.find(objet_id:discussion.id, objet:'FrigoDiscussion', owner:benoit, after: start_time)
     expect(watcher).not_to eq(nil),
-      "Un watcher devrait exister pour détruire la conversation".freeze
-    pitch('… mais un watcher a été initié pour la détruire dans une semaine…'.freeze)
+      "Un watcher devrait exister pour détruire la conversation"
+    pitch('… mais un watcher a été initié pour la détruire dans une semaine…')
     data_mail = {after: start_time, subject:FrigoDiscussion::SUBJECT_ANNONCE_DESTROY}
     discussion.participants.each do |part|
       if part.id == discussion.owner.id
@@ -425,9 +425,9 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
           # Même s'il ne veut pas être contacté par mail
       end
     end
-    pitch("… et tous les participants ont été prévenus.".freeze)
+    pitch("… et tous les participants ont été prévenus.")
 
-    gel('after-benoit-pre-destroy-discussion', <<-TEXT.freeze)
+    gel('after-benoit-pre-destroy-discussion', <<-TEXT)
 Dans ce gel, la discussion instanciée par Benoit, qui rassemble Marion, Élie et Phil, a été détruite par Benoit. Mais cette destruction n'est pas encore effectuée puisque c'est un watcher, qui doit se déclencher dans une semaine, qui doit permettre à Phil de la détruire.
 
 En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avertir et leur permettre de télécharger la discussion. Dans le mail se trouve un lien direct vers la discussion.
@@ -456,8 +456,8 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
 
     # On récupère les informations sur la discussion qui doit être détruite
     discuss   = TDiscussion.get_by_titre('Message pour Phil')
-    disid     = discuss.id.freeze
-    distitre  = discuss.titre.freeze
+    disid     = discuss.id
+    distitre  = discuss.titre
     participants = discuss.participants
     expect(benoit).to have_discussion(distitre, {owner: true})
 
@@ -465,17 +465,17 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
     # pour qu'il apparaisse sur mon bureau d'administration
     dwatcher = db_get('watchers', {objet_id: disid, wtype:'destroy_discussion', user_id: benoit.id})
     expect(dwatcher).not_to eq(nil),
-      "On devrait trouver le watcher de destruction de la discussion…".freeze
-    request = "UPDATE `watchers` SET triggered_at = ? WHERE id = ?".freeze
+      "On devrait trouver le watcher de destruction de la discussion…"
+    request = "UPDATE `watchers` SET triggered_at = ? WHERE id = ?"
     db_exec(request, [Time.now.to_i - 10, dwatcher[:id]])
 
     # Le selector du watcher
-    wselector = "div#watcher-#{dwatcher[:id]}".freeze
+    wselector = "div#watcher-#{dwatcher[:id]}"
 
     pitch("Benoit rejoint ses notifications…")
     benoit.rejoint_ses_notifications
     expect(page).to have_css(wselector, text: 'destruction de la discussion “Message pour Phil”')
-    pitch("… et en trouve une lui indiquant la destruction prochaine.".freeze)
+    pitch("… et en trouve une lui indiquant la destruction prochaine.")
     logout
 
     start_time = Time.now.to_i
@@ -487,7 +487,7 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
     pitch("Phil trouve la notification sur son bureau")
     within(wselector) do
       pitch("Il clique sur le bouton pour détruire la discussion.")
-      click_on("Détruire la discussion".freeze)
+      click_on("Détruire la discussion")
     end
     screenshot("after-phil-destroys-discussion")
 
@@ -501,12 +501,12 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
 
 
 
-    pitch("Benoit rejoint ses notifications et…".freeze)
+    pitch("Benoit rejoint ses notifications et…")
     benoit.rejoint_ses_notifications
-    screenshot('benoit-in-notifs-after-destroying'.freeze)
+    screenshot('benoit-in-notifs-after-destroying')
     expect(page).not_to have_css(wselector),
       "Le watcher aurait dû être détruit (or, Benoit le trouve.)"
-    pitch("… note (sic) que le watcher de destruction n'est plus affiché.".freeze)
+    pitch("… note (sic) que le watcher de destruction n'est plus affiché.")
     logout
 
     # On vérifie
@@ -514,7 +514,7 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
       "La discussion “#{distitre}” ne devrait plus exister"
     pitch("La discussion est intégralement détruite (participants, messages)")
 
-    data_mail = {after: start_time, subject:'Destruction d’une discussion'.freeze}
+    data_mail = {after: start_time, subject:'Destruction d’une discussion'}
     expect(TMails).to be_exists(benoit.mail, data_mail),
       "Benoit aurait dû recevoir un mail lui annonçant la destruction"
     pitch("Benoit est prévenu par un mail spécial (depuis la notification)")
@@ -523,7 +523,7 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
     participants.each do |part|
       if part.id == benoit.id
         expect(TMails).not_to be_exists(part.mail, data_mail),
-          "Benoit ne devrait pas recevoir le mail d'information aux participants".freeze
+          "Benoit ne devrait pas recevoir le mail d'information aux participants"
       else
         expect(TMails).to be_exists(part.mail, data_mail),
           "Un participant à la discussion autre que le propriétaire devrait toujours recevoir un mail d'information de destruction (#{part.pseudo} n'en a pas reçu)"
@@ -531,7 +531,7 @@ En revanche, des mails ont été envoyé à Marion, Élie et Phil pour les avert
     end
     pitch("Les autres participants sont prévenus par mail")
 
-    gel('phil-has-destroyed-discussion-benoit', <<-MKD.freeze)
+    gel('phil-has-destroyed-discussion-benoit', <<-MKD)
 Dans ce gel, Phil vient de détruire la discussion instanciée par Benoit, à laquelle participaient Marion et Élie. Cette discussion, ici, n'existe plus, et les mails ont été envoyés à tout le monde. La notification (watcher) de destruction n'existe plus.
 
 Discussion ID: ##{disid}
@@ -551,7 +551,7 @@ Participants : Benoit (créateur), Phil, Marion, Élie
   scenario 'Marion peut quitter la conversation de Benoit' do
     degel('marion-et-elie-invites-discussion-benoit-phil')
 
-    marion.rejoint_la_discussion('Message pour Phil'.freeze)
+    marion.rejoint_la_discussion('Message pour Phil')
 
     # Vérification pré-test pour voir si les choses sont OK
     expect(page).to have_new_messages_count(3)
@@ -570,7 +570,7 @@ Participants : Benoit (créateur), Phil, Marion, Élie
     pitch("Marion quitte la discussion")
     expect(page).to have_css('a[href="bureau/frigo?op=quitter_discussion&did=1"]', text:'Quitter cette discussion'),
       "La page devrait présenter un bouton pour quitter la conversation"
-    click_on('Quitter cette discussion'.freeze)
+    click_on('Quitter cette discussion')
     # === Vérifications ===
     expect(page).to have_content('Vous avez bien quitté la discussion “Message pour Phil”')
     pitch('Un message lui confirme que c’est fait')
@@ -584,11 +584,11 @@ Participants : Benoit (créateur), Phil, Marion, Élie
     expect(page).to have_new_messages_count(2)
     expect(page).to have_total_messages_count(5)
     expect(page).to have_participants_count(3)
-    expect(page).to have_participants_pseudos("Phil, Benoit et Élie (ex Marion)".freeze)
+    expect(page).to have_participants_pseudos("Phil, Benoit et Élie (ex Marion)")
     pitch('Il trouve le bon nombre de messages (nouveaux et total) et le bon affichage des pseudos (malgré le départ de Marion)')
 
     discuss = TDiscussion.get_by_titre('Message pour Phil')
-    gel('marion-a-quitte-discussion-benoit', <<-TEXT.freeze)
+    gel('marion-a-quitte-discussion-benoit', <<-TEXT)
 Dans ce gel, marion a quitté la conversation initiée entre Benoit et Phil, mais en laissant deux messages.
 
 Discussion : ##{discuss.id}
@@ -615,22 +615,22 @@ Nombre de messages : 5
     within('h2.page-title') do
       click_on 'Bureau'
     end
-    pitch('Benoit, en cliquant sur le lien retour, revient sur le bureau'.freeze)
+    pitch('Benoit, en cliquant sur le lien retour, revient sur le bureau')
     expect(page).to have_titre('Votre bureau')
     click_on 'Porte de frigo'
     pitch('Benoit clique sur la discussion “Message pour Phil”…')
     click_on 'Message pour Phil'
-    pitch('… et rejoint la page de la discussion'.freeze)
+    pitch('… et rejoint la page de la discussion')
     expect(page).to have_css('div.titre-discussion', text:'Message pour Phil')
-    pitch('… qui contient le titre de la discussion'.freeze)
+    pitch('… qui contient le titre de la discussion')
     expect(page).to have_titre('Discussion de frigo', {retour:{route:'bureau/frigo', text:'Frigo'}})
-    pitch('… qui contient le titre “Discussion de frigo” avec un lien retour vers la porte de frigo.'.freeze)
-    pitch('Benoit clique sur le lien retour…'.freeze)
+    pitch('… qui contient le titre “Discussion de frigo” avec un lien retour vers la porte de frigo.')
+    pitch('Benoit clique sur le lien retour…')
     within('h2.page-title') do
       click_on 'Frigo'
     end
-    expect(page).to have_titre('Votre porte de frigo'.freeze)
-    pitch('… et revient sur sa porte de frigo.'.freeze)
+    expect(page).to have_titre('Votre porte de frigo')
+    pitch('… et revient sur sa porte de frigo.')
   end
 
 end

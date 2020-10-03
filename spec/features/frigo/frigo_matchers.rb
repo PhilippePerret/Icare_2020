@@ -205,7 +205,7 @@ end
 RSpec::Matchers.define :have_pastille_frigo do |nombre|
 
   match do |icarien|
-    expect(page).to have_selector('div#goto-frigo > a > span.pastille', text: nombre.to_s)
+    expect(page).to have_selector('a#btn-frigo.goto > span.pastille', text: nombre.to_s)
   end
 
   failure_message do |icarien|

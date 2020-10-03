@@ -115,7 +115,7 @@ def degel
     proceed_gel
     return self
   end
-  puts "Dégel de #{name}…"
+  puts "Dégel de #{name}…" if ENV['SPEC_FORMATTER'] == 'Documentation'
   # Vider la base de données
   # Utile ?
   # Charger les données dans la base de données

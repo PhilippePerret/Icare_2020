@@ -13,7 +13,7 @@ DATA_KEY = {
   logout:     {route:'user/logout',  text:'se déconnecter'},
   aide:       {route:'aide/home',    text:'aide',     picto:'objets/gyrophare'},
   bureau:     {route:'bureau/home',  text:'bureau',   picto:'objets/bureau'},
-  frigo:      {route:'bureau/frigo', text:'Porte de frigo',  picto:'objets/thermometre'},
+  frigo:      {route:'bureau/frigo', text:'Porte de frigo%{pastille}',  picto:'objets/thermometre'},
   contact:    {route:'contact/mail', text:'contact', picto:'objets/lettre-mail'},
   plan:       {route:'plan', text:'plan', picto:'objets/boussole'},
   reussites:  {route:'overview/reussites', text:'belles réussites', picto:'objets/paquet-cadeau'},
@@ -65,7 +65,7 @@ end #/ simple
 def with(params)
   ftext = (params[:text]||self.data[:text]).dup
   ftext = ftext.capitalize if params[:titleize]
-  ftext = ftext % {non_vus:params[:pastille]} if params.key?(:pastille)
+  ftext = ftext % {pastille:params[:pastille]} if params.key?(:pastille)
   ftext = emoji+ISPACE+ftext if params[:picto]
   build_tag(text: ftext, class:params[:class])
 end #/ with
