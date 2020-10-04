@@ -30,6 +30,7 @@ feature "Changement du mot de passe" do
     scenario 'peut rejoindre le changement de mot de passe par son profil' do
       pitch("Marion, en s'identifiant, peut rejoindre le changement de mot de passe par son profil.".freeze)
       marion.rejoint_le_site
+      find('section#header').click
       click_on('Bureau')
       click_on('Profil')
       click_on(UI_TEXTS[:btn_lien_change_password])

@@ -554,15 +554,15 @@ Participants : Benoit (créateur), Phil, Marion, Élie
     marion.rejoint_la_discussion('Message pour Phil')
 
     # Vérification pré-test pour voir si les choses sont OK
-    expect(page).to have_new_messages_count(3)
+    expect(page).to have_new_messages_count(2)
     expect(page).to have_total_messages_count(3)
     expect(page).to have_participants_count(4)
-    expect(page).to have_participants_pseudos('Phil, Marion, Benoit et Élie')
+    expect(page).to have_participants_pseudos('Phil, MarionM, Benoit et Élie')
     pitch("Marion trouve un affichage correct du nombre de messages et de participants")
 
     pitch("Marion laisse deux messages…")
-    marion.add_message_to_discussion('Message pour Phil', 'Le premier message de Marion.')
-    marion.add_message_to_discussion('Message pour Phil', 'Le second message de Marion.')
+    marion.add_message_to_discussion('Message pour Phil', 'Le premier message de MarionM.')
+    marion.add_message_to_discussion('Message pour Phil', 'Le second message de MarionM.')
     expect(page).to have_css('span.total-messages-count', text:'5'),
       "Le nombre total de messages (affiché) devrait être de 5"
     pitch("… et peut voir que le nombre de messages a changé.")
@@ -584,7 +584,7 @@ Participants : Benoit (créateur), Phil, Marion, Élie
     expect(page).to have_new_messages_count(2)
     expect(page).to have_total_messages_count(5)
     expect(page).to have_participants_count(3)
-    expect(page).to have_participants_pseudos("Phil, Benoit et Élie (ex Marion)")
+    expect(page).to have_participants_pseudos("Phil, Benoit et Élie (ex MarionM)")
     pitch('Il trouve le bon nombre de messages (nouveaux et total) et le bon affichage des pseudos (malgré le départ de Marion)')
 
     discuss = TDiscussion.get_by_titre('Message pour Phil')
@@ -606,7 +606,7 @@ Nombre de messages : 5
 
     pitch("Benoit rejoint son bureau et…")
     benoit.rejoint_son_bureau
-    expect(page).to have_css('div.goto#goto-frigo', text: 'Porte de frigo')
+    expect(page).to have_css('a.goto#btn-frigo', text: 'Porte de frigo')
     pitch('… trouve le div-goto “Porte de frigo”')
     pitch('Il clique sur ce div-goto…')
     click_on 'Porte de frigo'

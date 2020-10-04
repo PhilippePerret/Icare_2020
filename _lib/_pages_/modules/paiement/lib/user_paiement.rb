@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_relative 'AIPaiement'
 require_relative 'constants'
 class User
@@ -11,7 +12,7 @@ class User
   def paiement_overcomen?
     return false unless has_paiement?
     dpaiement = db_get('watchers', {wtype:'paiement_module', user_id: self.id})
-    Time.now.to_i > dpaiement[:triggered_at]
+    Time.now.to_i > dpaiement[:triggered_at].to_i
   end #/ paiement_overcomen?
 
   # On ajoute un paiement pour le module +icmodule_id+ qu'on peut passer
@@ -44,8 +45,15 @@ class User
     message(MESSAGES[:annonce_new_notif_virement])
   end #/ simple_watcher_pour_virement
 
+  # Détruit le watcher de paiement de module et retourne ses données.
+  # [1] Lorsque l'icarien a chargé l'IBAN, son watcher de paiement a été
+  #     remplacé par un watcher de confirmation de paiement. Cette méthode en
+  #     tient compte et 1) détruit le bon watcher et 2) renvoie ses données
   def remove_watcher_paiement
     dwatcher = db_get('watchers', {user_id: id, wtype:'paiement_module'})
+    if dwatcher.nil? # [1]
+      dwatcher = db_get('watchers', {user_id: id, wtype:'confirm_virement'})
+    end
     db_delete('watchers', dwatcher[:id])
     return dwatcher
   end #/ remove_watcher_paiement

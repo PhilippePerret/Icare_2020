@@ -50,6 +50,7 @@ def param(key, value = nil)
   end
 end
 
+# Retourne tous les paramètres contenus dans l'URL
 def params
   @params ||= begin
     # debug "Tous les paramètres: #{cgi.params.inspect}"

@@ -28,7 +28,7 @@ NOMBRE_JOURS_PER_PAGE = 1.55
 
 MOTS_PER_PAGE = 450
 
-JOUR = 3600 * 24
+JOUR = 3600 * 24 unless defined?(JOUR)
 
 RATIO_MOTS_PER_DOCTYPE = {
   '.odt'  => 0.097,

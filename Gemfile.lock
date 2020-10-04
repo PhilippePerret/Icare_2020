@@ -22,6 +22,9 @@ GEM
       mini_portile2 (~> 2.4.0)
     pastel (0.8.0)
       tty-color (~> 0.5)
+    paypal-checkout-sdk (1.0.3)
+      paypalhttp (~> 1.0.0)
+    paypalhttp (1.0.0)
     public_suffix (4.0.6)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -66,6 +69,7 @@ DEPENDENCIES
   capybara
   kramdown
   mysql2
+  paypal-checkout-sdk
   rspec
   rubyzip
   selenium-webdriver

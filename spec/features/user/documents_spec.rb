@@ -3,23 +3,37 @@
   Tests sur la section Documents de l'icarien
 =end
 feature "Section document" do
-  scenario "Un non icarien en peut pas rejoindre la section document" do
-    goto("bureau/documents")
-    expect(page).not_to have_titre('Vos documents')
+  before(:all) do
+    require './_lib/_pages_/bureau/documents/constants'
+  end
+  context 'un visiteur quelconque' do
+    scenario "ne peut pas rejoindre la section document" do
+      goto("bureau/documents")
+      expect(page).not_to have_titre(UI_TEXTS[:titre_section_documents])
+    end
   end
 
-  scenario 'Un icarien peut rejoindre sa section document', only:true do
-    degel('marion_envoie_deux_autres_documents_cycle_complet')
-    marion.rejoint_son_bureau
-    click_on('Documents')
-    expect(page).to have_titre('Vos documents')
-    expect(page).to have_titre('Vos documents', {retour:{route:'bureau/home', text:'Bureau'}})
-    expect(page).to have_css('div.documents')
-    expect(marion.documents.count).to be(4)
-    expect(page).to have_css('span.nombre-documents', text: '4')
-    marion.documents.each do |tdocument|
-      expect(page).to have_css("div.document#document-#{tdocument.id}")
+  context 'un icarien identifié' do
+    before(:all) do
+      degel('marion_envoie_deux_autres_documents_cycle_complet')
+    end
+    scenario 'Un icarien peut rejoindre sa section document depuis son bureau' do
+      marion.rejoint_son_bureau
+      click_on('Documents')
+      expect(page).to have_titre(UI_TEXTS[:titre_section_documents])
     end
 
+    scenario 'trouve une section document conforme' do
+      marion.rejoint_son_bureau
+      click_on('Documents')
+      expect(page).to have_titre(UI_TEXTS[:titre_section_documents])
+      expect(page).to have_titre(UI_TEXTS[:titre_section_documents], {retour:{route:'bureau/home', text:'Bureau'}})
+      expect(page).to have_css('div.documents')
+      expect(marion.documents.count).to be(4)
+      expect(page).to have_css('span.nombre-documents', text: '4')
+      marion.documents.each do |tdocument|
+        expect(page).to have_css("div.document#document-#{tdocument.id}")
+      end
+    end
   end
 end

@@ -22,6 +22,7 @@ feature "Envoi des documents de travail" do
       degel('inscription_benoit')
       pitch("Benoit, tout juste inscrit, ne peut pas trouver un bouton pour remettre le travail sur son travail courant.")
       benoit.rejoint_le_site
+      find('section#header').click
       click_on('Bureau')
       click_on('Travail courant')
       screenshot('candidat-dans-travail-courant')

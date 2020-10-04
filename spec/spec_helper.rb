@@ -108,7 +108,14 @@ RSpec.configure do |config|
   end
 
   def pitch msg
-    return unless ENV['SPEC_FORMATTER'] == 'Documentation'
+    unless ENV['SPEC_FORMATTER'] == 'Documentation'
+      # Si on ne doit pas visualiser les messages (-fd/--format documentation)
+      # on s'en retourne. Mais on attend quand même un tout petit car souvent
+      # ça laisse le temps de finir d'écrire un fichier, d'enregistrer une
+      # donnée dans la base de données, etc.
+      sleep 0.3
+      return
+    end
     puts msg.gsub(/^[\t ]+/,'').bleu
   end #/ pitch
 

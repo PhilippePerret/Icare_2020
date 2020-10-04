@@ -1,8 +1,9 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_module('icmodules')
 class HTML
   def titre
-    "#{RETOUR_BUREAU}#{EMO_DOCUMENTS.page_title}#{ISPACE}Vos documents".freeze
+    "#{RETOUR_BUREAU}#{EMO_DOCUMENTS.page_title}#{ISPACE}#{UI_TEXTS[:titre_section_documents]}"
   end
   def exec
     # Code à exécuter avant la construction de la page

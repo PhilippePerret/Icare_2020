@@ -10,6 +10,8 @@ feature "Paiement d'un module d'apprentissage avec les différents modes de paie
     require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
     require './_lib/_watchers_processus_/_constants_'
   end
+
+
   scenario 'juste pour produire le gel marion_avec_paiement', gel:true do
     # On modifie la date de paiement pour que la notification apparaisse.
     # Pour ce faire, on doit récupérer le watcher de paiement de Marion
@@ -40,6 +42,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
 
   scenario "un icarien peut payer par virement bancaire" do
+
     degel('marion_avec_paiement')
     pitch("Marion va rejoindre son bureau pour payer son module d'apprentissage.")
 
@@ -47,7 +50,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
     marion.rejoint_ses_notifications
     # sleep 20
-    params = {unread:false, major:true, user_id:marion.id, wtype:'paiement_module'}
+    params = {major:true, user_id:marion.id, wtype:'paiement_module'}
     expect(page).to have_notification(params),
       "La page des notifications devrait contenir la notification pour le paiement."
     expect(page).to have_link('procéder au paiement')
@@ -65,11 +68,11 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
     pitch("Marion clique sur “#{UI_TEXTS[:button_download_iban]}” pour payer par virement bancaire.")
     click_on(UI_TEXTS[:button_download_iban])
     screenshot('marion-download-iban')
-
+    sleep 1.5
     # Le premier watcher doit être détruit
     expect(marion).not_to have_watcher(wtype: 'paiement_module'),
       "Marion ne devrait plus avoir de watcher de paiement."
-    expect(marion).to have_watcher(wtype:'annonce_virement', after:start_time),
+    expect(marion).to have_watcher(wtype:'annonce_virement', after: start_time),
       "Marion devrait avoir le watcher d'annonce de virement"
     pitch("Le watcher de paiement de Marion a été remplacé par un watcher pour informer du virement.")
 
@@ -132,7 +135,8 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       "Un nouvel enregistrement de paiement, pour le module, devrait avoir été enregistré."
     pitch("Le module a bien été marqué payé (un nouveau paiement a été effectué pour lui)")
     # Marion a reçu un mail de confirmation
-    expect(marion).to have_mail(after: start_time, subject:MESSAGES[:votre_facture])
+    expect(marion).to have_mail(after: start_time, subject:MESSAGES[:votre_facture]),
+      "MarionM devrait avoir reçu un mail avec sa facture"
     pitch("Marion a reçu un mail avec sa facture")
     # Marion devient une vrai icarienne
     expect(marion).to be_real
@@ -158,64 +162,106 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
 
   context 'Un icarien avec un module de suivi de projet' do
-    before(:all) do
+
+    scenario 'juste pour produire le gel avec un paiement', gel: true do
       degel('elie_demarre_son_module')
-    end
-
-    scenario 'peut payer son module et avoir une nouvelle date d’échéance de paiement', only:true do
-      pitch("Élie, qui suit le module de suivi de projet intensif vient payer son module, ce qui lui affecte une nouvelle date d'échéance de paiement.")
-
-      start_time = Time.now.to_i
-
-      # *** opérations préliminaires ***
-      # Il faut régler le watcher de telle sorte que la notification de paiement
-      # sera visible par Élie.
       expect(elie).to have_watcher(wtype:'paiement_module'),
         "Élie devrait avoir un watcher de paiement pour son module."
       watcher_id_init = $watcher_id
       dwatcher_paiement = db_get('watchers', watcher_id_init)
       db_compose_update('watchers', watcher_id_init, {triggered_at: Time.now.to_i - 1})
+      gel('elie-avec-paiement', <<-TXT)
+      Dans ce gel, élie doit payer son module d'apprentissage (suivi de projet).
+      TXT
+    end
+
+    scenario 'ne peut pas simuler le paiement en appelant op=ok', only:true do
+      pitch("Élie, qui suit le module de suivi de projet intensif vient payer son module, ce qui lui affecte une nouvelle date d'échéance de paiement.")
+
+      degel('elie-avec-paiement')
+
+      start_time = Time.now.to_i
+
+      # *** opérations préliminaires ***
+
+      # Il faut régler le watcher de telle sorte que la notification de paiement
+      # sera visible par Élie.
+      expect(elie).to have_watcher(wtype:'paiement_module'),
+        "Élie devrait avoir un watcher de paiement pour son module."
 
       elie.rejoint_ses_notifications
-      params = {unread:true, user_id:elie.id, wtype:'paiement_module'}
+      params = {major:true, user_id:elie.id, wtype:'paiement_module'}
       expect(page).to have_notification(params),
         "La page des notifications devrait contenir la notification pour le paiement."
       expect(page).to have_link('procéder au paiement')
 
       pitch("Élie clique sur “procéder au paiement” pour rejoindre la section des paiements et clique sur le bouton Paypal.")
-      click_on('procéder au paiement')
-      screenshot('elie-procede-paiement')
-      expect(page).to have_titre('Paiement')
+      elie.click_on('procéder au paiement')
+      sleep 90
 
-      # Pour simuler le clic sur le bouton de paiement
-      paypal_window =
-        window_opened_by do
-          within_frame(find(".paypal-buttons iframe")) do
-            first(".paypal-button").click
-          end
-        end
+      goto('modules/paiement?op=ok')
+      screenshot("direct-on-paiement")
 
-      # Pour les données secrètes de Benoit (qui paie)
-      require './_lib/data/secret/benoit' # => BENOIT
-      within_window(paypal_window) do
-        # similar, just couple of extra steps and calling reusable method for details
-        Capybara.using_wait_time(5) do
-          # accept cookies
-          click_button("Accepter les cookies") if page.has_button?("Accepter les cookies")
+      expect(db_get('paiements', {user_id: elie.id, icmodule_id:elie.icmodule_id})).to eq(nil),
+        "Elie ne devrait pas avoir de premier paiement pour le module"
 
-          # switch to login form (if needed)
-          click_on("Log In") if page.has_content?("PayPal Guest Checkout")
+    end
 
-          fill_in "login_email", with: BENOIT[:mail] # c'est Benoit qui paie
-          click_on "Suivant"
-          fill_in "login_password", with: BENOIT[:password] # cf. ci-dessus
-          find("#btnLogin").click
-          click_on("Payer")
-        end
-      end # / fin de travail dans la fenêtre de paypal
-      sleep 2
-      screenshot("after-paiement-elie")
-      sleep 4
+    scenario 'peut payer son module et avoir une nouvelle date d’échéance de paiement' do
+
+      degel('elie-avec-paiement')
+
+      pitch("Élie, qui suit le module de suivi de projet intensif vient payer son module, ce qui lui affecte une nouvelle date d'échéance de paiement.")
+
+      start_time = Time.now.to_i
+
+      # *** opérations préliminaires ***
+
+      elie.rejoint_ses_notifications
+      params = {major:true, user_id:elie.id, wtype:'paiement_module'}
+      expect(page).to have_notification(params),
+        "La page des notifications devrait contenir la notification pour le paiement."
+      expect(page).to have_link('procéder au paiement')
+
+      pitch("Élie clique sur “procéder au paiement” pour rejoindre la section des paiements et clique sur le bouton Paypal.")
+
+      goto('modules/paiement?op=ok')
+      screenshot("direct-on-paiement")
+
+      # # Par le vrai formulaire
+      # click_on('procéder au paiement')
+      # screenshot('elie-procede-paiement')
+      # expect(page).to have_titre('Paiement')
+      #
+      # # Pour simuler le clic sur le bouton de paiement
+      # paypal_window =
+      #   window_opened_by do
+      #     within_frame(find(".paypal-buttons iframe")) do
+      #       first(".paypal-button").click
+      #     end
+      #   end
+      #
+      # # Pour les données secrètes de Benoit (qui paie)
+      # require './_lib/data/secret/benoit' # => BENOIT
+      # within_window(paypal_window) do
+      #   # similar, just couple of extra steps and calling reusable method for details
+      #   Capybara.using_wait_time(5) do
+      #     # accept cookies
+      #     click_button("Accepter les cookies") if page.has_button?("Accepter les cookies")
+      #
+      #     # switch to login form (if needed)
+      #     click_on("Log In") if page.has_content?("PayPal Guest Checkout")
+      #
+      #     fill_in "login_email", with: BENOIT[:mail] # c'est Benoit qui paie
+      #     click_on "Suivant"
+      #     fill_in "login_password", with: BENOIT[:password] # cf. ci-dessus
+      #     find("#btnLogin").click
+      #     click_on("Payer")
+      #   end
+      # end # / fin de travail dans la fenêtre de paypal
+      # sleep 2
+      # screenshot("after-paiement-elie")
+      # sleep 4
 
       expect(db_get('paiements', {user_id: elie.id, icmodule_id:elie.icmodule_id})).not_to eq(nil),
         "Il devrait y avoir un premier paiement pour le module"
@@ -246,6 +292,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       pitch("Marion, qui a déjà téléchargé mon IBAN, et m'a mis en bénéficiaire, veut simplement m'informer de son virement. Elle peut rejoindre son bureau pour le faire.")
 
       degel('marion_envoie_deux_autres_documents_cycle_complet')
+
       expect(marion).to have_watcher(wtype: 'paiement_module'),
         "Marion devrait avoir un watcher de paiement."
       watcher_id = $watcher_id

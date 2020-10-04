@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class AIPaiement
   -----------------
@@ -20,7 +21,6 @@ class << self
   def table
     @table = 'paiements'
   end #/ table
-
 end # /<< self
 
 # ---------------------------------------------------------------------
@@ -59,12 +59,17 @@ def traite
   # il y aura une confusion ici, le premier watcher de paiement sera détruit.
   # Il faudrait appeler la méthode remove_watcher_paiement avec l'identifiant
   # du module concerné.
+  # Noter également que si l'icarien a chargé l'IBAN, le watcher paiement_module
+  # a été remplacé par un watcher 'confirm_virement'. La méthode
+  # remove_watcher_paiement tient compte de cette éventualité et se charger de
+  # détruire la bon watcher (le premier ou le second) et de renvoyer la donnée
+  # ici.
   dwatcher = owner.remove_watcher_paiement
 
   # Si c'est un suivi de projet, faire le prochain watcher
   if icmodule.suivi?
-    next_paiement =  dwatcher[:triggered_at] + 31.days
-    owner.watchers.add('paiement_module', {objet_id: icmodule.id, triggered_at: next_paiement, vu_user:false})
+    next_paiement =  dwatcher[:triggered_at].to_i + 31.days
+    owner.watchers.add('paiement_module', {objet_id:icmodule.id, triggered_at:next_paiement.to_s, vu_user:false})
     @date_next_paiement = formate_date(next_paiement)
   end
 

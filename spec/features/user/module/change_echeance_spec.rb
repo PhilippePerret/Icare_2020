@@ -106,7 +106,7 @@ feature "Changement de l'échéance de travail" do
       expect(page).to have_message(MESSAGES[:echeance_changed] % formate_date(new_eche, duree:true))
       pitch("La nouvelle échéance est prise en compte.")
       marion.reset
-      expect(marion.icetape.expected_end).to eq(new_eche.to_i)
+      expect(marion.icetape.expected_end).to eq(new_eche.to_i.to_s)
     end
   end
 end

@@ -112,15 +112,12 @@ feature 'Validation du mail' do
 
       marion.rejoint_le_site
       expect(page).to have_link("section de vos notifications")
-
       start_time = Time.now.to_i
 
       marion.click("section de vos notifications")
       expect(page).to have_link("Renvoyer le mail")
       marion.click_link("Renvoyer le mail")
       expect(page).to have_titre('Notifications')
-      sleep 2
-      # sleep 30
       # *** Vérifications ***
       expect(page).to have_message(MESSAGES[:mail_confirmation_mail_resent] % marion.pseudo)
       expect(marion).to have_mail(subject: 'Validation du mail', after: start_time)

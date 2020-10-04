@@ -43,6 +43,7 @@ class ContainerClass
     # Création d'une nouvelle donnée avec les données fournies
     # Retourne l'instance créée.
     def create_with_data(data)
+      log("-> ContainerClass::create_with_data(#{data.inspect})")
       now = Time.now.to_i
       data.merge!({created_at:now.to_s, updated_at:now.to_s})
       new_id = db_compose_insert(table, data)

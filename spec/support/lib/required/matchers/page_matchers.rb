@@ -116,8 +116,12 @@ RSpec::Matchers.define :have_notification do |params|
       end
       # À partir d'ici, candidats est une liste d'identifiants
       trouved = candidats.select do |wid|
-        selector = "div.watcher#watcher-#{wid}"
-        selector << ".unread" if params[:unread]
+        watchertype = case
+        when params[:unread] then '.unread'
+        when params[:major]  then '.major'
+        else ''
+        end
+        selector = "div.watcher#watcher-#{wid}#{watchertype}"
         page.has_css?(selector)
       end
 

@@ -1,5 +1,9 @@
 # encoding: UTF-8
 
+UI_TEXTS.merge!({
+  titre_section_documents: "Vos documents"
+})
+
 ERRORS.merge!({
   auteur_document_required: "L'auteur du document est absolument requis pour effectuer cette opération.".freeze,
   cant_find_qdd_document:'Désolé, mais je ne trouve pas ce document sur le Quai des docs… Il n’est peut-être pas encore déposé.'.freeze,

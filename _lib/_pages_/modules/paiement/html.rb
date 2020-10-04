@@ -1,11 +1,13 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_modules(['user/modules','watchers'])
 SANDBOX = TESTS || OFFLINE
 
 class HTML
   def titre
-    "#{Emoji.get('objets/cb').page_title+ISPACE}Paiement".freeze
+    "#{Emoji.get('objets/cb').page_title+ISPACE}Paiement"
   end
+
   # Code à exécuter avant la construction de la page
   def exec
     icarien_required
@@ -21,21 +23,38 @@ class HTML
     elsif param(:op) == 'per_virement'
       user.simple_watcher_pour_virement
       redirect_to 'bureau/notifications'
-    elsif param(:op) == 'ok'
+    elsif param(:op) == 'onApprove'
+      log("-> paiment effectué du paiement")
+      # TODO Il faut en fait aller directement sur une autre page, pour ne
+      # pas avoir de clic à nouveau sur le bouton (ou alors essayer de faire
+      # disparaitre le bouton dans la page ?)
       # Le paiement a été effectué avec succès, on peut enregistrer
       # ce paiement pour l'user
-      user.add_paiement
+      paiement_id = param(:paiement_id)
+      log("---- paiement_id: #{paiement_id}")
+
+      MyPayPal.sandbox = true
+      MyPayPal.get_access_token
+
+      res = MyPayPal.exec_request({
+        route: "v2/checkout/orders/#{paiement_id}"
+      })
+      log("---- Retour paiement: #{res.inspect}")
+      # Pour que le paiement soit OK, il faut que :
+      # res["status"] == "COMPLETED"
+      if res.key?('status') && res['status'] == 'COMPLETED'
+        user.add_paiement
+        @body_name = 'on_ok'
+      else
+        @body_name = 'on_error'
+      end
     elsif param(:op) == 'cancel'
-      message("ANNULATION du paiement")
+      @body_name = 'on_cancel'
     end
   end
   # Fabrication du body
   def build_body
-    @body = if param(:op) == 'ok'
-              deserb('vues/body_ok', self)
-            else
-              deserb('vues/body', self)
-            end
+    @body = deserb("vues/#{@body_name||'body_form'}", self)
   end
 
   def vue_paiement
