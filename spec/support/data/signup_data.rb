@@ -61,7 +61,7 @@ DATA_SPEC_SIGNUP_VALID = [
     rgpd:           {value:true, type:'checkbox'},
     module_3:       {value:true, type:'checkbox'}
   },
-  # Candidate valide pour Benoi (index 1 - et rester index 1 pour les gels)
+  # Candidate valide pour Benoi (index 2 - et rester index 1 pour les gels)
   {
     pseudo:         {value:'Benoit'},
     patronyme:      {value:'Benoit Ackerman'},
@@ -80,7 +80,7 @@ DATA_SPEC_SIGNUP_VALID = [
     module_2:       {value:true, type:'checkbox'},
     module_4:       {value:true, type:'checkbox'}
   },
-  # Candidat valide pour Élie (index 1 - et rester index 1 pour les gels)
+  # Candidat valide pour Élie (index 3 - et rester index 1 pour les gels)
   {
     pseudo:         {value:'Élie'},
     patronyme:      {value:'Élie Perret'},
@@ -97,7 +97,8 @@ DATA_SPEC_SIGNUP_VALID = [
     cgu:            {value:true, type:'checkbox'},
     rgpd:           {value:true, type:'checkbox'},
     module_6:       {value:true, type:'checkbox'},
-    module_7:       {value:true, type:'checkbox'}
+    module_7:       {value:true, type:'checkbox'},
+    modules_ids:    {value: [6, 7], editable: false}
   },
   # Candidat valide pour détruit (4)
   # Pour avoir un icarien détruit et voir si ça fonctionne bien

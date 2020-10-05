@@ -73,7 +73,7 @@ feature "Test du démarrage de module" do
 
       # --- Vérifications ---
       pitch('Malgré la tentative de Marion pour forcer les choses…')
-      expect(page).to have_error(ERRORS[:owner_or_admin_required] % 'Marion')
+      expect(page).to have_error(ERRORS[:owner_or_admin_required] % 'MarionM')
       pitch('… Marion trouve un message d’erreur')
       expect(benoit).to have_watcher(wtype:'start_module'),
         "Benoit devrait avoir toujours son watcher de démarrage de module."

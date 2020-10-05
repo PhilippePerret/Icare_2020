@@ -2776,15 +2776,36 @@ La boite à outils est directement en relation avec les [opérations administrat
 
 ---
 
-## Test du site distant
 
-Utiliser la commande suivante pour faire un site des principales pages du site distant :
+## Test de l'application
+
+
+
+### Introduction
+
+De façon générale, l’application est testée à l’aide de `RSpec` (`bundle exec rspec`).
+
+
+
+### Test minimal online
+
+Le « test minimal online » est un test des pages principales du site lancé par la commande CLI suivante :
+
+~~~bash
+> icare test
+~~~
+
+Elle doit être lancée dès qu'une modification du code est faite pour s'assurer que cette modification n'a pas « cassé » le site.
+
+Pour le détail des options, jouer `> icare -h` en console.
+
+La ligne possible complète est  :
 
 ~~~bash
 > icare test[ options][ route]
 ~~~
 
-`route` doit être une route définie dans le fichier de données [commands/test/data_urls.yaml](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/CLI/lib/commands/test/data_urls.yaml).
+`route` est à utiliser pour tester une route particulière, mais cette route doit être définie dans le fichier de données [commands/test/data_urls.yaml](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/CLI/lib/commands/test/data_urls.yaml).
 
 Ce fichier de données définit aussi précisément comment créer de nouvelles routes à checker.
 
@@ -2796,18 +2817,6 @@ Ce fichier de données définit aussi précisément comment créer de nouvelles 
 | -\-infos  | -i     | Pour voir le check « en direct » dans un navigateur (Firefox, normalement) |
 |           |        |                                                              |
 
-
-
-
----
-
-## Test de l'application
-
-
-
-### Introduction
-
-L’application est testée à l’aide de `RSpec`.
 
 
 

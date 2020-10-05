@@ -197,7 +197,6 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
       pitch("Élie clique sur “procéder au paiement” pour rejoindre la section des paiements et clique sur le bouton Paypal.")
       elie.click_on('procéder au paiement')
-      sleep 90
 
       goto('modules/paiement?op=ok')
       screenshot("direct-on-paiement")
@@ -308,7 +307,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       start_time = Time.now.to_i
 
       marion.rejoint_ses_notifications
-      params = {unread:true, user_id:marion.id, wtype:'paiement_module'}
+      params = {major:true, user_id:marion.id, wtype:'paiement_module'}
       expect(page).to have_notification(params),
         "La page des notifications devrait contenir la notification pour le paiement."
       expect(page).to have_link('procéder au paiement')

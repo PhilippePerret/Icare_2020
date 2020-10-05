@@ -1,8 +1,9 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_module('form')
 class HTML
   def titre
-    "#{Emoji.get('objets/card').page_title+ISPACE}Candidater".freeze
+    "#{Emoji.get('objets/card').page_title+ISPACE}Candidater"
   end
   # Code à exécuter avant la construction de la page
   def exec

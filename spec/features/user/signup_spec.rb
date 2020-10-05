@@ -19,30 +19,25 @@ def expect_a_valid_candidat_with(datainit)
   # enregistré dans session_id du candidat)
   folder_signup = "./tmp/signups/#{candidat[:session_id]}"
   expect(File.exists?(folder_signup)).to be(true), 'Le dossier candidature devrait avoir été créé'
-  # Un fichier d'information doit avoir été créé dans le dossier
-  file_infos = File.join(folder_signup,'infos.yaml')
-  expect(File.exists?(file_infos)).to be(true), 'Le fichier infos devrait exister'
-  # Le fichier d'information doit contenir les informations utiles
-  infos = YAML.load_file(file_infos)
-  puts "infos: #{infos.inspect}"
-  expect(infos).to have_key :modules_ids
-  expect(infos).to have_key :user_id
-  expect(infos[:user_id]).to eq(candidat[:id])
-  infos[:modules_ids].each do |mod_id|
-    key = "module_#{mod_id}".to_sym
-    expect(data).to have_key(key)
-    expect(data[key]).to be(true), "le module #{mod_id} devrait être choisi"
-  end
-  expect(infos).to have_key(:mail)
-  expect(infos[:mail]).to eq(data[:mail])
 
-  user_id = infos[:user_id]
-  user_mail = infos[:mail]
+  user_id   = candidat[:id]
+  user_mail = candidat[:mail]
 
-  # Un watcher doit lui rappeler de valider son mail
+  # Un watcher doit permettre de valider (ou non) l'inscription. Ce watcher
+  # doit contenir les bonnes informations et notamment le dossier physique
+  # contenant les documents de présentation (dont le nom est le numéro de session
+  # de l'user) et les identifiants des modules choisis.
   expect(TWatchers.exists?(user_id:user_id, wtype:'validation_inscription')).to be(true),
     "Un watcher devrait permettre de valider l'inscription"
+  twatcher = TWatchers.founds.first
+  # puts "--- twatcher.params: #{twatcher.params.inspect}"
+  wparams = JSON.parse(twatcher.params)
+  expect(wparams).to have_key("folder")
+  expect(wparams["folder"]).to eq(candidat[:session_id])
+  expect(wparams).to have_key("modules")
+  expect(wparams["modules"]).to eq(datainit[:modules_ids][:value])
 
+  # Un watcher doit lui rappeler de valider son mail
   expect(TWatchers.exists?(user_id:user_id, wtype:'validation_adresse_mail')).to be(true),
     "Un watcher devrait permettre de valider l'adresse mail"
 
@@ -67,6 +62,7 @@ end #/ expect_a_valid_candidat_with
 feature 'Inscription à l’atelier Icare' do
   before :all do
     require "#{FOLD_REL_PAGES}/user/signup/constants_messages"
+    degel('inscription_marion')
   end
 
   # Test d'inscriptions invalides à cause de mauvaises données
@@ -97,12 +93,15 @@ feature 'Inscription à l’atelier Icare' do
   end
 
 
-  scenario 'des données valides permettent de créer un candidat' do
+  scenario 'des données valides permettent de créer un candidat', only: true do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
 
     def clic_signup_button
+      if not page.has_css?('#btn-signup', visible: true)
+        find('section#header').click
+      end
       find('#btn-signup').click
     end #/ clic_signup_button
 
@@ -111,19 +110,19 @@ feature 'Inscription à l’atelier Icare' do
 
     # On boucle sur toutes les données à tester
     # Pour tester deux nouveaux candidats
-    data = DATA_SPEC_SIGNUP_VALID[0]
+    data = DATA_SPEC_SIGNUP_VALID[3]
     goto_home
     clic_signup_button
     fill_formulaire_with('#signup-form', data)
     submit_formulaire('#signup-form')
     check_messages_errors(data)
-    save_and_open_page
+    screenshot('apres-nouveau-candidat')
 
     expect_a_valid_candidat_with(data)
 
   end #/test d'un bon candidat
 
-  scenario 'des données valides permettent de créer une candidate', only:true do
+  scenario 'des données valides permettent de créer une candidate' do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
@@ -143,7 +142,7 @@ feature 'Inscription à l’atelier Icare' do
     fill_formulaire_with('#signup-form', data)
     submit_formulaire('#signup-form')
     check_messages_errors(data)
-    save_and_open_page
+    screenshot('apres-nouvelle-candidate')
     expect_a_valid_candidat_with(data)
   end #/test d'une bonne candidate
 end

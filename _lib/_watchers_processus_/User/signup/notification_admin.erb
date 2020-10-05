@@ -1,11 +1,6 @@
 <p>
 Candidature de <%= owner.pseudo %> #<%= owner.id %> à l'atelier. Merci de la valider ou la refuser.
 </p>
-<!--
-
-  TODO Mettre ici un formulaire pour charger ses documents de présentation
-
--->
 <%
 
 bouton_load_presentation = Tag.lien(route:"#{route.to_s}?op=download_signup&uid=#{owner.id}&wid=#{self.id}", text:"Documents de présentation", class:'btn main small')

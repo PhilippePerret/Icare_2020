@@ -10,11 +10,13 @@ class User
 
   # = main =
   #
-  # Méthode qui lance la vérification des données du candidat et
-  # enregistre un fichier d'information dans son dossier de candidature
+  # Méthode qui lance la vérification des données du candidat
+  # Note : avant un fichier de données étaient enregistré, avant notamment
+  # les modules choisis, mais maintenant toutes les informations (dossier de
+  # candidature et modules choisis) sont enregistrées en paramètres du watcher
+  # d'inscription, dans une donnée JSON définissant :folder et :modules_ids
   def check_signup_and_record
     chuser = check_signup
-    # save_record(chuser) unless chuser.nil? # en cas d'erreur
   end #/ check_signup_and_record
 
   # Méthode qui vérifie que l'inscription est bonne
@@ -52,19 +54,6 @@ class User
     error "#{e.message}"
     log(e)
   end #/ check_signup
-
-  # Procède à l'enregistrement des informations générales de cette
-  # candidature
-  def save_record(chuser)
-    finfos = File.join(signup_folder,'infos.yaml')
-    infos = {
-      user_id: chuser.id,
-      mail: chuser.mail,
-      modules_ids: chuser.modules_ids,
-      date: Time.now.to_s
-    }
-    File.open(finfos,'wb'){|f| f.write infos.to_yaml}
-  end #/ save_record
 
   # Dossier d'inscription
   def signup_folder

@@ -16,8 +16,6 @@ describe 'CLI Commande check' do
     it 'produit un résultat' do
       res = cli("check users")
       expect(res).to include("Tout est OK")
-      expect(res).to include("Tout va bien")
     end
-
   end
 end

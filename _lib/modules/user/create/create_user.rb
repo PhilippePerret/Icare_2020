@@ -49,10 +49,8 @@ class << self
     require_module('mail')
     # Envoi d'un message pour valider l'adresse mail
     newu.send_mail_validation_mail(watcher_id:id_watcher_mail)
-
     # Envoi d'un message pour confirmer l'inscription
     newu.send_mail_confirmation_inscription
-
 
     # Une actualité pour mentionner l'inscription
     Actualite.add('SIGNUP', newu, "Candidature posée par <strong>#{newu.pseudo}</strong>")

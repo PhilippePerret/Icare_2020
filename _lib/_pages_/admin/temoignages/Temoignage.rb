@@ -32,7 +32,7 @@ def out_to_confirm
   form = Form.new(id:"confirmation-temoignage-#{id}", route:route.to_s, class:'nolimit nomargin')
   form.rows = {
     '<identifiant>' => {type:'hidden', name:'temid', value:id},
-    '<operation>' => {type:'hidden', name:'operation', value:'valider-temoignage'}
+    '<operation>' => {type:'hidden', name:'operation', value:'valider-temoignage'},
     'Contenu' => {type:'textarea', name:'content', value: content, class:'block nolimit', height:300},
     'Plébiscites' => {type:'text', name:'plebiscites', value:plebiscites, class:'short center'}
   }
