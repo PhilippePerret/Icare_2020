@@ -11,8 +11,8 @@ require 'capybara/rspec'
 Capybara.run_server = false
 Capybara.default_driver = :selenium
 # Test sans navigateur
-# Capybara.default_driver = :selenium_headless
-# Capybara.current_driver = :selenium_headless
+Capybara.default_driver = :selenium_headless
+Capybara.current_driver = :selenium_headless
 
 
 Capybara.save_path = './spec/tmp/screenshots'
