@@ -62,7 +62,7 @@ def download
   STDOUT.puts "Content-length: #{zipfile_size}"
   STDOUT.puts ""
   STDOUT.puts File.open( zip_path, 'rb'){ |f| f.read }
-  remove unless options[:keep]
+  remove unless options && options[:keep]
 end #/ download
 
 # Destruction du zip
