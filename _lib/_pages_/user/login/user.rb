@@ -70,6 +70,10 @@ class << self
     @user_password  ||= data[:pwd]
     @user_mail      ||= data[:owner].mail
     @dbuser         ||= data[:owner].data
+    # log("--- Données pour check password ---")
+    # log("cpassword in base: #{@dbuser[:cpassword]}")
+    # log("cpassword calculé: #{User.encrypte_password(@user_password, @user_mail, @dbuser[:salt])}")
+    # log("(@user_password:#{@user_password.inspect}, @user_mail:#{@user_mail.inspect}, @dbuser[:salt]:#{@dbuser[:salt].inspect})")
     User.encrypte_password(@user_password, @user_mail, @dbuser[:salt]) == @dbuser[:cpassword]
   end
 

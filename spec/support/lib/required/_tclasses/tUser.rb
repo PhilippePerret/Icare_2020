@@ -326,5 +326,15 @@ def data_icmodule
   end
 end #/ data_icmodule
 
+# Les documents .documents ou .icdocuments
+# C'est une liste Array.
+def documents
+  @documents ||= begin
+    db_exec("SELECT * FROM icdocuments WHERE user_id = ?", id).collect do |dd|
+      TDocument.instantiate(dd)
+    end
+  end
+end #/ documents
+alias :icdocuments :documents
 
 end #/TUser

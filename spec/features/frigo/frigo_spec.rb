@@ -291,6 +291,7 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
       click_on 'Enregistrer'
       pitch('Marion régle “Aucun contact” avec les autres icariens.')
     end
+    marion.reset
     expect(marion.option(27)).to eq(0),
       "Le bit 27 de marion devrait être réglé à 0"
     logout
@@ -381,7 +382,7 @@ Benoit, qui a créé une discussion avec Phil, vient d'inviter Marion et Élie �
 
 
 
-  scenario 'Benoit ne peut pas détruire sa discussion, mais peut la marquer à détruire' do
+  scenario 'Benoit ne peut pas détruire sa discussion, mais peut la marquer à détruire', gel:true do
     degel('marion-et-elie-invites-discussion-benoit-phil')
 
     start_time = Time.now.to_i
@@ -554,7 +555,7 @@ Participants : Benoit (créateur), Phil, Marion, Élie
     marion.rejoint_la_discussion('Message pour Phil')
 
     # Vérification pré-test pour voir si les choses sont OK
-    expect(page).to have_new_messages_count(2)
+    expect(page).to have_new_messages_count(3)
     expect(page).to have_total_messages_count(3)
     expect(page).to have_participants_count(4)
     expect(page).to have_participants_pseudos('Phil, MarionM, Benoit et Élie')

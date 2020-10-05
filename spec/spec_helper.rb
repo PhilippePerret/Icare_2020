@@ -7,11 +7,14 @@ NO_SCREENSHOT = false
 
 require 'yaml'
 require 'capybara/rspec'
-# Capybara.default_driver = :selenium
-# driver = Selenium::WebDriver.for :chrome
-# Capybara.default_driver = :selenium
+
 Capybara.run_server = false
 Capybara.default_driver = :selenium
+# Test sans navigateur
+# Capybara.default_driver = :selenium_headless
+# Capybara.current_driver = :selenium_headless
+
+
 Capybara.save_path = './spec/tmp/screenshots'
 
 # Les requisitions pour les tests

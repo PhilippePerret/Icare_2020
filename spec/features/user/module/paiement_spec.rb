@@ -206,80 +206,78 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
     end
 
-    scenario 'peut payer son module et avoir une nouvelle date d’échéance de paiement' do
-
-      degel('elie-avec-paiement')
-
-      pitch("Élie, qui suit le module de suivi de projet intensif vient payer son module, ce qui lui affecte une nouvelle date d'échéance de paiement.")
-
-      start_time = Time.now.to_i
-
-      # *** opérations préliminaires ***
-
-      elie.rejoint_ses_notifications
-      params = {major:true, user_id:elie.id, wtype:'paiement_module'}
-      expect(page).to have_notification(params),
-        "La page des notifications devrait contenir la notification pour le paiement."
-      expect(page).to have_link('procéder au paiement')
-
-      pitch("Élie clique sur “procéder au paiement” pour rejoindre la section des paiements et clique sur le bouton Paypal.")
-
-      goto('modules/paiement?op=ok')
-      screenshot("direct-on-paiement")
-
-      # # Par le vrai formulaire
-      # click_on('procéder au paiement')
-      # screenshot('elie-procede-paiement')
-      # expect(page).to have_titre('Paiement')
-      #
-      # # Pour simuler le clic sur le bouton de paiement
-      # paypal_window =
-      #   window_opened_by do
-      #     within_frame(find(".paypal-buttons iframe")) do
-      #       first(".paypal-button").click
-      #     end
-      #   end
-      #
-      # # Pour les données secrètes de Benoit (qui paie)
-      # require './_lib/data/secret/benoit' # => BENOIT
-      # within_window(paypal_window) do
-      #   # similar, just couple of extra steps and calling reusable method for details
-      #   Capybara.using_wait_time(5) do
-      #     # accept cookies
-      #     click_button("Accepter les cookies") if page.has_button?("Accepter les cookies")
-      #
-      #     # switch to login form (if needed)
-      #     click_on("Log In") if page.has_content?("PayPal Guest Checkout")
-      #
-      #     fill_in "login_email", with: BENOIT[:mail] # c'est Benoit qui paie
-      #     click_on "Suivant"
-      #     fill_in "login_password", with: BENOIT[:password] # cf. ci-dessus
-      #     find("#btnLogin").click
-      #     click_on("Payer")
-      #   end
-      # end # / fin de travail dans la fenêtre de paypal
-      # sleep 2
-      # screenshot("after-paiement-elie")
-      # sleep 4
-
-      expect(db_get('paiements', {user_id: elie.id, icmodule_id:elie.icmodule_id})).not_to eq(nil),
-        "Il devrait y avoir un premier paiement pour le module"
-      expect(db_get('watchers', watcher_id_init)).to eq(nil),
-        "Le watcher de paiement d'Élie devrait avoir été supprimé"
-      new_watcher_paiement = db_get('watchers', {wtype:'paiement_module', objet_id: elie.icmodule_id})
-      expect(new_watcher_paiement).not_to eq(nil),
-        "Le nouveau watcher paiement pour le module d'Élie (##{elie.icmodule_id}) devrait avoir été créé"
-      pitch("Le watcher de paiement initial a été supprimé et remplacé par un nouveau")
-      expect(new_watcher_paiement[:triggered_at]).to be > (Time.now.to_i + 29.days)
-      pitch("Le nouveau watcher de paiement possède un bon trigger")
-      expect(elie).to have_mail(after: start_time, subject:MESSAGES[:votre_facture])
-      pitch("Élie a reçu un mail de confirmation avec sa facture")
-      expect(phil).to have_mail(after: start_time, subject:MESSAGES[:nouveau_paiement_icarien], message:"un paiement vient d’être effectué")
-      pitch("J'ai reçu un mail m'annonçant le paiement")
-
-      logout
-
-    end
+    # Test à faire manuellement :
+    # scenario 'peut payer son module et avoir une nouvelle date d’échéance de paiement' do
+    #
+    #   degel('elie-avec-paiement')
+    #
+    #   pitch("Élie, qui suit le module de suivi de projet intensif vient payer son module, ce qui lui affecte une nouvelle date d'échéance de paiement.")
+    #
+    #   start_time = Time.now.to_i
+    #
+    #   # *** opérations préliminaires ***
+    #
+    #   elie.rejoint_ses_notifications
+    #   params = {major:true, user_id:elie.id, wtype:'paiement_module'}
+    #   expect(page).to have_notification(params),
+    #     "La page des notifications devrait contenir la notification pour le paiement."
+    #   expect(page).to have_link('procéder au paiement')
+    #
+    #   pitch("Élie clique sur “procéder au paiement” pour rejoindre la section des paiements et clique sur le bouton Paypal.")
+    #
+    #   # Par le vrai formulaire
+    #   click_on('procéder au paiement')
+    #   screenshot('elie-procede-paiement')
+    #   expect(page).to have_titre('Paiement')
+    #
+    #   # Pour simuler le clic sur le bouton de paiement
+    #   paypal_window =
+    #     window_opened_by do
+    #       within_frame(find(".paypal-buttons iframe")) do
+    #         first(".paypal-button").click
+    #       end
+    #     end
+    #
+    #   # Pour les données secrètes de Benoit (qui paie)
+    #   require './_lib/data/secret/benoit' # => BENOIT
+    #   within_window(paypal_window) do
+    #     # similar, just couple of extra steps and calling reusable method for details
+    #     Capybara.using_wait_time(5) do
+    #       # accept cookies
+    #       click_button("Accepter les cookies") if page.has_button?("Accepter les cookies")
+    #
+    #       # switch to login form (if needed)
+    #       click_on("Log In") if page.has_content?("PayPal Guest Checkout")
+    #
+    #       fill_in "login_email", with: BENOIT[:mail] # c'est Benoit qui paie
+    #       click_on "Suivant"
+    #       fill_in "login_password", with: BENOIT[:password] # cf. ci-dessus
+    #       find("#btnLogin").click
+    #       click_on("Payer")
+    #     end
+    #   end # / fin de travail dans la fenêtre de paypal
+    #   sleep 2
+    #   screenshot("after-paiement-elie")
+    #   sleep 4
+    #
+    #   expect(db_get('paiements', {user_id: elie.id, icmodule_id:elie.icmodule_id})).not_to eq(nil),
+    #     "Il devrait y avoir un premier paiement pour le module"
+    #   expect(db_get('watchers', watcher_id_init)).to eq(nil),
+    #     "Le watcher de paiement d'Élie devrait avoir été supprimé"
+    #   new_watcher_paiement = db_get('watchers', {wtype:'paiement_module', objet_id: elie.icmodule_id})
+    #   expect(new_watcher_paiement).not_to eq(nil),
+    #     "Le nouveau watcher paiement pour le module d'Élie (##{elie.icmodule_id}) devrait avoir été créé"
+    #   pitch("Le watcher de paiement initial a été supprimé et remplacé par un nouveau")
+    #   expect(new_watcher_paiement[:triggered_at]).to be > (Time.now.to_i + 29.days)
+    #   pitch("Le nouveau watcher de paiement possède un bon trigger")
+    #   expect(elie).to have_mail(after: start_time, subject:MESSAGES[:votre_facture])
+    #   pitch("Élie a reçu un mail de confirmation avec sa facture")
+    #   expect(phil).to have_mail(after: start_time, subject:MESSAGES[:nouveau_paiement_icarien], message:"un paiement vient d’être effectué")
+    #   pitch("J'ai reçu un mail m'annonçant le paiement")
+    #
+    #   logout
+    #
+    # end
   end
 
 

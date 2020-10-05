@@ -6,28 +6,30 @@ class HTML
     "#{RETOUR_BUREAU}#{EMO_DOCUMENTS.page_title}#{ISPACE}#{UI_TEXTS[:titre_section_documents]}"
   end
   def exec
-    # Code à exécuter avant la construction de la page
     icarien_required
-    case param(:op)
-    when 'share'
-      icdocument = IcDocument.get(param(:did))
-      require_document_author(icdocument) || user.admin? || raise(ERRORS[:auteur_document_required])
-      fordoc = param(:fd).to_sym
-      shareit = param(:mk) == '1'
-      if icdocument.share(fordoc, shareit)
-        message(MESSAGES[shareit ? :document_set_shared : :document_unset_shared] % icdocument.name)
+    # Code à exécuter avant la construction de la page
+    begin
+      case param(:op)
+      when 'share'
+        icdocument = IcDocument.get(param(:did))
+        require_document_author(icdocument) || user.admin? || raise(ERRORS[:auteur_document_required])
+        fordoc = param(:fd).to_sym
+        shareit = param(:mk) == '1'
+        if icdocument.share(fordoc, shareit)
+          message(MESSAGES[shareit ? :document_set_shared : :document_unset_shared] % icdocument.name)
+        end
+      when 'download'
+        icdocument = IcDocument.get(param(:did))
+        require_document_author(icdocument) || user.admin? || raise(ERRORS[:auteur_document_required])
+        # Original ou commentaire ? mais en fait on charge les deux si
+        # c'est possible
+        fordoc = param(:fd).to_sym # :original ou :comments
+        icdocument.proceed_download
       end
-    when 'download'
-      icdocument = IcDocument.get(param(:did))
-      require_document_author(icdocument) || user.admin? || raise(ERRORS[:auteur_document_required])
-      # Original ou commentaire ? mais en fait on charge les deux si
-      # c'est possible
-      fordoc = param(:fd).to_sym # :original ou :comments
-      icdocument.proceed_download
+    rescue Exception => e
+      log(e)
+      erreur(e.message)
     end
-  rescue Exception => e
-    log(e)
-    erreur(e.message)
   end
   def build_body
     # Construction du body

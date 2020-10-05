@@ -24,6 +24,14 @@ ERRORS = {} unless defined?(ERRORS)
 #
 # ---------------------------------------------------------------------
 
+MODULES_PER_SIGNUP = {
+  'Philippe'  => [2,4,6],
+  'MarionM'   => [3],
+  'Benoit'    => [1,2,4],
+  'Élie'      => [6,7],
+  'Destroyed' => [1]
+}
+
 DATA_SPEC_SIGNUP_VALID = [
 
   # UN premier candidat valide
@@ -97,8 +105,7 @@ DATA_SPEC_SIGNUP_VALID = [
     cgu:            {value:true, type:'checkbox'},
     rgpd:           {value:true, type:'checkbox'},
     module_6:       {value:true, type:'checkbox'},
-    module_7:       {value:true, type:'checkbox'},
-    modules_ids:    {value: [6, 7], editable: false}
+    module_7:       {value:true, type:'checkbox'}
   },
   # Candidat valide pour détruit (4)
   # Pour avoir un icarien détruit et voir si ça fonctionne bien

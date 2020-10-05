@@ -24,7 +24,7 @@ class HTML
       user.simple_watcher_pour_virement
       redirect_to 'bureau/notifications'
     elsif param(:op) == 'onApprove'
-      log("-> paiment effectué du paiement")
+      log("-> paiement effectué")
       # TODO Il faut en fait aller directement sur une autre page, pour ne
       # pas avoir de clic à nouveau sur le bouton (ou alors essayer de faire
       # disparaitre le bouton dans la page ?)
@@ -33,13 +33,12 @@ class HTML
       paiement_id = param(:paiement_id)
       log("---- paiement_id: #{paiement_id}")
 
-      MyPayPal.sandbox = true
       MyPayPal.get_access_token
 
       res = MyPayPal.exec_request({
         route: "v2/checkout/orders/#{paiement_id}"
       })
-      log("---- Retour paiement: #{res.inspect}")
+      # log("---- Retour paiement: #{res.inspect}")
       # Pour que le paiement soit OK, il faut que :
       # res["status"] == "COMPLETED"
       if res.key?('status') && res['status'] == 'COMPLETED'
@@ -52,6 +51,7 @@ class HTML
       @body_name = 'on_cancel'
     end
   end
+
   # Fabrication du body
   def build_body
     @body = deserb("vues/#{@body_name||'body_form'}", self)

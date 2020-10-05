@@ -16,7 +16,7 @@ class << self
   # Exécute la command CURL (complète) +curl_command+ et retourne le
   # résultat déjonsonné
   def exec_and_return(curl_command)
-    log "\n\n--- REQUEST:\n#{curl_command}\n-------------------------/CURL"
+    # log "\n\n--- REQUEST:\n#{curl_command}\n-------------------------/CURL"
     JSON.parse(`#{curl_command} 2>&1`)
   end #/ exec_and_return
 
@@ -40,13 +40,12 @@ curl -s #{base_api}/v1/oauth2/token \\
    -d "grant_type=client_credentials"
     CURL
     result = exec_and_return(command)
-    log "++++ RESULT: #{result.inspect}"
+    # log "++++ RESULT: #{result.inspect}"
     @access_token = result['access_token']
   end #/ get_access_token
 
   def montant_paiement
-    return "0.01" # en attendant que ça fonctionne
-    @montant_paiement ||= sandbox? ? "0.01" : "#{absmodule.tarif}.00"
+    @montant_paiement ||= sandbox? ? "0.01" : "#{user.icmodule.absmodule.tarif}.00"
   end #/ montant_paiement
 
   def source_script

@@ -4,6 +4,7 @@
 =end
 feature "Section document" do
   before(:all) do
+    require './_lib/required/__first/constants/emojis'
     require './_lib/_pages_/bureau/documents/constants'
   end
   context 'un visiteur quelconque' do
@@ -28,11 +29,11 @@ feature "Section document" do
       click_on('Documents')
       expect(page).to have_titre(UI_TEXTS[:titre_section_documents])
       expect(page).to have_titre(UI_TEXTS[:titre_section_documents], {retour:{route:'bureau/home', text:'Bureau'}})
-      expect(page).to have_css('div.documents')
+      expect(page).to have_css('div.icdocuments')
       expect(marion.documents.count).to be(4)
       expect(page).to have_css('span.nombre-documents', text: '4')
       marion.documents.each do |tdocument|
-        expect(page).to have_css("div.document#document-#{tdocument.id}")
+        expect(page).to have_css("div.icdocument#icdocument-#{tdocument.id}")
       end
     end
   end

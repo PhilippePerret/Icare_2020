@@ -111,10 +111,9 @@ feature 'Validation du mail' do
 
 
       marion.rejoint_le_site
-      expect(page).to have_link("section de vos notifications")
+      expect(page).to have_css('a.goto', text:"Notifications")
       start_time = Time.now.to_i
-
-      marion.click("section de vos notifications")
+      find('a.goto', text:"Notifications").click
       expect(page).to have_link("Renvoyer le mail")
       marion.click_link("Renvoyer le mail")
       expect(page).to have_titre('Notifications')

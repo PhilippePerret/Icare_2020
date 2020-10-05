@@ -35,7 +35,7 @@ def expect_a_valid_candidat_with(datainit)
   expect(wparams).to have_key("folder")
   expect(wparams["folder"]).to eq(candidat[:session_id])
   expect(wparams).to have_key("modules")
-  expect(wparams["modules"]).to eq(datainit[:modules_ids][:value])
+  expect(wparams["modules"]).to eq(MODULES_PER_SIGNUP[data[:pseudo]])
 
   # Un watcher doit lui rappeler de valider son mail
   expect(TWatchers.exists?(user_id:user_id, wtype:'validation_adresse_mail')).to be(true),
