@@ -44,7 +44,7 @@ class HTML
 
 #{aGoto(Emoji.get('objets/pile-livres').regular+' Quai des Docs', route:'qdd/home')}
 
-#{aGoto(EMO_OUTILS+ISPACE++' Outils d’écriture', route:'outils/home')}
+#{aGoto(EMO_OUTILS+ISPACE++' Outils écriture', route:'outils/home')}
 
 #{MainLink[:aide].with(picto: true, titleize:true, class:'goto')}
 
@@ -54,7 +54,7 @@ class HTML
 
 #{divGoto(Emoji.get('machine/validator').regular+' Nouveautés', route:'overview/nouveautes')}
 
-#{divGoto(Emoji.get('objets/blason').regular+' Concours '+Emoji.get('objets/chronometre').regular, route:'concours/home', exergue:true)}
+#{divGoto(Emoji.get('objets/blason').regular+' Concours de synopsis'+Emoji.get('objets/chronometre').regular, route:'concours/home', exergue:true)}
 
     HTML
   end

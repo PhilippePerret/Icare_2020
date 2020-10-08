@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 class HTML
   def titre
-    "Le Concours annuel de l’atelier Icare"
+    "#{bouton_retour}Dossier du concours"
   end #/titre
 
   # Code à exécuter avant la construction de la page
@@ -12,8 +12,7 @@ class HTML
 
   # Fabrication du body
   def build_body
-    partial = ONLINE ? 'none' : 'body'
-    @body = deserb(partial, self)
+    @body = kramdown('body', self)
   end # /build_body
 
 end #/HTML

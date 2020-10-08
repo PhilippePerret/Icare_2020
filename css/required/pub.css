@@ -1,0 +1,40 @@
+/*
+  En fait de "pub", il s'agit de la boite qui apparait en bas à gauche
+  de l'écran et qui permet d'annoncer quelque chose comme le concours
+  annuel de synopsis par exemple
+*/
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  .overbox {
+    position:fixed;
+    bottom:0;
+    left:0;
+    width: 200px;
+    z-index:200;
+  }
+
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  .overbox {
+    width: 100%;
+  }
+
+}
+.overbox {
+  display:block;
+  padding:0.6em 1.2em;
+  background-color:green;
+  text-align:center;
+  color:white;
+  font-variant: small-caps;
+  letter-spacing:4px;
+}
+.overbox span {
+  color:white;
+  font-variant: small-caps;
+  letter-spacing:4px;
+}
+.overbox span.spacer {
+  letter-spacing:7.9px;
+}

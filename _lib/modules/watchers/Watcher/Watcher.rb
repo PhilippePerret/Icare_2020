@@ -119,7 +119,15 @@ end #/ vu?
 # lu, comme par exemple le watcher de paiement)
 def major?
   (@is_major ||= begin
-    absdata[:major] === true ? :true : :false
+    if absdata.nil? # NE DEVRAIT JAMAIS ARRIVER
+      begin
+        log("Le watcher de wtype '#{wtype}' n'a pas de données absolues. ÇA NE DEVRAIT JAMAIS ARRIVER !!!")
+      rescue Exception => e
+      end
+      false
+    else
+      absdata[:major] === true ? :true : :false
+    end
   end) == :true
 end #/ major?
 

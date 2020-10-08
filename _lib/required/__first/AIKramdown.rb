@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class AIKramdown
   ----------------
@@ -16,7 +17,7 @@ class << self
     if fpath.match?(/[\n ,']/)
       code = fpath
     else
-      fpath << '.md' unless fpath.end_with?('.md') || fpath.end_with?('.mmd')
+      fpath = "#{fpath}.md" unless fpath.end_with?('.md') || fpath.end_with?('.mmd')
       fpath = File.join(folder, fpath) unless folder.nil?
       code = file_read(fpath)
     end

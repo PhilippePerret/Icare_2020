@@ -88,14 +88,32 @@ div.buttons a.main,
 div.buttons input[type="submit"].main,
 div.buttons input[type="button"].main
 {
-  background-color:steelblue;
   color:white;
+}
+.btn.main:not(.green),
+div.buttons a.main,
+div.buttons input[type="submit"].main,
+div.buttons input[type="button"].main
+{
+  background-color:steelblue;
+}
+.btn.main.green {
+  background-color:#22b822;
 }
 .btn.main:hover,
 div.buttons a.main:hover,
 div.buttons input[type="submit"].main:hover,
 div.buttons input[type="button"].main:hover
 {
-  color:steelblue;
   background-color:white;
+}
+.btn.main:not(.green):hover,
+div.buttons a.main:hover,
+div.buttons input[type="submit"].main:hover,
+div.buttons input[type="button"].main:hover
+{
+  color:steelblue;
+}
+.btn.main.green:hover {
+  color:#22b822;
 }

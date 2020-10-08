@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-01 13:29:28 +0200
+ *    Date dernière modification : 2020-10-08 17:22:03 +0200
  *
  --------------------------------------------------------------------- */
 :root {
@@ -24,6 +24,46 @@
   --contre-color-normal: rgb(59, 186, 184);
 
   --text-max-width: 720px;
+}
+/*
+  En fait de "pub", il s'agit de la boite qui apparait en bas à gauche
+  de l'écran et qui permet d'annoncer quelque chose comme le concours
+  annuel de synopsis par exemple
+*/
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  .overbox {
+    position:fixed;
+    bottom:0;
+    left:0;
+    width: 200px;
+    z-index:200;
+  }
+
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  .overbox {
+    width: 100%;
+  }
+
+}
+.overbox {
+  display:block;
+  padding:0.6em 1.2em;
+  background-color:green;
+  text-align:center;
+  color:white;
+  font-variant: small-caps;
+  letter-spacing:4px;
+}
+.overbox span {
+  color:white;
+  font-variant: small-caps;
+  letter-spacing:4px;
+}
+.overbox span.spacer {
+  letter-spacing:7.9px;
 }
 /*
 
@@ -613,6 +653,10 @@ div.warning, p.warning, span.warning {
 .mb2 {margin-bottom:2em}
 .mb3 {margin-bottom:3em}
 .mb4 {margin-bottom:4em}
+
+.pd1 {padding:1em 1.5em!important}
+.pd15 {padding:1.5em 2em!important}
+.pd2 {padding:2em 2.5em!important}
 
 .pct50 {
   width:49%!important;
@@ -1447,16 +1491,34 @@ div.buttons a.main,
 div.buttons input[type="submit"].main,
 div.buttons input[type="button"].main
 {
-  background-color:steelblue;
   color:white;
+}
+.btn.main:not(.green),
+div.buttons a.main,
+div.buttons input[type="submit"].main,
+div.buttons input[type="button"].main
+{
+  background-color:steelblue;
+}
+.btn.main.green {
+  background-color:#22b822;
 }
 .btn.main:hover,
 div.buttons a.main:hover,
 div.buttons input[type="submit"].main:hover,
 div.buttons input[type="button"].main:hover
 {
-  color:steelblue;
   background-color:white;
+}
+.btn.main:not(.green):hover,
+div.buttons a.main:hover,
+div.buttons input[type="submit"].main:hover,
+div.buttons input[type="button"].main:hover
+{
+  color:steelblue;
+}
+.btn.main.green:hover {
+  color:#22b822;
 }
 section#messages {
   overflow:hidden;

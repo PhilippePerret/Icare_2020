@@ -353,7 +353,7 @@ def reparer_watchers(simuler = false)
   end
   # Si le watcher requis par rapport au statut n'existe pas, on le crée
   if not watchers.key?(datawatchers[:wtype])
-    lines_sql << "INSERT INTO watchers (wtype, user_id, objet_id, created_at, updated_at) VALUES ('datawatchers[:wtype]', #{user_id}, id, '#{created_at}', '#{created_at}')"
+    lines_sql << "INSERT INTO watchers (wtype, user_id, objet_id, created_at, updated_at) VALUES ('#{datawatchers[:wtype]}', #{user_id}, #{id}, '#{created_at}', '#{created_at}')"
   end
 
   # On construit la requête SQL

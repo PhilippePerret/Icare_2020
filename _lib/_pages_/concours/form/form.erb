@@ -1,0 +1,34 @@
+<%# frozen_string_literal: true %>
+<%
+=begin
+  Formulaire d'inscription au concours d'Icare
+  Note : on profite de ce formulaire d'inscription pour poser certaines
+  questions générales et personnelles.
+=end
+%>
+
+<%
+data = <<-YAML
+- :question: Depuis combien de temps pratiquez-vous l'écriture ?
+  :reponses:
+    - Depuis plus de 10 ans
+    - Depuis plus de 5 ans
+    - Depuis plus d'un an
+    - Occassionnellement seulement
+    - Je ne la pratique pas vraiment
+- :question: Connaissiez-vous l'atelier Icare avant ce concours ?
+  :reponses: ['Oui, depuis longtemps', 'Oui, depuis peu', 'Non']
+YAML
+%>
+<%
+require_module('form')
+form = Form.new(id:"concours-form", route:route.to_s, file:true)
+form.rows = {
+  "Votre patronyme" => {name:"u_patronyme", type:"text", placeholder: "Prénom Nom"},
+  "Votre mail"      => {name:"u_mail", type:"text", placeholder:"votre@mail.com"},
+  "Votre dossier"   => {name:"u_dossier", type:"file"},
+  "<lien dossier/>" => {type:"raw", content:"Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}."}
+}
+form.submit_button = "S’inscrire"
+%>
+<%= form.out %>
