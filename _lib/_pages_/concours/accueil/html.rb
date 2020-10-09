@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 class HTML
   def titre
-    "Le Concours annuel de l’atelier Icare"
+    "#{EMO_TITRE}Le Concours annuel de l’atelier Icare"
   end #/titre
 
   # Code à exécuter avant la construction de la page

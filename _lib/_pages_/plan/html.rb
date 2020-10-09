@@ -54,7 +54,7 @@ class HTML
 
 #{divGoto(Emoji.get('machine/validator').regular+' Nouveautés', route:'overview/nouveautes')}
 
-#{divGoto(Emoji.get('objets/blason').regular+' Concours de synopsis'+Emoji.get('objets/chronometre').regular, route:'concours/home', exergue:true)}
+#{divGoto(Emoji.get('objets/blason').regular+' Concours de synopsis'+Emoji.get('objets/chronometre').regular, route:'concours/accueil', exergue:true)}
 
     HTML
   end

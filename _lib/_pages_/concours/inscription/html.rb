@@ -3,7 +3,7 @@
 require_module('form')
 class HTML
   def titre
-    "#{bouton_retour}Inscription au concours"
+    "#{bouton_retour}#{EMO_TITRE}Inscription au concours"
   end #/titre
 
   # Code à exécuter avant la construction de la page

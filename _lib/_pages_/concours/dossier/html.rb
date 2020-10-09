@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 class HTML
   def titre
-    "#{bouton_retour}Dossier du concours"
+    "#{bouton_retour}#{EMO_TITRE}Dossier du concours"
   end #/titre
 
   # Code à exécuter avant la construction de la page

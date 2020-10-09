@@ -27,7 +27,10 @@ form.rows = {
   "Votre patronyme" => {name:"u_patronyme", type:"text", placeholder: "Prénom Nom"},
   "Votre mail"      => {name:"u_mail", type:"text", placeholder:"votre@mail.com"},
   "Votre dossier"   => {name:"u_dossier", type:"file"},
-  "<lien dossier/>" => {type:"raw", content:"Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}."}
+  "<lien dossier/>" => {type:"raw", content:"<div class=explication>Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
+  "<Règlement/>"    => {type:"checkbox", name: "u_reglement", values: "En cochant cette cache, vous acceptez dans leur intégralité tous les termes du réglement du présent concours."},
+  "<lienregle/>"    => {type:"raw", content: "[TODO: lien vers le règlement]"},
+  "Fiche de lecture"=> {type:"checkbox", name: "u_fiche", values: "Oui, je désire recevoir la fiche de lecture du jury concernant mon projet."},
 }
 form.submit_button = "S’inscrire"
 %>
