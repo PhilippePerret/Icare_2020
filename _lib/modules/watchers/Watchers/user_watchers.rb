@@ -102,9 +102,13 @@ end #/ add
 # Détruit tous les watchers de l'user correspondant aux données +data+ (qui
 # seront envoyées à `find`)
 def remove data
-  ids = find(data).collect do |watcher| watcher.id end
-  request = "DELETE FROM `watchers` WHERE id "
-  request << ((ids.count == 1) ? "= #{ids.first}" : "IN (#{ids.join(VG)})")
+  ids = find(data).collect { |watcher| watcher.id }
+  case ids.count
+  when 0 then return # aucun trouvé
+  when 1 then cond_ids = "id = #{ids.first}"
+  else cond_ids = "id IN (#{ids.join(VG)})"
+  end
+  request = "DELETE FROM `watchers` WHERE #{cond_ids}"
   db_exec(request)
 end #/ remove
 

@@ -1,0 +1,102 @@
+div.fiche {
+  position:absolute;
+  min-width:400px;
+  max-width:400px!important;
+  border:2px solid;
+  border-radius:0.5em 0.5em 0 0;
+  background-color:#F5F5F5;
+}
+div.fiche:not(.selected) {
+  border-color: black;
+  z-index:1;
+}
+div.fiche.selected {
+  border-color: blue;
+  z-index:2;
+}
+
+
+/* Pour tout élément lié (mais pas un lien) */
+div.fiche .linked {
+  color: black!important;
+  cursor: pointer;
+}
+div.fiche .linked:active {
+  background-color:green!important;
+  color:white!important;
+}
+
+
+div.fiche div.titre {
+  background-color: black;
+  color:white;
+  padding:0.3rem 1rem;
+}
+/* La X pour fermer la fiche */
+div.fiche div.titre span.close-cross {
+  position:absolute;
+  font-size:8pt;
+  top:4px;
+  right:4px;
+  padding:0 5px;
+  border-radius:8px;
+  background-color:red;
+  cursor:pointer;
+}
+
+/* Pour les données propres */
+div.fiche div.own-data {
+  margin-bottom:1em;
+}
+div.fiche div.own-data > div {
+  display:grid;
+  grid-template-columns: 160px auto;
+  grid-template-rows: 100%;
+}
+div.fiche div.own-data > div span.own-data-label {
+  grid-column:1;
+  color:#555;
+  font-size:14pt;
+  font-style:italic;
+  padding-left:0.5em;
+}
+div.fiche div.own-data > div span.own-data-value {
+  grid-column:2;
+  color:black;
+  padding-right:0.5em;
+}
+
+/* Le div contenant le champ de texte pour la requête pseudo-sql */
+div.fiche div.div-request {
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  padding:0;
+}
+
+div.fiche div.div-request input[type="text"] {
+  width:-webkit-fill-available;
+  font-family:Courier;
+  font-size:12pt;
+  padding:4px;
+  margin:0;
+  outline:none;
+}
+
+div.fiche div.listing {
+  min-height:200px;
+  max-height:600px;
+  overflow:auto;
+}
+div.fiche div.listing > div {
+  padding:0 0.5rem;
+}
+div.fiche div.listing > div:nth-child(odd) {
+  background-color:lightblue;
+  color:black;
+}
+div.fiche div.listing > div:nth-child(even) {
+  background-color:gainsboro;
+  color:black;
+}

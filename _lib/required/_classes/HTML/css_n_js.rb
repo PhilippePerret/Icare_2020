@@ -11,6 +11,7 @@ CSS_JS_PREFIX  = '.'
 
 CSS_TAG = "<link rel=\"stylesheet\" type=\"text/css\" href=\"#{CSS_JS_PREFIX}%{css}#{CSS_JS_VERSION}\" />"
 JAVASCRIPT_TAG = "<script src=\"#{CSS_JS_PREFIX}%{js}#{CSS_JS_VERSION}\" type=\"text/javascript\" charset=\"utf-8\"></script>"
+DEFER_JS_TAG = "<script src=\"#{CSS_JS_PREFIX}%{js}#{CSS_JS_VERSION}\" defer type=\"text/javascript\" charset=\"utf-8\"></script>"
 
 class HTML
   # Retourne les lignes de tag <link> pour les css
@@ -28,7 +29,11 @@ class HTML
   def js_tags
     get_js
     @all_js.collect do |reljs|
-      JAVASCRIPT_TAG % {js: reljs[1..-1]}
+      if reljs.start_with?('defer_')
+        DEFER_JS_TAG
+      else
+        JAVASCRIPT_TAG
+      end % {js: reljs[1..-1]}
     end.join(RC)
   end
 

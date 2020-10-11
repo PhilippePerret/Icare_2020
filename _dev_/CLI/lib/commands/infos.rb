@@ -8,6 +8,7 @@ class << self
     DATA_OBJETS.key?(what.to_sym) || raise("L'objet doit absolument être choisi parmi : #{DATA_OBJETS.keys.join(', ')}.")
     oid = params[2] || raise("Il faut absolument indiquer l'identifiant de l'objet #{what}.")
     oid = oid.to_i
+    what = 'icarien' if what == 'user'
     require_relative "infos/objets/#{what}"
     send("infos_for_#{what}", oid)
   rescue Exception => e

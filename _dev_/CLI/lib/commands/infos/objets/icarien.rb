@@ -58,6 +58,7 @@ end #/ display_infos
 def display_first_class_data
   {
     id:               {name:"ID"},
+    pseudo:           {name:"Pseudo"},
     created_date:     {name:"Inscription"},
     updated_date:     {name:"Actualisation"},
     mail:             {name:"Mail"},

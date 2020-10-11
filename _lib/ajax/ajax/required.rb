@@ -29,7 +29,6 @@ OFFLINE = ENV['HTTP_HOST'] == 'localhost'
 ONLINE  = !OFFLINE
 TEST_ON = File.exists?('../../TESTS_ON')
 DATABASE = ONLINE ? 'icare_db' : 'icare_test'
-  # Noter qu'on travaille toujours avec la table icare_test
 log("DATABASE = #{DATABASE}")
 erreur_required = nil
 Dir.chdir(APP_FOLDER) do

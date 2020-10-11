@@ -5,11 +5,10 @@ class Watcher < ContainerClass
     log('-> send_comments')
     log("param(:form_id): #{param(:form_id).inspect}")
     if param(:form_id) == 'send-comments-form'
-      form = Form.new
       # Si le formulaire est conforme, on procède à l'upload des
       # document et on s'interrompt en cas d'erreur
       # On exécute aussi les extra-opérations de façon automatique
-      if form.conform?
+      if Form.new.conform?
         proceed_sending_comments || raise(WatcherInterruption.new(nil))
       end
     end

@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Helpers pour HTML (donc pour le body.erb)
 =end
@@ -19,7 +20,7 @@ class HTML
     if dataprop[:editable]
       button_edit = BUTTON_EDIT_OBJET % {route:route.to_s, uid: icarien.id, objet: prop[0..-4], pid: icarien.send(prop)}
     end
-    <<-HTML.strip.freeze
+    <<-HTML.strip
 <form id="form-#{prop}" action="#{route.to_s}" class="noform nopadding" accept-charset="UTF-8" method="POST">
   <input type="hidden" name="route" value="#{route.to_s}">
   <input type="hidden" name="op" value="save-prop">

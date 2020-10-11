@@ -1,0 +1,11 @@
+/*
+
+*/
+section#header {display:none!important}
+h2.page-title{display:none!important}
+section#body {
+  position:relative;
+  width:100%;
+  /* width:4000px; */
+  height:2000px;
+}

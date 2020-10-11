@@ -17,7 +17,7 @@ end
 # Méthode qui permet de requérir les fichiers javascript dans le dossier
 # folderpath
 def require_js_in folderpath
-  Dir["#{folderpath}/**/*.js"].each do |jspath|
+  Dir["#{folderpath}/**/*.{mjs,js}"].each do |jspath|
     html.add_js(jspath)
   end
 end

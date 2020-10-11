@@ -20,3 +20,4 @@ MyDB.online = true
 MyDB.DBNAME = 'icare_db'
 
 Dir["#{__dir__}/required/**/*.rb"].each{|m|require(m)}
+Dir["#{__dir__}/objets/**/*.rb"].each{|m|require(m)}
