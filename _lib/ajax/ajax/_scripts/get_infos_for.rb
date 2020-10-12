@@ -19,6 +19,7 @@ WATCHERS_REQUEST          = "SELECT * FROM watchers WHERE objet_id = ? ORDER BY 
 MODULES_REQUEST = <<-SQL
 SELECT
   im.id, am.id AS abs_id, am.name AS module_name,
+  am.module_id AS module_short_name,
   im.started_at, im.ended_at, im.project_name
   FROM icmodules im
   INNER JOIN absmodules am ON am.id = im.absmodule_id
@@ -122,6 +123,8 @@ begin
     data.merge!(documents:db_exec(DOCUMENTS_REQUEST, id))
     # Les watchers
     data.merge!(watchers: get_watchers_of('IcEtape', id))
+  when 'IDocument'
+    data.merge!(watchers: get_watchers_of('IcDocument', id))
   end
   Ajax << {data: data, message:"Données de type #{type}"}
 rescue Exception => e

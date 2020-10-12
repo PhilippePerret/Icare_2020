@@ -15,5 +15,7 @@ begin
   #   message:"Le script essai.rb a été joué avec succès."
   # }
 rescue Exception => e
-  Ajax.error(e)
+  log("# ERREUR : #{e.message}")
+  log("# Backtrace : #{e.backtrace.join("\n")}")
+  Ajax << {error: "ERREUR FATALE : #{e.message} (consulter la console)", backtrace: e.backtrace}
 end

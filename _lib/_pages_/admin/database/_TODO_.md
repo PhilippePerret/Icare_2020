@@ -2,11 +2,11 @@
 
 ## TODO
 
-* Fiche icarien
-  * indiquer le statut (pouvoir le modifier)
-  * lien pour lui écrire (par le formulaire de contact ?)
-  * Outil : si date_sortie est non définie, demander de la calculer par rapport au dernier module
+* Pouvoir ouvrir le pdf d'un document du quai des docs
 * Poursuivre les données propres, avec des liens vers les autres fiches
+* Fiche icarien
+  * Pouvoir modifier le statut
+  * Outil : si date_sortie est non définie, demander de la calculer par rapport au dernier module
 
 ## Présentation
 

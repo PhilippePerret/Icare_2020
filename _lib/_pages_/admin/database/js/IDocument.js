@@ -27,6 +27,81 @@ build_all_own_data(){
   this.build_own_data("Nom fichier/original_name", this.data.original_name)
   this.build_own_data("Créé le/time_original", this.data.time_original, 'date')
   this.build_own_data("Commenté le/time_comments", this.data.time_comments, 'date')
+  this.build_own_data("Doc. original", `<span id="doc-lien-${this.data.id}-original">Recherche du document…</span>`)
+  this.build_own_data("Doc. commentaires", `<span id="doc-lien-${this.data.id}-comments">Recherche du document…</span>`)
+
+  this.checkExistenceFichiersOnQDD()
+}
+
+/**
+  * Méthode qui checke l'existence des fichiers PDF pour instruire correctement
+  * les balises pour les charger
+***/
+checkExistenceFichiersOnQDD(){
+  const pathToOriginal = this.path_to_document('original')
+  const pathToComments = this.path_to_document('comments')
+  Ajax.send("check_existence_qdd_doc.rb", {original:pathToOriginal})
+  .then(ret => {
+    console.log("Retour check existence : ", ret)
+    var rempOriginal ;
+    if (ret.original_exists) {rempOriginal = this.lien_original_pdf}
+    else { rempOriginal = "- document inexistant -"}
+    var rempComments ;
+    if (ret.comments_exists) {rempComments = this.lien_comments_pdf}
+    else { rempComments = "- document inexistant -"}
+    document.querySelector(`#doc-lien-${this.data.id}-original`).innerHTML = rempOriginal
+    document.querySelector(`#doc-lien-${this.data.id}-comments`).innerHTML = rempComments
+  })
+
+}
+
+get lien_original_pdf(){
+  return `<a href="${this.path_to_document('original')}" target="_blank">Ouvrir le fichier PDF</a>`
+}
+get lien_comments_pdf(){
+  return `<a href="${this.path_to_document('comments')}" target="_blank">Ouvrir le fichier PDF</a>`
+}
+path_to_document(type){
+  const docName = this[`name_of_${type}`]
+  return `./_lib/data/qdd/${this.module_id}/${docName}`
+}
+get name_of_original(){
+  return this._nameoforiginal || (this._nameoforiginal = this.name_of_document('original'))
+}
+get name_of_comments(){
+  return this._nameofcomments || (this._nameofcomments = this.name_of_document('comments'))
+}
+name_of_document(type){
+  var dn = []
+  dn.push(this.module_name)
+  dn.push('etape')
+  dn.push(this.numero_etape)
+  dn.push(this.pseudo_name)
+  dn.push(this.data.id)
+  dn.push(type)
+  return dn.join('_') + ".pdf"
+}
+// Le pseudo, mais toujours en version minuscules et majuscule au début
+get pseudo_name(){
+  return titleize(this.objet.user.data.pseudo)
+}
+get numero_etape(){
+  return this.ietape.data.numero
+}
+get module_id(){
+  return this.imodule.data.abs_id
+}
+get module_name(){
+  console.log("this.objet.owner:", this.objet.owner)
+  console.log("this.objet.owner.objet:", this.objet.owner.objet)
+  console.log("this.objet.owner.objet.owner.data:", this.objet.owner.objet.owner.data)
+  return camelize(this.imodule.data.module_short_name)
+}
+get ietape(){
+  return this.objet.owner.objet
+}
+get imodule(){
+  return this.objet.owner.objet.owner
 }
 
 /**

@@ -41,7 +41,7 @@ build_all_own_data(){
  */
 extra_build(){
   this.objet.extra_data.etapes.forEach(de => {
-    const eta = new IEtape(de)
+    const eta = new IEtape(de, this)
     eta.addLinkTo(this.sectionListing)
   })
 }

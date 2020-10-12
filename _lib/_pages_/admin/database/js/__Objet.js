@@ -55,6 +55,10 @@ get ref_brut(){
   return this._ref_brut || (this._ref_brut = `${this.constructor.name} #${this.data.id}`)
 }
 
+get user(){
+  return this._user || (this._user = Icarien.get(this.data.user_id))
+}
+
 get as_link(){
   return this._aslink || (this._aslink = this.buildlink())
 }

@@ -8,6 +8,18 @@ function stopEventAsync(ev){
   })
 }
 
+function titleize(str){
+  str = str.toLowerCase().split('')
+  str[0] = str[0].toUpperCase()
+  return str.join('')
+}
+function camelize(str){
+  str = str.split('_')
+  var fin = []
+  str.forEach(seg => fin.push( titleize(seg) ))
+  return fin.join('')
+}
+
 function formate_jjmmaaaa(timestamp) {
   return formate_date(timestamp, {day:'numeric', month:'numeric', year:'numeric'})
 }
