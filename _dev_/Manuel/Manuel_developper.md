@@ -1311,7 +1311,25 @@ Si les données contenues dans la **StateList** sont modifiables, on peut ajoute
 
 Dans les `{options}`, on peut définir une `:class` supplémentaire ou un `:title` qui apparaitra quand on glisse la souris sur le bouton.
 
+---
 
+<a name="javascript"></a>
+
+## Javascript
+
+Par défaut, il doit être fait un usage minimal de javascript (c'est un choix, peut-être que la version suivante prendra l'option opposée). Par défaut, jQuery et Ajax, par exemple, ne sont pas chargés.
+
+### Requérir un module javascript
+
+### Charger un module en différé
+
+Quand des feuilles javascript (appelées ici improprement « modules ») sont chargées d’un dossier, elles le sont dans n’importe quel ordre. Pourtant, souvent, par exemple avec les classes abstraites, il est nécessaire de charger d’abord les modules des classes abstraites et ensuite les modules des classes qui en héritent.
+
+Dans ce cas, on peut utiliser l’extension `.defer.js` qui permettra de différer le chargement du module. C’est le module ruby [HTML/css_n_js.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/_classes/HTML/css_n_js.rb) qui se charge de ce comportement
+
+
+
+---
 
 ## Styles particuliers
 
