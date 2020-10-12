@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-08 17:22:03 +0200
+ *    Date dernière modification : 2020-10-12 06:10:55 +0200
  *
  --------------------------------------------------------------------- */
 :root {
@@ -1018,6 +1018,7 @@ section#footer {
   padding:.2em 1em;
   margin:4em 0 0 0;
   width:calc(100% - 2em);
+  z-index:200;
 }
 
 pre#debug {

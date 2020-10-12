@@ -3344,7 +3344,7 @@ TActualites.founds
 | z-index | Élément                  | Description              | Class                                    |
 | ------- | ------------------------ | ------------------------------------------------------------ | --------------|
 | 500     | Toolbox d'administration | Elle apparait en bas à gauche quand c’est un administrateur qui s’identifie. | div#admin-toolbox |
-| 200 | Messages principaux | Les messages d’interaction et d’information avec l’icarien. | div#messages |
+| 200 | Messages principaux | Les messages d’interaction et d’information avec l’icarien.<br />Le pied de page. | div#messages<br />section#footer |
 | 100 | Table des matières<br />Les infos bulles | Les tables des matières flottantes dans le texte<br />Les infos bulles qui s’affiche en survolant le texte | div.float-tdm<br />span.info-bulle |
 | 10      | Pastilles                | Les pastilles qui indiquent le nombre de notifications ou de messages frigo. | .goto span.pastille |
 | 1 | Les dates sur timeline | Les dates sur la ligne de temps dans les historiques | div.timeline div.day-div |

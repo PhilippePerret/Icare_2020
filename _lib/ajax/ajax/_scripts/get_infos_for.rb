@@ -11,6 +11,9 @@
   éléments
 =end
 
+# Permet de récupérer les watchers de l'icarien
+WATCHERS_ICARIEN_REQUEST = "SELECT * FROM watchers WHERE user_id = ? ORDER BY created_at ASC"
+
 # Permet de récupérer les informations sur les modules d'un icarien
 MODULES_REQUEST = <<-SQL
 SELECT
@@ -19,7 +22,7 @@ SELECT
   FROM icmodules im
   INNER JOIN absmodules am ON am.id = im.absmodule_id
   WHERE user_id = ?
-  ORDER BY im.started_at DESC
+  ORDER BY im.started_at ASC
 SQL
 
 # Permet de récupérer les informations sur les étapes d'un module
@@ -29,7 +32,7 @@ SELECT
   FROM icetapes ie
   INNER JOIN absetapes ae ON ae.id = ie.absetape_id
   WHERE icmodule_id = ?
-  ORDER BY started_at
+  ORDER BY ie.started_at ASC
 SQL
 
 # Permet de récupérer les informations sur les documents d'une étape
@@ -38,7 +41,7 @@ SELECT
   *
   FROM icdocuments idoc
   WHERE icetape_id = ?
-  ORDER BY created_at
+  ORDER BY created_at ASC
 SQL
 
 def get_watchers_of(objet_name, item_id)
@@ -83,6 +86,8 @@ begin
   when 'Icarien'
     # Les modules suivis par l'icarien
     data.merge!(modules: db_exec(MODULES_REQUEST, id))
+    # Les watchers de l'icarien
+    data.merge!(watchers: db_exec(WATCHERS_ICARIEN_REQUEST, id))
   when 'IModule'
     # Les étapes du module
     data.merge!(etapes: db_exec(ETAPES_REQUEST, id))

@@ -45,20 +45,24 @@ load(thenMethod){
   })
 }
 
+get watchers(){
+  return this._watchers || (this._watchers = this.instancieWatchers())
+}
+
 instancieFiche(){
   const classname = `Fiche${this.constructor.name}` // p.e. FicheIcarien
   const classe = eval(classname)
   return new classe(this)
 }
- /**
+/**
   * Méthode permettant d'ajouter un lien permettant d'ouvrir la fiche
   * de l'objet dans la section +container+
-  */
+***/
 addLinkTo(container){
   var l = document.createElement("DIV")
   l.innerHTML = this.ref
   l.id = this.fid // l'identifiant formaté
-  l.className = "linked"
+  l.className = "linked grid-child"
   container.appendChild(l)
   l.addEventListener('click', this.onClickLink.bind(this))
 }
@@ -69,4 +73,14 @@ onClickLink(ev){
   this.fiche.open()
 }
 
+
+instancieWatchers(){
+  let wlist = []
+  if(!this.extra_data.watchers) return wlist
+  this.extra_data.watchers.forEach(dw => {
+    const w = new IWatcher(dw, this)
+    wlist.push(w)
+  })
+  return wlist
+}
 }// class Objet

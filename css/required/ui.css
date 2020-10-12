@@ -305,6 +305,7 @@ section#footer {
   padding:.2em 1em;
   margin:4em 0 0 0;
   width:calc(100% - 2em);
+  z-index:200;
 }
 
 pre#debug {

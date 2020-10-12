@@ -1,6 +1,10 @@
 /*
 
 */
+body {
+  background-color:cadetblue!important;
+}
+
 section#header {display:none!important}
 h2.page-title{display:none!important}
 section#body {

@@ -23,11 +23,13 @@ static buildFicheListe(){
   return f
 }
 
+static get color(){return 'darkred'}
+
 constructor(data, owner) {
   super(data, owner)
 }
 get ref(){
-  return this._ref || (this._ref = `${this.data.pseudo} (#${this.data.id})`)
+  return this._ref || (this._ref = `<span class="ref"><span class="nature">${this.data.sexe == 'F' ? '👩🏻‍🎓' : '👨🏻‍🎓'}</span><span class="name">${this.data.pseudo}</span><span class="id">#${this.data.id}</span><span class="date">${formate_jjmmaa(this.data.created_at)}</span></span>`)
 }
 get as_link(){
   return this._aslink || (this._aslink = this.buildlink())
@@ -51,8 +53,8 @@ constructor(objet) {
  */
 build_all_own_data() {
   this.build_own_data("Pseudo/pseudo",     this.data.pseudo)
-  this.build_own_data("Depuis le/created_at",  this.data.created_at, 'date')
-  this.build_own_data("Arrêt/ended_at",      this.data.ended_at, 'date')
+  this.build_own_data("Inscription/created_at",  this.data.created_at, 'date-time')
+  this.build_own_data("Arrêt/ended_at",      this.data.ended_at, 'date-time')
   this.build_own_data("Module courant/icmodule_id", "[lien vers courant]")
 }
 /**
@@ -67,4 +69,10 @@ extra_build(){
     mod.addLinkTo(this.sectionListing)
   })
 }
-}
+
+get data_children(){return{
+  name: "Modules d'apprentissage",
+  color: IModule.color
+}}
+
+} // Class << Fiche

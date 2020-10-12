@@ -6,6 +6,8 @@
   <fiche>.sectionListing
       Section contenant les éléments de l'objet (par exemple les documents
       pour une étape)
+  <fiche>.sectionWatchers
+      Section contenant les watchers de l'élément
 **/
 class Fiche {
 /** ---------------------------------------------------------------------
@@ -43,10 +45,12 @@ hide(){
 build(){
   this.obj = document.createElement("DIV")
   this.obj.className = "fiche hidden"
+
   // Titre
   const titre = document.createElement('DIV')
   titre.className = "titre"
   titre.innerHTML = this.objet.ref || this.data.titre
+  titre.style.backgroundColor = this.objet.constructor.color || 'black'
   this.obj.appendChild(titre)
   if ( !this.objet.not_closable ) {
     // Dans le titre : la case de fermeture de la fiche
@@ -65,10 +69,31 @@ build(){
 
   // Partie listing que comprend toujours une fiche, par défaut
   // C'est la liste des éléments de l'objet. Par exemple la liste des
-  // documents de l'étape.
+  // documents de l'étape ou la liste des étapes du modules.
+  if ( this.objet.fiche && this.objet.fiche.data_children ) {
+    const dchildren   = this.objet.fiche.data_children
+    const titListing  = document.createElement('DIV')
+    titListing.className = "sous-titre"
+    titListing.innerHTML = dchildren.name
+    titListing.style.backgroundColor = dchildren.color
+    this.obj.appendChild(titListing)
+  }
   this.sectionListing = document.createElement('DIV')
   this.sectionListing.className = "listing"
   this.obj.appendChild(this.sectionListing)
+
+  // La section des watchers si l'objet en contient
+  const has_watchers = this.objet.extra_data && this.objet.extra_data.watchers
+  if ( has_watchers ) {
+    const titwatchers = document.createElement('DIV')
+    titwatchers.className = "sous-titre"
+    titwatchers.innerHTML = "Watchers"
+    titwatchers.style.backgroundColor = IWatcher.color
+    this.obj.appendChild(titwatchers)
+    this.sectionWatchers = document.createElement('DIV')
+    this.sectionWatchers.className = "listing"
+    this.obj.appendChild(this.sectionWatchers)
+  }
 
   // La partie en bas de fiche pour envoyer une requête
   const divreq = document.createElement('DIV')
@@ -86,8 +111,10 @@ build(){
   // Pour activer la fiche
   this.obj.addEventListener('click', Fiche.select.bind(Fiche, this))
 
+  // On lance la construction du reste
   this.build_all_own_data()
-  this.extra_build()
+  if ( has_watchers ) this.build_watchers() // s'il y en a
+  this.extra_build() // les éléments propres
 
   this.built = true
 }
@@ -136,14 +163,14 @@ build_own_data(libelle, valeur, type){
       valeur = "n/d"
     } else {
       switch (type) {
+        case 'date-time':
+          real_value = valeur
+          valeur = formate_date(valeur, 'date-time')
+          break
         case 'date':
           real_value = valeur
-          var d = new Date()
-          d.setTime(Number(valeur) * 1000)
-          valeur = d.toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric', hour:'numeric', minute:'numeric'})
-          break;
-        default:
-          // rien à faire
+          valeur = formate_date(valeur, 'date')
+          break
       }
     }
     value.innerHTML = valeur
@@ -154,6 +181,15 @@ build_own_data(libelle, valeur, type){
   }
 
   this.sectionOwnData.appendChild(line)
+}
+
+/**
+ * Construire la liste des watchers
+**/
+build_watchers(){
+  this.objet.watchers.forEach(watcher => {
+    watcher.addLinkTo(this.sectionWatchers)
+  })
 }
 
 } // class Fiche

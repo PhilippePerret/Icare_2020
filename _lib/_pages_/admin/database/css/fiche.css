@@ -1,10 +1,11 @@
 div.fiche {
   position:absolute;
-  min-width:400px;
-  max-width:400px!important;
+  min-width:540px;
+  max-width:540px!important;
   border:2px solid;
   border-radius:0.5em 0.5em 0 0;
   background-color:#F5F5F5;
+  font-size:0.8em;
 }
 div.fiche:not(.selected) {
   border-color: black;
@@ -28,7 +29,8 @@ div.fiche .linked:active {
 
 
 div.fiche div.titre {
-  background-color: black;
+  /* background-color: black; */
+  border-radius:0.4em 0.4em 0 0;
   color:white;
   padding:0.3rem 1rem;
 }
@@ -36,12 +38,18 @@ div.fiche div.titre {
 div.fiche div.titre span.close-cross {
   position:absolute;
   font-size:8pt;
-  top:4px;
-  right:4px;
+  top:10px;
+  right:10px;
   padding:0 5px;
   border-radius:8px;
   background-color:red;
   cursor:pointer;
+}
+
+div.fiche div.sous-titre {
+  font-family:"Avenir Next Condensed", "Geneva";
+  color:white;
+  padding-left:1em;
 }
 
 /* Pour les données propres */
@@ -66,6 +74,43 @@ div.fiche div.own-data > div span.own-data-value {
   padding-right:0.5em;
 }
 
+span.ref > span {
+  margin-right:0.4em;
+}
+/* div:not(.grid-child) > span.ref > span {
+  margin-right:0.4em;
+} */
+
+/* La listing des enfants */
+div.fiche div.grid-child > span.ref {
+  display:grid;
+  grid-template-columns: 60px 340px 40px 60px;
+  grid-template-rows: auto;
+  vertical-align: middle;
+}
+div.fiche div.grid-child > span.ref > span {
+  line-height:1.5em;
+  vertical-align:middle;
+}
+div.fiche div.grid-child span.nature {
+  grid-column:1;
+  font-size: 0.75em;
+  margin-top:4px;
+}
+div.fiche div.grid-child span.name {
+  grid-column:2;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+div.fiche div.grid-child span.id {
+  grid-column:3;
+}
+div.fiche div.grid-child span.date {
+  grid-column:4;
+}
+
+
 /* Le div contenant le champ de texte pour la requête pseudo-sql */
 div.fiche div.div-request {
   position:absolute;
@@ -85,7 +130,7 @@ div.fiche div.div-request input[type="text"] {
 }
 
 div.fiche div.listing {
-  min-height:200px;
+  min-height:100px;
   max-height:600px;
   overflow:auto;
 }
@@ -99,4 +144,14 @@ div.fiche div.listing > div:nth-child(odd) {
 div.fiche div.listing > div:nth-child(even) {
   background-color:gainsboro;
   color:black;
+}
+
+div.fiche span.id {
+  font-size:0.85em;
+  font-family: "Arial Narrow", "Apple Chancery";
+  color:cadetblue; /* darkcyan brown */
+}
+div.fiche span.date {
+  font-size:0.85em;
+  color:brown;
 }
