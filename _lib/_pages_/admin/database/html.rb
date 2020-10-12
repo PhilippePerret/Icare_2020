@@ -12,4 +12,8 @@ class HTML
   def build_body
     @body = deserb('body', self)
   end
+
+  def texte_aide
+    @aide ||= kramdown('help', self)
+  end #/ texte_aide
 end #/HTML

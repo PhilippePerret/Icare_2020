@@ -35,3 +35,22 @@ function formate_date(timestamp, options){
   d.setTime(Number(timestamp) * 1000)
   return d.toLocaleDateString('fr-FR', options)
 }
+
+
+function message(msg){
+  console.info(msg)
+  flash(msg, "message")
+  return true
+}
+function erreur(msg){
+  console.error(msg)
+  flash(msg, "error")
+  return false
+}
+function flash(msg, type){
+  const div = document.createElement('DIV')
+  div.className = type
+  div.innerHTML = msg
+  div.setAttribute("onclick","this.remove()")
+  document.querySelector("#flash").appendChild(div)
+}

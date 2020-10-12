@@ -19,6 +19,7 @@ static addItem(item){
 **/
 static get(oid, owner) {
   if (undefined == this.items[oid]){
+    console.log("this.items ne contient pas l'élément %i", oid, this.items)
     Object.assign(this.items, {[oid]: new this({id: oid}, owner)})
   }
   return this.items[oid];
@@ -48,6 +49,10 @@ static get(oid, owner) {
 ***/
 get fid(){
  return this._fid || (this._fid = `${this.constructor.name}-${this.data.id}`.toLowerCase())
+}
+
+get ref_brut(){
+  return this._ref_brut || (this._ref_brut = `${this.constructor.name} #${this.data.id}`)
 }
 
 get as_link(){
@@ -90,6 +95,7 @@ addLinkTo(container){
   l.innerHTML = this.ref
   l.id = this.fid // l'identifiant formaté
   l.className = "linked grid-child"
+  l.setAttribute("data-id", this.data.id)
   container.appendChild(l)
   l.addEventListener('click', this.onClickLink.bind(this))
 }

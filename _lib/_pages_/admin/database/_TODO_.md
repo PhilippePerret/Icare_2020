@@ -2,8 +2,10 @@
 
 ## TODO
 
-* Outil Icarien : si date_sortie est non définie, demander de la calculer par rapport au dernier module
-* Pouvoir utiliser le text field du bas comme un filtre (seulement pour Icariens ?)
+* Fiche icarien
+  * indiquer le statut (pouvoir le modifier)
+  * lien pour lui écrire (par le formulaire de contact ?)
+  * Outil : si date_sortie est non définie, demander de la calculer par rapport au dernier module
 * Poursuivre les données propres, avec des liens vers les autres fiches
 
 ## Présentation

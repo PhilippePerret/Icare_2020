@@ -42,9 +42,32 @@ close(){return this.hide()}
 hide(){
   this.obj.classList.add('hidden')
 }
+
+/**
+  * Reconstruction de la fiche
+  * Par exemple après un changement de données.
+***/
+
+rebuild(){
+  this.obj.remove()
+  delete this.obj
+  delete this.sectionOwnData
+  delete this.sectionListing
+  delete this.sectionWatchers
+  this.built = false
+  this.build()
+  this.obj.classList.remove('hidden')
+}
+
+/**
+  * Construction de la fiche
+***/
 build(){
   this.obj = document.createElement("DIV")
   this.obj.className = "fiche hidden"
+
+  // Pour connaitre l'identifiant de l'objet
+  this.obj.setAttribute("data-id", this.objet.data.id)
 
   // Titre
   const titre = document.createElement('DIV')
@@ -100,12 +123,13 @@ build(){
   divreq.className = "div-request"
   const reqfield = document.createElement('INPUT')
   reqfield.id = `field-code-${this.objet.fid}`
-  reqfield.setAttribute('placeholder', "Pseudo-code Mysql")
   reqfield.type = "text"
   reqfield.addEventListener('keypress', this.onReturnInCodeField.bind(this))
   if (this.constructor.name == 'Fiche'){
     // Pour filtrer la liste, quand ce sont les icariens
     reqfield.addEventListener('keyup', this.onKeyUp.bind(this))
+    reqfield.setAttribute('placeholder', "Filtrer")
+  } else {
   }
   divreq.appendChild(reqfield)
   this.obj.appendChild(divreq)
@@ -129,14 +153,18 @@ build(){
  * Méthode appelée quand on clique sur une touche dans le champ de code
 **/
 onReturnInCodeField(ev){
-  if (ev.code == "Enter" && this.constructor.name != 'Fiche'){
-    stopEventAsync(ev).then(this.execCode.bind(this))
+  if (ev.code == "Enter"){
+    if ( this.constructor.name != 'Fiche' ) {
+      stopEventAsync(ev).then(this.execCode.bind(this))
+    } else {
+      this.filtreListing()
+    }
     return false
   }
   return true
 }
 onKeyUp(ev){
-  this.filtreListing()
+  // this.filtreListing()
 }
 
 /**
@@ -144,16 +172,55 @@ onKeyUp(ev){
  * de texte en bas de fiche.
 **/
 filtreListing(){
-  const searched = this.codeField.value.toLowerCase()
-  if ( searched != "" ) {
-    this.sectionListing.querySelectorAll("div.grid-child").forEach(div => {
-      const txt = div.querySelector("span.name").innerHTML.toLowerCase()
-      const contient = txt.includes(searched)
-      div.classList[contient ? 'remove' : 'add']('hidden')
-    })
-  } else {
+  const searched = this.codeField.value.trim().toLowerCase()
+  if ( searched == "" ) {
     this.sectionListing.querySelectorAll("div.grid-child").forEach(div => div.classList.remove('hidden'))
+    return
   }
+  let filterMethod ;
+  if ( searched.includes(':') ) {
+    let [etiquette, val] = searched.split(':')
+    if ( etiquette == 'after' || etiquette == 'before'){
+      const [jour, mois, annee] = val.split('/')
+      val = new Date([mois,jour,annee].join("/"))
+      val = Number(val.getTime() / 1000)
+    }
+    switch (etiquette) {
+      case 'before':
+        filterMethod = this.hasSignupBefore.bind(this, val)
+        break
+      case 'after':
+        filterMethod = this.hasSignupAfter.bind(this, val)
+        break
+      case 'statut':
+        filterMethod = this.isStatutEquals.bind(this, val)
+        break
+      case 'data':
+        const hval = {}
+        val.split(',').forEach(paire => {
+          let [key, value] = paire.split("=")
+          key   = key.trim()
+          value = eval(value.trim())
+          Object.assign(hval, {[key]: value})
+        })
+        console.log("hval:", hval)
+        filterMethod = this.hasData.bind(this, hval)
+        break
+      default:
+        return erreur(`Étiquette inconnue (${etiquette})… Utiliser 'statut:', 'before:' ou 'after:'`)
+    }
+  } else {
+    filterMethod = this.isNameContaining.bind(this, searched)
+  }
+  this.sectionListing.querySelectorAll("div.grid-child").forEach(div => {
+    const is_valide = filterMethod.call(this, div, searched)
+    div.classList[is_valide ? 'remove' : 'add']('hidden')
+  })
+}
+// Filtrage par le nom (name)
+isNameContaining(expected, div){
+  const txt = div.querySelector("span.name").innerHTML.toLowerCase()
+  return txt.includes(expected)
 }
 
 /**
@@ -161,12 +228,49 @@ filtreListing(){
  * confirmation par l'utilisateur.
 **/
 execCode(){
+  const sqlTable = this.objet.constructor.table
   const fieldcode = this.codeField.value // par exemple "SET date_sortie = '1356786537'"
-  const fullcode = `UPDATE ${this.objet.constructor.table} ${fieldcode} WHERE id = ${this.objet.data.id}`
-  if (!confirm("Dois-je vraiment exécuter le code :\n"+fullcode)) return
-  const realcode  = `UPDATE ${this.objet.constructor.table} ${fieldcode} WHERE id = ?`
+  const firstWord = fieldcode.split(' ')[0]
+  if (firstWord == 'SET') {
+    this.execCodeUpdate(sqlTable, fieldcode)
+  } else if ( firstWord == 'DESTROY') {
+    this.execCodeDestroy(sqlTable, fieldcode)
+  }
+}
+execCodeUpdate(sqlTable, fieldcode, options){
+  const fullcode = `UPDATE ${sqlTable} ${fieldcode} WHERE id = ${this.objet.data.id}`
+  if ( !(options && options.no_confirmation)) {
+    if (!confirm("Dois-je vraiment exécuter le code :\n"+fullcode)) return
+  }
+  const realcode  = `UPDATE ${sqlTable} ${fieldcode} WHERE id = ?`
   const values    = [this.objet.data.id]
-  Ajax.send("db_exec.rb", {request: realcode, values: values})
+  Ajax.send("db_exec.rb", {request: realcode, values: values, sql_table: sqlTable, sql_id: this.objet.data.id})
+  .then(ret => {
+    if (ret.error){
+      erreur(ret.error)
+    } else {
+      if (ret.message) message(ret.message)
+      // Updater la fiche avec les nouvelles valeurs envoyées
+      // console.log("ret", ret)
+      this.objet.data = ret.new_data
+      this.rebuild()
+    }
+  })
+}
+
+execCodeDestroy(sqlTable, fieldcode){
+  if (!confirm(`Veux-tu vraiment détruire l'élément ${this.objet.ref_brut}`)) return ;
+  switch (this.objet.constructor.name) {
+    case 'Icarien':
+      var opts = this.objet.data.options.split('')
+      opts[3] = "1"
+      opts = opts.join('')
+      this.execCodeUpdate(sqlTable, `SET options = "${opts}"`, {no_confirmation:true})
+      message(`J'ai marqué l'icarien ${this.objet.pseudo} détruit.`)
+      break;
+    default:
+      erreur(`Je ne sais pas encore détruire ce type d'élément.`)
+  }
 }
 
 get codeField(){
@@ -247,6 +351,47 @@ build_watchers(){
   this.objet.watchers.forEach(watcher => {
     watcher.addLinkTo(this.sectionWatchers)
   })
+}
+
+
+
+/**
+  * Ci-dessous, les méthodes de FILTRAGE de la liste des icariens (cf. le
+  * mode d'emploi)
+***/
+
+// Filtrage par le statut
+isStatutEquals(expected, div){
+  const user_id = Number(div.getAttribute('data-id'))
+  const user = Icarien.get(user_id)
+  const bit16 = user.data.options.substring(16,17);
+  switch (expected) {
+    case 'actif':     return bit16 == "2"
+    case 'inactif':   return bit16 == "4"
+    case 'candidat':  return bit16 == "3"
+    case 'recu':      return bit16 == "6"
+    default: return false
+  }
+}
+hasSignupAfter(date, div){
+  const user = this.getUserOfDiv(div)
+  return Number(user.data.created_at) >= date
+}
+hasSignupBefore(date, div){
+  const user = this.getUserOfDiv(div)
+  return Number(user.data.created_at) <= date
+}
+hasData(hval, div){
+  const user = this.getUserOfDiv(div)
+  for(var k in hval){
+    var v = hval[k]
+    if ( user.data[k] !== v ) { return false }
+  }
+  return true
+}
+getUserOfDiv(div){
+  const user_id = Number(div.getAttribute('data-id'))
+  return Icarien.get(user_id)
 }
 
 } // class Fiche
