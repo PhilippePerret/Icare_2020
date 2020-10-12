@@ -29,7 +29,7 @@ class HTML
   def js_tags
     get_js
     @all_js.collect do |reljs|
-      if reljs.start_with?('defer_')
+      if reljs.end_with?('.defer.js')
         DEFER_JS_TAG
       else
         JAVASCRIPT_TAG
