@@ -4,6 +4,8 @@ class Icarien extends Objet {
 static get ficheListe(){
   return this._ficheliste || (this._ficheliste = this.buildFicheListe())
 }
+
+static get table(){return 'users'}
 /**
  * Méthode principale qui construit la fiche contenant la liste des icariens
  * Cette méthode renseigne la variable de classe Icarien.ficheListe
@@ -31,16 +33,6 @@ constructor(data, owner) {
 get ref(){
   return this._ref || (this._ref = `<span class="ref"><span class="nature">${this.data.sexe == 'F' ? '👩🏻‍🎓' : '👨🏻‍🎓'}</span><span class="name">${this.data.pseudo}</span><span class="id">#${this.data.id}</span><span class="date">${formate_jjmmaa(this.data.created_at)}</span></span>`)
 }
-get as_link(){
-  return this._aslink || (this._aslink = this.buildlink())
-}
-buildlink(){
-  const lien = document.createElement('SPAN')
-  lien.innerHTML = this.ref
-  lien.className = "linked"
-  lien.addEventListener('click', this.fiche.open.bind(this.fiche))
-  return lien
-}
 }//class Icarien
 
 
@@ -52,10 +44,16 @@ constructor(objet) {
  * Construction des données propres de l'icarien
  */
 build_all_own_data() {
-  this.build_own_data("Pseudo/pseudo",     this.data.pseudo)
-  this.build_own_data("Inscription/created_at",  this.data.created_at, 'date-time')
-  this.build_own_data("Arrêt/ended_at",      this.data.ended_at, 'date-time')
-  this.build_own_data("Module courant/icmodule_id", "[lien vers courant]")
+  this.build_own_data("Pseudo/pseudo",            this.data.pseudo)
+  this.build_own_data("Inscription/created_at",   this.data.created_at, 'date-time')
+  this.build_own_data("Arrêt/date_sortie",           this.data.date_sortie, 'date-time')
+  // Noter que le module courant sera affecté après que les modules de l'icarien
+  // ont été relevés et instanciés.
+}
+
+link_to_current_module(){
+  if (!this.data.icmodule_id) return "- aucun -" ;
+  return IModule.get(this.data.icmodule_id, this.objet).as_link
 }
 /**
   Construction des éléments de la fiche
@@ -68,6 +66,10 @@ extra_build(){
     const mod = new IModule(dm, this.objet)
     mod.addLinkTo(this.sectionListing)
   })
+
+  // On peut ajouter le module courant aux données propres
+  this.build_own_data("Module courant/icmodule_id", this.link_to_current_module())
+
 }
 
 get data_children(){return{

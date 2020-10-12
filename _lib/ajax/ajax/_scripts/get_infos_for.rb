@@ -12,7 +12,8 @@
 =end
 
 # Permet de récupérer les watchers de l'icarien
-WATCHERS_ICARIEN_REQUEST = "SELECT * FROM watchers WHERE user_id = ? ORDER BY created_at ASC"
+WATCHERS_ICARIEN_REQUEST  = "SELECT * FROM watchers WHERE user_id = ? ORDER BY created_at ASC"
+WATCHERS_REQUEST          = "SELECT * FROM watchers WHERE objet_id = ? ORDER BY created_at ASC"
 
 # Permet de récupérer les informations sur les modules d'un icarien
 MODULES_REQUEST = <<-SQL
@@ -44,13 +45,36 @@ SELECT
   ORDER BY created_at ASC
 SQL
 
+# Méthode qui retourne les données des watchers pour l'objet de nom +objet_name+
+# et d'identifiant +item_id+. Il peut s'agir par exemple qu'un icarien
+# (objet_name = 'Icarien') ou d'une étape (objet_name = 'IcEtape')
+#
+# On retourne toutes les informations sur ces watchers, à savoir
+#   - leurs données propres, telles qu'enregistrées dans la table watchers
+#   - leurs données absolues, en fonction du wtype
+#   - leur type d'objet pour l'outil administration, pour ne pas avoir à le
+#     chercher, par exemple "Icarien" ou "IModule" respectivement pour les
+#     icariens ou les IcModules.
+#
 def get_watchers_of(objet_name, item_id)
   require "#{APP_FOLDER}/_lib/_watchers_processus_/_constants_" # => DATA_WATCHERS
-  wtype_to_folder # pour forcer sa fabrication et voir
-  db_exec("SELECT * FROM watchers WHERE objet_id = ?", item_id).collect do |dw|
-    next if not( wtype_to_folder[ dw[:wtype] ] == objet_name )
-    dw
-  end.compact
+  # Traitement particulier pour les icariens, car c'est la propriété user_id
+  # qu'il faut lire et on remonte des watchers de toutes sortes
+  if objet_name == 'Icarien'
+    rows_watchers = db_exec(WATCHERS_ICARIEN_REQUEST, item_id)
+  else
+    wtype_to_folder # pour forcer sa fabrication et voir
+    rows_watchers = db_exec(WATCHERS_REQUEST, item_id).collect do |dw|
+      next if not( wtype_to_folder[ dw[:wtype] ] == objet_name )
+      dw
+    end.compact
+  end
+
+  rows_watchers.collect do |dw|
+    dw.merge({
+      absdata: DATA_WATCHERS[dw[:wtype].to_sym]
+    })
+  end
 end #/ get_watchers_of
 
 def wtype_to_folder
@@ -87,7 +111,7 @@ begin
     # Les modules suivis par l'icarien
     data.merge!(modules: db_exec(MODULES_REQUEST, id))
     # Les watchers de l'icarien
-    data.merge!(watchers: db_exec(WATCHERS_ICARIEN_REQUEST, id))
+    data.merge!(watchers: get_watchers_of('Icarien', id))
   when 'IModule'
     # Les étapes du module
     data.merge!(etapes: db_exec(ETAPES_REQUEST, id))

@@ -2,8 +2,8 @@
 
 ## TODO
 
-* Implémenter le listing des watchers (pour icetape et icmodule, s'il y en a)
-* Implémenter le listing des documents (pour icetape, s'il y en a)
+* Outil Icarien : si date_sortie est non définie, demander de la calculer par rapport au dernier module
+* Pouvoir utiliser le text field du bas comme un filtre (seulement pour Icariens ?)
 * Poursuivre les données propres, avec des liens vers les autres fiches
 
 ## Présentation

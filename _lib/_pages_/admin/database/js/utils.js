@@ -1,5 +1,13 @@
 "use strict";
 
+function stopEventAsync(ev){
+  return new Promise((ok,ko) => {
+    ev.stopPropagation()
+    ev.preventDefault()
+    ok()
+  })
+}
+
 function formate_jjmmaaaa(timestamp) {
   return formate_date(timestamp, {day:'numeric', month:'numeric', year:'numeric'})
 }

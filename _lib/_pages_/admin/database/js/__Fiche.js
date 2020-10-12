@@ -99,8 +99,14 @@ build(){
   const divreq = document.createElement('DIV')
   divreq.className = "div-request"
   const reqfield = document.createElement('INPUT')
+  reqfield.id = `field-code-${this.objet.fid}`
   reqfield.setAttribute('placeholder', "Pseudo-code Mysql")
   reqfield.type = "text"
+  reqfield.addEventListener('keypress', this.onReturnInCodeField.bind(this))
+  if (this.constructor.name == 'Fiche'){
+    // Pour filtrer la liste, quand ce sont les icariens
+    reqfield.addEventListener('keyup', this.onKeyUp.bind(this))
+  }
   divreq.appendChild(reqfield)
   this.obj.appendChild(divreq)
 
@@ -119,6 +125,53 @@ build(){
   this.built = true
 }
 
+/**
+ * Méthode appelée quand on clique sur une touche dans le champ de code
+**/
+onReturnInCodeField(ev){
+  if (ev.code == "Enter" && this.constructor.name != 'Fiche'){
+    stopEventAsync(ev).then(this.execCode.bind(this))
+    return false
+  }
+  return true
+}
+onKeyUp(ev){
+  this.filtreListing()
+}
+
+/**
+ * Méthode qui permet de filtrer la liste des icariens à l'aide du champ
+ * de texte en bas de fiche.
+**/
+filtreListing(){
+  const searched = this.codeField.value.toLowerCase()
+  if ( searched != "" ) {
+    this.sectionListing.querySelectorAll("div.grid-child").forEach(div => {
+      const txt = div.querySelector("span.name").innerHTML.toLowerCase()
+      const contient = txt.includes(searched)
+      div.classList[contient ? 'remove' : 'add']('hidden')
+    })
+  } else {
+    this.sectionListing.querySelectorAll("div.grid-child").forEach(div => div.classList.remove('hidden'))
+  }
+}
+
+/**
+ * Méthode qui exécute le code du champ de texte de bas de page après
+ * confirmation par l'utilisateur.
+**/
+execCode(){
+  const fieldcode = this.codeField.value // par exemple "SET date_sortie = '1356786537'"
+  const fullcode = `UPDATE ${this.objet.constructor.table} ${fieldcode} WHERE id = ${this.objet.data.id}`
+  if (!confirm("Dois-je vraiment exécuter le code :\n"+fullcode)) return
+  const realcode  = `UPDATE ${this.objet.constructor.table} ${fieldcode} WHERE id = ?`
+  const values    = [this.objet.data.id]
+  Ajax.send("db_exec.rb", {request: realcode, values: values})
+}
+
+get codeField(){
+  return this._codefield || (this._codefield = document.querySelector(`input#field-code-${this.objet.fid}`))
+}
 /**
  * Méthode pour construire les "extra_data" de l'objet
  * Cette méthode doit être surclassée dans chaque classe concrète
@@ -146,10 +199,13 @@ build_own_data(libelle, valeur, type){
   const label = document.createElement('SPAN')
   label.className = "own-data-label linked"
   var [libelle, prop_name] = libelle.split("/")
+  if (prop_name && prop_name.trim() == "") prop_name = null ;
   label.innerHTML = libelle
-  label.setAttribute("title", `Pseudo-sql proprety: ${prop_name}`)
   line.appendChild(label)
-  label.addEventListener('click', this.giveValue.bind(this, "Le nom de la propriété est", prop_name))
+  if (prop_name){
+    label.setAttribute("title", `Pseudo-sql proprety: ${prop_name}`)
+    label.addEventListener('click', this.giveValue.bind(this, "Le nom de la propriété est", prop_name))
+  }
 
   // Valeur
   let value ;
@@ -158,7 +214,7 @@ build_own_data(libelle, valeur, type){
     value = valeur;
   } else {
     value = document.createElement('SPAN')
-    value.className = 'own-data-value linked'
+    value.className = 'own-data-value'
     if ( !valeur ) {
       valeur = "n/d"
     } else {
@@ -178,6 +234,7 @@ build_own_data(libelle, valeur, type){
   line.appendChild(value)
   if ( real_value ) {
     value.addEventListener('click', this.giveValue.bind(this, "La valeur réelle est", real_value))
+    value.classList.add('linked')
   }
 
   this.sectionOwnData.appendChild(line)

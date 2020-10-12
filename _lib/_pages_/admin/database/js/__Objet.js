@@ -5,6 +5,28 @@
  * La classe de n'importe quel élément, User, IcModule, AbsEtape etc.
  */
  class Objet {
+/**
+ * CLASSE
+**/
+static get items(){
+  return this._items || (this._items = {})
+}
+static addItem(item){
+  Object.assign(this.items, {[item.data.id]: item})
+}
+/**
+ * Retourne l'instance d'objet d'identifiant +oid+ et de propriétaire +owner+
+**/
+static get(oid, owner) {
+  if (undefined == this.items[oid]){
+    Object.assign(this.items, {[oid]: new this({id: oid}, owner)})
+  }
+  return this.items[oid];
+}
+
+/**
+ * INSTANCE
+**/
  constructor(data, owner) {
    this.data = data
    // Le propriétaire (qui N'EST PAS NÉCESSAIREMENT UN USER, c'est par exemple
@@ -16,6 +38,8 @@
    // dans un second temps.
    // C'est la méthode this.load qui s'en charge.
    this.extra_data = null;
+   // On ajoute cet objet à la liste des objets
+   this.constructor.addItem(this)
  }
 /**
   * L'ID formaté
@@ -26,15 +50,18 @@ get fid(){
  return this._fid || (this._fid = `${this.constructor.name}-${this.data.id}`.toLowerCase())
 }
 
+get as_link(){
+  return this._aslink || (this._aslink = this.buildlink())
+}
+
 get fiche(){
  return this._fiche || (this._fiche = this.instancieFiche())
 }
 
 load(thenMethod){
-  console.log("Chargement des données de " + this.ref)
   Ajax.send("get_infos_for.rb", {type: this.constructor.name, objet_id: this.data.id})
   .then(ret => {
-    console.log("retour:", ret)
+    console.log("Retour loading data:", ret)
     this.extra_data = ret.data
     this.loaden = true
     thenMethod.call()
@@ -83,4 +110,13 @@ instancieWatchers(){
   })
   return wlist
 }
+
+buildlink(){
+  const lien = document.createElement('SPAN')
+  lien.innerHTML = this.ref
+  lien.className = "linked"
+  lien.addEventListener('click', this.fiche.open.bind(this.fiche))
+  return lien
+}
+
 }// class Objet

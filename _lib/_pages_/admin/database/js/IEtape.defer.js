@@ -5,6 +5,8 @@ class IEtape extends Objet {
  * CLASSE
 **/
 static get color(){return 'chocolate'}
+
+static get table(){return 'icetapes'}
 /**
  * INSTANCE
 **/
@@ -25,8 +27,9 @@ constructor(data) {
 }
 
 build_all_own_data(){
-  this.build_own_data("Numéro/", this.data.numero)
-  this.build_own_data("Titre/", this.data.titre)
+  this.build_own_data("ID", `#${this.data.id}`)
+  this.build_own_data("Numéro", this.data.numero)
+  this.build_own_data("Titre", this.data.titre)
   this.build_own_data("Démarrée le/started_at", this.data.started_at, 'date-time')
   this.build_own_data("Finie le/ended_at", this.data.ended_at, 'date-time')
   this.build_own_data("Options/options", this.data.options)

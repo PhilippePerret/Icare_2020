@@ -15,8 +15,15 @@
 begin
   # Ajax << {message: "Je passe par db_exec (#{respond_to?(:db_exec) ? "la méthode existe" : "la méthode n'existe pas"})"}
   request = Ajax.param(:request)
-  response = db_exec(request)
-  Ajax << {response: response}
+  values  = Ajax.param(:values)
+  log("Requête à exécuter avec les valeurs #{values.inspect} : #{request.inspect}")
+  response =
+    if values.nil?
+      db_exec(request)
+    else
+      db_exec(request, values)
+    end
+  Ajax << {response: response, message: "Requête exécutée avec succès."}
 rescue Exception => e
   log("# ERREUR : #{e.message}")
   log("# Backtrace : #{e.backtrace.join("\n")}")

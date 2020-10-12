@@ -1,5 +1,13 @@
 "use strict";
 class IDocument extends Objet {
+/**
+ * CLASSE
+**/
+static get color(){return 'mediumpurple'}
+static get table(){return 'icdocuments'}
+/**
+ * INSTANCE
+**/
 constructor(data, ietape) {
   super(data, ietape)
   this.ietape = ietape
@@ -7,8 +15,6 @@ constructor(data, ietape) {
 get ref(){
   return this._ref || (this._ref = `<span class="ref"><span class="nature">doc</span><span class="name">${this.data.original_name}</span><span class="id">#${this.data.id}</span><span class="date">${formate_jjmmaa(this.data.created_at)}</span></span>`)
 }
-
-static get color(){return 'mediumpurple'}
 
 } // class IDocument
 
