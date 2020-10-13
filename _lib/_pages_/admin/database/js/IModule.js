@@ -39,8 +39,6 @@ constructor(objet){
   super(objet)
 }
 
-get fid(){return this.objet.fid}
-
 build_all_own_data(){
   this.build_own_data("Propriétaire", this.objet.owner.as_link)
   this.build_own_data("Titre projet/project_name", this.data.project_name)

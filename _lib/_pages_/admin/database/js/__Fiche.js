@@ -51,6 +51,7 @@ constructor(objet) {
   this.objet  = objet
   this.data   = objet.data
 }
+get fid(){return this.objet.fid}
 open(){return this.show()}
 show(){
   if (!this.objet.loaden) return this.objet.load(this.show.bind(this))

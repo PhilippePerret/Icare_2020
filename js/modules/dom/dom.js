@@ -65,7 +65,10 @@ function DCreate(tagName,attrs){
   * (note : 'data', ci-dessous, est la table envoyée à l'instanciation du
   *  menu)
   *   * Un identifiant défini dans data[:id]
-  *   * Pour fonctionner, le menu a besoin d'une table de valeurs qui
+  *   * data[:values]
+  *     Pour fonctionner, le menu a besoin d'une liste d'éléments qui contiennent
+  *     {:value, :text}, la valeur et le texte à afficher.
+  *     OU une table de valeurs qui
   *     contient en clé la valeur proprement dites et en valeur une table
   *     définissant au moins le texte apparant à utiliser.
   *     table = {val1 => {text:texte1}, val2 => {text:texte2}, etc.}
@@ -141,11 +144,18 @@ get menu(){
 ***/
 build(){
   const menu = DCreate('SELECT', {id: this.id, css:this.cssClasses})
-  for(var v in this.values){
-    var opt = DCreate('OPTION',{value:v, text:this.values[v].text})
-    if ( v == this.default_value ) opt.setAttribute('selected', "SELECTED")
-    menu.appendChild(opt)
+  let liste_valeurs ;
+  if (Array.isArray(this.values)){
+    liste_valeurs = this.values
+  } else {
+    liste_valeurs = []
+    for(var v in this.values){liste_valeurs.push({value: v, text: this.values[v].text})}
   }
+  liste_valeurs.forEach( d => {
+    var opt = DCreate('OPTION',{value:d.value, text: d.text})
+    if ( d.value == this.default_value ) opt.setAttribute('selected', "SELECTED")
+    menu.appendChild(opt)
+  })
   document.querySelector('body').appendChild(menu)
   // On le met dans la variable
   this._menu = menu

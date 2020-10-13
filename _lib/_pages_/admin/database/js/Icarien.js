@@ -1,4 +1,20 @@
 "use strict";
+
+const DATA_ICARIEN_STATUTS_LIST = [
+  {value:"2", text:"Actif (2)"}
+, {value:"4", text:"Inactif (ancien) (4)"}
+, {value:"6", text:"Reçu (6)"}
+, {value:"3", text:"Candidat (3)"}
+]
+const DATA_ICARIEN_STATUTS = {}
+DATA_ICARIEN_STATUTS_LIST.forEach(d => Object.assign(DATA_ICARIEN_STATUTS, {[d.value]: d}))
+// const DATA_ICARIEN_STATUTS = {
+//     "2": {value:"2", text:"Actif (2)"}
+//   , "4": {value:"4", text:"Inactif (ancien) (4)"}
+//   , "6": {value:"6", text:"Reçu (6)"}
+//   , "3": {value:"3", text:"Candidat (3)"}
+// }
+
 class Icarien extends Objet {
 
 static get ficheListe(){
@@ -34,13 +50,22 @@ constructor(data, owner) {
 get ref(){
   return this._ref || (this._ref = `<span class="ref"><span class="nature">${this.data.sexe == 'F' ? '👩🏻‍🎓' : '👨🏻‍🎓'}</span><span class="name">${this.data.pseudo}</span><span class="id">#${this.data.id}</span><span class="date">${formate_jjmmaa(this.data.created_at)}</span></span>`)
 }
-
-get human_state(){
-  const bit16 = this.data.options.substring(16,17);
-  return {
-    "2": "Actif", "3": "Candidat", "4": "Inactif (ancien)", "6":"Reçu"
-  }[bit16] || "- inconnu -"
+get state(){
+  return this.data.options.substring(16,17)
 }
+/**
+  * Méthode pour changer le statut de l'icarien
+***/
+changeIcarienStatut(newstate){
+  var opts = this.data.options.split('')
+  opts[16] = newstate
+  opts = opts.join('')
+  this.data.options = opts
+  DGet(`#${this.fid}-options`).innerHTML = this.data.options
+  this.fiche.execCodeUpdate('users',`SET options = "${opts}"`, {no_confirmation:true})
+  return true
+}
+
 
 }//class Icarien
 
@@ -56,14 +81,38 @@ build_all_own_data() {
   this.build_own_data("Pseudo/pseudo",            this.data.pseudo)
   this.build_own_data("Patronyme/patronyme",      this.data.patronyme)
   this.build_own_data("Sexe/sexe", this.data.sexe == "F" ? "Femme" : "Homme")
-  this.build_own_data("Statut", this.objet.human_state)
-  this.build_own_data("Options/options", this.data.options)
+  this.build_own_data("Statut", this.human_statut)
+  this.build_own_data("Options/options", DCreate('SPAN',{id:`${this.fid}-options`,text:this.data.options}))
   this.build_own_data("Inscription/created_at",   this.data.created_at, 'date-time')
   this.build_own_data("Arrêt/date_sortie",           this.data.date_sortie, 'date-time')
   // Noter que le module courant sera affecté après que les modules de l'icarien
   // ont été relevés et instanciés.
   this.build_own_data("Mail/mail", `<a href="mailto:${this.data.mail}?subject=🦋">${this.data.mail}</a>`)
   this.build_own_data("Naissance & âge/naissance", this.f_naissance)
+}
+
+/**
+  * Pour gérer le statut de l'icarien.
+  * C'est un menu qui affiche le statut de l'icarien et permet de le modifier.
+***/
+get human_statut(){
+  const dselect = new DSelect({
+      id: `${this.fid}-icarien-state`
+    , values: DATA_ICARIEN_STATUTS_LIST
+    , default_value: this.objet.state
+    , onchange: this.onChangeStatus.bind(this)
+  })
+  return dselect.menu
+}
+onChangeStatus(newState, ev){
+  const h_state = DATA_ICARIEN_STATUTS[newState].text
+  const pseudo      = this.objet.data.pseudo
+  const question    = `Dois-je mettre le statut de\n\n\t${pseudo}\nà :\n\t${h_state} ?`
+  if (confirm(question)) {
+    if (this.objet.changeIcarienStatut(newState)){
+      message(`Le statut de ${pseudo} a été mis à ${h_state}`)
+    }
+  }
 }
 
 get f_naissance(){

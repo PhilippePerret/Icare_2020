@@ -68,7 +68,6 @@ onChangeStatus(newStatus, ev){
     ietape.fiche.execCodeUpdate('icetapes',`SET status = ${newStatus}`,{no_confirmation:true})
     message(`J'ai mis le statut de l'étape ${this.as_human} à ${human_status}.`)
   }
-  this.closeMenuStatuts()
 }
 
 get as_human(){
