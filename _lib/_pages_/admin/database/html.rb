@@ -1,5 +1,7 @@
 # encoding: UTF-8
 require_module('form')
+require_module_js(['flash', 'event', 'dom'])
+
 class HTML
   def titre
     "#{RETOUR_ADMIN}#{EMO_ARMOIRE.page_title} Base de données".freeze
@@ -13,7 +15,4 @@ class HTML
     @body = deserb('body', self)
   end
 
-  def texte_aide
-    @aide ||= kramdown('help', self)
-  end #/ texte_aide
 end #/HTML

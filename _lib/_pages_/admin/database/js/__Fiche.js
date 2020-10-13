@@ -24,6 +24,26 @@ static deselectCurrent(){
   if (!this.current) return
   this.current.obj.classList.remove('selected')
 }
+static deselect(ifiche){
+  if (ifiche.obj.id == this.current.obj.id) {
+    this.deselectCurrent()
+  } else {
+    ifiche.obj.classList.remove('selected')
+  }
+}
+/**
+  * Retourne les positions à appliquer pour la prochaine fiche en fonction
+  * de la position de la fiche courante si elle est définie. Sinon, renvoie
+  * des valeurs par défaut.
+  * @return un objet {:x, :y}
+***/
+static getNextCoordonnates(){
+  if (this.current){
+    return { x : `calc(${this.current.left} + 40px)`, y : `calc(${this.current.top} + 40px)` }
+  } else {
+    return { x : '50%', y : '20px' }
+  }
+}
 /** ---------------------------------------------------------------------
  * INSTANCE
  --------------------------------------------------------------------- */
@@ -38,9 +58,15 @@ show(){
   this.obj.classList.remove('hidden')
   Fiche.select(this)
 }
-close(){return this.hide()}
+close(ev){
+  this.hide()
+  // Faut-il fermer les parents ?
+  if ( ev && ev.shiftKey && this.objet.owner && this.objet.owner.fiche) this.objet.owner.fiche.close(ev)
+  if (ev) stopEvent(ev) ;
+}
 hide(){
   this.obj.classList.add('hidden')
+  Fiche.deselect(this)
 }
 
 /**
@@ -49,6 +75,8 @@ hide(){
 ***/
 
 rebuild(){
+  const top   = this.obj.style.top
+      , left  = this.obj.style.left;
   this.obj.remove()
   delete this.obj
   delete this.sectionOwnData
@@ -57,29 +85,27 @@ rebuild(){
   this.built = false
   this.build()
   this.obj.classList.remove('hidden')
+  // Replacer la fiche au même endroit
+  this.obj.style.top = top
+  this.obj.style.left = left
 }
 
 /**
   * Construction de la fiche
 ***/
 build(){
-  this.obj = document.createElement("DIV")
-  this.obj.className = "fiche hidden"
+  this.obj = DCreate('DIV', {id: this.objet.id, css:"fiche hidden"})
 
   // Pour connaitre l'identifiant de l'objet
   this.obj.setAttribute("data-id", this.objet.data.id)
 
   // Titre
-  const titre = document.createElement('DIV')
-  titre.className = "titre"
-  titre.innerHTML = this.objet.ref || this.data.titre
+  const titre = DCreate('DIV', {css:'titre', text: this.objet.ref || this.data.titre})
   titre.style.backgroundColor = this.objet.constructor.color || 'black'
   this.obj.appendChild(titre)
   if ( !this.objet.not_closable ) {
     // Dans le titre : la case de fermeture de la fiche
-    const xclose = document.createElement('SPAN')
-    xclose.innerHTML = "&nbsp;"
-    xclose.className = "close-cross"
+    const xclose = DCreate('SPAN', {text:"&nbsp;", css:"close-cross" })
     xclose.addEventListener("click", this.close.bind(this))
     titre.appendChild(xclose)
   }
@@ -137,7 +163,8 @@ build(){
   // On ajoute la fiche au body et on la surveille
   document.querySelector("section#body").appendChild(this.obj)
   $(this.obj).draggable({})
-  $(this.obj).css({top:'20px', right:'20px'})
+  this.positionne()
+
   // Pour activer la fiche
   this.obj.addEventListener('click', Fiche.select.bind(Fiche, this))
 
@@ -148,6 +175,23 @@ build(){
 
   this.built = true
 }
+
+/**
+  * Méthode pour positionner la fiche
+  * Si x et y ne sont pas définis, on prend les positions de la fiche
+  * courante si elle existe, sinon des valeurs par défaut
+***/
+
+positionne(x,y){
+  const nextCoor = Fiche.getNextCoordonnates()
+  console.log("nextCoor:", nextCoor)
+  this.obj.style.top  = y || nextCoor.y ;
+  this.obj.style.left = x || nextCoor.x ;
+}
+
+
+get top(){ return this.obj.style.top }
+get left(){ return this.obj.style.left }
 
 /**
  * Méthode appelée quand on clique sur une touche dans le champ de code
@@ -285,7 +329,7 @@ extra_build(){
 }
 /**
  * Méthode pour construire les données propres de l'objet
- * Cette méthode devrait être surclassée par la classe héritante
+ * Cette méthode doit être surclassée par la classe héritante
  */
 build_all_own_data(){
 

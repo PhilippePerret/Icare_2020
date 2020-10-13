@@ -6,6 +6,28 @@ def require_folder foldername
   require_js_in(foldername)
 end
 
+# Requiert les fichiers JS et peut-être CSS dans le dossier de nom ou
+# de path +foldername+ (qui peut être une liste de paths)
+# Si +foldername+ est un simple nom, il doit être trouvé dans "./js/module/"
+# Sinon, c'est le chemin au dossier à charger.
+def require_module_js(folders_name)
+  folders_name = [folders_name] if folders_name.is_a?(String)
+  folders_name.each do |folder_name|
+    # Déterminer le vrai chemin d'accès au dossier du module
+    folder_path = if folder_name.include?("/")
+                    folder_name
+                  else
+                    "./js/modules/#{folder_name}"
+                  end
+    # On peut charger les css et les js de ce dossier
+    require_css_in(folder_path)
+    require_js_in(folder_path)
+  end
+end #/ require_module_js
+alias :require_js_module :require_module_js
+alias :require_js_modules :require_module_js
+alias :require_modules_js :require_module_js
+
 # Méthode qui permet de requérir les fichiers css dans le dossier
 # folderpath
 def require_css_in folderpath

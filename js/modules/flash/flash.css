@@ -1,0 +1,21 @@
+/*
+  Gestion des messages à l'utilisateur
+*/
+section#flash {
+  position:fixed;
+  bottom:35px;
+  left:0px;
+  background-color:bisque;
+  padding:0;
+}
+section#flash > div {
+  padding: 0.2rem 1rem;
+  font-family:"Arial Narrow";
+  font-size:13.2pt;
+}
+section#flash div.error {
+  color:red;
+}
+section#flash div.message {
+  color:green;
+}

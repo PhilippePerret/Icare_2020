@@ -48,6 +48,21 @@ Pour obtenir le nom d'une propriété à modifier, cliquer sur son libellé dans
 
 Les dates (timestamp sur 10 chiffres) sont transformées en dates humaine. Pour obtenir la valeur dans la base, il suffit de cliquer sur le champ et de récupérer la valeur donnée dans le champ.
 
+
+#### Fermeture des fiches
+
+Pour fermer une fiche, on clique sur la point rouge qui se trouve à droite en regard du titre de la fiche.
+
+Pour fermer tous les ascendants de la fiche — i.e. ses “propriétaires” —, on tient la touche `⇧` appuyée. Par exemple, si on a ouvert :
+
+~~~
+Icarien -> Un de ses modules -> une étape -> un document
+~~~
+
+… alors si on clique sur la case de fermeture du document en tenant la touche majuscule appuyée, alors toutes les fiches “ascendantes” seront fermées, c'est-à-dire la fiche de l'étape, la fiche du module et la fiche de l'icarien.
+
+---------------------------------------------------------------------
+
 <a name="implementation"></a>
 
 ### Aide programmation

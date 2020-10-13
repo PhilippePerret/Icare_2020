@@ -45,6 +45,7 @@ static get(oid, owner) {
 /**
   * L'ID formaté
   *
+  * Cet IDentifiant doit servir d'ID pour la fiche de l'objet.
   * L'instance doit définir son id dans this.data.id
 ***/
 get fid(){
@@ -59,8 +60,13 @@ get user(){
   return this._user || (this._user = Icarien.get(this.data.user_id))
 }
 
+/**
+  * Retourne un lien pour ouvrir la fiche de l'objet
+  *
+  * Note : il faut renvoyer un nouveau lien à chaque fois.
+***/
 get as_link(){
-  return this._aslink || (this._aslink = this.buildlink())
+  return this.buildlink()
 }
 
 get fiche(){
@@ -107,7 +113,7 @@ addLinkTo(container){
 // Quand on clique sur l'objet lié (par exemple le nom de l'icarien), on
 // ouvre sa fiche.
 onClickLink(ev){
-  this.fiche.open()
+  stopEventAsync(ev).then(this.fiche.open.bind(this.fiche))
 }
 
 

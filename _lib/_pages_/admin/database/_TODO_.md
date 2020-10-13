@@ -2,11 +2,12 @@
 
 ## TODO
 
-* Pouvoir ouvrir le pdf d'un document du quai des docs
+* Pouvoir faire des opérations sur les dates (par exemple pour prendre une date et dire "10 jours plus tard")
 * Poursuivre les données propres, avec des liens vers les autres fiches
 * Fiche icarien
   * Pouvoir modifier le statut
   * Outil : si date_sortie est non définie, demander de la calculer par rapport au dernier module
+* Pouvoir fermer tous les éléments ascendants de la fiche en tenant la touche MAJ : par exemple, on ouvrir ICARIEN -> UN MODULE -> UNE ÉTAPE -> UN DOCUMENT. Quand on ferme la fiche du document avec la touche MAJ appuyée, on ferme les autres fiches.
 
 ## Présentation
 

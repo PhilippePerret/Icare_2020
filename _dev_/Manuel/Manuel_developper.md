@@ -252,6 +252,14 @@ Cela, on le comprend, permet donc de partager des méthodes et des modules dans 
 
 
 
+<a name="mode_ajax"></a>
+
+### Mode Ajax
+
+Dans cette version, on utilise au minimum le mode Ajax pour la partie publique du site. En revanche, il est utilisé intensivement pour la partie d'administration du site.
+
+> Cf. tout ce qui concerne la [partie Javascript du site](#javascript).
+
 ---
 
 
@@ -319,7 +327,7 @@ Requérir un module signifie :
 * charger les javascripts (`.js`) de son dossier et tous ses sous-dossiers,
 * requérir tous les éléments des dossiers `xrequired` de ses ascendants selon le [principe des xrequired][].
 
-
+> Pour requérir un module javascript (ses fichiers js et css), cf. [Requérir un module javascript](#require_js_module).
 
 Ces modules doivent se trouver dans le dossier :
 
@@ -1319,7 +1327,36 @@ Dans les `{options}`, on peut définir une `:class` supplémentaire ou un `:titl
 
 Par défaut, il doit être fait un usage minimal de javascript (c'est un choix, peut-être que la version suivante prendra l'option opposée). Par défaut, jQuery et Ajax, par exemple, ne sont pas chargés.
 
+<a name="require_js_module"></a>
+
 ### Requérir un module javascript
+
+Ce qu'on appelle un « molule javascript », c'est un dossier qui contient 
+
+* des fichiers javascript (`.js` ou `.mjs`),
+* des fichiers CSS utiles au module pour la mise en forme.
+
+Par nature, ces dossiers se trouvent dans le dossier `./js/modules/`. Voir par exemple le module `./js/modules/flash` qui contient les méthodes et classes utiles pour gérer les messages à l'utilisateur quand on est en [mode ajax](#mode_ajax).
+
+Pour requérir un de ces modules on utilise la méthode `require_module_js` (ou son alias `require_js_module`) :
+
+~~~ruby
+require_module_js('flash')
+# ou 
+require_js_module('flash')
+~~~
+
+On peut charger plusieurs modules à l'aide de cette méthode (ou `require_modules_js` ou `require_js_modules`) :
+
+~~~ruby
+require_modules_js(['flash', 'autres', 'modules'])
+~~~
+
+Un module peut se trouver dans une autre location (mais c'est vraiment à éviter), on l'appelle alors avec son chemin complet :
+
+~~~ruby
+require_js_module("./path/to/my/folder/module/name")
+~~~
 
 ### Charger un module en différé
 

@@ -21,6 +21,7 @@ static buildFicheListe(){
       var u = new Icarien(du, this)
       u.addLinkTo(f.sectionListing)
     })
+    message("La liste des icariens est prête. Tu peux commencer par choisir un·e icarien·ne (en la filtrant peut-être avec une partie du pseudo ou une recherche par étiquette comme `statut:actif`).")
   })
   return f
 }
@@ -62,7 +63,15 @@ build_all_own_data() {
   // Noter que le module courant sera affecté après que les modules de l'icarien
   // ont été relevés et instanciés.
   this.build_own_data("Mail/mail", `<a href="mailto:${this.data.mail}?subject=🦋">${this.data.mail}</a>`)
-  this.build_own_data("Année naissance/naissance", this.data.naissance)
+  this.build_own_data("Naissance & âge/naissance", this.f_naissance)
+}
+
+get f_naissance(){
+  return this._fnaissance || ( this._fnaissance = this.build_naissance() )
+}
+build_naissance(){
+  const age = (new Date().getFullYear() - new Date(`1/1/${this.data.naissance}`).getFullYear())
+  return `${this.data.naissance} (${age} ans)`
 }
 
 link_to_current_module(){

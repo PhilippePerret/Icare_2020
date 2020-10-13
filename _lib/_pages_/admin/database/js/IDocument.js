@@ -19,16 +19,17 @@ get ref(){
 } // class IDocument
 
 class FicheIDocument extends Fiche {
-constructor(data) {
-  super(data)
+constructor(objet) {
+  super(objet)
 }
 
 build_all_own_data(){
+  this.build_own_data("Icarien", this.objet.user.as_link)
   this.build_own_data("Nom fichier/original_name", this.data.original_name)
   this.build_own_data("Créé le/time_original", this.data.time_original, 'date')
   this.build_own_data("Commenté le/time_comments", this.data.time_comments, 'date')
   this.build_own_data("Doc. original", `<span id="doc-lien-${this.data.id}-original">Recherche du document…</span>`)
-  this.build_own_data("Doc. commentaires", `<span id="doc-lien-${this.data.id}-comments">Recherche du document…</span>`)
+  this.build_own_data("Doc. comments", `<span id="doc-lien-${this.data.id}-comments">Recherche du document…</span>`)
 
   this.checkExistenceFichiersOnQDD()
 }
@@ -92,16 +93,13 @@ get module_id(){
   return this.imodule.data.abs_id
 }
 get module_name(){
-  console.log("this.objet.owner:", this.objet.owner)
-  console.log("this.objet.owner.objet:", this.objet.owner.objet)
-  console.log("this.objet.owner.objet.owner.data:", this.objet.owner.objet.owner.data)
   return camelize(this.imodule.data.module_short_name)
 }
 get ietape(){
-  return this.objet.owner.objet
+  return this.objet.owner
 }
 get imodule(){
-  return this.objet.owner.objet.owner
+  return this.objet.owner.owner
 }
 
 /**
