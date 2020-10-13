@@ -21,7 +21,7 @@ ERREUR MYSQL - Impossible d'exécuter la requête suivante :
 ############################################################
     TXT
     log(err_msg)
-    if user.admin?
+    if user && user.admin?
       erreur(err_msg)
     end
   end #/ trace_db_error

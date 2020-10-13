@@ -47,6 +47,14 @@ get ref(){
 get state(){
   return this.data.options.substring(16,17)
 }
+
+/**
+  * @async
+***/
+
+getLastDateOfUser(){
+  return Ajax.send("last_date_of_user.rb", {user_id: this.data.id})
+}
 /**
   * Méthode pour changer le statut de l'icarien
 ***/
@@ -83,6 +91,15 @@ build_all_own_data() {
   // ont été relevés et instanciés.
   this.build_own_data("Mail/mail", `<a href="mailto:${this.data.mail}?subject=🦋">${this.data.mail}</a>`)
   this.build_own_data("Naissance & âge/naissance", this.f_naissance)
+  this.build_own_data("Dernière date", this.human_last_date)
+}
+
+
+get human_last_date(){
+  this.objet.getLastDateOfUser()
+  .then(ret => {
+    console.log("Dernière date trouvée : ", ret)
+  })
 }
 
 /**
