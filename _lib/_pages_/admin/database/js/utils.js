@@ -28,7 +28,7 @@ function formate_date(timestamp, options){
     case 'date':
       options = {day:'numeric', month:'short', year:'numeric'}
       break
-    case 'date-time':
+    case 'date-time', undefined:
       options = {day:'numeric', month:'short', year:'numeric', hour:'numeric', minute:'numeric'}
       break
     default:

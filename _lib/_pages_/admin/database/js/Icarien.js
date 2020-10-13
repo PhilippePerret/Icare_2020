@@ -8,12 +8,6 @@ const DATA_ICARIEN_STATUTS_LIST = [
 ]
 const DATA_ICARIEN_STATUTS = {}
 DATA_ICARIEN_STATUTS_LIST.forEach(d => Object.assign(DATA_ICARIEN_STATUTS, {[d.value]: d}))
-// const DATA_ICARIEN_STATUTS = {
-//     "2": {value:"2", text:"Actif (2)"}
-//   , "4": {value:"4", text:"Inactif (ancien) (4)"}
-//   , "6": {value:"6", text:"Reçu (6)"}
-//   , "3": {value:"3", text:"Candidat (3)"}
-// }
 
 class Icarien extends Objet {
 

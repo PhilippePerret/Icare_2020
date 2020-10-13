@@ -2,9 +2,7 @@
 
 ## TODO
 
-* Pouvoir faire des opérations sur les dates (par exemple pour prendre une date et dire "10 jours plus tard")
 * Fiche icarien
-  * Pouvoir modifier le statut
   * Outil : si date_sortie est non définie, demander de la calculer par rapport au dernier module
 
 ## Présentation

@@ -41,7 +41,7 @@ static getNextCoordonnates(){
   if (this.current){
     return { x : `calc(${this.current.left} + 40px)`, y : `calc(${this.current.top} + 40px)` }
   } else {
-    return { x : '50%', y : '20px' }
+    return { x : '50%', y : '60px' }
   }
 }
 /** ---------------------------------------------------------------------

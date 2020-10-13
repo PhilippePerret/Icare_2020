@@ -12,4 +12,6 @@ section#body {
   width:100%;
   /* width:4000px; */
   height:2000px;
+  margin-top:0!important;
+  padding:0 1em!important;
 }

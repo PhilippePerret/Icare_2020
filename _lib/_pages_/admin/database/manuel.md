@@ -61,6 +61,28 @@ Icarien -> Un de ses modules -> une étape -> un document
 
 … alors si on clique sur la case de fermeture du document en tenant la touche majuscule appuyée, alors toutes les fiches “ascendantes” seront fermées, c'est-à-dire la fiche de l'étape, la fiche du module et la fiche de l'icarien.
 
+
+#### Additionneur de temps
+
+L'additionneur de temps, en haut de la page (sur le plan de travail) permet de calculer des dates par ajout ou soustraction.
+
+Il faut respecter les usages suivant :
+
+* la “durée littéraire” doit être exprimée par `minute`, `minutes`, `jour`, `jours`, `semaine`, `semaines` ou `mois` (ou leurs équivalents en anglais),
+* toujours coller (i.e. sans espace) le nombre et la durée littéraire : **`4jours`**, **`1semaine`**,
+* pour les secondes, mettre seulement le chiffre (par exemple `176543678 + 25`),
+* une opération doit être `+` ou `-` seulement,
+* toujours laisser des espaces avant et après chaque terme ou opération,
+* après un signe `+` ou `-` on peut enchainer les durées sans remettre le signe (par exemple `1516144258 + 2jours 2minutes 15 - 1semaine`).
+
+**Exemples**
+
+`1654567 + 4jours 2minutes - 12` sera une requête valide tandis que `1654567+4 jours+2 minutes-12` sera tout à fait invalide.
+
+**Récupération du timestamp d’une date**
+
+Pour récupérer le timestamp d'une date (nombre de secondes depuis le 1er janvier 1970), il suffit de cliquer sur le champ affichant la date au format humain.
+
 ---------------------------------------------------------------------
 
 <a name="implementation"></a>
