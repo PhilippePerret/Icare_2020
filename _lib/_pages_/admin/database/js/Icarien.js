@@ -78,7 +78,7 @@ build_all_own_data() {
   this.build_own_data("Statut", this.human_statut)
   this.build_own_data("Options/options", DCreate('SPAN',{id:`${this.fid}-options`,text:this.data.options}))
   this.build_own_data("Inscription/created_at",   this.data.created_at, 'date-time')
-  this.build_own_data("Arrêt/date_sortie",           this.data.date_sortie, 'date-time')
+  this.build_own_data("Sortie/date_sortie",           this.data.date_sortie, 'date-time')
   // Noter que le module courant sera affecté après que les modules de l'icarien
   // ont été relevés et instanciés.
   this.build_own_data("Mail/mail", `<a href="mailto:${this.data.mail}?subject=🦋">${this.data.mail}</a>`)

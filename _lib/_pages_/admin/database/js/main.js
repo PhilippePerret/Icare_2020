@@ -15,13 +15,14 @@ function CalculeTimeOperation(){
   const codeSegs = code.split(' ')
   var next_operation ;
   codeSegs.forEach(seg => {
-    console.log("seg : '%s'", seg)
     if ( seg == '+' || seg == '-') { next_operation = seg }
     else {
       if ( next_operation == '+' ) {
         result += eval(seg)
       } else if ( next_operation == '-' ) {
         result -= eval(seg)
+      } else {
+        result = eval(seg)
       }
     }
   })
