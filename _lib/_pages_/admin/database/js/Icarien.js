@@ -53,6 +53,7 @@ constructor(objet) {
  */
 build_all_own_data() {
   this.build_own_data("Pseudo/pseudo",            this.data.pseudo)
+  this.build_own_data("Patronyme/patronyme",      this.data.patronyme)
   this.build_own_data("Sexe/sexe", this.data.sexe == "F" ? "Femme" : "Homme")
   this.build_own_data("Statut", this.objet.human_state)
   this.build_own_data("Options/options", this.data.options)

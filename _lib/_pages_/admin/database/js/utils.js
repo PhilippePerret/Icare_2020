@@ -51,18 +51,55 @@ function formate_date(timestamp, options){
 
 function message(msg){
   console.info(msg)
-  flash(msg, "message")
+  new IMessage(msg, "message").show()
   return true
 }
 function erreur(msg){
   console.error(msg)
-  flash(msg, "error")
+  new IMessage(msg, "error").show()
   return false
 }
-function flash(msg, type){
+
+class IMessage {
+/**
+  * CLASSE
+***/
+static remove(imessage){
+  imessage = null
+}
+static get container(){
+  return this._container || (this._container = document.querySelector("#flash"))
+}
+/**
+  * INSTANCE
+***/
+constructor(msg, type) {
+  this.message = msg
+  this.type    = type // aka class CSS
+}
+show(){
+  this.build()
+  this.observe()
+}
+close(){
+  this.obj.remove()
+  clearTimeout(this.timer)
+  this.timer = null
+  this.constructor.remove(this)
+}
+build(){
   const div = document.createElement('DIV')
-  div.className = type
-  div.innerHTML = msg
-  div.setAttribute("onclick","this.remove()")
-  document.querySelector("#flash").appendChild(div)
+  div.className = this.type
+  div.innerHTML = this.message
+  this.constructor.container.appendChild(div)
+  this.obj = div
+}
+observe(){
+  this.obj.setAttribute("onclick","this.remove()")
+  this.timer = setTimeout(this.close.bind(this), this.duree)
+}
+get duree(){
+  const nombre_mots = this.message.split(" ").length
+  return nombre_mots * 1 * 1000
+}
 }
