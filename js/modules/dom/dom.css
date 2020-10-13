@@ -1,0 +1,7 @@
+select.dselect {
+  background-color:white;
+}
+select.movable {
+  position:absolute;
+  z-index:200;
+}
