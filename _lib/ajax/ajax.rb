@@ -1,5 +1,6 @@
 #!/usr/bin/ruby
 # encoding: UTF-8
+# frozen_string_literal: true
 
 ######################!/usr/bin/env ruby
 def log message
@@ -7,7 +8,7 @@ def log message
 end
 alias :thislog :log
 
-log("--- [#{Time.now}] Entrée dans ajax.rb")
+log("\n\n--- [#{Time.now}] Entrée dans ajax.rb")
 
 require_relative 'ajax/required'
 Ajax.treate_request

@@ -1,5 +1,7 @@
 # TODO LIST
 
+Voir dans GHI les tâches avec le tag 'concours'.
+
 ## Identifiant d'un inscrit
 
 ~~~

@@ -18,7 +18,7 @@ Options +FollowSymlinks
 RewriteEngine on
 
 # Pour ne pas rediriger les images, fichiers css, fonts, etc.
-RewriteCond %{REQUEST_FILENAME} !.+\.(css|js|mjs|jp2|png|jpg|pdf|ico|txt)$
+RewriteCond %{REQUEST_FILENAME} !.+\.(css|js|png|jpg|pdf|gif|mjs|jp2|ico|txt)$
 
 # Pour ne pas rediriger l'appel au script ajax
 RewriteCond %{REQUEST_FILENAME} !.+ajax\.rb$

@@ -51,7 +51,31 @@ constructor(objet) {
   this.objet  = objet
   this.data   = objet.data
 }
+
+/** ---------------------------------------------------------------------
+  *   MÉTHODES ET PROPRIÉTÉS PUBLIQUES
+  *
+*** --------------------------------------------------------------------- */
+
+// Retourne l'identifiant unique de l'objet (p.e. "icarien-101")
 get fid(){return this.objet.fid}
+
+// Retourne un DOMElement cliquable qui affiche la date +date+ (la calcule
+// si elle n'existe pas) et donne le temps +time+ correspondant dans un
+// champ de sélection.
+makeSpanDate(time, date){
+  date = date || formate_date(date)
+  let span = DCreate('SPAN', {text:date, class:'linked'})
+  span.addEventListener('click', this.giveValue.bind(this, "Le timestamp est", time))
+  return span
+}
+
+/** ---------------------------------------------------------------------
+  *   AUTRES MÉTHODES
+  *
+*** --------------------------------------------------------------------- */
+
+
 open(){return this.show()}
 show(){
   if (!this.objet.loaden) return this.objet.load(this.show.bind(this))

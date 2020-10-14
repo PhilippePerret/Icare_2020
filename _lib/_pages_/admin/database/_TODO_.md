@@ -2,6 +2,8 @@
 
 ## TODO
 
+`ghi list -L dbfiches` pour voir la liste des choses à faire
+
 * Fiche icarien
   * Outil : si date_sortie est non définie, demander de la calculer par rapport au dernier module
 

@@ -35,6 +35,7 @@ class Ajax
 
     def treate_request
       init
+      log("= Script : #{param(:script)}")
       checkPirate   || raise(PiratageError.new)
       script_fullpath = File.expand_path(File.join('.','ajax','_scripts',param(:script)))
       checkScript(script_fullpath)   || raise("Le script '#{script_fullpath}' est introuvable…")

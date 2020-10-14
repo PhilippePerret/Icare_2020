@@ -85,23 +85,45 @@ build_all_own_data() {
   this.build_own_data("Sexe/sexe", this.data.sexe == "F" ? "Femme" : "Homme")
   this.build_own_data("Statut", this.human_statut)
   this.build_own_data("Options/options", DCreate('SPAN',{id:`${this.fid}-options`,text:this.data.options}))
-  this.build_own_data("Inscription/created_at",   this.data.created_at, 'date-time')
-  this.build_own_data("Sortie/date_sortie",           this.data.date_sortie, 'date-time')
+  this.build_own_data("Inscription/created_at", formate_date(this.data.created_at))
+  this.build_own_data("Sortie/date_sortie", this.f_date_sortie)
   // Noter que le module courant sera affecté après que les modules de l'icarien
   // ont été relevés et instanciés.
   this.build_own_data("Mail/mail", `<a href="mailto:${this.data.mail}?subject=🦋">${this.data.mail}</a>`)
   this.build_own_data("Naissance & âge/naissance", this.f_naissance)
-  this.build_own_data("Dernière date", this.human_last_date)
 }
 
-
-get human_last_date(){
+get f_date_sortie(){
   this.objet.getLastDateOfUser()
   .then(ret => {
-    console.log("Dernière date trouvée : ", ret)
+    setTimeout(this.fixLastTimeAndSortie.bind(this, ret), 1 * 1000)
   })
+  return `${formate_date(this.data.date_sortie)} <span id="${this.fid}-checked-date"><img src="./img/gif/spirale.gif" width="20" style="vertical-align:sub;" /></span><div id="${this.fid}-last-time" class="hidden"></div>`
 }
 
+fixLastTimeAndSortie(ret){
+  // console.log("Dernière dates trouvées : ", ret)
+  const markok = ret.date_sortie_ok ? '√' : `<span title="${ret.raison}">🆘</span>` ;
+  const date_sortie_check_span = document.querySelector(`span#${this.fid}-checked-date`)
+  const last_time_span = document.querySelector(`div#${this.fid}-last-time`)
+  date_sortie_check_span.innerHTML = markok
+  if (!ret.date_sortie_ok) {
+    // Si la date de sortie n'est pas bonne, il faut proposer des nouvelles
+    // date
+    const last_time_data = ret.time_list[0]
+    let last_time = Number(last_time_data.time)
+    let from_item = `${last_time_data.table} #${last_time_data.id}`
+    if ( last_time_data.property != 'ended_at' ) {
+      // Si ce n'est pas une propriété de fin, on ajoute 10 jours
+      last_time += 10*24*3600
+      from_item += " + 10 jours"
+    }
+    const idprov = `time-${new Date().getTime()}`
+    last_time_span.classList.remove('hidden')
+    last_time_span.innerHTML = `Pourrait être <span id="${idprov}"></span> (de ${from_item})`
+    document.querySelector(`span#${idprov}`).replaceWith(this.makeSpanDate(last_time, formate_date(last_time)))
+  }
+}
 /**
   * Pour gérer le statut de l'icarien.
   * C'est un menu qui affiche le statut de l'icarien et permet de le modifier.
