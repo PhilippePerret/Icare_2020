@@ -14,10 +14,19 @@
 
 =end
 
+# L'expression régulière qui va permettre de ne pas faire des réductions de
+# réductions de réductions…
+REG_END_PASSE = /\-(regular|big|small|large)\.(png|jp2)/
+
 
 require_relative 'xlib/required'
 
+puts "FOLDER_IMAGES: #{File.expand_path(FOLDER_IMAGES)}"
+
 Dir["#{FOLDER_IMAGES}/**/*.{png,jpg}"].each do |imgpath|
+  if imgpath.match?(/\-(regular|big|small|large|bigger|huge)\.(png|jpg|jp2)$/)
+    next
+  end
   img = Image.new(imgpath)
   STDOUT.write "🌅 IMAGE #{img.affixe}… "
   if img.all_exists?
