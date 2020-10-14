@@ -10,6 +10,7 @@
 class IcareCLI
   OPTIONS_DIM_TO_REAL = {
     'e' => :errors_only,
+    'h' => :help,
     'i' => :infos,
     'k' => :keep,
     'l' => :local,
