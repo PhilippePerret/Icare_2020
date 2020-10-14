@@ -4,9 +4,6 @@
 
 `ghi list -L dbfiches` pour voir la liste des choses à faire
 
-* Fiche icarien
-  * Outil : si date_sortie est non définie, demander de la calculer par rapport au dernier module
-
 ## Présentation
 
 L'idée de cette partie est de pouvoir gérer la base de données de façon très "graphique", avec des "fiches" que je mets de côté et que je peux déplacer à loisir.

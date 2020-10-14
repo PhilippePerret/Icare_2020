@@ -15,6 +15,13 @@ class IEtape extends Objet {
 /**
  * CLASSE
 **/
+
+static get OWN_DATA(){
+  return [
+    {suffix: 'icarien',     method:'f_icarien',     field_method:'innerHTML'}
+  ]
+}
+
 static get color(){return 'chocolate'}
 
 static get table(){return 'icetapes'}
@@ -38,7 +45,7 @@ constructor(objet) {
 }
 
 build_all_own_data(){
-  this.build_own_data("Icarien", this.objet.user.as_link)
+  this.build_own_data("Icarien", this.spanProperty('icarien', this.f_icarien))
   this.build_own_data("Propriétaire", this.objet.owner.as_link)
   this.build_own_data("ID", `#${this.data.id}`)
   this.build_own_data("Statut/status", this.human_status)
@@ -47,6 +54,8 @@ build_all_own_data(){
   this.build_own_data("Finie le/ended_at", this.data.ended_at, 'date-time')
   this.build_own_data("Options/options", this.data.options)
 }
+
+get f_icarien(){return this.objet.user.as_link}
 
 /**
   * Retourne le statut de l'étape, au format humain

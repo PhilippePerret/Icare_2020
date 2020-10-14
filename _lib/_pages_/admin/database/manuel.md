@@ -1,6 +1,6 @@
-## Graphic Database
+## DB-Per-Fiches
 
-“Graphic Database” est un mode de consultation et d'édition des données de la base de données qui permet un travail confortable avec les données. Il fonctionne par carte, ou "fiche", qui sont chacun des objets de l'application.
+“DB-Per-Fiches” est un mode de consultation et d'édition des données de la base de données qui permet un travail confortable avec les données. Il fonctionne par carte, ou "fiche", qui sont chacun des objets de l'application.
 
 Ce document est composé de deux sections principales :
 
@@ -32,6 +32,8 @@ SET date_sortie = "5789947893"
 
 > Note : c'est le premier mot — ici "SET" — qui va déterminer comment traiter la ligne de code.
 
+Pour obtenir facilement le code `set` à utiliser, il suffit de cliquer sur le nom de la propriété, à gauche. Par exemple, si on clique sur « Date sortie », le programme demande si on veut redéfinir cette valeur. Si on confirme, il ajoute le code `SET date_sortie = ` dans le champ de code. Il suffit alors de rentrer la valeur (ici, soit en utilisant la valeur suggérée en cas d’erreur de date de sortie, soit en en calculant une grâce au [calculateur de date](#calculateur_date)).
+
 #### Autre action par le champ de code
 
 En plus de la commande `SET`, on peut trouver :
@@ -61,10 +63,12 @@ Icarien -> Un de ses modules -> une étape -> un document
 
 … alors si on clique sur la case de fermeture du document en tenant la touche majuscule appuyée, alors toutes les fiches “ascendantes” seront fermées, c'est-à-dire la fiche de l'étape, la fiche du module et la fiche de l'icarien.
 
+<a name="calculateur_date"></a>
 
-#### Additionneur de temps
 
-L'additionneur de temps, en haut de la page (sur le plan de travail) permet de calculer des dates par ajout ou soustraction.
+#### Calculateur de date
+
+Le « Calculateur de date », ou « additionneur de temps », en haut de la page (sur le plan de travail) permet de calculer des dates par ajout ou soustraction.
 
 Il faut respecter les usages suivant :
 
@@ -90,3 +94,7 @@ Pour récupérer le timestamp d'une date (nombre de secondes depuis le 1er janvi
 ### Aide programmation
 
 Pour le moment s'inspirer des modules javascript présents pour modifier le comportement ou ajouter des fonctionnalités.
+
+### Tâches à exécuter
+
+Pour connaitre les tâches qui restent à exécuter, jouer `ghi list -L dbfiches` en console.

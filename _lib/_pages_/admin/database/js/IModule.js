@@ -3,6 +3,13 @@ class IModule extends Objet {
 /**
  * CLASSE
 **/
+static get OWN_DATA(){
+  return [
+      {suffix:'owner',        method:'f_owner',           field_method:'innerHTML'}
+    , {suffix:'project_name', method:'data.project_name', field_method:'innerHTML'}
+  ]
+}
+
 static get color(){return 'darkslategray'}
 
 static get table(){return 'icmodules'}
@@ -25,10 +32,9 @@ get f_name(){
 }
 build_fname(){
   var ps = [this.data.module_name]
-  if ( this.data.project_name) {
-    ps.push(`“${this.data.project_name}”`)
-  }
-  return ps.join(' ')
+  const projectName = this.data.project_name ? `“${this.data.project_name}”` : ""
+  ps.push(`<span class="${this.fid}-project_name">${projectName}</span>`)
+  return ps.join(' ').trim()
 }
 
 }// class IModule
@@ -40,13 +46,15 @@ constructor(objet){
 }
 
 build_all_own_data(){
-  this.build_own_data("Propriétaire", this.objet.owner.as_link)
-  this.build_own_data("Titre projet/project_name", this.data.project_name)
+  this.build_own_data("Icarien", this.spanProperty('owner', this.f_owner))
+  this.build_own_data("Titre projet/project_name", this.spanProperty('project_name', this.data.project_name))
   this.build_own_data("Démarré le/started_at", this.data.started_at, 'date')
   this.build_own_data("Achevé le/ended_at", this.data.ended_at, 'date')
   this.build_own_data("Étape courante/icetape_id", `<span id="${this.fid}-icetape_id">…</span>`)
   this.build_own_data("Options/options", this.data.options)
 }
+
+get f_owner() { return this.objet.owner.as_link }
 
 defineLinkToCurrentEtape(){
   let cont ;

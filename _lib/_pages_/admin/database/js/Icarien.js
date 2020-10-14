@@ -68,6 +68,17 @@ changeIcarienStatut(newstate){
   return true
 }
 
+static get OWN_DATA(){
+  return [
+      {suffix: 'pseudo',      method:'data.pseudo',     field_method: 'innerHTML'}
+    , {suffix: 'patronyme',   method:'data.patronyme',  field_method: 'innerHTML'}
+    , {suffix: 'sexe',        method:'f_sexe',          field_method: 'innerHTML'}
+    , {suffix: 'options',     method:'data.options',    field_method: 'innerHTML'}
+    , {suffix: 'mail',        method:'f_mail',          field_method: 'innerHTML'}
+    , {suffix: 'naissance',   method:'f_naissance',     field_method: 'innerHTML'}
+    , {suffix: 'created_at',  method:'f_created_at',    field_method: 'innerHTML'}
+  ]
+}
 
 }//class Icarien
 
@@ -80,17 +91,31 @@ constructor(objet) {
  * Construction des données propres de l'icarien
  */
 build_all_own_data() {
-  this.build_own_data("Pseudo/pseudo",            this.data.pseudo)
-  this.build_own_data("Patronyme/patronyme",      this.data.patronyme)
-  this.build_own_data("Sexe/sexe", this.data.sexe == "F" ? "Femme" : "Homme")
+  this.build_own_data("Pseudo/pseudo", this.spanProperty('pseudo'))
+  this.build_own_data("Patronyme/patronyme", this.spanProperty('patronyme'))
+  this.build_own_data("Sexe/sexe", this.spanProperty('sexe', this.f_sexe))
   this.build_own_data("Statut", this.human_statut)
-  this.build_own_data("Options/options", DCreate('SPAN',{id:`${this.fid}-options`,text:this.data.options}))
-  this.build_own_data("Inscription/created_at", formate_date(this.data.created_at))
-  this.build_own_data("Sortie/date_sortie", this.f_date_sortie)
+  this.build_own_data("Options/options", this.spanProperty('options'))
+  this.build_own_data("Inscription/created_at", this.spanProperty('created_at', this.f_created_at))
+  this.build_own_data("Sortie/date_sortie", this.spanProperty('date_sortie', this.f_date_sortie))
   // Noter que le module courant sera affecté après que les modules de l'icarien
-  // ont été relevés et instanciés.
-  this.build_own_data("Mail/mail", `<a href="mailto:${this.data.mail}?subject=🦋">${this.data.mail}</a>`)
-  this.build_own_data("Naissance & âge/naissance", this.f_naissance)
+  // ont été relevés et instanciés. TODO Mettre plutôt un champ ici qui sera remplacé plus tard
+  // comme pour les icmodules je crois.
+  this.build_own_data("Mail/mail", this.spanProperty('mail', this.f_mail))
+  this.build_own_data("Naissance & âge/naissance", this.spanProperty('naissance', this.f_naissance))
+}
+
+get f_created_at(){
+  return formate_date(this.data.created_at)
+}
+get f_mail(){
+  return `<a href="mailto:${this.data.mail}?subject=🦋">${this.data.mail}</a>`
+}
+get f_sexe(){
+  return this.data.sexe == "F" ? "Femme" : "Homme"
+}
+get f_naissance(){
+  return this._fnaissance || ( this._fnaissance = this.build_naissance() )
 }
 
 get f_date_sortie(){
@@ -148,9 +173,6 @@ onChangeStatus(newState, ev){
   }
 }
 
-get f_naissance(){
-  return this._fnaissance || ( this._fnaissance = this.build_naissance() )
-}
 build_naissance(){
   const age = (new Date().getFullYear() - new Date(`1/1/${this.data.naissance}`).getFullYear())
   return `${this.data.naissance} (${age} ans)`

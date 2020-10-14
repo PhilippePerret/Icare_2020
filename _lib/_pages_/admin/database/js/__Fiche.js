@@ -52,6 +52,8 @@ constructor(objet) {
   this.data   = objet.data
 }
 
+
+
 /** ---------------------------------------------------------------------
   *   MÉTHODES ET PROPRIÉTÉS PUBLIQUES
   *
@@ -59,6 +61,25 @@ constructor(objet) {
 
 // Retourne l'identifiant unique de l'objet (p.e. "icarien-101")
 get fid(){return this.objet.fid}
+
+
+/**
+  * Retourne un CODE SPAN type pour remplacement de valeur.
+  * +property+ La propriété de l'objet
+  * +value+ La valeur. Si elle n'est pas définie, elle est prise dans
+  * les data de l'objet.
+***/
+spanProperty(property, value){
+  value = value || this.data[property]
+  const span = DCreate('SPAN', {class:`${this.fid}-${property}`})
+  if ( "object" == typeof value ) {
+    span.appendChild(value)
+  } else {
+    span.innerHTML = value
+  }
+  return span
+}
+
 
 // Retourne un DOMElement cliquable qui affiche la date +date+ (la calcule
 // si elle n'existe pas) et donne le temps +time+ correspondant dans un
@@ -75,6 +96,49 @@ makeSpanDate(time, date){
   *
 *** --------------------------------------------------------------------- */
 
+// Pour le moment, la méthode ne permet d'actualiser que les données
+// propres
+update(){
+  this.updateOwnData()
+}
+/**
+  * Méthode appelée pour actualiser toutes les données propres, après
+  * modification des données.
+  *
+  * La table doit être une propriété/constante de l'objet :
+  *   static get OWN_DATA(){return [...]}
+  * (cf. dans Icarien.js)
+  *
+  * Requiert
+  * --------
+  *   - une liste contenant des tables avec :
+  *       {:suffix, :method, :field_method}
+  *     avec
+  *       :suffix     Suffixe de l'identifiant du champ, à mettre après
+  *                   this.fid.
+  *       :method     La méthode à appeler sur l'objet pour avoir la valeur
+  *       :field_method   'innerHTML' ou 'value' pour préciser comment affecter
+  *                   la valeur
+  *
+***/
+updateOwnData(){
+  this.objet.constructor.OWN_DATA.forEach(dod => {
+    const fields = document.querySelectorAll(`.${this.fid}-${dod.suffix}`)
+    const code  = eval(`this.${dod.method}`)
+    let new_value ;
+    if ( "function" == typeof code) {
+      new_value = code.call(this)
+    } else {
+      new_value = code
+    }
+    console.log("new_value = ", new_value)
+    if ( 'object' == typeof new_value /* un HTMLElement */) {
+      fields.forEach(field => {field.innerHTML = "";field.appendChild(new_value)})
+    } else /* un simple string */ {
+      fields.forEach(field => field[dod.field_method/*'innerHTML' ou 'value'*/] = new_value)
+    }
+  })
+}
 
 open(){return this.show()}
 show(){
@@ -321,8 +385,8 @@ execCodeUpdate(sqlTable, fieldcode, options){
       if (ret.message) message(ret.message)
       // Updater la fiche avec les nouvelles valeurs envoyées
       // console.log("ret", ret)
-      this.objet.data = ret.new_data
-      this.rebuild()
+      this.objet.data = this.data = ret.new_data
+      this.update()
     }
   })
 }
@@ -363,6 +427,17 @@ build_all_own_data(){
 giveValue(message, valueStr){
   prompt(message, valueStr)
 }
+setSQLcodeOrGiveValue(message, property){
+  const question = `Dois-je ajouter la propriété ${property} à la commande SQL ?`
+  if ( confirm(question) ) {
+    let current_code = this.codeField.value
+    current_code += current_code == "" ? "SET " : ", "
+    current_code += `${property} = `
+    this.codeField.value = current_code
+  } else {
+    this.giveValue(message, property)
+  }
+}
 
 /**
  * Pour construire une ligne de donnée propre
@@ -377,17 +452,17 @@ build_own_data(libelle, valeur, type){
   line.appendChild(label)
   if (prop_name){
     label.setAttribute("title", `Pseudo-sql proprety: ${prop_name}`)
-    label.addEventListener('click', this.giveValue.bind(this, "Le nom de la propriété est", prop_name))
+    label.addEventListener('click', this.setSQLcodeOrGiveValue.bind(this, "Le nom de la propriété est", prop_name))
   }
 
   // Valeur
   let value ;
   let real_value = null;
+  // console.log("typeof(valeur): ", typeof(valeur), valeur)
   if ( valeur && "object" == typeof(valeur) ) {
     value = valeur;
   } else {
-    value = document.createElement('SPAN')
-    value.className = 'own-data-value'
+    value = DCreate('SPAN', {class:'own-data-value'})
     if ( !valeur ) {
       valeur = "n/d"
     } else {

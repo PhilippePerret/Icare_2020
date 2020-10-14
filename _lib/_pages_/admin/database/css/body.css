@@ -3,6 +3,7 @@
 */
 body {
   background-color:cadetblue!important;
+  color:black;
 }
 
 section#header {display:none!important}

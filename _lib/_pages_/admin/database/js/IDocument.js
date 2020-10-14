@@ -3,6 +3,14 @@ class IDocument extends Objet {
 /**
  * CLASSE
 **/
+
+static get OWN_DATA(){
+  return [
+      {suffix: 'icarien',     method:'f_icarien',       field_method:'innerHTML'}
+    , {suffix: 'original',    method:'f_original_name', field_method:'innerHTML'}
+  ]
+}
+
 static get color(){return 'mediumpurple'}
 static get table(){return 'icdocuments'}
 /**
@@ -24,8 +32,8 @@ constructor(objet) {
 }
 
 build_all_own_data(){
-  this.build_own_data("Icarien", this.objet.user.as_link)
-  this.build_own_data("Nom fichier/original_name", this.data.original_name)
+  this.build_own_data("Icarien", this.spanProperty('icarien', this.f_icarien))
+  this.build_own_data("Nom fichier/original_name", this.spanProperty('original', this.f_original))
   this.build_own_data("Créé le/time_original", this.data.time_original, 'date')
   this.build_own_data("Commenté le/time_comments", this.data.time_comments, 'date')
   this.build_own_data("Doc. original", `<span id="doc-lien-${this.data.id}-original">Recherche du document…</span>`)
@@ -33,6 +41,9 @@ build_all_own_data(){
 
   this.checkExistenceFichiersOnQDD()
 }
+
+get f_icarien(){return this.objet.user.as_link}
+get f_original(){return this.data.original_name}
 
 /**
   * Méthode qui checke l'existence des fichiers PDF pour instruire correctement
