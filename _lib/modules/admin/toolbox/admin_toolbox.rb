@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Boite à outils de l'administration
 =end
@@ -15,6 +16,7 @@ class << self
 <div id="admin-toolbox">
 <div class="titre"><img src="img/Emojis/machine/manette-jeu.png" style="width:40px;" /></div>
 <div class="content">
+#{Tag.link(route:'admin/home', text:"Tableau de bord", class:"operation")}
 #{link_operation(:essai, 'Essai toolbox')}
 #{link_operation(:inspecter, 'Inspecter cette page')}
 </div>
