@@ -78,10 +78,29 @@ end #/ resultat_comparaison
 # ---------------------------------------------------------------------
 def out_of_date?
   (@outofdate ||= begin
-    (not(dis_exists?) || dis_mtime < loc_mtime) ? :true : :false
+    (not(ignored?) && (not(dis_exists?) || dis_mtime < loc_mtime) )? :true : :false
   end) == :true
-
 end #/ out_of_date?
+
+# Retourne TRUE si le fichier doit être ignoré
+def ignored?
+  is_ignored = false
+  unless IGNORES[:paths].empty?
+    is_ignored = true if IGNORES[:paths].include?(rel_path)
+  end
+  unless is_ignored || IGNORES[:regs].empty?
+    IGNORES[:regs].each do |reg|
+      if rel_path.match?(reg)
+        is_ignored = true
+        break
+      end
+    end
+  end
+  if VERBOSE && is_ignored
+    puts "IGNORED".bleu
+  end
+  return is_ignored
+end #/ ignored?
 
 # ---------------------------------------------------------------------
 #

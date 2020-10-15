@@ -8,6 +8,7 @@ SERVEUR_SSH = "icare@ssh-icare.alwaysdata.net"
 # Path au fichier qui contient les opérations à faire relevées au cours
 # de la dernière analyse de synchro
 OPERATIONS_PATH = File.join(THIS_FOLDER,'last_operations.msh')
+IGNORE_FILE_PATH = File.join(THIS_FOLDER, '.syncignore')
 
 require_relative './classes/usual_methods'
 
@@ -16,7 +17,7 @@ ssh #{SERVEUR_SSH} ruby << RUBY
 require 'json'
 folder = '%{folder}'
 alist = []
-Dir["\#{folder}/**/*.*"].each do |path|
+Dir["\#{folder}/*"].each do |path|
   next if File.directory?(path)
   hdata = {path:path, mtime: File.stat(path).mtime.to_i}
   alist << hdata

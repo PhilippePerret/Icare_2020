@@ -29,6 +29,27 @@ il faut ajouter l'option :
 
 == Filtrage des éléments ==
 
+#{'Noter que les filtrages ne s’applique pas au traitement d’un'.rouge}
+#{'unique fichier'.rouge}.
+Par exemple, les fichiers 'index.rb' et '.htaccess' sont exclus des
+synchronisation, mais si on joue #{'icare sync index.rb'.jaune}, alors ce fichier
+sera synchronisé.
+
+Pour voir tous les éléments ignorés et les définir de façon définitive,
+jouer la commande (qui ouvre le fichier '.syncignore' qui se situe dans
+le dossier 'sync') :
+
+  #{'icare sync ignore'.jaune}
+
+On peut ponctuellement ignorer des fichiers ou des dossiers avec l'option :
+
+  #{'--ignore=...'.jaune}
+
+On met en argument de cette fonction les paths des fichiers à exclure,
+séparés par des virgules. Par exemple :
+
+  #{'--ignore=.htaccess,index.rb'.jaune}
+
   TEXT
 end #/ aide
 end # /<< self

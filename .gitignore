@@ -12,6 +12,8 @@ _lib/data/qdd/
 
 _lib/ajax/log.txt
 
+_dev_/CLI/lib/commands/sync/last_operations.msh
+
 *.log
 
 tmp/

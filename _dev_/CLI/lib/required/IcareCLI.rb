@@ -35,7 +35,14 @@ class << self
     @options = {}
     (0...ARGV.length).each do |ivar|
       if ARGV[ivar].start_with?('--')
-        @options.merge!(ARGV[ivar][2..-1].gsub(/\-/,'_').to_sym => true)
+        opt = ARGV[ivar][2..-1].gsub(/\-/,'_')
+        if opt.match?('=')
+          opt, val = opt.split('=')
+          val = val[1...-1] if val.match?(/^['"](.*)["']$/)
+        else
+          val = true
+        end
+        @options.merge!(opt.to_sym => val)
       elsif ARGV[ivar].start_with?('-') # on peut utiliser -eohg
         ARGV[ivar][1..-1].split('').each do |short_opt|
           @options.merge!((OPTIONS_DIM_TO_REAL[short_opt]||short_opt) => true)

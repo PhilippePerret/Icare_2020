@@ -1,0 +1,10 @@
+
+# Ignorer les fichiers PDF
+*.pdf
+
+# Ignorer le fichier développement
+_dev_/
+
+# Ignorer les fichiers de base
+.htaccess
+index.rb

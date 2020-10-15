@@ -12,6 +12,10 @@ class << self
       require_relative('./sync/aide')
       show_aide
       return
+    elsif what == 'ignore'
+      # Pour voir le fichier .syncignore
+      require_relative './sync/classes/ignore'
+      return show_ignore_files
     end
 
     # Les éléments à traiter (suite de paths)
@@ -19,17 +23,36 @@ class << self
     elements.shift
 
     # On nettoie la console
-    clear
+    # clear # TODO : REMETTRE
 
-    if elements.empty? && options[:sync] && File.exists?(OPERATIONS_PATH)
-      # Rechargement des opérations mémorisées
-      reload_operations
+    if elements.empty?
+      if options[:sync] && File.exists?(OPERATIONS_PATH)
+        # Rechargement des opérations mémorisées
+        reload_operations
+      else
+        puts "Aucun élément n'est spécifié (jouer la commande #{'icare sync aide'.jaune} pour de l'aide)".rouge
+        return
+      end
     else
       # Traitement de chaque path donnée en argument
+      require_relative './sync/classes/ignore'
+      load_sync_ignore # => IGNORES
       elements.each do |what|
         check_element(what)
       end
+
+      # On procède à l'analyse
+      # ----------------------
+      # Si un fichier n'est pas à jour, on l'ajoute à OPERATIONS[:updates]
+      ALLFILES.each do |rpath, sfile|
+        puts sfile.resultat_comparaison if sfile.out_of_date? || VERBOSE
+        OPERATIONS[:updates] << sfile if sfile.out_of_date?
+      end
+
     end
+
+    # On détruit toujours le fichier des opérations, ici, s'il existe
+    File.delete(OPERATIONS_PATH) if File.exists?(OPERATIONS_PATH)
 
     # Pour vérifier si la synchronisation est requise
     require_relative './sync/classes/Synchro'
@@ -41,7 +64,7 @@ class << self
       proceed_synchronisation
     else
       # Quand tout est OK
-      puts "=== Tous les éléments sont synchronisés ===".vert
+      puts "#{RC}=== Tous les éléments sont synchronisés ===".vert
     end
 
     puts RC * 3

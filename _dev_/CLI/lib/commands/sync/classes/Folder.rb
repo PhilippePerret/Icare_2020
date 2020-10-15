@@ -11,9 +11,15 @@ OPERATIONS = {updates: [], deletes: []}
 # le chemin d'accès à un dossier icare existant
 def check_folder(loc_path)
 
-  dis_path = loc_path.sub(/^\.\//, 'www/')
-  puts "\n\n* Traitement du dossier #{loc_path} (#{dis_path}) *"
-  res = `#{SSH_REQUEST_FOLDER % {folder: dis_path}}`
+  # On passe provisoirement par un SFile pour savoir s'il faut ignorer
+  # le dossier
+  sfile = SFile.new(loc_path)
+  puts "* Traitement du dossier '#{loc_path}' (#{sfile.rel_path})(#{sfile.dis_path})".bleu
+
+  # Si tout le dossier doit être ignoré, on le passe
+  return if sfile.ignored?
+
+  res = `#{SSH_REQUEST_FOLDER % {folder: sfile.dis_path}}`
   data_files = JSON.parse(res)
 
   # Transformation de la liste en table
@@ -25,9 +31,13 @@ def check_folder(loc_path)
   # puts "\n\ntable_distant_files: #{table_distant_files.inspect}"
 
   # Traitement des fichiers locaux
-  Dir["#{loc_path}/**/*.*"].each do |fpath|
-    sfile = SFile.new(fpath)
-    ALLFILES.merge!(sfile.rel_path => sfile)
+  Dir["#{loc_path}/*"].each do |fpath|
+    if File.directory?(fpath)
+      check_folder(fpath)
+    else
+      sfile = SFile.new(fpath)
+      ALLFILES.merge!(sfile.rel_path => sfile)
+    end
   end
   # puts "\n\nALLFILES: #{ALLFILES.inspect}"
 
@@ -38,21 +48,12 @@ def check_folder(loc_path)
     if ALLFILES.key?(rel_path)
       ALLFILES[rel_path].dis_mtime = df["mtime"]
     else
-      distant_files_not_locaux(relpath => df)
+      distant_files_not_locaux.merge!(rel_path => df)
     end
   end
   unless distant_files_not_locaux.empty?
     puts "\n\n==== distant_files_not_locaux (restants) : #{distant_files_not_locaux.inspect}"
     OPERATIONS[:deletes] += distant_files_not_locaux.values
-  end
-
-  # On procède à l'analyse
-  # Si un fichier n'est pas à jour, on l'ajoute à OPERATIONS[:updates]
-  ALLFILES.each do |rpath, sfile|
-    puts sfile.resultat_comparaison if sfile.out_of_date? || VERBOSE
-    if sfile.out_of_date?
-      OPERATIONS[:updates] << sfile
-    end
   end
 
 end #/ traite_folder
