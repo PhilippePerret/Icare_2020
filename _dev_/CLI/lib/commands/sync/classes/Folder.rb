@@ -81,12 +81,3 @@ def traite_folder(loc_path)
 
   puts RC * 3
 end #/ traite_folder
-
-def proceder_a_la_synchro?
-  Q.yes?("Dois-je procéder à la synchronisation ?")
-end #/ proceder_a_la_synchro?
-
-# Méthode pour mémoriser les résultats de cette analyse de synchro
-def memorise_synchronisation(operations)
-
-end #/ memorise_synchronisation

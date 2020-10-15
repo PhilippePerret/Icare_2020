@@ -28,6 +28,8 @@ end #/ initialize
 #   Méthodes de synchronisation
 #
 # ---------------------------------------------------------------------
+
+# Méthode de synchronisation quand on traite par dossier
 def synchronize
   STDOUT.write " * Synchronisation de #{rel_path}".bleu
   cmd = "ssh #{SERVEUR_SSH} 'mkdir -p ./#{File.dirname(dis_path)}';scp -p #{loc_path} #{SERVEUR_SSH}:#{dis_path}"
@@ -38,6 +40,22 @@ def synchronize
 rescue Exception => e
   puts "#{RC}   ÉCHEC : #{e.message}".rouge
 end #/ synchronize
+
+# Méthode appelée quand on traite un fichier unique
+def synchronize_as_lonely
+  puts "*** Synchronisation du fichier unique #{rel_path} ***".bleu
+  # On compare avec l'état distant
+  res = JSON.parse(`#{SSH_REQUEST_FILE % {dis_path: dis_path}}`)
+  self.dis_mtime = res['mtime']
+  if not out_of_date?
+    puts "√ Le fichier est à jour".vert
+    return
+  end
+  puts "🆘 Le fichier n'est pas à jour.".rouge
+  if IcareCLI.options[:sync] || proceder_a_la_synchro?("de ce fichier")
+    synchronize
+  end
+end #/ synchro_as_lonely
 # ---------------------------------------------------------------------
 #
 #   Méthodes d'helper

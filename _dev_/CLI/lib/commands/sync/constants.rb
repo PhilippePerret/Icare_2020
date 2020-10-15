@@ -5,6 +5,8 @@ VERBOSE = IcareCLI.options[:verbose]
 
 SERVEUR_SSH = "icare@ssh-icare.alwaysdata.net"
 
+require_relative './classes/usual_methods'
+
 SSH_REQUEST_FOLDER = <<-SSH
 ssh #{SERVEUR_SSH} ruby << RUBY
 require 'json'
@@ -18,6 +20,7 @@ end
 puts alist.to_json
 RUBY
 SSH
+
 SSH_REQUEST_FILE = <<-SSH
 ssh #{SERVEUR_SSH} ruby << RUBY
 require 'json'
