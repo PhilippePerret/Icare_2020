@@ -18,14 +18,32 @@ class << self
     elements = params.values
     elements.shift
 
-    # Traitement de chaque path donnée en argument
+    # On nettoie la console
     clear
-    elements.each do |what|
-      traite_element(what)
+
+    if elements.empty? && options[:sync] && File.exists?(OPERATIONS_PATH)
+      # Rechargement des opérations mémorisées
+      reload_operations
+    else
+      # Traitement de chaque path donnée en argument
+      elements.each do |what|
+        check_element(what)
+      end
     end
 
-    puts RC * 2
-    puts "(Penser à lancer la commande 'icare test' pour voir si le site n'a pas été cassé.)"
+    # Pour vérifier si la synchronisation est requise
+    require_relative './sync/classes/Synchro'
+    check_if_synchronization_required
+
+    # On procède à la synchronisation si nécessaire
+    # ---------------------------------------------
+    if OPERATIONS[:synchro_required]
+      proceed_synchronisation
+    else
+      # Quand tout est OK
+      puts "=== Tous les éléments sont synchronisés ===".vert
+    end
+
     puts RC * 3
 
   rescue Exception => e
@@ -33,17 +51,17 @@ class << self
     puts e.backtrace.join(RC).rouge
   end #/ proceed_sync
 
-  def traite_element(what)
+  def check_element(what)
     # Il faut commencer par retourner les informations sur les éléments
     # à synchroniser (ou à étudier)
     if File.directory?(what)
-      traite_folder(what)
+      check_folder(what)
     elsif File.exists?(what)
       SFile.new(what).synchronize_as_lonely
     else
       puts "Le fichier/dossier #{what.inspect} est introuvable".rouge
     end
-  end #/ traite_element
+  end #/ check_element
 
 end # /<< self
 end #/IcareCLI

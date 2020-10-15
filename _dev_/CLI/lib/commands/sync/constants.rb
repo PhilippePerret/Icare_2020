@@ -5,6 +5,10 @@ VERBOSE = IcareCLI.options[:verbose]
 
 SERVEUR_SSH = "icare@ssh-icare.alwaysdata.net"
 
+# Path au fichier qui contient les opérations à faire relevées au cours
+# de la dernière analyse de synchro
+OPERATIONS_PATH = File.join(THIS_FOLDER,'last_operations.msh')
+
 require_relative './classes/usual_methods'
 
 SSH_REQUEST_FOLDER = <<-SSH

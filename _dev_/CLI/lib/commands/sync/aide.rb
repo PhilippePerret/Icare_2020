@@ -12,18 +12,10 @@ def aide
 
 * Pour vérifier la synchronisation d'un fichier :
 
-  #{'icare sync ./path/to/file (*)'.jaune}
+  #{'icare sync ./path/to/file.ext ./path/to/other.ext ./to/folder (*)'.jaune}
 
-  (*) Tous les chemins en point sont relatifs à la base du site.
-
-Ajouter l'option #{'--sync'.jaune} pour procéder à la synchronisation ou
-lancer la synchronisation dans un second temps à l'aide de :
-
-  #{'icare sync --sync'.jaune}
-
-* Pour vérifier la synchronisation d'un dossier :
-
-  #{'icare sync ./path/to/folder'.jaune}
+  (*) Dossiers ou fichier. Tous les chemins en point sont relatifs à la
+      base du site.
 
 Ajouter l'option #{'--sync'.jaune} pour procéder à la synchronisation ou
 lancer la synchronisation dans un second temps à l'aide de :
@@ -34,6 +26,8 @@ Pour détruire les fichiers solitaires sur le site distant (#{'ATTENTION !'.rou
 il faut ajouter l'option :
 
   #{'--remove-distants-seuls'.jaune}
+
+== Filtrage des éléments ==
 
   TEXT
 end #/ aide

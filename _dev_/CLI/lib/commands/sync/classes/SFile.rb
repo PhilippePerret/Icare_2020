@@ -31,12 +31,12 @@ end #/ initialize
 
 # Méthode de synchronisation quand on traite par dossier
 def synchronize
-  STDOUT.write " * Synchronisation de #{rel_path}".bleu
+  STDOUT.write "* Synchronisation de #{rel_path}".bleu
   cmd = "ssh #{SERVEUR_SSH} 'mkdir -p ./#{File.dirname(dis_path)}';scp -p #{loc_path} #{SERVEUR_SSH}:#{dis_path}"
   # puts "\n   Command : #{cmd}"
   result = `#{cmd} 2>&1`
   raise result if result != ""
-  STDOUT.write "\r √ Synchronisation de #{rel_path}#{RC}".vert
+  STDOUT.write "\r√ Synchronisation de #{rel_path}#{RC}".vert
 rescue Exception => e
   puts "#{RC}   ÉCHEC : #{e.message}".rouge
 end #/ synchronize

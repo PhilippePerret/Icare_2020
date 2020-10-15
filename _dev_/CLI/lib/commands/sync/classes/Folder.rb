@@ -3,12 +3,14 @@
 
 # La table dans laquelle seront mis tous les fichiers à traiter
 ALLFILES = {}
+OPERATIONS = {updates: [], deletes: []}
 
-# Traitement d'un dossier
-# -----------------------
+# Vérification d'un dossier
+# -------------------------
 # Rappel : on est sûr, en appelant cette méthode, que +loc_path+ est
 # le chemin d'accès à un dossier icare existant
-def traite_folder(loc_path)
+def check_folder(loc_path)
+
   dis_path = loc_path.sub(/^\.\//, 'www/')
   puts "\n\n* Traitement du dossier #{loc_path} (#{dis_path}) *"
   res = `#{SSH_REQUEST_FOLDER % {folder: dis_path}}`
@@ -41,43 +43,16 @@ def traite_folder(loc_path)
   end
   unless distant_files_not_locaux.empty?
     puts "\n\n==== distant_files_not_locaux (restants) : #{distant_files_not_locaux.inspect}"
+    OPERATIONS[:deletes] += distant_files_not_locaux.values
   end
 
   # On procède à l'analyse
-  operations = {updates: [], deletes: []}
+  # Si un fichier n'est pas à jour, on l'ajoute à OPERATIONS[:updates]
   ALLFILES.each do |rpath, sfile|
     puts sfile.resultat_comparaison if sfile.out_of_date? || VERBOSE
     if sfile.out_of_date?
-      operations[:updates] << sfile
+      OPERATIONS[:updates] << sfile
     end
   end
 
-  nombre_update_required = operations[:updates].count
-  if nombre_update_required > 0
-    puts "\n\nNombre d'actualisations requises : #{nombre_update_required}".rouge
-  end
-  nombre_deletion_required = distant_files_not_locaux.count
-  if nombre_deletion_required > 0
-    operations[:deletes] = distant_files_not_locaux.values
-    puts "\n\nNombre de destructions requises : #{nombre_deletion_required}".rouge
-  end
-
-  if nombre_deletion_required + nombre_update_required > 0
-    # S'il y a l'option --sync, on doit passer directement à la synchronisation
-    # Sinon, on demande quoi faire
-    # S'il ne faut pas synchroniser, on enregistre le résultat pour une
-    # utilisation ultérieure
-    if IcareCLI.options[:sync] || proceder_a_la_synchro?
-      require_relative './Synchro'
-      synchronize(operations)
-    else
-      memorise_synchronisation(operations)
-    end
-
-  else
-    # Quand tout est OK
-    puts "=== Les éléments sont synchronisés ===".vert
-  end
-
-  puts RC * 3
 end #/ traite_folder
