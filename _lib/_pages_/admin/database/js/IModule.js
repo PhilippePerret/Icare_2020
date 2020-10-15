@@ -48,8 +48,8 @@ constructor(objet){
 build_all_own_data(){
   this.build_own_data("Icarien", this.spanProperty('owner', this.f_owner))
   this.build_own_data("Titre projet/project_name", this.spanProperty('project_name', this.data.project_name))
-  this.build_own_data("Démarré le/started_at", this.data.started_at, 'date')
-  this.build_own_data("Achevé le/ended_at", this.data.ended_at, 'date')
+  this.build_own_data("Démarré le/started_at", this.spanProperty('started_at', this.f_started_at))
+  this.build_own_data("Achevé le/ended_at", this.spanProperty('ended_at', this.f_ended_at))
   this.build_own_data("Étape courante/icetape_id", `<span id="${this.fid}-icetape_id">…</span>`)
   this.build_own_data("Options/options", this.data.options)
 }

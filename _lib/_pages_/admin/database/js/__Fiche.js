@@ -62,6 +62,20 @@ constructor(objet) {
 // Retourne l'identifiant unique de l'objet (p.e. "icarien-101")
 get fid(){return this.objet.fid}
 
+get f_created_at(){return this.makeSpanDate(this.data.created_at, formate_date(this.data.created_at))}
+get f_updated_at(){return this.makeSpanDate(this.data.updated_at, formate_date(this.data.updated_at))}
+get f_started_at(){
+  let hdate ;
+  if (this.data.started_at) { hdate = formate_date(this.data.started_at, 'date') }
+  else { hdate = "- non démarré -"}
+  return hdate
+}
+get f_ended_at()  {
+  let hdate ;
+  if (this.data.ended_at) { hdate = formate_date(this.data.ended_at, 'date') }
+  else { hdate = "---"}
+  return hdate
+}
 
 /**
   * Retourne un CODE SPAN type pour remplacement de valeur.

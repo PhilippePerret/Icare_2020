@@ -105,9 +105,6 @@ build_all_own_data() {
   this.build_own_data("Naissance & âge/naissance", this.spanProperty('naissance', this.f_naissance))
 }
 
-get f_created_at(){
-  return formate_date(this.data.created_at)
-}
 get f_mail(){
   return `<a href="mailto:${this.data.mail}?subject=🦋">${this.data.mail}</a>`
 }
@@ -119,11 +116,17 @@ get f_naissance(){
 }
 
 get f_date_sortie(){
-  this.objet.getLastDateOfUser()
-  .then(ret => {
-    setTimeout(this.fixLastTimeAndSortie.bind(this, ret), 1 * 1000)
-  })
-  return `${formate_date(this.data.date_sortie)} <span id="${this.fid}-checked-date"><img src="./img/gif/spirale.gif" width="20" style="vertical-align:sub;" /></span><div id="${this.fid}-last-time" class="hidden"></div>`
+  if ( ! this.data.date_sortie ) {
+    // Quand aucune date de sortie n'est définie, il faut l'indiquer
+    return "- en d'activité -"
+  } else {
+    // Quand une date de sortie est définie,il faut la checker
+    this.objet.getLastDateOfUser()
+    .then(ret => {
+      setTimeout(this.fixLastTimeAndSortie.bind(this, ret), 1 * 1000)
+    })
+    return `${formate_date(this.data.date_sortie)} <span id="${this.fid}-checked-date"><img src="./img/gif/spirale.gif" width="20" style="vertical-align:sub;" /></span><div id="${this.fid}-last-time" class="hidden"></div>`
+  }
 }
 
 fixLastTimeAndSortie(ret){
