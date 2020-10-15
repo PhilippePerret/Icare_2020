@@ -131,7 +131,6 @@ updateOwnData(){
     } else {
       new_value = code
     }
-    console.log("new_value = ", new_value)
     if ( 'object' == typeof new_value /* un HTMLElement */) {
       fields.forEach(field => {field.innerHTML = "";field.appendChild(new_value)})
     } else /* un simple string */ {
