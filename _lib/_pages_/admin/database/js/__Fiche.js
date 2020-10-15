@@ -71,6 +71,8 @@ get fid(){return this.objet.fid}
 ***/
 spanProperty(property, value){
   value = value || this.data[property]
+  // Si la valeur est null, elle est mise à ""
+  value = value || ""
   const span = DCreate('SPAN', {class:`${this.fid}-${property}`})
   if ( "object" == typeof value ) {
     span.appendChild(value)
@@ -222,13 +224,10 @@ build(){
   // La section des watchers si l'objet en contient
   const has_watchers = this.objet.extra_data && this.objet.extra_data.watchers
   if ( has_watchers ) {
-    const titwatchers = document.createElement('DIV')
-    titwatchers.className = "sous-titre"
-    titwatchers.innerHTML = "Watchers"
+    const titwatchers = DCreate('DIV', {class:"sous-titre", text:"Watchers"})
     titwatchers.style.backgroundColor = IWatcher.color
     this.obj.appendChild(titwatchers)
-    this.sectionWatchers = document.createElement('DIV')
-    this.sectionWatchers.className = "listing"
+    this.sectionWatchers = DCreate('DIV',{class:"listing"})
     this.obj.appendChild(this.sectionWatchers)
   }
 
@@ -272,7 +271,6 @@ build(){
 
 positionne(x,y){
   const nextCoor = Fiche.getNextCoordonnates()
-  console.log("nextCoor:", nextCoor)
   this.obj.style.top  = y || nextCoor.y ;
   this.obj.style.left = x || nextCoor.x ;
 }

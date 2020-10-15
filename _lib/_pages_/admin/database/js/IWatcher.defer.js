@@ -43,9 +43,7 @@ build_all_own_data(){
 /**
  * Construction des outils propres aux watchers TODO
 **/
-build_own_tools(){
-
-}
+build_own_tools(){}
 
 /**
  * Construit les données supplémentaires

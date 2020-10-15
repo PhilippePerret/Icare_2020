@@ -61,16 +61,16 @@ def get_watchers_of(objet_name, item_id)
   require "#{APP_FOLDER}/_lib/_watchers_processus_/_constants_" # => DATA_WATCHERS
   # Traitement particulier pour les icariens, car c'est la propriété user_id
   # qu'il faut lire et on remonte des watchers de toutes sortes
-  if objet_name == 'Icarien'
-    rows_watchers = db_exec(WATCHERS_ICARIEN_REQUEST, item_id)
-  else
-    wtype_to_folder # pour forcer sa fabrication et voir
-    rows_watchers = db_exec(WATCHERS_REQUEST, item_id).collect do |dw|
-      next if not( wtype_to_folder[ dw[:wtype] ] == objet_name )
-      dw
-    end.compact
-  end
-
+  rows_watchers = if objet_name == 'Icarien'
+                    db_exec(WATCHERS_ICARIEN_REQUEST, item_id)
+                  else
+                    wtype_to_folder # pour forcer sa fabrication et voir
+                    db_exec(WATCHERS_REQUEST, item_id).collect do |dw|
+                      next if not( wtype_to_folder[ dw[:wtype] ] == objet_name )
+                      dw
+                    end.compact
+                  end
+  # On récupère les watchers
   rows_watchers.collect do |dw|
     dw.merge({
       absdata: DATA_WATCHERS[dw[:wtype].to_sym]

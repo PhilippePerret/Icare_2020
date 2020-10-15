@@ -113,9 +113,9 @@ div.fiche div.grid-child span.date {
 
 /* Le div contenant le champ de texte pour la requête pseudo-sql */
 div.fiche div.div-request {
-  position:absolute;
-  left:0;
-  bottom:0;
+  /* position:absolute; */
+  /* left:0; */
+  /* bottom:0; */
   width:100%;
   padding:0;
 }
