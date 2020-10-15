@@ -1,6 +1,6 @@
 # Atelier Icare<br/>Concours de synopsis
 
-
+> Note : le RÈGLEMENT est travaillé dans le dossier général [./_dev_/Icare.scriv](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/Icare.scriv).
 
 ## Description
 
@@ -16,7 +16,7 @@ Projet d’un concours de synopsis visant à donner de la visibilité à l’ate
 
 * Faut-il des **partenaires** ? (je pense par exemple à des maisons de production)
 
-  
+
 
 ## Liens utiles
 
@@ -38,7 +38,7 @@ Prix de consolation : une remise de 10 % sur tous les modules de l’atelier.
 
 ## Date limite de dépôt
 
-La mettre assez éloignée (juin 2021) afin de pouvoir faire de la publicité pendant assez longtemps. Rappeler le concours par exemple tous les 15 jours, en indiquant le nombre de participants.
+Mars 2021 (et Mars de chaque année.
 
 Pour connaitre le nombre de participants, il faut permettre de s’inscrire en ligne tout de suite. Peut-être est-ce que ça donne une chance en plus, ça donne du coefficiant. De la même manière, il pourrait y avoir des avantages à donner un résumé, à parler de son développement de l’histoire (sur la page Facebook)
 

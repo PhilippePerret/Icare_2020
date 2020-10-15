@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ScrivenerProject Identifier="DF60DD54-AB7A-4325-BB63-2818B52205B6" Version="2.0" Creator="SCRMAC-3.1.5-12258" Device="MacBook-Air-de-Philippe" Author="Philippe PERRET" Modified="2020-10-09 11:30:51 +0200" ModID="35CBF863-16C5-4FEB-B18D-0359D103F028">
+<ScrivenerProject Identifier="DF60DD54-AB7A-4325-BB63-2818B52205B6" Version="2.0" Creator="SCRMAC-3.1.5-12258" Device="MacBook-Air-de-Philippe" Author="Philippe PERRET" Modified="2020-10-15 10:57:49 +0200" ModID="9E8382C7-A05E-4188-8CFE-7A9BB1ADA07F">
     <Binder>
         <BinderItem UUID="23F1F075-C1C1-46A5-8E34-53A91F4FE095" Type="DraftFolder" Created="2020-10-09 10:11:54 +0200" Modified="2020-10-09 10:11:54 +0200">
             <Title>Ébauche</Title>
@@ -24,13 +24,13 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                     <Children>
-                        <BinderItem UUID="2CAFCD1E-0596-41CA-A36B-87D917AB9B96" Type="Text" Created="2020-10-09 10:12:15 +0200" Modified="2020-10-09 11:30:51 +0200">
+                        <BinderItem UUID="2CAFCD1E-0596-41CA-A36B-87D917AB9B96" Type="Text" Created="2020-10-09 10:12:15 +0200" Modified="2020-10-15 10:57:49 +0200">
                             <Title>Réglement</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                             </MetaData>
                             <TextSettings>
-                                <TextSelection>1422,0</TextSelection>
+                                <TextSelection>679,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
                     </Children>
@@ -104,14 +104,14 @@
     </StatusSettings>
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2020-10-09 10:11:53 +0200" IgnoreDeadline="Yes">0</DraftTarget>
-        <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" NextResetDate="2020-10-10 01:00:00 +0200" ResetType="Time" ResetTime="00:00" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="290" Characters="1984" Date="2020-10-09 10:11:53 +0200"/>
+        <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" NextResetDate="2020-10-16 01:00:00 +0200" ResetType="Time" ResetTime="00:00" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
+        <PreviousSession Words="127" Characters="865" Date="2020-10-15 10:46:10 +0200"/>
     </ProjectTargets>
-    <RecentWritingHistory Date="2020-10-09 10:11:53 +0200">
-        <DraftWordCount>290</DraftWordCount>
-        <DraftCharCount>1984</DraftCharCount>
+    <RecentWritingHistory Date="2020-10-15 00:00:00 +0200">
+        <DraftWordCount>127</DraftWordCount>
+        <DraftCharCount>865</DraftCharCount>
         <OtherWordCount>0</OtherWordCount>
         <OtherCharCount>0</OtherCharCount>
     </RecentWritingHistory>
-    <PrintSettings PaperSize="595.0,842.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"/>
+    <PrintSettings PaperSize="595.275567,841.889771" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="iso-a4" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"/>
 </ScrivenerProject>
