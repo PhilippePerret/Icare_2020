@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ScrivenerProject Identifier="DF60DD54-AB7A-4325-BB63-2818B52205B6" Version="2.0" Creator="SCRMAC-3.1.5-12258" Device="MacBook-Air-de-Philippe" Author="Philippe PERRET" Modified="2020-10-15 15:13:50 +0200" ModID="59E0E750-A4B8-4BA1-95AA-01DCCB1DBF73">
+<ScrivenerProject Identifier="DF60DD54-AB7A-4325-BB63-2818B52205B6" Version="2.0" Creator="SCRMAC-3.1.5-12258" Device="MacBook-Air-de-Philippe" Author="Philippe PERRET" Modified="2020-10-15 20:04:38 +0200" ModID="95A825D7-E45D-43BB-AC3C-4CB9FAAECB8F">
     <Binder>
         <BinderItem UUID="23F1F075-C1C1-46A5-8E34-53A91F4FE095" Type="DraftFolder" Created="2020-10-09 10:11:54 +0200" Modified="2020-10-09 10:11:54 +0200">
             <Title>Ébauche</Title>
@@ -24,13 +24,13 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                     <Children>
-                        <BinderItem UUID="2CAFCD1E-0596-41CA-A36B-87D917AB9B96" Type="Text" Created="2020-10-09 10:12:15 +0200" Modified="2020-10-15 15:13:50 +0200">
+                        <BinderItem UUID="2CAFCD1E-0596-41CA-A36B-87D917AB9B96" Type="Text" Created="2020-10-09 10:12:15 +0200" Modified="2020-10-15 20:04:38 +0200">
                             <Title>Réglement</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                             </MetaData>
                             <TextSettings>
-                                <TextSelection>679,0</TextSelection>
+                                <TextSelection>2923,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
                     </Children>
@@ -105,11 +105,11 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2020-10-09 10:11:53 +0200" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" NextResetDate="2020-10-16 01:00:00 +0200" ResetType="Time" ResetTime="00:00" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="177" Characters="1193" Date="2020-10-15 15:10:55 +0200"/>
+        <PreviousSession Words="203" Characters="1335" Date="2020-10-15 15:10:55 +0200"/>
     </ProjectTargets>
     <RecentWritingHistory Date="2020-10-15 00:00:00 +0200">
-        <DraftWordCount>177</DraftWordCount>
-        <DraftCharCount>1193</DraftCharCount>
+        <DraftWordCount>203</DraftWordCount>
+        <DraftCharCount>1335</DraftCharCount>
         <OtherWordCount>0</OtherWordCount>
         <OtherCharCount>0</OtherCharCount>
     </RecentWritingHistory>
