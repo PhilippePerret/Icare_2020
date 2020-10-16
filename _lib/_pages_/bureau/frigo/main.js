@@ -6,6 +6,6 @@
 */
 function afterReady(){
   if (window.location.search.indexOf('disid=') > -1){
-    window.scrollTo(0, window.innerHeight+100);
+    window.scrollTo(0, window.innerHeight+10000);
   }
 }

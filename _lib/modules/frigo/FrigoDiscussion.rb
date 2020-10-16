@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class FrigoDiscussion
 =end
@@ -19,13 +20,13 @@ class << self
   def create_form(destinataire = nil)
     form = Form.new(id:'frigo-discussion-form', route:route.to_s, class:'nomargin nolibelle')
     rows = {
-      'Titre'     => {name:'frigo_titre', type:'text', placeholder:'Titre de la discussion'.freeze},
-      'Message'   => {name:'frigo_message', type:'textarea', height:200, placeholder:'Premier message de la discussion'.freeze},
+      'Titre'     => {name:'frigo_titre', type:'text', placeholder:'Titre de la discussion'},
+      'Message'   => {name:'frigo_message', type:'textarea', height:200, placeholder:'Premier message de la discussion'},
       '<dest/>'   => {name:'touid', type:'hidden', value:destinataire&.id},
       '<op/>'     => {name:'op', type:'hidden', value:'pose'}
     }
     form.rows = rows
-    toic = destinataire.nil? ? EMPTY_STRING : " de #{destinataire.pseudo}".freeze
+    toic = destinataire.nil? ? EMPTY_STRING : " de #{destinataire.pseudo}"
     form.submit_button = "Poser ce message sur le frigo#{toic}"
     return form
   end #/ create_form
@@ -70,7 +71,7 @@ end # /<< self
 # Retourne la liste des participants à cette discussion (Array de User(s))
 def participants
   @participants ||= begin
-    db_exec("SELECT user_id FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze).collect do |ddis|
+    db_exec("SELECT user_id FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}").collect do |ddis|
       User.get(ddis[:user_id])
     end
   end
@@ -116,9 +117,9 @@ def destroy
   end
   # Mettre ça après l'envoi des mails. Cf. [1] ci-dessus
   [
-    "DELETE FROM #{FrigoDiscussion::TABLE_DISCUSSIONS} WHERE id = #{id}".freeze,
-    "DELETE FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}".freeze,
-    "DELETE FROM #{FrigoDiscussion::TABLE_MESSAGES} WHERE discussion_id = #{id}".freeze
+    "DELETE FROM #{FrigoDiscussion::TABLE_DISCUSSIONS} WHERE id = #{id}",
+    "DELETE FROM #{FrigoDiscussion::TABLE_USERS} WHERE discussion_id = #{id}",
+    "DELETE FROM #{FrigoDiscussion::TABLE_MESSAGES} WHERE discussion_id = #{id}"
   ].each do |request|
     db_exec(request)
   end

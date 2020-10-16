@@ -1,4 +1,5 @@
 <%
+# frozen_string_literal: true
 require_module('user/modules')
 discussion = FrigoDiscussion.get(param(:did))
 %>
@@ -13,8 +14,8 @@ discussion = FrigoDiscussion.get(param(:did))
 # Principe : on affiche une liste des icariens pour pouvoir les choisir
 conditions = ['id != 9'] # ne doit pas être l'anonyme
 conditions << 'SUBSTRING(options,4,1) != "1"' # ne doit pas être détruit
-conditions << 'CONVERT(SUBSTRING(options,28,1),UNSIGNED) & 2' # doit être contactable par frigo pour un icarien
-conditions = conditions.join(AND).freeze
+# conditions << 'CONVERT(SUBSTRING(options,28,1),UNSIGNED) & 2' # doit être contactable par frigo pour un icarien
+conditions = conditions.join(AND)
 %>
 <h3><%= UI_TEXTS[:inviter_users_button] %> à la discussion “<%= discussion.titre %>”</h3>
 <div class="mb2">
