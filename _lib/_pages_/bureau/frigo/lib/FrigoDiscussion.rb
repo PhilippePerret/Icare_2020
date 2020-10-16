@@ -153,11 +153,11 @@ def notify_followers(params)
       subject:(SUBJECT_NEW_MESSAGE % user.pseudo),
       message:(MESSAGE_NEW_MESSAGE % {pseudo:part.pseudo, from:user.pseudo, titre:titre, disid:self.id})
     })
-    message(MESSAGES[:follower_warned_for_new_message] % part.pseudo)
     # On indique que le participant a reçu ce jour une alerte pour cette
     # discussion (last_warn_at).
     part.set_last_warn_discussion(self)
   end
+  message(MESSAGES[:followers_warned_for_new_message])
 end #/ notify_followers
 
 # Pour envoyer des invitations à rejoindre une discussion

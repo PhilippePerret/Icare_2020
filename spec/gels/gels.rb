@@ -369,7 +369,7 @@ def phil_marion_elie_repondent_benoit
       fill_in('frigo_message', with: "Réponse d’Élie à Benoit.")
       click_on("Ajouter")
     end
-    message_benoit = MESSAGES[:follower_warned_for_new_message] % 'Benoit'
+    message_benoit = MESSAGES[:followers_warned_for_new_message]
     screenshot('elie-premier-message-benoit')
     expect(page).not_to have_content(message_benoit),
       "Élie ne devrait pas avoir de message lui disant que Benoit a été averti. Benoit a déjà un message non lu pour ce fil."

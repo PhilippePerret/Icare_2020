@@ -1,11 +1,12 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_modules(['form','frigo'])
 class HTML
   def titre
     unless param(:disid) || (param(:did) && param(:did)!=EMPTY_STRING)
-      "#{RETOUR_BUREAU}#{EMO_THERMOMETRE+ISPACE}Votre porte de frigo".freeze
+      "#{RETOUR_BUREAU}#{EMO_THERMOMETRE+ISPACE}Votre porte de frigo"
     else
-      "#{RETOUR_FRIGO}#{EMO_THERMOMETRE+ISPACE}Discussion de frigo".freeze
+      "#{RETOUR_FRIGO}#{EMO_THERMOMETRE+ISPACE}Discussion de frigo"
     end
   end
   def exec
@@ -84,16 +85,16 @@ class HTML
   # Construction du corps de la page
   def build_body
     # Construction du body
-    vue = if param(:op) == STRINGS[:destroy] && !param(:confirmed)
-            STRINGS[:destroy]
-          elsif param(:op) == STRINGS[:inviter]
-            STRINGS[:inviter]
-          elsif param(:op) == STRINGS[:download]
-            STRINGS[:download]
+    vue = if param(:op) == 'destroy' && !param(:confirmed)
+            'destroy'
+          elsif param(:op) == 'inviter'
+            'inviter'
+          elsif param(:op) == 'download'
+            'download'
           elsif param(:disid)  # une discussion choisie
-            STRINGS[:discussion]
+            'discussion'
           else
-            STRINGS[:home]
+            'home'
           end
     # On construit le body
     @body = deserb("vues/#{vue}", user)
@@ -123,7 +124,8 @@ class HTML
               end
 
     # On établit la condition
-    conditions = ["SUBSTRING(options,4,1) != '1'"] # non détruit
+    conditions = []
+    conditions << "SUBSTRING(options,4,1) != '1'" # non détruit
     conditions << "SUBSTRING(options,1,1) = 0" # pas un administrateur
     bit17_in = []
     if target & 1 > 0 # => il faut prendre les actifs
@@ -149,7 +151,7 @@ class HTML
 
     # On prend les instances icariens qui seront concernées
     conditions = conditions.join(AND)
-    request = "SELECT id, pseudo, mail FROM `users` WHERE #{conditions}".freeze
+    request = "SELECT id, pseudo, mail FROM `users` WHERE #{conditions}"
     allusers = db_exec(request).collect{|duser|User.instantiate(duser)}
 
     if allusers.empty?

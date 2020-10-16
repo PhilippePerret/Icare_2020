@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Constantes propres à la section Frigo du bureau
 =end
@@ -10,7 +11,7 @@ RETOUR_FRIGO = Tag.retour(route:'bureau/frigo', titre:'Frigo')
 class FrigoDiscussion < ContainerClass
 
 # Requête pour obtenir toutes les discussion de l'user
-REQUEST_DISCUSSIONS_USER = <<-SQL.freeze
+REQUEST_DISCUSSIONS_USER = <<-SQL
 SELECT
   dis.titre AS titre, dis.id AS discussion_id, u.pseudo AS owner_pseudo,
   u.id AS owner_id,
@@ -24,11 +25,11 @@ SELECT
   ORDER BY fm.created_at DESC
 SQL
 
-SIGNATURE_BOT = "<p>#{EMO_ROBOT.texte(full:true) + ISPACE}Le Bot de l'Atelier Icare #{EMO_PAPILLON.regular(full:true)}</p>".freeze
+SIGNATURE_BOT = "<p>#{EMO_ROBOT.texte(full:true) + ISPACE}Le Bot de l'Atelier Icare #{EMO_PAPILLON.regular(full:true)}</p>"
 
 # Pour un mail de notification de nouveau message frigo
-SUBJECT_NEW_MESSAGE = 'Nouveau message de %s sur votre frigo'.freeze
-MESSAGE_NEW_MESSAGE = <<-HTML.freeze
+SUBJECT_NEW_MESSAGE = 'Nouveau message de %s sur votre frigo'
+MESSAGE_NEW_MESSAGE = <<-HTML
 <p>Bonjour %{pseudo},</p>
 <p>Je vous informe que %{from} vient de laisser un message sur votre frigo concernant la discussion “%{titre}”.</p>
 <p>Vous pouvez #{Tag.lien(route:'bureau/frigo?disid=%{disid}', full:true, text:'rejoindre cette discussion')}  sur votre frigo.</p>
@@ -38,7 +39,7 @@ HTML
 
 # Pour un message d'invitation à participer à une conversation
 SUBJECT_INVITATION = "Invitation à rejoindre une discussion"
-MESSAGE_INVITATION = <<-HTML.freeze
+MESSAGE_INVITATION = <<-HTML
 <p>Bonjour %{pseudo},</p>
 <p>Excusez-moi de vous déranger, mais %{owner} vous invite à rejoindre sa discussion “%{titre}”.</p>
 <p>Pour participer à cette discussion, cliquer sur le bouton ci-dessous :</p>
@@ -52,7 +53,7 @@ HTML
 # La requête pour créer un nouveau lien entre un user et une discussion (donc
 # pour ajouter l'icarien/admin à la discussion) en vérifiant que ce lien
 # n'existe pas déjà.
-REQUEST_ADD_TO_DISCUSSION = <<-SQL.freeze
+REQUEST_ADD_TO_DISCUSSION = <<-SQL
   INSERT INTO `#{FrigoDiscussion::TABLE_USERS}`
     (user_id, discussion_id, last_checked_at, created_at, updated_at)
   VALUES (?, ?, ?, ?, ?)
@@ -60,11 +61,11 @@ REQUEST_ADD_TO_DISCUSSION = <<-SQL.freeze
 SQL
 
 # Les requêtes pour obtenir les messages (tous ou les 40 derniers)
-REQUEST_GET_ALL_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i ORDER BY `created_at`'.freeze
-REQUEST_GET_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i ORDER BY `created_at` DESC LIMIT 40'.freeze
+REQUEST_GET_ALL_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i ORDER BY `created_at`'
+REQUEST_GET_MESSAGES = 'SELECT * FROM `frigo_messages` WHERE discussion_id = %i ORDER BY `created_at` DESC LIMIT 40'
 
 SUBJECT_ANNONCE_DESTROY = 'Destruction d’une discusion à laquelle vous participez'
-MESSAGE_ANNONCE_DESTROY = <<-HTML.freeze
+MESSAGE_ANNONCE_DESTROY = <<-HTML
 <p>%{pseudo},</p>
 <p>Je vous annonce par la présente que la discussion “%{titre}” instiguée par %{owner_pseudo} à laquelle vous participez va être supprimée dans une semaine.</p>
 <p>Si vous voulez en conserver une trace, #{Tag.lien(route:'bureau/frigo&disid=%{id}', text:'vous pouvez la télécharger', full:true)} grâce au bouton “Télécharger” placée en dessous de cette discussion.</p>
