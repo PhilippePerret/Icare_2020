@@ -9,6 +9,7 @@
 =end
 class IcareCLI
   OPTIONS_DIM_TO_REAL = {
+    'd' => :delete,
     'e' => :errors_only,
     'h' => :help,
     'i' => :infos,

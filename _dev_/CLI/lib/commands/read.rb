@@ -9,13 +9,13 @@ MESSAGES.merge!({
 })
 
 DATA_WHAT_READ = [
-  {name:'Journal (log)', value: :log},
-  {name:'Journal (cron)', value: :cronjob},
-  {name:'Traceur', value: :tracer},
-  {name:'Manuel (pdf)', value: :manuel_dev},
-  {name:'Manuel (md)', value: :manuel_dev_md},
-  {name:'Dossier…', value: :folder},
-  {name:'Fichier…', value: :file}
+  {name:'Journal [log]', value: :log},
+  {name:'Journal [cronjob]', value: :cronjob},
+  {name:'Traceur [tracer]', value: :tracer},
+  {name:'Manuel [manuel_pdf]', value: :manuel_pdf},
+  {name:'Manuel [manuel_md]', value: :manuel_md},
+  {name:'Dossier… [folder]', value: :folder},
+  {name:'Fichier… [file]', value: :file}
 ]
 
 SSH_SERVER = 'icare@ssh-icare.alwaysdata.net'
@@ -60,15 +60,19 @@ class << self
     read_it(path)
   end #/ read_folder
   # Pour ouvrir le manuel développeur
-  def read_manuel_dev
+  def read_manuel_pdf
     `open "#{File.join(DEV_FOLDER,'Manuel','Manuel_developper.pdf')}"`
-  end #/ manuel_dev
+  end #/ manuel_pdf
   # Pour ouvrir la version modifiable du mode d'emploi
-  def read_manuel_dev_md
+  def read_manuel_md
     `open -a Typora "#{File.join(DEV_FOLDER,'Manuel','Manuel_developper.md')}"`
-  end #/ manuel_dev_md
+  end #/ manuel_md
 
+  # Pour lire le fichier distant voulu
+  # Avec l'option -d/--delete, le fichier est ramené localement
+  # et détruit en online.
   def read_it(path)
+    and_delete_id = options[:delete]
     cmd = <<-CMD.strip
     ssh icare@ssh-icare.alwaysdata.net ruby << SSH
 if !File.exists?('#{path}')
@@ -77,12 +81,22 @@ elsif File.directory?('#{path}')
   puts Dir['#{path}/*'].join("\n")
 else
   puts File.open('#{path}','rb'){|f|f.read}
+  #{"File.delete('#{path}')" if options[:delete]}
 end
 SSH
     CMD
     puts "#{RC*2}= Lecture du fichier… ="
-    puts `#{cmd}`
+    unless and_delete_id
+      puts "(ajouter l'option #{'-d/--delete'.jaune}) pour charger le fichier localement et le détruire)"
+    end
+    content = `#{cmd}`
+    path_copie = File.join('.', File.basename(path))
+    if and_delete_id
+      File.open(path_copie,'wb'){|f|f.write content}
+    end
+    puts content
     puts "= / fin lecture fichier =#{RC*2}"
+    puts "= Le fichier a été enregistré dans #{path_copie}" if and_delete_id
   end #/ read_it
 end # /<< self
 end #/IcareCLI
