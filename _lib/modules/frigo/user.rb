@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Extension de la class User pour les discussions de frigo
 =end
@@ -30,7 +31,7 @@ end #/ add_discussion
 # Pour quitter la discussion d'ID discussion_id
 def quit_discussion(discussion_id)
   discussion = FrigoDiscussion.get(discussion_id)
-  req = <<-SQL.freeze
+  req = <<-SQL
 DELETE FROM `#{FrigoDiscussion::TABLE_USERS}`
   WHERE user_id = ? AND discussion_id = ?
   SQL
@@ -62,7 +63,7 @@ end #/ last_check_discussion
 
 # Marquer une discussion entièrement lue
 def marquer_discussion_lue(discussion_id)
-  req = <<-SQL.freeze
+  req = <<-SQL
   UPDATE `#{FrigoDiscussion::TABLE_USERS}`
     SET last_checked_at = ?
     WHERE discussion_id = ? AND user_id = ?
@@ -72,29 +73,30 @@ def marquer_discussion_lue(discussion_id)
 end #/ marquer_discussion_lue
 
 =begin
-  Méthode permettant de savoir si l'user a déjà été prévenu pour un nouveau
-  message dans la discussion +discussion+.
-  Il a déjà été prévenu si :
-    - il y a un message avant le dernier message qui est plus vieux que la
-      date de dernier check de user.
-  Donc, il faut que le message réponde à ces critères :
-    - created_at > last_check_at de l'user
-    - id != last_message_id de la conversation
-  Si on en trouve au moins un, on revoie true, sinon on renvoie false
+Méthode qui renvoie TRUE si l'icarien participant à la discussion doit
+être averti d'un nouveau message. La difficulté tient au fait que s'il a
+déjà été averti, il ne faut pas l'avertir à nouveau.
+Pour ça, on tient à jour deux propriétés :
+  last_warned_at    Date de dernier mail envoyé, annonçant un nouveau message
+  last_checked_at   Date de dernière vérification de la discussion.
+Si un nouveau message est envoyé (cette méthode est appelée dans ce cas-là),
+et que last_warned_at est supérieur à last_checked_at (i.e. un message d'alerte
+a été envoyé au participant depuis son dernier check, pour cette discussion),
+il n'y a rien à faire, le participant a déjà été informé.
+Sinon, il faut lui envoyer un mail. Donc la méthode retourne TRUE
 =end
-def has_message_non_lu_before_last?(discussion)
-  request = <<-SQL.freeze
-SELECT COUNT(fm.id)
-  FROM `frigo_messages` AS fm
-  INNER JOIN `frigo_users` AS fu  ON fu.user_id = fm.user_id
-  INNER JOIN `frigo_users` AS fdu ON fdu.discussion_id = fm.discussion_id
-  INNER JOIN `frigo_discussions` AS fd ON fm.discussion_id = fd.id
-  WHERE fm.discussion_id = #{discussion.id}
-    -- Le message doit être plus vieux que le dernier check de l'user
-    AND fm.created_at > fu.last_checked_at
-    -- Le message ne doit pas être le dernier message de la discussion
-    AND fm.id != fd.last_message_id
+REQUEST_WARN_REQUIRED = "SELECT (last_warned_at IS NULL OR last_checked_at > last_warned_at) AS warn_required FROM frigo_users WHERE user_id = ? AND discussion_id = ?"
+def warn_required_for?(discussion)
+  db_exec(REQUEST_WARN_REQUIRED,[self.id, discussion.id]).first[:warn_required] == 1
+end #/ get_last_warned_and_checked_on_discussion
+
+def set_last_warn_discussion(discussion, time = nil)
+  time ||= Time.now.to_i
+  request = <<-SQL
+UPDATE `frigo_users`
+  SET last_warned_at = ?
+  WHERE user_id = ? AND discussion_id = ?
   SQL
-  db_exec(request).first.values.first > 0
-end #/ has_message_non_lu_before_last?
+  db_exec(request, [time.to_s, self.id, discussion.id])
+end #/ set_last_warn_discussion
 end #/User

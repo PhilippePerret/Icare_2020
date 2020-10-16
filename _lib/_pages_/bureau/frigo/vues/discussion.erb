@@ -58,6 +58,7 @@ if param(:disid)
       <%= MESSAGES[:bouton_tout_marquer_lu] % param(:disid) %>
     <% end %>
     <a href="bureau/frigo" class="small discret ml2">LISTE DES DISCUSSIONS</a>
+    <a href="<%= route.to_s %>" class="small btn noborder">Actualiser la discussion</a>
   </div>
 
 <% else %>

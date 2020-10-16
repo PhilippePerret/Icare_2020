@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class FrigoDiscussion
 
@@ -29,8 +30,8 @@ class << self
     # L'user doit participer à cette discussion ou être administrateur
     discussion.participant?(user) || user.admin? || raise(ERRORS[:not_a_participant])
 
-    folder_discussion_name  = "discussion-#{discussion_id}".freeze
-    discussion_zip_name     = "#{folder_discussion_name}.zip".freeze
+    folder_discussion_name  = "discussion-#{discussion_id}"
+    discussion_zip_name     = "#{folder_discussion_name}.zip"
     discussion_zip_file     = File.join(DOWNLOAD_FOLDER, discussion_zip_name)
     File.unlink(discussion_zip_file) if File.exists?(discussion_zip_file)
     path_folder_discussion  = File.join(TEMP_FOLDER, folder_discussion_name)
@@ -50,7 +51,7 @@ class << self
 
   def destroy(discussion_id)
     unless param(:confirmed)
-      return message("Vous devez confirmer la destruction de la discussion".freeze)
+      return message("Vous devez confirmer la destruction de la discussion")
     end
     form = Form.new
     if form.conform?
@@ -102,6 +103,7 @@ end #/ annonce_destruction
 #   :auteur   {User} Instance de l'user qui envoie le message
 #   :message  {String} Le message proprement dit (non vérifié)
 def add_message(params)
+  # log("-> FrigoDiscussion#add_message(#{params.inspect})")
   msg = params[:message].nil_if_empty
   msg || raise(ERRORS[:message_discussion_required])
   msg.length < 12000 || raise(ERRORS[:message_frigo_too_long])
@@ -127,17 +129,34 @@ end #/ add_message
 #   :but    {User}  Les prévenir tous sauf celui-ci, qui est l'auteur du message
 #
 def notify_followers(params)
+  # log("FrigoDiscussion#notify_followers(params:#{params.inspect})")
   participants.each do |part|
-    next if params[:but].id == part.id
-    # - Il ne faut pas l'avertir s'il ne l'a pas demandé
-    next if part.option(22) != 1 # pas de notification
+    # log("- Traitement du participant : #{part.inspect}")
+    if params[:but].id == part.id
+      # log("  <= C'est l'auteur du message => pas de mail")
+      next
+    end
+    # # - Il ne faut pas l'avertir s'il ne l'a pas demandé
+    # # NOT : MAINTENANT, ON PRÉVIENT TOUJOURS
+    # TODO Faire une préférence propre au frigo pour ne pas être averti
+    # if not [1,3].include?(part.option(26)) # pas de notification par mail
+    #   log("  <= Son bit 26 d'option est différent de 1 ou 3 (part.option(26) = #{part.option(26)}) => pas de mail")
+    #   next
+    # end
     # - Il ne faut pas l'avertir s'il a déjà un message précédent pour ce fil
-    next if part.has_message_non_lu_before_last?(self)
+    if not part.warn_required_for?(self)
+      # log("  <= Il a déjà un message non lu avant => pas de mail")
+      next
+    end
+    # log("  On envoie le message avec le sujet “#{SUBJECT_NEW_MESSAGE % user.pseudo}”")
     part.send_mail({
       subject:(SUBJECT_NEW_MESSAGE % user.pseudo),
       message:(MESSAGE_NEW_MESSAGE % {pseudo:part.pseudo, from:user.pseudo, titre:titre, disid:self.id})
     })
     message(MESSAGES[:follower_warned_for_new_message] % part.pseudo)
+    # On indique que le participant a reçu ce jour une alerte pour cette
+    # discussion (last_warn_at).
+    part.set_last_warn_discussion(self)
   end
 end #/ notify_followers
 
@@ -150,8 +169,8 @@ def send_invitations_to(icariens)
   nombre_icariens = icariens.count
   return erreur(ERRORS[:invites_required]) if nombre_icariens == 0
   nombre_hommes = 0
-  lien_participer = Tag.lien(route:"bureau/frigo?disid=#{self.id}", full:true, text:'Lire la discussion'.freeze)
-  lien_decliner   = Tag.lien(route:"bureau/frigo?op=decliner_invitation&did=#{self.id}", full:true, text:'Décliner cette invitation'.freeze)
+  lien_participer = Tag.lien(route:"bureau/frigo?disid=#{self.id}", full:true, text:'Lire la discussion')
+  lien_decliner   = Tag.lien(route:"bureau/frigo?op=decliner_invitation&did=#{self.id}", full:true, text:'Décliner cette invitation')
   ary_values = []
   pseudos = []
   now = Time.now.to_i
@@ -168,7 +187,7 @@ def send_invitations_to(icariens)
   s = nombre_icariens > 1 ? 's' : ''
   es = nombre_icariens > 1 ? (nombre_hommes > 0 ? 's' : 'es') : ''
   a_ete = nombre_icariens > 1 ? 'ont été' : 'a été'
-  message("#{nombre_icariens} icarien·ne·#{s} #{a_ete} invité#{es} à rejoindre la discussion “#{titre}” : #{pseudos.pretty_join}.".freeze)
+  message("#{nombre_icariens} icarien·ne·#{s} #{a_ete} invité#{es} à rejoindre la discussion “#{titre}” : #{pseudos.pretty_join}.")
   @participants = nil
   @anciens_participants = nil
   @auteurs_messages = nil
@@ -220,7 +239,7 @@ end #/ liste_messages_formated
 def liste_complete_participants
   lp = participants.collect{|u|u.pseudo}.pretty_join
   unless anciens_participants.empty?
-    lp << " (ex #{anciens_participants.collect{|u|u.pseudo}.pretty_join})"
+    lp = "#{lp} (ex #{anciens_participants.collect{|u|u.pseudo}.pretty_join})"
   end
   lp
 end #/ liste_complete_participants
@@ -228,10 +247,10 @@ end #/ liste_complete_participants
 # Retourne le code de la discussion pour téléchargement
 def for_download(options = nil)
   lines = []
-  lines << "=== DISCUSSION ATELIER ICARE ##{id} ===#{RC}=".freeze
-  lines << "= Instiga#{owner.fem(:trice)} : #{owner.pseudo}".freeze
-  lines << "= Entre : #{participants.collect{|u|u.pseudo}.pretty_join}".freeze
-  lines << "= Date : #{formate_date}".freeze
+  lines << "=== DISCUSSION ATELIER ICARE ##{id} ===#{RC}="
+  lines << "= Instiga#{owner.fem(:trice)} : #{owner.pseudo}"
+  lines << "= Entre : #{participants.collect{|u|u.pseudo}.pretty_join}"
+  lines << "= Date : #{formate_date}"
   lines << RC2
   messages(true).each do |message|
     lines << "#{message.auteur.pseudo.upcase}, #{formate_date(message.created_at,{hour:true})}#{RC}#{message.content}#{RC}"
