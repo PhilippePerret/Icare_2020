@@ -55,18 +55,20 @@ class ContainerClass
     # true et la renvoie.
     # @alias : find
     # @retourne : Table Hash avec l'identifiant en clé
-    def get_all(filtre = nil, reset_items = false)
+    def find(filtre = nil, reset_items = false)
       @items = {} if reset_items
       @items ||= {}
       where = where_clausize(filtre)
-      db_exec("SELECT * FROM #{table}#{where}").each do |ditem|
+      cmd   = "SELECT * FROM #{table}#{where}"
+      log("CMD Find : #{cmd}")
+      db_exec(cmd).each do |ditem|
         item = new(ditem[:id])
         item.data= ditem
         @items.merge!(item.id => item)
       end
       return @items
     end #/ get_all
-    alias :find :get_all
+    alias :get_all :find
 
     # Pour pouvoir utiliser la méthode <classe>.collect qui va boucler
     # sur tous les éléments. Noter que cette méthode instancie TOUS les

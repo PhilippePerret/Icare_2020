@@ -5,9 +5,9 @@
   gels.
 =end
 
-# Le traitement qu'il faut appliquer
+# Le traitement qu'il faut appliquer À TOUS LES GELS des tests
 DB_REQUEST = <<-SQL.strip
-TRUNCATE TABLE `temoignages`
+ALTER TABLE `frigo_users` ADD COLUMN `last_warned_at` VARCHAR(10) DEFAULT NULL AFTER `user_id`;
 SQL
 
 

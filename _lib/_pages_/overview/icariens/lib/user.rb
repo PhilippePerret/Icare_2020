@@ -236,7 +236,7 @@ class << self
     @listes[:recu]
   end #/ recus
   def all_but_users_out
-    @all_but_users_out ||= find("SUBSTRING(options,1,1) = 0 AND id != 9 AND SUBSTRING(options,4,1) = '0'").values
+    @all_but_users_out ||= find("id > 9 AND SUBSTRING(options,4,1) = '0'").values
   end #/ all_but_users_out
 end #/<< self
 end #/User

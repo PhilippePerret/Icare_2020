@@ -12,17 +12,24 @@ require_relative './scripts/required'
 MyDB.DBNAME = 'icare_db'
 MyDB.online = true
 
+=begin
+  Exemple de requêtes :
+    SELECT * FROM watchers
+    ALTER TABLE `frigo_users` ADD COLUMN `last_warned_at` VARCHAR(10) DEFAULT NULL AFTER `user_id`;
+=end
+# -- Ici la requête --
 request = <<-SQL
--- Ici la requête --
-SELECT * FROM watchers
+SELECT * FROM frigo_users;
 SQL
 result = db_exec(request)
+puts "result: #{result.inspect}"
 
 # Si la requête ne renvoie aucun résultat, on peut s'arrêter là
 if result.empty?
   puts "Aucun résultat renvoyé par la requête #{request.inspect}"
   exit
 end
+
 
 # La table qui va contenir en clé le nom des colonnes est en
 # valeur leur longueur (longueur de la donnée la plus longue)

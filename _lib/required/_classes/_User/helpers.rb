@@ -19,7 +19,7 @@ class User
   #   subject: Le sujet
   #   message: Le message au format HTML
   def send_mail(dmail)
-    require_module('mail')
+    require_module('mail') unless defined?(Mail)
     Mail.send(dmail.merge!(to: mail))
   end #/ send_mail
 
