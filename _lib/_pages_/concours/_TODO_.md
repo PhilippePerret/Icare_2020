@@ -6,14 +6,13 @@ Voir dans GHI les tâches avec le tag 'concours'.
 
 ~~~
 
-001 20210123 234 => 00120210123234
---- -------- ---
- ^     ^      ^
- |     |      |_____ Numéro d'inscription
- |     |
- |     |_____ Date d'inscription
- |    
- |____ Numéro du concours
+20210123 234 => 20210123234
+-------- ---
+   ^      ^
+   |      |_____ Numéro d'inscription
+   |
+   |_____ Date d'inscription
+
 
 ~~~
 
@@ -22,15 +21,40 @@ Voir dans GHI les tâches avec le tag 'concours'.
 
 ### Table des données
 
-concours
+La table qui contient les participants (qui peuvent participer à plusieurs
+concours)
 
-id          INTEGER  AUTO_INCREMENTE
-concours_id VARCHAR(3)
-user_id     VARCHAR(14)
-user_mail   VARCHAR(255)
-specs       VARCHAR(8)
-            bit 0     Confirmation mail
-            bit 1     Dossier complet (validé)
-            bit 7     Résultat (0: rien, 1: 1er prix, 2: 2e, 3: 3e)
-created_at  VARCHAR(10)
-updated_at  VARCHAR(10)
+~~~SQL
+
+DROP TABLE IF EXISTS `concours_concurrents`;
+CREATE TABLE `concours_concurrents` (
+  id              INT(12)  PRIMARY KEY AUTO_INCREMENT,
+  session_id      VARCHAR(64) NOT NULL,
+  user_id         VARCHAR(14) NOT NULL,
+  user_mail       VARCHAR(255) NOT NULL,
+  patronyme       VARCHAR(200) NOT NULL,
+  sexe            VARCHAR(1) NOT NULL,
+  mail_confirmed  BOOLEAN DEFAULT FALSE,
+  created_at      VARCHAR(10),
+  updated_at      VARCHAR(10)
+);
+
+~~~
+
+### Table de participation
+
+~~~SQL
+
+DROP TABLE IF EXISTS `concours`;
+CREATE TABLE `concours`(
+  annee             VARCHAR(4) NOT NULL,
+  user_id           VARCHAR(14) NOT NULL,
+  dossier_complete  BOOLEAN DEFAULT FALSE,
+  fiche_required    BOOLEAN DEFAULT TRUE,
+  titre             VARCHAR(200),
+  prix              VARCHAR(1), --  0, 1, 2, ou 3
+  created_at        VARCHAR(10),
+  updated_at        VARCHAR(10)
+);
+
+~~~

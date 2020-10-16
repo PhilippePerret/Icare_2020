@@ -1,0 +1,63 @@
+<p>Bienvenue dans votre section du concours de synopsis, <%= concurrent.pseudo %>.</p>
+
+<%
+# ---------------------------------------------------------------------
+#
+# Informations sur le concours
+# ----------------------------
+# Ici une partie générale indiquant les informations sur le concours,
+# avec notamment le nombre de concurrents actuels.
+#
+# ---------------------------------------------------------------------
+%>
+<section id="concours-informations">
+  <p>Informations sur le concours actuel</p>
+</section>
+
+<%
+# ---------------------------------------------------------------------
+#
+# Si le concurrent n'a pas encore envoyé son dossier, il faut lui
+# proposer de le faire avec un formulaire
+#
+# ---------------------------------------------------------------------
+form = Form.new(id: "concours-dossier-form", route:route.to_s, class:"", file: true)
+form.rows = {
+  "Votre dossier"   => {type:"file", name:"p_dossier"},
+  "<lien dossier/>" => {type:"raw", content:"<div class=\"italic\">… ou transmettez votre dossier plus tard.</div><div class=\"italic small\">Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
+}
+form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
+
+%>
+<% if not concurrent.dossier_transmis? %>
+  <section id="concours-envoi-dossier">
+    <%= form.out %>
+  </section>
+<% end %>
+
+<%
+# ---------------------------------------------------------------------
+#
+# Le concurrent a toujours la possibilité de changer sa préférence
+# concernant la fiche de lecture
+#
+# ---------------------------------------------------------------------
+%>
+<% if concurrent.fiche_lecture? %>
+<% else %>
+<% end %>
+
+<%
+# ---------------------------------------------------------------------
+#
+# Informations sur le concurrent et ses participations
+#
+# ---------------------------------------------------------------------
+%>
+<section id="concours-historique">
+  <% if concurrent.concours.count == 1 %>
+    <p>C'est votre première participation à ce concours. Bonne chance à vous !</p>
+  <% else %>
+    <p>[Historique des participations]</p>
+  <% end %>
+</section>

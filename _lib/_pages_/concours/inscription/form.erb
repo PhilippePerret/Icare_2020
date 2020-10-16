@@ -1,5 +1,7 @@
 <%# frozen_string_literal: true %>
 <%
+require_module('form')
+
 =begin
   Formulaire d'inscription au concours d'Icare
   Note : on profite de ce formulaire d'inscription pour poser certaines
@@ -23,18 +25,33 @@ data = <<-YAML
   :reponses: ['Oui, depuis longtemps', 'Oui, depuis peu', 'Non']
 YAML
 %>
+
 <%
-require_module('form')
-form = Form.new(id:"concours-form", route:route.to_s, file:true)
-form.rows = {
-  "Votre patronyme" => {name:"u_patronyme", type:"text", placeholder: "Prénom Nom"},
-  "Votre mail"      => {name:"u_mail", type:"text", placeholder:"votre@mail.com"},
-  "Votre dossier"   => {name:"u_dossier", type:"file"},
-  "<lien dossier/>" => {type:"raw", content:"<div class=explication>Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
-  "<Règlement/>"    => {type:"checkbox", name: "u_reglement", values: "En cochant cette cache, vous acceptez dans leur intégralité tous les termes du réglement du présent concours."},
-  "<lienregle/>"    => {type:"raw", content: "[TODO: lien vers le règlement]"},
-  "Fiche de lecture"=> {type:"checkbox", name: "u_fiche", values: "Oui, je désire recevoir la fiche de lecture du jury concernant mon projet."},
+signedup_form = Form.new(id: "concours-signedup-form", route:route.to_s, class:"noborder nomargin")
+signedup_form.rows = {
+  'Votre mail'    => {name:"p_mail", type:'text'},
+  'Votre Numéro'  => {name:'p_uuid', type:'text'},
+  '<explication>' => {type:"raw", name: "<div class=\"explication\">Ce numéro correspond au numéro qui vous a été attribué à l'inscription (et envoyé par mail).</div>"}
 }
-form.submit_button = "S’inscrire"
+signedup_form.submit_button = UI_TEXTS[:concours_bouton_sidentifier]
 %>
-<%= form.out %>
+<fieldset id="user-signedup">
+  <legend>Vous êtes déjà inscrit·e</legend>
+  <%= signedup_form.out %>
+</fieldset>
+<%
+form = Form.new(id:"concours-signup-form", route:route.to_s, class:"noborder nomargin")
+form.rows = {
+  "Votre patronyme" => {name:"p_patronyme", type:"text", placeholder: "Prénom Nom"},
+  "Votre mail"      => {name:"p_mail", type:"text", placeholder:"votre@mail.com"},
+  "Confirmation"    => {name:"p_mail_confirmation", type:"text", placeholder:"votre@mail-confirmé.com"},
+  "Votre genre"     => {name:"p_sexe", type:"select", values:[["F","féminin"], ["H","masculin"], ["N","neutre"]]},
+  "<Règlement/>"    => {type:"checkbox", name: "p_reglement", values: "En cochant cette cache, vous acceptez dans leur intégralité tous les termes du réglement du présent concours (consulter le #{REGLEMENT_LINK})."},
+  "Fiche de lecture"=> {type:"checkbox", name: "p_fiche_lecture", values: "Oui, je désire recevoir la fiche de lecture du jury concernant mon projet (après les résultats)."},
+}
+form.submit_button = UI_TEXTS[:concours_bouton_signup]
+%>
+<fieldset id="signup-section">
+  <legend>Première inscription au concours</legend>
+  <%= form.out %>
+</fieldset>

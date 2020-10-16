@@ -2,7 +2,9 @@
 <CompileSettings>
     <ProjectSettings>
         <Content Scope="Included">
+            <CompileGroup Type="Selection"/>
             <Filter State="Off" Exclude="No" Type="Label">
+                <CollectionID>E26E0BD6-6483-4181-8DAA-0B9D8C73743E</CollectionID>
                 <Label>-1</Label>
                 <Status>-1</Status>
             </Filter>
@@ -13,7 +15,7 @@
             <ResampleImages DPI="72">No</ResampleImages>
             <ConvertTablesAndListToMMD>Yes</ConvertTablesAndListToMMD>
             <PDF>
-                <Cover Bleed="9.0" BleedUnits="pt"/>
+                <Cover Source="FrontMatter" Bleed="9.0" BleedUnits="pt"/>
                 <Compression Enabled="No">
                     <ImageResolutionCompressionType>Set</ImageResolutionCompressionType>
                     <ImageResolution>150</ImageResolution>
@@ -58,7 +60,7 @@
             </MMDMetaData>
         </MetaData>
     </ProjectSettings>
-    <CurrentFileType>Print</CurrentFileType>
+    <CurrentFileType>pdf</CurrentFileType>
     <FormatSettings>
         <Format ID="DEFAULT">
             <SectionLayouts>
@@ -67,5 +69,8 @@
             </SectionLayouts>
         </Format>
     </FormatSettings>
-    <LastUsedFormats/>
+    <LastUsedFormats>
+        <Print>DEFAULT</Print>
+        <pdf>DEFAULT</pdf>
+    </LastUsedFormats>
 </CompileSettings>
