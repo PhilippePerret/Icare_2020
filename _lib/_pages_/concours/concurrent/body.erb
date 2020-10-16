@@ -1,4 +1,7 @@
-<p>Bienvenue dans votre section du concours de synopsis, <%= concurrent.pseudo %>.</p>
+<%
+# frozen_string_literal: true
+%>
+<p><strong><%= concurrent.pseudo.titleize %></strong>, bienvenue dans votre section du <strong>Concours de Synopsis de l’atelier Icare</strong>. Dans cette partie, que vous pouvez rejoindre à tout moment en vous identifiant à l'aide de votre mail et de votre numéro de concurrent, vous pouvez retrouver vos informations et envoyer le cas échéant votre dossier de candidature.</p>
 
 <%
 # ---------------------------------------------------------------------
@@ -10,30 +13,31 @@
 #
 # ---------------------------------------------------------------------
 %>
-<section id="concours-informations">
-  <p>Informations sur le concours actuel</p>
-</section>
-
-<%
-# ---------------------------------------------------------------------
-#
-# Si le concurrent n'a pas encore envoyé son dossier, il faut lui
-# proposer de le faire avec un formulaire
-#
-# ---------------------------------------------------------------------
-form = Form.new(id: "concours-dossier-form", route:route.to_s, class:"", file: true)
-form.rows = {
-  "Votre dossier"   => {type:"file", name:"p_dossier"},
-  "<lien dossier/>" => {type:"raw", content:"<div class=\"italic\">… ou transmettez votre dossier plus tard.</div><div class=\"italic small\">Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
-}
-form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
-
-%>
-<% if not concurrent.dossier_transmis? %>
-  <section id="concours-envoi-dossier">
-    <%= form.out %>
-  </section>
-<% end %>
+<fieldset id="concours-informations">
+  <legend>Informations sur le concours en cours</legend>
+  <div class="row">
+    <span class="libelle">Année</span>
+    <span class="value bold"><%= concours.annee %></span>
+  </div>
+  <div class="row">
+    <span class="libelle">Thème</span>
+    <span class="value bold"><%= concours.theme %></span>
+  </div>
+  <div class="row">
+    <span class="libelle">Échéance</span>
+    <span class="value bold"><%= concours.h_echeance %></span>
+  </div>
+  <div class="row right">
+    <span class="libelle">Nombre de concurrents inscrits</span>
+    <span class="value">
+      <% if concours.nombre_concurrents == 0 %>
+        Vous serez le premier inscrit au concours !
+      <% else %>
+        <%= concours.nombre_concurrents %>
+      <% end %>
+    </span>
+  </div>
+</fieldset>
 
 <%
 # ---------------------------------------------------------------------
@@ -43,9 +47,43 @@ form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
 #
 # ---------------------------------------------------------------------
 %>
-<% if concurrent.fiche_lecture? %>
-<% else %>
-<% end %>
+<fieldset>
+  <legend>Fiche de lecture sur votre projet</legend>
+  <% if concurrent.fiche_lecture? %>
+    <div>Vous recevrez la fiche de lecture sur votre projet.</div>
+    <div class="small right"><a href="<%= route.to_s %>?op=nonfl">Je ne veux plus recevoir cette fiche de lecture</a>.</div>
+  <% else %>
+    <div>Vous ne recevrez pas la fiche de lecture.</div>
+    <div class="small right"><a href="<%= route.to_s %>?op=ouifl">Finalement, je veux bien recevoir cette fiche de lecture</a>.</div>
+  <% end %>
+</fieldset>
+
+<%
+# ---------------------------------------------------------------------
+#
+# Si le concurrent n'a pas encore envoyé son dossier, il faut lui
+# proposer de le faire avec un formulaire
+#
+# ---------------------------------------------------------------------
+if not concurrent.dossier_transmis?
+  form = Form.new(id: "concours-dossier-form", route:route.to_s, class:"nomargin noborder nolibelle", file: true, value_size: "600px")
+  form.rows = {
+    "Votre dossier"   => {type:"file", name:"p_dossier"},
+    "<lien dossier/>" => {type:"raw", content:"<div class=\"italic small\">Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
+  }
+  form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
+end
+
+%>
+<fieldset id="concours-envoi-dossier">
+  <legend>Dossier de candidature</legend>
+  <% if not concurrent.dossier_transmis? %>
+    <%= form.out %>
+  <% else %>
+    <p>Votre dossier de candidature a bien été transmis.</p>
+  <% end %>
+</fieldset>
+
 
 <%
 # ---------------------------------------------------------------------
@@ -54,6 +92,7 @@ form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
 #
 # ---------------------------------------------------------------------
 %>
+<h3>Vos participations aux concours de l’atelier Icare</h3>
 <section id="concours-historique">
   <% if concurrent.concours.count == 1 %>
     <p>C'est votre première participation à ce concours. Bonne chance à vous !</p>

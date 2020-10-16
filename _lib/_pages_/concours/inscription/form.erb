@@ -30,7 +30,7 @@ YAML
 signedup_form = Form.new(id: "concours-signedup-form", route:route.to_s, class:"noborder nomargin")
 signedup_form.rows = {
   'Votre mail'    => {name:"p_mail", type:'text'},
-  'Votre Numéro'  => {name:'p_uuid', type:'text'},
+  'Votre Numéro'  => {name:'p_concurrent_id', type:'text'},
   '<explication>' => {type:"raw", name: "<div class=\"explication\">Ce numéro correspond au numéro qui vous a été attribué à l'inscription (et envoyé par mail).</div>"}
 }
 signedup_form.submit_button = UI_TEXTS[:concours_bouton_sidentifier]

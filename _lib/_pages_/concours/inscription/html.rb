@@ -17,7 +17,7 @@ class HTML
             redirect_to("concours/concurrent")
           end
         when 'concours-signedup-form'
-          raise "Je ne traite pas encore ce formulaire"
+          check_concurrent
         end
       end
     end
@@ -28,46 +28,15 @@ class HTML
     @body = deserb("form", self)
   end # /build_body
 
-  def traite_inscription(form)
-    now = Time.now
 
-    # IDENTIFIANT UNIQUE pour le concours
-    user_id = "#{now.strftime("%Y%m%d%H%M%S")}"
-    while db_count(DBTABLE_CONCURRENTS, {user_id: user_id}) > 1
-      now += 1
-      user_id = "#{now.strftime("%Y%m%d%H%M%S")}"
+  def check_concurrent
+    dc = db_exec(REQUEST_CHECK_CONCURRENT, [param(:p_concurrent_id), param(:p_mail)]).first
+    if not dc.nil?
+      session['concours_user_id'] = param(:p_concurrent_id)
+      db_compose_update(DBTABLE_CONCURRENTS, dc[:id], {session_id: session.id})
+      redirect_to("concours/concurrent")
+    else
+      erreur("Désolé, je ne vous remets pas… Merci de vérifier votre adresse mail et le numéro de concurrent qui vous a été remis dans le message de confirmation lors de votre inscription.")
     end
-
-    # On enregistre le numéro de session avec l'enregistrement de l'user
-    # C'est comme ça qu'on le retrouvera à chaque fois.
-    data = {
-      user_mail:  param(:p_mail),
-      patronyme:  param(:p_patronyme),
-      sexe:       param[:p_sexe],
-      session_id: session.id,
-      user_id:    user_id,
-      mail_confirmed: false
-    }
-    new_id = db_compose_insert(DBTABLE_CONCURRENTS, data)
-
-    session['concours_user_id'] = user_id
-
-    # Les données pour le concours courant
-    data = {
-      user_id:        user_id,
-      annee:          ANNEE_CONCOURS_COURANTE,
-      fiche_required: !!param(:p_fiche_lecture)
-    }
-    db_compose_insert(DBTABLE_CONCOURS, data)
-
-    # Envoyer un mail pour confirmer l'inscription
-    # TODO
-    # Envoyer un mail pour confirmer l'adresse mail
-    # TODO
-    # Ajouter une actualité pour l'inscription
-    # TODO
-
-    return true
-  end #/ traite_inscription
-
+  end #/ check_concurrent
 end #/HTML

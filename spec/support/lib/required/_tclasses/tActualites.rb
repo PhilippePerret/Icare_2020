@@ -70,8 +70,10 @@ class << self
     params ||= {}
     cols = "id, user_id, type, message, created_at, updated_at"
     request = "SELECT #{cols} FROM actualites"
-    user_id = params[:user_id] || params[:user].id
-    request << " WHERE user_id = #{user_id}" if user_id
+    if params.key?(:user_id) || params.key?(:user)
+      user_id = params[:user_id] || params[:user].id
+      request << " WHERE user_id = #{user_id}" if user_id
+    end
     request << " ORDER BY created_at"
     request << " LIMIT #{params[:limit]}" if params.key(:limit)
     db_exec(request).collect do |dactu|

@@ -4,22 +4,26 @@ Voir dans GHI les tâches avec le tag 'concours'.
 
 ## Identifiant d'un inscrit
 
-~~~
-
-20210123 234 => 20210123234
--------- ---
-   ^      ^
-   |      |_____ Numéro d'inscription
-   |
-   |_____ Date d'inscription
-
-
-~~~
-
-* confirmation du mail de l'inscrit
-  À son inscription, on lui attribue un identifiant
+L'identifiant est construit avec la date et le temps courant au moment de l'inscription : Année, mois, jour, heures, minutes et secondes. Par exemple 2020, 11, 13, 10, 44, 32 sans espaces ni virgules ("20201113104432"). Si cet identifiant est déjà trouvé dans la base (très improbable, on ajoute une seconde.)
 
 ### Table des données
+
+#### Table des données du concours
+
+~~~SQL
+DROP TABLE IF EXISTS `concours`;
+CREATE TABLE `concours` (
+  annee       VARCHAR(4) NOT NULL,
+  theme       VARCHAR(100) NOT NULL,
+  prix1       VARCHAR(200),
+  prix2       VARCHAR(200),
+  prix3       VARCHAR(200),
+  prix4       VARCHAR(200),
+  prix5       VARCHAR(200),
+  created_at  VARCHAR(10),
+  updated_at  VARCHAR(10)
+);
+~~~
 
 La table qui contient les participants (qui peuvent participer à plusieurs
 concours)
@@ -30,8 +34,8 @@ DROP TABLE IF EXISTS `concours_concurrents`;
 CREATE TABLE `concours_concurrents` (
   id              INT(12)  PRIMARY KEY AUTO_INCREMENT,
   session_id      VARCHAR(64) NOT NULL,
-  user_id         VARCHAR(14) NOT NULL,
-  user_mail       VARCHAR(255) NOT NULL,
+  concurrent_id   VARCHAR(14) NOT NULL,
+  mail            VARCHAR(255) NOT NULL,
   patronyme       VARCHAR(200) NOT NULL,
   sexe            VARCHAR(1) NOT NULL,
   mail_confirmed  BOOLEAN DEFAULT FALSE,
@@ -45,10 +49,10 @@ CREATE TABLE `concours_concurrents` (
 
 ~~~SQL
 
-DROP TABLE IF EXISTS `concours`;
-CREATE TABLE `concours`(
+DROP TABLE IF EXISTS `concurrents_per_concours`;
+CREATE TABLE `concurrents_per_concours`(
   annee             VARCHAR(4) NOT NULL,
-  user_id           VARCHAR(14) NOT NULL,
+  concurrent_id     VARCHAR(14) NOT NULL,
   dossier_complete  BOOLEAN DEFAULT FALSE,
   fiche_required    BOOLEAN DEFAULT TRUE,
   titre             VARCHAR(200),
