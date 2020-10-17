@@ -13,6 +13,7 @@ UI_TEXTS.merge!({
 
 MESSAGES.merge!({
   concours_signed_confirmation: "Confirmation de votre inscription au concours de synopsis",
+  concours_new_signup_titre: "Nouvelle inscription au concours de synopsis",
 })
 
 ANNEE_CONCOURS_COURANTE = Time.now.month < 3 ? Time.now.year : Time.now.year + 1
@@ -26,3 +27,13 @@ REGLEMENT_LINK = "<a href=\"public/Concours_ICARE_#{ANNEE_CONCOURS_COURANTE}.pdf
 
 
 REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTABLE_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
+
+CONCOURS_KNOWLEDGE_VALUES = [
+  ["none", "Vous avez entendu parler de ce concours par…"],
+  ["google", "une recherche google"],
+  ["forum", "un forum d'écriture"],
+  ["facebook", "un groupe Facebook"],
+  ["someone", "bouche à oreille"],
+  ["medias", "les médias"],
+  ["autre", "un autre moyen"]
+]

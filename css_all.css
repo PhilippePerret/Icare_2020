@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-12 06:10:55 +0200
+ *    Date dernière modification : 2020-10-17 07:00:38 +0200
  *
  --------------------------------------------------------------------- */
 :root {
@@ -1123,6 +1123,25 @@ select.error,
 textarea.error
 {
   border-color:red;
+  outline:none;
+}
+input.ok,
+select.ok,
+textarea.ok
+{
+  background-color:rgb(205, 255, 205);
+  outline:none;
+}
+select.ok {
+  border-color:green;
+  outline:none;
+}
+
+/* Pour écrire le message d'erreur */
+div.errorfield {
+  font-size:0.85em!important;
+  color:red;
+  opacity:0.5;
 }
 
 form:not(.noform) {

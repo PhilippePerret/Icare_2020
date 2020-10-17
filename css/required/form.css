@@ -45,6 +45,25 @@ select.error,
 textarea.error
 {
   border-color:red;
+  outline:none;
+}
+input.ok,
+select.ok,
+textarea.ok
+{
+  background-color:rgb(205, 255, 205);
+  outline:none;
+}
+select.ok {
+  border-color:green;
+  outline:none;
+}
+
+/* Pour écrire le message d'erreur */
+div.errorfield {
+  font-size:0.85em!important;
+  color:red;
+  opacity:0.5;
 }
 
 form:not(.noform) {

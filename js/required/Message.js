@@ -15,15 +15,15 @@ function message(msg) {
 }
 class Message {
   // Affichage du message
-  static display(divMessage){
+  static display(imsg){
     this.timer && this.stopTimer()
     if ( ! this.sectionMessages ) this.buildSectionMessages() ;
-    this.sectionMessages.appendChild(divMessage)
-    this.startTimer()
+    this.sectionMessages.appendChild(imsg.span)
+    this.startTimer(imsg.duration)
   }
 
-  static startTimer(){
-    this.timer = setTimeout(this.delete.bind(this), 30 * 1000)
+  static startTimer(duree_secondes){
+    this.timer = setTimeout(this.delete.bind(this), duree_secondes * 1000)
   }
   static stopTimer(){
     clearTimeout(this.timer) ;
@@ -50,12 +50,16 @@ class Message {
     this.type = type ;
   }
   display() {
-    this.constructor.display(this.span)
+    this.constructor.display(this)
   }
   get span(){
     const span = document.createElement('DIV');
     span.className = `${this.type}s`;
     span.innerHTML = this.content;
     return span ;
+  }
+  // Durée en seconde du message
+  get duration(){
+    return this.content.split(' ').length * 0.75 ;
   }
 }

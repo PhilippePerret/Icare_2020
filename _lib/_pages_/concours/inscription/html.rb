@@ -6,6 +6,12 @@ class HTML
     "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:titre_page_inscription]}"
   end #/titre
 
+  def usefull_links
+		[
+			Tag.link(route:"concours/accueil", text:"Accueil du concours")
+		]
+	end
+
   # Code à exécuter avant la construction de la page
   def exec
     if param(:form_id)
@@ -16,9 +22,6 @@ class HTML
           if traite_inscription(form)
             redirect_to("concours/concurrent")
           end
-        when 'concours-signedup-form'
-          check_concurrent
-        end
       end
     end
   end # /exec
@@ -28,15 +31,4 @@ class HTML
     @body = deserb("form", self)
   end # /build_body
 
-
-  def check_concurrent
-    dc = db_exec(REQUEST_CHECK_CONCURRENT, [param(:p_concurrent_id), param(:p_mail)]).first
-    if not dc.nil?
-      session['concours_user_id'] = param(:p_concurrent_id)
-      db_compose_update(DBTABLE_CONCURRENTS, dc[:id], {session_id: session.id})
-      redirect_to("concours/concurrent")
-    else
-      erreur("Désolé, je ne vous remets pas… Merci de vérifier votre adresse mail et le numéro de concurrent qui vous a été remis dans le message de confirmation lors de votre inscription.")
-    end
-  end #/ check_concurrent
 end #/HTML

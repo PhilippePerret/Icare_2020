@@ -58,6 +58,9 @@ feature "Section d'inscription de la partie concours" do
     expect(TMails).to be_exists(concurrent_mail, {after:start_time, subject: MESSAGES[:concours_signed_confirmation]}),
       "Le concurrent devrait avoir reçu un mail confirmant son inscription"
 
+    # Un mail doit avoir été envoyé à l'administration
+    expect(phil).to have_mail(after: start_time, subject: MESSAGES[:concours_new_signup_titre])
+    
     # Participant doit avoir reçu un mail pour confirmer son adresse mail
     # Non, pour le moment, il faut qu'il fasse attention.
 

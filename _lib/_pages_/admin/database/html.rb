@@ -1,6 +1,6 @@
 # encoding: UTF-8
 require_module('form')
-require_module_js(['flash', 'event', 'dom'])
+require_module_js(['jquery', 'flash', 'event', 'dom'])
 
 class HTML
   def titre

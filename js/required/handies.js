@@ -5,7 +5,5 @@ function clip(code){
 }
 
 function raise(msg){
-  alert(`PROBLÈME : ${msg}`) ;
-  console.error(msg)
-  throw new Error(msg) ;
+  throw msg;
 }

@@ -5,6 +5,12 @@ class HTML
     "#{bouton_retour}#{EMO_TITRE}Dossier du concours"
   end #/titre
 
+  # def usefull_links
+	# 	[
+	# 		Tag.link(route:"concours/accueil", text:"Accueil du concours")
+	# 	]
+	# end
+
   # Code à exécuter avant la construction de la page
   def exec
 

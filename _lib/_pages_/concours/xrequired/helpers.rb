@@ -15,6 +15,10 @@ class HTML
     cont = Tag.link(class:'btn main green pd1', text:"Inscription au concours", route:"concours/inscription")
     Tag.div(class:'mt2 mb2 center', text: cont)
   end #/ bouton_formulaire
+  def bouton_login
+    cont = Tag.link(route:"concours/login", text:"Identifiez-vous")
+    Tag.div(class:'right', text: "Déjà inscrite ou inscrit ?… #{cont} !")
+  end #/ bouton_login
 
   def bouton_retour
     @bouton_retour ||= Tag.retour(route:"concours/accueil", titre:"Le Concours")

@@ -50,6 +50,11 @@ end #/ load
 def pseudo
   @pseudo ||= data[:patronyme]
 end #/ pseudo
+alias :patronyme :pseudo
+
+def mail
+  @mail ||= data[:mail]
+end #/ mail
 
 def concurrent_id
   @concurrent_id ||= data[:concurrent_id]

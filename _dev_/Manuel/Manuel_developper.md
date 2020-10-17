@@ -1521,6 +1521,8 @@ explication		Une explication discrète pour un champ. Mettre un label
 							sauf pour certains types comme 'raw'
 :id						IDentifiant éventuel pour le champ
 :value				Valeur à donner au champ, à sa construction
+:errorable		Si true, on ajoute un champ sous le champ pour contenir 
+							l'éventuel message d'erreur. Cf. "Traitement des erreurs"
 :values				Pour un select, le Array des valeurs
 :options			Pour un select, les options, en String
 :explication	Texte de l'explication si le champ est expliqué. Tip : le
@@ -1680,8 +1682,22 @@ message("Le nouveau temps est #{formate_date(newDate)}")
 > cf. la méthode [formate_date][]
 
 
+#### Traitement des erreurs
 
+Si un champ définit son `errorable` à true, il permet d'être contrôlé par javascript.
 
+Si le champ porte d'identifiant `fieldid`, le champ contenant l'erreur aura pour identifiant `fieldid-errorfield` et aura une class `hidden` pour être masqué par défaut.
+
+Une utilisation classique du champ d'erreur dans un script javascript consiste à faire quelque chose comme :
+
+~~~javascript
+const err = "Mon message d'erreur";
+const field = document.querySelector("#mon-champ");
+const errorField = document.querySelector("#mon-champ-errorfield");
+field.classList.add('error'); // pour l'entourer de rouge
+errorField.classList.remove('hidden'); // le faire apparaitre
+errorField.innerHTML = err ;
+~~~
 
 ---
 

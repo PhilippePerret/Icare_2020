@@ -3,7 +3,7 @@
 require_module('form')
 class HTML
   def titre
-    "#{UI_TEXTS[:concours_titre_participant]}"
+    "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:concours_titre_participant]}"
   end #/titre
 
   def usefull_links

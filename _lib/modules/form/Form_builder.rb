@@ -162,6 +162,7 @@ class Form
   #{span_libelle(style: libelle_style, label: label)}
   <span class="value#{" file" if dfield[:type] == 'file'}">
     #{value_field_for(dfield)}
+    #{errorable_field(dfield) if dfield[:errorable]}
     #{explication_field(dfield) if dfield.key?(:explication)}
   </span>
 </div>
@@ -189,6 +190,10 @@ class Form
   def explication_field(dfield)
     EXPLICATION_TAG % {text: dfield[:explication], style:''}
   end #/ explication_field
+
+  def errorable_field(dfield)
+    ERRORABLE_FIELD % {id: "#{dfield[:id]}-errorfield"}
+  end #/ errorable_field
 
   def row_style(dfield)
     sty = []
