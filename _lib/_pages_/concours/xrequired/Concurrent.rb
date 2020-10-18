@@ -5,7 +5,8 @@
 REQUEST_DATA_CONCURRENT = <<-SQL
 SELECT
   cc.*,
-  cpc.dossier_complete, cpc.titre
+  cpc.specs AS specs, -- pour savoir si le projet est envoyé
+  cpc.titre
   FROM concours_concurrents cc
   INNER JOIN concurrents_per_concours cpc ON cpc.concurrent_id = cc.concurrent_id
   WHERE cc.concurrent_id = ? AND cc.session_id = ? AND cpc.annee = ?
@@ -19,9 +20,6 @@ class HTML
 end
 
 class Concurrent
-class << self
-
-end # /<< self
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
@@ -60,19 +58,22 @@ end #/ mail
 def concurrent_id; @concurrent_id end #/ concurrent_id
 alias :id :concurrent_id
 
+# === Options ===
+#   (ou "specs")
+#
+#   bit 0     1 si le concurrent veut recevoir des informations par mail
+#   bit 1     1 si le concurrent veut recevoir sa fiche de lecture.
+#
 def options
   @options ||= data[:options]
 end #/ options
 
 # Retourne la liste Array des données des concours faits par le concurrent
 def concours
-  @concours ||= db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ?", self.id)
+  @concours ||= Concours.new(self)
 end #/ concours
 
 # Retourne la valeur {Integer} de l'option de bit +bit+
-#
-#   bit 0     1 si le concurrent veut recevoir des informations par mail
-#   bit 1     1 si le concurrent veut recevoir sa fiche de lecture.
 #
 def option(bit)
   data[:options][bit].to_i
@@ -80,6 +81,7 @@ end #/ option
 def set_option(bit, value)
   opts = data[:options].dup
   opts[bit] = value
+  data[:options] = opts
 end #/ set_option
 
 # ---------------------------------------------------------------------
@@ -122,7 +124,7 @@ end #/ warned?
 #   - le fichier physique existe
 def dossier_transmis?
   (@dossier_transmis ||= begin
-    data[:dossier_complete] == 1 ? :true : :false
+    data[:specs][0] == "1" ? :true : :false
   end) == :true
 end #/ dossier_complete?
 
@@ -147,5 +149,32 @@ end #/ change_pref_warn_information
 def update_options
   db_exec(REQUEST_UPDATE_OPTIONS, [options, concurrent_id])
 end #/ update_options
+
+  # ---------------------------------------------------------------------
+  #
+  #   Pour la donnée concours du concurrent
+  #
+  # ---------------------------------------------------------------------
+  class Concours
+    def initialize(concurrent)
+      @concurrent = concurrent
+    end #/ initialize
+    def data
+      @data ||= begin
+        db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ? AND annee = ?", [self.id, ANNEE_CONCOURS_COURANTE]).first
+      end
+    end #/ data
+
+    # *** Options pour le concours courant ***
+    #     (pas les options générales)
+    #
+    # bit 0   1 si le projet a été envoyé
+    # ...
+    # bit 7
+    def options
+      @options ||= data[:options]
+    end #/ options
+  end #/Concours
+
 
 end #/Concurrent

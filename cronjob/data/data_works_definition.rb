@@ -4,7 +4,8 @@ DATA_WORKS_FIRST_DEFINITION = [
   {id:'mail_actu_hebdo', day:6, at:2, exec:'CJActualites.traite_mail_hebdomadaire', required:'actualites'},
   {id:'divers_jobs', every: 1.day, at:3, exec:'Cronjob.nettoyage_quotidien', required:'jobs'},
   {id:'nettoyage_hebdo', every:7.days, at:1, exec:'Cronjob.nettoyage_hebdomadaire', require:'jobs'},
-  {id:'rapport_complet', every: 1.day, at:4, exec:'Report.send'}
+  {id:'rapport_complet', every: 1.day, at:4, exec:'Report.send'},
+  {id:'mail_concours', every:7.days, exec:'Cronjob.send_information_concours', require:'concours'}
 ]
 
 # Pour ajouter des travaux lorsque les travaux ont déjà été lancés

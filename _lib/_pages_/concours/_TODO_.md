@@ -53,10 +53,9 @@ DROP TABLE IF EXISTS `concurrents_per_concours`;
 CREATE TABLE `concurrents_per_concours`(
   annee             VARCHAR(4) NOT NULL,
   concurrent_id     VARCHAR(14) NOT NULL,
-  dossier_complete  BOOLEAN DEFAULT FALSE,
   titre             VARCHAR(200),
   prix              VARCHAR(1), --  0, 1, 2, ou 3
-  options           VARCHAR(8) DEFAULT "00000000",
+  specs             VARCHAR(8) DEFAULT "00000000",
   created_at        VARCHAR(10),
   updated_at        VARCHAR(10)
 );

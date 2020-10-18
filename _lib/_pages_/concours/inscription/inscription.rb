@@ -19,6 +19,7 @@ class HTML
 
     # Options
     options = "0" * 8
+    options[0] = "1" # Par défaut, on reçoit toujours les informations
     options[1] = "1" if !!param(:p_fiche_lecture)
 
     # On enregistre le numéro de session avec l'enregistrement de l'user
