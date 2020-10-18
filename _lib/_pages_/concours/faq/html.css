@@ -1,0 +1,40 @@
+/*
+ Pour la faq
+*/
+div.qr {
+  border:1px solid grey;
+  border-radius:0.2em;
+  padding:1em;
+  font-size:0.9em;
+}
+div.qr div.question {
+  font-family:"Arial Narrow", Arial, Geneva, serif;
+}
+div.qr div.reponse {
+  margin:1em 2em;
+  overflow:hidden;
+}
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  div.qr div.reponse {
+    margin:1em 2em;
+  }
+  div.qr:not(hover) div.reponse {
+    height:0;
+    transition:0.5s;
+  }
+  div.qr:hover div.reponse {
+    height:100px;
+    transition:0.5s;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  div.qr div.question {
+    font-family:"Arial Narrow", Arial, Geneva, serif;
+    font-weight:bold;
+  }
+  div.qr div.reponse {
+    margin:1em 1em;
+  }
+}

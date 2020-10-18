@@ -38,7 +38,7 @@ CREATE TABLE `concours_concurrents` (
   mail            VARCHAR(255) NOT NULL,
   patronyme       VARCHAR(200) NOT NULL,
   sexe            VARCHAR(1) NOT NULL,
-  mail_confirmed  BOOLEAN DEFAULT FALSE,
+  options         VARCHAR(8) DEFAULT "00000000",
   created_at      VARCHAR(10),
   updated_at      VARCHAR(10)
 );
@@ -54,9 +54,9 @@ CREATE TABLE `concurrents_per_concours`(
   annee             VARCHAR(4) NOT NULL,
   concurrent_id     VARCHAR(14) NOT NULL,
   dossier_complete  BOOLEAN DEFAULT FALSE,
-  fiche_required    BOOLEAN DEFAULT TRUE,
   titre             VARCHAR(200),
   prix              VARCHAR(1), --  0, 1, 2, ou 3
+  options           VARCHAR(8) DEFAULT "00000000",
   created_at        VARCHAR(10),
   updated_at        VARCHAR(10)
 );

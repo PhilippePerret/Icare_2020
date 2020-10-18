@@ -17,6 +17,10 @@ class HTML
       user_id = "#{now.strftime("%Y%m%d%H%M%S")}"
     end
 
+    # Options
+    options = "0" * 8
+    options[1] = "1" if !!param(:p_fiche_lecture)
+
     # On enregistre le numéro de session avec l'enregistrement de l'user
     # C'est comme ça qu'on le retrouvera à chaque fois.
     data_save = {
@@ -24,7 +28,8 @@ class HTML
       patronyme:      data_concurrent[:patronyme],
       sexe:           param(:p_sexe),
       session_id:     session.id,
-      concurrent_id:  user_id
+      concurrent_id:  user_id,
+      options:        options
     }
     log("data_conc: #{data_save}")
     new_id = db_compose_insert(DBTABLE_CONCURRENTS, data_save)
@@ -34,8 +39,7 @@ class HTML
     # Les données pour le concours courant
     data = {
       concurrent_id:  user_id,
-      annee:          ANNEE_CONCOURS_COURANTE,
-      fiche_required: !!param(:p_fiche_lecture)
+      annee:          ANNEE_CONCOURS_COURANTE
     }
     db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data)
 
@@ -77,7 +81,8 @@ class HTML
     return true
 
   rescue Exception => e
-    erreur("Les données sont invalides…")
+    log(e)
+    erreur("Les données sont invalides… #{e.message}")
     return false
   end #/ traite_inscription
 
@@ -96,7 +101,11 @@ class HTML
     genre     = param(:p_sexe)
     reglement = param(:p_reglement).nil_if_empty
     reglement == "on" || raise("Le réglement doit être approuvé.")
-
+    {
+      mail: mail,
+      patronyme: patronyme,
+      genre: genre
+    }
   end #/ data_are_valid
 
   # Retourne TRUE si le mail ne correspond pas déjà à un inscrit

@@ -1,0 +1,25 @@
+<%# frozen_string_literal: true %>
+<%
+=begin
+  Formulaire d'inscription au concours d'Icare
+  Note : on profite de ce formulaire d'inscription pour poser certaines
+  questions générales et personnelles.
+
+  Ce formulaire permet aussi au candidat de retrouver son compte pour
+  pouvoir, par exemple, transmettre ses documents.
+=end
+%>
+
+<%
+signedup_form = Form.new(id: "concours-signedup-form", route:route.to_s, class:'form-value-300')
+signedup_form.rows = {
+  '<operation/>'  => {name:"p_op", type:"hidden", value:""},
+  'Votre mail <span class="small">*</span>'    => {name:"p_mail", type:'text'},
+  'Votre Numéro <span class="small">**</span>'  => {name:'p_concurrent_id', type:'text'},
+  'Numéro oublié' => {type:"raw", content:"<button type='submit' class='small btn' onclick='document.querySelector(\"#p_op\").value=\"retrievenum\"'>#{UI_TEXTS[:bouton_recup_numero]}</button>"},
+  '<expli-mail/>' => {type:"explication", name: "(*) Mail utilisé pour l'inscription.<br>(**) Numéro attribué à l'inscription et envoyé par mail."},
+}
+signedup_form.submit_button = UI_TEXTS[:concours_bouton_sidentifier]
+%>
+
+<%= signedup_form.out %>

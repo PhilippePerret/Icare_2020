@@ -6,16 +6,14 @@ class HTML
     "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:concours_titre_participant]}"
   end #/titre
 
-  def usefull_links
-		[
-			Tag.link(route:"concours/accueil", text:"Accueil du concours")
-		]
-	end
-
   # Code à exécuter avant la construction de la page
   def exec
+    session['concours_user_id'] || begin
+      erreur(ERRORS[:concours_login_required])
+      return redirect_to("concours/identification")
+    end
     @concurrent = Concurrent.new(concurrent_id: session['concours_user_id'], session_id: session.id)
-    @concours = Concours.new(ANNEE_CONCOURS_COURANTE)
+    @concours   = Concours.new(ANNEE_CONCOURS_COURANTE)
     if param(:op)
       case param(:op)
       when 'nonfl'
@@ -24,6 +22,12 @@ class HTML
       when 'ouifl'
         concurrent.change_pref_fiche_lecture(true)
         message("D'accord, vous recevrez la fiche de lecture.")
+      when 'nonwarn'
+        concurrent.change_pref_warn_information(false)
+        message("D'accord, vous ne recevrez plus d'informations sur le concours.")
+      when 'ouiwarn'
+        concurrent.change_pref_warn_information(true)
+        message("D'accord, vous recevrez les informations sur le concours.")
       end
     end
   end # /exec

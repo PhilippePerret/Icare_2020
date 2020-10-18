@@ -5,14 +5,14 @@
 REQUEST_DATA_CONCURRENT = <<-SQL
 SELECT
   cc.*,
-  cpc.dossier_complete, cpc.fiche_required, cpc.titre
+  cpc.dossier_complete, cpc.titre
   FROM concours_concurrents cc
   INNER JOIN concurrents_per_concours cpc ON cpc.concurrent_id = cc.concurrent_id
   WHERE cc.concurrent_id = ? AND cc.session_id = ? AND cpc.annee = ?
 SQL
 
 # Requête SQL pour fixer la demande ou non de la fiche de lecture
-REQUEST_UPDATE_FICHE_REQUIRED = "UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET fiche_required = ? WHERE concurrent_id  = ? AND annee = ?"
+REQUEST_UPDATE_OPTIONS = "UPDATE #{DBTABLE_CONCURRENTS} SET options = ? WHERE concurrent_id  = ?"
 
 class HTML
   attr_reader :concurrent
@@ -30,6 +30,7 @@ end # /<< self
 attr_reader :concurrent_id, :session_id
 def initialize(ini_data)
   @concurrent_id  = ini_data[:concurrent_id]
+  @concurrent_id ||= raise("Initialisation impossible sans numéro d'inscription.")
   @session_id     = ini_data[:session_id]
 end #/ initialize
 # Pour charger le concurrent depuis la table
@@ -56,15 +57,30 @@ def mail
   @mail ||= data[:mail]
 end #/ mail
 
-def concurrent_id
-  @concurrent_id ||= data[:concurrent_id]
-end #/ concurrent_id
+def concurrent_id; @concurrent_id end #/ concurrent_id
 alias :id :concurrent_id
+
+def options
+  @options ||= data[:options]
+end #/ options
 
 # Retourne la liste Array des données des concours faits par le concurrent
 def concours
   @concours ||= db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ?", self.id)
 end #/ concours
+
+# Retourne la valeur {Integer} de l'option de bit +bit+
+#
+#   bit 0     1 si le concurrent veut recevoir des informations par mail
+#   bit 1     1 si le concurrent veut recevoir sa fiche de lecture.
+#
+def option(bit)
+  data[:options][bit].to_i
+end #/ option
+def set_option(bit, value)
+  opts = data[:options].dup
+  opts[bit] = value
+end #/ set_option
 
 # ---------------------------------------------------------------------
 #
@@ -88,9 +104,17 @@ end #/ femme?
 # Retourne TRUE si le concurrent veut recevoir sa fiche de lecture
 def fiche_lecture?
   (@fiche_lecture ||= begin
-    data[:fiche_required] == 1 ? :true : :false
+    option(1) == 1 ? :true : :false
   end) == :true
 end #/ fiche_lecture?
+
+# Retourne TRUE si le concurrent veut recevoir des informations sur
+# le concours.
+def warned?
+  (@is_warned ||= begin
+    option(0) == 1 ? :true : :false
+  end) == :true
+end #/ warned?
 
 # Retourne TRUE si le dossier de participation a été transmis
 # Deux conditions :
@@ -109,8 +133,19 @@ end #/ dossier_complete?
 # ---------------------------------------------------------------------
 
 def change_pref_fiche_lecture(recevoir)
-  db_exec(REQUEST_UPDATE_FICHE_REQUIRED, [recevoir, concurrent_id, ANNEE_CONCOURS_COURANTE])
-  @fiche_lecture = recevoir ? :true : :false
+  set_option(1, recevoir ? '1' : '0')
+  update_options
+  @fiche_lecture = nil
 end #/ change_pref_fiche_lecture
+
+def change_pref_warn_information(recevoir)
+  set_option(0, recevoir ? '1' : '0')
+  update_options
+  @is_warned = nil
+end #/ change_pref_warn_information
+
+def update_options
+  db_exec(REQUEST_UPDATE_OPTIONS, [options, concurrent_id])
+end #/ update_options
 
 end #/Concurrent

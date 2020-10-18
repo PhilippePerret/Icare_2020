@@ -1,39 +1,9 @@
 # Atelier Icare<br/>Concours de synopsis
 
-> Note : le RÈGLEMENT est travaillé dans le dossier général [./_dev_/Icare.scriv](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_dev_/Icare.scriv).
-
-## Description
-
-Projet d’un concours de synopsis visant à donner de la visibilité à l’atelier Icare, le mettre un peu en avant pour obtenir de nouveaux apprentis-auteurs. Pour le moment, l’atelier est trop confidentiel, alors qu’il est un des meilleurs.
-
-
-
-## Question
-
-* Faut-il **un thème** ?
-
-* Faut-il **un jury** nombreux ? Si oui, comment les rémunérer ?
-
-* Faut-il des **partenaires** ? (je pense par exemple à des maisons de production)
-
-
 
 ## Liens utiles
 
 [https://www.reglementdejeu.com](https://www.reglementdejeu.com)
-
-
-
-## Les lots
-
-PREMIER PRIX : Un développement de 1 an à l’atelier, en rythme intensif (d’une valeur de 1380 €).
-
-DEUXIÈME PRIX : un développement de 6 mois à l’atelier, en rythme intensif (d’une valeur de 6540 €)
-
-TROISIÈME PRIX : un module coaching d’une valeur de 200 €.
-
-Prix de consolation : une remise de 10 % sur tous les modules de l’atelier.
-
 
 
 ## Date limite de dépôt

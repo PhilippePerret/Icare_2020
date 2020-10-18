@@ -6,12 +6,6 @@ class HTML
     "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:titre_page_inscription]}"
   end #/titre
 
-  def usefull_links
-		[
-			Tag.link(route:"concours/accueil", text:"Accueil du concours")
-		]
-	end
-
   # Code à exécuter avant la construction de la page
   def exec
     if param(:form_id)
@@ -22,6 +16,7 @@ class HTML
           if traite_inscription(form)
             redirect_to("concours/concurrent")
           end
+        end
       end
     end
   end # /exec

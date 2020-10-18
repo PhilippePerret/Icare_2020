@@ -49,13 +49,26 @@
 %>
 <fieldset>
   <legend>Fiche de lecture sur votre projet</legend>
-  <% if concurrent.fiche_lecture? %>
-    <div>Vous recevrez la fiche de lecture sur votre projet.</div>
-    <div class="small right"><a href="<%= route.to_s %>?op=nonfl">Je ne veux plus recevoir cette fiche de lecture</a>.</div>
-  <% else %>
-    <div>Vous ne recevrez pas la fiche de lecture.</div>
-    <div class="small right"><a href="<%= route.to_s %>?op=ouifl">Finalement, je veux bien recevoir cette fiche de lecture</a>.</div>
-  <% end %>
+  <div class="row">
+    <% if concurrent.fiche_lecture? %>
+      <div>Vous recevrez la fiche de lecture sur votre projet.</div>
+      <div class="small right"><a href="<%= route.to_s %>?op=nonfl">Je ne veux plus recevoir cette fiche de lecture</a>.</div>
+    <% else %>
+      <div>Vous ne recevrez pas la fiche de lecture.</div>
+      <div class="small right"><a href="<%= route.to_s %>?op=ouifl">Finalement, je veux bien recevoir cette fiche de lecture</a>.</div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <% if concurrent.warned?  %>
+      <div>Vous recevez des informations de la part du concours (échéances, inscrits, etc.).
+      <div class="small right"><a href="<%= route.to_s %>?op=nonwarn">Je ne veux plus recevoir ces informations</a>.</div>
+      </div>
+    <% else %>
+    <div>Vous ne recevez pas les informations de la part du concours (échéances, inscrits, etc.).
+    <div class="small right"><a href="<%= route.to_s %>?op=ouiwarn">Je voudrais bien les recevoir, finalement</a>.</div>
+    <% end %>
+  </div>
 </fieldset>
 
 <%
