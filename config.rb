@@ -4,6 +4,12 @@
   Note : ce fichier est appelé APRÈS le fichier des constantes.
 =end
 
+# Concours de synopsis
+# --------------------
+# Cette constante est mise à TRUE quand le concours de synopsis annuel
+# est lancé.
+CONCOURS_SYNOPSIS_ON = false
+
 # Conservation du log
 # -------------------
 # Constante permettant de définir si le log (journal2020.log) doit être

@@ -6,11 +6,11 @@
 QUESTIONS_REPONSES = [
   {
     question: "Où trouver le formulaire d'inscription ?",
-    reponse: "Le formulaire d'inscription se trouve à l'adresse #{FORMULAIRE_INSCRIPTION.with("https://www.atelier-icare.net/concours/inscription")}."
+    reponse: "Le formulaire d'inscription se trouve à l'adresse #{CONCOURS_SIGNUP.with("https://www.atelier-icare.net/concours/inscription")}."
   },
   {
     question: "Où trouver le formulaire d'identification (une fois que l'on est inscrit) ?",
-    reponse: "Le formulaire d'identification se trouve à l'adresse #{FORMULAIRE_IDENTIFICATION.with("https://www.atelier-icare.net/concours/identification")}."
+    reponse: "Le formulaire d'identification se trouve à l'adresse #{CONCOURS_LOGIN.with("https://www.atelier-icare.net/concours/identification")}."
   },
   {
     question: "À quoi doit ressembler le fichier à envoyer ?",
@@ -42,7 +42,7 @@ QUESTIONS_REPONSES = [
   },
   {
     question: "J'ai perdu mon numéro d'inscription, comment le récupérer ?",
-    reponse: "C'est très simple : rejoignez le #{FORMULAIRE_INSCRIPTION}, tapez votre adresse mail et cliquez le bouton #{UI_TEXTS[:bouton_recup_numero]}."
+    reponse: "C'est très simple : rejoignez le #{CONCOURS_SIGNUP}, tapez votre adresse mail et cliquez le bouton #{UI_TEXTS[:bouton_recup_numero]}."
   }
 
 ]

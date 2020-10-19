@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 class HTML
   def titre
-    "#{EMO_TITRE}Le Concours annuel de l’atelier Icare"
+    "#{EMO_TITRE}Concours de synopsis de l’atelier Icare"
   end #/titre
 
   # Code à exécuter avant la construction de la page
@@ -12,7 +12,7 @@ class HTML
 
   # Fabrication du body
   def build_body
-    partial = ONLINE ? 'none' : 'body'
+    partial = CONCOURS_SYNOPSIS_ON ? 'body' : 'none'
     @body = deserb(partial, self)
   end # /build_body
 

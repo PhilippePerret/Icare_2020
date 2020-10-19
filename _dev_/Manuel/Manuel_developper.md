@@ -2783,6 +2783,28 @@ La classe `Downloader` créer un fichier zip dans le dossier `./tmp/downloads/` 
 Voir le [dossier contenant le fichier principal dans module/paiment](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/modules/paiement/html.rb) et la classe [AIPaiement](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/modules/paiement/lib/AIPaiement.rb) (attention, cette classe se trouve dans le dossier `modules/paiement`, pas dans un dossier module — qui serait un peu superfétatoire).
 
 
+
+---
+
+## Cronjob
+
+Un cronjob est lancé tous les jours, dans les premières heures de la journée.
+
+En local, le cron récupère le fichier rapport distant pour savoir comment les choses se sont passés.
+
+### Création d'un nouveau travail de cron (cronjob)
+
+Pour créer une nouvelle tâche, il suffit de s'inspirer de celle déjà créées. Il faut penser à l'ajouter à la liste du [fichier des définitions des cronjobs](/Users/philippeperret/Sites/AlwaysData/Icare_2020/cronjob/data/data_works_definition.rb) qui détermine les opérations et leur fréquence.
+
+### Rapport de cron
+
+#### Ajouter une opération/un résultat au rapport
+
+~~~ruby
+rapport "<Message du rapport>"
+~~~
+
+
 ---
 
 <a name="operations-admin"></a>

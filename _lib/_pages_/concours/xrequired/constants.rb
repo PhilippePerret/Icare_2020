@@ -73,7 +73,7 @@ class Linker
     @default_template ||= Tag.link(route: '%{route}', text: '%{text}')
   end #/ default_template
 end #/Linker
-CONCOURS_LINK = Linker.new(route:"concours/accueil", text:"Concours de Synopsis de l'atelier ICARE")
-DOSSIER_LINK = Linker.new(route:"concours/dossier", text:"dossier de candidature")
-FORMULAIRE_INSCRIPTION = Linker.new(route:'concours/inscription', text:"formulaire d'inscription")
-FORMULAIRE_IDENTIFICATION = Linker.new(route:'concours/identification', text:"formulaire d'identification")
+CONCOURS_LINK   = Linker.new(route:"concours/accueil", text:"Concours de Synopsis de l'atelier ICARE")
+DOSSIER_LINK    = Linker.new(route:"concours/dossier", text:"dossier de candidature")
+CONCOURS_SIGNUP = Linker.new(route:'concours/inscription', text:"formulaire d'inscription")
+CONCOURS_LOGIN  = Linker.new(route:'concours/identification', text:"formulaire d'identification")

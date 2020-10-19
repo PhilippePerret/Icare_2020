@@ -3,18 +3,12 @@
 
 class HTML
   def titre
-    "Résultats du concours de synopsis"
+    "#{bouton_retour}#{EMO_TITRE}Résultats du concours de synopsis"
   end #/titre
-  
-def usefull_links
-		[
-			# Ici les liens
-		]
-	end
 
   # Code à exécuter avant la construction de la page
   def exec
-    
+
   end # /exec
 
   # Fabrication du body
