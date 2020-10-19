@@ -125,7 +125,7 @@ class << self
   def launched?
     (@is_launched ||= begin
       require './config'
-      CONCOURS_SYNOPSIS_ON ? :true : :false
+      Concours.current.started? ? :true : :false
     end) == :true
   end #/ launched?
 

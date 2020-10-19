@@ -9,7 +9,7 @@ UI_TEXTS.merge!({
   #  *** boutons ***
   concours_bouton_signup: "S’inscrire",
   concours_bouton_sidentifier: "S’identifier",
-  concours_bouton_send_dossier: "Transmettre ce dossier",
+  concours_bouton_send_dossier: "Transmettre ce fichier",
   bouton_recup_numero: "Me renvoyer mon numéro d'inscription"
 })
 
@@ -31,6 +31,7 @@ CONCOURS_THEME_DESCRIPTION = <<-TEXT
 Avant l'accident, après l'accident, pendant l'accident, accident de la route ou de caddie, accident involontaire ou provoqué, peu importe le temps, le lieu, la durée choisis, l'histoire présentée dans le synopsis devra s'articuler autour d'un accident.
 TEXT
 
+CONCOURS_DATA_FOLDER = File.expand_path(File.join('.','_lib','data','concours')).tap{|p|`mkdir -p #{p}`}
 DBTABLE_CONCOURS = "concours"
 DBTABLE_CONCURRENTS = "concours_concurrents"
 DBTBL_CONCURS_PER_CONCOURS = "concurrents_per_concours"

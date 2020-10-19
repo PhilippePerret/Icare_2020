@@ -15,7 +15,7 @@ class HTML
         case param(:form_id)
         when 'concours-signup-form'
           if traite_inscription(form)
-            redirect_to("concours/concurrent")
+            redirect_to("concours/espace_concurrent")
           end
         end
       end

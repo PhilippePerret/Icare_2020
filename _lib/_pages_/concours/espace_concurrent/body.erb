@@ -1,7 +1,13 @@
 <%
 # frozen_string_literal: true
 %>
-<p><strong><%= concurrent.pseudo.titleize %></strong>, bienvenue dans votre section du <strong>Concours de Synopsis de l’atelier Icare</strong>. Dans cette partie, que vous pouvez rejoindre à tout moment en vous identifiant à l'aide de votre mail et de votre numéro de concurrent, vous pouvez retrouver vos informations et envoyer le cas échéant votre dossier de candidature.</p>
+<p><strong><%= concurrent.pseudo.titleize %></strong>, bienvenue dans votre espace du <strong>Concours de Synopsis de l’atelier Icare</strong>. Retrouvez dans cette partie les informations sur vos participation ainsi que des informations sur le concours actuel.<%=
+  if concurrent.dossier_transmis?
+    ""
+  else
+    " C'est ici que vous pouvez transmettre votre fichier de candidature."
+  end
+%></p>
 
 <%
 # ---------------------------------------------------------------------
@@ -15,7 +21,7 @@
 %>
 <fieldset id="concours-informations">
   <legend>Informations sur le concours en cours</legend>
-  <% if CONCOURS_SYNOPSIS_ON %>
+  <% if Concours.current.started? %>
     <div class="row">
       <span class="libelle">Année</span>
       <span class="value bold"><%= concours.annee %></span>
@@ -28,13 +34,13 @@
       <span class="libelle">Échéance</span>
       <span class="value bold"><%= concours.h_echeance %></span>
     </div>
-    <div class="row right">
-      <span class="libelle">Nombre de concurrents inscrits</span>
-      <span class="value">
+    <div class="row right mt2">
+      <span class="italic">Nombre de concurrents inscrits : </span>
+      <span id="nombre-concurrents">
         <% if concours.nombre_concurrents == 0 %>
           Vous serez le premier inscrit au concours !
         <% else %>
-          <%= concours.nombre_concurrents %>
+          <%= concours.nombre_concurrents.to_s.rjust(3, "0") %>
         <% end %>
       </span>
     </div>
@@ -86,12 +92,12 @@
 # proposer de le faire avec un formulaire
 #
 # ---------------------------------------------------------------------
-if CONCOURS_SYNOPSIS_ON
+if Concours.current.started?
   # Le concours est en route
   if not concurrent.dossier_transmis?
     form = Form.new(id: "concours-dossier-form", route:route.to_s, class:"nomargin noborder nolibelle", file: true, value_size: "600px")
     form.rows = {
-      "Votre dossier"   => {type:"file", name:"p_dossier"},
+      "Votre fichier"   => {type:"file", name:"p_fichier_candidature"},
       "<lien dossier/>" => {type:"raw", content:"<div class=\"italic small\">Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
     }
     form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
@@ -100,11 +106,11 @@ end # Si le concours est en route
 %>
 <fieldset id="concours-envoi-dossier">
   <legend>Fichier de candidature</legend>
-  <% if CONCOURS_SYNOPSIS_ON %>
-    <% if not concurrent.dossier_transmis? %>
-      <%= form.out %>
-    <% else %>
+  <% if Concours.current.started? %>
+    <% if concurrent.dossier_transmis? %>
       <p>Votre fichier de candidature a bien été transmis.</p>
+    <% else %>
+      <%= form.out %>
     <% end %>
   <% else %>
     <div>
@@ -123,7 +129,7 @@ end # Si le concours est en route
 %>
 <h3>Vos participations aux concours de l’atelier Icare</h3>
 <section id="concours-historique">
-  <% if concurrent.concours.count == 1 %>
+  <% if concurrent.all_concours.count == 1 %>
     <p>C'est votre première participation à ce concours. Bonne chance à vous !</p>
   <% else %>
     <p>[Historique des participations]</p>

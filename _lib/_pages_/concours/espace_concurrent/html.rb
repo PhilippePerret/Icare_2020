@@ -8,13 +8,13 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
-    session['concours_user_id'] || begin
-      erreur(ERRORS[:concours_login_required])
-      return redirect_to("concours/identification")
-    end
-    @concurrent = Concurrent.new(concurrent_id: session['concours_user_id'], session_id: session.id)
+    try_reconnect_concurrent
     @concours   = Concours.new(ANNEE_CONCOURS_COURANTE)
-    if param(:op)
+    if param(:form_id) && param(:form_id) == 'concours-dossier-form'
+      # Soumission du fichier de candidature
+      form = Form.new
+      consigne_fichier_candidature if form.conform?
+    elsif param(:op)
       case param(:op)
       when 'nonfl'
         concurrent.change_pref_fiche_lecture(false)
@@ -36,5 +36,6 @@ class HTML
   def build_body
     @body = deserb('body', self)
   end # /build_body
+
 
 end #/HTML

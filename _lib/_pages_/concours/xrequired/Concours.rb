@@ -3,9 +3,14 @@
 class HTML
   attr_reader :concours
 end
+
+
 class Concours
 class << self
-
+  attr_accessor :current # le concours courant
+  def current
+    @current ||= new(ANNEE_CONCOURS_COURANTE)
+  end #/ current
 end # /<< self
 attr_reader :annee
 def initialize(annee)
@@ -46,4 +51,33 @@ end #/ nombre_concurrents
 def h_echeance
   @h_echeance ||= formate_date(Time.new(ANNEE_CONCOURS_COURANTE, 3, 1), {duree: true})
 end #/ h_echeance
+
+# ---------------------------------------------------------------------
+#
+#   STATUTS
+#
+# ---------------------------------------------------------------------
+# Retourne TRUE is le concours est démarré
+def started?
+  config[:started] == true
+end #/ started?
+
+# ---------------------------------------------------------------------
+#
+#   CONFIGURATION
+#
+# ---------------------------------------------------------------------
+def config
+  @config ||= begin
+    h = {}
+    JSON.parse(File.read(config_path)).each do |k,v|
+      h.merge!(k.to_sym => v)
+    end ; h
+  end
+end #/ config
+
+def config_path
+  @config_path ||= File.expand_path(File.join('.','_lib','_pages_','concours','xrequired','config.json'))
+end #/ config_path
+
 end #/Concours

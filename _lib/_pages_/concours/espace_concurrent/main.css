@@ -1,0 +1,15 @@
+fieldset#concours-informations {
+  font-size:1.2em!important;
+  line-height:1.8em!important;
+}
+fieldset#concours-informations span.libelle {
+  font-size:0.75em!important;
+  display: inline-block;
+  width: 100px;
+}
+
+fieldset#concours-informations span#nombre-concurrents {
+  font-weight: bold;
+  margin:0 1em;
+  font-size: 1.2em;
+}

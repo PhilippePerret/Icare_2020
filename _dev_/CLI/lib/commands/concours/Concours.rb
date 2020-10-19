@@ -26,9 +26,10 @@ class << self
           {patronyme: "Phil chezMoi", mail: "phil@philippeperret.fr"}
         ]
       else
+        require './_lib/required/__first/db'
         MyDB.online = true
         MyDB.DBNAME = "icare_db"
-        db_exec()
+        db_exec(request)
       end
     # On retourne la liste
     return liste

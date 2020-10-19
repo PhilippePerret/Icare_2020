@@ -17,6 +17,13 @@ REQUEST_UPDATE_OPTIONS = "UPDATE #{DBTABLE_CONCURRENTS} SET options = ? WHERE co
 
 class HTML
   attr_reader :concurrent
+  def try_reconnect_concurrent
+    session['concours_user_id'] || begin
+      erreur(ERRORS[:concours_login_required])
+      return redirect_to("concours/identification")
+    end
+    @concurrent = Concurrent.new(concurrent_id: session['concours_user_id'], session_id: session.id)
+  end #/ try_reconnect_concurrent
 end
 
 class Concurrent
@@ -73,6 +80,11 @@ def concours
   @concours ||= Concours.new(self)
 end #/ concours
 
+# Retourne la liste Array de tous les concours du concurrent
+def all_concours
+  @all_concours ||= db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ?", [id])
+end #/ all_concours
+
 # Retourne la valeur {Integer} de l'option de bit +bit+
 #
 def option(bit)
@@ -80,10 +92,21 @@ def option(bit)
 end #/ option
 def set_option(bit, value)
   opts = data[:options].dup
-  opts[bit] = value
+  opts[bit] = value.to_s
   data[:options] = opts
 end #/ set_option
 
+def spec(bit)
+  data[:specs][bit].to_i
+end #/ spec
+def set_spec(bit, value)
+  opts = data[:specs].dup
+  opts[bit] = value.to_s
+  data[:specs] = opts
+end #/ set_spec
+def save_specs
+  db_exec("UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET specs = ? WHERE concurrent_id = ? AND annee = ?", [data[:specs], id, ANNEE_CONCOURS_COURANTE])
+end #/ save_specs
 # ---------------------------------------------------------------------
 #
 #   Statut
@@ -124,7 +147,7 @@ end #/ warned?
 #   - le fichier physique existe
 def dossier_transmis?
   (@dossier_transmis ||= begin
-    data[:specs][0] == "1" ? :true : :false
+    spec(0) == 1 ? :true : :false
   end) == :true
 end #/ dossier_complete?
 
@@ -171,8 +194,8 @@ end #/ update_options
     # bit 0   1 si le projet a été envoyé
     # ...
     # bit 7
-    def options
-      @options ||= data[:options]
+    def specs
+      @specs ||= data[:specs]
     end #/ options
   end #/Concours
 

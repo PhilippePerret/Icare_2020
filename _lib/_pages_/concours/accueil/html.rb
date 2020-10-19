@@ -7,12 +7,12 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
-
+    try_reconnect_concurrent
   end # /exec
 
   # Fabrication du body
   def build_body
-    partial = CONCOURS_SYNOPSIS_ON ? 'body' : 'none'
+    partial = Concours.current.started? ? 'body' : 'none'
     @body = deserb(partial, self)
   end # /build_body
 

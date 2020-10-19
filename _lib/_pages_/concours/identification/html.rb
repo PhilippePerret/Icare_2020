@@ -32,7 +32,7 @@ class HTML
     if not dc.nil?
       session['concours_user_id'] = param(:p_concurrent_id).dup
       db_compose_update(DBTABLE_CONCURRENTS, dc[:id], {session_id: session.id})
-      redirect_to("concours/concurrent")
+      redirect_to("concours/espace_concurrent")
     else
       erreur("Désolé, je ne vous remets pas… Merci de vérifier votre adresse mail et le numéro de concurrent qui vous a été remis dans le message de confirmation lors de votre inscription.")
     end

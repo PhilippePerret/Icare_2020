@@ -16,10 +16,16 @@ class HTML
     Tag.div(class:'mt2 mb2 center', text: cont)
   end #/ bouton_formulaire
 
-  # Produit un bouton pour s'identifier
-  def bouton_login
-    cont = Tag.link(route:"concours/identification", text:"Identifiez-vous")
-    Tag.div(class:'right', text: "Déjà inscrite ou inscrit ?… #{cont} !")
+  # Produit un bouton pour s'identifier ou, si on est identifié, pour
+  # rejoindre son section à soi
+  def bouton_login_or_espace
+    if concurrent
+      cont = Tag.link(route:"concours/espace_concurrent", text:"Rejoindre votre espace.")
+      Tag.div(class:'right', text:"Vous êtes identifié#{concurrent.femme? ? 'e' : ''}. #{cont}")
+    else
+      cont = Tag.link(route:"concours/identification", text:"Identifiez-vous")
+      Tag.div(class:'right', text: "Déjà inscrite ou inscrit ?… #{cont} !")
+    end
   end #/ bouton_login
 
   # Produit un bouton pour le titre, pour revenir à l'accueil du concours
