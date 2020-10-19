@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'date'
 
+UI_TEXTS  = {}
 MESSAGES  = {}
 ERRORS    = {}
 

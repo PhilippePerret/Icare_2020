@@ -4,6 +4,8 @@
   ------------------
   Permet de faire des appels à la table Scenariopole
 =end
+require 'mysql2'
+
 class Scenariopole
 class << self
   # Pour exécuter une requête sur le site scénariopole
@@ -40,7 +42,7 @@ class << self
     end
     return candidate
   rescue Exception => e
-    debug "# PROBLÈME DANS get_a_citation #"
+    debug "# PROBLÈME DANS get_citation #"
     debug e
     return {id:'', citation:'', auteur:''}
   end

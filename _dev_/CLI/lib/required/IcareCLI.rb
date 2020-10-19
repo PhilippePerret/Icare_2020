@@ -81,5 +81,11 @@ class << self
     end
   end #/ verbose?
 
+  # Retourne TRUE si on est en mode simulation
+  # Le mode simulation s'obtient en ajoutant -s/--simuler à la commande
+  def mode_simulation?
+    options[:simuler]
+  end #/ mode_simulation?
+
 end # /<< self
 end #/IcareCLI

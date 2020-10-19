@@ -47,6 +47,11 @@ AIDE = <<-BASH
 
       Pour lire le journal.log, le traceur, le manuel, etc.
 
+  #{'icare concours[ <cmd>]'.jaune}
+
+      Gestion du concours de synopsis. Utiliser la sous-commande 'help'
+      pour avoir toutes les informations
+
   #{'icare goto la/route'.jaune}
 
       Pour rejoindre la route voulue dans un navigateur. Ajouter l'option

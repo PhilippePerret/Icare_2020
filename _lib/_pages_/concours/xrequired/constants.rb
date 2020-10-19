@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require './_lib/required/__first/helpers/Linker'
 
 UI_TEXTS.merge!({
   # *** Titres ***
@@ -25,13 +26,14 @@ MESSAGES.merge!({
 })
 
 ANNEE_CONCOURS_COURANTE = Time.now.month < 3 ? Time.now.year : Time.now.year + 1
+CONCOURS_THEME_COURANT = "L'ACCIDENT"
+CONCOURS_THEME_DESCRIPTION = <<-TEXT
+Avant l'accident, après l'accident, pendant l'accident, accident de la route ou de caddie, accident involontaire ou provoqué, peu importe le temps, le lieu, la durée choisis, l'histoire présentée dans le synopsis devra s'articuler autour d'un accident.
+TEXT
 
 DBTABLE_CONCOURS = "concours"
 DBTABLE_CONCURRENTS = "concours_concurrents"
 DBTBL_CONCURS_PER_CONCOURS = "concurrents_per_concours"
-
-# Lien conduisant au règlement du concours de l'année en cours
-REGLEMENT_LINK  = "<a href=\"public/Concours_ICARE_#{ANNEE_CONCOURS_COURANTE}.pdf\" target=\"_blank\">Réglement du concours</a>"
 
 REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTABLE_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
 
@@ -44,36 +46,11 @@ CONCOURS_KNOWLEDGE_VALUES = [
   ["medias", "les médias"],
   ["autre", "un autre moyen"]
 ]
-class Linker
-  attr_reader :default_text, :route
-  def initialize(withdata)
-    @default_text = withdata[:text]
-    @route        = withdata[:route]
-  end #/ initialize
-  def to_str
-    default_template % {route: real_route, text: default_text || route}
-  end #/ to_str
-  def real_route
-    finpath = "#{@path_absolu ? "#{App.url}/" : ""}#{route}"
-    @path_absolu = nil
-    finpath
-  end #/ real_route
-  alias :to_s :to_str
-  def with(data)
-    data = {text: data} if data.is_a?(String)
-    @path_absolu = true if data[:absolute]
-    data.merge!(text: default_text) unless data[:text]
-    default_template % data.merge!(route: real_route)
-  end #/ with
-  def absolute # pour utilisation avec .with(...) ensuite
-    @path_absolu = true
-    return self
-  end #/ absolute
-  def default_template
-    @default_template ||= Tag.link(route: '%{route}', text: '%{text}')
-  end #/ default_template
-end #/Linker
+
 CONCOURS_LINK   = Linker.new(route:"concours/accueil", text:"Concours de Synopsis de l'atelier ICARE")
 DOSSIER_LINK    = Linker.new(route:"concours/dossier", text:"dossier de candidature")
 CONCOURS_SIGNUP = Linker.new(route:'concours/inscription', text:"formulaire d'inscription")
 CONCOURS_LOGIN  = Linker.new(route:'concours/identification', text:"formulaire d'identification")
+
+# Lien conduisant au règlement du concours de l'année en cours
+REGLEMENT_LINK = Linker.new(route:"public/Concours_ICARE_#{ANNEE_CONCOURS_COURANTE}.pdf", target: :blank, text:"Réglement du concours")
