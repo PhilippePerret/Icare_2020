@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-17 07:00:38 +0200
+ *    Date dernière modification : 2020-10-19 07:36:49 +0200
  *
  --------------------------------------------------------------------- */
 :root {
@@ -1565,12 +1565,12 @@ section#messages .notices {
 
 
 /* Pour le picto */
-span.picto-message {
+section#messages > div span.picto-message {
   position:absolute;
   left:8px;
   top:8px;
 }
-span.picto-message img {
+section#messages > div span.picto-message img {
   width:45px;
 }
 /*

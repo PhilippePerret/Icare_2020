@@ -45,8 +45,20 @@ constructor(form, id /* p.e. 'mail' */) {
 }
 init(){
   this.isOK = false ; // il faudra au moins le vérifier une fois
+  this.isChecked = false ; // pour savoir s'il a été vérifié au moins une fois
   this.observe();
 }
+get isOK(){
+  if (undefined == this._isok || !this.isChecked){
+    this.check();
+  }
+  return this._isok;
+}
+set isOK(value){
+  this._isok = value ;
+  this.isChecked = true ;
+}
+
 observe(){
   this.obj.addEventListener('blur', this.check.bind(this));
 }
@@ -56,6 +68,7 @@ onError(err){
   this.error_obj.classList.remove('hidden');
   this.obj.classList.remove('ok');
   this.obj.classList.add('error');
+  this.isOK = false ; // pour indiquer qu'il est checké
   // this.obj.focus(); // ça bloque sur le champ
 }
 onOK(){

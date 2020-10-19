@@ -23,11 +23,11 @@ section#messages .notices {
 
 
 /* Pour le picto */
-span.picto-message {
+section#messages > div span.picto-message {
   position:absolute;
   left:8px;
   top:8px;
 }
-span.picto-message img {
+section#messages > div span.picto-message img {
   width:45px;
 }

@@ -1,7 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_module('mail')
-require_js_module('jquery')
 class HTML
   def traite_inscription(form)
 

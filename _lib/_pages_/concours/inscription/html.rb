@@ -1,6 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_module('form')
+require_js_module(['jquery','flash'])
 class HTML
   def titre
     "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:titre_page_inscription]}"

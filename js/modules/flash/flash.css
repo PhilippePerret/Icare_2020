@@ -3,19 +3,32 @@
 */
 section#flash {
   position:fixed;
-  bottom:35px;
-  left:0px;
+  top:45px;
+  left:20%;
   background-color:bisque;
   padding:0;
 }
 section#flash > div {
-  padding: 0.2rem 1rem;
+  padding: 1em;
+  min-width: 400px;
+  max-width: 700px;
   font-family:"Arial Narrow";
   font-size:13.2pt;
+  margin-left: 3em;
 }
 section#flash div.error {
   color:red;
 }
 section#flash div.message {
   color:green;
+}
+
+/* Pour le picto */
+section#flash > div span.picto-message {
+  position:absolute;
+  left:8px;
+  top:4px;
+}
+section#flash > div span.picto-message img {
+  width:45px;
 }
