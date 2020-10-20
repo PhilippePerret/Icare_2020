@@ -13,7 +13,6 @@ class Concurrent
   # Pour détruire le concurrent
   def destroy
     check_confirmation || return
-    # Destruction du dossier
     destroy_folder
     destroy_in_db
     destroy_in_session
@@ -23,7 +22,7 @@ class Concurrent
   # Méthode qui vérifie que le numéro d'inscription fourni correspond
   # bien au numéro du visiteur courant
   def check_confirmation
-    if param(:p_num) == concurrent.id
+    if param(:c_numero) == self.id
       return true
     else
       return erreur(ERRORS[:invalid_num_for_destroy])
@@ -31,11 +30,11 @@ class Concurrent
   end #/ check_confirmation
 
   def destroy_folder
-    FileUtils.rm_rf(concurrent.folder) if File.exists?(concurrent.folder)
+    FileUtils.rm_rf(self.folder) if File.exists?(self.folder)
   end #/ destroy_folder
 
   def destroy_in_db
-    db_exec(DESTROY_CONCOURS_REQUEST % [concurrent.id])
+    db_exec(DESTROY_CONCOURS_REQUEST % {id: self.id})
   end #/ destroy_in_db
 
   def destroy_in_session

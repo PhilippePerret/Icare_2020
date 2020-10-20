@@ -18,9 +18,6 @@ class << self
     end
   end #/ all
 
-  def folder_data
-    @folder_data ||= File.join('')
-  end #/ folder_data
 end # /<< self
 # ---------------------------------------------------------------------
 #
@@ -35,4 +32,7 @@ end #/ initialize
 alias :pseudo :patronyme
 alias :id :concurrent_id
 
+def folder
+  @folder ||= File.join(CONCOURS_DATA_FOLDER, self.id)
+end #/ folder
 end #/TConcurrent

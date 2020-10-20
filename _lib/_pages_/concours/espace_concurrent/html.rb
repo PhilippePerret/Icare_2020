@@ -9,7 +9,7 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     try_reconnect_concurrent(required = true)
-    @concours   = Concours.new(ANNEE_CONCOURS_COURANTE)
+    @concours = Concours.new(ANNEE_CONCOURS_COURANTE)
     if param(:form_id)
       return if not Form.new.conform?
       case param(:form_id)
