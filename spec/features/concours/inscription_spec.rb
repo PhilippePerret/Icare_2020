@@ -5,8 +5,11 @@
 =end
 feature "Section d'inscription de la partie concours" do
   before(:all) do
+    degel("benoit_frigote_phil_marion_et_elie")
     require_support('concours')
     require './_lib/_pages_/concours/inscription/constants' # propres à l'inscription
+    TConcours.reset
+    TConcours.peuple
   end
 
 
@@ -177,6 +180,23 @@ feature "Section d'inscription de la partie concours" do
     end
   end
 
-
+  context 'un icarien identifié' do
+    scenario 'peut s’inscrire au concours en cliquant sur un simple bouton', only:true do
+      marion.rejoint_le_site
+      goto("concours/accueil")
+      marion.click_on(UI_TEXTS[:concours_bouton_inscription])
+      expect(page).to have_titre(UI_TEXTS[:titre_page_inscription])
+      expect(page).not_to have_css("form#concours-signup-form")
+      expect(page).to have_link("S’inscrire au concours de synopsis")
+      marion.click_on("S’inscrire au concours de synopsis")
+      expect(page).to have_titre(UI_TEXTS[:concours_titre_participant])
+      # *** Vérifications dans les tables ***
+      dc = db_exec("SELECT concurrent_id, patronyme FROM #{DBTBL_CONCURRENTS} WHERE mail = ?", [marion.mail]).first
+      expect(dc).not_to eq(nil)
+      expect(dc[:patronyme]).to eq(marion.patronyme || marion.pseudo)
+      dcc = db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} where annee = ? AND concurrent_id = ?", [ANNEE_CONCOURS_COURANTE, dc[:concurrent_id]]).first
+      expect(dcc).not_to eq(nil)
+    end
+  end
 
 end

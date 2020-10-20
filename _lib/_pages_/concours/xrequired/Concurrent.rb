@@ -78,6 +78,7 @@ end #/ folder
 #
 #   bit 0     1 si le concurrent veut recevoir des informations par mail
 #   bit 1     1 si le concurrent veut recevoir sa fiche de lecture.
+#   bit 2     1 si le concurrent est un icarien
 #
 def options
   @options ||= data[:options]
@@ -150,6 +151,12 @@ def femme?
     data[:sexe] == 'F' ? :true : :false
   end) == :true
 end #/ femme?
+
+def icarien?
+  (@is_icarien ||= begin
+    option(2) == 1 ? :true : :false
+  end) == :true
+end #/ icarien?
 
 # Retourne TRUE si le concurrent veut recevoir sa fiche de lecture
 def fiche_lecture?

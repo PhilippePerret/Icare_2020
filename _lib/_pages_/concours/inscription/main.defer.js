@@ -131,9 +131,12 @@ function validateForm(){
   return window.signupForm.isOK.call(window.signupForm);
 }
 
-
-$(document).ready(()=>{
-  window.signupForm = new MyForm("concours-signup-form");
-  window.signupForm.observe();
-  window.signupForm.obj.setAttribute("onsubmit", "return validateForm();")
-})
+if ( document.querySelector("form#concours-signup-form")){
+  // Note : le formulaire n'existe pas si c'est un icarien
+  // identifié qui visite cette partie
+  $(document).ready(()=>{
+      window.signupForm = new MyForm("concours-signup-form");
+      window.signupForm.observe();
+      window.signupForm.obj.setAttribute("onsubmit", "return validateForm();")
+  })
+}

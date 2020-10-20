@@ -28,7 +28,7 @@ def data_concurrent_concours(patronyme, sexe)
   mail  = "#{mail}@gmail.com"
   concurrent_id = random_concours_id(annee)
   donnees_participations = (annee..ANNEE_CONCOURS_COURANTE).collect do |an|
-    {annee:an, concurrent_id:concurrent_id, specs:"1000000"}
+    {annee:an, concurrent_id:concurrent_id, specs:"10000000"} # 1er bit 1 => dossier envoyé
   end
   {
     patronyme: patronyme,

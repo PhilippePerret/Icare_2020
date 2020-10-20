@@ -27,6 +27,9 @@ div.buttons input[type="button"]:not(.tiny):not(.small)
   padding:0.4em 1.1em 0.3em;
   margin-left:4px;
 }
+a.btn:not(.tiny):not(.small) {
+  padding:0.4em 1.1em 0.5em;
+}
 
 .btn.tiny,
 div.buttons a.tiny,

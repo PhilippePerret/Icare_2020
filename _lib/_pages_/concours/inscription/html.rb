@@ -1,7 +1,9 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_module('form')
-require_js_module(['jquery','flash'])
+if user.guest?
+  require_js_module(['jquery','flash'])
+end
 class HTML
   def titre
     "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:titre_page_inscription]}"
@@ -10,15 +12,19 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     if param(:form_id)
-      form = Form.new
-      if form.conform?
+      if Form.new.conform?
         case param(:form_id)
         when 'concours-signup-form'
-          if traite_inscription(form)
+          require_relative '../xmodules/inscription'
+          if traite_inscription
             redirect_to("concours/espace_concurrent")
           end
         end
       end
+    elsif param(:op) == 'signupconcours'
+      # Quand un icarien inscrit clique sur le bouton "S'inscrire au concours"
+      require_relative '../xmodules/inscription'
+      traite_inscription_icarien
     end
   end # /exec
 

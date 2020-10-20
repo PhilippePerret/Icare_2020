@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-19 07:36:49 +0200
+ *    Date dernière modification : 2020-10-20 13:19:25 +0200
  *
  --------------------------------------------------------------------- */
 :root {
@@ -1449,6 +1449,9 @@ div.buttons input[type="button"]:not(.tiny):not(.small)
 {
   padding:0.4em 1.1em 0.3em;
   margin-left:4px;
+}
+a.btn:not(.tiny):not(.small) {
+  padding:0.4em 1.1em 0.5em;
 }
 
 .btn.tiny,

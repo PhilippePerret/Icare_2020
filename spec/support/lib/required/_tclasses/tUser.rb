@@ -194,6 +194,7 @@ end #/ data
 
 def id        ; @id       ||= data[:id]       end
 def pseudo    ; @pseudo   ||= data[:pseudo]   end
+def patronyme ; @patronyme||= data[:patronyme]end
 def mail      ; @mail     ||= data[:mail]     end
 def options   ; @options  ||= data[:options]  end
 def cpassword ; @cpassword||= data[:cpassword]end

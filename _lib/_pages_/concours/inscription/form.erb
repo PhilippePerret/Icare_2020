@@ -1,3 +1,28 @@
+<%# frozen_string_literal: true %>
+<%
+if not user.guest?
+  # On passe par ici si l'icarien est identifié
+  # S'il est identifié, soit il est déjà inscrit
+  # S'il est déjà inscrit, on lui indique qu'il est déjà inscrit
+  # Sinon, on lui propose de s'inscrire par un simple click
+
+  if user.concurrent_concours?
+%>
+  <p><%= user.pseudo %>, vous êtes déjà inscrit<%= user.fem(:e) %> au concours de synopsis. Il vous suffit de rejoindre votre <%= ESPACE_LINK %> pour voir les informations courantes ou envoyer votre fichier de candidature.</p>
+
+  <%
+    else
+      # Si ça n'est pas un icarien déjà inscrit
+  %>
+    <p><%= user.pseudo %>, pour vous inscrire au concours du synopsis, il vous suffit de cliquer sur le bouton ci-dessous.</p>
+    <p class="center"><a id="btn-signup-icarien" href="<%= route.to_s %>?op=signupconcours" class="btn main big-air">S’inscrire au concours de synopsis</a></p>
+
+  <% end %>
+<%
+
+  else
+    # Si c'est un visiteur quelconque
+%>
 <%
 form = Form.new(id:"concours-signup-form", route:route.to_s, class:"noborder nomargin")
 form.rows = {
@@ -15,3 +40,6 @@ form.submit_button = UI_TEXTS[:concours_bouton_signup]
   <legend>Première inscription au concours</legend>
   <%= form.out %>
 </fieldset>
+
+<% end # Si ce n'est pas un icarien
+%>
