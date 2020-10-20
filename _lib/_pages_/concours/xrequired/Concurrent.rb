@@ -18,12 +18,20 @@ REQUEST_UPDATE_OPTIONS = "UPDATE #{DBTBL_CONCURRENTS} SET options = ? WHERE conc
 class HTML
   attr_reader :concurrent
   def try_reconnect_concurrent(required = false)
+    if session['concours_user_id'].nil? && not(user.guest?)
+      # Connecter un icarien qui fait le concours pour la première fois
+      dc = db_exec("SELECT concurrent_id FROM #{DBTBL_CONCURRENTS} WHERE mail = ?", [user.mail]).first
+      unless dc.nil?
+        session['concours_user_id'] = dc[:concurrent_id]
+        db_exec("UPDATE #{DBTBL_CONCURRENTS} SET session_id = ? WHERE concurrent_id = ?", [session.id, dc[:concurrent_id]])
+      end
+    end
+
     if session['concours_user_id']
       @concurrent = Concurrent.new(concurrent_id: session['concours_user_id'], session_id: session.id)
       if @concurrent.exists?
         log("RECONNEXION CONCURRENT #{concurrent.id} (#{concurrent.pseudo})")
       else # ça arrive pendant les tests, par exemple
-        log("# Le concurrent #{session['concours_user_id'].inspect} n'existe pas.")
         session.delete('concours_user_id')
         @concurrent = nil
       end

@@ -1,7 +1,11 @@
 <p class='explication'>Chaque année, l'atelier Icare organise un concours d'écriture ouvert à toutes et tous, auteur·e·s de langue française. Ce concours offre l'opportunité à trois gagnant·e·s d'intégrer l'atelier pour suivre jusqu'à un an d'accompagnement à l'écriture.</p>
 
-<%= bouton_formulaire %>
-<%= bouton_login_or_espace %>
+<% if not concurrent %>
+  <%= bouton_formulaire %>
+  <%= bouton_login_or_espace %>
+<% else %>
+  <p>Rejoindre votre <%= ESPACE_LINK %>.</p>
+<% end %>
 
 <h3>Objet du concours</h3>
 
