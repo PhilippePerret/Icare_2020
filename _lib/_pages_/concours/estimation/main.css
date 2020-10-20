@@ -1,0 +1,24 @@
+div.prop:not(.simple) {
+  margin-top:1em;
+}
+div.subprop {
+  font-size: 0.84em;
+  margin-left:1em;
+}
+div.prop div.items {
+  margin-left:2em;
+}
+
+span.prop-name {
+  display: inline-block;
+}
+div.prop > span.prop-name {
+  width: 300px;
+}
+div.prop:not(.simple) > span.prop-name {
+  font-weight:bold;
+  border-bottom:1px solid grey;
+}
+div.subprop span.prop-name {
+  width: 280px;
+}

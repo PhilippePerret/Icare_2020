@@ -15,54 +15,131 @@
 # Note : penser à ajouter partout :
 #   le choix "adéquation avec le thème"
 #
-DATA_PROJET = {
-  titre: "Évaluation du projet",
-  items: {
-    projet: {
+DATA_PROJET = [{
+  titre: "Évaluation générale du projet",
+  id:'p',
+  items: [
+    {
       titre: "Projet dans sa globalité",
-      items: {
-        titre: {titre:"Titre du projet"}
-      }
+      id: 'g',
+      items: [
+        {titre:"Titre du projet",id: 'titre'},
+      ]
     },
-    personnages: {
+    {
       titre: "Les personnages",
-      items: {
-        protagoniste: {titre: "Le protagoniste"},
-        antagoniste: {titre: "L'Antagoniste"},
-        persos_secondes: {titre: "Les personnages secondaires"},
-        autres_perso: {titre: "Autre personnages"}
-      },
-      common_properties: {
-        coherence: {titre: "Cohérence"},
-        idiosyncrasie: {titre: "Idiosyncrasie"}
-      }
+      id: 'ps',
+      items: [
+        {
+          titre: "Le protagoniste",
+          id:'prota',
+        },
+        {
+          titre: "L'Antagoniste",
+          id:'anta',
+        },
+        {
+          titre: "Les personnages secondaires",
+          id:'psec',
+        },
+        {
+          titre: "Autre personnages",
+          id:'autres',
+        },
+        {
+          titre: "Les dialogues",
+          id:'dial'
+        }
+      ],
+      common_properties: [
+        {
+          titre: "Cohérence",
+          common_properties: false,
+          id:'cohe',
+        },
+        {
+          titre: "Idiosyncrasie",
+          id:'idio',
+        }
+      ]
     },
-    intrigues: {
+    {
       titre: "Les intrigues",
-      items: {
-        intrigue_principale:{titre:"L'intrigue principale"},
-        intrique_secondaire:{titre:"L'intrigue secondaire"}
-      },
-      common_properties: {
-        coherence: {titre:"La cohérence"}
-      }
+      id:'i',
+      items: [
+        {
+          titre:"Construction générale",
+          id:'form',
+          common_properties: false,
+          items:[
+            {
+              titre:"Utilisation nœuds classiques (PFA)",
+              common_properties: false,
+              id:'pfa'
+            },
+            {
+              titre:"Clarté des 3 actes",
+              common_properties: false,
+              id:'3acts'
+            }
+          ]
+        },
+        {
+          titre:"L'intrigue principale",
+          id:'ip',
+        },
+        {
+          titre:"L'intrigue secondaire",
+          id:'is',
+        }
+      ],
+      common_properties: [
+        {
+          titre:"Cohérence",
+          id:'cohe',
+        }
+      ]
     },
-    themes: {
-      titre: "Les thèmes"
+    {
+      titre: "Les thèmes",
+      id:'th',
     },
-    redaction: {
+    {
       titre: "Rédaction",
-      items: {
-        clarte: {titre:"Clarté"},
-        simplicite: {titre: "Simplicité", contraire: "Complexité"},
-      }
+      common_properties: false,
+      id:'r',
+      items: [
+        {
+          titre:"Clarté",
+          id:'cla',
+          common_properties: false
+        },
+        {
+          titre: "Simplicité",
+          id:'sim',
+          contraire: "Complexité",
+          common_properties: false
+        },
+        {
+          titre: "Émotion",
+          id:'emo',
+          common_properties: false
+        }
+      ]
     }
-  },
-  common_properties: {
-    facteur_o: {titre: "Facteur O (originalité)"},
-    facteur_u: {titre: "Facteur U (universalité)"},
-    inexistant_neutre: {titre: "Inexistant (mais ne manque pas)"},
-    inexistant_moins: {titre: "Inexistant (crée un manque)"},
-    adequation_theme: {titre: "Adéquation avec le thème"},
-  }
-}
+  ],
+  common_properties: [
+    {
+      titre: "Facteur O (originalité)",
+      id:'fo',
+    },
+    {
+      titre: "Facteur U (universalité)",
+      id:'fu',
+    },
+    {
+      titre: "Adéquation avec le thème",
+      id:'ade',
+    }
+  ]
+}]

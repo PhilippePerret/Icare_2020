@@ -3,9 +3,9 @@
 require_module('form')
 class HTML
   def titre
-    "Estimation"
+    "Estimation des synopsis"
   end #/titre
-  
+
   # Code à exécuter avant la construction de la page
   def exec
     admin_required

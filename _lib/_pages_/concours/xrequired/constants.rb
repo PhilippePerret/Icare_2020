@@ -31,13 +31,15 @@ MESSAGES.merge!({
   concours_confirm_destroyed: "Votre inscription au concours est détruite."
 })
 
+CONCOURS_DATA_FOLDER = File.expand_path(File.join('.','_lib','data','concours')).tap{|p|`mkdir -p #{p}`}
+
+
 ANNEE_CONCOURS_COURANTE = Time.now.month < 3 ? Time.now.year : Time.now.year + 1
 CONCOURS_THEME_COURANT = "L'ACCIDENT"
 CONCOURS_THEME_DESCRIPTION = <<-TEXT
 Avant l'accident, après l'accident, pendant l'accident, accident de la route ou de caddie, accident involontaire ou provoqué, peu importe le temps, le lieu, la durée choisis, l'histoire présentée dans le synopsis devra s'articuler autour de cet évènement dramatique.
 TEXT
 
-CONCOURS_DATA_FOLDER = File.expand_path(File.join('.','_lib','data','concours')).tap{|p|`mkdir -p #{p}`}
 
 
 DBTBL_CONCOURS = "concours"
