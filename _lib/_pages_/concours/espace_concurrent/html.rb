@@ -8,12 +8,18 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
-    try_reconnect_concurrent
+    try_reconnect_concurrent(required = true)
     @concours   = Concours.new(ANNEE_CONCOURS_COURANTE)
-    if param(:form_id) && param(:form_id) == 'concours-dossier-form'
-      # Soumission du fichier de candidature
-      form = Form.new
-      consigne_fichier_candidature if form.conform?
+    if param(:form_id)
+      return if not Form.new.conform?
+      case param(:form_id)
+      when 'concours-dossier-form' # Soumission du fichier de candidature
+        require_relative '../xmodules/consigne_fichier'
+        consigne_fichier_candidature
+      when 'destroy-form'
+        require_relative '../xmodules/destroy'
+        concurrent.destroy
+      end
     elsif param(:op)
       case param(:op)
       when 'nonfl'

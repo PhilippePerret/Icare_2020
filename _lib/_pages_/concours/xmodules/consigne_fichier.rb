@@ -62,7 +62,7 @@ end #/ name
 
 # Le path conforme du fichier
 def path
-  @path ||= File.join(CONCOURS_DATA_FOLDER,concurrent.id,name).tap{|p|`mkdir -p #{File.dirname(p)}`}
+  @path ||= File.join(concurrent.folder,name).tap{|p|`mkdir -p #{File.dirname(p)}`}
 end #/ path
 
 private

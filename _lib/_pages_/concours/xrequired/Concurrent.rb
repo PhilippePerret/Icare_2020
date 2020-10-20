@@ -17,12 +17,20 @@ REQUEST_UPDATE_OPTIONS = "UPDATE #{DBTABLE_CONCURRENTS} SET options = ? WHERE co
 
 class HTML
   attr_reader :concurrent
-  def try_reconnect_concurrent
-    session['concours_user_id'] || begin
+  def try_reconnect_concurrent(required = false)
+    if session['concours_user_id']
+      @concurrent = Concurrent.new(concurrent_id: session['concours_user_id'], session_id: session.id)
+      if @concurrent.exists?
+        log("RECONNEXION CONCURRENT #{concurrent.id} (#{concurrent.pseudo})")
+      else # ça arrive pendant les tests, par exemple
+        log("# Le concurrent #{session['concours_user_id'].inspect} n'existe pas.")
+        session.delete('concours_user_id')
+        @concurrent = nil
+      end
+    elsif required
       erreur(ERRORS[:concours_login_required])
       return redirect_to("concours/identification")
     end
-    @concurrent = Concurrent.new(concurrent_id: session['concours_user_id'], session_id: session.id)
   end #/ try_reconnect_concurrent
 end
 
@@ -53,18 +61,18 @@ end #/ load
 #   Propriétés
 #
 # ---------------------------------------------------------------------
-def pseudo
-  @pseudo ||= data[:patronyme]
-end #/ pseudo
-alias :patronyme :pseudo
+def patronyme ; @patronyme ||= data[:patronyme] end
+alias :pseudo :patronyme
 
-def mail
-  @mail ||= data[:mail]
-end #/ mail
+def mail ; @mail ||= data[:mail] end
 
 def concurrent_id; @concurrent_id end #/ concurrent_id
 alias :id :concurrent_id
 
+def folder
+  @folder ||= File.join(CONCOURS_DATA_FOLDER, id)
+  # Note : ne pas le créer ici
+end #/ folder
 # === Options ===
 #   (ou "specs")
 #

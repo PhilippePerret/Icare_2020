@@ -1,0 +1,84 @@
+<h3>Format du fichier</h3>
+<p>
+  Le “fichier de candidature” sera de préférence un fichier au format PDF.
+</p>
+
+<p>
+  Mais il pourra également se présenter sous la forme d'un fichier Writer de LibreOffice ou OpenOffice (.odt), d'un fichier Microsoft Word (.doc, .docx) ou autre format de texte tel que .rtf, .rtfd, .md, .markdown ou simple text (.txt).
+</p>
+
+<h3>Modèles de document</h3>
+<p>
+  Deux modèles de document sont téléchargeables sur le site :
+</p>
+
+<p class="center">
+  <%= Tag.link(text:"Format ODF de LibreOffice ou OpenOffice (.odt)", route:"public/concours/modele_fichier_candidature.odt", full: true) %>
+  <%= Tag.link(text:"Format Microsoft Word (.docx)", route:"public/concours/modele_fichier_candidature.docx", full: true) %>
+</p>
+
+<p>Vous pouvez également consulter le <%= Tag.link(text:"modèle PDF donné en exemple", route:"public/concours/ConcoursSynopsisIcare_modele_exemple.pdf", full: true) %>.
+</p>
+
+
+<h3>Contenu</h3>
+
+<h4>Première de couverture</h4>
+
+<p>
+  Une couverture — première page du document — portera les mentions suivantes :
+</p>
+<ul>
+  <li>mention “Concours de synopsis <%= ANNEE_CONCOURS_COURANTE %> de l'atelier Icare”,</li>
+  <li>patronyme de l'auteur·e et des coauteur·e·s éventuel·le·s,</li>
+  <li>mail ayant servi à l'inscription au concours,</li>
+  <li>numéro d'inscription (fourni par mail à l'inscription),</li>
+  <li>titre de l'histoire,</li>
+  <li>support de l'histoire (roman, film, théâtre, radio, BD, etc.),</li>
+  <li>nombre de signes (espaces comprises) ou nombre de mots (l'une des deux indications suffit).</li>
+</ul>
+
+<p>Tous les éléments ci-dessus sont obligatoires.</p>
+
+<p>Optionnellement, une image peut être choisie — avec soin — pour illustrer le projet.</p>
+
+<h4>Synopsis</h4>
+
+<p>La section suivante devra comprendre le synopsis respectant toutes les contraintes définies par le <%= REGLEMENT_LINK %>, notamment en terme de longueurs.</p>
+
+<h4>Note d'intention optionnelle</h4>
+
+<p>La section suivante permettra à l'auteur·e de rédiger une note d'intention pour approfondir la présentation de son projet.</p>
+<p>Note : cette note d'intention ne doit pas être confondue avec une explication de texte du synopsis. Elle n'est pas là pour expliquer ce que le lecteur doit comprendre en lisant le synopsis, mais pour mentionner ce que ce lecteur ne pourrait savoir ou deviner, et qui serait susceptible de rendre le projet plus pertinent.</p>
+
+<h4>Biographie</h4>
+
+<p>
+  La section suivante présente le parcours de l'auteur·e ou des auteur·e.s, de façon suscinte et en mettant en exergue les formations et expériences en rapport avec l'écriture.
+</p>
+<p>Si des romans publiés sont mentionnés, indiquer clairement leur mode de publication&nbsp;: à compte d'éditeur, à compte d'auteur ou en auto-édition (indication cependant : seule la publication à compte d'éditeur sera réellement prise en considération).</p>
+
+<h4>Attestation sur l'honneur</h4>
+
+<p>Enfin, une dernière section contiendra l'attestation sur l'honneur mentionnant&nbsp;:</p>
+<ul>
+  <li>l'exactitude des informations contenues dans le présent document,</li>
+  <li>la propriété de l'intégralité des droits du projet présenté,</li>
+</ul>
+<p>Dans cette partie, l'indication de l'adresse mail fera office de signature.</p>
+
+<p class="right">Consulter le <%= Tag.link(text:"modèle PDF donné en exemple", route:"public/concours/ConcoursSynopsisIcare_modele_exemple.pdf", full: true) %>.
+</p>
+
+<h3>Transmission du fichier</h3>
+
+<p>
+Le fichier ainsi conçu pourra être remis, après inscription, dans l'espace qui vous est réservé sur l'atelier après le dépôt de votre candidature.
+</p>
+
+<p class="mt4">
+<% if ! concurrent %>
+  <%= bouton_formulaire %>
+<% end %>
+<%= bouton_login_or_espace %>
+</p>

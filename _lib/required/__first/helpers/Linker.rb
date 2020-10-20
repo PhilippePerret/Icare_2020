@@ -26,6 +26,9 @@
       - dans un code ruby
         #{lien}
 
+      :query_string permet d'ajouter des données query string (pour le
+      moment elles doivent être formatées)
+
   CHANGEMENT DU TEXTE
   -------------------
     On change très facilement le titre du lien (le texte qui apparait) avec
@@ -47,6 +50,7 @@ class Linker
   end #/ to_str
   def real_route
     finpath = "#{@path_absolu ? "#{url}/" : ""}#{route}"
+    finpath = "#{finpath}?#{@query_string}" if @query_string
     @path_absolu = nil
     finpath
   end #/ real_route
@@ -60,6 +64,7 @@ class Linker
     data = {text: data} if data.is_a?(String)
     @path_absolu    = true if data[:absolute]
     @for_url_online = true if data[:online]
+    @query_string   = data[:query_string]
     data.merge!(text: default_text) unless data[:text]
     default_template % data.merge!(route: real_route)
   end #/ with

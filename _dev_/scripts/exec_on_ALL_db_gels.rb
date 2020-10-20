@@ -7,8 +7,9 @@
 
 # Le traitement qu'il faut appliquer À TOUS LES GELS des tests
 DB_REQUEST = <<-SQL.strip
-ALTER TABLE `frigo_users` ADD COLUMN `last_warned_at` VARCHAR(10) DEFAULT NULL AFTER `user_id`;
+UPDATE absmodules SET short_description = ? WHERE id = ?;
 SQL
+DB_VALUES = ["<p>Ce module d’un caractère particulier permet de travailler de façon intensive — ou pas, suivant votre propre rythme — sur un “projet” de type quelconque (roman, concours, film, dossier).</p><p>Depuis sa création, ce module a notamment été utilisé pour :</p><ul>  <li>élaborer un scénario de court-métrage,</li><li>réaliser le dossier de présentation d’une bible,</li><li>établir des dossiers de demande d’aide à l’écriture,</li><li>préparer le concours du CEEA (une des deux fois avec succès),</li><li>préparer le concours d’entrée dans un master de scénario (avec succès),</li><li>développer le synopsis de plusieurs histoires (dans le but de choisir la meilleure),</li><li>être accompagnée dans la rédaction d’un roman jeunesse (sur plusieurs modules),</li><li>établir des dossiers de candidatures à des concours,</li><li>retravailler un roman adulte (faire une ré-écriture accompagnée complète — dont un roman publié à compte d’éditeur).</li></ul>", 12]
 
 
 PV = ';' unless defined?(PV)
@@ -22,7 +23,11 @@ Dir["#{GELS_FOLDER_PATH}/*"].each do |gel_folder|
   # On le charge dans la base actuelle
   `mysql -u root icare_test < "#{sql_file}"`
   # On effectue les changements
-  db_exec(DB_REQUEST)
+  if DB_VALUES
+    db_exec(DB_REQUEST, DB_VALUES)
+  else
+    db_exec(DB_REQUEST)
+  end
   # On dumpe les données
   `mysqldump -u root icare_test > "#{sql_file}"`
 end

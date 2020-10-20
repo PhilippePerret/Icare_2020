@@ -25,6 +25,10 @@ QUESTIONS_REPONSES = [
     reponse: "Tout à fait. Il suffit, dans le #{DOSSIER_LINK}, d'indiquer le patronyme des co-auteur·e·s."
   },
   {
+    question: "Comment seront annoncés les résultats ?",
+    reponse: "Comme l'indique le #{REGLEMENT_LINK}, ces résultats seront annoncés sur le site de l'atelier ainsi que par un mail transmis à toutes et tous les concurrents."
+  },
+  {
     question: "Peut-on participer quand on est icarienne ou icarien ?",
     reponse: "Bien entendu ! :-D L'inscription est même facilitée quand vous êtes icarienne ou icarien"
   },
@@ -34,7 +38,7 @@ QUESTIONS_REPONSES = [
   },
   {
     question: "A-t-on plus de chance d'être sélectionné si l'on est icarien ?",
-    reponse: "Nous aimerions vous dire “oui” mais la réponse honnête est “non”. Les synopsis seront vraiment estimés à leur plus juste valeur. Et puis les membres du jury, exception faite de Phil, ne connaissent pas ces icariennes ou icariens dont ne peuvent pas être influencés."
+    reponse: "Nous aimerions vous dire “oui” mais la réponse honnête est “non”. Les synopsis seront vraiment estimés à leur plus juste valeur. Et puis les membres du jury, exception faite de Phil, ne connaissent pas ces icariennes ou icariens ne peuvent donc pas être influencés."
   },
   {
     question: "Quand sera remise la fiche de lecture ?",
@@ -42,7 +46,15 @@ QUESTIONS_REPONSES = [
   },
   {
     question: "J'ai perdu mon numéro d'inscription, comment le récupérer ?",
-    reponse: "C'est très simple : rejoignez le #{CONCOURS_SIGNUP}, tapez votre adresse mail et cliquez le bouton #{UI_TEXTS[:bouton_recup_numero]}."
+    reponse: "C'est très simple : rejoignez le #{CONCOURS_SIGNUP}, tapez votre adresse mail et cliquez le bouton “#{UI_TEXTS[:bouton_recup_numero]}”."
+  },
+  {
+    question: "Je ne sais pas produire un fichier PDF… Comment faire ?",
+    reponse: "Heureusement, il existe sur YouTube ou ailleurs de nombreux tutoriels expliquant cette démarche avec précision. Tapez par exemple sur google : “[Votre logiciel] exporter en PDF” (par exemple “LibreOffice exporter PDF”) et vous devriez trouver votre bonheur."
+  },
+  {
+    question: "Comment détruire son inscription ?",
+    reponse: "Pour détruire votre inscription, rejoignez votre espace après vous être identifié·e. En bas de la page, vous trouverez un bouton pour détruire complètement votre inscription."
   }
 
 ]

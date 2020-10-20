@@ -1,0 +1,22 @@
+dl#prix {
+  margin-left:1em;
+}
+dl#prix dt {
+  font-size:1.1em;
+  letter-spacing:1px;
+  font-variant:small-caps;
+  margin-top: 1.5em;
+  margin-bottom:0.5em;
+}
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+  dl#prix {
+    margin-left:4em;
+  }
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  dl#prix {
+    margin-left:1em;
+  }
+}

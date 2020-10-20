@@ -47,6 +47,11 @@ RSpec.configure do |config|
     puts "Implémenter le test #{path}:#{line}".jaune
   end #/ pending
 
+  # Pour requérir tout un dossier se trouvant dans ./spec/support/modules
+  def require_support(folder_name)
+    Dir["./spec/support/modules/#{folder_name}/**/*.rb"].each{|m|require m}
+  end #/ require_support
+
   config.include Capybara::DSL, :type => :feature
 
   # POur se souvenir des tests qui échouent

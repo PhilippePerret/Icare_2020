@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 class HTML
   def titre
-    "#{bouton_retour}#{EMO_TITRE}Dossier du concours"
+    "#{bouton_retour}#{EMO_TITRE}Fichier du concours"
   end #/titre
 
   # def usefull_links
@@ -18,7 +18,7 @@ class HTML
 
   # Fabrication du body
   def build_body
-    @body = kramdown('body', self)
+    @body = deserb('body', self)
   end # /build_body
 
 end #/HTML
