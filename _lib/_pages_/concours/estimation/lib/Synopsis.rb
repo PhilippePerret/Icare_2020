@@ -6,8 +6,34 @@
   et une année (année du concours).
 =end
 class Synopsis
+# ---------------------------------------------------------------------
+#
+#   CLASSE
+#
+# ---------------------------------------------------------------------
 class << self
 
+REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS = <<-SQL
+SELECT
+  cc.concurrent_id, cc.patronyme
+  FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
+  INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
+  WHERE cpc.annee = ? AND SUBSTRING(cpc.specs,1,1) = "1"
+SQL
+
+  # Retourne la liste de tous les synopsis courants (sous forme d'instances
+  # synopsis).
+  # Processus :
+  #   On relève dans la base les concurrents de l'année courante
+  #   Mais seulement ceux qui ont déposé leur synopsis
+  #
+  def all_courant
+    @all_courant ||= begin
+      db_exec(REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS, [ANNEE_CONCOURS_COURANTE]).collect do |dc|
+        Synopsis.new(dc[:concurrent_id], ANNEE_CONCOURS_COURANTE)
+      end
+    end
+  end #/ all_courant
 end # /<< self
 # ---------------------------------------------------------------------
 #
@@ -20,10 +46,28 @@ def initialize concurrent_id, annee
   @annee = annee
 end #/ initialize
 
+TEMPLATE_FICHE_SYNOPSIS = <<-HTML
+<div id="synopsis-%{id}" class="synopsis">
+  <div class="titre">de %{pseudo}</div>
+  <div id="synopsis-%{id}-note-generale" class="note-generale">%{note}</div>
+</div>
+HTML
+def out
+  TEMPLATE_FICHE_SYNOPSIS % {id:"#{concurrent_id}-#{annee}", pseudo: concurrent.patronyme, note: note_generale}
+end #/ out
+
+def concurrent
+  @concurrent ||= Concurrent.get(concurrent_id)
+end #/ concurrent
+
 # Son instance de fiche de lecture
 def fiche_lecture
   @fiche_lecture ||= FicheLecture.new(self)
 end #/ fiche_lecture
+
+def note_generale
+  12
+end #/ note_generale
 
 # Son instance de formulaire d'évaluation, pour un évaluateur donné
 def evaluation(evaluateur)

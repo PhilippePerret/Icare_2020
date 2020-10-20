@@ -15,7 +15,7 @@
 # Note : penser à ajouter partout :
 #   le choix "adéquation avec le thème"
 #
-DATA_PROJET = [{
+DATA_EVALUATION_PROJET = [{
   titre: "Évaluation générale du projet",
   id:'p',
   items: [
@@ -28,7 +28,7 @@ DATA_PROJET = [{
     },
     {
       titre: "Les personnages",
-      id: 'ps',
+      id: 'p',
       items: [
         {
           titre: "Le protagoniste",

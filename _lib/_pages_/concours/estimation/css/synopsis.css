@@ -1,0 +1,22 @@
+div#synopsis-container {
+  position:relative;
+}
+div.synopsis {
+  display:inline-block;
+  border:1px solid #CCC;
+  border-radius:0.5em;
+  padding:1em;
+  width: 150px;
+  height: 200px;
+  background-color: white;
+  font-size: 12pt;
+}
+div.synopsis div.titre {
+  height:40px;
+  font-weight:bold;
+}
+div.synopsis div.note-generale {
+  text-align:center;
+  font-size: 32pt;
+  font-weight: bold;
+}

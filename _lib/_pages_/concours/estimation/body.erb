@@ -1,12 +1,12 @@
 <%# frozen_string_literal: true %>
 <%
-# Pour choisir le projet (synopsis à évaluer)
-# Note : on peut en choisir plusieurs pour les confronter
+# Pour choisir l'évaluateur
 %>
 
-<%
-# Liste des projets classés par note
-%>
-[Ici la liste des projets, classés par note]
+<div id="synopsis-container">
+  <% Synopsis.all_courant.each do |synopsis| %>
+    <%= synopsis.out %>
+  <% end %>
+</div>
 
 <%= EvaluationForm.build %>

@@ -45,6 +45,26 @@ end
 class Concurrent
 # ---------------------------------------------------------------------
 #
+#   CLASSE
+#
+# ---------------------------------------------------------------------
+class << self
+  def get(concurrent_id)
+    table_concurrents[concurrent_id]
+  end #/ get
+  def table_concurrents
+    @table_concurrents ||= begin
+      h = {}
+      db_exec("SELECT * FROM #{DBTBL_CONCURRENTS}").each do |dc|
+        conc = new(dc)
+        conc.data = dc
+        h.merge!( dc[:concurrent_id] => conc)
+      end ; h
+    end
+  end #/ table_concurrents
+end # << self
+# ---------------------------------------------------------------------
+#
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
@@ -62,7 +82,8 @@ def data
     dconcurrent = db_exec(REQUEST_DATA_CONCURRENT, [concurrent_id, session_id, ANNEE_CONCOURS_COURANTE])
     dconcurrent = dconcurrent.first
   end
-end #/ load
+end #/ data
+def data=(value); @data = value end
 
 # ---------------------------------------------------------------------
 #

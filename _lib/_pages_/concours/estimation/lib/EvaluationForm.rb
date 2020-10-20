@@ -47,7 +47,7 @@ class << self
   # soustendrait la construction
   def build
     @build ||= begin
-      build_sujet(DATA_PROJET[0])
+      build_sujet(DATA_EVALUATION_PROJET[0])
     end
   end #/ build
   def build_sujet(dataprop, fullid = "", common_properties = nil)
