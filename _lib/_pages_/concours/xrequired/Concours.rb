@@ -17,7 +17,7 @@ def initialize(annee)
   @annee = annee
 end #/ initialize
 def data
-  @data ||= db_get(DBTABLE_CONCOURS, {annee: annee})
+  @data ||= db_get(DBTBL_CONCOURS, {annee: annee})
 end #/ data
 
 # ---------------------------------------------------------------------

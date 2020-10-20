@@ -37,7 +37,7 @@ feature "Destruction d'un participant au concours" do
       nb = db_count(DBTBL_CONCURS_PER_CONCOURS, {concurrent_id: concurrent.id})
       expect(nb).to eq(0),
         "Il ne devrait plus y avoir de participations du concurrent dans '#{DBTBL_CONCURS_PER_CONCOURS}'…"
-      d = db_exec("SELECT * FROM #{DBTABLE_CONCURRENTS} WHERE concurrent_id = ?", [concurrent.id])
+      d = db_exec("SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ?", [concurrent.id])
       expect(d).to be_empty
       expect(File).not_to be_exists(concurrent.folder),
         "Le dossier du concurrent ne devrait plus exister."

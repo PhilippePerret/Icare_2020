@@ -7,7 +7,7 @@ UI_TEXTS.merge!({
   concours_titre_home_page: "Concours de synopsis de l’atelier Icare",
   titre_page_inscription: "Inscription au concours",
   concours_bouton_inscription: "Inscription au concours",
-  concours_titre_participant: "Participation au concours",
+  concours_titre_participant: "Espace personnel",
   #  *** boutons ***
   concours_bouton_signup: "S’inscrire",
   concours_bouton_sidentifier: "S’identifier",
@@ -40,11 +40,11 @@ TEXT
 CONCOURS_DATA_FOLDER = File.expand_path(File.join('.','_lib','data','concours')).tap{|p|`mkdir -p #{p}`}
 
 
-DBTABLE_CONCOURS = "concours"
-DBTABLE_CONCURRENTS = "concours_concurrents"
+DBTBL_CONCOURS = "concours"
+DBTBL_CONCURRENTS = "concours_concurrents"
 DBTBL_CONCURS_PER_CONCOURS = "concurrents_per_concours"
 
-REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTABLE_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
+REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
 
 CONCOURS_KNOWLEDGE_VALUES = [
   ["none", "Vous avez entendu parler de ce concours par…"],

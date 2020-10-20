@@ -146,7 +146,7 @@ REQUEST_ALL_CONCURRENTS = <<-SQL
 SELECT
   cc.*, cpc.id AS concours_id, cpc.specs AS specs
   FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
-  INNER JOIN #{DBTABLE_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
+  INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
   WHERE cpc.annee = ?
 SQL
 end #/Cronjob

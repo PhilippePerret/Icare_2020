@@ -36,13 +36,13 @@ class << self
   end #/ concurrents
 
   # Requête remontant tous les concurrents
-  REQUEST_ALL_CONCURRENTS = "SELECT * FROM #{DBTABLE_CONCURRENTS}"
+  REQUEST_ALL_CONCURRENTS = "SELECT * FROM #{DBTBL_CONCURRENTS}"
   # Requête remontant les concurrents ayant participé
   REQUEST_LAST_CONCURRENTS = <<-SQL
 SELECT
     cc.*,
     cpc.specs AS specs, cpc.prix AS prix
-  FROM #{DBTABLE_CONCURRENTS} cc
+  FROM #{DBTBL_CONCURRENTS} cc
   INNER JOIN #{DBTBL_CONCURS_PER_CONCOURS} cpc ON cpc.concurrent_id = cc.concurrent_id
   WHERE cpc.annee = "#{ANNEE_CONCOURS_COURANTE - 1}"
   SQL

@@ -13,7 +13,7 @@ SELECT
 SQL
 
 # Requête SQL pour fixer la demande ou non de la fiche de lecture
-REQUEST_UPDATE_OPTIONS = "UPDATE #{DBTABLE_CONCURRENTS} SET options = ? WHERE concurrent_id  = ?"
+REQUEST_UPDATE_OPTIONS = "UPDATE #{DBTBL_CONCURRENTS} SET options = ? WHERE concurrent_id  = ?"
 
 class HTML
   attr_reader :concurrent
@@ -88,9 +88,26 @@ def concours
   @concours ||= Concours.new(self)
 end #/ concours
 
+REQUEST_ALL_CONCOURS_CURRENT = <<-SQL
+SELECT
+  cpc.*,
+  c.theme AS theme
+  FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
+  INNER JOIN #{DBTBL_CONCOURS} c ON c.annee = cpc.annee
+  WHERE cpc.concurrent_id = ?
+SQL
 # Retourne la liste Array de tous les concours du concurrent
 def all_concours
-  @all_concours ||= db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ?", [id])
+  @all_concours ||= begin
+    db_exec(REQUEST_ALL_CONCOURS_CURRENT, [id]).collect do |dcon|
+      if dcon[:prix]
+        dcon[:prix] = "Prix #{dcon[:prix]}"
+      else
+        dcon[:prix] = "pas de prix"
+      end
+      dcon # pour collect
+    end
+  end
 end #/ all_concours
 
 # Retourne la valeur {Integer} de l'option de bit +bit+

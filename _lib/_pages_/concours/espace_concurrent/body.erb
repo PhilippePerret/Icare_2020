@@ -61,7 +61,7 @@
 #
 # ---------------------------------------------------------------------
 %>
-<fieldset>
+<fieldset id="concours-preferences">
   <legend>Vos préférences</legend>
   <div class="row">
     <% if concurrent.fiche_lecture? %>
@@ -132,7 +132,11 @@ end # Si le concours est en route
   <% if concurrent.all_concours.count == 1 %>
     <p>C'est votre première participation à ce concours. Bonne chance à vous !</p>
   <% else %>
-    <p>[Historique des participations]</p>
+    <ul>
+      <% concurrent.all_concours.each do |dcon| %>
+        <li><%= "Session #{dcon[:annee]} (thème “#{dcon[:theme]}” — #{dcon[:prix]})" %></li>
+      <% end %>
+    </ul>
   <% end %>
 </section>
 
@@ -151,6 +155,9 @@ formdestroy.submit_button = UI_TEXTS[:concours_button_destroy]
 formdestroy.submit_button_class = "btn warning discret"
 %>
 <h3>Détruire mes informations</h3>
-<p>Vous pouvez à tout moment détruire votre inscription — ainsi que toutes les données et tous les fichiers qui y sont associés en renseignant le champ ci-desous et en cliquant sur le bouton de destruction.</p>
-<p>Bien noter que l'opération est irréversible. Une fois vos informations et vos fichiers détruits, il sera impossible de les récupérer.</p>
-<%= formdestroy.out %>
+<section id="concours-destruction">
+  <p>Vous pouvez à tout moment détruire votre inscription — ainsi que toutes les données et tous les fichiers qui y sont associés en renseignant le champ ci-desous et en cliquant sur le bouton de destruction.</p>
+  <p>Bien noter que l'opération est irréversible. Une fois vos informations et vos fichiers détruits, il sera impossible de les récupérer.</p>
+  <p>Cette destruction s'applique à toutes les sessions auxquelles vous avez pu participer, c'est-à-dire <%= concurrent.all_concours.count == 1 ? "la session" : "les sessions" %>&nbsp;: <%= concurrent.all_concours.collect{|dc|dc[:annee]}.pretty_join %>.</p>
+  <%= formdestroy.out %>
+</section>

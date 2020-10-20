@@ -11,7 +11,7 @@ class HTML
 
     # IDENTIFIANT UNIQUE pour le concours
     user_id = "#{now.strftime("%Y%m%d%H%M%S")}"
-    while db_count(DBTABLE_CONCURRENTS, {concurrent_id: user_id}) > 1
+    while db_count(DBTBL_CONCURRENTS, {concurrent_id: user_id}) > 1
       now += 1
       user_id = "#{now.strftime("%Y%m%d%H%M%S")}"
     end
@@ -32,7 +32,7 @@ class HTML
       options:        options
     }
     log("data_conc: #{data_save}")
-    new_id = db_compose_insert(DBTABLE_CONCURRENTS, data_save)
+    new_id = db_compose_insert(DBTBL_CONCURRENTS, data_save)
 
     session['concours_user_id'] = user_id
 
@@ -89,13 +89,13 @@ class HTML
   def data_are_valid
     patronyme = param(:p_patronyme).nil_if_empty
     patronyme || raise("Patronyme non défini.")
-    patronyme.length < 256 || raise("Patronyme trop long (255 max.).")
-    patronyme_unique?(patronyme) || raise("Ce patronyme est déjà utilisé…")
+    patronyme.length < 256 || raise(ERRORS[:concours_patronyme_too_long])
+    patronyme_unique?(patronyme) || raise(ERRORS[:concours_patronyme_exists])
     mail      = param(:p_mail).nil_if_empty
     mail || raise("Mail non défini.")
-    mail.length < 256 || raise("Mail trop long.")
-    mail.match?(/(.*)@(.*)\.(.*){1,7}/) || raise("Mail invalide.")
-    mail_unique?(mail) || raise("Ce mail est déjà utilisé pour une inscription.")
+    mail.length < 256 || raise(ERRORS[:mail_too_long])
+    mail.match?(/(.*)@(.*)\.(.*){1,7}/) || raise(ERRORS[:mail_invalide])
+    mail_unique?(mail) || raise(ERRORS[:concours_mail_exists])
     mailconf  = param(:p_mail_confirmation).nil_if_empty
     mailconf == mail || raise("La confirmation du mail ne correspond pas.")
     genre     = param(:p_sexe)
@@ -110,11 +110,11 @@ class HTML
 
   # Retourne TRUE si le mail ne correspond pas déjà à un inscrit
   def mail_unique?(mail)
-    db_count(DBTABLE_CONCURRENTS, {mail: mail}) == 0
+    db_count(DBTBL_CONCURRENTS, {mail: mail}) == 0
   end #/ mail_unique?
 
   def patronyme_unique?(patronyme)
-    db_count(DBTABLE_CONCURRENTS, {patronyme: patronyme}) == 0
+    db_count(DBTBL_CONCURRENTS, {patronyme: patronyme}) == 0
   end #/ patronyme_unique?
 
 end #/HTML

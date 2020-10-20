@@ -7,8 +7,8 @@ class << self
 
   def reset
     # Vide les tables
-    db_exec("TRUNCATE TABLE #{DBTABLE_CONCOURS}")
-    db_exec("TRUNCATE TABLE #{DBTABLE_CONCURRENTS}")
+    db_exec("TRUNCATE TABLE #{DBTBL_CONCOURS}")
+    db_exec("TRUNCATE TABLE #{DBTBL_CONCURRENTS}")
     db_exec("TRUNCATE TABLE #{DBTBL_CONCURS_PER_CONCOURS}")
     # Vide les classes
     TConcurrent.reset
@@ -27,12 +27,12 @@ class << self
     path_pdf_file = File.expand_path(File.join('.','spec','support','asset','documents','autre_doc.pdf'))
     # D'abord on crée les concours
     ANNEES_CONCOURS_TESTS.uniq.each do |annee, dannee|
-      db_compose_insert(DBTABLE_CONCOURS, {annee:annee, theme:random_theme, prix1: "1000€", prix2:"800€", prix3:"200€"})
+      db_compose_insert(DBTBL_CONCOURS, {annee:annee, theme:random_theme, prix1: "1000€", prix2:"800€", prix3:"200€"})
     end
     # On crée les concurrents
     DATA_CONCURRENTS.each do |dc|
       data_participations = dc.delete(:data_participations)
-      db_compose_insert(DBTABLE_CONCURRENTS, dc)
+      db_compose_insert(DBTBL_CONCURRENTS, dc)
       data_participations.each do |dp|
         # Créer l'enregistrement pour la participation au concours
         db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, dp)

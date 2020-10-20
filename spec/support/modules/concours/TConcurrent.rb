@@ -14,7 +14,7 @@ class << self
 
   def all
     @allconcurrents ||= begin
-      db_exec("SELECT * FROM #{DBTABLE_CONCURRENTS}").collect { |dc| new(dc) }
+      db_exec("SELECT * FROM #{DBTBL_CONCURRENTS}").collect { |dc| new(dc) }
     end
   end #/ all
 
