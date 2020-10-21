@@ -1,0 +1,74 @@
+---
+  :ti: Évaluation générale du projet
+  :id: p
+  :items:
+    - :ti: Projet dans sa globalité
+      :id: g
+      :items:
+        - :ti: Titre du projet
+          :id: ti
+    - :ti: Les Personnages
+      :id: p
+      :items:
+        - :ti: Le Protagoniste
+          :id: prota
+        - :ti: L'Antagoniste
+          :id: anta
+        - :ti: Les Personnages secondaires
+          :id: psec
+        - :ti: Les autres personnages
+          :id: autp
+        - :ti: Les Dialogues
+          :id: dials
+      :common_properties:
+        - :ti: Cohérence
+          :id: cohe
+          :common_properties: false
+        - :ti: Idiosyncrasie
+          :id: idio
+          :common_properties: false
+    - :ti: Les Intrigues
+      :id: i
+      :items:
+        - :ti: Construction générale
+          :id: form
+          :common_properties: false,
+          items:
+            - :ti: Usage des Scènes-clés (PFA)
+              :id: pfa
+              :common_properties: false
+            - :ti: Clarté des 3 actes
+              :id: 3acts
+              :common_properties: false
+            - :ti: Qualité des charnières
+              :id: pvts
+              :common_properties: false
+              :ex: "Les charnières, ce sont les pivots qui font glisser d'un acte à l'autre."
+        - :ti: L’Intrigue principale
+          :id: ip
+        - :ti: L’Intrigue secondaire
+          :id: is
+      :common_properties:
+          - :ti: Cohérence
+            :id: cohe
+    - :ti: Les Thèmes
+      :id: th
+    - :ti: La Rédaction
+      :id: r
+      :common_properties: false
+      items:
+        - :ti: Clarté
+          :id: cla
+        - :ti: Simplicité
+          :id: sim
+          :ex: "La simplicité dans l'écriture, en tant que qualité."
+        - :ti: Émotion
+          :id: emo
+          :ex: "Qualité de l'écriture à faire ressortir les émotions de l'histoire."
+  :common_properties:
+    - :ti: Facteur O
+      :id: fO
+      :ex: "Facteur d'originalité (son peu d'occurences dans les histoires connues)."
+    - :ti: Facteur U
+      :id: fU
+      :ex: "Facteur d'universalité de l'élément (caractère de ce qui est commun à beaucoup de gens et de choses)."

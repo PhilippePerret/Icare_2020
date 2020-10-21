@@ -31,7 +31,9 @@ MESSAGES.merge!({
   concours_confirm_destroyed: "Votre inscription au concours est détruite."
 })
 
-CONCOURS_DATA_FOLDER = File.expand_path(File.join('.','_lib','data','concours')).tap{|p|`mkdir -p #{p}`}
+CONCOURS_FOLDER = File.join(PAGES_FOLDER,'concours')
+XMODULES_FOLDER = File.join(CONCOURS_FOLDER,'xmodules')
+CONCOURS_DATA_FOLDER = File.expand_path(File.join(DATA_FOLDER,'concours')).tap{|p|`mkdir -p #{p}`}
 
 
 ANNEE_CONCOURS_COURANTE = Time.now.month < 3 ? Time.now.year : Time.now.year + 1
