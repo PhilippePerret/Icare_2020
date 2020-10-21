@@ -12,16 +12,26 @@ ALL_FULL_ID = {}
 
 class FicheLecture
 class << self
+
+  # = main =
+  #
+  # Reconstruction de la check-list qui permet d'affecter les notes
   def rebuild_checklist
-    ff.puts "<%# frozen_string_literal: true %>"
-    ff.puts '<div id="checklist">'
-    # ff.puts build_sujet(data, "", [])
-    ff.puts "</div>" # / div#checklist
+    w("<%# frozen_string_literal: true %>")
+    w('<div id="checklist">')
+    w(build_sujet(data, "", []))
+    w('</div>') # / div#checklist
+    message("La check-list a été reconstruite.")
   rescue Exception => e
     raise e
   ensure
     ff.close if not ff.nil?
   end #/ rebuild_check_list
+
+  # Pour écrire dans le fichier
+  def w str
+    ff.write(str+RC)
+  end #/ w
 
   # = Construction du sujet =
   def build_sujet(datasuj, fullid, common_properties)
@@ -41,10 +51,12 @@ class << self
     line = TEMPLATE_LINE_MAINPROP % datasuj
     comsprops = ""
     unless datasuj[:common_properties] === false
-      common_properties += datasuj[:common_properties] if datasuj.key?(:common_properties)
+      if datasuj.key?(:common_properties)
+        datasuj[:common_properties].each do |dp|
+          common_properties << dp.merge!(titre:dp.delete(:ti), explication:dp.delete(:ex))
+        end
+      end
       comsprops = common_properties.collect do |dprop|
-        dprop.merge!(titre: dprop.delete(:ti))
-        dprop.merge!(explication: dprop.delete(:ex))
         TEMPLATE_LINE_PROP % dprop.merge!(fullid: "#{fullid}-#{dprop[:id]}", class:"subprop")
       end.join('')
     end
@@ -77,12 +89,33 @@ end # /<< self
 
 # *** LES TEMPLATES pour construire la check-list ***
 
+TEMPLATE_MENU_CHIFFRE = <<-HTML
+<select name="%{fullid}">
+  <option value="">  -  </option>
+  #{(0..5).to_a.reverse.collect{|i| "<option value=\"#{i}\">  #{i}  </option>"}.join('')}
+</select>
+HTML
+
+TEMPLATE_MENU_APPRE = <<-HTML
+<select name="%{fullid}">
+  <option value="">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+HTML
+
 TEMPLATE_TITRE_SELECT = <<-HTML
 <span class="prop-name">%{titre}</span>
-<select name="%{fullid}">
-  <option value="">&nbsp;&nbsp;-&nbsp;&nbsp;</option>
-  #{(0..5).collect{|i| "<option value=\"#{i}\">&nbsp;&nbsp;#{i}&nbsp;&nbsp;</option>"}.join('')}
-</select>
+#{TEMPLATE_MENU_APPRE}
+HTML
+
+TEMPLATE_TITRE_SELECT_CHFFRES = <<-HTML
+<span class="prop-name">%{titre}</span>
+#{TEMPLATE_MENU_CHIFFRE}
 HTML
 
 TEMPLATE_LINE_PROP = <<-HTML

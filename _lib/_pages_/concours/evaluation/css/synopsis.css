@@ -18,5 +18,19 @@ div.synopsis div.titre {
 div.synopsis div.note-generale {
   text-align:center;
   font-size: 32pt;
-  font-weight: bold;
+  font-family:"Arial Narrow", Arial, Geneva, Helvetica;
+  margin-top: 8px;
+  margin-bottom:20px;
+}
+div.synopsis div.keywords {
+  font-size:0.9em;
+}
+div.synopsis div.state {
+
+}
+div.synopsis div.state.ok {
+  color:green;
+}
+div.synopsis div.state:not(.ok){
+  color:orange;
 }

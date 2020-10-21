@@ -32,8 +32,8 @@
       :items:
         - :ti: Construction générale
           :id: form
-          :common_properties: false,
-          items:
+          :common_properties: false
+          :items:
             - :ti: Usage des Scènes-clés (PFA)
               :id: pfa
               :common_properties: false
@@ -56,7 +56,7 @@
     - :ti: La Rédaction
       :id: r
       :common_properties: false
-      items:
+      :items:
         - :ti: Clarté
           :id: cla
         - :ti: Simplicité

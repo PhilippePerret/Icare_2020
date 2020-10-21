@@ -50,10 +50,19 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
 <div id="synopsis-%{id}" class="synopsis">
   <div class="titre">de %{pseudo}</div>
   <div id="synopsis-%{id}-note-generale" class="note-generale">%{note}</div>
+  <div id="synopsis-%{id}-keywords" class="keywords">%{keywords}</div>
+  <div id="synopsis-%{id}-state" class="state">%{state}</div>
 </div>
 HTML
 def out
-  TEMPLATE_FICHE_SYNOPSIS % {id:"#{concurrent_id}-#{annee}", pseudo: concurrent.patronyme, note: note_generale}
+  TEMPLATE_FICHE_SYNOPSIS % {
+    id:"#{concurrent_id}-#{annee}",
+    pseudo: concurrent.patronyme,
+    note: note_generale,
+    keywords: keywords, # Pour se souvenir du synopsis
+    state: state,
+    state_ok: state_ok
+  }
 end #/ out
 
 def concurrent
@@ -66,8 +75,20 @@ def fiche_lecture
 end #/ fiche_lecture
 
 def note_generale
-  12
+  12.4
 end #/ note_generale
+
+def keywords
+  "[mots] [clés]"
+end #/ keywords
+
+def state
+  "[ÉTAT]"
+end #/ state
+# Retourne "ok" si la fiche est terminée, "" dans le cas contraire
+def state_ok
+  ""
+end #/ state_ok
 
 # Son instance de formulaire d'évaluation, pour un évaluateur donné
 def evaluation(evaluateur)
