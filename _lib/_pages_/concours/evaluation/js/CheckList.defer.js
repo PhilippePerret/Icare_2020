@@ -14,9 +14,10 @@ class CheckList {
 static openWith(ev, checklist){
   this.checklist = checklist ; // utile pour onSave
   this.obj.removeClass('hidden')
-  const pos = {top: ev.target.offsetTop+'px', left:ev.target.offsetLeft+'px'}
-  this.obj.css(pos);
+  // const pos = {top: ev.target.offsetTop+'px', left:ev.target.offsetLeft+'px'}
+  // this.obj.css(pos);
   this.obj.find('.titre').text(checklist.synopsis.titre)
+  this.setValues(checklist.score)
 }
 static onSave(ev){
   this.checklist.onSave.call(this.checklist, this.getValues())
@@ -32,8 +33,14 @@ static getValues(){
   })
   return results
 }
-static setValues(values){
-
+// On remplit la checklist avec les valeurs de +score+
+// Toutes les valeurs non fournies sont mises à "-"
+static setValues(score){
+  console.log("-> setValues:", score)
+  this.obj.find('select').each((i, select) => {
+    const key = select.name
+    select.value = score[key] || '-';
+  })
 }
 static close(){
   this.obj.addClass('hidden')
@@ -64,7 +71,8 @@ open(ev){
   if(this.score){this.constructor.openWith(ev, this)}
   else {
     this.getScore().then(ret => {
-      this.score = ret.score;
+      console.log("Retour de getScore :", ret)
+      this.score = ret.data_score.score || {};
       this.constructor.openWith.call(this.constructor, ev, this)
     })
   }
@@ -74,6 +82,7 @@ onSave(results){
   console.log("Je dois sauver les résultats :", results);
   this.score = results ;
   this.saveScore().then(ret => {
+    console.log("ret:", ret);
     if (ret.error) erreur(ret.error)
     else {
       message("Nouveau score enregistré.");

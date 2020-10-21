@@ -1,35 +1,26 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-DEEPNESS_COEF = {}
-(1..20).each do |i|
-  DEEPNESS_COEF.merge!( i => 1.0 - ( (i - 1).to_f / 10 )) # 1 => 1, 2 => 0.9, 3 => 0.8
+require 'json'
+
+Dir.chdir(APP_FOLDER) do
+  require './_lib/_pages_/concours/xrequired/constants'
+  require './_lib/_pages_/concours/xmodules/evaluation/module_calculs'
 end
 
-def calculer_note_generale(score)
-  n = 0.0
-  nombre_questions = score.count
-  nombre_reponses  = 0
-  score.each do |k, v|
-    if v == "-"
-    else
-      coef = DEEPNESS_COEF[k.split('-').count]
-      n += v * coef
-      nombre_reponses += 1
-    end
-  end
-  n = (4 * ( n / nombre_reponses )).round(1)
-  pct = (100.0 / (nombre_questions.to_f / nombre_reponses)).round(1)
-  return {note_generale: n, pourcentage_reponses: pct}
-end #/ calculer_note_generale
-
 begin
-  evaluator   = Ajax.param(:evalutor)
+  evaluator   = Ajax.param(:evaluator)
   synopsis_id = Ajax.param(:synopsis_id)
   score       = Ajax.param(:score)
+  concurrent_id, annee = synopsis_id.split('-')
+  scores_folder_path = File.join(CONCOURS_DATA_FOLDER,concurrent_id,synopsis_id)
+  score_path = File.join(scores_folder_path, "evaluation-#{evaluator}.json")
+  `mkdir -p "#{scores_folder_path}"`
+  File.open(score_path,'wb'){|f| f.write score.to_json }
+
   log("evaluator: #{evaluator}, synopsis_id:#{synopsis_id}, score:#{score}")
 
-  resultats = calculer_note_generale(score)
-  log("résultat: #{resultats.inspect}")
+  resultats = ConcoursCalcul.note_generale_et_pourcentage_from(score)
+  log("Résultat des calculs : #{resultats.inspect}")
   # Ajax << {note_generale:resultats[:note_generale], pourcentage_reponses: resultats[:pourcentage_reponses]}
   Ajax << resultats
 rescue Exception => e

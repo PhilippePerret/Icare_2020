@@ -11,6 +11,7 @@ class HTML
   def exec
     admin_required # TODO evaluators_required
     add_js('./js/modules/ajax')
+    require_xmodule('evaluation/module_calculs')
     check_up_to_date
   end # /exec
 

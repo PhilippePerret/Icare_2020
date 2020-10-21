@@ -1,9 +1,13 @@
 div#checklist {
-  position:absolute;
+  /* position:absolute; */
+  position:fixed;
+  top:0px;
+  left:calc(50% - 250px);
   padding:1em;
   border:1px solid;
   box-shadow: 8px 8px 21px 7px #DDD;
   z-index:2;
+  /* TODO : régler dimensions (titre et bouton) et faire réglage automatique */
 }
 div#checklist, div#checklist form {
   background-color:#EEE;
@@ -20,9 +24,20 @@ div#checklist .titre {
   font-size:1.2em;
 }
 
+div#checklist form {
+  overflow: auto;
+  width:500px;
+  height:600px;
+}
+
 div#checklist form div.line-note.deep {
   background-color: rgba(181, 226, 255, 0.33);
 }
 div#checklist form div.line-note.soft {
   background-color: rgb(231, 255, 241);
+}
+
+div#checklist div#row-buttons {
+  height:40px;
+  text-align:right;
 }

@@ -38,7 +38,7 @@ MESSAGES.merge!({
 CONCOURS_FOLDER = File.join(PAGES_FOLDER,'concours')
 XMODULES_FOLDER = File.join(CONCOURS_FOLDER,'xmodules')
 CONCOURS_DATA_FOLDER = File.expand_path(File.join(DATA_FOLDER,'concours')).tap{|p|`mkdir -p #{p}`}
-
+NOMBRE_QUESTIONS_PATH = File.join(CONCOURS_DATA_FOLDER,'NOMBRE_QUESTIONS')
 
 ANNEE_CONCOURS_COURANTE = Time.now.month < 3 ? Time.now.year : Time.now.year + 1
 CONCOURS_THEME_COURANT = "L'ACCIDENT"

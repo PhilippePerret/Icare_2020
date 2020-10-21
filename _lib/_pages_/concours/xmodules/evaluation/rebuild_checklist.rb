@@ -17,6 +17,7 @@ class << self
   #
   # Reconstruction de la check-list qui permet d'affecter les notes
   def rebuild_checklist
+    @nombre_questions = 0
     w("<%# frozen_string_literal: true %>")
     w('<%# DÉTRUIRE CE FICHIER POUR ACTUALISER AUTOMATIQUEMENT LA CHECK-LIST %>')
     w('<div id="checklist">')
@@ -24,9 +25,10 @@ class << self
     w('<form id="checklist-form" class="nopadding noborder nomargin" action="concours/evaluation" method="POST">')
     w(build_sujet(data, [], []))
     w('</form>')
-    w('<div class="right mt3"><button id="btn-save" class="btn main">Enregistrer</button></div>')
+    w('<div id="row-buttons"><button id="btn-save" class="btn main">Enregistrer</button></div>')
     w('</div>') # / div#checklist
     message("La check-list a été reconstruite.")
+    File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(@nombre_questions)}
   rescue Exception => e
     raise e
   ensure
@@ -54,6 +56,7 @@ class << self
     end
     datasuj.merge!(fullid: fullid_str, class:css, fond: fond_line)
     line = TEMPLATE_LINE_MAINPROP % datasuj
+    @nombre_questions += 1
     comsprops = ""
     unless datasuj[:common_properties] === false
       if datasuj.key?(:common_properties)
@@ -62,6 +65,7 @@ class << self
         end
       end
       comsprops = common_properties.collect do |dprop|
+        @nombre_questions += 1
         TEMPLATE_LINE_PROP % dprop.merge!(fullid: "#{fullid_str}-#{dprop[:id]}", class:"subprop", fond:fond_line)
       end.join('')
     end

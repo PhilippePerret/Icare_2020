@@ -9,6 +9,10 @@ def require_folder(path)
   end
 end #/ require_folder
 
+def require_site(relpath)
+  require File.join(APP_FOLDER, relpath)
+end #/ require_site
+
 def cgi
   @cgi ||= CGI.new('html4')
 end
@@ -29,6 +33,7 @@ end #/ user
 # Contient quelque chose comme '/Users/moi/Sites/MonApplication'
 #
 APP_FOLDER = File.dirname(File.dirname(File.dirname(__dir__)))
+LIB_FOLDER = File.join(APP_FOLDER,'_lib') unless defined?(LIB_FOLDER)
 log("[Ajax] APP_FOLDER = #{APP_FOLDER.inspect}")
 require_relative 'ajax_class'
 

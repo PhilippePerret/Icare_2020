@@ -6,10 +6,15 @@
 const EVALUATOR_ID = <%= user.id %>;
 </script>
 
-<div id="synopsis-container">
+<%=
+  # Il faut passer par là notamment pour produire le fichier NOMBRE_QUESTIONS
+  # qui contient le nombre de questions actuelles, utiles pour estimer
+  # le pourcentage de travail
+  checklist
+%>
+
+<div id="synopsis-container" class="nolimit">
   <% Synopsis.all_courant.each do |synopsis| %>
-    <%= synopsis.out %>
+    <%= synopsis.out(user.id) %>
   <% end %>
 </div>
-
-<%= checklist %>

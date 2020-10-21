@@ -1,3 +1,6 @@
+body {
+  max-width:none!important;
+}
 div#synopsis-container {
   position:relative;
 }

@@ -42,6 +42,10 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 attr_reader :concurrent_id, :annee, :data
+# Les données de score pour un évaluator donné
+# Note : pour le moment, l'évaluateur se donne dans :out
+attr_reader :data_score, :evaluator_id
+# Instanciation
 def initialize concurrent_id, annee, data = nil
   @concurrent_id = concurrent_id
   @annee = annee
@@ -61,7 +65,8 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
   <div id="synopsis-%{id}-state" class="state">%{state}</div>
 </div>
 HTML
-def out
+def out(evaluator_id)
+  @evaluator_id = evaluator_id
   TEMPLATE_FICHE_SYNOPSIS % {
     id:"#{concurrent_id}-#{annee}",
     titre: titre,
@@ -88,12 +93,25 @@ def fiche_lecture
 end #/ fiche_lecture
 
 def note_generale
-  12.4
+  data_score || get_data_score
+  data_score[:note_generale] || "---"
 end #/ note_generale
 
 def pourcentage_reponses
-  62.3
+  data_score || get_data_score
+  data_score[:pourcentage_reponses] || 0
 end #/ pourcentage_reponses
+
+def get_data_score
+  dscore = {}
+  if File.exists?(folder)
+    score_evaluator_path = score_path(evaluator_id)
+    if File.exists?(score_evaluator_path)
+      dscore = JSON.parse(File.read(score_evaluator_path))
+    end
+  end
+  @data_score = ConcoursCalcul.note_generale_et_pourcentage_from(dscore)
+end #/ data_score
 
 def keywords
   @keywords ||= data[:keywords].split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
@@ -116,6 +134,10 @@ def evaluation(evaluateur)
   @evaluations[evaluateur.id]
 end #/ evaluation
 
+# Chemin d'accès au fichier d'évaluation (score) pour l'évaluator evaluator_id
+def score_path(evaluator_id)
+  File.join(folder, "evaluation-#{evaluator_id}.json")
+end #/ score_path
 # Chemin d'accès au dossier du synopsis, où sont rangées tous les fichiers,
 # et notamment les fichiers d'évaluation
 def folder
