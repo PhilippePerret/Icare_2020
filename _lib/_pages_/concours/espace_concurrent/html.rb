@@ -14,10 +14,10 @@ class HTML
       return if not Form.new.conform?
       case param(:form_id)
       when 'concours-dossier-form' # Soumission du fichier de candidature
-        require_relative '../xmodules/consigne_fichier'
+        require_xmodule('consigne_fichier')
         consigne_fichier_candidature
       when 'destroy-form'
-        require_relative '../xmodules/destroy'
+        require_xmodule('destroy')
         concurrent.destroy
       end
     elsif param(:op)

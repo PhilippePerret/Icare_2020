@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require './_lib/required/__first/constants/paths'
 require './_lib/required/__first/helpers/Linker'
 
 UI_TEXTS.merge!({
@@ -21,14 +22,17 @@ ERRORS.merge!({
   concours_mail_required: "Votre mail est requis, pour récupérer votre numéro d'inscription.",
   concours_mail_unknown: "Désolé, mais le mail '%s' est inconnu de nos services…",
   concours_login_required: "Identifiez-vous pour pouvoir rejoindre cette page.",
-  invalid_num_for_destroy: "Le numéro d'inscription que vous avez fourni pour la destruction est invalide."
+  invalid_num_for_destroy: "Le numéro d'inscription que vous avez fourni pour la destruction est invalide.",
+  titre_required: "Le titre du projet est requis.",
+  too_long: "%s est trop long (maximum : %i)."
 })
 
 MESSAGES.merge!({
   concours_signed_confirmation: "Confirmation de votre inscription au concours de synopsis",
   concours_new_signup_titre: "Nouvelle inscription au concours de synopsis",
   concours_sujet_retrieve_numero: "Récupération de votre numéro d'inscription au concours",
-  concours_confirm_destroyed: "Votre inscription au concours est détruite."
+  concours_confirm_destroyed: "Votre inscription au concours est détruite.",
+  merci_fichier_et_titre: "Merci %s, votre fichier de candidature et votre titre ont bien été pris en compte."
 })
 
 CONCOURS_FOLDER = File.join(PAGES_FOLDER,'concours')

@@ -97,6 +97,7 @@ if Concours.current.started?
   if not concurrent.dossier_transmis?
     form = Form.new(id: "concours-dossier-form", route:route.to_s, class:"nomargin noborder nolibelle nobackground", file: true, value_size: "600px")
     form.rows = {
+      "Titre projet"    => {type:"text", name:"p_titre"},
       "Votre fichier"   => {type:"file", name:"p_fichier_candidature"},
       "<lien dossier/>" => {type:"raw", content:"<div class=\"italic small\">Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
     }

@@ -8,7 +8,7 @@ class HTML
   def consigne_fichier_candidature
     file = Concours::CFile.new(concurrent, ANNEE_CONCOURS_COURANTE)
     if file.consigne_file(param(:p_fichier_candidature))
-      message("Merci #{concurrent.pseudo}, votre fichier de candidature a bien été pris en compte.")
+      message(MESSAGES[:merci_fichier_et_titre] % [concurrent.pseudo])
     end
   end #/ consigne_fichier_candidature
 end #/HTML
@@ -29,21 +29,24 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 attr_reader :concurrent, :annee
-def initialize(owner, annee)
-  @concurrent = owner
+def initialize(concurrent, annee)
+  @concurrent = concurrent
   @annee      = annee
 end #/ initialize
 
 
 # Méthode appelée avec le champ file du formulaire pour consigner le fichier
 def consigne_file(ffile) # ffile pour "form-file"
-  ffile.size > 0 || raise("Ce fichier est vide…")
+  titre = titre_valide? # ou raise avec l'erreur
+  ffile.size > 0  || raise("Ce fichier est vide…")
   ffile.size < 1000000 || raise("Ce fichier est trop volumineux (1Mo maximum — essayez de réduire la taille de l'image).")
   # Nom original et extension
   orname = ffile.original_filename
   @extname = File.extname(orname)
   extension_valide?(@extname) || raise("L'extension de ce fichier est invalide. Les extensions acceptées sont : #{EXTENSIONS_VALIDES.pretty_join}.")
   File.open(path,'wb') { |f| f.write ffile.read }
+  # On enregistre le titre
+  db_exec(REQUEST_SAVE_TITRE, [titre, concurrent.id, annee])
   # Si tout est OK, on marque que le dossier est envoyé dans les
   # specs du concurrent.
   concurrent.set_spec(0, 1)
@@ -67,6 +70,14 @@ end #/ path
 
 private
 
+  def titre_valide?
+    tit = param('p_titre').nil_if_empty
+    tit || raise(ERRORS[:titre_required])
+    tit <= 200 || raise(ERRORS[:too_long] % ["Le titre", 200])
+    tit = tit.titleize
+    return tit
+  end #/ titre_valide?
+
   def extension_valide?(ext)
     EXTENSIONS_VALIDES.include?(ext)
   end #/ extension_valide?
@@ -75,5 +86,7 @@ private
 EXTENSIONS_VALIDES = [
   '.pdf','.odt','.doc','.docx','.txt','.rtf','.md','.markdown','.rtfd'
 ]
+
+REQUEST_SAVE_TITRE = "UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET titre = ? WHERE concurrent_id = ? AND annee = ?"
 end #/File
 end #/Concours

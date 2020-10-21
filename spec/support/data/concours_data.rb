@@ -20,6 +20,23 @@ def random_concours_id(annee)
   els.join('')
 end #/ random_concours_id
 
+# Retourne un titre de projet aléatoire
+TERMES_GENE = ["Le Mythe", "Une histoire", "Une Version", "La Punition", "Le Voyage", "La Chevauchée", "Le Secret", "Le Mystère", "Les Aventures"]
+TERMES_GENE_COUNT = TERMES_GENE.count
+TERMES_DENE = ["", "de l'escargot", "de l'amour", "de la crypte", "du soir", "de Sir Ripaï", "de Monsieur X", "du cheval", "de l'Histoire", "de la femme"]
+TERMES_DENE_COUNT = TERMES_DENE.count
+def random_titre
+  "#{TERMES_GENE[rand(TERMES_GENE_COUNT)]} #{TERMES_DENE[rand(TERMES_DENE_COUNT)]}".strip
+end #/ random_titre
+
+KEYWORDS = ["robot", "amour","disparition","voyage","guerre","survie","ile","désert","mer","traversée","naufrage","descente","drogue","social","enquête","meurtre","serial killer","vengeance","sexe","alcool","vin","vignoble","course","sport","vacances","homosexualité","construction","art","moine","chinois","samouraï","japon","monstre","fantôme","soldat","ange","argent","bourse","loup","loup-garou","souffrance","école","étude","musique"]
+KEYWORDS_COUNT = KEYWORDS.count
+def random_keywords
+  nombre = 2 + rand(8)
+  list = KEYWORDS.dup.shuffle.shuffle
+  return list[0...nombre].join(',')
+end #/ random_keywords
+
 def data_concurrent_concours(patronyme, sexe)
   now_year = Time.now.year
   annee = 2015 + rand(now_year - 2015)
@@ -28,7 +45,7 @@ def data_concurrent_concours(patronyme, sexe)
   mail  = "#{mail}@gmail.com"
   concurrent_id = random_concours_id(annee)
   donnees_participations = (annee..ANNEE_CONCOURS_COURANTE).collect do |an|
-    {annee:an, concurrent_id:concurrent_id, specs:"10000000"} # 1er bit 1 => dossier envoyé
+    {annee:an, concurrent_id:concurrent_id, specs:"10000000", titre:random_titre, keywords:random_keywords} # 1er bit 1 => dossier envoyé
   end
   {
     patronyme: patronyme,
