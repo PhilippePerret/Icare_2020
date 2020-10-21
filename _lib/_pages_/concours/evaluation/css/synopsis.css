@@ -7,24 +7,54 @@ div.synopsis {
   border-radius:0.5em;
   padding:1em;
   width: 150px;
-  height: 200px;
+  height: 240px;
   background-color: white;
   font-size: 12pt;
+  margin-bottom: 12px;
+}
+div.synopsis div.titre,
+div.synopsis div.auteur
+{
+  height:40px;
 }
 div.synopsis div.titre {
-  height:40px;
+  font-variant:small-caps;
   font-weight:bold;
+}
+div.synopsis div.auteur {
+  text-align:right;
+}
+div.synopsis div.note-generale,
+div.synopsis span.pct-reponses {
+  font-family:"Arial Narrow", Arial, Geneva, Helvetica;
 }
 div.synopsis div.note-generale {
   text-align:center;
   font-size: 32pt;
-  font-family:"Arial Narrow", Arial, Geneva, Helvetica;
   margin-top: 8px;
   margin-bottom:20px;
+  cursor:pointer;
 }
-div.synopsis div.keywords {
-  font-size:0.9em;
+div.synopsis div.div-pct-reponses {
+  text-align:right;
+  font-size:10.5pt;
 }
+div.synopsis div.jauge-pct-reponses {
+  position:relative;
+  background-color:red;
+  width:100%;
+  height:10px;
+}
+div.synopsis div.jauge-pct-reponses span.jauge-pct-reponses-done {
+  position:absolute;
+  display:inline-block;
+  top:0;
+  left:0;
+  background-color:green;
+  width:0%;
+  height:10px;
+}
+
 div.synopsis div.state {
 
 }
@@ -33,4 +63,15 @@ div.synopsis div.state.ok {
 }
 div.synopsis div.state:not(.ok){
   color:orange;
+}
+
+div.synopsis div.keywords {
+  width: fit-content;
+  height:48px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:0.9em;
+}
+div.synopsis span.kword {
+
 }

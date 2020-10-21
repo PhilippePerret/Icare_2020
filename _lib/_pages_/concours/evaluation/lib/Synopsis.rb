@@ -15,7 +15,8 @@ class << self
 
 REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS = <<-SQL
 SELECT
-  cc.concurrent_id, cc.patronyme
+  cc.concurrent_id, cc.patronyme,
+  cpc.titre, cpc.keywords
   FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
   INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
   WHERE cpc.annee = ? AND SUBSTRING(cpc.specs,1,1) = "1"
@@ -30,7 +31,7 @@ SQL
   def all_courant
     @all_courant ||= begin
       db_exec(REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS, [ANNEE_CONCOURS_COURANTE]).collect do |dc|
-        Synopsis.new(dc[:concurrent_id], ANNEE_CONCOURS_COURANTE)
+        Synopsis.new(dc[:concurrent_id], ANNEE_CONCOURS_COURANTE, dc)
       end
     end
   end #/ all_courant
@@ -40,16 +41,22 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
-attr_reader :concurrent_id, :annee
-def initialize concurrent_id, annee
+attr_reader :concurrent_id, :annee, :data
+def initialize concurrent_id, annee, data = nil
   @concurrent_id = concurrent_id
   @annee = annee
+  @data = data
 end #/ initialize
 
 TEMPLATE_FICHE_SYNOPSIS = <<-HTML
-<div id="synopsis-%{id}" class="synopsis">
-  <div class="titre">de %{pseudo}</div>
+<div id="synopsis-%{id}" class="synopsis" data-id="%{id}">
+  <div id="synopsis-%{id}-titre" class="titre">%{titre}</div>
+  <div class="auteur">de <span id="synopsis-%{id}-pseudo" class="">%{pseudo}</span></div>
   <div id="synopsis-%{id}-note-generale" class="note-generale">%{note}</div>
+  <div id="synopsis-%{id}-pct-reponses" class="div-pct-reponses"><span class="pct-reponses">%{pct_reponses}</span> %%</div>
+  <div id="synopsis-%{id}-jauge-pct-reponses" class="jauge-pct-reponses">
+    <span class="jauge-pct-reponses-done"></span>
+  </div>
   <div id="synopsis-%{id}-keywords" class="keywords">%{keywords}</div>
   <div id="synopsis-%{id}-state" class="state">%{state}</div>
 </div>
@@ -57,13 +64,19 @@ HTML
 def out
   TEMPLATE_FICHE_SYNOPSIS % {
     id:"#{concurrent_id}-#{annee}",
+    titre: titre,
     pseudo: concurrent.patronyme,
     note: note_generale,
+    pct_reponses: pourcentage_reponses,
     keywords: keywords, # Pour se souvenir du synopsis
     state: state,
     state_ok: state_ok
   }
 end #/ out
+
+def titre
+  @titre ||= data[:titre]
+end #/ titre
 
 def concurrent
   @concurrent ||= Concurrent.get(concurrent_id)
@@ -78,8 +91,12 @@ def note_generale
   12.4
 end #/ note_generale
 
+def pourcentage_reponses
+  62.3
+end #/ pourcentage_reponses
+
 def keywords
-  "[mots] [clés]"
+  @keywords ||= data[:keywords].split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
 end #/ keywords
 
 def state

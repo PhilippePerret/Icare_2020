@@ -16,4 +16,4 @@ PARTIAL_CHECK_LIST  = File.join(PARTIAL_FOLDER,'checklist.erb')
 DATA_CHECK_LIST_FILE  = File.join(EVAL_DATA_FOLDER, 'data_evaluation.yaml')
 
 # * Développement *
-REBUILDER_CHECK_LIST = File.join(XMODULES_FOLDER,'evaluation','rebuild_check_list.rb')
+REBUILDER_CHECK_LIST = File.join(XMODULES_FOLDER,'evaluation','rebuild_checklist.rb')

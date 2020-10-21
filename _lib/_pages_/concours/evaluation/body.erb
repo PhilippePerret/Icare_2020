@@ -2,6 +2,9 @@
 <%
 # Pour choisir l'évaluateur
 %>
+<script type="text/javascript">
+const EVALUATOR_ID = <%= user.id %>;
+</script>
 
 <div id="synopsis-container">
   <% Synopsis.all_courant.each do |synopsis| %>

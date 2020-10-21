@@ -2,11 +2,8 @@
   :ti: Évaluation générale du projet
   :id: p
   :items:
-    - :ti: Projet dans sa globalité
-      :id: g
-      :items:
-        - :ti: Titre du projet
-          :id: ti
+    - :ti: Le Titre
+      :id: ti
     - :ti: Les Personnages
       :id: p
       :items:
@@ -34,7 +31,7 @@
           :id: form
           :common_properties: false
           :items:
-            - :ti: Usage des Scènes-clés (PFA)
+            - :ti: Usage des Scènes-clés
               :id: pfa
               :common_properties: false
             - :ti: Clarté des 3 actes
@@ -72,3 +69,5 @@
     - :ti: Facteur U
       :id: fU
       :ex: "Facteur d'universalité de l'élément (caractère de ce qui est commun à beaucoup de gens et de choses)."
+    - :ti: Adéquation avec le thème
+      :id: th

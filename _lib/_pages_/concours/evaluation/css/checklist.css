@@ -1,0 +1,28 @@
+div#checklist {
+  position:absolute;
+  padding:1em;
+  border:1px solid;
+  box-shadow: 8px 8px 21px 7px #DDD;
+  z-index:2;
+}
+div#checklist, div#checklist form {
+  background-color:#EEE;
+}
+div#checklist select {
+  /* border:none!important; */
+  float:right;
+  border-color:#DDD!important;
+  font-size:12pt!important;
+}
+
+div#checklist .titre {
+  font-variant:small-caps;
+  font-size:1.2em;
+}
+
+div#checklist form div.line-note.deep {
+  background-color: rgba(181, 226, 255, 0.33);
+}
+div#checklist form div.line-note.soft {
+  background-color: rgb(231, 255, 241);
+}

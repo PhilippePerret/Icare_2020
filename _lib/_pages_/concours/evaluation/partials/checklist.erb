@@ -1,9 +1,13 @@
 <%# frozen_string_literal: true %>
+<%# DÉTRUIRE CE FICHIER POUR ACTUALISER AUTOMATIQUEMENT LA CHECK-LIST %>
 <div id="checklist">
-<div id="div--p" class="prop">
+<div class="titre"></div>
+<form id="checklist-form" class="nopadding noborder nomargin" action="concours/evaluation" method="POST">
+<div id="div-p" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">Évaluation générale du projet</span>
-<select name="-p">
-  <option value="">  -  </option>
+  <select name="p">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -12,11 +16,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-fO">
-  <option value="">  -  </option>
+  <select name="p-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -25,12 +31,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-fU" class="subprop">
+<div id="div-p-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-fU">
-  <option value="">  -  </option>
+  <select name="p-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -39,13 +47,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-</div>
-  <div class="items"><div id="div--p-g" class="prop">
-  <span class="prop-name">Projet dans sa globalité</span>
-<select name="-p-g">
-  <option value="">  -  </option>
+<div id="div-p-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-th">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -54,11 +63,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-g-fO" class="subprop">
+</div>
+</div>
+  <div class="items"><div id="div-p-ti" class="prop">
+  <div class="line-note soft">
+  <span class="prop-name">Le Titre</span>
+  <select name="p-ti">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+  <div class="common-properties"><div id="div-p-ti-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-g-fO">
-  <option value="">  -  </option>
+  <select name="p-ti-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -67,12 +95,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-g-fU" class="subprop">
+<div id="div-p-ti-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-g-fU">
-  <option value="">  -  </option>
+  <select name="p-ti-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -80,41 +110,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-</div>
-  <div class="items"><div id="div--p-g-ti" class="prop">
-  <span class="prop-name">Titre du projet</span>
-<select name="-p-g-ti">
-  <option value="">  -  </option>
-  <option value="5">Excellent</option>
-  <option value="4">Bon</option>
-  <option value="3">Moyen</option>
-  <option value="2">Faible</option>
-  <option value="1">Bas</option>
-  <option value="0">Nul</option>
-</select>
-
-
-  <div class="common-properties"><div id="div--p-g-ti-fO" class="subprop">
-  <span class="prop-name">Facteur O</span>
-<select name="-p-g-ti-fO">
-  <option value="">  -  </option>
-  <option value="5">Excellent</option>
-  <option value="4">Bon</option>
-  <option value="3">Moyen</option>
-  <option value="2">Faible</option>
-  <option value="1">Bas</option>
-  <option value="0">Nul</option>
-</select>
-
 
 </div>
-<div id="div--p-g-ti-fU" class="subprop">
-  <span class="prop-name">Facteur U</span>
-<select name="-p-g-ti-fU">
-  <option value="">  -  </option>
+<div id="div-p-ti-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-ti-th">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -123,17 +127,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-</div>
-</div>
-<div id="div--p-p" class="prop">
+<div id="div-p-p" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">Les Personnages</span>
-<select name="-p-p">
-  <option value="">  -  </option>
+  <select name="p-p">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -142,11 +146,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-p-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-p-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-p-fO">
-  <option value="">  -  </option>
+  <select name="p-p-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -155,12 +161,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-fU" class="subprop">
+<div id="div-p-p-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-p-fU">
-  <option value="">  -  </option>
+  <select name="p-p-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -169,12 +177,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-cohe" class="subprop">
+<div id="div-p-p-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-p-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-p-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-p-cohe">
-  <option value="">  -  </option>
+  <select name="p-p-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -183,12 +209,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-idio" class="subprop">
+<div id="div-p-p-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-p-idio">
-  <option value="">  -  </option>
+  <select name="p-p-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -197,13 +225,15 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
-  <div class="items"><div id="div--p-p-prota" class="prop">
+  <div class="items"><div id="div-p-p-prota" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">Le Protagoniste</span>
-<select name="-p-p-prota">
-  <option value="">  -  </option>
+  <select name="p-p-prota">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -212,11 +242,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-p-prota-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-p-prota-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-p-prota-fO">
-  <option value="">  -  </option>
+  <select name="p-p-prota-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -225,12 +257,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-prota-fU" class="subprop">
+<div id="div-p-p-prota-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-p-prota-fU">
-  <option value="">  -  </option>
+  <select name="p-p-prota-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -239,12 +273,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-prota-cohe" class="subprop">
+<div id="div-p-p-prota-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-p-prota-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-p-prota-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-p-prota-cohe">
-  <option value="">  -  </option>
+  <select name="p-p-prota-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -252,13 +304,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-p-prota-idio" class="subprop">
+
+</div>
+<div id="div-p-p-prota-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-p-prota-idio">
-  <option value="">  -  </option>
+  <select name="p-p-prota-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -267,15 +321,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-<div id="div--p-p-anta" class="prop">
+<div id="div-p-p-anta" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">L'Antagoniste</span>
-<select name="-p-p-anta">
-  <option value="">  -  </option>
+  <select name="p-p-anta">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -284,11 +340,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-p-anta-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-p-anta-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-p-anta-fO">
-  <option value="">  -  </option>
+  <select name="p-p-anta-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -297,12 +355,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-anta-fU" class="subprop">
+<div id="div-p-p-anta-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-p-anta-fU">
-  <option value="">  -  </option>
+  <select name="p-p-anta-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -311,12 +371,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-anta-cohe" class="subprop">
+<div id="div-p-p-anta-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-p-anta-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-p-anta-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-p-anta-cohe">
-  <option value="">  -  </option>
+  <select name="p-p-anta-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -324,13 +402,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-p-anta-idio" class="subprop">
+
+</div>
+<div id="div-p-p-anta-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-p-anta-idio">
-  <option value="">  -  </option>
+  <select name="p-p-anta-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -339,15 +419,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-<div id="div--p-p-psec" class="prop">
+<div id="div-p-p-psec" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">Les Personnages secondaires</span>
-<select name="-p-p-psec">
-  <option value="">  -  </option>
+  <select name="p-p-psec">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -356,11 +438,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-p-psec-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-p-psec-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-p-psec-fO">
-  <option value="">  -  </option>
+  <select name="p-p-psec-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -369,12 +453,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-psec-fU" class="subprop">
+<div id="div-p-p-psec-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-p-psec-fU">
-  <option value="">  -  </option>
+  <select name="p-p-psec-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -383,12 +469,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-psec-cohe" class="subprop">
+<div id="div-p-p-psec-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-p-psec-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-p-psec-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-p-psec-cohe">
-  <option value="">  -  </option>
+  <select name="p-p-psec-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -396,13 +500,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-p-psec-idio" class="subprop">
+
+</div>
+<div id="div-p-p-psec-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-p-psec-idio">
-  <option value="">  -  </option>
+  <select name="p-p-psec-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -411,15 +517,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-<div id="div--p-p-autp" class="prop">
+<div id="div-p-p-autp" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">Les autres personnages</span>
-<select name="-p-p-autp">
-  <option value="">  -  </option>
+  <select name="p-p-autp">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -428,11 +536,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-p-autp-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-p-autp-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-p-autp-fO">
-  <option value="">  -  </option>
+  <select name="p-p-autp-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -441,12 +551,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-autp-fU" class="subprop">
+<div id="div-p-p-autp-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-p-autp-fU">
-  <option value="">  -  </option>
+  <select name="p-p-autp-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -455,12 +567,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-autp-cohe" class="subprop">
+<div id="div-p-p-autp-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-p-autp-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-p-autp-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-p-autp-cohe">
-  <option value="">  -  </option>
+  <select name="p-p-autp-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -468,13 +598,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-p-autp-idio" class="subprop">
+
+</div>
+<div id="div-p-p-autp-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-p-autp-idio">
-  <option value="">  -  </option>
+  <select name="p-p-autp-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -483,15 +615,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-<div id="div--p-p-dials" class="prop">
+<div id="div-p-p-dials" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">Les Dialogues</span>
-<select name="-p-p-dials">
-  <option value="">  -  </option>
+  <select name="p-p-dials">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -500,11 +634,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-p-dials-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-p-dials-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-p-dials-fO">
-  <option value="">  -  </option>
+  <select name="p-p-dials-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -513,12 +649,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-dials-fU" class="subprop">
+<div id="div-p-p-dials-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-p-dials-fU">
-  <option value="">  -  </option>
+  <select name="p-p-dials-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -527,12 +665,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-p-dials-cohe" class="subprop">
+<div id="div-p-p-dials-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-p-dials-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-p-dials-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-p-dials-cohe">
-  <option value="">  -  </option>
+  <select name="p-p-dials-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -540,13 +696,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-p-dials-idio" class="subprop">
+
+</div>
+<div id="div-p-p-dials-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-p-dials-idio">
-  <option value="">  -  </option>
+  <select name="p-p-dials-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -555,6 +713,7 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
@@ -562,10 +721,11 @@
 </div>
 </div>
 </div>
-<div id="div--p-i" class="prop">
+<div id="div-p-i" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">Les Intrigues</span>
-<select name="-p-i">
-  <option value="">  -  </option>
+  <select name="p-i">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -574,11 +734,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-i-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-i-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-i-fO">
-  <option value="">  -  </option>
+  <select name="p-i-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -587,12 +749,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-fU" class="subprop">
+<div id="div-p-i-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-i-fU">
-  <option value="">  -  </option>
+  <select name="p-i-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -601,12 +765,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-cohe" class="subprop">
+<div id="div-p-i-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-i-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-i-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-i-cohe">
-  <option value="">  -  </option>
+  <select name="p-i-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -615,12 +797,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-idio" class="subprop">
+<div id="div-p-i-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-i-idio">
-  <option value="">  -  </option>
+  <select name="p-i-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -629,12 +813,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-cohe" class="subprop">
+<div id="div-p-i-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-i-cohe">
-  <option value="">  -  </option>
+  <select name="p-i-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -643,13 +829,15 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
-  <div class="items"><div id="div--p-i-form" class="prop">
+  <div class="items"><div id="div-p-i-form" class="prop">
+  <div class="line-note deep">
   <span class="prop-name">Construction générale</span>
-<select name="-p-i-form">
-  <option value="">  -  </option>
+  <select name="p-i-form">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -658,12 +846,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
   <div class="common-properties"></div>
-  <div class="items"><div id="div--p-i-form-pfa" class="prop simple">
-  <span class="prop-name">Usage des Scènes-clés (PFA)</span>
-<select name="-p-i-form-pfa">
-  <option value="">  -  </option>
+  <div class="items"><div id="div-p-i-form-pfa" class="prop simple">
+  <div class="line-note soft">
+  <span class="prop-name">Usage des Scènes-clés</span>
+  <select name="p-i-form-pfa">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -672,14 +862,16 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
   <div class="common-properties"></div>
   <div class="items"></div>
 </div>
-<div id="div--p-i-form-3acts" class="prop simple">
+<div id="div-p-i-form-3acts" class="prop simple">
+  <div class="line-note deep">
   <span class="prop-name">Clarté des 3 actes</span>
-<select name="-p-i-form-3acts">
-  <option value="">  -  </option>
+  <select name="p-i-form-3acts">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -688,14 +880,16 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
   <div class="common-properties"></div>
   <div class="items"></div>
 </div>
-<div id="div--p-i-form-pvts" class="prop simple">
+<div id="div-p-i-form-pvts" class="prop simple">
+  <div class="line-note soft">
   <span class="prop-name">Qualité des charnières</span>
-<select name="-p-i-form-pvts">
-  <option value="">  -  </option>
+  <select name="p-i-form-pvts">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -704,16 +898,18 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
   <div class="common-properties"></div>
   <div class="items"></div>
 </div>
 </div>
 </div>
-<div id="div--p-i-ip" class="prop">
+<div id="div-p-i-ip" class="prop">
+  <div class="line-note deep">
   <span class="prop-name">L’Intrigue principale</span>
-<select name="-p-i-ip">
-  <option value="">  -  </option>
+  <select name="p-i-ip">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -722,11 +918,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-i-ip-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-i-ip-fO" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur O</span>
-<select name="-p-i-ip-fO">
-  <option value="">  -  </option>
+  <select name="p-i-ip-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -735,12 +933,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-ip-fU" class="subprop">
+<div id="div-p-i-ip-fU" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur U</span>
-<select name="-p-i-ip-fU">
-  <option value="">  -  </option>
+  <select name="p-i-ip-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -749,12 +949,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-ip-cohe" class="subprop">
+<div id="div-p-i-ip-th" class="subprop">
+  <div class="line-note soft">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-i-ip-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-i-ip-cohe" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Cohérence</span>
-<select name="-p-i-ip-cohe">
-  <option value="">  -  </option>
+  <select name="p-i-ip-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -763,12 +981,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-ip-idio" class="subprop">
+<div id="div-p-i-ip-idio" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-i-ip-idio">
-  <option value="">  -  </option>
+  <select name="p-i-ip-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -776,13 +996,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-i-ip-cohe" class="subprop">
+
+</div>
+<div id="div-p-i-ip-cohe" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Cohérence</span>
-<select name="-p-i-ip-cohe">
-  <option value="">  -  </option>
+  <select name="p-i-ip-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -791,15 +1013,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-<div id="div--p-i-is" class="prop">
+<div id="div-p-i-is" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">L’Intrigue secondaire</span>
-<select name="-p-i-is">
-  <option value="">  -  </option>
+  <select name="p-i-is">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -808,11 +1032,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-i-is-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-i-is-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-i-is-fO">
-  <option value="">  -  </option>
+  <select name="p-i-is-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -821,12 +1047,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-is-fU" class="subprop">
+<div id="div-p-i-is-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-i-is-fU">
-  <option value="">  -  </option>
+  <select name="p-i-is-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -835,12 +1063,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-is-cohe" class="subprop">
+<div id="div-p-i-is-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-i-is-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-i-is-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-i-is-cohe">
-  <option value="">  -  </option>
+  <select name="p-i-is-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -849,12 +1095,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-i-is-idio" class="subprop">
+<div id="div-p-i-is-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-i-is-idio">
-  <option value="">  -  </option>
+  <select name="p-i-is-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -862,13 +1110,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-i-is-cohe" class="subprop">
+
+</div>
+<div id="div-p-i-is-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-i-is-cohe">
-  <option value="">  -  </option>
+  <select name="p-i-is-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -877,6 +1127,7 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
@@ -884,10 +1135,11 @@
 </div>
 </div>
 </div>
-<div id="div--p-th" class="prop">
+<div id="div-p-th" class="prop">
+  <div class="line-note deep">
   <span class="prop-name">Les Thèmes</span>
-<select name="-p-th">
-  <option value="">  -  </option>
+  <select name="p-th">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -896,11 +1148,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-th-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-th-fO" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur O</span>
-<select name="-p-th-fO">
-  <option value="">  -  </option>
+  <select name="p-th-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -909,12 +1163,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-th-fU" class="subprop">
+<div id="div-p-th-fU" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur U</span>
-<select name="-p-th-fU">
-  <option value="">  -  </option>
+  <select name="p-th-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -923,12 +1179,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-th-cohe" class="subprop">
+<div id="div-p-th-th" class="subprop">
+  <div class="line-note soft">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-th-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-th-cohe" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Cohérence</span>
-<select name="-p-th-cohe">
-  <option value="">  -  </option>
+  <select name="p-th-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -937,12 +1211,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-th-idio" class="subprop">
+<div id="div-p-th-idio" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-th-idio">
-  <option value="">  -  </option>
+  <select name="p-th-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -950,13 +1226,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-th-cohe" class="subprop">
+
+</div>
+<div id="div-p-th-cohe" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Cohérence</span>
-<select name="-p-th-cohe">
-  <option value="">  -  </option>
+  <select name="p-th-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -965,15 +1243,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-<div id="div--p-r" class="prop">
+<div id="div-p-r" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">La Rédaction</span>
-<select name="-p-r">
-  <option value="">  -  </option>
+  <select name="p-r">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -982,12 +1262,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
   <div class="common-properties"></div>
-  <div class="items"><div id="div--p-r-cla" class="prop">
+  <div class="items"><div id="div-p-r-cla" class="prop">
+  <div class="line-note deep">
   <span class="prop-name">Clarté</span>
-<select name="-p-r-cla">
-  <option value="">  -  </option>
+  <select name="p-r-cla">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -996,11 +1278,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-r-cla-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-r-cla-fO" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur O</span>
-<select name="-p-r-cla-fO">
-  <option value="">  -  </option>
+  <select name="p-r-cla-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1009,12 +1293,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-cla-fU" class="subprop">
+<div id="div-p-r-cla-fU" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur U</span>
-<select name="-p-r-cla-fU">
-  <option value="">  -  </option>
+  <select name="p-r-cla-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1023,12 +1309,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-cla-cohe" class="subprop">
+<div id="div-p-r-cla-th" class="subprop">
+  <div class="line-note soft">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-r-cla-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-r-cla-cohe" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Cohérence</span>
-<select name="-p-r-cla-cohe">
-  <option value="">  -  </option>
+  <select name="p-r-cla-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1037,12 +1341,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-cla-idio" class="subprop">
+<div id="div-p-r-cla-idio" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-r-cla-idio">
-  <option value="">  -  </option>
+  <select name="p-r-cla-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1050,13 +1356,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-r-cla-cohe" class="subprop">
+
+</div>
+<div id="div-p-r-cla-cohe" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Cohérence</span>
-<select name="-p-r-cla-cohe">
-  <option value="">  -  </option>
+  <select name="p-r-cla-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1065,15 +1373,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-<div id="div--p-r-sim" class="prop">
+<div id="div-p-r-sim" class="prop">
+  <div class="line-note soft">
   <span class="prop-name">Simplicité</span>
-<select name="-p-r-sim">
-  <option value="">  -  </option>
+  <select name="p-r-sim">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1082,11 +1392,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-r-sim-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-r-sim-fO" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur O</span>
-<select name="-p-r-sim-fO">
-  <option value="">  -  </option>
+  <select name="p-r-sim-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1095,12 +1407,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-sim-fU" class="subprop">
+<div id="div-p-r-sim-fU" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur U</span>
-<select name="-p-r-sim-fU">
-  <option value="">  -  </option>
+  <select name="p-r-sim-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1109,12 +1423,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-sim-cohe" class="subprop">
+<div id="div-p-r-sim-th" class="subprop">
+  <div class="line-note deep">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-r-sim-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-r-sim-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-r-sim-cohe">
-  <option value="">  -  </option>
+  <select name="p-r-sim-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1123,12 +1455,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-sim-idio" class="subprop">
+<div id="div-p-r-sim-idio" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-r-sim-idio">
-  <option value="">  -  </option>
+  <select name="p-r-sim-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1136,13 +1470,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-r-sim-cohe" class="subprop">
+
+</div>
+<div id="div-p-r-sim-cohe" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Cohérence</span>
-<select name="-p-r-sim-cohe">
-  <option value="">  -  </option>
+  <select name="p-r-sim-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1151,15 +1487,17 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
   <div class="items"></div>
 </div>
-<div id="div--p-r-emo" class="prop">
+<div id="div-p-r-emo" class="prop">
+  <div class="line-note deep">
   <span class="prop-name">Émotion</span>
-<select name="-p-r-emo">
-  <option value="">  -  </option>
+  <select name="p-r-emo">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1168,11 +1506,13 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
-  <div class="common-properties"><div id="div--p-r-emo-fO" class="subprop">
+  <div class="common-properties"><div id="div-p-r-emo-fO" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Facteur O</span>
-<select name="-p-r-emo-fO">
-  <option value="">  -  </option>
+  <select name="p-r-emo-fO">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1181,12 +1521,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-emo-fU" class="subprop">
+<div id="div-p-r-emo-fU" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Facteur U</span>
-<select name="-p-r-emo-fU">
-  <option value="">  -  </option>
+  <select name="p-r-emo-fU">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1195,12 +1537,30 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-emo-cohe" class="subprop">
+<div id="div-p-r-emo-th" class="subprop">
+  <div class="line-note soft">
+  <span class="prop-name">Adéquation avec le thème</span>
+  <select name="p-r-emo-th">
+  <option value="-">  -  </option>
+  <option value="5">Excellent</option>
+  <option value="4">Bon</option>
+  <option value="3">Moyen</option>
+  <option value="2">Faible</option>
+  <option value="1">Bas</option>
+  <option value="0">Nul</option>
+</select>
+
+</div>
+
+</div>
+<div id="div-p-r-emo-cohe" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Cohérence</span>
-<select name="-p-r-emo-cohe">
-  <option value="">  -  </option>
+  <select name="p-r-emo-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1209,12 +1569,14 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
-<div id="div--p-r-emo-idio" class="subprop">
+<div id="div-p-r-emo-idio" class="subprop">
+  <div class="line-note soft">
   <span class="prop-name">Idiosyncrasie</span>
-<select name="-p-r-emo-idio">
-  <option value="">  -  </option>
+  <select name="p-r-emo-idio">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1222,13 +1584,15 @@
   <option value="1">Bas</option>
   <option value="0">Nul</option>
 </select>
-
 
 </div>
-<div id="div--p-r-emo-cohe" class="subprop">
+
+</div>
+<div id="div-p-r-emo-cohe" class="subprop">
+  <div class="line-note deep">
   <span class="prop-name">Cohérence</span>
-<select name="-p-r-emo-cohe">
-  <option value="">  -  </option>
+  <select name="p-r-emo-cohe">
+  <option value="-">  -  </option>
   <option value="5">Excellent</option>
   <option value="4">Bon</option>
   <option value="3">Moyen</option>
@@ -1237,6 +1601,7 @@
   <option value="0">Nul</option>
 </select>
 
+</div>
 
 </div>
 </div>
@@ -1247,4 +1612,6 @@
 </div>
 </div>
 
+</form>
+<div class="right mt3"><button id="btn-save" class="btn main">Enregistrer</button></div>
 </div>
