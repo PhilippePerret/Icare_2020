@@ -1,0 +1,33 @@
+:projet:
+  :explication: Note moyenne calculée d'après les notes attribuées par les jurés pour l'ensemble du projet (alors que la note totale est une moyenne de toutes les notes obtenues dans toutes les rubriques). Elle est attribuée sur une impression générale, ainsi que selon certains critères que sont les facteurs O et U (cf. plus bas), l'adéquation au thème, etc.
+
+:personnages:
+  :explication: Note moyenne calculée d'après les notes attribuées par les jurés pour les personnages dans leur ensemble, ainsi que, plus spécifiquement, sur le protagoniste (s'il existe), l'antagoniste (s'il existe), les personnages secondaires, les dialogues, etc.
+
+:forme:
+  :explication: Note moyenne pour la forme générale de l'histoire, sa structure.
+
+:fO:
+  :short_name: Facteur O
+  :name: Facteur O (facteur d'originalité)
+  :explication: Ce facteur indique comment a été perçu l'histoire ainsi que ses différents “ingrédients” au niveau de leur originalité, c'est-à-dire au niveau de leur singularité et de leur fréquence d'utilisation dans les histoires. Plus la note est élevée, plus l'histoire a été perçue comme originale ou possédant des éléments originaux.
+  :plus15: Une note supérieure à 15 indique que votre histoire et/ou ses ingrédients ont été perçus comme très originaux, et c'est un point fort.
+  :moins15: Une note entre 10 et 15 indique que les lecteurs ont perçu l'histoire comme plutôt originale, sans que cette originalité ne soit trop affirmée.
+  :moins10: Une note inférieure à 10 peut indiquer que l'histoire et ses ingrédients manquent peut-être d'originalité pour vraiment être bien perçue.
+  :moins5: Une note inférieure à 5 indique que les lecteurs n'ont pas trouvé l'histoire très originale. Elle a été perçue comme trop banale.
+:fU:
+  :name: Facteur U (facteur d'Universalité)
+  :short_name: Facteur U
+  :explication: Le facteur d'universalité est le complémentaire du facteur O. Il indique comment a été perçu l'histoire et ses différents éléments au niveau de l'universalité qu'ils dégagent, c'est-à-dire leur capacité à toucher les autres — les lecteurs, les spectateurs, les auditeurs… — dans leur grande diversité. Plus la note est élevée, plus l'histoire a été perçue comme universelle ou possédant des éléments d'universalité.
+  :plus15: Avec une note supérieure à 15, votre histoire a été perçue comme très universelle, avec un fort potentiel pour parler aux autres, les interpeler, les accrocher.
+  :moins15: Avec un note supérieure à 10, votre histoire a été perçue comme assez universelle, susceptible de capter l'attention d'une audience assez large. Mais cette note inférieure ou égale à 15 indique également que son universalité peut être approfondie, renforcée, afin de toucher un plus grand nombre encore de lecteurs, de spectateurs ou d'auditeurs.
+  :moins10: Une note inférieur à 10 peut indiquer une faiblesse de votre histoire au niveau de sa capacité à intéresser le plus grand nombre. Elle est peut-être un peu trop particulière.
+  :moins5: Une note inférieure à 5 peut indiquer que votre histoire manque peut-être de cette capacité à communier avec les autres, à les intéresser et les captiver.
+:cohe:
+  :name: Cohérence
+  :short_name: Cohérence
+  :explication: Cette note indique comment les lecteurs ont perçu la cohérence de l'histoire et de ses éléments. La cohérence concerne principalement la conduite des intrigues et la psychologie des personnages. Plus la note est élevée, plus l'histoire a semblé cohérente.
+:adth:
+  :name: Adéquation avec le thème
+  :short_name: Adéquation thème
+  :explication: Cette note indique comment les lecteurs ont perçu l'adéquation de l'histoire et de ses “ingrédients” avec le thème imposé du concours. Cette adéquation relève de la présence et de l'importance du thème dans l'histoire, mais également de son exploitation, de son utilisation pour définir les personnages, de son rôle dans les intrigues et ses développements dans les thèmes eux-mêmes. Plus la note est élevée, et puis l'histoire et ses éléments ont paru en adéquation avec le thème.

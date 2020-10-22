@@ -16,6 +16,7 @@ CHECKLIST_TEMPLATE  = File.join(XMODULES_FOLDER,'evaluation','checklist_template
 
 # * Data *
 DATA_CHECK_LIST_FILE  = File.join(EVAL_DATA_FOLDER, 'data_evaluation.yaml')
+DATA_MAIN_PROPERTIES_FILE = File.join(EVAL_DATA_FOLDER, 'data_main_properties.yaml')
 
 # * Développement *
 REBUILDER_CHECK_LIST = File.join(XMODULES_FOLDER,'evaluation','rebuild_checklist.rb')

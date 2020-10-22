@@ -47,10 +47,10 @@ div#checklist form div.subprop
 {
   position:relative;
 }
-div#checklist form div.withex div.line-note span.prop-name {
+div#checklist form div.withex > div.line-note > span.prop-name {
   cursor:help;
 }
-div#checklist form div.withex div.line-note span.prop-name:after {
+div#checklist form div.withex > div.line-note > span.prop-name:after {
   content: "?";
   font-size: 11pt;
   background: green;
@@ -60,7 +60,7 @@ div#checklist form div.withex div.line-note span.prop-name:after {
   margin-left: 4px;
   opacity:0.3;
 }
-div#checklist form div.withex:hover div.line-note span.prop-name:after {
+div#checklist form div.withex > div.line-note:hover > span.prop-name:after {
   opacity:1;
 }
 

@@ -17,7 +17,7 @@ class HTML
 
   # Fabrication du body
   def build_body
-    @body = deserb('body', self)
+    @body = deserb(param(:view) || 'body_evaluation', self)
   end # /build_body
 
   # Méthode qui s'assure que tout soit à jour (pour ne pas tout refaire

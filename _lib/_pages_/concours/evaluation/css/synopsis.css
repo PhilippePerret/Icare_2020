@@ -10,7 +10,7 @@ div.synopsis {
   border-radius:0.5em;
   padding:1em;
   width: 150px;
-  height: 240px;
+  height: 280px;
   background-color: white;
   font-size: 12pt;
   margin-bottom: 12px;
@@ -77,4 +77,9 @@ div.synopsis div.keywords {
 }
 div.synopsis span.kword {
 
+}
+
+div.synopsis div.synopsis-id {
+  margin-top:8px;
+  font-size:0.9em;
 }

@@ -1,0 +1,4 @@
+<%
+syno = Synopsis.all_courant.first
+%>
+<%= syno.fiche_lecture.out(format: :concurrent) %>

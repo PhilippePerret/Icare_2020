@@ -18,3 +18,7 @@ const EVALUATOR_ID = <%= user.id %>;
     <%= synopsis.out(user.id) %>
   <% end %>
 </div>
+
+<div>
+  <%= Tag.link(route:"concours/evaluation?view=body_fiches_lecture", text:"Fiches de lecture") %>
+</div>

@@ -66,6 +66,7 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
   <div class="right">
     <button type="button" class="btn-evaluate small btn">Évaluer</button>
   </div>
+  <div class="synopsis-id">%{id}</div>
 </div>
 HTML
 
