@@ -13,32 +13,35 @@ ALL_FULL_ID = {}
 class CheckList
 class << self
 
+  def bind ; binding() end
+
   # = main =
   #
   # Reconstruction de la check-list qui permet d'affecter les notes
   def rebuild_checklist
     @nombre_questions = 0
-    w("<%# frozen_string_literal: true %>")
-    w('<%# DÉTRUIRE CE FICHIER POUR ACTUALISER AUTOMATIQUEMENT LA CHECK-LIST %>')
-    w('<div id="checklist">')
-    w('<div class="titre"></div>')
-    w('<form id="checklist-form" class="nopadding noborder nomargin" action="concours/evaluation" method="POST">')
-    w(build_sujet(data, [], []))
-    w('</form>')
-    w('<div id="row-buttons"><button id="btn-save" class="btn main">Enregistrer</button></div>')
-    w('</div>') # / div#checklist
+    File.open(PARTIAL_CHECKLIST,'wb'){|f| f.write(deserb('checklist_template',self))}
+    # w("<%# frozen_string_literal: true %>")
+    # w('<%# DÉTRUIRE CE FICHIER POUR ACTUALISER AUTOMATIQUEMENT LA CHECK-LIST %>')
+    # w('<div id="checklist">')
+    # w('<div class="titre"></div>')
+    # w('<form id="checklist-form" class="nopadding noborder nomargin" action="concours/evaluation" method="POST">')
+    # w(build_sujet(data, [], []))
+    # w('</form>')
+    # w('<div id="row-buttons"><button id="btn-save" class="btn main">Enregistrer</button></div>')
+    # w('</div>') # / div#checklist
     message("La check-list a été reconstruite.")
     File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(@nombre_questions)}
   rescue Exception => e
     raise e
   ensure
-    ff.close if not ff.nil?
+    # ff.close if not ff.nil?
   end #/ rebuild_check_list
 
-  # Pour écrire dans le fichier
-  def w str
-    ff.write(str+RC)
-  end #/ w
+  # # Pour écrire dans le fichier
+  # def w str
+  #   ff.write(str+RC)
+  # end #/ w
 
   # = Construction du sujet =
   def build_sujet(datasuj, fullid, common_properties)
@@ -86,14 +89,15 @@ class << self
     @ifondline = @ifondline == 1 ? 0 : 1
     ['deep','soft'][@ifondline]
   end #/ fond_line
-  # La référence au fichier partiel de la checklist
-  #
-  def ff
-    @ff ||= begin
-      File.delete(PARTIAL_CHECK_LIST) if File.exists?(PARTIAL_CHECK_LIST)
-      File.open(PARTIAL_CHECK_LIST,'a')
-    end
-  end #/ ff
+
+  # # La référence au fichier partiel de la checklist
+  # #
+  # def ff
+  #   @ff ||= begin
+  #     File.delete(PARTIAL_CHECKLIST) if File.exists?(PARTIAL_CHECKLIST)
+  #     File.open(PARTIAL_CHECKLIST,'a')
+  #   end
+  # end #/ ff
 
   # Les données d'évaluation (questions) dans le fichier data_evaluation.yaml
   def data

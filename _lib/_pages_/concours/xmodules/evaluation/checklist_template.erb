@@ -1,0 +1,13 @@
+<%# frozen_string_literal: true %>
+<div id="checklist" class="hidden">
+  <div class="titre"><!-- Titre du Synopsis étudié --></div>
+  <form id="checklist-form" class="nopadding noborder nomargine" action="concours/evaluation" method="POST">
+    <%= build_sujet(data, [], []) %>
+  </form>
+  <div id="row-buttons">
+    <div id="checklist-gauge-container"><span id="checklist-gauge"><span class="value"></span></span></div>
+    <button type="button" id="btn-only-undone" class="small btn fleft">Questions non faites</button>
+    <button type="button" id="btn-see-all" class="small btn fleft discret">Toutes les questions</button>
+    <button type="button" id="btn-save" class="btn main">Enregistrer</button>
+  </div>
+</div>

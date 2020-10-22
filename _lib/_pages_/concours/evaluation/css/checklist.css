@@ -33,11 +33,40 @@ div#checklist form {
 div#checklist form div.line-note.deep {
   background-color: rgba(181, 226, 255, 0.33);
 }
+div#checklist form div.line-note.deep.undone {
+  background-color: rgba(255, 177, 182, 1);
+}
 div#checklist form div.line-note.soft {
   background-color: rgb(231, 255, 241);
+}
+div#checklist form div.line-note.soft.undone {
+  background-color: rgba(255, 177, 182, 0.24);
 }
 
 div#checklist div#row-buttons {
   height:40px;
   text-align:right;
+}
+
+/* JAUGE D'AVANCÉE */
+div#checklist div#checklist-gauge-container {
+  position:relative;
+  padding:0;margin:0;
+  width:100%;
+  height:10px;
+  background-color:red;
+}
+div#checklist div#checklist-gauge-container span#checklist-gauge {
+  position:absolute;
+  display:inline-block;
+  top:0;left:0;
+  height:10px;
+  background-color:green;
+}
+div#checklist div#checklist-gauge-container span#checklist-gauge span.value {
+  position:absolute;
+  right:-4px;
+  top:-16px;
+  font-size:10pt;
+  font-family:"Arial Narrow",Georgia,serif;
 }

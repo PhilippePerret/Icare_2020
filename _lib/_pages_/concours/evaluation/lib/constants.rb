@@ -10,7 +10,9 @@ PARTIAL_FOLDER      = File.join(EVALUATION_FOLDER,'partials')
 EVAL_DATA_FOLDER    = File.join(EVALUATION_FOLDER,'data')
 
 # * Partiels *
-PARTIAL_CHECK_LIST  = File.join(PARTIAL_FOLDER,'checklist.erb')
+PARTIAL_CHECKLIST  = File.join(PARTIAL_FOLDER,'checklist.erb')
+CHECKLIST_TEMPLATE  = File.join(XMODULES_FOLDER,'evaluation','checklist_template.erb')
+
 
 # * Data *
 DATA_CHECK_LIST_FILE  = File.join(EVAL_DATA_FOLDER, 'data_evaluation.yaml')

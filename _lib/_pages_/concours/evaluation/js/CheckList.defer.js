@@ -41,6 +41,7 @@ static setValues(score){
     const key = select.name
     select.value = score[key] || '-';
   })
+  this.updateGaugeDone()
 }
 static close(){
   this.obj.addClass('hidden')
@@ -51,12 +52,69 @@ static close(){
   * sur son bouton "Enregistrer"
 ***/
 static prepare(){
-  this.obj.find('button#btn-save').bind('click', this.onSave.bind(this))
+  this.obj.find('button#btn-save').bind('click', this.onSave.bind(this));
+  this.obj.find('button#btn-only-undone').bind('click', this.showOnlyUndonesQuestions.bind(this));
+  this.obj.find('button#btn-see-all').bind('click', this.showAllQuestions.bind(this));
+  this.obj.find('div.line-note select').bind('change', this.onChangeValueQuestion.bind(this));
 }
+
+// Méthode d'évènement appelée quand on change la valeur de la question
+// On en profite pour actualiser la jauge d'avancée
+static onChangeValueQuestion(ev){
+  const men = $(ev.target);
+  const div = $(men.parent())
+  if ( men.val() == '-' ) {
+    // Si la question devient une question non faite
+    // (note : mais normalement c'est impossible puisqu'elle est cachée)
+    div.addClass('undone') ; // si elle a été marquée non faites
+  } else {
+    div.removeClass('undone') ; // si elle a été marquée non faites
+  }
+  this.updateGaugeDone()
+}
+
+// Pour actualiser la jauge qui montre l'avancée du travail sur le
+// synopsis
+static updateGaugeDone(){
+  const totalQuestions = this.obj.find('form select').length;
+  console.log("Nombre total de questions", totalQuestions);
+  let questionsUndone = 0;
+  this.obj.find('form select').each((i,menu) => {
+    if(menu.value == '-') ++ questionsUndone ;
+  });
+  console.log("Nombre de questions non faites:", questionsUndone);
+  const questionsDone = totalQuestions - questionsUndone
+  const pct = 100 / (totalQuestions/questionsDone);
+  const pctStr = parseInt(pct * 10, 10) / 10 ;
+  this.obj.find('#checklist-gauge').css('width',`${pct}%`);
+  this.obj.find('#checklist-gauge span.value').text(`${pctStr} %`)
+}
+
 // La checklist physique
 static get obj(){
   return this._obj || (this._obj = $('#checklist'))
 }
+
+// Pour ne montrer que les questions non répondues
+static showOnlyUndonesQuestions(){
+  this.obj.find('div.line-note').each((i,div) => {
+    div = $(div);
+    const menu = $(div.find('select'));
+    if (menu.val() == "-"){
+      div.addClass('undone')
+      menu.removeClass('hidden')
+    }
+    else {menu.addClass('hidden')}
+  })
+  this.obj.find('button#btn-see-all').removeClass('discret')
+}
+// Pour montrer toutes les questions
+static showAllQuestions(){
+  this.obj.find('div.line-note').removeClass('undone');
+  this.obj.find('div.line-note select').removeClass('hidden');
+  this.obj.find('button#btn-see-all').addClass('discret');
+}
+
 /** ---------------------------------------------------------------------
   *   INSTANCE
   *
@@ -79,10 +137,9 @@ open(ev){
 }
 
 onSave(results){
-  console.log("Je dois sauver les résultats :", results);
   this.score = results ;
   this.saveScore().then(ret => {
-    console.log("ret:", ret);
+    console.log("Retour de la sauvegarde des résultats :", ret);
     if (ret.error) erreur(ret.error)
     else {
       message("Nouveau score enregistré.");
