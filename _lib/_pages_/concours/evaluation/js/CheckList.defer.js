@@ -34,7 +34,7 @@ static getValues(){
 // On remplit la checklist avec les valeurs de +score+
 // Toutes les valeurs non fournies sont mises à "-"
 static setValues(score){
-  console.log("-> setValues:", score)
+  // console.log("-> setValues:", score)
   this.obj.find('select').each((i, select) => {
     const key = select.name
     select.value = score[key] || '-';
