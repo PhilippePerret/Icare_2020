@@ -60,7 +60,7 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
   <div id="synopsis-%{id}-note-generale" class="note-generale">%{note}</div>
   <div id="synopsis-%{id}-pct-reponses" class="div-pct-reponses"><span class="pct-reponses">%{pct_reponses}</span> %%</div>
   <div id="synopsis-%{id}-jauge-pct-reponses" class="jauge-pct-reponses">
-    <span class="jauge-pct-reponses-done"></span>
+    <span class="jauge-pct-reponses-done" style="width:%{pct_reponses}%%;"></span>
   </div>
   <div id="synopsis-%{id}-keywords" class="keywords">%{keywords}</div>
   <div class="right">
