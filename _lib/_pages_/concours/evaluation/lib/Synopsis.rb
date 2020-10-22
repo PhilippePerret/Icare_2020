@@ -41,7 +41,7 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
-attr_reader :concurrent_id, :annee, :data
+attr_reader :concurrent_id, :annee, :data, :id
 # Les données de score pour un évaluator donné
 # Note : pour le moment, l'évaluateur se donne dans :out
 attr_reader :data_score, :evaluator_id
@@ -49,6 +49,7 @@ attr_reader :data_score, :evaluator_id
 def initialize concurrent_id, annee, data = nil
   @concurrent_id = concurrent_id
   @annee = annee
+  @id = "#{concurrent_id}-#{annee}"
   @data = data
 end #/ initialize
 
@@ -67,6 +68,7 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
   </div>
 </div>
 HTML
+
 def out(evaluator_id)
   @evaluator_id = evaluator_id
   TEMPLATE_FICHE_SYNOPSIS % {
@@ -111,6 +113,9 @@ def get_data_score
     end
   end
   @data_score = ConcoursCalcul.note_generale_et_pourcentage_from(dscore)
+  if not dscore.empty?
+    log("@data_score obtenu pour #{id} : #{@data_score.inspect}")
+  end
 end #/ data_score
 
 def keywords

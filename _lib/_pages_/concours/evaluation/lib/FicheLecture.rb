@@ -124,7 +124,7 @@ private
   #
   def decompose_fullid
     @ids = {}
-    fullid_splited = fullid[2..-1].split('-')
+    fullid_splited = fullid[3..-1].split('-') # 3 pour passer "po-"
     @main_categorie = fullid_splited.first
     fullid_splited.each{|i| @ids.merge!(i.to_sym => true)}
   end #/ decompose_fullid

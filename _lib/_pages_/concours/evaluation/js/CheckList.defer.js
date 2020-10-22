@@ -14,8 +14,6 @@ class CheckList {
 static openWith(ev, checklist){
   this.checklist = checklist ; // utile pour onSave
   this.obj.removeClass('hidden')
-  // const pos = {top: ev.target.offsetTop+'px', left:ev.target.offsetLeft+'px'}
-  // this.obj.css(pos);
   this.obj.find('.titre').text(checklist.synopsis.titre)
   this.setValues(checklist.score)
 }
@@ -90,15 +88,12 @@ static onChangeValueQuestion(ev){
 // Pour actualiser la jauge qui montre l'avancée du travail sur le
 // synopsis
 static updateGaugeDone(){
-  const totalQuestions = this.obj.find('form select').length;
-  console.log("Nombre total de questions", totalQuestions);
-  let questionsUndone = 0;
+  let questionsDone = 0;
   this.obj.find('form select').each((i,menu) => {
-    if(menu.value == '-') ++ questionsUndone ;
+    if ( menu.value != '-' ) ++ questionsDone ;
   });
-  console.log("Nombre de questions non faites:", questionsUndone);
-  const questionsDone = totalQuestions - questionsUndone
-  const pct = 100 / (totalQuestions/questionsDone);
+  const questionsUndone = window.NOMBRE_QUESTIONS - questionsDone;
+  const pct = 100 / (window.NOMBRE_QUESTIONS/questionsDone);
   const pctStr = parseInt(pct * 10, 10) / 10 ;
   this.obj.find('#checklist-gauge').css('width',`${pct}%`);
   this.obj.find('#checklist-gauge span.value').text(`${pctStr} %`)
@@ -144,6 +139,7 @@ open(ev){
   else {
     this.getScore().then(ret => {
       console.log("Retour de getScore :", ret)
+      window.NOMBRE_QUESTIONS = ret.data_score.nombre_questions;
       this.score = ret.data_score.score || {};
       this.constructor.openWith.call(this.constructor, ev, this)
     })

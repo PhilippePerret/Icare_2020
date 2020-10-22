@@ -63,9 +63,6 @@ get checklist(){
   return this._checklist || ( this._checklist = new CheckList(this) )
 }
 
-// Fabrication de la carte du synopsis
-// (pour le moment, la fiche est fabriquée en local)
-build(){}
 // Observation de la carte du synopsis
 observe(){
 

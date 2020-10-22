@@ -34,17 +34,19 @@ class << self
       nombre_reponses  = 0
       score.each do |k, v|
         if v == "-"
+          # nombre_undone += 1
         else
+          nombre_reponses += 1
           coef = DEEPNESS_COEF[k.split('-').count]
           n += v * coef
-          nombre_reponses += 1
         end
       end
-      nr = nombre_reponses
-      n = (4 * ( n / nr )).round(1)
+      nr  = nombre_reponses
+      nu  = nq - nr
+      n   = (4 * ( n / nr )).round(1)
       pct = (100.0 / (nq.to_f / nr)).round(1)
     end
-    return {note_generale: n, pourcentage_reponses: pct, nombre_questions:nq, nombre_missings: (nq - nr)}
+    return {note_generale: n, pourcentage_reponses: pct, nombre_questions:nq, nombre_reponses:nr, nombre_missings: nu}
   end #/ note_generale_et_pourcentage_from
 
   def nombre_absolu_questions
