@@ -32,18 +32,20 @@ class << self
       nr  = 0
     else
       nombre_reponses  = 0
+      nbabs_reponses = 0 # pour
       score.each do |k, v|
-        if v == "-"
-          # nombre_undone += 1
-        else
+        unless v == "-"
           nombre_reponses += 1
           coef = DEEPNESS_COEF[k.split('-').count]
           n += v * coef
+          # Combien vaut cette réponse en nombre absolu de réponse ?
+          # Cela dépend du coeffiant
+          nbabs_reponses += 1 * coef
         end
       end
       nr  = nombre_reponses
       nu  = nq - nr
-      n   = (4 * ( n / nr )).round(1)
+      n   = (4 * ( n / nbabs_reponses )).round(1)
       pct = (100.0 / (nq.to_f / nr)).round(1)
     end
     return {note_generale: n, pourcentage_reponses: pct, nombre_questions:nq, nombre_reponses:nr, nombre_missings: nu}
