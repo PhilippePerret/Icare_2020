@@ -66,69 +66,79 @@ end #/ out
 
 # Pour construire la fiche à destination du concurrent (mail et affichage
 # dans son espace)
+ECUSSON = Emoji.new('objets/blason').regular
 FICHE_LECTURE_TEMPLATE = <<-HTML
 <div class="fiche-lecture">
-  <div class="grand-titre">#{Emoji.new('objets/blason').regular}#{ISPACE}Concours de Synopsis de L'atelier Icare</div>
-  <div class="div-annee">Édition <span class="annee">#{ANNEE_CONCOURS_COURANTE}</span></div>
-  <div class="projet-titre">
-    <span class="libelle">Titre projet</span>
-    <span class="value">%{titre}</span>
+  <div class="header">
+    <div class="grand-titre">#{ECUSSON}#{ISPACE}Concours de Synopsis de L'atelier Icare#{ISPACE}#{ECUSSON}</div>
+    <div class="div-annee">Édition <span class="annee">#{ANNEE_CONCOURS_COURANTE}</span></div>
   </div>
-  <div class="projet-auteur">
-    <span class="libelle">Auteur·e(s)</span>
-    <span class="value">%{auteur}</span>
+
+  <div class="infos-projet">
+    <div class="projet-titre">
+      <span class="libelle">TITRE</span>
+      <span class="value">%{titre}</span>
+    </div>
+    <div class="projet-auteur">
+      <span class="libelle">AUTEUR·E(S)</span>
+      <span class="value">%{auteur}</span>
+    </div>
   </div>
 
   <div class="divnote note-totale">
-    <span class="libelle">Note totale</span>
+    <span class="libelle">Note : </span>
     <span class="value">%{note_totale}</span>
   </div>
 
-  <div class="divnote note-projet">
-    <span class="libelle">Projet dans sa globalité</span>
-    <span class="value">%{note_projet}</span>
-    <div class="explication">%{explication_projet}</div>
-  </div>
+  <div class="detail">
 
-  <div class="divnote note-personnages">
-    <span class="libelle">Personnages</span>
-    <span class="value">%{note_personnages}</span>
-    <div class="explication">%{explication_personnages}</div>
-  </div>
-
-  <div class="divnote note-forme">
-    <span class="libelle">Forme/structure</span>
-    <span class="value">%{note_forme}</span>
-    <div class="explication">%{explication_forme}</div>
-  </div>
-
-  <div class="divnote note-intrigues">
-    <span class="libelle">Intrigues</span>
-    <span class="value">%{note_intrigues}</span>
-  </div>
-
-  <div class="divnote note-themes">
-    <span class="libelle">Thèmes</span>
-    <span class="value">%{note_themes}</span>
-  </div>
-
-  <div class="divnote note-facteur-O">
-    <span class="libelle">Facteur O</span>
-    <span class="value">%{facteurO}</span>
-    <div class="expli">
-      <div class="explication">%{facteurO_explication}</div>
-      <div>%{facteurO_explication_per_note}</div>
+    <div class="divnote note-projet">
+      <span class="libelle">Projet dans sa globalité</span>
+      <span class="value">%{note_projet}</span>
+      <div class="explication">%{explication_projet}</div>
     </div>
-  </div>
 
-  <div class="divnote note-facteur-U">
-    <span class="libelle">Facteur U</span>
-    <span class="value">%{facteurU}</span>
-    <div class="expli">
-      <div class="explication">%{facteurU_explication}</div>
-      <div>%{facteurU_explication_per_note}</div>
+    <div class="divnote note-personnages">
+      <span class="libelle">Personnages</span>
+      <span class="value">%{note_personnages}</span>
+      <div class="explication">%{explication_personnages}</div>
     </div>
-  </div>
+
+    <div class="divnote note-forme">
+      <span class="libelle">Forme/structure</span>
+      <span class="value">%{note_forme}</span>
+      <div class="explication">%{explication_forme}</div>
+    </div>
+
+    <div class="divnote note-intrigues">
+      <span class="libelle">Intrigues</span>
+      <span class="value">%{note_intrigues}</span>
+    </div>
+
+    <div class="divnote note-themes">
+      <span class="libelle">Thèmes</span>
+      <span class="value">%{note_themes}</span>
+    </div>
+
+    <div class="divnote note-facteur-O">
+      <span class="libelle">Facteur O</span>
+      <span class="value">%{facteurO}</span>
+      <div class="expli">
+        <div class="explication">%{facteurO_explication}</div>
+        <div>%{facteurO_explication_per_note}</div>
+      </div>
+    </div>
+
+    <div class="divnote note-facteur-U">
+      <span class="libelle">Facteur U</span>
+      <span class="value">%{facteurU}</span>
+      <div class="expli">
+        <div class="explication">%{facteurU_explication}</div>
+        <div>%{facteurU_explication_per_note}</div>
+      </div>
+    </div>
+
+  </div><!-- div.details -->
 
 </div>
 HTML
