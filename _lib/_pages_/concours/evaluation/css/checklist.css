@@ -9,6 +9,19 @@ div#checklist {
   z-index:2;
   /* TODO : régler dimensions (titre et bouton) et faire réglage automatique */
 }
+div#checklist div.div-titre {
+  position:relative;
+}
+div#checklist div.div-titre span.closebox {
+  position:absolute;
+  right:0px;top:0px;
+  width:16px;height:16px;
+  border-radius:16px;
+  background-color:red;
+  color:red;
+  cursor:pointer;
+}
+
 div#checklist, div#checklist form {
   background-color:#EEE;
 }

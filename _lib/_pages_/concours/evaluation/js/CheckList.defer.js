@@ -58,6 +58,8 @@ static prepare(){
   this.obj.find('form div.withex div.line-note span.prop-name').bind('click', this.showExplication.bind(this))
   // Pour fermer les explications
   this.obj.find('form div.withex div.expli').bind('click', this.hideExplication.bind(this))
+  // Pour fermer sans enregistrer
+  this.obj.find('div.div-titre span.closebox').bind('click', this.close.bind(this))
 }
 
 static showExplication(ev){
