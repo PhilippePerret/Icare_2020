@@ -56,6 +56,20 @@ static prepare(){
   this.obj.find('button#btn-only-undone').bind('click', this.showOnlyUndonesQuestions.bind(this));
   this.obj.find('button#btn-see-all').bind('click', this.showAllQuestions.bind(this));
   this.obj.find('div.line-note select').bind('change', this.onChangeValueQuestion.bind(this));
+  // Pour faire apparaitre les aides/explications
+  this.obj.find('form div.withex div.line-note span.prop-name').bind('click', this.showExplication.bind(this))
+  // Pour fermer les explications
+  this.obj.find('form div.withex div.expli').bind('click', this.hideExplication.bind(this))
+}
+
+static showExplication(ev){
+  const el = $(ev.target);
+  const div = $(el.parent());
+  const exp = div.prev();
+  exp.removeClass('hidden')
+}
+static hideExplication(ev){
+  $(ev.target).addClass('hidden');
 }
 
 // Méthode d'évènement appelée quand on change la valeur de la question

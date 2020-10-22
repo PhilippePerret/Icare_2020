@@ -20,5 +20,5 @@ div.prop:not(.simple) > span.prop-name {
   border-bottom:1px solid grey;
 }
 div.subprop span.prop-name {
-  width: 280px;
+  width: 270px;
 }

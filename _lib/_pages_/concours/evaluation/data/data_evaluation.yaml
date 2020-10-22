@@ -1,6 +1,6 @@
 ---
   :ti: Évaluation générale du projet
-  :id: p
+  :id: po
   :items:
     - :ti: Le Titre
       :id: ti
@@ -46,10 +46,23 @@
         - :ti: L’Intrigue secondaire
           :id: is
       :common_properties:
-          - :ti: Cohérence
-            :id: cohe
+        - :ti: Cohérence
+          :id: cohe
     - :ti: Les Thèmes
-      :id: th
+      :id: t
+      :items:
+        - :ti: Thème principal
+          :id: thprinc
+        - :ti: Thème secondaire
+          :id: thsec
+      :common_properties:
+        - :ti: Clarté
+          :id: cla
+        - :ti: Cohérence
+          :id: cohe
+        - :ti: Antithèse
+          :id: antithese
+          :ex: "Traitement de l'équilibre du thème par la présence de son antithèse."
     - :ti: La Rédaction
       :id: r
       :common_properties: false
@@ -65,9 +78,9 @@
   :common_properties:
     - :ti: Facteur O
       :id: fO
-      :ex: "Facteur d'originalité (son peu d'occurences dans les histoires connues)."
+      :ex: "Facteur d'originalité, la “quantité” d'originalité pour l'élément ci-dessus."
     - :ti: Facteur U
       :id: fU
-      :ex: "Facteur d'universalité de l'élément (caractère de ce qui est commun à beaucoup de gens et de choses)."
+      :ex: "Facteur d'universalité de l'élément ci-dessus, caractère de ce qui est commun à beaucoup de gens et de choses."
     - :ti: Adéquation avec le thème
-      :id: th
+      :id: adth

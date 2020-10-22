@@ -62,7 +62,9 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
     <span class="jauge-pct-reponses-done"></span>
   </div>
   <div id="synopsis-%{id}-keywords" class="keywords">%{keywords}</div>
-  <div id="synopsis-%{id}-state" class="state">%{state}</div>
+  <div class="right">
+    <button type="button" class="btn-evaluate small btn">Évaluer</button>
+  </div>
 </div>
 HTML
 def out(evaluator_id)
@@ -73,9 +75,7 @@ def out(evaluator_id)
     pseudo: concurrent.patronyme,
     note: note_generale,
     pct_reponses: pourcentage_reponses,
-    keywords: keywords, # Pour se souvenir du synopsis
-    state: state,
-    state_ok: state_ok
+    keywords: keywords # Pour se remémorer le synopsis
   }
 end #/ out
 
@@ -116,14 +116,6 @@ end #/ data_score
 def keywords
   @keywords ||= data[:keywords].split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
 end #/ keywords
-
-def state
-  "[ÉTAT]"
-end #/ state
-# Retourne "ok" si la fiche est terminée, "" dans le cas contraire
-def state_ok
-  ""
-end #/ state_ok
 
 # Son instance de formulaire d'évaluation, pour un évaluateur donné
 def evaluation(evaluateur)

@@ -39,6 +39,9 @@ prepare(){
 }
 
 onClickNote(ev){
+  this.wantEvaluate(ev);
+}
+wantEvaluate(ev){
   this.checklist.open(ev);
 }
 
@@ -65,7 +68,11 @@ get checklist(){
 build(){}
 // Observation de la carte du synopsis
 observe(){
+
+  // Pour évaluer le synopsis, on peut soit cliquer sur le chiffre soit
+  // cliquer sur le bouton "évaluer"
   this.obj.find('.note-generale').bind('click', this.onClickNote.bind(this))
+  this.obj.find('.btn-evaluate').bind('click',this.wantEvaluate.bind(this))
 }
 
 }// Synopsis

@@ -29,7 +29,41 @@ div#checklist form {
   width:500px;
   height:600px;
 }
+div#checklist form div.prop,
+div#checklist form div.subprop
+{
+  position:relative;
+}
+div#checklist form div.withex div.line-note span.prop-name {
+  cursor:help;
+}
+div#checklist form div.withex div.line-note span.prop-name:after {
+  content: "?";
+  font-size: 11pt;
+  background: green;
+  color: white;
+  padding: 0 4px;
+  border-radius: 6px;
+  margin-left: 4px;
+  opacity:0.3;
+}
+div#checklist form div.withex:hover div.line-note span.prop-name:after {
+  opacity:1;
+}
 
+div#checklist form div.withex div.expli {
+  position:absolute;
+  font-size:13pt;
+  background-color:green;
+  color:white;
+  padding:0.5em;
+  top:-20px; left:-20px;
+  cursor:pointer;
+  z-index:10;
+}
+div#checklist form div.line-note {
+  clear:both;
+}
 div#checklist form div.line-note.deep {
   background-color: rgba(181, 226, 255, 0.33);
 }

@@ -8,7 +8,7 @@
 require 'yaml'
 
 # Pour consigner les "ID full" afin d'éviter les doublons
-ALL_FULL_ID = {}
+ALL_IDS = {}
 
 class CheckList
 class << self
@@ -21,15 +21,6 @@ class << self
   def rebuild_checklist
     @nombre_questions = 0
     File.open(PARTIAL_CHECKLIST,'wb'){|f| f.write(deserb('checklist_template',self))}
-    # w("<%# frozen_string_literal: true %>")
-    # w('<%# DÉTRUIRE CE FICHIER POUR ACTUALISER AUTOMATIQUEMENT LA CHECK-LIST %>')
-    # w('<div id="checklist">')
-    # w('<div class="titre"></div>')
-    # w('<form id="checklist-form" class="nopadding noborder nomargin" action="concours/evaluation" method="POST">')
-    # w(build_sujet(data, [], []))
-    # w('</form>')
-    # w('<div id="row-buttons"><button id="btn-save" class="btn main">Enregistrer</button></div>')
-    # w('</div>') # / div#checklist
     message("La check-list a été reconstruite.")
     File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(@nombre_questions)}
   rescue Exception => e
@@ -38,38 +29,41 @@ class << self
     # ff.close if not ff.nil?
   end #/ rebuild_check_list
 
-  # # Pour écrire dans le fichier
-  # def w str
-  #   ff.write(str+RC)
-  # end #/ w
-
   # = Construction du sujet =
-  def build_sujet(datasuj, fullid, common_properties)
-    fullid << datasuj[:id]
+  def build_sujet(datasuj, fullid, commons_props)
+    common_properties = commons_props.dup # pour ne pas toutes les ajouter
+    id = datasuj[:id]
+    fullid << id
     fullid_str = fullid.join('-')
     datasuj.merge!(titre: datasuj.delete(:ti))
     datasuj.merge!(explication: datasuj.delete(:ex))
     log("datasuj: #{datasuj.inspect}")
-    raise "Le fullid #{fullid_str} est un doublon à corriger" if ALL_FULL_ID.key?(fullid_str)
-    ALL_FULL_ID.merge!(fullid_str => true)
+    if ALL_IDS.key?(id) && ALL_IDS[id] != datasuj[:titre]
+      raise "Doublon d'identifiant (#{id.inspect}) avec titre différent (#{ALL_IDS[id]}/#{datasuj[:titre]}). Je dois m'arrêter là."
+    else
+      # On enregistre cet identifiant avec son titre
+      ALL_IDS.merge!(datasuj[:id] => datasuj[:titre])
+    end
     # Classe CSS
     css = 'prop'
     if datasuj[:common_properties] === false && (datasuj[:items].nil? || datasuj[:items].empty?)
       css = "#{css} simple"
     end
     datasuj.merge!(fullid: fullid_str, class:css, fond: fond_line)
-    line = TEMPLATE_LINE_MAINPROP % datasuj
+    template = datasuj[:explication] ? TEMPLATE_LINE_MAINPROP_WITHEX : TEMPLATE_LINE_MAINPROP
+    line = template % datasuj
     @nombre_questions += 1
     comsprops = ""
     unless datasuj[:common_properties] === false
       if datasuj.key?(:common_properties)
         datasuj[:common_properties].each do |dp|
-          common_properties << dp.merge!(titre:dp.delete(:ti), explication:dp.delete(:ex))
+          common_properties << dp.merge!(titre:dp.delete(:ti))
         end
       end
       comsprops = common_properties.collect do |dprop|
         @nombre_questions += 1
-        TEMPLATE_LINE_PROP % dprop.merge!(fullid: "#{fullid_str}-#{dprop[:id]}", class:"subprop", fond:fond_line)
+        template = dprop.key?(:ex) ? TEMPLATE_LINE_PROP_WITHEX : TEMPLATE_LINE_PROP
+        template % dprop.merge!(fullid: "#{fullid_str}-#{dprop[:id]}", class:"subprop", fond:fond_line)
       end.join('')
     end
     line = line.sub(/__COMMON_PROPERTIES__/,comsprops)
@@ -145,9 +139,25 @@ TEMPLATE_LINE_PROP = <<-HTML
   #{TEMPLATE_TITRE_SELECT}
 </div>
 HTML
+TEMPLATE_LINE_PROP_WITHEX = <<-HTML
+<div id="div-%{fullid}" class="%{class} withex">
+  <div class="expli hidden">%{ex}</div>
+  #{TEMPLATE_TITRE_SELECT}
+</div>
+HTML
+
 
 TEMPLATE_LINE_MAINPROP = <<-HTML
 <div id="div-%{fullid}" class="%{class}">
+  #{TEMPLATE_TITRE_SELECT}
+  <div class="common-properties">__COMMON_PROPERTIES__</div>
+  <div class="items">__ITEMS__</div>
+</div>
+HTML
+
+TEMPLATE_LINE_MAINPROP_WITHEX = <<-HTML
+<div id="div-%{fullid}" class="%{class} withex">
+  <div class="expli hidden">%{explication}</div>
   #{TEMPLATE_TITRE_SELECT}
   <div class="common-properties">__COMMON_PROPERTIES__</div>
   <div class="items">__ITEMS__</div>

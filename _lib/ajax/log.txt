@@ -893,3 +893,335 @@ DATABASE = icare_test
 = Script : concours/save_score.rb
 evaluator: 1, synopsis_id:20191025180826-2021, score:{"p"=>1, "p-fO"=>"-", "p-fU"=>5, "p-th"=>"-", "p-ti"=>"-", "p-ti-fO"=>"-", "p-ti-fU"=>"-", "p-ti-th"=>4, "p-p"=>"-", "p-p-fO"=>"-", "p-p-fU"=>"-", "p-p-th"=>3, "p-p-cohe"=>"-", "p-p-idio"=>"-", "p-p-prota"=>5, "p-p-prota-fO"=>"-", "p-p-prota-fU"=>2, "p-p-prota-th"=>"-", "p-p-prota-cohe"=>"-", "p-p-prota-idio"=>"-", "p-p-anta"=>5, "p-p-anta-fO"=>"-", "p-p-anta-fU"=>"-", "p-p-anta-th"=>"-", "p-p-anta-cohe"=>"-", "p-p-anta-idio"=>"-", "p-p-psec"=>"-", "p-p-psec-fO"=>"-", "p-p-psec-fU"=>"-", "p-p-psec-th"=>"-", "p-p-psec-cohe"=>"-", "p-p-psec-idio"=>"-", "p-p-autp"=>"-", "p-p-autp-fO"=>"-", "p-p-autp-fU"=>"-", "p-p-autp-th"=>"-", "p-p-autp-cohe"=>"-", "p-p-autp-idio"=>"-", "p-p-dials"=>"-", "p-p-dials-fO"=>"-", "p-p-dials-fU"=>"-", "p-p-dials-th"=>"-", "p-p-dials-cohe"=>"-", "p-p-dials-idio"=>"-", "p-i"=>"-", "p-i-fO"=>"-", "p-i-fU"=>"-", "p-i-th"=>"-", "p-i-cohe"=>"-", "p-i-idio"=>"-", "p-i-form"=>"-", "p-i-form-pfa"=>"-", "p-i-form-3acts"=>"-", "p-i-form-pvts"=>"-", "p-i-ip"=>"-", "p-i-ip-fO"=>"-", "p-i-ip-fU"=>"-", "p-i-ip-th"=>"-", "p-i-ip-cohe"=>"-", "p-i-ip-idio"=>"-", "p-i-is"=>"-", "p-i-is-fO"=>"-", "p-i-is-fU"=>"-", "p-i-is-th"=>"-", "p-i-is-cohe"=>"-", "p-i-is-idio"=>"-", "p-th-fO"=>"-", "p-th-fU"=>"-", "p-th-th"=>"-", "p-th-cohe"=>"-", "p-th-idio"=>"-", "p-r"=>"-", "p-r-cla"=>"-", "p-r-cla-fO"=>"-", "p-r-cla-fU"=>"-", "p-r-cla-th"=>"-", "p-r-cla-cohe"=>"-", "p-r-cla-idio"=>"-", "p-r-sim"=>"-", "p-r-sim-fO"=>"-", "p-r-sim-fU"=>"-", "p-r-sim-th"=>"-", "p-r-sim-cohe"=>"-", "p-r-sim-idio"=>"-", "p-r-emo"=>"-", "p-r-emo-fO"=>"-", "p-r-emo-fU"=>"-", "p-r-emo-th"=>"-", "p-r-emo-cohe"=>"-", "p-r-emo-idio"=>"-"}
 Résultat des calculs : {:note_generale=>11.7, :pourcentage_reponses=>7.1, :nombre_questions=>98, :nombre_missings=>91}
+
+
+--- [2020-10-22 07:50:04 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 07:51:06 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:20161121150532-2021, score:{"p"=>0, "p-fO"=>2, "p-fU"=>2, "p-th"=>"-", "p-ti"=>"-", "p-ti-fO"=>"-", "p-ti-fU"=>4, "p-ti-th"=>"-", "p-p"=>4, "p-p-fO"=>"-", "p-p-fU"=>"-", "p-p-th"=>"-", "p-p-cohe"=>"-", "p-p-idio"=>4, "p-p-prota"=>"-", "p-p-prota-fO"=>"-", "p-p-prota-fU"=>"-", "p-p-prota-th"=>4, "p-p-prota-cohe"=>"-", "p-p-prota-idio"=>"-", "p-p-anta"=>"-", "p-p-anta-fO"=>"-", "p-p-anta-fU"=>"-", "p-p-anta-th"=>"-", "p-p-anta-cohe"=>"-", "p-p-anta-idio"=>"-", "p-p-psec"=>"-", "p-p-psec-fO"=>"-", "p-p-psec-fU"=>"-", "p-p-psec-th"=>"-", "p-p-psec-cohe"=>"-", "p-p-psec-idio"=>"-", "p-p-autp"=>"-", "p-p-autp-fO"=>"-", "p-p-autp-fU"=>"-", "p-p-autp-th"=>"-", "p-p-autp-cohe"=>"-", "p-p-autp-idio"=>"-", "p-p-dials"=>"-", "p-p-dials-fO"=>"-", "p-p-dials-fU"=>"-", "p-p-dials-th"=>"-", "p-p-dials-cohe"=>"-", "p-p-dials-idio"=>"-", "p-i"=>"-", "p-i-fO"=>"-", "p-i-fU"=>"-", "p-i-th"=>"-", "p-i-cohe"=>"-", "p-i-idio"=>"-", "p-i-form"=>"-", "p-i-form-pfa"=>"-", "p-i-form-3acts"=>"-", "p-i-form-pvts"=>"-", "p-i-ip"=>"-", "p-i-ip-fO"=>"-", "p-i-ip-fU"=>"-", "p-i-ip-th"=>"-", "p-i-ip-cohe"=>"-", "p-i-ip-idio"=>"-", "p-i-is"=>"-", "p-i-is-fO"=>"-", "p-i-is-fU"=>"-", "p-i-is-th"=>"-", "p-i-is-cohe"=>"-", "p-i-is-idio"=>"-", "p-th-fO"=>"-", "p-th-fU"=>"-", "p-th-th"=>"-", "p-th-cohe"=>"-", "p-th-idio"=>"-", "p-r"=>"-", "p-r-cla"=>"-", "p-r-cla-fO"=>"-", "p-r-cla-fU"=>"-", "p-r-cla-th"=>"-", "p-r-cla-cohe"=>"-", "p-r-cla-idio"=>"-", "p-r-sim"=>"-", "p-r-sim-fO"=>"-", "p-r-sim-fU"=>"-", "p-r-sim-th"=>"-", "p-r-sim-cohe"=>"-", "p-r-sim-idio"=>"-", "p-r-emo"=>3, "p-r-emo-fO"=>4, "p-r-emo-fU"=>2, "p-r-emo-th"=>5, "p-r-emo-cohe"=>"-", "p-r-emo-idio"=>2}
+Résultat des calculs : {:note_generale=>9.3, :pourcentage_reponses=>12.2, :nombre_questions=>98, :nombre_missings=>86}
+
+
+--- [2020-10-22 07:55:30 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 07:57:01 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 07:57:39 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 2, synopsis_id:20161121150532-2021, score:{"p"=>4, "p-fO"=>"-", "p-fU"=>"-", "p-th"=>"-", "p-ti"=>"-", "p-ti-fO"=>4, "p-ti-fU"=>"-", "p-ti-th"=>"-", "p-p"=>"-", "p-p-fO"=>"-", "p-p-fU"=>"-", "p-p-th"=>"-", "p-p-cohe"=>"-", "p-p-idio"=>4, "p-p-prota"=>"-", "p-p-prota-fO"=>4, "p-p-prota-fU"=>"-", "p-p-prota-th"=>"-", "p-p-prota-cohe"=>"-", "p-p-prota-idio"=>4, "p-p-anta"=>"-", "p-p-anta-fO"=>"-", "p-p-anta-fU"=>"-", "p-p-anta-th"=>"-", "p-p-anta-cohe"=>"-", "p-p-anta-idio"=>"-", "p-p-psec"=>"-", "p-p-psec-fO"=>"-", "p-p-psec-fU"=>"-", "p-p-psec-th"=>"-", "p-p-psec-cohe"=>"-", "p-p-psec-idio"=>"-", "p-p-autp"=>"-", "p-p-autp-fO"=>"-", "p-p-autp-fU"=>"-", "p-p-autp-th"=>"-", "p-p-autp-cohe"=>"-", "p-p-autp-idio"=>"-", "p-p-dials"=>"-", "p-p-dials-fO"=>"-", "p-p-dials-fU"=>"-", "p-p-dials-th"=>"-", "p-p-dials-cohe"=>"-", "p-p-dials-idio"=>"-", "p-i"=>"-", "p-i-fO"=>"-", "p-i-fU"=>"-", "p-i-th"=>"-", "p-i-cohe"=>"-", "p-i-idio"=>"-", "p-i-form"=>"-", "p-i-form-pfa"=>"-", "p-i-form-3acts"=>"-", "p-i-form-pvts"=>"-", "p-i-ip"=>"-", "p-i-ip-fO"=>"-", "p-i-ip-fU"=>"-", "p-i-ip-th"=>"-", "p-i-ip-cohe"=>"-", "p-i-ip-idio"=>"-", "p-i-is"=>"-", "p-i-is-fO"=>"-", "p-i-is-fU"=>"-", "p-i-is-th"=>"-", "p-i-is-cohe"=>"-", "p-i-is-idio"=>"-", "p-th-fO"=>"-", "p-th-fU"=>"-", "p-th-th"=>"-", "p-th-cohe"=>"-", "p-th-idio"=>"-", "p-r"=>"-", "p-r-cla"=>"-", "p-r-cla-fO"=>"-", "p-r-cla-fU"=>"-", "p-r-cla-th"=>"-", "p-r-cla-cohe"=>"-", "p-r-cla-idio"=>"-", "p-r-sim"=>"-", "p-r-sim-fO"=>"-", "p-r-sim-fU"=>"-", "p-r-sim-th"=>"-", "p-r-sim-cohe"=>"-", "p-r-sim-idio"=>"-", "p-r-emo"=>"-", "p-r-emo-fO"=>"-", "p-r-emo-fU"=>"-", "p-r-emo-th"=>"-", "p-r-emo-cohe"=>"-", "p-r-emo-idio"=>"-"}
+Résultat des calculs : {:note_generale=>12.8, :pourcentage_reponses=>5.1, :nombre_questions=>98, :nombre_missings=>93}
+
+
+--- [2020-10-22 07:59:31 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 07:59:57 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 2, synopsis_id:20161121150532-2021, score:{"p"=>4, "p-fO"=>"-", "p-fU"=>"-", "p-th"=>"-", "p-ti"=>"-", "p-ti-fO"=>4, "p-ti-fU"=>"-", "p-ti-th"=>"-", "p-p"=>"-", "p-p-fO"=>"-", "p-p-fU"=>"-", "p-p-th"=>"-", "p-p-cohe"=>"-", "p-p-idio"=>4, "p-p-prota"=>"-", "p-p-prota-fO"=>4, "p-p-prota-fU"=>"-", "p-p-prota-th"=>"-", "p-p-prota-cohe"=>"-", "p-p-prota-idio"=>4, "p-p-anta"=>"-", "p-p-anta-fO"=>"-", "p-p-anta-fU"=>"-", "p-p-anta-th"=>"-", "p-p-anta-cohe"=>"-", "p-p-anta-idio"=>"-", "p-p-psec"=>"-", "p-p-psec-fO"=>"-", "p-p-psec-fU"=>"-", "p-p-psec-th"=>"-", "p-p-psec-cohe"=>"-", "p-p-psec-idio"=>"-", "p-p-autp"=>"-", "p-p-autp-fO"=>"-", "p-p-autp-fU"=>"-", "p-p-autp-th"=>4, "p-p-autp-cohe"=>"-", "p-p-autp-idio"=>"-", "p-p-dials"=>"-", "p-p-dials-fO"=>"-", "p-p-dials-fU"=>4, "p-p-dials-th"=>"-", "p-p-dials-cohe"=>5, "p-p-dials-idio"=>"-", "p-i"=>"-", "p-i-fO"=>"-", "p-i-fU"=>"-", "p-i-th"=>"-", "p-i-cohe"=>"-", "p-i-idio"=>2, "p-i-form"=>"-", "p-i-form-pfa"=>4, "p-i-form-3acts"=>"-", "p-i-form-pvts"=>"-", "p-i-ip"=>"-", "p-i-ip-fO"=>"-", "p-i-ip-fU"=>"-", "p-i-ip-th"=>"-", "p-i-ip-cohe"=>"-", "p-i-ip-idio"=>"-", "p-i-is"=>"-", "p-i-is-fO"=>"-", "p-i-is-fU"=>"-", "p-i-is-th"=>"-", "p-i-is-cohe"=>"-", "p-i-is-idio"=>"-", "p-th-fO"=>"-", "p-th-fU"=>"-", "p-th-th"=>"-", "p-th-cohe"=>"-", "p-th-idio"=>"-", "p-r"=>"-", "p-r-cla"=>"-", "p-r-cla-fO"=>"-", "p-r-cla-fU"=>"-", "p-r-cla-th"=>"-", "p-r-cla-cohe"=>"-", "p-r-cla-idio"=>"-", "p-r-sim"=>"-", "p-r-sim-fO"=>"-", "p-r-sim-fU"=>"-", "p-r-sim-th"=>"-", "p-r-sim-cohe"=>"-", "p-r-sim-idio"=>"-", "p-r-emo"=>"-", "p-r-emo-fO"=>"-", "p-r-emo-fU"=>"-", "p-r-emo-th"=>"-", "p-r-emo-cohe"=>"-", "p-r-emo-idio"=>"-"}
+Résultat des calculs : {:note_generale=>11.8, :pourcentage_reponses=>10.2, :nombre_questions=>98, :nombre_missings=>88}
+
+
+--- [2020-10-22 08:00:01 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 08:00:24 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 2, synopsis_id:20191025180826-2021, score:{"p"=>5, "p-fO"=>5, "p-fU"=>5, "p-th"=>"-", "p-ti"=>5, "p-ti-fO"=>5, "p-ti-fU"=>5, "p-ti-th"=>5, "p-p"=>5, "p-p-fO"=>5, "p-p-fU"=>5, "p-p-th"=>5, "p-p-cohe"=>"-", "p-p-idio"=>"-", "p-p-prota"=>"-", "p-p-prota-fO"=>"-", "p-p-prota-fU"=>"-", "p-p-prota-th"=>"-", "p-p-prota-cohe"=>"-", "p-p-prota-idio"=>"-", "p-p-anta"=>"-", "p-p-anta-fO"=>"-", "p-p-anta-fU"=>"-", "p-p-anta-th"=>"-", "p-p-anta-cohe"=>"-", "p-p-anta-idio"=>"-", "p-p-psec"=>"-", "p-p-psec-fO"=>"-", "p-p-psec-fU"=>"-", "p-p-psec-th"=>"-", "p-p-psec-cohe"=>"-", "p-p-psec-idio"=>"-", "p-p-autp"=>"-", "p-p-autp-fO"=>"-", "p-p-autp-fU"=>"-", "p-p-autp-th"=>"-", "p-p-autp-cohe"=>"-", "p-p-autp-idio"=>"-", "p-p-dials"=>"-", "p-p-dials-fO"=>"-", "p-p-dials-fU"=>"-", "p-p-dials-th"=>"-", "p-p-dials-cohe"=>"-", "p-p-dials-idio"=>"-", "p-i"=>"-", "p-i-fO"=>"-", "p-i-fU"=>"-", "p-i-th"=>"-", "p-i-cohe"=>"-", "p-i-idio"=>"-", "p-i-form"=>"-", "p-i-form-pfa"=>"-", "p-i-form-3acts"=>"-", "p-i-form-pvts"=>"-", "p-i-ip"=>"-", "p-i-ip-fO"=>"-", "p-i-ip-fU"=>"-", "p-i-ip-th"=>"-", "p-i-ip-cohe"=>"-", "p-i-ip-idio"=>"-", "p-i-is"=>"-", "p-i-is-fO"=>"-", "p-i-is-fU"=>"-", "p-i-is-th"=>"-", "p-i-is-cohe"=>"-", "p-i-is-idio"=>"-", "p-th-fO"=>"-", "p-th-fU"=>"-", "p-th-th"=>"-", "p-th-cohe"=>"-", "p-th-idio"=>"-", "p-r"=>"-", "p-r-cla"=>"-", "p-r-cla-fO"=>"-", "p-r-cla-fU"=>"-", "p-r-cla-th"=>"-", "p-r-cla-cohe"=>"-", "p-r-cla-idio"=>"-", "p-r-sim"=>"-", "p-r-sim-fO"=>"-", "p-r-sim-fU"=>"-", "p-r-sim-th"=>"-", "p-r-sim-cohe"=>"-", "p-r-sim-idio"=>"-", "p-r-emo"=>"-", "p-r-emo-fO"=>"-", "p-r-emo-fU"=>"-", "p-r-emo-th"=>"-", "p-r-emo-cohe"=>"-", "p-r-emo-idio"=>"-"}
+Résultat des calculs : {:note_generale=>17.1, :pourcentage_reponses=>11.2, :nombre_questions=>98, :nombre_missings=>87}
+
+
+--- [2020-10-22 08:56:40 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:06:12 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:08:01 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:11:47 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:15:20 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:16:50 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:17:28 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:18:52 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:19:48 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:25:32 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:27:56 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:28:52 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:29:30 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:29:57 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:32:16 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:33:32 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:35:37 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-10-22 09:38:24 +0200] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
