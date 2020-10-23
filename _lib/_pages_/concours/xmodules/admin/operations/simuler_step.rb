@@ -3,7 +3,6 @@
 class Concours
   def simuler_step
     data_step = STEPS_DATA[param(:step).to_i]
-
     res = []
     res << "Simulation de l'étape “#{data_step[:name_current]}”…"
     res += data_step[:operations].collect{|dop| "– #{dop[:name]}"}

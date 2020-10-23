@@ -2,6 +2,9 @@
 # frozen_string_literal: true
 class Concours
   def change_step
-    save(step: param(:current_step).to_i)
+    @step = param(:current_step).to_i
+    save(step: @step)
+    require_relative './proceed_operations_per_step'
+    proceed_operations_per_step(STEPS_DATA[@step].merge(step: @step))
   end #/ change_step
 end

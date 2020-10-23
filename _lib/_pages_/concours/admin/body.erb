@@ -22,6 +22,9 @@ stepform.submit_button_class = "small btn"
   <%= stepform.out %>
 </div>
 <% if concours.resultat %>
+<div class="right">
+  <%= Tag.link(route:"concours/admin", text:"Données du concours") %>
+</div>
   <div id="concours-resultat">
     <%= concours.resultat %>
   </div>
