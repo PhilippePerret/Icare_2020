@@ -50,13 +50,13 @@ def initialize(synopsis)
   @synopsis = synopsis
 end #/ initialize
 
+def bind; binding() end
+
 # Sortie de la fiche de lecture du synopsis
 def out(options = nil)
   rassemble_resultats
   dispatche_per_element
   case options[:format]
-  when :data
-    out_as_data
   when :concurrent
     out_for_concurrent
   else
@@ -64,204 +64,74 @@ def out(options = nil)
   end
 end #/ out
 
-# Pour construire la fiche à destination du concurrent (mail et affichage
-# dans son espace)
-ECUSSON = Emoji.new('objets/blason').regular
-FICHE_LECTURE_TEMPLATE = <<-HTML
-<div class="fiche-lecture">
-  <div class="header">
-    <div class="grand-titre">#{ECUSSON}#{ISPACE}Concours de Synopsis de L'atelier Icare#{ISPACE}#{ECUSSON}</div>
-    <div class="div-annee">Édition <span class="annee">#{ANNEE_CONCOURS_COURANTE}</span></div>
-  </div>
-
-  <div class="infos-projet">
-    <div class="projet-titre">
-      <span class="libelle">TITRE</span>
-      <span class="value">%{titre}</span>
-    </div>
-    <div class="projet-auteur">
-      <span class="libelle">AUTEUR·E(S)</span>
-      <span class="value">%{auteur}</span>
-    </div>
-  </div>
-
-  <div class="divnote note-totale">
-    <span class="libelle">Note : </span>
-    <span class="value">%{note_totale}</span>
-  </div>
-
-  <div class="detail">
-
-    <div class="divnote note-projet">
-      <span class="libelle">Projet dans sa globalité</span>
-      <span class="value">%{note_projet}</span>
-      <div class="explication">%{explication_projet}</div>
-    </div>
-
-    <div class="divnote note-personnages">
-      <span class="libelle">Personnages</span>
-      <span class="value">%{note_personnages}</span>
-      <div class="explication">%{explication_personnages}</div>
-    </div>
-
-    <div class="divnote note-forme">
-      <span class="libelle">Forme/structure</span>
-      <span class="value">%{note_forme}</span>
-      <div class="explication">%{explication_forme}</div>
-    </div>
-
-    <div class="divnote note-intrigues">
-      <span class="libelle">Intrigues</span>
-      <span class="value">%{note_intrigues}</span>
-    </div>
-
-    <div class="divnote note-themes">
-      <span class="libelle">Thèmes</span>
-      <span class="value">%{note_themes}</span>
-    </div>
-
-    <div class="divnote note-facteur-O">
-      <span class="libelle">Facteur O</span>
-      <span class="value">%{facteurO}</span>
-      <div class="expli">
-        <div class="explication">%{facteurO_explication}</div>
-        <div>%{facteurO_explication_per_note}</div>
-      </div>
-    </div>
-
-    <div class="divnote note-facteur-U">
-      <span class="libelle">Facteur U</span>
-      <span class="value">%{facteurU}</span>
-      <div class="expli">
-        <div class="explication">%{facteurU_explication}</div>
-        <div>%{facteurU_explication_per_note}</div>
-      </div>
-    </div>
-
-  </div><!-- div.details -->
-
-</div>
-HTML
-
+# OUT   Retourne le code HTML de la fiche de lecture complète pour le
+#       synopsis.
 def out_for_concurrent
-  FICHE_LECTURE_TEMPLATE % {
-    titre: synopsis.titre,
-    auteur: synopsis.concurrent.pseudo,
-
-    note_totale: human_note_from_enotes(@all_enotes),
-
-    note_projet: note_projet_props,
-    explication_projet: DATA_MAIN_PROPERTIES[:projet][:explication],
-
-    note_personnages: human_note_from_enotes(@notes_categories[:p]),
-    explication_personnages: DATA_MAIN_PROPERTIES[:personnages][:explication],
-
-    note_forme: human_note_from_enotes(@notes_categories[:f]),
-    explication_forme: DATA_MAIN_PROPERTIES[:personnages][:explication],
-
-    note_intrigues: human_note_from_enotes(@notes_categories[:i]),
-    note_themes: human_note_from_enotes(@notes_categories[:t]),
-
-    facteurO: note_sur_vingt(facteurO_note),
-    facteurO_explication: DATA_MAIN_PROPERTIES[:fO][:explication],
-    facteurO_explication_per_note: facteurO_explication_per_note,
-
-    facteurU: "#{facteurU_note}/20",
-    facteurU_explication: DATA_MAIN_PROPERTIES[:fU][:explication],
-    facteurU_explication_per_note: facteurU_explication_per_note,
-
-    # coherence:
-
-  }
+  deserb('../partials/fiche_lecture_template', self)
 end #/ out_for_concurrent
 
-# Retourne la note sur le projet, mais pas la note finale qui fait le total
-# de toutes les notes mais la note sur le menu "Projet" et ses propriétés
-# La difficulté est de les retrouver dans les ENotes, sans utiliser les
-# clés explicitement
-def note_projet_props
-  human_note_from_enotes(@notes_categories[:projet])
-end #/ note_projet_props
+def ecusson
+  @ecusson ||= Emoji.new('objets/blason').regular
+end #/ ecusson
+def annee_edition ; ANNEE_CONCOURS_COURANTE end
 
-def facteurO_note
-  @facteurO_note ||= calcul_note_from_enotes(@notes_main_properties[:fO])
-end #/ facteurO_note
-def facteurO_explication_per_note
-  k = key_explication_per_note(facteurU_note)
-  DATA_MAIN_PROPERTIES[:fO][k]
-end #/ facteurO_explication_per_note
+def auteurs
+  # TODO Améliorer les choses pour avoir tous les auteurs s'il y en
+  # a plusieurs
+  synopsis.concurrent.pseudo
+end #/ auteurs
 
-def facteurU_note
-  @facteurU_note ||= calcul_note_from_enotes(@notes_main_properties[:fU])
-end #/ facteurU_note
-def facteurU_explication_per_note
-  k = key_explication_per_note(facteurU_note)
-  DATA_MAIN_PROPERTIES[:fU][k]
-end #/ facteurU_explication_per_note
-
-def key_explication_per_note(note)
-  if    note > 15 then  :plus15
-  elsif note > 9  then  :moins15
-  elsif note > 4  then  :moins10
-                  else  :moins5
+def all_enotes
+  @all_enotes || begin
+    rassemble_resultats
+    dispatche_per_element
   end
-end #/ key_explication_per_note
+  @all_enotes
+end #/ all_enotes
 
-# En entrée : une liste (Array) d'ENote
-# En sortie : note sur 20
-def calcul_note_from_enotes(enotes)
-  n   = []
-  enotes.each do |enote|
-    n += enote.values
+# Pour la gestion du total
+def total
+  @total ||= ENotesFL.new(:total, all_enotes)
+end #/ total
+
+# Position du synopsis par rapport aux autres synopsis
+def position
+  @position ||= begin
+    p = synopsis.position
+    pstr = p == 1 ? "1<exp>er</exp>" : "#{p}<exp>e</exp>"
+    pstr = "#{pstr}#{ISPACE}🏆" if p < 4 # => S'il est primé
+    pstr
   end
-  return '---' if n.empty?
-  nr = n.count
-  n  = n.inject(:+)
-  coef = enotes.first.deepness_coefficiant
-  n20 = ((4 * coef) * (n.to_f / nr)).round(1)
-end #/ calcul_note_from_enotes
+end #/ position
 
-def human_note_from_enotes(enotes)
-  note_sur_vingt(calcul_note_from_enotes(enotes))
-end #/ human_note_from_enotes
+def projet
+  @projet ||= ENotesFL.new(:projet, @notes_categories[:projet])
+end #/ projet
 
-def note_sur_vingt(n)
-  return n if n == "---"
-  n = n.to_s
-  n = n.split('.').first if n.end_with?('.0')
-  "#{n} / 20"
-end #/ note_sur_vingt
+def personnages
+  @personnages ||= ENotesFL.new(:personnages, @notes_categories[:p])
+end #/ personnages
 
-=begin
-  Version "data" de l'affichage de la fiche
-  Principalement pour avoir une vision sans "parasite" (sans explication)
-=end
-LARGEUR_DATA = 40
-def out_as_data
-  lines = []
-  lines << '<pre>'
-  lines << line_data('Note principale générale', @ENotes['po'].values.inspect)
+def intrigues
+  @intrigues ||= ENotesFL.new(:intrigues, @notes_categories[:i])
+end #/ intrigues
 
-  # Les propriétés principales (cohérence, facteurO, facteur U etc.)
-  DATA_MAIN_PROPERTIES.each do |kmp, dmprop|
-    lines << line_data(dmprop[:short_name], human_note_from_enotes(@notes_main_properties[kmp]))
-    lines << "<div class='justify'>#{dmprop[:explication]}</div>"
-  end
+def themes
+  @themes ||= ENotesFL.new(:themes, @notes_categories[:t])
+end #/ themes
 
-  DATA_CATEGORIES.each do |kcate, dcate|
-    lines << line_data("Note #{dcate[:name]}", human_note_from_enotes(@notes_categories[kcate]))
-  end
-  lines << RC * 2
-  self.ENotes.each do |k, enote|
-    lines << "#{k}/#{enote.fullid} : Coefficiant DeepNess: #{enote.deepness_coefficiant}#{RC}"
-  end
-  lines << '</pre>'
-  return lines.join('')
-end #/ out_as_data
+def forme
+  @forme ||= ENotesFL.new(:forme, @notes_categories[:f])
+end #/ forme_note
 
-def line_data(libelle, value)
-  libelle.ljust(LARGEUR_DATA,'.') + ' ' + value.to_s + RC
-end #/ line_data
+def facteurO
+  @facteurO ||= ENotesFL.new(:fO, @notes_main_properties[:fO])
+end #/ facteurO
+
+def facteurU
+  @facteurU ||= ENotesFL.new(:fU, @notes_main_properties[:fU])
+end #/ facteurU
+
 
 # Méthode qui prend tous les fichiers d'évaluation du synopsis et produit
 # la table de résultats qui va permettre d'établir la fiche de lecture
@@ -281,22 +151,23 @@ end #/ line_data
 #       - note_generale
 #
 def rassemble_resultats
-  self.ENotes = {}
+  @ENotes = {}
   @all_enotes = []
   Dir["#{synopsis.folder}/evaluation-*.json"].each do |fpath|
     evaluation_id = File.basename(fpath,File.extname(fpath)).split("-")
     concurrent_id, evaluator_id = evaluation_id
     JSON.parse(File.read(fpath)).each do |k, note|
-      if not self.ENotes.key?(k)
+      if not @ENotes.key?(k)
         enote = ENote.new(k)
-        self.ENotes.merge!(k => enote)
+        @ENotes.merge!(k => enote)
         @all_enotes << enote
       end
       # On ajoute cette valeur (même si c'est "-")
-      self.ENotes[k].add_value(note)
+      @ENotes[k].add_value(note)
     end
   end #/fin boucle sur tous les fichiers d'évaluation du synopsis
-  # log("ENotes : #{self.ENotes}")
+  # log("ENotes : #{@ENotes}")
+  log("@all_enotes: #{@all_enotes.inspect}")
 end #/ rassemble_resultats
 
 # Après avoir ramassé toutes les notes dans <FicheLecture>@ENotes, on peut

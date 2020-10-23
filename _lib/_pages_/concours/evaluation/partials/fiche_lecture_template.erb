@@ -1,0 +1,79 @@
+<div class="fiche-lecture">
+  <div class="header">
+    <div class="grand-titre"><%= ecusson %>&nbsp;Concours de Synopsis de L'atelier Icare&nbsp;<%= ecusson %></div>
+    <div class="div-annee">Édition <span class="annee"><%= annee_edition %></span></div>
+  </div>
+
+  <div class="infos-projet">
+    <div class="projet-titre">
+      <span class="libelle">TITRE</span>
+      <span class="value"><%= synopsis.titre %></span>
+    </div>
+    <div class="projet-auteur">
+      <span class="libelle">AUTEUR·E(S)</span>
+      <span class="value"><%= auteurs %></span>
+    </div>
+  </div>
+
+  <div class="note-totale">
+    <span class="libelle">Appréciation finale : </span>
+    <span class="value"><%= total.human_note %> (<%= position %>)</span>
+  </div>
+
+  <div class="detail">
+
+    <div class="divnote note-projet">
+      <span class="value note"><%= projet.human_note %></span>
+      <span class="libelle">Projet dans sa globalité</span>
+      <div class="explication"><%= projet.explication %></div>
+    </div>
+
+    <div class="divnote note-personnages">
+      <span class="libelle">Personnages</span>
+      <span class="value note"><%= personnages.human_note %></span>
+      <div class="explication"><%= personnages.explication %></div>
+      <div class="explication-note"><%= personnages.explication_per_note %></div>
+    </div>
+
+    <div class="divnote note-forme">
+      <span class="libelle">Forme/structure</span>
+      <span class="value note"><%= forme.human_note %></span>
+      <div class="explication"><%= forme.explication %></div>
+      <div class="explication-note"><%= forme.explication_per_note %></div>
+    </div>
+
+    <div class="divnote note-themes">
+      <span class="libelle">Thèmes</span>
+      <span class="value note"><%= themes.human_note %></span>
+      <div class="explication"><%= themes.explication %></div>
+      <div class="explication-note"><%= themes.explication_per_note %></div>
+    </div>
+
+    <div class="divnote note-intrigues">
+      <span class="libelle">Intrigues</span>
+      <span class="value note"><%= intrigues.human_note %></span>
+      <div class="explication"><%= intrigues.explication %></div>
+      <div class="explication-note"><%= intrigues.explication_per_note %></div>
+    </div>
+
+    <div class="divnote note-facteur-O">
+      <span class="libelle">Facteur O</span>
+      <span class="value note"><%= facteurO.human_note %></span>
+      <div class="expli">
+        <div class="explication"><%= facteurO.explication %></div>
+        <div class="explication-note"><%= facteurO.explication_per_note %></div>
+      </div>
+    </div>
+
+    <div class="divnote note-facteur-U">
+      <span class="libelle">Facteur U</span>
+      <span class="value note"><%= facteurU.human_note %></span>
+      <div class="expli">
+        <div class="explication"><%= facteurU.explication %></div>
+        <div class="explication-note"><%= facteurU.explication_per_note %></div>
+      </div>
+    </div>
+
+  </div><!-- div.details -->
+
+</div>

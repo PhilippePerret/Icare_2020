@@ -35,6 +35,15 @@ SQL
       end
     end
   end #/ all_courant
+
+  # OUT   Liste Array des instances de Synopsis, classés par note
+  def all_sorted
+    @all_sorted ||= begin
+      sorteds = all_courant.dup.sort_by { |syno| syno.fiche_lecture.total.note }.reverse
+      sorteds.each_with_index { |syno, idx| syno.position = idx + 1 }
+      sorteds
+    end
+  end #/ all_sorted
 end # /<< self
 # ---------------------------------------------------------------------
 #
@@ -45,6 +54,8 @@ attr_reader :concurrent_id, :annee, :data, :id
 # Les données de score pour un évaluator donné
 # Note : pour le moment, l'évaluateur se donne dans :out
 attr_reader :data_score, :evaluator_id
+# Position de classement par rapport à la note
+attr_accessor :position
 # Instanciation
 def initialize concurrent_id, annee, data = nil
   @concurrent_id = concurrent_id

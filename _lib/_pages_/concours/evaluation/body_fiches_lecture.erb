@@ -1,4 +1,9 @@
 <%
-syno = Synopsis.all_courant.first
+# frozen_string_literal: true
+
+# Boucle sur la liste des synopsis classés par note
 %>
-<%= syno.fiche_lecture.out(format: :concurrent) %>
+<div>NOMBRE SYNOPSIS : <%= Synopsis.all_sorted.count %></div>
+<% Synopsis.all_sorted.each do |syno| %>
+  <%= syno.fiche_lecture.out(format: :concurrent) %>
+<% end %>

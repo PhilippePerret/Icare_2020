@@ -1,0 +1,87 @@
+/*
+  *** Fiche de lecture ***
+*/
+div.fiche-lecture {
+  border:1px solid;
+}
+div.fiche-lecture div.header {
+  margin-top:1em;
+  margin-bottom:1em;
+}
+div.fiche-lecture div.grand-titre,
+div.fiche-lecture div.div-annee
+{
+  font-variant: all-small-caps;
+  font-weight: bold;
+  font-size: 20pt;
+  font-family:Arial, Helvetica, Geneva, serif;
+  text-align: center;
+}
+
+/* INFOS DU PROJET */
+
+div.fiche-lecture div.infos-projet {
+  border:1px solid #CCC;
+  padding:1em 0 2em;
+}
+div.fiche-lecture div.infos-projet span.libelle {
+  display:inline-block;
+  width: 140px;
+  font-size: 14pt;
+  font-style:normal;
+  opacity:0.5;
+}
+div.fiche-lecture div.infos-projet div.projet-titre span.value {
+  font-size:2rem;
+}
+
+/* *** APPRÉCIATION GLOBALE *** */
+
+div.fiche-lecture div.note-totale {
+  text-align: right;
+  padding:2em 3em 3em;
+}
+div.fiche-lecture div.note-totale span.libelle
+{
+
+}
+div.fiche-lecture div.note-totale span.value
+{
+  font-size: 30pt;
+}
+
+/* *** DÉTAIL DES NOTES *** */
+
+div.fiche-lecture div.detail {
+  border-style:solid;
+  border-width:1px 0;
+  border-color:#CCC;
+  padding-top:1em;
+}
+
+div.fiche-lecture div.detail div.divnote {
+  border-style:solid;
+  border-color:#CCC;
+  border-width:1px 0;
+  padding:1em;
+}
+
+div.fiche-lecture div.detail span.libelle,
+div.fiche-lecture div.detail span.value
+{
+}
+div.fiche-lecture div.detail span.libelle {
+  font-style: normal;
+  font-size:1em;
+}
+div.fiche-lecture div.detail span.value {
+  font-size:1.3em;
+  float:right;
+}
+div.fiche-lecture div.detail div.explication {
+  margin-top:1em;
+}
+div.fiche-lecture div.detail div.explication-note {
+  font-size: 0.9em;
+  margin-left:2em;
+}
