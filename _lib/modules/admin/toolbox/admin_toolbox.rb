@@ -17,7 +17,7 @@ class << self
 <div class="titre"><img src="img/Emojis/machine/manette-jeu.png" style="width:40px;" /></div>
 <div class="content">
 #{Tag.link(route:'admin/home', text:"Tableau de bord", class:"operation")}
-#{Tag.link(route:'concours/evaluation', text:"CONCOURS")}
+#{Tag.link(route:'concours/admin', text:"CONCOURS")}
 #{link_operation(:essai, 'Essai toolbox')}
 #{link_operation(:inspecter, 'Inspecter cette page')}
 </div>

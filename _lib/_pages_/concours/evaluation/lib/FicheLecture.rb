@@ -231,7 +231,10 @@ class ENote
 
   # Coefficiant de profondeur (il faut multiplier la valeur par ce coefficiant)
   def deepness_coefficiant
-    @deepness_coefficiant ||= 1.0 - ( (deepness - 1).to_f / 10 )
+    @deepness_coefficiant ||= begin
+      dness = deepness > 0 ? deepness : 1
+      1.0 - ( (dness - 1).to_f / 10 )
+    end
   end #/ deepness_coefficiant
 
   def deepness

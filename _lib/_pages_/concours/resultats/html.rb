@@ -1,5 +1,11 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+=begin
+  Partie qui affiche les résultats ou une page d'attente des
+  résultats.
+  En tant qu'administrateur, on peut toujours avoir la page des résultats
+  affichés.
+=end
 
 class HTML
   def titre
