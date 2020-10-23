@@ -25,8 +25,14 @@ TERMES_GENE = ["Le Mythe", "Une histoire", "Une Version", "La Punition", "Le Voy
 TERMES_GENE_COUNT = TERMES_GENE.count
 TERMES_DENE = ["", "de l'escargot", "de l'amour", "de la crypte", "du soir", "de Sir Ripaï", "de Monsieur X", "du cheval", "de l'Histoire", "de la femme"]
 TERMES_DENE_COUNT = TERMES_DENE.count
+
+KNOWED_TITRES = {}
 def random_titre
-  "#{TERMES_GENE[rand(TERMES_GENE_COUNT)]} #{TERMES_DENE[rand(TERMES_DENE_COUNT)]}".strip
+  begin
+    titre = "#{TERMES_GENE[rand(TERMES_GENE_COUNT)]} #{TERMES_DENE[rand(TERMES_DENE_COUNT)]}".strip
+  end while KNOWED_TITRES.key?(titre)
+  KNOWED_TITRES.merge!(titre => true)
+  return titre
 end #/ random_titre
 
 KEYWORDS = ["robot", "amour","disparition","voyage","guerre","survie","ile","désert","mer","traversée","naufrage","descente","drogue","social","enquête","meurtre","serial killer","vengeance","sexe","alcool","vin","vignoble","course","sport","vacances","homosexualité","construction","art","moine","chinois","samouraï","japon","monstre","fantôme","soldat","ange","argent","bourse","loup","loup-garou","souffrance","école","étude","musique"]

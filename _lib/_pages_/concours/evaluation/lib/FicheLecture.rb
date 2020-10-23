@@ -75,10 +75,8 @@ def ecusson
 end #/ ecusson
 def annee_edition ; ANNEE_CONCOURS_COURANTE end
 
-def auteurs
-  # TODO Améliorer les choses pour avoir tous les auteurs s'il y en
-  # a plusieurs
-  synopsis.concurrent.pseudo
+def formated_auteurs
+  synopsis.real_auteurs
 end #/ auteurs
 
 def all_enotes

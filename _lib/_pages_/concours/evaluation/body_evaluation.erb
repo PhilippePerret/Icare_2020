@@ -5,10 +5,6 @@
 <script type="text/javascript">
 const EVALUATOR_ID = <%= user.id %>;
 </script>
-<div class="right mb1">
-  <%= Tag.link(route:"concours/evaluation?view=body_fiches_lecture", text:"➵ Fiches de lecture", class:"discret") %>
-</div>
-
 <%=
   # Il faut passer par là notamment pour produire le fichier NOMBRE_QUESTIONS
   # qui contient le nombre de questions actuelles, utiles pour estimer

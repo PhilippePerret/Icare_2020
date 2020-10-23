@@ -52,7 +52,13 @@ class << self
   end #/ note_generale_et_pourcentage_from
 
   def nombre_absolu_questions
-    @nombre_absolu_questions ||= File.read(NOMBRE_QUESTIONS_PATH).to_i
+    @nombre_absolu_questions ||= begin
+      if not File.exists?(NOMBRE_QUESTIONS_PATH)
+        require_relative './rebuild_checklist'
+        CheckList.rebuild_checklist
+      end
+      File.read(NOMBRE_QUESTIONS_PATH).to_i
+    end
   end #/ nombre_absolu_questions
 end # /<< self
 

@@ -76,7 +76,8 @@ CREATE TABLE `concurrents_per_concours`(
   annee             VARCHAR(4) NOT NULL,
   concurrent_id     VARCHAR(14) NOT NULL,
   titre             VARCHAR(200),
-  keywords          VARCHAR(255),
+  auteurs           VARCHAR(255) DEFAULT NULL,
+  keywords          VARCHAR(255) DEFAULT NULL,
   prix              VARCHAR(1), --  0, 1, 2, ou 3
   specs             VARCHAR(8) DEFAULT "00000000",
   created_at        VARCHAR(10),

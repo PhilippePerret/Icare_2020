@@ -6,6 +6,14 @@
   et une année (année du concours).
 =end
 class Synopsis
+
+# Pour récupérer les données d'un ~synopsis
+REQUEST_SYNOPSIS = <<-SQL
+SELECT *
+  FROM #{DBTBL_CONCURS_PER_CONCOURS}
+  WHERE concurrent_id = ? AND annee = ?
+SQL
+
 # ---------------------------------------------------------------------
 #
 #   CLASSE
@@ -64,6 +72,8 @@ def initialize concurrent_id, annee, data = nil
   @data = data
 end #/ initialize
 
+# Pour la fiche du synopsis
+# -------------------------
 TEMPLATE_FICHE_SYNOPSIS = <<-HTML
 <div id="synopsis-%{id}" class="synopsis" data-id="%{id}">
   <div id="synopsis-%{id}-titre" class="titre">%{titre}</div>
@@ -75,6 +85,7 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
   </div>
   <div id="synopsis-%{id}-keywords" class="keywords">%{keywords}</div>
   <div class="right">
+    <a class="btn-edit small btn" href="concours/evaluation?view=body_form_synopsis&synoid=%{id}">Éditer</a>
     <button type="button" class="btn-evaluate small btn">Évaluer</button>
   </div>
   <div class="synopsis-id">%{id}</div>
@@ -89,13 +100,34 @@ def out(evaluator_id)
     pseudo: concurrent.patronyme,
     note: note_generale,
     pct_reponses: pourcentage_reponses,
-    keywords: keywords # Pour se remémorer le synopsis
+    keywords: formated_keywords # Pour se remémorer le synopsis
   }
 end #/ out
 
-def titre
-  @titre ||= data[:titre]
-end #/ titre
+# Pour sauver les données
+def save(data)
+  if data.key?(:keywords)
+    data[:keywords] = data[:keywords].split(',').collect{|w|w.strip}.join(',')
+  end
+  if data.key?(:titre)
+    raise("Il faut un titre !") if data[:titre].nil_if_empty.nil?
+  end
+  values  = data.values
+  columns = data.keys.collect { |k| "#{k} = ?" }.join(", ")
+  values << concurrent_id
+  values << annee
+  db_exec("UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET #{columns} WHERE concurrent_id = ? AND annee = ?", values)
+  # Pour actualiser
+  data.each {|k,v| instance_variable_set("@#{k}", v)}
+end #/ save
+
+def titre;    @titre    ||= data[:titre]    end
+def auteurs;  @auteurs  ||= data[:auteurs]  end
+def keywords; @keywords ||= data[:keywords] end
+
+def real_auteurs
+  auteurs || concurrent.patronyme
+end #/ formated_auteurs
 
 def concurrent
   @concurrent ||= Concurrent.get(concurrent_id)
@@ -130,8 +162,8 @@ def get_data_score
   end
 end #/ data_score
 
-def keywords
-  @keywords ||= data[:keywords].split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
+def formated_keywords
+  @formated_keywords ||= data[:keywords].split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
 end #/ keywords
 
 # Son instance de formulaire d'évaluation, pour un évaluateur donné

@@ -3,9 +3,6 @@
 
 # Boucle sur la liste des synopsis classés par note
 %>
-<div class="right mb1">
-  <%= Tag.link(route:"concours/evaluation", text:"➵ Évaluation des fiches", class:"discret") %>
-</div>
 <div id="fiches-lecture">
   <% Synopsis.all_sorted.each do |syno| %>
     <%= syno.fiche_lecture.out(format: :concurrent) %>

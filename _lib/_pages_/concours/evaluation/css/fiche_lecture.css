@@ -41,10 +41,17 @@ div.fiche-lecture div.infos-projet div.projet-titre {
   grid-row:1;
   text-align:center;
 }
-div.fiche-lecture div.infos-projet div.projet-titre div.titre {
+div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.titre {
+  font-size:1.5rem;
+  font-weight:bold;
+}
+div.fiche-lecture.exergue div.infos-projet div.projet-titre div.titre {
   font-size:2.5rem;
 }
-div.fiche-lecture div.infos-projet div.projet-titre div.auteur {
+div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.auteur {
+  font-size:0.6rem;
+}
+div.fiche-lecture.exergue div.infos-projet div.projet-titre div.auteur {
   font-size:1rem;
 }
 div.fiche-lecture div.infos-projet div.note-totale {
