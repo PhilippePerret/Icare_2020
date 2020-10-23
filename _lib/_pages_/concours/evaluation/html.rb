@@ -4,8 +4,14 @@ require_module('form')
 require_js_module(['flash','jquery'])
 class HTML
   def titre
-    "Estimation des synopsis"
+    case param(:view)
+    when "body_fiches_lecture"
+      "Fiches de lecture"
+    else
+      "Évaluation des synopsis"
+    end
   end #/titre
+
 
   # Code à exécuter avant la construction de la page
   def exec

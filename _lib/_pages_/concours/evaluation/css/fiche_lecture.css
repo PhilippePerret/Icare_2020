@@ -3,6 +3,15 @@
 */
 div.fiche-lecture {
   border:1px solid;
+  margin-bottom: 1em;
+}
+div.fiche-lecture:not(.exergue) {
+  transition:0.5;
+  opacity:0.6;
+}
+div.fiche-lecture.exergue {
+  transition:0.5;
+  opacity:1;
 }
 div.fiche-lecture div.header {
   margin-top:1em;
@@ -23,32 +32,37 @@ div.fiche-lecture div.div-annee
 div.fiche-lecture div.infos-projet {
   border:1px solid #CCC;
   padding:1em 0 2em;
+  display:grid;
+  grid-template-columns: auto 240px;
+  grid-template-rows: auto;
 }
-div.fiche-lecture div.infos-projet span.libelle {
-  display:inline-block;
-  width: 140px;
-  font-size: 14pt;
-  font-style:normal;
-  opacity:0.5;
+div.fiche-lecture div.infos-projet div.projet-titre {
+  grid-column:1;
+  grid-row:1;
+  text-align:center;
 }
-div.fiche-lecture div.infos-projet div.projet-titre span.value {
-  font-size:2rem;
+div.fiche-lecture div.infos-projet div.projet-titre div.titre {
+  font-size:2.5rem;
+}
+div.fiche-lecture div.infos-projet div.projet-titre div.auteur {
+  font-size:1rem;
+}
+div.fiche-lecture div.infos-projet div.note-totale {
+  grid-column:2;
+  grid-row:1;
+  text-align:center;
+  font-size: 30pt;
+}
+div.fiche-lecture div.infos-projet div.note-totale div.note {font-size:30pt}
+div.fiche-lecture div.infos-projet div.note-totale div.position {
+  font-size:20pt;
 }
 
 /* *** APPRÉCIATION GLOBALE *** */
 
-div.fiche-lecture div.note-totale {
-  text-align: right;
+/* div.fiche-lecture div.note-totale {
   padding:2em 3em 3em;
-}
-div.fiche-lecture div.note-totale span.libelle
-{
-
-}
-div.fiche-lecture div.note-totale span.value
-{
-  font-size: 30pt;
-}
+} */
 
 /* *** DÉTAIL DES NOTES *** */
 

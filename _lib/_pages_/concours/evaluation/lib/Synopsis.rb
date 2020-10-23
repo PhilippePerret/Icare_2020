@@ -40,7 +40,7 @@ SQL
   def all_sorted
     @all_sorted ||= begin
       sorteds = all_courant.dup.sort_by { |syno| syno.fiche_lecture.total.note }.reverse
-      sorteds.each_with_index { |syno, idx| syno.position = idx + 1 }
+      sorteds.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total.undefined? }
       sorteds
     end
   end #/ all_sorted

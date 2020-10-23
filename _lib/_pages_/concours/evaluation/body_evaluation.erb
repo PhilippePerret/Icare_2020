@@ -5,6 +5,9 @@
 <script type="text/javascript">
 const EVALUATOR_ID = <%= user.id %>;
 </script>
+<div class="right mb1">
+  <%= Tag.link(route:"concours/evaluation?view=body_fiches_lecture", text:"➵ Fiches de lecture", class:"discret") %>
+</div>
 
 <%=
   # Il faut passer par là notamment pour produire le fichier NOMBRE_QUESTIONS
@@ -17,8 +20,4 @@ const EVALUATOR_ID = <%= user.id %>;
   <% Synopsis.all_courant.each do |synopsis| %>
     <%= synopsis.out(user.id) %>
   <% end %>
-</div>
-
-<div>
-  <%= Tag.link(route:"concours/evaluation?view=body_fiches_lecture", text:"Fiches de lecture") %>
 </div>

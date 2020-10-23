@@ -1,26 +1,22 @@
 <div class="fiche-lecture">
-  <div class="header">
+  <div class="header hidden">
     <div class="grand-titre"><%= ecusson %>&nbsp;Concours de Synopsis de L'atelier Icare&nbsp;<%= ecusson %></div>
     <div class="div-annee">Édition <span class="annee"><%= annee_edition %></span></div>
   </div>
 
   <div class="infos-projet">
     <div class="projet-titre">
-      <span class="libelle">TITRE</span>
-      <span class="value"><%= synopsis.titre %></span>
+      <div class="titre"><%= synopsis.titre %></div>
+      <div class="auteurs"><%= auteurs %></div>
     </div>
-    <div class="projet-auteur">
-      <span class="libelle">AUTEUR·E(S)</span>
-      <span class="value"><%= auteurs %></span>
+    <div class="note-totale">
+      <div class="note"><%= total.human_note %></div>
+      <div class="position"><%= position %></div>
     </div>
   </div>
 
-  <div class="note-totale">
-    <span class="libelle">Appréciation finale : </span>
-    <span class="value"><%= total.human_note %> (<%= position %>)</span>
-  </div>
 
-  <div class="detail">
+  <div class="detail hidden">
 
     <div class="divnote note-projet">
       <span class="value note"><%= projet.human_note %></span>

@@ -98,8 +98,11 @@ end #/ total
 def position
   @position ||= begin
     p = synopsis.position
-    pstr = p == 1 ? "1<exp>er</exp>" : "#{p}<exp>e</exp>"
-    pstr = "#{pstr}#{ISPACE}🏆" if p < 4 # => S'il est primé
+    pstr = ""
+    if not p.nil?
+      pstr = p == 1 ? "1<exp>er</exp>" : "#{p}<exp>e</exp>"
+      pstr = "#{pstr}#{ISPACE}🏆" if p < 4 # => S'il est primé
+    end
     pstr
   end
 end #/ position
