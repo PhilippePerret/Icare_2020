@@ -24,7 +24,7 @@ class << self
 REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS = <<-SQL
 SELECT
   cc.concurrent_id, cc.patronyme,
-  cpc.titre, cpc.keywords
+  cpc.*
   FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
   INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
   WHERE cpc.annee = ? AND SUBSTRING(cpc.specs,1,1) = "1"
