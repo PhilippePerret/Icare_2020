@@ -26,11 +26,11 @@ QUESTIONS_REPONSES = [
   },
   {
     question: "Comment seront annoncés les résultats ?",
-    reponse: "Comme l'indique le #{REGLEMENT_LINK}, ces résultats seront annoncés sur le site de l'atelier ainsi que par un mail transmis à toutes et tous les concurrents."
+    reponse: "Comme l'indique le #{REGLEMENT_LINK}, ces résultats seront annoncés sur le site de l'atelier ainsi que par un mail transmis à chaque concurrent."
   },
   {
     question: "Peut-on participer quand on est icarienne ou icarien ?",
-    reponse: "Bien entendu ! :-D L'inscription est même facilitée quand vous êtes icarienne ou icarien"
+    reponse: "Bien entendu ! :-D L'inscription est même facilitée quand vous êtes icarienne ou icarien."
   },
   {
     question: "Faut-il être icarien pour participer ?",
@@ -38,15 +38,15 @@ QUESTIONS_REPONSES = [
   },
   {
     question: "A-t-on plus de chance d'être sélectionné si l'on est icarien ?",
-    reponse: "Nous aimerions vous dire “oui” mais la réponse honnête est “non”. Les synopsis seront vraiment estimés à leur plus juste valeur. Et puis les membres du jury, exception faite de Phil, ne connaissent pas ces icariennes ou icariens ne peuvent donc pas être influencés."
+    reponse: "Nous aimerions vous dire “oui” mais la réponse honnête est “non”. Les synopsis seront estimés à leur plus juste valeur. Et puis les membres du jury, exception faite de Phil, ne connaissent pas ces icariennes ou icariens et ne peuvent donc pas être influencés."
   },
   {
     question: "Quand sera remise la fiche de lecture ?",
-    reponse: "Le délai dépendra de la participation au concours. Il sera donc fixé au moment des résultats (ou peu avant). Quoi qu'il en soit, les organistateurs feront tout pour que cette fiche soit remise dans les trois mois suivant la remise des prix."
+    reponse: "Le délai dépendra de la participation au concours. Il sera donc fixé au moment des résultats (ou peu avant). Quoi qu'il en soit, les organisateurs feront tout pour que cette fiche soit remise dans les trois mois suivant la remise des prix."
   },
   {
     question: "J'ai perdu mon numéro d'inscription, comment le récupérer ?",
-    reponse: "C'est très simple : rejoignez le #{CONCOURS_SIGNUP}, tapez votre adresse mail et cliquez le bouton “#{UI_TEXTS[:bouton_recup_numero]}”."
+    reponse: "C'est très simple : rejoignez le #{CONCOURS_SIGNUP}, tapez votre adresse mail et cliquez sur le bouton “#{UI_TEXTS[:bouton_recup_numero]}”."
   },
   {
     question: "Je ne sais pas produire un fichier PDF… Comment faire ?",
