@@ -20,3 +20,13 @@ dl#prix dt {
     margin-left:1em;
   }
 }
+
+div#description-step-concours {
+  padding:1em 2em;
+  margin:3em 0 4em;
+  border:1px solid;
+  border-radius:0.5em;
+  font-variant:all-small-caps;
+  font-size:1.2em;
+  text-align:center;
+}

@@ -8,6 +8,7 @@ UI_TEXTS.merge!({
   concours_titre_home_page: "Concours de synopsis de l’atelier Icare",
   titre_page_inscription: "Inscription au concours",
   concours_bouton_inscription: "Inscription au concours",
+  concours_btn_signup_next: 'Inscription au prochain concours',
   concours_titre_participant: "Espace personnel",
   #  *** boutons ***
   concours_bouton_signup: "S’inscrire",
@@ -41,12 +42,6 @@ CONCOURS_DATA_FOLDER = File.expand_path(File.join(DATA_FOLDER,'concours')).tap{|
 NOMBRE_QUESTIONS_PATH = File.join(CONCOURS_DATA_FOLDER,'NOMBRE_QUESTIONS')
 
 ANNEE_CONCOURS_COURANTE = Time.now.month < 3 ? Time.now.year : Time.now.year + 1
-CONCOURS_THEME_COURANT = "L'ACCIDENT"
-CONCOURS_THEME_DESCRIPTION = <<-TEXT
-Avant l'accident, après l'accident, pendant l'accident, accident de la route ou de caddie, accident involontaire ou provoqué, peu importe le temps, le lieu, la durée choisis, l'histoire présentée dans le synopsis devra s'articuler autour de cet évènement dramatique.
-TEXT
-
-
 
 DBTBL_CONCOURS = "concours"
 DBTBL_CONCURRENTS = "concours_concurrents"
@@ -69,6 +64,7 @@ DOSSIER_LINK    = Linker.new(route:"concours/dossier", text:"fichier de candidat
 CONCOURS_SIGNUP = Linker.new(route:'concours/inscription', text:"formulaire d'inscription")
 CONCOURS_LOGIN  = Linker.new(route:'concours/identification', text:"formulaire d'identification")
 ESPACE_LINK     = Linker.new(route:'concours/espace_concurrent', text:"espace personnel")
+PALMARES_LINK   = Linker.new(route:'concours/palmares', text:"palmarès #{ANNEE_CONCOURS_COURANTE}")
 
 # Lien conduisant au règlement du concours de l'année en cours
 REGLEMENT_LINK = Linker.new(route:"public/Concours_ICARE_#{ANNEE_CONCOURS_COURANTE}.pdf", target: :blank, text:"Règlement du concours")

@@ -67,8 +67,10 @@ div.errorfield {
 }
 
 form:not(.noform) {
-  display:inline-block;
   background-color:#F7F7F7;
+}
+form:not(.noform):not(.nolimit) {
+  display:inline-block;
 }
 form:not(.inline):not(.noform){
   min-width:50%;

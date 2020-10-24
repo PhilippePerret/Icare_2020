@@ -40,14 +40,21 @@
 require_relative './Tag'
 
 class Linker
-  attr_reader :default_text, :route
+  attr_reader :data, :default_text, :route
   def initialize(withdata)
     @default_text = withdata[:text]
     @route        = withdata[:route]
+    @data = withdata
   end #/ initialize
   def to_str
-    default_template % {route: real_route, text: default_text || route}
+    default_template % alldata.merge(route: real_route, text: default_text || route)
   end #/ to_str
+  def alldata
+    d = data.dup
+    d.merge!(class: nil)  unless d.key?(:class)
+    d.merge!(target: nil) unless d.key?(:target)
+    return d
+  end #/ alldata
   def real_route
     finpath = "#{@path_absolu ? "#{url}/" : ""}#{route}"
     finpath = "#{finpath}?#{@query_string}" if @query_string
@@ -60,19 +67,20 @@ class Linker
     @for_url_online ? App::FULL_URL_ONLINE : App.url
   end #/ url
 
-  def with(data)
-    data = {text: data} if data.is_a?(String)
+  def with(wdata)
+    wdata = {text: wdata} if wdata.is_a?(String)
+    @data = data.merge(wdata)
     @path_absolu    = true if data[:absolute]
     @for_url_online = true if data[:online]
     @query_string   = data[:query_string]
     data.merge!(text: default_text) unless data[:text]
-    default_template % data.merge!(route: real_route)
+    default_template % alldata.merge!(route: real_route)
   end #/ with
   def absolute # pour utilisation avec .with(...) ensuite
     @path_absolu = true
     return self
   end #/ absolute
   def default_template
-    @default_template ||= Tag.link(route: '%{route}', text: '%{text}')
+    @default_template ||= Tag.link(route: '%{route}', text: '%{text}', target: '%{target}', class: '%{class}')
   end #/ default_template
 end #/Linker

@@ -27,7 +27,7 @@ signedup_form.submit_button = UI_TEXTS[:concours_bouton_sidentifier]
 <%
 # Si on est OFFLINE, je présente des identifications possibles en fonction
 # des utilisateurs de la base
-if OFFLINE
+if OFFLINE && user.admin?
 %>
 <pre>
   <% db_exec("SELECT concurrent_id, mail FROM #{DBTBL_CONCURRENTS}").each do |dc| %>

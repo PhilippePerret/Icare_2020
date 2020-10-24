@@ -7,19 +7,7 @@
 
 # Le traitement qu'il faut appliquer À TOUS LES GELS des tests
 DB_REQUEST = <<-SQL.strip
-DROP TABLE IF EXISTS `concours`;
-CREATE TABLE `concours` (
-  annee       VARCHAR(4) NOT NULL,
-  theme       VARCHAR(100) NOT NULL,
-  step        INTEGER(1) NOT NULL DEFAULT 0,
-  prix1       VARCHAR(200),
-  prix2       VARCHAR(200),
-  prix3       VARCHAR(200),
-  prix4       VARCHAR(200),
-  prix5       VARCHAR(200),
-  created_at  VARCHAR(10),
-  updated_at  VARCHAR(10)
-);
+ALTER TABLE `concours` ADD COLUMN `theme_d` TEXT DEFAULT NULL AFTER `theme`;
 SQL
 DB_VALUES = nil
 

@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-20 13:19:25 +0200
+ *    Date dernière modification : 2020-10-24 06:44:08 +0200
  *
  --------------------------------------------------------------------- */
 :root {
@@ -1145,8 +1145,10 @@ div.errorfield {
 }
 
 form:not(.noform) {
-  display:inline-block;
   background-color:#F7F7F7;
+}
+form:not(.noform):not(.nolimit) {
+  display:inline-block;
 }
 form:not(.inline):not(.noform){
   min-width:50%;

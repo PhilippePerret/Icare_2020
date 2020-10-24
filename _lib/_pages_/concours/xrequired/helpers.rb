@@ -12,7 +12,8 @@ class HTML
   # Retourne le code HTML du bouton pour rejoindre le formulaire
   # d'inscription au concours.
   def bouton_formulaire
-    cont = Tag.link(class:'btn main green pd1', text:UI_TEXTS[:concours_bouton_inscription], route:"concours/inscription")
+    btn_key = Concours.current.step < 2 ? :concours_bouton_inscription : :concours_btn_signup_next
+    cont = Tag.link(class:'btn main green pd1', text:UI_TEXTS[btn_key], route:"concours/inscription")
     Tag.div(class:'mt2 mb2 center', text: cont)
   end #/ bouton_formulaire
 
@@ -21,10 +22,10 @@ class HTML
   def bouton_login_or_espace
     if concurrent
       cont = Tag.link(route:"concours/espace_concurrent", text:"Rejoindre votre espace.")
-      Tag.div(class:'right', text:"Vous êtes identifié#{concurrent.femme? ? 'e' : ''}. #{cont}")
+      Tag.div(class:'center small', text:"Vous êtes identifié#{concurrent.femme? ? 'e' : ''}. #{cont}")
     else
       cont = Tag.link(route:"concours/identification", text:UI_TEXTS[:concours_btn_identifiez_vous])
-      Tag.div(class:'right', text: "Déjà inscrite ou inscrit ?… #{cont} !")
+      Tag.div(class:'center small', text: "Déjà inscrite ou inscrit ?… #{cont} !")
     end
   end #/ bouton_login
 

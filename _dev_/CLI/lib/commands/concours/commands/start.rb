@@ -12,7 +12,7 @@ class << self
     puts "  - Envoyer un mail d'annonce à tous les inscrits."
     puts "  - Marquer le démarrage dans les configurations du concours (xrequired/config.json)."
     puts "Pour démarrer le concours, #{'il est impératif de'.rouge} :"
-    puts "  - Avoir défini le thème (constante CONCOURS_THEME_COURANT — et sa description — dans concours/xrequired/constants.rb)"
+    puts "  - Avoir défini le thème (constante Concours.current.theme.upcase — et sa description — dans concours/xrequired/constants.rb)"
     puts "  - Avoir produit le Réglement du concours propre à cette année."
     puts RC*2
     return if not Q.yes?("\tDois-je démarrer le concours de synopsis de l'année #{ANNEE_CONCOURS_COURANTE} ?")

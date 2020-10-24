@@ -20,7 +20,7 @@ feature "Accueil du concours de synopsis" do
     expect(page).to have_css("h3", text: "Objet du concours")
     expect(page).to have_css("h3", text: "Trois Prix")
     expect(page).to have_css("h3", text: "Thème")
-    expect(page).to have_css("span.concours-theme", text: CONCOURS_THEME_COURANT),
+    expect(page).to have_css("span.concours-theme", text: Concours.current.theme.upcase),
       "La page devrait présenter le thème du concours"
     expect(page).to have_css("h3", text: "Fichier de candidature")
     expect(page).to have_link("format du fichier de candidature", href: "concours/dossier"),

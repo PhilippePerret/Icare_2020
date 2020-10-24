@@ -12,12 +12,12 @@
   Deux modèles de document sont téléchargeables sur le site :
 </p>
 
-<p class="center">
-  <%= Tag.link(text:"Format ODF de LibreOffice ou OpenOffice (.odt)", route:"public/concours/modele_fichier_candidature.odt", full: true) %>
-  <%= Tag.link(text:"Format Microsoft Word (.docx)", route:"public/concours/modele_fichier_candidature.docx", full: true) %>
-</p>
+<ul>
+  <li><%= Tag.link(text:"Format ODF de LibreOffice ou OpenOffice (.odt)", route:"public/concours/modele_fichier_candidature.odt", full: true, target: :blank) %></li>
+  <li><%= Tag.link(text:"Format Microsoft Word (.docx)", route:"public/concours/modele_fichier_candidature.docx", full: true, target: :blank) %></li>
+</ul>
 
-<p>Vous pouvez également consulter le <%= Tag.link(text:"modèle PDF donné en exemple", route:"public/concours/ConcoursSynopsisIcare_modele_exemple.pdf", full: true) %>.
+<p>Vous pouvez également consulter le <%= Tag.link(text:"modèle PDF donné en exemple", route:"public/concours/ConcoursSynopsisIcare_modele_exemple.pdf", full: true, target: :blank) %>.
 </p>
 
 
@@ -34,6 +34,7 @@
   <li>mail ayant servi à l'inscription au concours,</li>
   <li>numéro d'inscription (fourni par mail à l'inscription),</li>
   <li>titre de l'histoire,</li>
+  <li>genre de l'histoire (comédie, thriller, anticipation, etc.)</li>
   <li>support de l'histoire (roman, film, théâtre, radio, BD, etc.),</li>
   <li>nombre de signes (espaces comprises) ou nombre de mots (l'une des deux indications suffit).</li>
 </ul>
@@ -67,7 +68,7 @@
 </ul>
 <p>Dans cette partie, l'indication de l'adresse mail fera office de signature.</p>
 
-<p class="right">Consulter le <%= Tag.link(text:"modèle PDF donné en exemple", route:"public/concours/ConcoursSynopsisIcare_modele_exemple.pdf", full: true) %>.
+<p class="right">Consulter le <%= Tag.link(text:"modèle PDF donné en exemple", route:"public/concours/Concours_ICARE_Modele_fichier.pdf", full: true, target: :blank) %>.
 </p>
 
 <h3>Transmission du fichier</h3>

@@ -1,0 +1,36 @@
+<%= description_concours %>
+
+<%= bouton_evaluation if user.evaluateur? %>
+
+<%= description_etape_courante %>
+
+<%= boutons_visiteur %>
+
+<h3>Objet du concours</h3>
+
+<p>Pour cette édition <span class="annee-concours"><%= ANNEE_CONCOURS_COURANTE %></span>, il s'agit d'écrire le SYNOPSIS d'une histoire destinée au cinéma, au roman, à la radio ou à la BD, sur le thème de <%= Concours.current.theme.upcase %> en respectant les contraintes énoncées ci-dessous.</p>
+
+<h3>Trois Prix</h3>
+
+<dl id="prix">
+  <dt class="bold">Premier Prix de l'atelier Icare</dt>
+  <dd><%= Concours.current.formated_prix1 %></dd>
+  <dt class="bold">Deuxième Prix de l'atelier Icare</dt>
+  <dd><%= Concours.current.formated_prix2 %></dd>
+  <dt class="bold">Troisième Prix de l'atelier Icare</dt>
+  <dd><%= Concours.current.formated_prix3 %></dd>
+</dl>
+
+<p class="small">(*) L'histoire développée au cours de ces modules ne sera pas nécessairement celle présentée pour le concours. L’auteur·e aura toute latitude pour choisir celle qu'elle ou il voudra développer.</p>
+
+<h3>Thème</h3>
+
+<p>Le thème choisi pour la session <%= ANNEE_CONCOURS_COURANTE %> est <strong><span class="concours-theme"><%= Concours.current.theme.upcase %></span></strong>.</p>
+<p><%= Concours.current.formated_theme_d %></p>
+
+<h3>Fichier de candidature</h3>
+
+Consultez le <%= Tag.link(text:"format du fichier de candidature", route:"concours/dossier") %> pour vous assurer de respecter toutes les contraintes.
+
+<%= reglement %>
+<%= faq %>

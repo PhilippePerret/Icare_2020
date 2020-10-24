@@ -30,13 +30,14 @@ stepform.submit_button_class = "small btn"
   </div>
 <% else %>
   <%
-  form = Form.new(id:"concours-form", route:route.to_s, class:"nomargin")
+  form = Form.new(id:"concours-form", route:route.to_s, class:"nomargin nolimit", size:1000)
   form.rows = {
     "<op/>" => {type:"hidden", name:"op", value:"save_concours_data"},
     "Thème" => {type:"text", name:"concours_theme", value: concours.theme},
-    "Premier Prix"    => {type:"text", name:"concours_prix1", value: concours.prix1},
-    "Deuxième Prix"   => {type:"text", name:"concours_prix2", value: concours.prix2},
-    "Troisième Prix"  => {type:"text", name:"concours_prix3", value: concours.prix3},
+    "Description" => {type:"textarea", height:140, name:"concours_theme_d", value: concours.theme_d, placeholder:"Description du thème", explication: "Texte pouvant contenir des variables ruby \#{...} qui seront évaluées. Comme pour les Prix ci-dessous."},
+    "Premier Prix"    => {type:"textarea", name:"concours_prix1", value: concours.prix1},
+    "Deuxième Prix"   => {type:"textarea", name:"concours_prix2", value: concours.prix2},
+    "Troisième Prix"  => {type:"textarea", name:"concours_prix3", value: concours.prix3},
   }
   form.submit_button = "Enregistrer"
   %>
