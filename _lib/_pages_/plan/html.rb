@@ -56,6 +56,7 @@ class HTML
 
 #{divGoto(Emoji.get('machine/validator').regular+' Nouveautés', route:'overview/nouveautes')}
 
+#{Concours.pub_box if Concours.current.started?}
 
     HTML
   end

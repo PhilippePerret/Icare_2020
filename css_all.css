@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-24 06:44:08 +0200
+ *    Date dernière modification : 2020-10-24 09:15:21 +0200
  *
  --------------------------------------------------------------------- */
 :root {
@@ -37,7 +37,7 @@
     bottom:0;
     left:0;
     width: 200px;
-    z-index:200;
+    z-index:210;
   }
 
 }

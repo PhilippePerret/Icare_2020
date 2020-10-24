@@ -41,23 +41,13 @@ XMODULES_FOLDER = File.join(CONCOURS_FOLDER,'xmodules')
 CONCOURS_DATA_FOLDER = File.expand_path(File.join(DATA_FOLDER,'concours')).tap{|p|`mkdir -p #{p}`}
 NOMBRE_QUESTIONS_PATH = File.join(CONCOURS_DATA_FOLDER,'NOMBRE_QUESTIONS')
 
-ANNEE_CONCOURS_COURANTE = Time.now.month < 3 ? Time.now.year : Time.now.year + 1
+ANNEE_CONCOURS_COURANTE = Concours.annee_courante
 
-DBTBL_CONCOURS = "concours"
+DBTBL_CONCOURS = Concours.table
 DBTBL_CONCURRENTS = "concours_concurrents"
 DBTBL_CONCURS_PER_CONCOURS = "concurrents_per_concours"
 
 REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
-
-CONCOURS_KNOWLEDGE_VALUES = [
-  ["none", "Vous avez entendu parler de ce concours par…"],
-  ["google", "une recherche google"],
-  ["forum", "un forum d'écriture"],
-  ["facebook", "un groupe Facebook"],
-  ["someone", "bouche à oreille"],
-  ["medias", "les médias"],
-  ["autre", "un autre moyen"]
-]
 
 CONCOURS_LINK   = Linker.new(route:"concours/accueil", text:"Concours de Synopsis de l'atelier ICARE")
 DOSSIER_LINK    = Linker.new(route:"concours/dossier", text:"fichier de candidature")

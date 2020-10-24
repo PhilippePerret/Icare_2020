@@ -41,6 +41,8 @@ unless SELF_LOADED
   trace(id:"LOADING", message:route.to_s,data:Tracer.params_added())
 end
 
+# Pour le concours de synopsis
+require './_lib/_pages_/concours/xrequired/Concours_mini.rb'
 
 # NOTE Dans ce required.rb, user n'est pas encore défini. Il le sera seulement
 # dans User.init appelé par App.init

@@ -11,14 +11,7 @@
 <div id="air-sous-bandeau">&nbsp;</div>
 <%= Citation.rand.out %>
 
-<!--
-
-<a id="annonce" class="overbox" href="concours/accueil">
-  <span>Concours 2021</span>
-  <span class="spacer">de synopsis</span>
-</a>
-
--->
+<%= Concours.pub_box if Concours.current.started? %>
 
 <div id="actualites">
   <div class="titre">dernières activités</div>

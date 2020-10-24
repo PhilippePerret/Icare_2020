@@ -8,3 +8,14 @@ ERRORS.merge!({
   mail_invalide: "Le mail est invalide…",
   mail_too_long: "Ce mail est trop long…",
 })
+
+CONCOURS_KNOWLEDGE_VALUES = [
+  ["none", "Vous avez entendu parler de ce concours par…"],
+  ["google", "une recherche google"],
+  ["forum", "un forum d'écriture"],
+  ["icare", "l'atelier Icare"],
+  ["facebook", "un groupe Facebook"],
+  ["someone", "bouche à oreille"],
+  ["medias", "les médias"],
+  ["autre", "un autre moyen"]
+]
