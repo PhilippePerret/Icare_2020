@@ -150,7 +150,7 @@
       :text: Quai des Docs
       :success: "contient un block menant au Quai des docs"
     - :tag: a.goto[href="outils/home"]
-      :text: Outils d’écriture
+      :text: Outils écriture
       :success: "contient un block menant aux outils d'écriture"
     - :tag: a.goto[href="aide/home"]
       :text: Aide
@@ -164,8 +164,8 @@
     - :tag: a.goto[href="overview/nouveautes"]
       :text: Nouveautés
       :success: "contient un block menant aux nouveautés"
-    - :tag: a.goto[href="concours/home"]
-      :text: Concours
+    - :tag: a.goto[href="concours/accueil"]
+      :text: CONCOURS
       :success: "contient un block menant au concours de synopsis"
     # Après s'être assuré que tous les liens s'y trouvaient, on joue
     # chaque block
@@ -211,7 +211,7 @@
       :success: On ne peut pas rejoindre le quai des docs sans être identifié
     - :doit: |
         within("section#footer"){click_on("plan")}
-        click_on("Outils d’écriture")
+        click_on("Outils écriture")
     - :tag: h2.page-title
       :text: Outils d’écriture
       :success: On peut rejoindre la liste des outils d’écriture

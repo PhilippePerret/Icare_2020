@@ -1,6 +1,7 @@
 #### Table des données du concours
 
 ~~~SQL
+
 DROP TABLE IF EXISTS `concours`;
 CREATE TABLE `concours` (
   annee       VARCHAR(4) NOT NULL,
@@ -15,11 +16,8 @@ CREATE TABLE `concours` (
   created_at  VARCHAR(10),
   updated_at  VARCHAR(10)
 );
-~~~
 
-~~~SQL
-ALTER TABLE `concours` ADD COLUMN `theme_d` TEXT DEFAULT NULL AFTER `theme`;
-SQL
+~~~
 
 La table qui contient les participants (qui peuvent participer à plusieurs
 concours)

@@ -40,7 +40,7 @@ class HTML
 
 #{aGoto(Emoji.get('humain/fille-rousse-carre').regular+Emoji.get('humain/homme-marron-moustache').regular+Emoji.get('humain/femme-voilee').regular+Emoji.get('humain/extraterrestre').regular+Emoji.get('humain/homme-barbe-noire').regular+Emoji.get('humain/jeune-homme-blond').regular, route:'overview/icariens')}
 
-#{divGoto(Emoji.get('objets/blason').regular+' CONCOURS', route:'concours/accueil', exergue:true)}
+#{aGoto(Emoji.get('objets/blason').regular+' CONCOURS', route:'concours/accueil', exergue:true)}
 
 #{aGoto(Emoji.get('objets/lettre-mail').regular+' Contact', route:'contact/mail')}
 

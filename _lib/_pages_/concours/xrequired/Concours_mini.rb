@@ -8,28 +8,29 @@ class Concours
 #
 # ---------------------------------------------------------------------
 class << self
-  def current
-    @current ||= new(annee_courante)
-  end #/ current
-  def annee_courante
-    @annee_courante ||= Time.now.month < 3 ? Time.now.year : Time.now.year + 1
-  end #/ annee_courante
+def current
+  @current ||= new(annee_courante)
+end #/ current
+def annee_courante
+  @annee_courante ||= Time.now.month < 3 ? Time.now.year : Time.now.year + 1
+end #/ annee_courante
 
-  # OUT   Boite à coller en bas de la page pour rejoindre le concours
-  def pub_box
-    @pub_box ||= begin
-      <<-HTML
-  <a id="annonce" class="overbox" href="concours/accueil">
-    <span>Concours 2021</span>
-    <span class="spacer">de synopsis</span>
-  </a>
-    HTML
-    end
-  end #/ pub_box
+# OUT   Boite à coller en bas de la page pour rejoindre le concours
+def pub_box
+  @pub_box ||= begin
+    <<-HTML
+<a id="annonce" class="overbox" href="concours/accueil">
+  <span>Concours 2021</span>
+  <span class="spacer">de synopsis</span>
+</a>
+  HTML
+  end
+end #/ pub_box
 
-  def table
-    @table ||= "concours"
-  end #/ table
+def table
+  @table ||= "concours"
+end #/ table
+
 end # /<< self
 # ---------------------------------------------------------------------
 #

@@ -5,6 +5,12 @@
 # Ignorer le fichier développement
 _dev_/
 
+# Ignore tous les tests
+spec/
+
+# Ignore le dossier temporaire
+tmp/
+
 # Ignorer les fichiers de base
 .htaccess
 index.rb

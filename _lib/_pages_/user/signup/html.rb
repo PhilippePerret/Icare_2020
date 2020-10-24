@@ -17,6 +17,6 @@ class HTML
               deserb('signup_ok', self)
             else
               signup_form
-            end + (Concours.pub_box if Concours.current.started?)
+            end + (Concours.current.started? ? Concours.pub_box : "")
   end
 end #/HTML

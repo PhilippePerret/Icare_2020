@@ -25,6 +25,10 @@ QUESTIONS_REPONSES = [
     reponse: "Tout à fait. Il suffit, dans le #{DOSSIER_LINK}, d'indiquer le patronyme des co-auteur·e·s."
   },
   {
+    question: "Peut-on suivre un module coaching intensif pour préparer le concours ? :-)",
+    reponse: "LOL. Nous n'avions pas pensé à cette éventualité, mais oui, bien sûr, il est tout à fait autorisé de le faire puisque rien n'interdit dans le règlement de présenter le synopsis d'un projet développé à l'atelier."
+  },
+  {
     question: "Comment seront annoncés les résultats ?",
     reponse: "Comme l'indique le #{REGLEMENT_LINK}, ces résultats seront annoncés sur le site de l'atelier ainsi que par un mail transmis à chaque concurrent."
   },

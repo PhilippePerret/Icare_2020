@@ -1,5 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_relative './Concours_mini'
+
 require './_lib/required/__first/constants/paths'
 require './_lib/required/__first/helpers/Linker'
 
