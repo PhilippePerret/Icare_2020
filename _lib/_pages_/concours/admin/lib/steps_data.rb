@@ -14,10 +14,11 @@ STEPS_DATA[0].merge!(operations:[
   {name:"Le changement du step modifie automatiquement l'affichage"}
 ])
 STEPS_DATA[1].merge!(operations: [
-  {name:"Réglage des configurations (utiles ?…)", info:true},
+  {name:"Accueil : affichage du panneau avec le nombre d'inscrits, le thème et l'échéance etc.", info:true},
+  {name:"Espace personnel : possibilité d'envoyer son fichier", info:true},
+  {name:"Envoi du mail d'annonce de lancement à tous les icariens", method: :send_mail_icariens_annonce_start},
   {name:"Envoi du mail d'annonce de lancement à tous les concurrents", method: :send_mail_concurrents_annonce_start},
-  {name:"Envoi du mail d'annonce de lancement à tous les membres du jury", method: :send_mail_jury_annonce_start},
-  {name:"À présent, le formulaire pour envoyer son dossier est visible", info:true}
+  {name:"Envoi du mail d'annonce de lancement à tous les membres du jury", method: :send_mail_jury_annonce_start}
 ])
 STEPS_DATA[2].merge!(operations:[
   {name:"Envoi du mail aux concurrents annonçant l'échéance finale"},

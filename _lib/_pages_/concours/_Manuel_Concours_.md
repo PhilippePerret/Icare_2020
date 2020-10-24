@@ -20,3 +20,26 @@ L'étape courante du concours détermine là où on se trouve du concours. Elle 
 |      |                            | *action* | Mail de fin de concours, remerciements aux concurrents, annonce de la prochaine session.<br />Remerciements aux membres du jury. |
 | 9    | Concours nettoyé           | *état*   | Les éléments du concours sont nettoyés pour permettre le lancement et le traitement du prochain concours. |
 
+
+
+### Opérations pour chaque étape
+
+On peut définir les opérations et les informations à donner à chaque passage d’étape dans le fichier [steps_data](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/admin/lib/steps_data.rb). On trouve par exemple :
+
+~~~ruby
+STEPS_DATA = {
+  ...
+  5 => {name:"Le nom commun", name_current:"Nom quand étape courante", name_done:"Nom quand achevée"
+    operations: [
+    	{name:"Nom de l'opération qui doit jouer la méthode :method", method: :ma_methode_de_cinq}, # (1)
+      {name:"Nom de l'information à afficher", info: true}, # (2)
+    ]
+    }
+  }
+~~~
+
+
+
+(1) Pour définir une méthode à jouer lorsque l'on passe à cette étape. Cette méthode doit être définie (avec argument `options`) dans le fichier `concours/xmodules/admin/operations/step_operations/step_X.rb` ([step_5.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/xmodules/admin/operations/step_operations/step_5.rb) pour l’étape 5).
+
+(2) Pour définir une ligne informative qui donnera juste une information, par exemple en disant ce que ce passage à l’étape va entrainer comme changement sur l’espace personnel des concurrents, sur la page d’accueil, etc.

@@ -60,7 +60,6 @@ class ContainerClass
       @items ||= {}
       where = where_clausize(filtre)
       cmd   = "SELECT * FROM #{table}#{where}"
-      log("CMD Find : #{cmd}")
       db_exec(cmd).each do |ditem|
         item = new(ditem[:id])
         item.data= ditem
@@ -73,7 +72,11 @@ class ContainerClass
     # Pour pouvoir utiliser la méthode <classe>.collect qui va boucler
     # sur tous les éléments. Noter que cette méthode instancie TOUS les
     # éléments de la base de données, donc il faut y aller mollo.
-    def collect(filtre = nil)
+    # IN    options   Table d'options
+    #                 :raw      Si true, on ne renvoie pas des instances mais
+    #                           des tables de données telles que renvoyées par
+    #                           db_exec
+    def collect(filtre = nil, options = nil)
       order_by = filtre && (filtre.delete(:order) || filtre.delete(:order_by))
       where = where_clausize(filtre)
       where = "#{where} ORDER BY #{order_by}" unless order_by.nil?
@@ -83,10 +86,16 @@ class ContainerClass
         erreur(e.message)
         return []
       end
-      allcollect.collect do |ditem|
-        item = new(ditem[:id])
-        item.data = ditem
-        yield item
+      if options && options[:raw]
+        allcollect.collect do |ditem|
+          yield ditem
+        end
+      else
+        allcollect.collect do |ditem|
+          item = new(ditem[:id])
+          item.data = ditem
+          yield item
+        end
       end
     end #/ collect
 

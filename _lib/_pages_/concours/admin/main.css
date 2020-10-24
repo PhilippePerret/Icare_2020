@@ -2,3 +2,10 @@ div#concours-resultat {
   padding:1em;
   margin-top:1em;
 }
+
+
+div.etape-titre {
+  font-variant:all-small-caps;
+  font-size:1.3em;
+  font-weight:bold;
+}

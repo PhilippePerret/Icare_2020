@@ -26,4 +26,12 @@ class HTML
     concours.send(op.to_sym)
   end #/ run_operation
 
+  def res
+    @res ||= []
+  end #/ res
+
+  def resultat
+    res.join(BR)
+  end #/ resultat
+
 end #/HTML

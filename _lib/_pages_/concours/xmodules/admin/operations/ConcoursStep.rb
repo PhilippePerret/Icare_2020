@@ -24,7 +24,7 @@ end #/ initialize
 #   Méthodes d'action
 # ---------------------------------------------------------------------
 def run_operations(options = nil)
-  concours.res << "ÉTAPE #{data[:name_current]}"
+  html.res << Tag.div(class:'etape-titre', text:"ÉTAPE #{numero}. #{name_current}")
   require_relative "./step_operations/step_#{data[:step]}"
   operations.each { |dop| dop.run(options) }
 end #/ run_operations
@@ -35,6 +35,9 @@ end #/ run_operations
 def name ; data[:name] end
 def name_current ; data[:name_current] end
 def name_done ; data[:name_done] end
+def numero ; data[:step] end
+alias :step :numero
+alias :id :numero
 
 def operations; data[:operations].collect{|dop|Operation.new(concours, self, dop)} end
 
@@ -63,9 +66,9 @@ def initialize(concours, istep, data)
 end #/ initialize
 def run(options = nil)
   if method?
-    send(method)
+    send(method, options)
   elsif info?
-    concours.res << "🥁#{ISPACE}#{name}"
+    html.res << "🥁#{ISPACE}#{name}"
   end
 end #/ run
 def method?
