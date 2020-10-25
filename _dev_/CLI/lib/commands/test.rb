@@ -22,7 +22,9 @@ class << self
     # Le premier sert uniquement au lancement
     visit(URL_BASE)
     clear
-    puts "=== TEST MINIMAL DU SITE DISTANT #{URL_BASE} ===#{RC}===".bleu
+    puts "=== TEST MINIMAL DU SITE DISTANT #{URL_BASE} ===".bleu
+    puts "===".bleu
+    puts "=== Data: ./_dev_/CLI/lib/commands/test/data_urls.yaml".bleu
     puts "=== OPTIONS ===".bleu
     [
       only_route ? "Seulement la route : #{only_route}" : "Toutes les routes",

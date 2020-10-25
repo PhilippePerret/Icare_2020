@@ -190,6 +190,9 @@ class SeekAndDo
 
   def do_operation
     eval(doit)
+  rescue Exception => e
+    # En cas d'impossibilité d'exécuter l'opération
+    affiche_failure(e.message)
   end #/ do_operation
 
 private
