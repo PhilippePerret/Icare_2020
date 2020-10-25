@@ -145,7 +145,9 @@ class << self
       required.each do |prop|
         params.merge!(prop => "") unless params.key?(prop)
       end
-      if params.key?(:route) && params[:full]
+      if params.key?(:route) && params[:distant]
+        params[:route] = "#{App::FULL_URL_ONLINE}/#{params[:route]}"
+      elsif params.key?(:route) && params[:full]
         params[:route] = "#{App::URL}/#{params[:route]}"
       end
       params
