@@ -19,23 +19,35 @@ class << self
     else
       rapport("Nombre d'actualités pour la veille : #{actualites_veille.count}")
     end
-    # Les données pour le mail
-    datamail = {subject:"Activité du #{Time.veille.to_s(heure:false)}", message: nil}
-    # puts "datamail quotidien : #{datamail.inspect}"
+    begin
+      # Les données pour le mail
+      datamail = {
+        subject:"Activité du #{Time.veille.to_s(heure:false)}"
+      }
+      # puts "datamail quotidien : #{datamail.inspect}"
 
-    # Envoyer le mail à l'administrateur
-    datamail.merge!({to: PHIL[:mail], message: mail_quotidien  % {pseudo: 'Phil'}})
-    Mail.send(datamail)
+      # Envoyer le mail à l'administrateur
+      datamail.merge!({to: PHIL[:mail], message: (mail_quotidien % {pseudo: 'Phil'})})
+      begin
+        Mail.send(datamail)
+      rescue Exception => e
+        rapport("ERREUR : #{e.message}")
+      end
 
-    nombre_envois_quotidien = 0
-    CJUser.each do |cuser|
-      next if cuser.destroyed?
-      next unless cuser.mail_quotidien?
-      datamail.merge!(to:cuser.mail, message:(mail_quotidien % {pseudo: cuser.pseudo}))
-      Mail.send(datamail)
-      nombre_envois_quotidien += 1
+      nombre_envois_quotidien = 0
+      CJUser.each do |cuser|
+        next if cuser.destroyed?
+        next unless cuser.mail_quotidien?
+        next if cuser.mail.nil? # L'ancien enregistrement #99 par exemple
+        datamail.merge!(to:cuser.mail, message:(mail_quotidien % {pseudo: cuser.pseudo}))
+        Mail.send(datamail)
+        nombre_envois_quotidien += 1
+      end
+      rapport("Nombre d'envois des actualités quotidiennes : #{nombre_envois_quotidien}")
+    rescue Exception => e
+      rapport("# ERREUR : #{e.message}")
+      rapport("# BACTRACE ERREUR : #{e.backtrace.join("\n")}")
     end
-    rapport("Nombre d'envois des actualités quotidiennes : #{nombre_envois_quotidien}")
   end #/ mail_quotidien
 
   def traite_mail_hebdomadaire
