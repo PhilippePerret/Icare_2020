@@ -1,6 +1,10 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class Route
+ROUTES_SHORTCUTS = {
+  'concours'  => 'concours/accueil',
+  'bureau'    => 'bureau/home'
+}
 class << self
 
   # L'instance Route courante
@@ -42,7 +46,17 @@ end #/<< self
 # ---------------------------------------------------------------------
 attr_reader :route, :route_init
 def initialize init_route
-  @route_init = init_route
+  unless init_route.nil?
+    # Voir si init_route n'est pas un raccourci.
+    # Cf. la [Note 001] dans le manuel (icare read manuel)
+    checked_route = init_route.dup
+    checked_route = checked_route[0...-1] if checked_route.end_with?('/')
+    if ROUTES_SHORTCUTS.key?(checked_route)
+      @route_init = ROUTES_SHORTCUTS[checked_route]
+    else
+      @route_init = init_route
+    end
+  end
 end
 
 def to_s
