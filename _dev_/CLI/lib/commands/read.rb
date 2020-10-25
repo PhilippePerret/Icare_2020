@@ -12,7 +12,7 @@ DATA_WHAT_READ = [
   {name:'Journal', value: :log},
   {name:'Journal', value: :cronjob},
   {name:'Traceur', value: :tracer},
-  {name:'Manuel', value: :manuel_pdf},
+  {name:'Manuel', value: :manuel},
   {name:'Dossier…', value: :folder},
   {name:'Fichier…', value: :file},
   {name:'Règlement concours', value: :reglement_concours},
@@ -65,7 +65,7 @@ class << self
     read_it(path)
   end #/ read_folder
   # Pour ouvrir le manuel développeur
-  def read_manuel_pdf
+  def read_manuel
     `open "#{File.join(DEV_FOLDER,'Manuel','Manuel_developper.pdf')}"`
   end #/ manuel_pdf
 
