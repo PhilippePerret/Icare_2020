@@ -1,43 +1,12 @@
 <%# frozen_string_literal: true %>
-<%
-if not user.guest?
-  # On passe par ici si l'icarien est identifié
-  # S'il est identifié, soit il est déjà inscrit
-  # S'il est déjà inscrit, on lui indique qu'il est déjà inscrit
-  # Sinon, on lui propose de s'inscrire par un simple click
-
-  if user.concurrent_concours?
-%>
-  <p><%= user.pseudo %>, vous êtes déjà inscrit<%= user.fem(:e) %> au concours de synopsis. Il vous suffit de rejoindre votre <%= ESPACE_LINK %> pour voir les informations courantes ou envoyer votre fichier de candidature.</p>
-
-  <%
-    else
-      # Si ça n'est pas un icarien déjà inscrit
-  %>
-    <p><%= user.pseudo %>, pour vous inscrire au concours du synopsis, il vous suffit de cliquer sur le bouton ci-dessous.</p>
-    <p class="center"><a id="btn-signup-icarien" href="<%= route.to_s %>?op=signupconcours" class="btn main big-air">S’inscrire au concours de synopsis</a></p>
-
+<% if user.icarien? %>
+  <% if user.concurrent? %>
+    <%= panneau_icarien_concurrent %>
+  <% else %>
+    <%= panneau_signup_pour_icarien %>
   <% end %>
-<%
-
-  else
-    # Si c'est un visiteur quelconque
-%>
-<%
-form = Form.new(id:"concours-signup-form", route:route.to_s)
-form.rows = {
-  "Votre patronyme" => {name:"p_patronyme", type:"text", placeholder: "Prénom Nom", errorable: true},
-  "Votre mail"      => {name:"p_mail", type:"text", placeholder:"votre@mail.com", errorable: true},
-  "Confirmation"    => {name:"p_mail_confirmation", type:"text", placeholder:"votre@mail-confirmé.com", errorable: true},
-  "Votre genre"     => {name:"p_sexe", type:"select", values:[["F","féminin"], ["H","masculin"], ["N","neutre"]]},
-  "<Règlement/>"    => {type:"checkbox", name: "p_reglement", values: "En cochant cette case, vous acceptez dans leur intégralité tous les termes du règlement du présent concours (consulter le #{REGLEMENT_LINK})."},
-  "Fiche de lecture"=> {type:"checkbox", name: "p_fiche_lecture", values: "Oui, je désire recevoir la fiche de lecture du jury concernant mon projet (après les résultats)."},
-  "Connu par…"      => {type:'select', values: CONCOURS_KNOWLEDGE_VALUES, name: 'p_knowledge'}
-}
-form.submit_button = UI_TEXTS[:concours_bouton_signup]
-%>
-<legend>Première inscription au concours</legend>
-<%= form.out %>
-
-<% end # Si ce n'est pas un icarien
-%>
+<% elsif Concours.ancien_concurrent? %>
+<%= panneau_ancien_concurrent %>
+<% else %>
+  <%= panneau_visiteur_quelconque %>
+<% end %>

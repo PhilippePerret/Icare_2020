@@ -1,0 +1,9 @@
+<%
+# frozen_string_literal: true
+=begin
+  Panneau pour un icarien qui n'est pas encore inscrit
+  Un simple bouton lui permet de s'inscrire.
+=end
+%>
+<p><%= user.pseudo %>, pour vous inscrire au concours du synopsis, il vous suffit de cliquer sur le bouton ci-dessous.</p>
+<p class="center"><a id="btn-signup-icarien" href="<%= route.to_s %>?op=signupconcours" class="btn main big-air">S’inscrire au concours de synopsis</a></p>

@@ -33,4 +33,18 @@ class HTML
     @body = deserb("form", self)
   end # /build_body
 
+
+  def panneau_icarien_concurrent
+    deserb("./partials/panneau_icarien_concurrent", self)
+  end
+  def panneau_signup_pour_icarien
+    deserb("./partials/panneau_signup_pour_icarien", self)
+  end
+  def panneau_visiteur_quelconque
+    deserb("./partials/panneau_visiteur_quelconque", self)
+  end
+  def panneau_ancien_concurrent
+    deserb("./partials/panneau_ancien_concurrent", self)
+  end
+
 end #/HTML
