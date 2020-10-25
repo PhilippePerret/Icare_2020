@@ -34,7 +34,12 @@ class << self
     params[:new] && params.merge!(target: '_blank')
     params[:target] ||= '_self'
     params[:titre] = params[:text] if params.key?(:text)
-    params = normalize_params(params, [:id, :route, :class, :titre, :title, :target, :style])
+    params = normalize_params(params, [:id, :route, :class, :title, :target, :style])
+    # Si le mail ne contient pas de titre (de texte), on lui met l'adresse
+    # elle-même
+    if not params.key?(:titre)
+      params.merge!(titre: params[:route])
+    end
     (TAG_LIEN % params)
   end #/ lien
   alias :link :lien
@@ -150,7 +155,7 @@ class << self
       elsif params.key?(:route) && params[:full]
         params[:route] = "#{App::URL}/#{params[:route]}"
       end
-      params
+      return params
     end #/ normalize_params
 end # /<< self
 end #/Tag
