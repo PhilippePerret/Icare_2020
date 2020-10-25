@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-24 09:15:21 +0200
+ *    Date dernière modification : 2020-10-25 02:48:06 +0100
  *
  --------------------------------------------------------------------- */
 :root {
@@ -415,6 +415,27 @@ div.document h2 {
 }
 div.document h3 {
   font-size:1.2em;
+}
+
+/*
+  Bloc encadrant une simulation
+  Surtout utiliser en administration, avant l'envoi de messages par exemple
+*/
+div.simulation {
+  border:1px solid green;
+  padding:1em;
+  background-color:#DFD;
+  position:relative;
+}
+div.simulation:before {
+  content:"SIMULATION";
+  padding:2px 8px;
+  position:absolute;
+  font-size:10pt;
+  background-color:green;
+  color:white;
+  top:10px;
+  left:-40px;
 }
 div.state-list {
   position:relative;
