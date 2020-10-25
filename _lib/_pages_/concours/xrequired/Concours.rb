@@ -34,6 +34,17 @@ def formated_prix3
   @formated_prix3 ||= eval("%Q(#{prix3})")
 end #/ formated_prix3
 
+def jury_members
+  @jury_members ||= begin
+    require './_lib/data/secret/phil'
+    require './_lib/data/secret/marion'
+    [
+      {pseudo: "Phil", mail: PHIL_MAIL, sexe:'H'},
+      {pseudo: "Marion", mail: MARION_MAIL, sexe:'F'}
+    ]
+  end
+end #/ jury_members
+
 # ---------------------------------------------------------------------
 #
 #   Propriétés volatiles
@@ -42,6 +53,24 @@ end #/ formated_prix3
 def nombre_concurrents
   @nombre_concurrents ||= db_count(DBTBL_CONCURS_PER_CONCOURS, {annee: annee})
 end #/ nombre_concurrents
+
+# ---------------------------------------------------------------------
+#
+#   Dates et helpers de date
+#
+# ---------------------------------------------------------------------
+
+def date_echeance
+  @date_echeance ||= Time.new(annee, 3, 1)
+end #/ date_echeance
+
+def date_fin_preselection
+  @date_preselection ||= Time.new(annee, 4, 15)
+end #/ date_preselection
+
+def date_palmares
+  @date_palmares ||= Time.new(annee, 6, 1)
+end #/ date_palmares
 
 # ---------------------------------------------------------------------
 #

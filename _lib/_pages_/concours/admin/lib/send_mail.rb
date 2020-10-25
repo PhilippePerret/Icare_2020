@@ -33,7 +33,7 @@ class << self
         dd = sexize_destinataire_properties(dd) if dd.key?(:sexe)
         Mail.send(to: dd[:mail], subject:mail_subject, message:(message % dd))
       end
-      message("#{destinataires.count} messages envoyés.")
+      html.res << "= #{destinataires.count} messages envoyés. ="
     end
   end #/ send
 

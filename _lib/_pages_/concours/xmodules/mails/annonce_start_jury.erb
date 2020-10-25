@@ -1,0 +1,17 @@
+<%
+subject("Lancement officiel du Concours de synopsis")
+concours = Concours.current
+%>
+<p>Bonjour %{pseudo},</p>
+<p>Je suis heureux de vous annoncer l'ouverture officielle de la session <%= Concours.annee_courante %> du <%= Tag.link(text:"concours de synopsis de l'atelier Icare", route:"concours", distant: true) %> auquel vous participez en qualité de juré%{e}.</p>
+<p>Encore une fois, nous vous en remercions.</p>
+<p>Voici un petit échéancier à titre de rappel :</p>
+<ul>
+  <li><%= formate_date(concours.date_echeance) %> : échéance de remise des fichiers de candidature,</li>
+  <li><%= formate_date(concours.date_fin_preselection) %> : fin de la pré-sélection (les 10 synopsis retenus vous sont remis)</li>
+  <li><%= formate_date(concours.date_palmares) %> : fin annonce du palmarès</li>
+</ul>
+<p>N'hésitez pas à contacter Phil pour toute question relative au concours.</p>
+<p>Nous vous tiendrons informé%{e} régulièrement de l'avancée des dépôts.</p>
+<p>D'ici là, bien à vous,</p>
+<p>L'administration de l'atelier Icare</p>
