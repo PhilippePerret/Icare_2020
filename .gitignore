@@ -23,3 +23,5 @@ tmp/forms/
 
 spec/support/Gel/gels/
 cronjob/*.log
+
+cronjob/data/

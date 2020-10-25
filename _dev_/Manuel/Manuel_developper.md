@@ -1047,19 +1047,6 @@ On peut les fabriquer facilement avec le fichier [./\_dev\_/Emoji/show.html](/Us
 
 
 
-### Constantes LIENS fréquents
-
-
-
-#### Liens de retour (pour revenir à une partir principale)
-
-~~~ruby
-RETOUR_BUREAU		# Pour retourner au bureau (avec le signe ↩︎ devant)
-RETOUR_PROFIL		# Pour retourner au profil (avec le signe ↩︎ devant)
-~~~
-
-
-
 ### Contenu de la page
 
 Le plus simple est d’écrire le contenu, le texte, dans le fichier `body.erb` ou `body.md` qui peut se trouver à la racine du dossier, et sera  appelé par :
@@ -1098,61 +1085,22 @@ On peut citer notamment ces méthodes et classes indispensables.
 
 ### `Tag`, builder de balises
 
-La classe `Tag`, définies dans [helpers/Tags.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tag.rb), permet de créer très facilement des liens à l’aide de la méthode :
+La classe `Tag`, définies dans [helpers/Tags.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/helpers/Tag.rb), permet de créer très facilement des balises à l’aide de la méthode :
 
 ~~~ruby
-Tag.<type tage>({<params>})
+Tag.<type balise>({<params>})
 ~~~
 
 Par exemple :
 
 ~~~ruby
-lien = Tag.link({route:"ma/route", titre:"Suivre ma route", class:'class-du-lien'})
+lien = Tag.div(class:"ma-class", text:"Le contenu du div")
 ~~~
 
 Voir dans le fichier ci-dessus toutes les méthodes utilisables.
 
+Pour les tags propres aux liens, cf. [Les Liens](#liens).
 
-
-#### Lien vers le bureau
-
-~~~ruby
-Tag.lien_bureau([titre])
-# Note : il vaut mieux ne pas utiliser `[titre]` pour avoir un picto avec "Bureau"
-~~~
-
-
-
-#### Lien vers des routes connues
-
-On peut obtenir des liens vers des routes connues grâce à la méthode `Tag.route`, en passant en premier argument soit un raccourci de route (par exemple `:aide` pour l’aide) soit une route explicite.
-
-Les raccourcis de route sont définis dans le fichier [./_lib/required/__first/constants/routes.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/routes.rb).
-
-On utilise alors :
-
-~~~ruby
-Tag.route(:<route id>[, "titre", {options}])
-~~~
-
-> Dans `options`, on peut par exemple indiquer `full: true` pour créer un URL entière qui pourra être utilisée dans les mails.
->
-> Noter que c’est le cas, de manière générale, avec toutes les méthodes générant des liens, à commencer par `Tag.lien`.
-
-
-
-#### Lien « retour » pour titre
-
-Pour définir un lien à ajouter au titre des pages, ressemblant à :
-
-
-
-… on utilise la méthode :
-
-~~~ruby
-Tag.retour(:route, :titre)
-# Les deux arguments sont obligatoire
-~~~
 
 
 
@@ -1318,6 +1266,92 @@ Si les données contenues dans la **StateList** sont modifiables, on peut ajoute
 ~~~
 
 Dans les `{options}`, on peut définir une `:class` supplémentaire ou un `:title` qui apparaitra quand on glisse la souris sur le bouton.
+
+---
+
+<a name="liens"></a>
+
+## Les Liens
+
+Cette partie contient tout ce qui concerne les liens et leur gestion.
+
+### Helper de liens (Tag.link)
+
+La classe `Tag` permet de produire des liens facilement :
+
+~~~ruby
+lien = Tag.link(route:"ma/route", text:"Suivre ma route")
+~~~
+
+On peut ajouter à la table d'arguments :
+
+~~~text
+:class
+	La ou les classes CSS du lien. P.e. "btn" pour un bouton
+	
+:distant		true/false
+		Si TRUE, c'est l'adresse distante complète qui est utilisée.
+		
+:full   true/false		
+		Pour écrire le lien en entier, par exemple pour un mail. Noter que
+		:distant ci-dessus ne fait pas exactement la même chose. Par exemple,
+		pour les tests, il faut utiliser :full pour que les liens soient 
+		locaux et puissent être testés en local.
+~~~
+
+
+#### Lien vers le bureau
+
+~~~ruby
+Tag.lien_bureau([titre])
+# Note : il vaut mieux ne pas utiliser `[titre]` pour avoir un picto avec "Bureau"
+~~~
+
+
+### Constantes LIENS fréquents
+
+
+
+#### Liens de retour (pour revenir à une partir principale)
+
+~~~ruby
+RETOUR_BUREAU		# Pour retourner au bureau (avec le signe ↩︎ devant)
+RETOUR_PROFIL		# Pour retourner au profil (avec le signe ↩︎ devant)
+~~~
+
+On peut aussi obtenir des liens vers des routes connues grâce à la méthode `Tag.route`, en passant en premier argument soit un raccourci de route (par exemple `:aide` pour l’aide) soit une route explicite.
+
+Les raccourcis de route sont définis dans le fichier [./_lib/required/__first/constants/routes.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/required/__first/constants/routes.rb).
+
+On utilise alors :
+
+~~~ruby
+Tag.route(:<route id>[, "titre", {options}])
+~~~
+
+> Dans `options`, on peut par exemple indiquer `full: true` pour créer un URL entière qui pourra être utilisée dans les mails.
+>
+> Noter que c’est le cas, de manière générale, avec toutes les méthodes générant des liens, à commencer par `Tag.lien`.
+
+
+
+#### Lien « retour » pour titre
+
+Pour définir un lien à ajouter au titre des pages, ressemblant à :
+
+
+
+… on utilise la méthode :
+
+~~~ruby
+Tag.retour(:route, :titre)
+# Les deux arguments sont obligatoire
+~~~
+
+
+
+
+
 
 ---
 
@@ -3463,7 +3497,22 @@ La commande `icare` permet de gérer l’atelier en ligne de commande. Jouer sim
 
 ### [Note 001]
 
+Le système de route fait que si on appelle un dossier de `_pages_` sans sous-dossier, même si ce dossier ne fonctionne qu’avec des sous-dossiers, à commencer par le sous-dossier `home` ou `accueil`, tout le dossier est chargé, ce qui conduit fatalement à une erreur.
 
+Par exemple, si l’on cherche l’url `www.atelier-icare.net/concours`, on va charger tout le dossier `_lib/_pages_/concours` qui n’est absolument pas fait pour ça et ça provoquera une erreur.
+
+Pour éviter ce comportement, on place dans `Route::ROUTES_SHORTCUTS` les dossiers seuls en raccourcis avec leur vraie valeur.
+
+Par exemple :
+
+~~~ruby
+class Route
+  ROUTES_SHORTCUTS = {
+  	'concours' => 'concours/accueil'  
+  }
+~~~
+
+Noter que sont considérés les dossiers avec ou sans « / » terminaux, donc inutile de mettre les deux dans la table des raccourcis.
 
 
 

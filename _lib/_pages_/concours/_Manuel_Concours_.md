@@ -43,3 +43,59 @@ STEPS_DATA = {
 (1) Pour définir une méthode à jouer lorsque l'on passe à cette étape. Cette méthode doit être définie (avec argument `options`) dans le fichier `concours/xmodules/admin/operations/step_operations/step_X.rb` ([step_5.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/xmodules/admin/operations/step_operations/step_5.rb) pour l’étape 5).
 
 (2) Pour définir une ligne informative qui donnera juste une information, par exemple en disant ce que ce passage à l’étape va entrainer comme changement sur l’espace personnel des concurrents, sur la page d’accueil, etc.
+
+
+
+## Envoi de mailing
+
+L’envoi de mails est facilité pour le concours (le fonctionnement doit d’ailleurs être repris sur le site [Note du 25 octobre 2020]).
+
+Pour commencer, tous les mails sont écrits dans le dossier :
+
+~~~bash
+./_lib/_pages_/concours/xmodules/mails
+~~~
+
+Ensuite, une classe intermédiaire `MailSender` se charge de l’envoi en nombre, il suffit de lui envoyer la liste des destinataires, le nom du mail dans le dossier ci-dessus et quelques options (pour préciser par exemple qu’il ne faut pas envoyer vraiment le mail mais seulement simuler la commande — mode `:noop`).
+
+~~~ruby
+MailSender.send([destinataires], "nom_mail", {options})
+~~~
+
+Avec :
+
+~~~ruby
+destinataires = [
+  {pseudo: "pseudo", mail: "mail"[, autre_data: "facultatif"]},
+  idem, idem, idem
+ ]
+
+nom_mail = "nom_du_fichier_dans_dossier_mails"
+
+options = {
+  noop: true,				# Simuler seulement si TRUE
+  doit: true,				# Confirmation qu'il faut le faire si TRUE et si :noop est false
+}
+~~~
+
+#### Titre du mail
+
+C’est ici que la démarche est largement simplement : dans le mail (i.e. dans le fichier ERB), il suffit d’utiliser la méthode `subject("Titre du mail")` pour définir le `subject` du mail. De cette manière, message du mail et sujet du mail sont toujours associés.
+
+#### Contenu du mail
+
+Dans le mail, on utilise deux sortes de variables :
+
+* Les variables ERB (`<%= ... %>`) qui seront renseignées au déserbage,
+* Les variables template ruby (`%{…}`) qui seront évaluées au moment de l’envoi, avec les données des destinataires. À commencer par le pseudo.
+
+~~~ERB
+<p>
+  Bonjours %{pseudo},
+</p>
+<p>
+  Nous sommes cette année en <%= Time.now.year %> et votre mail est %{mail}.
+</p>
+<%= signature %>
+~~~
+

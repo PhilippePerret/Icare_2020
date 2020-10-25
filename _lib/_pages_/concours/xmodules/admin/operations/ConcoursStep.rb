@@ -27,6 +27,11 @@ def run_operations(options = nil)
   html.res << Tag.div(class:'etape-titre', text:"ÉTAPE #{numero}. #{name_current}")
   require_relative "./step_operations/step_#{data[:step]}"
   operations.each { |dop| dop.run(options) }
+  if options[:noop]
+    btn_proceed = Tag.link(route:"#{route}?#{options[:query_string]}", class:"btn", text:"Procéder à l'opération")
+    div_btn = Tag.div(class:"mt2 right", text: btn_proceed)
+    html.res << div_btn
+  end
 end #/ run_operations
 # ---------------------------------------------------------------------
 #   Properties

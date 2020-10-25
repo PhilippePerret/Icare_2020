@@ -6,7 +6,11 @@ class Concours
     save(step: @step)
     require_relative './proceed_operations_per_step'
     options = {}
-    options.merge!(noop: true) unless param(:doit) == "1"
+    if param(:doit) == "1"
+      options.merge!(doit: true) # do it
+    else
+      options.merge!(noop: true)
+    end
     proceed_operations_per_step(STEPS_DATA[@step].merge(step: @step), options)
   end #/ change_step
 end

@@ -4,8 +4,9 @@ class ConcoursStep
 class Operation
   def send_mail_icariens_annonce_start(options)
     html.res << "📤 Envoi de l'annonce du démarrage à tous les icariens"
-    request = "SELECT mail, pseudo FROM users WHERE id <> 9 AND SUBSTRING(options,4,1) <> 1"
-    MailSend.send(db_exec(request), 'annonce_start_icariens', options)
+    request = "SELECT mail, pseudo, sexe FROM users WHERE id <> 9 AND SUBSTRING(options,4,1) <> 1"
+    options.merge!(query_string: "op=change_step&current_step=1")
+    MailSender.send(db_exec(request), 'annonce_start_icariens', options)
   end #/ send_mail_icariens_annonce_start
   def send_mail_concurrents_annonce_start(options)
     html.res << "📤 Envoi de l'annonce du démarrage aux concurrents"
