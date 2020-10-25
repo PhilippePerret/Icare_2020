@@ -1,5 +1,7 @@
 <%
 # frozen_string_literal: true
+
+ilya_un_resultat = not(resultat.nil_if_empty.nil?)
 STEPS_VALUES = Concours::STEPS_DATA.collect do |k,v|
   # message("#{k}::#{k.class} < #{concours.step}::#{concours.step.class} ? #{(k < concours.step).inspect}")
   name = if k == concours.step
@@ -13,21 +15,22 @@ stepform = Form.new(id:"concours-step-from", route:route.to_s, class:"nogrid nob
 stepform.rows = {
   "<op/>" => {type:"hidden", name:"op", value:"change_step"},
   "Étape courante" => {type:"select", class:"", name:"current_step", values:STEPS_VALUES, value:concours.step},
-  "<btnsim/>" => {type:"raw", content:"<a href=\"javascript:LanceSimulationStep()\" class=\"small btn\">Simuler l'étape choisie</a>"}
 }
-stepform.submit_button = "Passer à cette étape"
+stepform.submit_button = "Simuler et procéder à cette étape…"
 stepform.submit_button_class = "small btn"
 %>
+<% if ilya_un_resultat %>
+  <div class="mb2 right">
+    <%= Tag.link(route:"concours/admin", text:"Données du concours") %>
+  </div>
+<% end %>
 <div>
   <%= stepform.out %>
 </div>
-<% if resultat %>
-<div class="right">
-  <%= Tag.link(route:"concours/admin", text:"Données du concours") %>
+<% if ilya_un_resultat %>
+<div id="concours-resultat">
+  <%= resultat %>
 </div>
-  <div id="concours-resultat">
-    <%= resultat %>
-  </div>
 <% else %>
   <%
   form = Form.new(id:"concours-form", route:route.to_s, class:"nomargin nolimit", size:1000)

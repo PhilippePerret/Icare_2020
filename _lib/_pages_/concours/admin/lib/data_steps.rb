@@ -11,7 +11,8 @@ STEPS_DATA = {
   9 => {name: "Nettoyer le concours", name_current:"Nettoyage du concours en cours", name_done:"Concours nettoyé"}
 }
 STEPS_DATA[0].merge!(operations:[
-  {name:"Le changement du step modifie automatiquement l'affichage"}
+  {name:"Le concours ne peut s'atteindre que depuis le plan", info:true},
+  {name:"Un panneau minimal permet de s'inscrire à la prochaine session et de lire le règlement", info:true}
 ])
 STEPS_DATA[1].merge!(operations: [
   {name:"Présence de la “pub” en bas à gauche des premières pages", info:true},
