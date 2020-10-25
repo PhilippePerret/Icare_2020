@@ -22,6 +22,7 @@ class << self
   def send(destinataires, mail, options)
     require_module('mail')
     # On construit le texte avant pour définir le titre
+    @mail_subject = nil # pour ne pas hériter de l'envoi précédant si subject oublié
     message = deserb(mail_path(mail), self)
     if options[:noop]
       simuler(message, destinataires, options)
@@ -49,15 +50,20 @@ class << self
   # Simuler l'envoi du message +message+ aux +destinataires+
   def simuler(message, destinataires, options)
     # Pour prendre des propriétés particulières peut-être
-    first_destinataire = destinataires.first.dup || {pseudo:'Ernestine', mail:'ernestine@gmail.com', sexe:'F'}
+    destinataire_femme = destinataires.first.dup || {pseudo:'Ernestine', mail:'ernestine@gmail.com', sexe:'F'}
+    destinataire_homme = destinataire_femme.dup.merge!(pseudo:'Ernest', sexe:'H')
     # Pour voir les féminines (if any)
-    first_destinataire.merge!(pseudo:"Philippine", sexe:'F')
-    first_destinataire = sexize_destinataire_properties(first_destinataire) if first_destinataire.key?(:sexe)
+    destinataire_femme.merge!(pseudo:"Ernestine", sexe:'F')
+    destinataire_femme = sexize_destinataire_properties(destinataire_femme)
+    destinataire_homme = sexize_destinataire_properties(destinataire_homme)
 
     html.res << <<-HTML
 <div class="simulation">
 <p class="bold">Envoi du mail :<br> “#{mail_subject}”</p>
-#{Tag.div(class:'border', text:(message % first_destinataire))}
+<div class="bold">Version féminine</div>
+#{Tag.div(class:'border', text:(message % destinataire_femme))}
+<div class="bold">Version masculine</div>
+#{Tag.div(class:'border', text:(message % destinataire_homme))}
 <p>Envoyer ce mail à : </p>
 <ul>#{destinataires.collect { |dd| "<li>#{dd[:pseudo]} (#{dd[:mail]})</li>" }.join}</ul>
 </div>

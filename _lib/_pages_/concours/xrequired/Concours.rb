@@ -34,6 +34,7 @@ def formated_prix3
   @formated_prix3 ||= eval("%Q(#{prix3})")
 end #/ formated_prix3
 
+# TODO Voir comment le régler (sans faire une table pour auteur)
 def jury_members
   @jury_members ||= begin
     require './_lib/data/secret/phil'

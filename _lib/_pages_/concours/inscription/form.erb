@@ -24,7 +24,7 @@ if not user.guest?
     # Si c'est un visiteur quelconque
 %>
 <%
-form = Form.new(id:"concours-signup-form", route:route.to_s, class:"noborder nomargin")
+form = Form.new(id:"concours-signup-form", route:route.to_s)
 form.rows = {
   "Votre patronyme" => {name:"p_patronyme", type:"text", placeholder: "Prénom Nom", errorable: true},
   "Votre mail"      => {name:"p_mail", type:"text", placeholder:"votre@mail.com", errorable: true},
@@ -36,10 +36,8 @@ form.rows = {
 }
 form.submit_button = UI_TEXTS[:concours_bouton_signup]
 %>
-<fieldset id="signup-section">
-  <legend>Première inscription au concours</legend>
-  <%= form.out %>
-</fieldset>
+<legend>Première inscription au concours</legend>
+<%= form.out %>
 
 <% end # Si ce n'est pas un icarien
 %>

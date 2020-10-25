@@ -24,6 +24,7 @@ class User
   end
 
   def set_last_connexion(user)
+    return if user.guest? || Route.last.nil?
     request = if last_connexion_for?(user)
                 "UPDATE connexions SET route = ?, time = ? WHERE id = ?"
               else
