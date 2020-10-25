@@ -21,7 +21,7 @@ def exec
 end # exec
 
 def build_body
-  @body = "#{User.login_form.out}#{Concours.pub_box if Concours.current.started?}"
+  @body = deserb('body', self)
 end # /build_body
 
 end #HTML

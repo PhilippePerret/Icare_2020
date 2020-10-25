@@ -38,6 +38,7 @@ end #/ initialize
 # Méthode appelée avec le champ file du formulaire pour consigner le fichier
 def consigne_file(ffile) # ffile pour "form-file"
   titre = titre_valide? # ou raise avec l'erreur
+  not(ffile.nil?) || raise("Il faut fournir votre fichier de candidature !")
   ffile.size > 0  || raise("Ce fichier est vide…")
   ffile.size < 1000000 || raise("Ce fichier est trop volumineux (1Mo maximum — essayez de réduire la taille de l'image).")
   # Nom original et extension
@@ -73,7 +74,7 @@ private
   def titre_valide?
     tit = param('p_titre').nil_if_empty
     tit || raise(ERRORS[:titre_required])
-    tit <= 200 || raise(ERRORS[:too_long] % ["Le titre", 200])
+    tit.length <= 200 || raise(ERRORS[:too_long] % ["Le titre", 200])
     tit = tit.titleize
     return tit
   end #/ titre_valide?

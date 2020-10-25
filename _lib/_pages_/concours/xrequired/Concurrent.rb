@@ -181,6 +181,7 @@ end #/ save_specs
 def current?
   not(data_current_concours.nil?)
 end #/ current?
+alias :concurrent? :current?
 
 # Retourne TRUE pour savoir si le concurrent, identifié par le concurrent_id en
 # session et l'identifiant de session fourni existe véritablement dans la

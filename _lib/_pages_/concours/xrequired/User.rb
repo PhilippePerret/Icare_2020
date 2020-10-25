@@ -7,4 +7,9 @@ class User
     # savoir et on pourra être évaluateur sans être administrateur
     admin?
   end #/ evaluateur?
+
+  def concurrent?
+    db_count(DBTBL_CONCURRENTS, {mail: user.mail}) > 0
+  end #/ concurrent?
+
 end #/User

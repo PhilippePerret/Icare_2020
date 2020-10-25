@@ -1,0 +1,8 @@
+<%
+# frozen_string_literal: true
+%>
+<%= User.login_form.out %>
+<div class="">
+  Pour rejoindre le <strong>Concours de Synopsis</strong>, merci d'utiliser <%= Tag.link(route:"concours/identification", text: "le formulaire idoine") %>.
+</div>
+<%= Concours.pub_box if Concours.current.started? %>

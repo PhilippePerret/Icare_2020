@@ -119,7 +119,7 @@ class HTML
     })
 
     # Ajouter une actualité pour l'inscription
-    Actualite.add('CONCOURS', nil, "#{data_concurrent[:patronyme]} s'inscrire au concours de synopsis.")
+    Actualite.add('CONCOURS', nil, "<strong>#{data_concurrent[:patronyme]}</strong> s'inscrit au concours de synopsis.")
 
     return true
 
