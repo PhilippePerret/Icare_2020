@@ -9,13 +9,14 @@ MESSAGES.merge!({
 })
 
 DATA_WHAT_READ = [
-  {name:'Journal [log]', value: :log},
-  {name:'Journal [cronjob]', value: :cronjob},
-  {name:'Traceur [tracer]', value: :tracer},
-  {name:'Manuel [manuel_pdf]', value: :manuel_pdf},
-  {name:'Manuel [manuel_md]', value: :manuel_md},
-  {name:'Dossier… [folder]', value: :folder},
-  {name:'Fichier… [file]', value: :file}
+  {name:'Journal', value: :log},
+  {name:'Journal', value: :cronjob},
+  {name:'Traceur', value: :tracer},
+  {name:'Manuel', value: :manuel_pdf},
+  {name:'Dossier…', value: :folder},
+  {name:'Fichier…', value: :file},
+  {name:'Règlement concours', value: :reglement_concours},
+  {name:'Renoncer', value: :cancel}
 ]
 
 SSH_SERVER = 'icare@ssh-icare.alwaysdata.net'
@@ -27,10 +28,11 @@ class << self
     what = params[1]
     unless self.respond_to?("read_#{what}".to_sym)
       what = Q.select(MESSAGES[:question_read], required: true) do |q|
-        q.choices DATA_WHAT_READ
+        q.choices DATA_WHAT_READ.collect{|d|d.merge(name:"#{d[:name]} [#{d[:value]}]")}
         q.per_page DATA_WHAT_READ.count
       end
     end
+    return if what == :cancel
     self.send("read_#{what}".to_sym)
   end #/ proceed_feed
 
@@ -49,6 +51,9 @@ class << self
     path = './www/tmp/logs/tracer.log'
     read_it(path)
   end #/ read_tracer
+  def read_reglement_concours
+    `open "#{File.join(PUBLIC_FOLDER,"Concours_ICARE_#{annee_concours}")}"`
+  end #/ read_reglement_concours
   def read_file
     fichier = params[2] ||= Q.ask('Fichier (depuis racine)')
     path = "./www/#{fichier}"
@@ -63,10 +68,6 @@ class << self
   def read_manuel_pdf
     `open "#{File.join(DEV_FOLDER,'Manuel','Manuel_developper.pdf')}"`
   end #/ manuel_pdf
-  # Pour ouvrir la version modifiable du mode d'emploi
-  def read_manuel_md
-    `open -a Typora "#{File.join(DEV_FOLDER,'Manuel','Manuel_developper.md')}"`
-  end #/ manuel_md
 
   # Pour lire le fichier distant voulu
   # Avec l'option -d/--delete, le fichier est ramené localement
@@ -98,5 +99,11 @@ SSH
     puts "= / fin lecture fichier =#{RC*2}"
     puts "= Le fichier a été enregistré dans #{path_copie}" if and_delete_id
   end #/ read_it
+
+private
+
+  def annee_concours
+    @annee_concours ||= Time.now.month < 3 ? Time.now.year : Time.now.year + 1
+  end #/ annee_concours
 end # /<< self
 end #/IcareCLI
