@@ -241,9 +241,9 @@
       :success: On peut rejoindre la section des dernières fonctionnalités
     - :doit: |
         within("section#footer"){click_on("plan")}
-        click_on("Concours")
+        click_on("CONCOURS")
     - :tag: h2.page-title
-      :text: Le Concours de l’atelier Icare
+      :text: Concours de synopsis de l’atelier Icare
       :success: On peut rejoindre la section du concours
 
 # ---------------------------------------------------------------------
