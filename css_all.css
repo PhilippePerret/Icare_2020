@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-25 02:48:06 +0100
+ *    Date dernière modification : 2020-10-25 08:49:14 +0100
  *
  --------------------------------------------------------------------- */
 :root {
@@ -1565,6 +1565,12 @@ div.buttons input[type="button"].main:hover
 }
 .btn.main.green:hover {
   color:#22b822;
+}
+
+/* Pour empêcher les boutons de s'écrire dans les versions PDF,
+pour éviter les erreurs */
+@print {
+  .btn {display:none;}
 }
 section#messages {
   overflow:hidden;

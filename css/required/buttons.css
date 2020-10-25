@@ -120,3 +120,9 @@ div.buttons input[type="button"].main:hover
 .btn.main.green:hover {
   color:#22b822;
 }
+
+/* Pour empêcher les boutons de s'écrire dans les versions PDF,
+pour éviter les erreurs */
+@print {
+  .btn {display:none;}
+}
