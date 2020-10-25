@@ -46,7 +46,7 @@ def consigne_file(ffile) # ffile pour "form-file"
   extension_valide?(@extname) || raise("L'extension de ce fichier est invalide. Les extensions acceptées sont : #{EXTENSIONS_VALIDES.pretty_join}.")
   File.open(path,'wb') { |f| f.write ffile.read }
   # On enregistre le titre
-  db_exec(REQUEST_SAVE_TITRE, [titre, concurrent.id, annee])
+  db_exec(REQUEST_SAVE_DATA_PROJETS, [titre, param(:p_auteurs), concurrent.id, annee])
   # Si tout est OK, on marque que le dossier est envoyé dans les
   # specs du concurrent.
   concurrent.set_spec(0, 1)
@@ -87,6 +87,6 @@ EXTENSIONS_VALIDES = [
   '.pdf','.odt','.doc','.docx','.txt','.rtf','.md','.markdown','.rtfd'
 ]
 
-REQUEST_SAVE_TITRE = "UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET titre = ? WHERE concurrent_id = ? AND annee = ?"
+REQUEST_SAVE_DATA_PROJETS = "UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET titre = ?, auteurs = ? WHERE concurrent_id = ? AND annee = ?"
 end #/File
 end #/Concours

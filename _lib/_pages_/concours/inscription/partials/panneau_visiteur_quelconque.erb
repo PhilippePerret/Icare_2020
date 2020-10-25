@@ -5,6 +5,8 @@
 <%
 form = Form.new(id:"concours-signup-form", route:route.to_s)
 form.rows = {
+  "<pour icarien/>" => {type:"raw", content: "<div class=\"italic\">Si <strong>vous êtes icarien ou icarienne</strong>, merci de #{LOGIN_LINK.with("vous identifier")} et vous pourrez vous inscrire au concours en un clic !</div>"},
+  "<ancienconcur/>" => {type:"raw", content: "<div class='italic'>Si <strong>vous êtes un concurrent d'une session précédente</strong>, merci de #{CONCOURS_LOGIN.with("vous connecter")} pour vous inscrire à la session #{Concours.current.annee} en un seul clic !</div>"},
   "Votre patronyme" => {name:"p_patronyme", type:"text", placeholder: "Prénom Nom", errorable: true},
   "Votre mail"      => {name:"p_mail", type:"text", placeholder:"votre@mail.com", errorable: true},
   "Confirmation"    => {name:"p_mail_confirmation", type:"text", placeholder:"votre@mail-confirmé.com", errorable: true},
@@ -15,5 +17,5 @@ form.rows = {
 }
 form.submit_button = UI_TEXTS[:concours_bouton_signup]
 %>
-<legend>Première inscription au concours</legend>
+
 <%= form.out %>

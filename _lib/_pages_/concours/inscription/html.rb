@@ -11,19 +11,23 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
+    try_reconnect_concurrent(required = true)
+    require_relative '../xmodules/inscription'
     if param(:form_id)
       if Form.new.conform?
         case param(:form_id)
         when 'concours-signup-form'
-          require_relative '../xmodules/inscription'
           if traite_inscription
+            redirect_to("concours/espace_concurrent")
+          end
+        when 'signup-concours-ancien'
+          if traite_inscription_ancien
             redirect_to("concours/espace_concurrent")
           end
         end
       end
     elsif param(:op) == 'signupconcours'
       # Quand un icarien inscrit clique sur le bouton "S'inscrire au concours"
-      require_relative '../xmodules/inscription'
       traite_inscription_icarien
     end
   end # /exec

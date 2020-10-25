@@ -3,6 +3,18 @@
 require_module('mail')
 class HTML
 
+  # Traitement de l'inscription à la session courante d'un ancien concurrent
+  def traite_inscription_ancien
+    # Les données pour le concours courant
+    data = {
+      concurrent_id: concurrent.id,
+      annee:  Concours.current.annee,
+      specs:  "00000000"
+    }
+    db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data)
+    message("#{concurrent.pseudo}, vous êtes inscrit#{concurrent.fem(:e)} à la session #{Concours.current.annee} du concours ! Bon courage et inspiration à vous !")
+  end #/ traite_inscription_ancien
+
   # Dans le cas d'un icarien identifié
   def traite_inscription_icarien
     icarien_required # barrière de sécurité

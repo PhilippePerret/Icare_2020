@@ -1,22 +1,16 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-# Requête pour récupérer toutes les données d'un concurrent
-REQUEST_DATA_CONCURRENT = <<-SQL
-SELECT
-  cc.*,
-  cpc.specs AS specs, -- pour savoir si le projet est envoyé
-  cpc.titre
-  FROM concours_concurrents cc
-  INNER JOIN concurrents_per_concours cpc ON cpc.concurrent_id = cc.concurrent_id
-  WHERE cc.concurrent_id = ? AND cc.session_id = ? AND cpc.annee = ?
-SQL
-
-# Requête SQL pour fixer la demande ou non de la fiche de lecture
-REQUEST_UPDATE_OPTIONS = "UPDATE #{DBTBL_CONCURRENTS} SET options = ? WHERE concurrent_id  = ?"
-
 class HTML
-  attr_reader :concurrent
+
+  attr_accessor :concurrent
+
+  # IN    required  Si TRUE, il faut vraiment qu'on puisse reconnecter un
+  #                 concurrent, sinon on renvoie le visiteur vers l'identifi-
+  #                 cation. Si required est false, peu importe qu'on puisse en
+  #                 reconnecter un.
+  # DO    Reconnecte le concurrent s'il est trouvé.
+  #
   def try_reconnect_concurrent(required = false)
     if session['concours_user_id'].nil? && not(user.guest?)
       # Connecter un icarien qui fait le concours pour la première fois
@@ -28,12 +22,9 @@ class HTML
     end
 
     if session['concours_user_id']
-      @concurrent = Concurrent.new(concurrent_id: session['concours_user_id'], session_id: session.id)
-      if @concurrent.exists?
+      self.concurrent = Concurrent.authentify(session['concours_user_id'])
+      if self.concurrent
         log("RECONNEXION CONCURRENT #{concurrent.id} (#{concurrent.pseudo})")
-      else # ça arrive pendant les tests, par exemple
-        session.delete('concours_user_id')
-        @concurrent = nil
       end
     elsif required
       erreur(ERRORS[:concours_login_required])
@@ -43,6 +34,7 @@ class HTML
 end
 
 class Concurrent
+  include FemininesMethods
 # ---------------------------------------------------------------------
 #
 #   CLASSE
@@ -52,6 +44,22 @@ class << self
   def get(concurrent_id)
     table_concurrents[concurrent_id]
   end #/ get
+
+  # Pour authentifier le concurrent d'identifiant +concurrent_id+. Son ID
+  # de session doit correspondre à la session courante
+  def authentify(concurrent_id)
+    log("Tentative d'authentification de #{concurrent_id}")
+    log("Session ID courant : #{session.id}")
+    cand = get(concurrent_id)
+    log("Candidat.data : #{cand.data.inspect}")
+    log("Session enregistrée : #{cand.session_id.inspect}")
+    log("Participe au concours courant ? #{cand.current?.inspect}")
+    if cand.session_id == session.id
+      return cand
+    else
+      session.delete('concours_user_id')
+    end
+  end #/ authentify
   def table_concurrents
     @table_concurrents ||= begin
       h = {}
@@ -68,6 +76,7 @@ end # << self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
+
 attr_reader :concurrent_id, :session_id
 def initialize(ini_data)
   @concurrent_id  = ini_data[:concurrent_id]
@@ -79,7 +88,7 @@ end #/ initialize
 def data
   @data ||= begin
     # Les données du concurrent
-    dconcurrent = db_exec(REQUEST_DATA_CONCURRENT, [concurrent_id, session_id, ANNEE_CONCOURS_COURANTE])
+    dconcurrent = db_exec(REQUEST_DATA_CONCURRENT, [concurrent_id, session_id])
     dconcurrent = dconcurrent.first
   end
 end #/ data
@@ -113,19 +122,17 @@ def options
   @options ||= data[:options]
 end #/ options
 
+def data_current_concours
+  @data_current_concours ||= begin
+    db_exec(REQUEST_DATA_CONCURRENT_CURRENT_CONCOURS, [id, ::Concours.annee_courante]).first
+  end
+end #/ data_current_concours
+
 # Retourne la liste Array des données des concours faits par le concurrent
 def concours
   @concours ||= Concours.new(self)
 end #/ concours
 
-REQUEST_ALL_CONCOURS_CURRENT = <<-SQL
-SELECT
-  cpc.*,
-  c.theme AS theme
-  FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
-  INNER JOIN #{DBTBL_CONCOURS} c ON c.annee = cpc.annee
-  WHERE cpc.concurrent_id = ?
-SQL
 # Retourne la liste Array de tous les concours du concurrent
 def all_concours
   @all_concours ||= begin
@@ -152,21 +159,28 @@ def set_option(bit, value)
 end #/ set_option
 
 def spec(bit)
-  data[:specs][bit].to_i
+  log("data_current_concours: #{data_current_concours.inspect}")
+  data_current_concours[:specs][bit].to_i
 end #/ spec
 def set_spec(bit, value)
-  opts = data[:specs].dup
+  opts = data_current_concours[:specs].dup
   opts[bit] = value.to_s
-  data[:specs] = opts
+  data_current_concours[:specs] = opts
 end #/ set_spec
 def save_specs
-  db_exec("UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET specs = ? WHERE concurrent_id = ? AND annee = ?", [data[:specs], id, ANNEE_CONCOURS_COURANTE])
+  db_exec("UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET specs = ? WHERE concurrent_id = ? AND annee = ?", [data_current_concours[:specs], id, ANNEE_CONCOURS_COURANTE])
 end #/ save_specs
 # ---------------------------------------------------------------------
 #
 #   Statut
 #
 # ---------------------------------------------------------------------
+
+# Retourne TRUE si c'est un concurrent du concours actuel. Sinon, c'est
+# un ancien concurrent qui n'est pas encore inscrit
+def current?
+  not(data_current_concours.nil?)
+end #/ current?
 
 # Retourne TRUE pour savoir si le concurrent, identifié par le concurrent_id en
 # session et l'identifiant de session fourni existe véritablement dans la
@@ -262,3 +276,32 @@ end #/ update_options
 
 
 end #/Concurrent
+
+# Requête pour récupérer toutes les données d'un concurrent
+REQUEST_DATA_CONCURRENT = <<-SQL
+SELECT
+  cc.*,
+  cpc.specs AS specs, -- pour savoir si le projet est envoyé
+  cpc.titre
+  FROM concours_concurrents cc
+  INNER JOIN concurrents_per_concours cpc ON cpc.concurrent_id = cc.concurrent_id
+  WHERE cc.concurrent_id = ? AND cc.session_id = ?
+SQL
+
+REQUEST_DATA_CONCURRENT_CURRENT_CONCOURS = <<-SQL
+SELECT *
+  FROM #{DBTBL_CONCURS_PER_CONCOURS}
+  WHERE concurrent_id = ? AND annee = ?
+SQL
+
+# Requête SQL pour fixer la demande ou non de la fiche de lecture
+REQUEST_UPDATE_OPTIONS = "UPDATE #{DBTBL_CONCURRENTS} SET options = ? WHERE concurrent_id  = ?"
+
+REQUEST_ALL_CONCOURS_CURRENT = <<-SQL
+SELECT
+  cpc.*,
+  c.theme AS theme
+  FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
+  INNER JOIN #{DBTBL_CONCOURS} c ON c.annee = cpc.annee
+  WHERE cpc.concurrent_id = ?
+SQL

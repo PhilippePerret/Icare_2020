@@ -5,6 +5,8 @@
 =end
 class User
 
+  include FemininesMethods
+
   # Retourne le pseudo de l'icarien lié à son profil
   def linked
     @linked ||= "<a href=\"user/profil?uid=#{id}\" target=\"_blank\">#{pseudo}</a>"
