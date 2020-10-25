@@ -8,6 +8,13 @@ class User
     admin?
   end #/ evaluateur?
 
+  # TODO Il faudra faire la distinction entre un concurrent icarien qui
+  # est inscrit pour ce concours-ci et un icarien qui n'est pas du tout
+  # inscrit. En fait, on peut avoir trois choses :
+  # - un icarien jamais inscrit à aucun concours
+  # - un icarien inscrit à un concours précédent
+  # - un icarien inscrit à la session courante du concours (et inscrit ou
+  #   non à des versions précédentes)
   def concurrent?
     db_count(DBTBL_CONCURRENTS, {mail: user.mail}) > 0
   end #/ concurrent?

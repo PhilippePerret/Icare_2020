@@ -26,13 +26,31 @@ end #/ initialize
 def run_operations(options = nil)
   html.res << Tag.div(class:'etape-titre', text:"ÉTAPE #{numero}. #{name_current}")
   require_relative "./step_operations/step_#{data[:step]}"
-  operations.each { |dop| dop.run(options) }
+  # On joue toutes les opérations de l'étape, sauf celle décochées
+  operations.each_with_index do |dop, idx|
+    if dop.method?
+      html.res << dop.name
+      if options[:noop]
+        html.res << "<div class='ml2'><input type='checkbox' name='operation_#{idx}' id='operation_#{idx}' CHECKED /><label for='operation_#{idx}'>Cette opération doit être exécutée</label></div>"
+      else
+        if param("operation_#{idx}".to_sym) != 'on'
+          html.res << "<div class='ml2'>OPÉRATION NON EXÉCUTÉE</div>"
+          next
+        end
+      end
+    end
+    dop.run(options)
+  end
   # Si on opère pas, il faut mettre un bouton de confirmation, bouton de
   # demande d'opération effective.
   if options[:noop]
-    btn_proceed = Tag.link(route:"#{route}?current_step=#{numero}&op=change_step&doit=1", class:"btn", text:"Procéder à l'opération")
-    div_btn = Tag.div(class:"mt2 right", text: btn_proceed)
-    html.res << div_btn
+    # btn_proceed = Tag.link(route:"#{route}?current_step=#{numero}&op=change_step&doit=1", class:"btn", text:"Procéder à l'opération")
+    # div_btn = Tag.div(class:"mt2 right", text: btn_proceed)
+    # html.res << div_btn
+    html.res << "<input type='hidden' name='current_step' value='#{numero}' />"
+    html.res << "<input type='hidden' name='op' value='change_step' />"
+    html.res << "<input type='hidden' name='doit' value='1' />"
+    html.res << "<div class='buttons'><input type='submit' class='btn main' value='Procéder aux opérations cochées' /></div>"
   end
 end #/ run_operations
 # ---------------------------------------------------------------------

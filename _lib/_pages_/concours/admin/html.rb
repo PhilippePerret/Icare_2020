@@ -31,7 +31,12 @@ class HTML
   end #/ res
 
   def resultat
-    res.join(BR)
+    <<-HTML
+<form class="noform" method="POST">
+  <input type="hidden" name="route" value="#{route}" />
+#{res.join(BR)}
+</form>
+    HTML
   end #/ resultat
 
 end #/HTML

@@ -18,28 +18,28 @@ STEPS_DATA[1].merge!(operations: [
   {name:"Présence de la “pub” en bas à gauche des premières pages", info:true},
   {name:"Accueil : affichage du panneau avec le nombre d'inscrits, le thème et l'échéance etc.", info:true},
   {name:"Espace personnel : possibilité d'envoyer son fichier", info:true},
-  {name:"Envoi du mail d'annonce de lancement à tous les icariens", method: :send_mail_icariens_annonce_start},
-  {name:"Envoi du mail d'annonce de lancement à tous les concurrents", method: :send_mail_concurrents_annonce_start},
-  {name:"Envoi du mail d'annonce de lancement à tous les membres du jury", method: :send_mail_jury_annonce_start}
+  {name:"📤 Envoi du mail d'annonce de lancement à tous les icariens", method: :send_mail_icariens_annonce_start},
+  {name:"📤 Envoi du mail d'annonce de lancement à tous les concurrents", method: :send_mail_concurrents_annonce_start},
+  {name:"📤 Envoi du mail d'annonce de lancement à tous les membres du jury", method: :send_mail_jury_annonce_start}
 ])
 STEPS_DATA[2].merge!(operations:[
-  {name:"Envoi du mail aux concurrents annonçant l'échéance finale"},
-  {name:"Envoi du mail aux jurés annonçant la fin de l'échéance"},
+  {name:"📤 Envoi du mail aux concurrents annonçant l'échéance finale"},
+  {name:"📤 Envoi du mail aux jurés annonçant la fin de l'échéance"},
   {name:"Retrait du formulaire pour envoyer son dossier"},
 ])
 STEPS_DATA[3].merge!(operations:[
-  {name:"Envoi du mail aux concurrents annonçant les résultats de la première sélection"},
+  {name:"📤 Envoi du mail aux concurrents annonçant les résultats de la première sélection"},
   {name:"Construction du panneau pour voir le résultat des premières sélections"}
 ])
 STEPS_DATA[5].merge!(operations:[
-  {name:"Envoi du mail aux concurrent annonçant le palmarès final"},
+  {name:"📤 Envoi du mail aux concurrent annonçant le palmarès final"},
   {name:"Construction du panneau pour voir les résultats finaux"},
   {name:"Construction des fiches de lecture de chaque concurrent"},
   {name:"Affichage de la fiche de lecture sur l'espace personnel"}
 ])
 STEPS_DATA[8].merge!(operations:[
-  {name:"Envoi du mail de remerciement (et félicitations) à tous concurrents"},
-  {name:"Envoi du mail de remerciement aux jurés"},
+  {name:"📤 Envoi du mail de remerciement (et félicitations) à tous concurrents"},
+  {name:"📤 Envoi du mail de remerciement aux jurés"},
   {name:"Le concours n'est plus annoncé sur l'atelier"}
 ])
 STEPS_DATA[9].merge!(operations:[

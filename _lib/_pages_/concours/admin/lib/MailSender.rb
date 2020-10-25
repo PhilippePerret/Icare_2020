@@ -28,12 +28,22 @@ class << self
       simuler(message, destinataires, options)
     else # On procède vraiment à l'opération
       envois = destinataires.collect do |dd|
+        # Si c'est un destinataire sans mail, on ne le traite pas
+        if not(dd.key?(:mail))
+          html.res << "<div class='error'>Donnée destinataire sans mail : #{dd.inspect}. Pas d'envoi possible.</div>"
+          next
+        end
         # Si le sexe est défini dans les données, on renseigne des propriétés
         # de base à commencer par le "e" pour les filles. Cf. ci-dessous la
         # méthode :sexize_destinataire_properties
         dd = sexize_destinataire_properties(dd) if dd.key?(:sexe)
-        Mail.send(to: dd[:mail], subject:mail_subject, message:(message % dd))
-        "<li>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
+        begin
+          Mail.send(to: dd[:mail], subject:mail_subject, message:(message % dd))
+          "<li>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
+        rescue Exception => e
+          html.res << "<div class='error'>PROBLÈME D'ENVOI DE MAIL : #{e.message} (avec dd = #{dd.inspect})</div>"
+          "<li class='error'>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
+        end
       end
       html.res << "<ul>#{envois.join}</ul><div>= #{destinataires.count} messages envoyés. =</div>"
     end
