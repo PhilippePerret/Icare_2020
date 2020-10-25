@@ -27,14 +27,15 @@ class << self
     if options[:noop]
       simuler(message, destinataires, options)
     else # On procède vraiment à l'opération
-      destinataires.each do |dd|
+      envois = destinataires.collect do |dd|
         # Si le sexe est défini dans les données, on renseigne des propriétés
         # de base à commencer par le "e" pour les filles. Cf. ci-dessous la
         # méthode :sexize_destinataire_properties
         dd = sexize_destinataire_properties(dd) if dd.key?(:sexe)
         Mail.send(to: dd[:mail], subject:mail_subject, message:(message % dd))
+        "<li>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
       end
-      html.res << "= #{destinataires.count} messages envoyés. ="
+      html.res << "<ul>#{envois.join}</ul><div>= #{destinataires.count} messages envoyés. =</div>"
     end
   end #/ send
 
