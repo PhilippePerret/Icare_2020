@@ -16,6 +16,8 @@ _lib/ajax/log.txt
 
 _dev_/CLI/lib/commands/sync/last_operations.msh
 
+_dev_/Corrections/
+
 *.log
 
 tmp/
