@@ -11,7 +11,7 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
-    try_reconnect_concurrent(required = true)
+    try_reconnect_concurrent(required = false)
     require_relative '../xmodules/inscription'
     if param(:form_id)
       if Form.new.conform?

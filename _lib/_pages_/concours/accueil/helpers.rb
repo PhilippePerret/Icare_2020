@@ -15,7 +15,7 @@ class HTML
   def bouton_evaluation
     <<-HTML
 <div class="right">
-  Vous êtes évaluateur. #{Tag.link(route:"concours/evaluation",text:"Rejoindre la section d'évaluation")}.
+  <strong>Vous êtes membre du jury</strong>. #{Tag.link(route:"concours/evaluation",text:"Rejoindre la section d'évaluation")}.
 </div>
     HTML
   end #/ bouton_evaluation
