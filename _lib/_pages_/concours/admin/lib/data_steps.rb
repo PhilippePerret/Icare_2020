@@ -20,16 +20,17 @@ STEPS_DATA[1].merge!(operations: [
   {name:"Espace personnel : possibilité d'envoyer son fichier", info:true},
   {name:"📤 Envoi du mail d'annonce de lancement à tous les icariens", method: :send_mail_icariens_annonce_start},
   {name:"📤 Envoi du mail d'annonce de lancement à tous les concurrents", method: :send_mail_concurrents_annonce_start},
-  {name:"📤 Envoi du mail d'annonce de lancement à tous les membres du jury", method: :send_mail_jury_annonce_start}
+  {name:"📤 Envoi du mail d'annonce de lancement à tous les membres du jury", method: :send_mail_jury_annonce_start},
+  {name:"📣 Actualité annonçant l'ouverture du concours", method: :add_actualite_concours_start}
 ])
 STEPS_DATA[2].merge!(operations:[
-  {name:"📤 Envoi du mail aux concurrents annonçant l'échéance finale"},
+  {name:"📤 Envoi du mail aux concurrents annonçant la fin de l’échéance"},
   {name:"📤 Envoi du mail aux jurés annonçant la fin de l'échéance"},
-  {name:"Retrait du formulaire pour envoyer son dossier"},
+  {name:"Retrait du formulaire pour envoyer son dossier", info: true},
 ])
 STEPS_DATA[3].merge!(operations:[
-  {name:"📤 Envoi du mail aux concurrents annonçant les résultats de la première sélection"},
-  {name:"Construction du panneau pour voir le résultat des premières sélections"}
+  {name:"📤 Envoi du mail aux concurrents annonçant les résultats de la pré-sélection"},
+  {name:"Panneau dans la section “Résultats” pour voir les pré-sélections", info: true}
 ])
 STEPS_DATA[5].merge!(operations:[
   {name:"📤 Envoi du mail aux concurrent annonçant le palmarès final"},

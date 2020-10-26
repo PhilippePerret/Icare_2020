@@ -22,6 +22,8 @@ class HTML
       end
     elsif param(:op)
       case param(:op)
+      when 'logout'
+        concurrent.logout
       when 'nonfl'
         concurrent.change_pref_fiche_lecture(false)
         message("D'accord, vous ne recevrez plus la fiche de lecture.")

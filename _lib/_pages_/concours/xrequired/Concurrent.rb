@@ -233,18 +233,6 @@ end #/ dossier_complete?
 #
 # ---------------------------------------------------------------------
 
-def change_pref_fiche_lecture(recevoir)
-  set_option(1, recevoir ? '1' : '0')
-  update_options
-  @fiche_lecture = nil
-end #/ change_pref_fiche_lecture
-
-def change_pref_warn_information(recevoir)
-  set_option(0, recevoir ? '1' : '0')
-  update_options
-  @is_warned = nil
-end #/ change_pref_warn_information
-
 def update_options
   db_exec(REQUEST_UPDATE_OPTIONS, [options, concurrent_id])
 end #/ update_options

@@ -94,7 +94,7 @@ class HTML
     Mail.send({
       to:       data_concurrent[:mail],
       subject:  MESSAGES[:concours_signed_confirmation],
-      message:  deserb('inscription/mail-signup-confirmation', self)
+      message:  deserb('mails/inscription/mail-signup-confirmation', self)
     })
 
     # Annonce à l'administration
@@ -115,7 +115,7 @@ class HTML
     # Envoyer un mail à l'administration
     phil.send_mail({
       subject: MESSAGES[:concours_new_signup_titre],
-      message: deserb('inscription/mail-signup-admin', self)
+      message: deserb('mails/inscription/mail-signup-admin', self)
     })
 
     # Ajouter une actualité pour l'inscription

@@ -24,7 +24,7 @@ class HTML
   def description_etape_courante
     t = case Concours.current.step
         when 0 then ""
-        when 1 then "<strong>Le concours est ouvert !</strong> Vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire')} et #{ESPACE_LINK.with('envoyer votre synopsis')}."
+        when 1 then "<strong>Le concours est ouvert !</strong> Vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire')} ou #{CONCOURS_LOGIN.with('vous identifier')} et #{ESPACE_LINK.with('envoyer votre synopsis')}."
         when 2 then "<strong>Les #{nombre_synopsis} synopsis sont en préselection</strong>.<br/><br/>Rendez-vous aux alentours du #{date_premiere_selection} pour les résultats de la première sélection !"
         when 3 then "<strong>Les 10 synopsis sélectionnés sont en pleiniaire</strong>.<br/>(#{PALMARES_LINK.with('voir les synopsis retenus')})<br/><br/>Rendez-vous aux alentours du #{date_selection_finale} pour le palmarès final."
         when 5 then "<strong>Les synopsis lauréats ont été choisis !</strong><br/><br/>Voir le #{PALMARES_LINK}."
