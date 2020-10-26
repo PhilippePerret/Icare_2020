@@ -408,7 +408,7 @@ En général, pour récupérer des icariens :
 | 2             | 1: le mail a été confirmé                                    |
 | 3             | **Bit de destruction**<br />1 si l’icarien a été détruit. Note : toutes ses « productions » sur le site devient anonymes (`user_id` = 9). |
 | 4             | **Bit de fréquence de mail**<br />0: quotidien, 1:hebdomadaire, 9: aucun mail |
-| 5             |                                                              |
+| 5             | **Bit de concours**<br />0: le bit n’a pas été défini, 1: l’user fait le concours, 2: l’user ne fait pas le concours<br />Noter le fonctionnement particulier de ce bit, qui contient une valeur 0 quand il n’est pas défini, permettant ici à la méthode `concurrent?` de le définir, pour accélérer les vérifications. |
 | 6             |                                                              |
 | 7             |                                                              |
 | 8             |                                                              |

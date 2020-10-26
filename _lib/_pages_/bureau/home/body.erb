@@ -8,3 +8,6 @@
 <%= divGoto((femme? ? EMO_ETUDIANTE.regular : EMO_ETUDIANT.regular)+ISPACE+'Profil', id:'goto-profil', route:'user/profil') %>
 <%= divGoto(EMO_ROUE_DENTEE+ISPACE+'Préférences', route:'bureau/preferences', id:'goto-preferences') %>
 <%= divGoto(EMO_CALENDAR+ISPACE+'Historique', route:'bureau/historique', id:'goto-historique') %>
+<% if concurrent? %>
+  <%= divGoto(Emoji.get('objets/blason').regular+'Concours', route:'concours', id:'goto-concours') %>
+<% end %>

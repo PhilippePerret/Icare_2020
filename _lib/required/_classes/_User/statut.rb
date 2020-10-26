@@ -52,6 +52,17 @@ def inactif?
   @is_inactif
 end #/ inactif?
 
+# True si l'user est inscrit au concours (au moins une session)
+def concurrent?
+  bit5 = option(5)
+  if bit5 == 0 # Il faut le définir
+    is_concurrent = db_count('concours_concurrents', {mail:mail}) > 0
+    bit5 = is_concurrent ? 1 : 2
+    set_option(5, bit5)
+  end
+  return bit5 == 1
+end #/ concurrent?
+
 def pause?
   statut == :en_pause
 end #/ pause?
