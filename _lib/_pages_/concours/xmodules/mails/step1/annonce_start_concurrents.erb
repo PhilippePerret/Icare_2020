@@ -1,0 +1,27 @@
+<%
+# frozen_string_literal: true
+=begin
+  Mail pour informer les concurrents (ayant participé à une session précédente)
+  que le nouveau concours est lancé
+=end
+subject("Lancement du Concours de Synopsis de l'atelier Icare")
+%>
+<p>
+Bonjour %{pseudo} !
+</p>
+<p>
+J'ai le grand plaisir de vous annoncer l'ouverture de la session <%= Concours.annee_courante %> du CONCOURS DE SYNOPSIS DE L'ATELIER ICARE auquel vous avez déjà participé.
+</p>
+<p>Vous pouvez vous y inscrire (avec vos numéro et mail des précédentes sessions) à l'adresse :</p>
+<p style="text-align:center;">
+  <%= Tag.link(route:"concours/inscription", distant:true) %>
+</p>
+<p>
+  Vous trouverez tous les renseignements sur cette nouvelle session, et notamment le nouveau thème, à l'adresse :
+</p>
+<p style="text-align:center;">
+  <%= Tag.link(route:"concours", distant:true) %>
+</p>
+<p>Au plaisir de vous compter à nouveau parmi les concurrent%{e}s et, qui sait, parmi les lauréat%{e}s !</p>
+<p>Bien à vous,</p>
+<p>L'administration de l'atelier Icare</p>

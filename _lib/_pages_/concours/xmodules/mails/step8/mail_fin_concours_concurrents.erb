@@ -1,0 +1,22 @@
+<%
+# frozen_string_literal: true
+=begin
+  Mail pour annoncer la fin du concours
+  Remerciements aux participants
+
+  Note : ce mail n'est pas à confondre avec celui qui annonce le palmarès
+=end
+%>
+<p>
+Bonjour <%= concurrent.pseudo %> !
+</p>
+<p>
+Un grand merci à vous pour votre participation à la session <%= concours.annee %> du Concours de Synopsis de l'atelier Icare.
+</p>
+<% if concurrent.winner? %>
+  <p>Vous avez remporté un prix et nous vous en félicitons.</p>
+<% else %>
+  <p>Vous n'avez pas remporté de Prix cette année mais nous vous souhaitons plus de chance pour la prochaine session de <%= concours.annee + 1 %>.</p>
+<% end %>
+<p>Bien à vous,</p>
+<p>L'administration de l'atelier Icare</p>

@@ -1,0 +1,17 @@
+<%
+# frozen_string_literal: true
+=begin
+  Mail de confirmation de l'inscription au concurrent
+=end
+%>
+<p>Bonjour <%= concurrent.pseudo %>,</p>
+<p>Nous vous confirmons par la présente votre inscription au Concours de Synopsis Annuel de l'atelier Icare (année <%= Concours.current.annee %>).</p>
+<p>Nous vous transmettons également votre <strong>Numéro de concurrent</strong> qui vous sera indispensable pour transmettre votre synopsis ou vous connecter à la section du concours.</p>
+<p>Ce <strong>Numéro de concurrent</strong> est : <%= concurrent.id %>.</p>
+<p>Ce numéro doit être utilisé comme mot de passe, conjointement à l'adresse mail avec laquelle vous vous êtes inscrit<%= concurrent.femme? ? 'e' : '' %> : <%= concurrent.mail %> dans le formulaire d'identification que vous trouvez à l'adresse : </p>
+<p style="text-align:center;">
+<%= CONCOURS_LOGIN.with(distant: true, text: nil) %>
+</p>
+
+<p>Bien à vous,</p>
+<p><%= le_bot %></p>
