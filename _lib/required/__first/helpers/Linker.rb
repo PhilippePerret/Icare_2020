@@ -38,6 +38,7 @@
       lien.with(text: "nouveau", ...)
 =end
 require_relative './Tag'
+require './_lib/required/_classes/App'
 
 class Linker
   attr_reader :data, :default_text, :route
@@ -46,41 +47,69 @@ class Linker
     @route        = withdata[:route]
     @data = withdata
   end #/ initialize
+
   def to_str
-    default_template % alldata.merge(route: real_route, text: default_text || route)
+    @default_link ||= begin
+      reset
+      Tag.link(filldata.merge!(route: real_route, text: default_text || route))
+    end
   end #/ to_str
-  def alldata
+  alias :to_s :to_str
+
+  def with(wdata)
+    reset
+    wdata = {text: wdata} if wdata.is_a?(String)
+    @data = data.merge(wdata)
+    has_absolute_path if data.delete(:absolute)
+    has_distant_path if data.delete(:online) || data.delete(:distant)
+    @qs = data[:query_string]
+    data.merge!(text: default_text) unless data.key?(:text)
+    Tag.link(filldata.merge!(route: real_route))
+  end #/ with
+
+private
+
+  def filldata
     d = data.dup
     d.merge!(class: nil)  unless d.key?(:class)
     d.merge!(target: nil) unless d.key?(:target)
     return d
-  end #/ alldata
+  end #/ filldata
+
   def real_route
-    finpath = "#{@path_absolu ? "#{url}/" : ""}#{route}"
-    finpath = "#{finpath}?#{@query_string}" if @query_string
-    @path_absolu = nil
-    finpath
+    "#{base}#{route}#{query_string}"
   end #/ real_route
-  alias :to_s :to_str
+
+  def base
+    if absolute_path? then "#{url}/" else "" end
+  end #/ base
 
   def url
-    @for_url_online ? App::FULL_URL_ONLINE : App.url
+    distant_path? ? App::FULL_URL_ONLINE : App.url
   end #/ url
 
-  def with(wdata)
-    wdata = {text: wdata} if wdata.is_a?(String)
-    @data = data.merge(wdata)
-    @path_absolu    = true if data[:absolute]
-    @for_url_online = true if data[:online]
-    @query_string   = data[:query_string]
-    data.merge!(text: default_text) unless data[:text]
-    default_template % alldata.merge!(route: real_route)
-  end #/ with
-  def absolute # pour utilisation avec .with(...) ensuite
-    @path_absolu = true
-    return self
-  end #/ absolute
-  def default_template
-    @default_template ||= Tag.link(route: '%{route}', text: '%{text}', target: '%{target}', class: '%{class}')
-  end #/ default_template
+  def query_string
+    if @qs then "?#{@qs}" end
+  end #/ query_string
+
+  # Avant chaque lien il faut resetter pour ne pas prendre le réglage d'avant
+  def reset
+    @has_absolute_path  = nil
+    @has_distant_path   = nil
+  end #/ reset
+
+  def has_absolute_path
+    @has_absolute_path = :true
+  end #/ has_absolute_path
+  def absolute_path?
+    @has_absolute_path == :true
+  end #/ absolute_path?
+
+  def has_distant_path
+    @has_distant_path = :true
+    @has_absolute_path = :true
+  end #/ has_distant_path
+  def distant_path?
+    @has_distant_path == :true
+  end #/ distant_path?
 end #/Linker
