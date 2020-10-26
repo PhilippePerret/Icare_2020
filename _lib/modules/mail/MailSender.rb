@@ -9,21 +9,52 @@ class << self
     @mail_subject = titre
   end #/ title
 
+  # La méthode qui wrap l'envoi de mail, pour permettre une définition plus
+  # simple des mails, et notamment du sujet qui sera, ici, contenu dans le
+  # mail lui-même
+  # Cf. le manuel (icare read manuel)
+  #
+  # IN    {Hash} Paramètres du mail et notamment :
+  #         :to     Mail du destinataire    [REQUIS]
+  #         :from   Mail de l'expéditeur
+  #         :path   Chemin d'accès une mail en vers ERB [REQUIS]
+  #         :bind   Le bindee pour composer le mail [REQUIS]
+  #
+  def send(dmail)
+    # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
+    implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))
+    # Déserber le message et récupérer le sujet du mail
+    mail_message = deserb(dmail[:file]||dmail[:path], dmail[:bind]) # => subject
+    # Finaliser les données utiles pour le mail
+    dmail.merge!(subject: dmail[:bind].mail_subject, message: mail_message)
+    # log("Data mail final: #{dmail.inspect}")
+    # Envoyer le mail
+    Mail.send(dmail)
+  end #/ send
+
+  # On implémente les méthode 'subject(...)' et 'mail_subject' à l'objet bindé
+  # s'il ne connait pas ces méthodes.
+  def implemente_subject_to(bindee)
+    eval("def subject(sujet);@mail_subject = sujet end\n", bindee.bind)
+    eval("def mail_subject;suj=@mail_subject.dup;@mail_subject=nil;return suj;end\n", bindee.bind)
+  end #/ implemente_subject_to
+
   # = main =
   #
   # Envoi des messages
   # ------------------
-  # IN    destinataires   Array des tables des destinataires
-  #       mail            Nom du mail (fichier)
-  #       options         Table d'options.
+  # IN    to:         Array des destinataires
+  #       file:       Chemin d'accès au mail (fichier ERB)
+  #       bind:       Objet bindé au fichier ERB.
   # OUT   void
   # DO    Envoi le mail +mail+ à tous les +destinataires+
   #
-  def send(destinataires, mail, options)
-    require_module('mail')
+  def send_mailing(dmail, options = nil)
+    destinataires = dmail[:to]
+    # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
+    implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))
     # On construit le texte avant pour définir le titre
-    @mail_subject = nil # pour ne pas hériter de l'envoi précédant si subject oublié
-    message = deserb(mail_path(mail), self)
+    message = deserb(dmail[:file], dmail[:bind])
     if options[:noop]
       simuler(message, destinataires, options)
     else # On procède vraiment à l'opération
@@ -38,7 +69,7 @@ class << self
         # méthode :sexize_destinataire_properties
         dd = sexize_destinataire_properties(dd) if dd.key?(:sexe)
         begin
-          Mail.send(to: dd[:mail], subject:mail_subject, message:(message % dd))
+          Mail.send(to: dd[:mail], subject:bind.mail_subject, message:(message % dd))
           "<li>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
         rescue Exception => e
           html.res << "<div class='error'>PROBLÈME D'ENVOI DE MAIL : #{e.message} (avec dd = #{dd.inspect})</div>"

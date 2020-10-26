@@ -1,0 +1,18 @@
+<%
+# frozen_string_literal: true
+subject("Confirmation de votre inscription au Concours de Synopsis")
+%>
+<p>
+Bonjour <%= user.pseudo %>,
+</p>
+<p>
+  Je vous confirme que votre inscription à la session <%= Concours.current.annee %> du Concours de Synopsis de l'atelier Icare a bien été prise en compte.
+</p>
+<p>
+  Vous pouvez dès à présent rejoindre la section du concours sur le site grâce à un lien “Concours”
+  depuis <%= votre_bureau %>.
+</p>
+<p>
+  Bien à vous,
+</p>
+<p>L'administration de l'atelier Icare</p>

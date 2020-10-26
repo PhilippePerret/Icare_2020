@@ -52,9 +52,15 @@ class HTML
     make_inscription_session_courante_for(concid)
     session['concours_user_id'] = concid
     # Envoyer un mail à l'administration
-    phil.send_mail({
-      subject: MESSAGES[:concours_new_signup_titre],
-      message: "<p>Phil,</p><p>#{user.pseudo} (##{user.id}) s'est inscrit#{user.fem(:e)} au concours de synopsis.</p>"
+    MailSender.send({
+      from: user.mail,
+      file: File.join(XMODULES_FOLDER,'mails','inscription','mail-admin-signup-icarien'),
+      bind: user
+      })
+    MailSender.send({
+      to: user.mail,
+      file: File.join(XMODULES_FOLDER,'mails','inscription','confirm-icarien-signup'),
+      bind: self # html
     })
     message(MESSAGES[:concours_signup_ok] % [user.pseudo])
     redirect_to('concours/espace_concurrent')
@@ -63,7 +69,7 @@ class HTML
   def make_inscription_session_courante_for(concurrent_id)
     data_cpc = {concurrent_id:concurrent_id, annee:Concours.current.annee, specs:"00000000"}
     db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data_cpc)
-  end #/ make_inscription_session_courante_for(concurrent_id)
+  end
 
   def new_concurrent_id
     now = Time.now

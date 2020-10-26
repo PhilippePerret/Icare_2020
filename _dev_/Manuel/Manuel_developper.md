@@ -744,6 +744,35 @@ ERRORS = {
 
 ### Envoi de mail
 
+Pour l'envoi des mails, on utilise maintenant au maximum la class `MailSender` qui présente deux avantages et non des moindres :
+
+* elle permet de faire des mailings, en deux temps, avec confirmation de l'envoi après avoir vérifié le mail au masculin et au féminin, ainsi que la liste des destinataires,
+* elle permet de définir le sujet du mail DANS le mail (fichier erb) ce qui n'était pas le cas avant.
+
+Pour pouvoir fonctionner, `MailSender.send` a donc besoin de trois données seulement :
+
+* le destinataire (et/ou l'expéditeur) (`:to` ou `:from`),
+* le chemin d'accès au fichier `ERB` (`:file` ou `:path`),
+* l'objet bindé (`:bind`).
+
+Par exemple :
+
+~~~ruby
+require_module('mail')
+MailSender.send(to:user.mail, file:"mon/fichier/mail", bind: user)
+~~~
+
+#### Envoi de mailing
+
+Pour envoyer un mailing, on utilise la méthode `MailSender#send_mailing` avec les paramètres :
+
+~~~ruby
+require_module('mail')
+MailSender.send_mail([destinataires], "path/to/mail", bindee)
+~~~
+
+#### Ancienne méthode (éviter de l'utiliser)
+
 Pour envoyer un mail à un destinataire quelconque, on utilise la méthode générique :
 
 ~~~ruby
