@@ -32,9 +32,18 @@ class HTML
     if not dc.nil?
       session['concours_user_id'] = param(:p_concurrent_id).dup
       db_compose_update(DBTBL_CONCURRENTS, dc[:id], {session_id: session.id})
-      redirect_to("concours/espace_concurrent")
+      # Ici, deux solutions : soit 1) le concurrent est ancien concurrent, i.e.
+      # il n'est pas inscrit pour le concours courant, soit 2) il est inscrit à
+      # la session courante. Si c'est le 1), on l'envoie vers l'inscription (qui
+      # lui présentera un panneau propre à son cas) soit on l'envoie vers
+      # l'espace personnel normal
+      if Concurrent.is_current_concurrent?(session['concours_user_id'])
+        redirect_to("concours/espace_concurrent")
+      else
+        redirect_to("concours/inscription")
+      end
     else
-      erreur("Désolé, je ne vous remets pas… Merci de vérifier votre adresse mail et le numéro de concurrent qui vous a été remis dans le message de confirmation lors de votre inscription.")
+      erreur(ERRORS[:concours_invalid_informations])
     end
   end #/ check_concurrent
 

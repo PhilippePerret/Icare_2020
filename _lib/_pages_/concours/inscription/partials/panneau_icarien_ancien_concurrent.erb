@@ -1,0 +1,10 @@
+<%
+# frozen_string_literal: true
+=begin
+  Panneau pour un icarien identifié qui est déjà inscrit pour le concours.
+=end
+%>
+<p><%= user.pseudo %>, vous êtes inscrit<%= user.fem(:e) %> aux concours mais pas à cette session <%= Concours.current.annee %>. Pour y remédier, il vous suffit de cliquer sur le bouton ci-dessous.</p>
+<p class="mt2 center">
+  <%= Tag.link(route:"#{route}?op=sgnupsesscour", text: (UI_TEXTS[:concours_signup_session_concours] % {annee: Concours.current.annee}), class:"btn main") %>
+</p>

@@ -11,18 +11,18 @@
 %>
 
 <%
-signedup_form = Form.new(id: "concours-signedup-form", route:route.to_s, class:'form-value-300')
-signedup_form.rows = {
+login_form = Form.new(id: "concours-login-form", route:route.to_s, class:'form-value-300')
+login_form.rows = {
   '<operation/>'  => {name:"p_op", type:"hidden", value:""},
   'Votre mail <span class="small">*</span>'    => {name:"p_mail", type:'text'},
   'Votre Numéro <span class="small">**</span>'  => {name:'p_concurrent_id', type:'text'},
   'Numéro oublié' => {type:"raw", content:"<button type='submit' class='small btn' onclick='document.querySelector(\"#p_op\").value=\"retrievenum\"'>#{UI_TEXTS[:bouton_recup_numero]}</button>"},
   '<expli-mail/>' => {type:"explication", name: "(*) Mail utilisé pour l'inscription.<br>(**) Numéro attribué à l'inscription et envoyé par mail."},
 }
-signedup_form.submit_button = UI_TEXTS[:concours_bouton_sidentifier]
+login_form.submit_button = UI_TEXTS[:concours_bouton_sidentifier]
 %>
 
-<%= signedup_form.out %>
+<%= login_form.out %>
 
 <%
 # Si on est OFFLINE, je présente des identifications possibles en fonction

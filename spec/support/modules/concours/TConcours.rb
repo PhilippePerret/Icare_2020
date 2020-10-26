@@ -27,7 +27,10 @@ class << self
     path_pdf_file = File.expand_path(File.join('.','spec','support','asset','documents','autre_doc.pdf'))
     # D'abord on crée les concours
     ANNEES_CONCOURS_TESTS.uniq.each do |annee, dannee|
-      db_compose_insert(DBTBL_CONCOURS, {annee:annee, theme:random_theme, prix1: "1000€", prix2:"800€", prix3:"200€"})
+      theme = random_theme
+      # step = annee < (Time.now.month < 3 ? Time.now.year : Time.now.year + 1) ? 9 : 1
+      step = annee < ANNEE_CONCOURS_COURANTE ? 9 : 1
+      db_compose_insert(DBTBL_CONCOURS, {annee:annee, step:step, theme:theme, theme_d:"L'explication du thème “#{theme}”", prix1: "1000€", prix2:"800€", prix3:"200€"})
     end
     # On crée les concurrents
     DATA_CONCURRENTS.each do |dc|

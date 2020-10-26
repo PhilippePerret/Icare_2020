@@ -18,6 +18,46 @@ class << self
     end
   end #/ all
 
+  # Pour inscrire un {TUser} qui est un icarien
+  # Noter que cette inscription se fera toujours sur un concours précédent,
+  # jamais sur le concours présent.
+  #
+  # IN    +u+ {User} à inscrire
+  #       +options+   {Hash} d'options, donc :
+  #         :session_courante   Si true, on l'inscrit à la session courante
+  #                             Sinon, non.
+  def inscrire_icarien(u, options)
+    data_cc = {
+      patronyme: u.patronyme||u.pseudo,
+      mail: u.mail,
+      sexe: u.ini_sexe, # u.sexe = "une femme" ou "un homme" pour le moment…
+      session_id: "1"*32,
+      concurrent_id: new_concurrent_id,
+      options: "11100000" # 3e bit à 1 => icarien
+    }
+    db_compose_insert(DBTBL_CONCURRENTS, data_cc)
+    if options && false === options[:session_courante]
+      # Note : il faut forcément une participation à un concours, donc on prend
+      # un des concours précédent
+      dco = db_exec("SELECT annee FROM concours WHERE annee < ? LIMIT 1", Time.now.year).first
+      dco || raise("Pour inscrire un concurrent, il faut au moins un concours précédent")
+      data_cpc = {concurrent_id:data_cc[:concurrent_id], annee:dco[:annee], specs:"00000000"}
+    elsif options && options[:session_courante]
+      data_cpc = {concurrent_id:data_cc[:concurrent_id], annee:ANNEE_CONCOURS_COURANTE, specs:"00000000"}
+    end
+    db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data_cpc)
+  end #/ inscrire
+
+  def new_concurrent_id
+    now = Time.now
+    concid = "#{now.strftime("%Y%m%d%H%M%S")}"
+    while db_count(DBTBL_CONCURRENTS, {concurrent_id: concid}) > 1
+      now += 1
+      concid = "#{now.strftime("%Y%m%d%H%M%S")}"
+    end
+    return concid
+  end #/ new_concurrent_id
+
 end # /<< self
 # ---------------------------------------------------------------------
 #

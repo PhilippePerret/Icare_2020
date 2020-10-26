@@ -12,15 +12,7 @@ class Concours
 #
 # ---------------------------------------------------------------------
 class << self
-  # La méthode renvoie true dans le cas où un (ancien) concurrent est identifié
-  # mais qu'il n'est pas encore inscrit pour la session courante.
-  def ancien_concurrent?
-    is_concurrent_identified = not(session['concours_user_id'].nil?)
-    if is_concurrent_identified
-      is_concurrent_current_concours = db_count(DBTBL_CONCURS_PER_CONCOURS, {concurrent_id: session['concours_user_id']}) > 0
-    end
-    is_concurrent_identified && not(is_concurrent_current_concours)
-  end #/ ancien_concurrent?
+
 end # / << self
 # ---------------------------------------------------------------------
 #

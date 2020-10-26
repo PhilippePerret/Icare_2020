@@ -196,6 +196,12 @@ def id        ; @id       ||= data[:id]       end
 def pseudo    ; @pseudo   ||= data[:pseudo]   end
 def patronyme ; @patronyme||= data[:patronyme]end
 def mail      ; @mail     ||= data[:mail]     end
+def sexe      ; @sexe     ||= data[:sexe]     end
+def ini_sexe
+  @ini_sexe ||= begin
+    (sexe == "une femme" || sexe == "F") ? "F" : "H"
+  end
+end
 def options   ; @options  ||= data[:options]  end
 def cpassword ; @cpassword||= data[:cpassword]end
 def password

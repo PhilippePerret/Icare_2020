@@ -20,15 +20,19 @@ class HTML
           if traite_inscription
             redirect_to("concours/espace_concurrent")
           end
-        when 'signup-concours-ancien'
-          if traite_inscription_ancien
-            redirect_to("concours/espace_concurrent")
-          end
         end
       end
+    elsif param(:op) == 'signupcursessancien'
+      redirect_to("concours/espace_concurrent") if traite_inscription_ancien
     elsif param(:op) == 'signupconcours'
       # Quand un icarien inscrit clique sur le bouton "S'inscrire au concours"
+      icarien_required
       traite_inscription_icarien
+    elsif param(:op) == 'sgnupsesscour'
+      # Pour un icarien ancien concurrent qui veut participer à la session courante
+      icarien_required
+      traite_inscription_icarien_session_courante
+      redirect_to("concours/espace_concurrent")
     end
   end # /exec
 
@@ -38,8 +42,11 @@ class HTML
   end # /build_body
 
 
-  def panneau_icarien_concurrent
-    deserb("./partials/panneau_icarien_concurrent", self)
+  def panneau_icarien_concurrent_session_courante
+    deserb("./partials/panneau_icarien_concurrent_session_courante", self)
+  end
+  def panneau_icarien_ancien_concurrent
+    deserb("./partials/panneau_icarien_ancien_concurrent", self)
   end
   def panneau_signup_pour_icarien
     deserb("./partials/panneau_signup_pour_icarien", self)

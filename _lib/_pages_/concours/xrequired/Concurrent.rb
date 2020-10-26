@@ -45,6 +45,20 @@ class << self
     table_concurrents[concurrent_id]
   end #/ get
 
+  # OUT   True si on trouve un concurrent répondant aux paramètres +params+
+  # IN    +params+ Table Hash de paramètres définissant le concurrent, en
+  #       général son mail (mail: ...)
+  def exists?(params)
+    db_count(DBTBL_CONCURRENTS, params) > 0
+  end #/ exists?
+
+  # IN    Identifiant du concurrent (concurrent_id)
+  # OUT   True si le concurrent d'identifiant +cid+ est inscrit à la session
+  #       courante du concours. False otherwise.
+  def is_current_concurrent?(cid)
+    db_count(DBTBL_CONCURS_PER_CONCOURS, {concurrent_id: cid, annee: Concours.current.annee}) > 0
+  end
+
   # Pour authentifier le concurrent d'identifiant +concurrent_id+. Son ID
   # de session doit correspondre à la session courante
   def authentify(concurrent_id)
@@ -124,13 +138,13 @@ end #/ options
 
 def data_current_concours
   @data_current_concours ||= begin
-    db_exec(REQUEST_DATA_CONCURRENT_CURRENT_CONCOURS, [id, ::Concours.annee_courante]).first
+    db_exec(REQUEST_DATA_CONCURRENT_CURRENT_CONCOURS, [id, Concours.annee_courante]).first
   end
 end #/ data_current_concours
 
 # Retourne la liste Array des données des concours faits par le concurrent
 def concours
-  @concours ||= Concours.new(self)
+  @concours ||= ConcurrentConcours.new(self)
 end #/ concours
 
 # Retourne la liste Array de tous les concours du concurrent
@@ -181,7 +195,7 @@ end #/ save_specs
 def current?
   not(data_current_concours.nil?)
 end #/ current?
-alias :concurrent? :current?
+# alias :concurrent? :current?
 
 # Retourne TRUE pour savoir si le concurrent, identifié par le concurrent_id en
 # session et l'identifiant de session fourni existe véritablement dans la
@@ -242,7 +256,7 @@ end #/ update_options
   #   Pour la donnée concours du concurrent
   #
   # ---------------------------------------------------------------------
-  class Concours
+  class ConcurrentConcours
     def initialize(concurrent)
       @concurrent = concurrent
     end #/ initialize
@@ -261,7 +275,8 @@ end #/ update_options
     def specs
       @specs ||= data[:specs]
     end #/ options
-  end #/Concours
+
+  end #/class Concurrent::ConcurrentConcours
 
 
 end #/Concurrent

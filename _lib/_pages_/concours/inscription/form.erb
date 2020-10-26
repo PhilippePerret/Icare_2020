@@ -1,11 +1,13 @@
 <%# frozen_string_literal: true %>
 <% if not(user.guest?) %>
-  <% if user.concurrent? %>
-    <%= panneau_icarien_concurrent %>
+  <% if user.concurrent_session_courante? %>
+    <%= panneau_icarien_concurrent_session_courante %>
+  <% elsif user.concurrent? %>
+    <%= panneau_icarien_ancien_concurrent %>
   <% else %>
     <%= panneau_signup_pour_icarien %>
   <% end %>
-<% elsif Concours.ancien_concurrent? %>
+<% elsif concurrent && not(concurrent.current?) %>
   <%= panneau_ancien_concurrent %>
 <% else %>
   <%= panneau_visiteur_quelconque %>

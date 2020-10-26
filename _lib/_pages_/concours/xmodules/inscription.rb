@@ -18,27 +18,52 @@ class HTML
   # Dans le cas d'un icarien identifié
   def traite_inscription_icarien
     icarien_required # barrière de sécurité
+    proceed_inscription_icarien(mail:user.mail, patronyme:user.patronyme||user.pseudo, sexe:user.sexe)
+  end
+
+  # Quand un icarien ancien concurrent veut s'inscrire à la session courante
+  # du concours
+  def traite_inscription_icarien_session_courante
+    icarien_required
+    dc = db_get(DBTBL_CONCURRENTS, {mail: user.mail})
+    dc || raise("Vous n'êtes pas un ancien concurrent… Je dois renoncer.")
+    make_inscription_session_courante_for(dc[:concurrent_id])
+    message(MESSAGES[:concours_confirm_inscription_session_courante] % {e: user.fem(:e)})
+  end #/ traite_inscription_icarien_session_courante
+
+  # Procède à l'inscription de l'icarien
+  #
+  # IN    Données pour l'inscription (mail, patronyme, sexe)
+  #
+  # Note : au départ, le traitement de l'inscription se faisait entièrement
+  # dans la méthode traite_inscription_icarien, mais ensuite j'ai voulu
+  # l'utiliser aussi pour un icarien non identifié qui s'inscrirait en
+  # remplissant le formulaire. Mais finalement, je renonce à cette dernière
+  # utilisation sinon un visiteur mal intentionné pourrait créer une inscription
+  # au concours en se faisant passer pour un icarien.
+  def proceed_inscription_icarien(data_cc)
     concid = new_concurrent_id
-    data_cc = {
-      mail:           user.mail,
-      patronyme:      user.patronyme || user.pseudo,
-      sexe:           user.sexe,
+    data_cc.merge!({
       session_id:     session.id,
       concurrent_id:  concid,
       options:        "11100000" # 3 bit à 1 => icarien
-    }
+    })
     db_compose_insert(DBTBL_CONCURRENTS, data_cc)
-    data_cpc = {concurrent_id:concid, annee:ANNEE_CONCOURS_COURANTE, specs:"00000000"}
-    db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data_cpc)
+    make_inscription_session_courante_for(concid)
     session['concours_user_id'] = concid
     # Envoyer un mail à l'administration
     phil.send_mail({
       subject: MESSAGES[:concours_new_signup_titre],
       message: "<p>Phil,</p><p>#{user.pseudo} (##{user.id}) s'est inscrit#{user.fem(:e)} au concours de synopsis.</p>"
     })
-    message("Votre inscription au concours a été effectuée avec succès, #{user.pseudo} !")
+    message(MESSAGES[:concours_signup_ok] % [user.pseudo])
     redirect_to('concours/espace_concurrent')
   end #/ traite_inscription_icarien
+
+  def make_inscription_session_courante_for(concurrent_id)
+    data_cpc = {concurrent_id:concurrent_id, annee:Concours.current.annee, specs:"00000000"}
+    db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data_cpc)
+  end #/ make_inscription_session_courante_for(concurrent_id)
 
   def new_concurrent_id
     now = Time.now
@@ -51,10 +76,42 @@ class HTML
   end #/ new_concurrent_id
 
   # Inscription d'un visiteur quelconque
+  #
+  # Mais il peut s'agir d'un icarien qui ne s'est pas identifié.
+  #
   def traite_inscription
 
     # On s'assure que les données soient valides
     data_concurrent = data_are_valid || raise
+
+    # Si c'est un icarien non identifié qui tente de s'inscrire au concours,
+    # on le renvoie vers l'identification pour qu'il s'inscrive d'un simple
+    # clic. Ou, s'il est déjà inscrit, il a juste à s'identifier pour participer
+    # au concours présent.
+    if data_concurrent[:is_icarien]
+      fem_ne = data_concurrent[:sexe]=="F" ? "ne" : ""
+      fem_e = data_concurrent[:sexe]=="F" ? "e" : ""
+      if Concurrent.exists?(mail:data_concurrent[:mail])
+        # <= L'icarien non identifié est inscrit aux concours
+        # => On lui demande de s'identifier
+        message(MESSAGES[:concours_icarien_inscrit_login_required] % {pseudo:data_concurrent[:patronyme], e:fem_e})
+      else
+        # <= L'icarien non identifié n'est pas inscrit aux concours
+        # => On lui demande de s'identifier
+        message(MESSAGES[:concours_just_icarien_login_required] % {ne:fem_ne})
+      end
+      session['back_to'] = "concours/espace_concurrent"
+      redirect_to("user/login")
+      return
+    elsif data_concurrent[:is_concurrent]
+      # <=  Le candidat a été détecté comme étant un concurrant déjà inscrit
+      #     Soit il utilise le formulaire par dépit, soit il est un ancien
+      #     concurrent qui veut s'inscrire à la session courante.
+      # =>  Dans les deux cas, on le renvoie à l'identification avec un message
+      message(MESSAGES[:concurrent_login_required])
+      redirect_to("concours/identification")
+      return
+    end
 
     # IDENTIFIANT UNIQUE pour le concours
     user_id = new_concurrent_id
@@ -131,25 +188,39 @@ class HTML
 
 
   def data_are_valid
+    # On commence par s'assurer que le visiteur qui s'inscrit n'est pas un
+    # icarien. Si c'est le cas, on renvoie tout de suite false pour que
+    # ce cas soit traité juste après
+    mail = param(:p_mail).nil_if_empty
     patronyme = param(:p_patronyme).nil_if_empty
-    patronyme || raise("Patronyme non défini.")
-    patronyme.length < 256 || raise(ERRORS[:concours_patronyme_too_long])
-    patronyme_unique?(patronyme) || raise(ERRORS[:concours_patronyme_exists])
-    mail      = param(:p_mail).nil_if_empty
-    mail || raise("Mail non défini.")
-    mail.length < 256 || raise(ERRORS[:mail_too_long])
-    mail.match?(/(.*)@(.*)\.(.*){1,7}/) || raise(ERRORS[:mail_invalide])
-    mail_unique?(mail) || raise(ERRORS[:concours_mail_exists])
-    mailconf  = param(:p_mail_confirmation).nil_if_empty
-    mailconf == mail || raise("La confirmation du mail ne correspond pas.")
     genre     = param(:p_sexe)
-    reglement = param(:p_reglement).nil_if_empty
-    reglement == "on" || raise("Le réglement doit être approuvé.")
-    {
+    dcandidat = {
       mail: mail,
       patronyme: patronyme,
-      sexe: genre
+      sexe: genre,
+      is_icarien:     User.exists?(mail: mail),
+      is_concurrent:  Concurrent.exists?(mail: mail)
     }
+    # SI c'est un icarien (reconnu par son adresse mail), on ne le
+    # traite pas ici, on le laisse "remonter" avec les données minimales
+    # pour voir ce qu'il faut faire.
+    # IDEM pour un concurrent reconnu (qui est peut-être un ancien concurrent
+    # qui veut s'inscrire à la session courante)
+    if not(dcandidat[:is_icarien]) && not(dcandidat[:is_concurrent])
+      # OK, on peut étudier sérieusement cette candidature
+      patronyme || raise("Patronyme non défini.")
+      patronyme.length < 256 || raise(ERRORS[:concours_patronyme_too_long])
+      patronyme_unique?(patronyme) || raise(ERRORS[:concours_patronyme_exists])
+      mail || raise("Mail non défini.")
+      mail.length < 256 || raise(ERRORS[:mail_too_long])
+      mail.match?(/(.*)@(.*)\.(.*){1,7}/) || raise(ERRORS[:mail_invalide])
+      mail_unique?(mail) || raise(ERRORS[:concours_mail_exists])
+      mailconf  = param(:p_mail_confirmation).nil_if_empty
+      mailconf == mail || raise("La confirmation du mail ne correspond pas.")
+      reglement = param(:p_reglement).nil_if_empty
+      reglement == "on" || raise("Le réglement doit être approuvé.")
+    end
+    return dcandidat
   end #/ data_are_valid
 
   # Retourne TRUE si le mail ne correspond pas déjà à un inscrit

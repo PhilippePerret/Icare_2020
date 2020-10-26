@@ -103,6 +103,13 @@ class ContainerClass
       self.collect(filtre) { |item| item }
     end #/ get_instances
 
+    # OUT   True si la donnée spécifiée par +specs+ (table ou string)
+    #       existe dans la base.
+    # IN    Les données de filtre caractérisant la donnée.
+    def exists?(specs)
+      count(specs) > 0
+    end #/ exists?
+
     # Retourne le nombre d'éléments répondant au filtre +filtre+. Si +filtre+
     # est nil, retourne le nombre total d'éléments.
     def count(filtre = nil)

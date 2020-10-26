@@ -8,15 +8,18 @@ class User
     admin?
   end #/ evaluateur?
 
-  # TODO Il faudra faire la distinction entre un concurrent icarien qui
-  # est inscrit pour ce concours-ci et un icarien qui n'est pas du tout
-  # inscrit. En fait, on peut avoir trois choses :
-  # - un icarien jamais inscrit à aucun concours
-  # - un icarien inscrit à un concours précédent
-  # - un icarien inscrit à la session courante du concours (et inscrit ou
-  #   non à des versions précédentes)
+  # OUT   TRUE si l'user est concurrent des concours (le concours courant
+  #       ou non).
+  # Pour voir s'il est concurrent du concours courant, voir la méthode
+  # concurrent_session_courante?
   def concurrent?
-    db_count(DBTBL_CONCURRENTS, {mail: user.mail}) > 0
+    db_count(DBTBL_CONCURRENTS, {mail: mail}) > 0
   end #/ concurrent?
 
+  # OUT   TRUE si l'user est concurrent de la session courante du concours
+  def concurrent_session_courante?
+    return false if not concurrent?
+    dc = db_get(DBTBL_CONCURRENTS, {mail: mail})
+    db_count(DBTBL_CONCURS_PER_CONCOURS, {concurrent_id: dc[:concurrent_id], annee:Concours.current.annee}) > 0
+  end #/ concurrent_session_courante?
 end #/User

@@ -18,7 +18,8 @@ UI_TEXTS.merge!({
   concours_btn_identifiez_vous: "Identifiez-vous",
   concours_bouton_send_dossier: "Transmettre ce fichier",
   bouton_recup_numero: "Me renvoyer mon numéro d'inscription",
-  concours_button_destroy: "Détruire mon inscription"
+  concours_button_destroy: "Détruire mon inscription",
+  concours_signup_session_concours: "Vous inscrire à la session %{annee} du concours",
 })
 
 ERRORS.merge!({
@@ -27,7 +28,8 @@ ERRORS.merge!({
   concours_login_required: "Identifiez-vous pour pouvoir rejoindre cette page.",
   invalid_num_for_destroy: "Le numéro d'inscription que vous avez fourni pour la destruction est invalide.",
   titre_required: "Le titre du projet est requis.",
-  too_long: "%s est trop long (maximum : %i)."
+  too_long: "%s est trop long (maximum : %i).",
+  concours_invalid_informations: "Désolé, je ne vous remets pas… Merci de vérifier votre adresse mail et le numéro de concurrent qui vous a été remis dans le message de confirmation lors de votre inscription.",
 })
 
 MESSAGES.merge!({
@@ -35,7 +37,12 @@ MESSAGES.merge!({
   concours_new_signup_titre: "Nouvelle inscription au concours de synopsis",
   concours_sujet_retrieve_numero: "Récupération de votre numéro d'inscription au concours",
   concours_confirm_destroyed: "Votre inscription au concours est détruite.",
-  merci_fichier_et_titre: "Merci %s, votre fichier de candidature et votre titre ont bien été pris en compte."
+  merci_fichier_et_titre: "Merci %s, votre fichier de candidature et votre titre ont bien été pris en compte.",
+  concours_signup_ok: "Votre inscription au concours a été effectuée avec succès, %s !",
+  concours_just_icarien_login_required: "Vous êtes icarien%{ne}, identifiez-vous pour vous inscrire facilement au concours !",
+  concours_icarien_inscrit_login_required: "%{pseudo}, vous êtes déjà inscrit%{e}. Il vous suffit de vous identifier pour demander à participer à cette session du concours.",
+  concours_confirm_inscription_session_courante: "Vous êtes maintenant inscrit%{e} à la session courante du concours.",
+  concurrent_login_required: "Vous êtes déjà concurrent du concours, vous devez vous identifier (pour participer à la nouvelle session ou rejoindre votre espace personnel).",
 })
 
 CONCOURS_FOLDER = File.join(PAGES_FOLDER,'concours')

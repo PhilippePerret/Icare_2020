@@ -5,11 +5,10 @@
   inscrit pour ce concours en particulier.
   Un simple bouton lui permet de s'inscrire.
 =end
-form = Form.new(id:"signup-concours-ancien", route:route.to_s, class:'nolibelle')
-form.rows = {
-  "<infos/>" => {type:"raw", content: "<div>En cliquant sur le bouton ci-dessous en tant qu'ancien#{concurrent.fem(:ne)} concurrent#{concurrent.fem(:e)}, vous pourrez participer à la session #{Concours.current.annee} du Concours de Synopsis.</div>"}
-}
-form.submit_button = "S’inscrire à la session #{Concours.current.annee}"
-form.submit_button_class = "btn main center"
 %>
-<%= form.out %>
+<p>
+  En cliquant sur le bouton ci-dessous en tant qu'ancien<%=concurrent.fem(:ne)%> concurrent<%=concurrent.fem(:e)%>, vous pourrez participer à la session <%=Concours.current.annee%> du Concours de Synopsis.
+</p>
+<p class="mt2 center">
+  <%= Tag.link(route:"#{route}?op=signupcursessancien", text: (UI_TEXTS[:concours_signup_session_concours] % {annee: Concours.current.annee}), class:"btn main") %>
+</p>

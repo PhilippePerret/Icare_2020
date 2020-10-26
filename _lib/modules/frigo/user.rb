@@ -58,7 +58,18 @@ end #/ discussions
 # Retourne la date de dernier check de l'icarien pour la discussion d'ID
 # discussion_id
 def last_check_discussion(discussion_id)
-  db_get(FrigoDiscussion::TABLE_USERS, {discussion_id:discussion_id.to_i, user_id:self.id}, ['last_checked_at'])[:last_checked_at]
+  dd = db_get(FrigoDiscussion::TABLE_USERS, {discussion_id:discussion_id.to_i, user_id:self.id}, ['last_checked_at'])
+  if not dd.nil?
+    dd[:last_checked_at]
+  else
+    begin
+      send_error("# ERREUR DANS last_check_discussion en récupérant 'last_checked_at' avec :\n- discussion_id = #{discussion_id.inspect}\n- user_id = #{self.id_inspect}")
+    rescue Exception => e
+      log(e.message)
+      log(e.backtrace.join(RC))
+    end
+    Time.now.to_i - 30*24*3600
+  end
 end #/ last_check_discussion
 
 # Marquer une discussion entièrement lue

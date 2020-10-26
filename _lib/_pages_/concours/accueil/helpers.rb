@@ -6,8 +6,8 @@ class HTML
   def boutons_visiteur
     if not concurrent
       bouton_formulaire + bouton_login_or_espace
-    else
-      "<p>Rejoindre votre #{ESPACE_LINK}.</p>"
+    elsif concurrent.current?
+      "<p class='right'>Rejoindre #{ESPACE_LINK.with("votre espace personnel")}.</p>"
     end
   end #/ boutons_visiteur
 
@@ -24,7 +24,33 @@ class HTML
   def description_etape_courante
     t = case Concours.current.step
         when 0 then ""
-        when 1 then "<strong>Le concours est ouvert !</strong> Vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire')} ou #{CONCOURS_LOGIN.with('vous identifier')} et #{ESPACE_LINK.with('envoyer votre synopsis')}."
+        when 1 then
+          # Étape 1 (concours en cours)
+          # Message différent en fonction du fait qu'il s'agit d'un visiteur
+          # quelconque, d'un icarien identifié ou d'un icarien identifié
+          # inscrit aux concours
+          identified = not(user.guest?)
+          segs = []
+          segs << "<strong>Le concours est ouvert !</strong>"
+          if identified
+            if user.concurrent?
+              # Icarien identifié concurrent
+              if user.concurrent_session_courante?
+                # Icarien identifié inscrit au concours courant
+                segs << "Puisque vous êtes inscrit#{user.fem(:e)}, vous pouvez" #"envoyer votre manuscrit"
+              else
+                # Icarien identifié, concurrent mais non inscrit à la session courante
+                segs << "Vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire à la session courante')} et"
+              end
+            else
+              # Icarien identifié ne participant pas aux concours (non concurrent)
+              segs << "Vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire')} et"
+            end
+          else
+            segs << "Vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire')} ou #{CONCOURS_LOGIN.with('vous identifier')} et"
+          end
+          segs << "#{ESPACE_LINK.with('envoyer votre synopsis')}."
+          segs.join(" ")
         when 2 then "<strong>Les #{nombre_synopsis} synopsis sont en préselection</strong>.<br/><br/>Rendez-vous aux alentours du #{date_premiere_selection} pour les résultats de la première sélection !"
         when 3 then "<strong>Les 10 synopsis sélectionnés sont en pleiniaire</strong>.<br/>(#{PALMARES_LINK.with('voir les synopsis retenus')})<br/><br/>Rendez-vous aux alentours du #{date_selection_finale} pour le palmarès final."
         when 5 then "<strong>Les synopsis lauréats ont été choisis !</strong><br/><br/>Voir le #{PALMARES_LINK}."
