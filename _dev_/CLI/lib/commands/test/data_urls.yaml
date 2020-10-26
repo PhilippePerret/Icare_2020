@@ -138,6 +138,9 @@
     - :tag: a.goto[href="user/signup"]
       :text: S’inscrire
       :success: "contient un block menant au formulaire d'inscription"
+    - :tag: a.goto[href="concours"]
+      :text: CONCOURS
+      :success: "contient un bloc menant à la section concours"
     - :tag: a.goto[href="user/login"]
       :text: S’identifier
       :success: "contient un block menant au formulaire d'identification"
@@ -164,9 +167,6 @@
     - :tag: a.goto[href="overview/nouveautes"]
       :text: Nouveautés
       :success: "contient un block menant aux nouveautés"
-    - :tag: a.goto[href="concours/accueil"]
-      :text: CONCOURS
-      :success: "contient un block menant au concours de synopsis"
     # Après s'être assuré que tous les liens s'y trouvaient, on joue
     # chaque block
     - :doit: click_on("L’ATELIER")
@@ -209,6 +209,12 @@
     - :tag: h2.page-title
       :text: Identification
       :success: On ne peut pas rejoindre le quai des docs sans être identifié
+    - :doit: |
+        within("section#footer"){click_on("plan")}
+        click_on("CONCOURS")
+    - :tag: h2.page-title
+      :text: "Concours de synopsis de l’atelier Icare"
+      :success: On peut rejoindre la section du concours
     - :doit: |
         within("section#footer"){click_on("plan")}
         click_on("Outils écriture")
@@ -379,3 +385,17 @@
         find('section#header').click
         click_on('se déconnecter')
     - :text: À la prochaine, Phil
+
+# ---------------------------------------------------------------------
+#   LA SECTION CONCOURS
+# ---------------------------------------------------------------------
+-
+  :name: Section du Concours de Synopsis
+  :route: concours
+  :seek_and_do:
+    - :doit: |
+        within("section#footer") { click_on "plan" }
+        click_on "CONCOURS"
+    - :tag: h2.page-title
+      :text: Concours de synopsis de l’atelier Icare
+    - :tag: a[href="concours/inscription"]
