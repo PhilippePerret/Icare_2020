@@ -27,6 +27,9 @@ feature "La section d'aide" do
 end
 
 feature "La section concours" do
+  before(:all) do
+    # TODO il faut s'assurer que le concours soit bien à l'étape 1
+  end
   scenario 'est visible sur les trois première pages visitées' do
     pitch("Quelle que soit la page, un panneau en bas à gauche de l'écran permet de rejoindre le concours.")
     implementer(__FILE__,__LINE__)
