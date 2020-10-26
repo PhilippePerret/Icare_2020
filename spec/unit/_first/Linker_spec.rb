@@ -99,6 +99,16 @@ describe Linker do
         expect(lien).to eq('<a href="ma/route/with" id="" class="" title="" target="_self" style="">défaut</a>')
       end
     end
+
+    context 'sans text précisé' do
+      it 'c’est l’URL qui se marque' do
+        lien = linker.with(text: nil)
+        expect(lien).to eq('<a href="ma/route/with" id="" class="" title="" target="_self" style="">ma/route/with</a>')
+        lien = linker.with(distant:true, text:nil)
+        expect(lien).to eq('<a href="https://www.atelier-icare.net/ma/route/with" id="" class="" title="" target="_self" style="">https://www.atelier-icare.net/ma/route/with</a>')
+      end
+    end
+
   end
 
 

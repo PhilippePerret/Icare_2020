@@ -64,6 +64,7 @@ class Linker
     has_distant_path if data.delete(:online) || data.delete(:distant)
     @qs = data[:query_string]
     data.merge!(text: default_text) unless data.key?(:text)
+    data.merge!(text: real_route) if data[:text].nil?
     Tag.link(filldata.merge!(route: real_route))
   end #/ with
 
@@ -77,7 +78,7 @@ private
   end #/ filldata
 
   def real_route
-    "#{base}#{route}#{query_string}"
+    @real_route ||= "#{base}#{route}#{query_string}"
   end #/ real_route
 
   def base
@@ -94,6 +95,8 @@ private
 
   # Avant chaque lien il faut resetter pour ne pas prendre le réglage d'avant
   def reset
+    @real_route         = nil
+    @qs                 = nil
     @has_absolute_path  = nil
     @has_distant_path   = nil
   end #/ reset
