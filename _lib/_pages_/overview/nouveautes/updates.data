@@ -2,8 +2,9 @@
 # apparaitre en premier car le fichier est lu séquentiellement jusqu'à la
 # date une semaine avant.
 
+26 10 2020::Ajout d'un bouton “Concours” sur le bureau d'un icarien-concurrent du concours.::bureau/home
+24 10 2020::Implémentation du concours de synopsis et lancement
 22 09 2020::Section contenant les outils d’écriture::outils/home
-20 09 2020::Concours de synopsis::concours/home
 14 09 2020::Porte de frigo améliorée, avec possibilité de discuter avec plusieurs personnes.::bureau/frigo
 14 09 2020::Historique complet et détaillé.::bureau/historique
 14 09 2020::Possibilité de partager son historique de travail avec les autres icarien·ne·s ou le reste du monde.::bureau/preferences
