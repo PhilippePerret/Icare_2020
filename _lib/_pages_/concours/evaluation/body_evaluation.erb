@@ -13,7 +13,12 @@ const EVALUATOR_ID = <%= user.id %>;
 %>
 <%= sorting_tools(param(:ks), param(:ss)) %>
 <div id="synopsis-container" class="nolimit">
-  <% Synopsis.sorted_by(param(:ks),param(:ss)).each do |synopsis| %>
-    <%= synopsis.out(user.id) %>
+  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss)) %>
+  <% if fiches_synopsis.count > 0 %>
+    <% fiches_synopsis.each do |synopsis| %>
+      <%= synopsis.out(user.id) %>
+    <% end %>
+  <% else %>
+    <p>Il n'y a pas encore d’inscrit au concours <%= Concours.current.annee %>.</p>
   <% end %>
 </div>
