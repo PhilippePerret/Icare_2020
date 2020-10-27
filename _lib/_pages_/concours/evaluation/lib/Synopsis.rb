@@ -4,10 +4,12 @@
   La classe Synopsis pour la gestion d'un synopsis
   Un synopsis est désigné par un :concurrent_id (identifiant du concurrent)
   et une année (année du concours).
+  Noter que l'instance existe même lorsque le fichier de candidature n'a
+  pas été envoyé. Mais dans ce cas, l'évaluation n'est pas encore possible.
 =end
 class Synopsis
 
-# Pour récupérer les données d'un ~synopsis
+# Pour récupérer les données d'un ~synopsis en particulier.
 REQUEST_SYNOPSIS = <<-SQL
 SELECT *
   FROM #{DBTBL_CONCURS_PER_CONCOURS}
@@ -21,20 +23,12 @@ SQL
 # ---------------------------------------------------------------------
 class << self
 
-# REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS = <<-SQL
-# SELECT
-#   cc.concurrent_id, cc.patronyme,
-#   cpc.*
-#   FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
-#   INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
-#   WHERE cpc.annee = ? AND SUBSTRING(cpc.specs,1,1) = "1"
-# SQL
-# Maintenant, on prend tous les participants et ceux qui n'ont pas
+# On prend tous les participants et ceux qui n'ont pas
 # encore envoyé de synopsis, le synopsis est marqué "ghost"
 REQUEST_ALL_CONCURRENTS = <<-SQL
 SELECT
   cc.concurrent_id, cc.patronyme,
-  cpc.*, (SUBSTRING(cpc.specs,1,1) = "1") AS with_synopsis
+  cpc.*, (SUBSTRING(cpc.specs,1,1) = "1") AS with_fichier
   FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
   INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
   WHERE cpc.annee = ? -- AND SUBSTRING(cpc.specs,1,1) = "1"
@@ -86,7 +80,7 @@ end #/ initialize
 # Pour la fiche du synopsis
 # -------------------------
 TEMPLATE_FICHE_SYNOPSIS = <<-HTML
-<div id="synopsis-%{id}" class="synopsis" data-id="%{id}">
+<div id="synopsis-%{id}" class="%{class}" data-id="%{id}">
   <div id="synopsis-%{id}-titre" class="titre">%{titre}</div>
   <div class="auteur">de <span id="synopsis-%{id}-pseudo" class="">%{pseudo}</span></div>
   <div id="synopsis-%{id}-note-generale" class="note-generale">%{note}</div>
@@ -95,7 +89,7 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
     <span class="jauge-pct-reponses-done" style="width:%{pct_reponses}%%;"></span>
   </div>
   <div id="synopsis-%{id}-keywords" class="keywords">%{keywords}</div>
-  <div class="right">
+  <div class="fiche-buttons" class="right">
     <a class="btn-edit small btn" href="concours/evaluation?view=body_form_synopsis&synoid=%{id}">Éditer</a>
     <button type="button" class="btn-evaluate small btn">Évaluer</button>
   </div>
@@ -107,6 +101,7 @@ def out(evaluator_id)
   @evaluator_id = evaluator_id
   TEMPLATE_FICHE_SYNOPSIS % {
     id:"#{concurrent_id}-#{annee}",
+    class:css_classes,
     titre: titre,
     pseudo: concurrent.patronyme,
     note: note_generale,
@@ -115,6 +110,13 @@ def out(evaluator_id)
   }
 end #/ out
 
+def css_classes
+  @css ||= begin
+    c = ["synopsis"]
+    c << "ghost" if not(fichier?)
+    c.join(' ')
+  end
+end #/ css
 # Pour sauver les données
 def save(data)
   if data.key?(:keywords)
@@ -185,6 +187,19 @@ def evaluation(evaluateur)
   end
   @evaluations[evaluateur.id]
 end #/ evaluation
+
+# ---------------------------------------------------------------------
+#   Méthodes d'état
+# ---------------------------------------------------------------------
+
+# OUT   True si le fichier a été envoyé
+def fichier?
+  data[:with_fichier] == 1
+end #/ fichier?
+
+# ---------------------------------------------------------------------
+#   Méthods de chemins
+# ---------------------------------------------------------------------
 
 # Chemin d'accès au fichier d'évaluation (score) pour l'évaluator evaluator_id
 def score_path(evaluator_id)

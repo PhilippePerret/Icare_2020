@@ -17,7 +17,15 @@ div.synopsis {
 }
 
 div.synopsis.ghost {
-  opacity:0.3;
+  opacity:0.5;
+}
+/* Tous les éléments masqués lorsque le synopsis n'est pas fourni */
+div.synopsis.ghost div.jauge-pct-reponses,
+div.synopsis.ghost div.fiche-buttons,
+div.synopsis.ghost div.note-generale,
+div.synopsis.ghost div.div-pct-reponses
+{
+  visibility:hidden;
 }
 
 div.synopsis div.titre,
