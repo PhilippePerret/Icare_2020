@@ -1,4 +1,6 @@
 # encoding: UTF-8
+# frozen_string_literal: true
+require './_lib/required/__first/constants/paths'
 
 def require_folder foldername
   Dir["#{foldername}/**/*.rb"].each{|m|require m}
@@ -64,7 +66,7 @@ def require_module modname
   elsif File.exists?(path) || File.exists?(pathrb)
     require path
   else
-    raise "Impossible de charger le module #{modname} (#{path})".freeze
+    raise "Impossible de charger le module #{modname} (#{path})"
   end
   # Ensuite on charge tous les dossiers xrequired dans la
   # hiérarchie

@@ -116,6 +116,11 @@ def footer
   deserb('partials/footer', self)
 end #/ footer
 
+# OUT   True s'il faut une citation
+def citation?
+  not(data[:no_citation] === true)
+end #/ citation?
+
 # Retourne une instance citation
 def citation
   @citation ||= begin

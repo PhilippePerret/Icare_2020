@@ -762,6 +762,8 @@ require_module('mail')
 MailSender.send(to:user.mail, file:"mon/fichier/mail", bind: user)
 ~~~
 
+> On peut ajouter `no_citation:true` pour ne pas écrire de citation dans le mail.
+
 #### Envoi de mailing
 
 Pour envoyer un mailing, on utilise la méthode `MailSender#send_mailing` avec les paramètres :
@@ -3366,9 +3368,25 @@ Pour commencer un test à partir de rien, on peut vouloir supprimer tous les mai
 
 ~~~ruby
 vide_dossier_mails
+
+ou
+
+TMails.remove_all
 ~~~
 
 Cela vide le dossier `./tmp/mails` dans lequel sont enregistrés les codes html de tous les mails envoyés, en offline comme en online.
+
+
+
+#### Nombre de mails
+
+Le nombre de mails est retourné par la méthode :
+
+~~~ruby
+TMails.count
+~~~
+
+> Elle est recalculée à chaque appel.
 
 
 

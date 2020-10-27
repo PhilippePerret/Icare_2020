@@ -18,6 +18,16 @@ class << self
     end
   end #/ find_all
 
+  # Pour la destruction de tous les mails
+  def remove_all
+    FileUtils.rm_rf("./tmp/mails")
+  end #/ remove_all
+
+  # OUT   Le nombre de mails présent dans le dossier
+  def count
+    Dir["./tmp/mails/*.*"].count
+  end #/ count
+
   # Retourne TRUE si un message au moins parmi les messages transmis à
   # +mail_destinataire+ contient +searched+
   # +searched+ {String} Le texte recherché (ou les options)

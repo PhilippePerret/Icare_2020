@@ -35,7 +35,10 @@ class << self
   #
   def finish
     puts "CRON-FIN: #{Time.now}"
+    Report.send
   end #/ finish
+
+  def bind; binding() end
 
   # OUT   {Time} Le temps courant
   #       En temps normal (non test), c'est vraiment le temps courant

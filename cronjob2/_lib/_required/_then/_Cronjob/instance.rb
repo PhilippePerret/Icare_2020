@@ -14,6 +14,7 @@ end #/ initialize
 
 # DO    Joue le job
 def run
+  Report << "RUN JOB [#{method_name}]"
   if self.send(method_name)
     finish
   end
@@ -66,5 +67,6 @@ end #/ method_name
 
 def noop?; self.class.noop? end #/ noop?
 
+def bind; binding() end
 
 end #/Cronjob

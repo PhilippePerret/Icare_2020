@@ -50,6 +50,7 @@ class << self
   # DO    Envoi le mail +mail+ à tous les +destinataires+
   #
   def send_mailing(dmail, options = nil)
+    options ||= {}
     destinataires = dmail[:to]
     # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
     implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))

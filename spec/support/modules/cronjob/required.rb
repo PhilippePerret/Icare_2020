@@ -10,7 +10,7 @@ REPORT_PATH = File.join(CRONJOB_FOLDER,'tmp', "report-#{Time.now.strftime('%Y-%m
 # Pour ne pas exécuter les opérations mais seulement les voir : params[:noop] = true
 def run_cronjob(params = nil)
   params ||= {}
-  cmd = "ruby #{RUNNER_PATH}"
+  cmd = "ONLINE=false ruby #{RUNNER_PATH}"
   cmd = "CURRENT_TIME='#{params[:time]}' #{cmd}" if params.key?(:time)
   cmd = "NOOP=true #{cmd}" if params[:noop]
   # puts "Command cronjob: #{cmd.inspect}"
@@ -30,7 +30,7 @@ def read_main_log
 end #/ read_main_log
 
 def report_path(time)
-  time = Time.new(*(time.split('/').collect { |i| i.to_i })) if time.is_a?(String)
+  time = realtime(time)
   File.join(CRONJOB_FOLDER,'tmp', "report-#{time.strftime('%Y-%m-%d')}.txt")
 end #/ report_path
 
@@ -41,3 +41,7 @@ def remove_report(time = nil)
   # On retourne le path dont le test peut avoir besoin
   return path
 end #/ remove_report
+
+def realtime(time)
+  Time.new(*(time.split('/').collect { |i| i.to_i })) if time.is_a?(String)
+end #/ real_time

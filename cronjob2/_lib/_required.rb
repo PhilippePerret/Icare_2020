@@ -7,6 +7,8 @@ APPFOLDER         = File.dirname(CRON_FOLDER)
 # Les modules du site utiles pour le cron
 Dir.chdir(APPFOLDER) do
   require './_lib/required/__first/extensions/Formate_helpers'
+  require './_lib/required/__first/require_methods'
+  require './_lib/required/__first/db'
 end
 
 Dir["#{CRON_LIB_FOLDER}/_required/_first/**/*.rb"].each{|m| require m}
