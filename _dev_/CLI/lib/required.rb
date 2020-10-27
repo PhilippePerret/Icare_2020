@@ -4,6 +4,7 @@
 =end
 # require 'rubygems'
 require 'tty-prompt'
+require './_lib/required/__first/extensions/Formate_helpers'
 
 
 Q = TTY::Prompt.new

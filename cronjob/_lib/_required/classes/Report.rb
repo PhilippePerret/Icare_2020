@@ -65,6 +65,27 @@ class << self
     @report_path ||= File.join(CJDATA_FOLDER,"report-#{NOW.strftime('%Y-%m-%d')}.txt")
   end #/ report_path
 
+  # DO    Nettoie les rapports qui datent de plus de deux semaines
+  def nettoie_vieux_rapports
+    total   = 0 # nombre total de rapports
+    nombre  = 0 # nombre de rapports détruits
+    ilya15jours = Time.now.to_i - 15*3600*24
+    Dir["#{CJDATA_FOLDER}/report-*.*"].each do |rpath|
+      total += 1
+      affixe, ext = File.basename(rpath).split('.')
+      port = affixe.split('-').collect{|i|i.to_i}
+      port.unshift # le texte "report"
+      time = Time.new(*port)
+      if time < ilya15jours
+        File.delete(rpath)
+        nombre += 1
+      end
+    end
+    add("Nettoyage des vieux rapports (nombre : #{nombre}/#{total})")
+  rescue Exception => e
+    add("# ERREUR in Report::nettoie_vieux_rapports : #{e.message}")
+  end #/ nettoie_vieux_rapports
+
 end # /<< self
 # ---------------------------------------------------------------------
 #

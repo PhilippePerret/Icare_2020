@@ -27,3 +27,5 @@ spec/support/Gel/gels/
 cronjob/*.log
 
 cronjob/data/
+
+cronjob2/tmp/

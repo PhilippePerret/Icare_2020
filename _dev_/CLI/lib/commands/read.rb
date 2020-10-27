@@ -11,6 +11,7 @@ MESSAGES.merge!({
 DATA_WHAT_READ = [
   {name:'Journal', value: :log},
   {name:'Journal', value: :cronjob},
+  {name:'Rapports Cronjob', value: :report},
   {name:'Traceur', value: :tracer},
   {name:'Manuel', value: :manuel},
   {name:'Dossier…', value: :folder},
@@ -44,9 +45,19 @@ class << self
   end #/ read_log
   def read_cronjob
     path = './www/cronjob/journal.log'
-    # path = './www/tmp/logs/cronjob.log'
     read_it(path)
   end #/ read_cronjob
+  # Pour lire tous les rapports de cronjob
+  def read_report
+    require_relative './read/Report'
+    res = `#{SSH_COMMAND_CRON_REPORTS}`
+    res = Marshal.load(res)
+    res.each do |nreport, dreport|
+      Report.new(nreport, dreport).out
+    end
+  end #/ read_report
+  alias :read_reports :read_report
+
   def read_tracer
     path = './www/tmp/logs/tracer.log'
     read_it(path)
@@ -75,7 +86,7 @@ class << self
   def read_it(path)
     and_delete_id = options[:delete]
     cmd = <<-CMD.strip
-    ssh icare@ssh-icare.alwaysdata.net ruby << SSH
+    ssh #{SSH_ICARE_SERVER} ruby << SSH
 if !File.exists?('#{path}')
   puts "L'élément '#{path}' est introuvable…"
 elsif File.directory?('#{path}')

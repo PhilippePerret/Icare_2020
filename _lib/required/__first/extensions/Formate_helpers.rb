@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require './_lib/required/__first/constants/String'
 
 JOUR = (3600 * 24)
 MOIS = {

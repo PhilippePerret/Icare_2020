@@ -16,6 +16,8 @@ class << self
     nettoyage_dossiers
     # On détruit les factures de plus de 3 ans
     detruire_facture_3_ans
+    # On nettoie les vieux rapports
+    Report.nettoie_vieux_rapports
   end #/ nettoyage_hebdomadaire
 
   # Divers jobs à effectuer
@@ -34,7 +36,7 @@ class << self
 
   # Réduction du traceur avec récupération des erreurs rencontrées
   def reduce_traceur
-    Report.add('Réduction du traceur', type: :operation)
+    Report.add('Réduction de la taille du traceur', type: :operation)
     CJTraceur.reduce
   end #/ reduce_traceur
 
