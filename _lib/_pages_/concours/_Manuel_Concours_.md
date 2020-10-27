@@ -1,4 +1,4 @@
-# Concour<br>Manuel d'utilisation
+# Concours<br>Manuel d'utilisation
 
 # Étape du concours
 
@@ -97,5 +97,25 @@ Dans le mail, on utilise deux sortes de variables :
   Nous sommes cette année en <%= Time.now.year %> et votre mail est %{mail}.
 </p>
 <%= signature %>
+~~~
+
+
+
+## Résultats (messages)
+
+Dès qu’il faut produire un résultat en plusieurs lignes, qui s’étend sur plusieurs méthodes, on peut utiliser `html.res <<` (ou simplement `res << ` dans une méthode d’instance de la classe `HTML`). Dans la page, il suffit ensuite d’utiliser `<%= resultat %>` (si l’instance `HTML` est bindée) ou `<%= html.resultat %>` (dans le cas contraire) pour afficher ce résultat et le réinitialiser.
+
+#### Ajout d’un message de résultat
+
+~~~ruby
+html.res << "Mon message de résultat"
+~~~
+
+#### Affichage du résultat
+
+~~~erb
+<%= resultat %>
+
+<%= html.resultat %>
 ~~~
 
