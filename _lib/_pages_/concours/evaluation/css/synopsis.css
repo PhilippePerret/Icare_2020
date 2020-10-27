@@ -15,6 +15,11 @@ div.synopsis {
   font-size: 12pt;
   margin-bottom: 12px;
 }
+
+div.synopsis.ghost {
+  opacity:0.3;
+}
+
 div.synopsis div.titre,
 div.synopsis div.auteur
 {

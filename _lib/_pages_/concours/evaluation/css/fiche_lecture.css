@@ -5,6 +5,7 @@ div.fiche-lecture {
   border:1px solid;
   margin-bottom: 1em;
 }
+
 div.fiche-lecture:not(.exergue) {
   transition:0.5;
   opacity:0.6;

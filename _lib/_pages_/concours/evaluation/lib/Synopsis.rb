@@ -21,24 +21,35 @@ SQL
 # ---------------------------------------------------------------------
 class << self
 
-REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS = <<-SQL
+# REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS = <<-SQL
+# SELECT
+#   cc.concurrent_id, cc.patronyme,
+#   cpc.*
+#   FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
+#   INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
+#   WHERE cpc.annee = ? AND SUBSTRING(cpc.specs,1,1) = "1"
+# SQL
+# Maintenant, on prend tous les participants et ceux qui n'ont pas
+# encore envoyé de synopsis, le synopsis est marqué "ghost"
+REQUEST_ALL_CONCURRENTS = <<-SQL
 SELECT
   cc.concurrent_id, cc.patronyme,
-  cpc.*
+  cpc.*, (SUBSTRING(cpc.specs,1,1) = "1") AS with_synopsis
   FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
   INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
-  WHERE cpc.annee = ? AND SUBSTRING(cpc.specs,1,1) = "1"
+  WHERE cpc.annee = ? -- AND SUBSTRING(cpc.specs,1,1) = "1"
 SQL
 
   # Retourne la liste de tous les synopsis courants (sous forme d'instances
-  # synopsis).
+  # synopsis). Note : il y en a une par concurrent de la session courante,
+  # même s'il n'a pas encore envoyé son fichier de candidature
   # Processus :
   #   On relève dans la base les concurrents de l'année courante
-  #   Mais seulement ceux qui ont déposé leur synopsis
   #
   def all_courant
     @all_courant ||= begin
-      db_exec(REQUEST_ALL_CONCURRENTS_WITH_SYNOPSIS, [ANNEE_CONCOURS_COURANTE]).collect do |dc|
+      db_exec(REQUEST_ALL_CONCURRENTS, [ANNEE_CONCOURS_COURANTE]).collect do |dc|
+        log("dc : #{dc.inspect}")
         Synopsis.new(dc[:concurrent_id], ANNEE_CONCOURS_COURANTE, dc)
       end
     end

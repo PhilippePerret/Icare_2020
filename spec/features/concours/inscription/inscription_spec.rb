@@ -12,6 +12,12 @@ feature "Section d'inscription de la partie concours" do
     TConcours.peuple
   end
 
+  scenario 'seulement pour lancer le gel et la préparation', gel:true do
+    expect(2 + 2).to eq(4)
+    gel('concours', <<-TEXT)
+Gel pour des données de base de concours.
+    TEXT
+  end
 
   scenario "Une page conforme permet de s'inscrire une première fois au concours" do
     goto("concours/inscription")

@@ -39,12 +39,14 @@ class << self
       data_participations.each do |dp|
         # Créer l'enregistrement pour la participation au concours
         db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, dp)
-        # Créer le dossier du concurrent avec son fichier pour
-        # cette participation
-        filename = "#{dp[:concurrent_id]}-#{dp[:annee]}.pdf"
-        filepath = File.join(CONCOURS_DATA_FOLDER,dp[:concurrent_id],filename)
-        `mkdir -p "#{File.dirname(filepath)}"`
-        FileUtils.cp(path_pdf_file, filepath)
+        if dp[:specs][0] == "1"
+          # Créer le dossier du concurrent avec son fichier pour
+          # cette participation
+          filename = "#{dp[:concurrent_id]}-#{dp[:annee]}.pdf"
+          filepath = File.join(CONCOURS_DATA_FOLDER,dp[:concurrent_id],filename)
+          `mkdir -p "#{File.dirname(filepath)}"`
+          FileUtils.cp(path_pdf_file, filepath)
+        end
       end
     end
   end #/ peuple

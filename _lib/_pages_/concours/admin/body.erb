@@ -2,6 +2,12 @@
 # frozen_string_literal: true
 
 ilya_un_resultat = not(resultat.nil_if_empty.nil?)
+
+# ---------------------------------------------------------------------
+#
+#   FORMULAIRE POUR LES ÉTAPES
+#
+# ---------------------------------------------------------------------
 STEPS_VALUES = Concours::STEPS_DATA.collect do |k,v|
   # message("#{k}::#{k.class} < #{concours.step}::#{concours.step.class} ? #{(k < concours.step).inspect}")
   name = if k == concours.step
@@ -19,30 +25,14 @@ stepform.rows = {
 stepform.submit_button = "Simuler et procéder à cette étape…"
 stepform.submit_button_class = "small btn"
 %>
+
+<%= lien_vers_evaluations %>
+<%= lien_concours_data if ilya_un_resultat %>
+
+<div><%= stepform.out %></div>
+
 <% if ilya_un_resultat %>
-  <div class="mb2 right">
-    <%= Tag.link(route:"concours/admin", text:"Données du concours") %>
-  </div>
-<% end %>
-<div>
-  <%= stepform.out %>
-</div>
-<% if ilya_un_resultat %>
-<div id="concours-resultat">
-  <%= resultat %>
-</div>
+  <div id="concours-resultat"><%= resultat %></div>
 <% else %>
-  <%
-  form = Form.new(id:"concours-form", route:route.to_s, class:"nomargin nolimit", size:1000)
-  form.rows = {
-    "<op/>" => {type:"hidden", name:"op", value:"save_concours_data"},
-    "Thème" => {type:"text", name:"concours_theme", value: concours.theme},
-    "Description" => {type:"textarea", height:140, name:"concours_theme_d", value: concours.theme_d, placeholder:"Description du thème", explication: "Texte pouvant contenir des variables ruby \#{...} qui seront évaluées. Comme pour les Prix ci-dessous."},
-    "Premier Prix"    => {type:"textarea", name:"concours_prix1", value: concours.prix1},
-    "Deuxième Prix"   => {type:"textarea", name:"concours_prix2", value: concours.prix2},
-    "Troisième Prix"  => {type:"textarea", name:"concours_prix3", value: concours.prix3},
-  }
-  form.submit_button = "Enregistrer"
-  %>
-  <%= form.out %>
+  <%= concours_data_form %>
 <% end %>

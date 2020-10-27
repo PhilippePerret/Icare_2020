@@ -50,8 +50,10 @@ def data_concurrent_concours(patronyme, sexe)
   mail  = patronyme.split(' ').join('_').downcase.gsub(/[^a-z_]/,'')
   mail  = "#{mail}@gmail.com"
   concurrent_id = random_concours_id(annee)
+  with_fichier = false
   donnees_participations = (annee..ANNEE_CONCOURS_COURANTE).collect do |an|
-    {annee:an, concurrent_id:concurrent_id, specs:"10000000", titre:random_titre, keywords:random_keywords} # 1er bit 1 => dossier envoyé
+    with_fichier = !with_fichier
+    {annee:an, concurrent_id:concurrent_id, specs:"#{with_fichier ? 1 : 0}0000000", titre:random_titre, keywords:random_keywords} # 1er bit 1 => dossier envoyé
   end
   {
     patronyme: patronyme,

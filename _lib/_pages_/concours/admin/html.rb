@@ -31,6 +31,7 @@ class HTML
   end #/ res
 
   def resultat
+    return nil if res.empty?
     <<-HTML
 <form class="noform" method="POST">
   <input type="hidden" name="route" value="#{route}" />
