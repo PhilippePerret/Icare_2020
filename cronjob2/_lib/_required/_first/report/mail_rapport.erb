@@ -1,0 +1,11 @@
+<%
+# frozen_string_literal: true
+today = formate_date(Cronjob.current_time,{hour:true})
+subject("Rapport CRON du #{today}")
+%>
+<p>Phil,</p>
+<p>Voici le rapport du cron du <%= today %>.</p>
+<pre>
+<%= File.read(path) %>
+</pre>
+<p>🤖 Le Bot de l'atelier</p>

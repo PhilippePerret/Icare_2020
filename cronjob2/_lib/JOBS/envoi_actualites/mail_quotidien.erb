@@ -1,0 +1,13 @@
+<%
+# frozen_string_literal: true
+subject("Actualités du #{veille_humaine}")
+%>
+<p>Bonjour %{pseudo},</p>
+<p>Veuillez trouver ci-dessous les dernières actualités de l'atelier Icare.</p>
+<%= section_actualites_quotidienne %>
+<p>Si vous ne désirez plus recevoir ces actualités, cliquez simplement sur le bouton ci-dessous.</p>
+<p style="text-align:center;">
+  %{bouton_nomore_news}
+</p>
+<p>Bien à vous,</p>
+<p>🤖 Le Bot de l'atelier Icare</p>
