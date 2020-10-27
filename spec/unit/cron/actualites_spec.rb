@@ -64,8 +64,14 @@ describe 'Le job envoi_actualites' do
         # de la veille.
         # 27e bit à 1 ou 3
         # 5e bit à 0 pour quotidien, 1 pour hebdomadaire
-        nombre_pour_mail_quoti = db_count('users', "SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 0")
-        nombre_pour_mail_hebdo = db_count('users', "SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 1")
+        where_clause = "id > 10 AND SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 0"
+        request = "SELECT * FROM users WHERE #{where_clause} LIMIT 10"
+        icariens_news_quoti = db_exec(request)
+        nombre_pour_mail_quoti = icariens_news_quoti.count
+        where_clause = "id > 10 AND SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 1"
+        request = "SELECT * FROM users WHERE #{where_clause} LIMIT 10"
+        icariens_news_hebdo = db_exec(request)
+        nombre_pour_mail_hebdo = icariens_news_hebdo.count
         if nombre_pour_mail_quoti < 4
           raise "Pas assez pour mail quotidien"
         end
@@ -78,15 +84,25 @@ describe 'Le job envoi_actualites' do
             opts[4] = "1"
             db_exec(update_request, [opts.join(''), du[:id]])
           end
-          nombre_pour_mail_hebdo = db_count('users', "SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 1")
+          # On vérifie
+          where_clause = "id > 10 AND SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 1"
+          request = "SELECT * FROM users WHERE #{where_clause} LIMIT 10"
+          icariens_news_hebdo = db_exec(request)
+          nombre_pour_mail_hebdo = icariens_news_hebdo.count
           if nombre_pour_mail_hebdo < 5
             raise "Impossible de définir 5 users recevant les news hebdomadaires…"
           end
         end
+
+        @icariens_news_hebdo = icariens_news_hebdo
+        @icariens_news_quoti = icariens_news_quoti
       end
 
       let(:thetime) { @thetime }
       let(:reportpath) { @reportpath }
+      let(:icariens_news_hebdo) { @icariens_news_hebdo }
+      let(:icariens_news_quoti) { @icariens_news_quoti }
+
       context 'sans aucune actualités' do
         before(:each) do
           @thetime = "2020/10/24/3/8"
@@ -95,7 +111,7 @@ describe 'Le job envoi_actualites' do
           # On détruit toutes les actualités entre les temps
           delete_actualites_semaine_of_jour(rtime)
         end
-        it 'il n’envoie aucun mail d’actualités', only:true do
+        it 'il n’envoie aucun mail d’actualités' do
           res = run_cronjob(time:thetime)
           # puts "\n\n---res:\n#{res}"
           code_report = File.read(reportpath)
@@ -107,7 +123,7 @@ describe 'Le job envoi_actualites' do
         end
       end #/context : sans actualité
 
-      context 'avec des actualités de la semaine seulement', only:true do
+      context 'avec des actualités de la semaine seulement' do
         before(:each) do
           @thetime = "2020/10/24/3/8"
           @reportpath = remove_report(@thetime)
@@ -121,7 +137,7 @@ describe 'Le job envoi_actualites' do
           db_compose_insert('actualites', data_news)
         end #/before :each
 
-        it 'il envoie les mails d’actualités de la semaine', only:true do
+        it 'il envoie les mails d’actualités de la semaine' do
           res = run_cronjob(time:thetime)
           # puts "\n\n---res:\n#{res}"
           code_report = File.read(reportpath)
@@ -150,7 +166,7 @@ describe 'Le job envoi_actualites' do
           data_news.merge!(message:"Actu veille 3", created_at: rtime.to_i - 1.day + 17000)
           db_compose_insert('actualites', data_news)
         end #/before :each
-        it 'il envoie les mails d’actualités de la semaine et de la veille', only:true do
+        it 'il envoie les mails d’activité de la veille et indirectement de la semaine' do
           res = run_cronjob(time:thetime)
           # puts "\n\n---res:\n#{res}"
           code_report = File.read(reportpath)
@@ -185,7 +201,12 @@ describe 'Le job envoi_actualites' do
           data_news.merge!(message:"Actu d'il y a 2 jours", created_at: rtime.to_i - 2.days)
           db_compose_insert('actualites', data_news)
         end #/before :each
-        it 'il envoie les mails d’actualités de la semaine et de la veille', only:true do
+
+
+        it 'il envoie les mails d’activité de la semaine et de la veille', only:true do
+
+          start_time = Time.now.to_i
+
           res = run_cronjob(time:thetime)
           # puts "\n\n---res:\n#{res}"
           code_report = File.read(reportpath)
@@ -197,6 +218,16 @@ describe 'Le job envoi_actualites' do
           expect(code_report).to include("Nombre d'actualités de la semaine : 5.")
           expect(code_report).not_to include("Aucune actualité pour la veille.")
           expect(code_report).to include("Nombre d'actualités de la veille : 3.")
+
+          # Tester le contenu des mails
+          icariens_news_hebdo.each do |di|
+            expect(TMails).to be_exists(di[:mail], {after: start_time})
+          end
+          veille = realtime(@thetime).to_i - 24*3600
+          veille = formate_date(Time.at(veille))
+          icariens_news_quoti.each do |di|
+            expect(TMails).to be_exists(di[:mail], {after: start_time})
+          end
         end
       end #/ context actualité veille et semaine
     end #/ context un samedi

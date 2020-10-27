@@ -32,17 +32,16 @@ class Cronjob
     end
     destinataires = []
     Icarien.who_want_quotidien_news.each do |icarien|
-      destinataires << icarien.data
+      destinataires << icarien.data.merge(bouton_nomore_news: bouton_nomore_news(icarien))
     end
     if destinataires.empty?
       Report << "Aucun destinataires pour les actualités quotidiennes."
     else
 
       news = actualites_veille
-      puts "news veille : #{news}"
 
       Report << "Nombre de destinataires news veille : #{destinataires.count}."
-      mail_path = File.join(__dir__,'envoi_actualites','mail_hebdomadaire.erb')
+      mail_path = File.join(__dir__,'envoi_actualites','mail_quotidien.erb')
       MailSender.send_mailing(to: destinataires, file: mail_path, bind: self)
     end
   end #/ envoi_actualites_quotidiennes
@@ -58,7 +57,7 @@ class Cronjob
     end
     destinataires = []
     Icarien.who_want_hebdo_news.each do |icarien|
-      destinataires << icarien.data
+      destinataires << icarien.data.merge(bouton_nomore_news: bouton_nomore_news(icarien))
     end
     if destinataires.empty?
       Report << "Aucun destinataires pour les actualités hebdomadaires."
@@ -125,6 +124,20 @@ class Cronjob
     @semaine_start = @semaine_fin - 7.days
   end #/ calc_veille_times
 
+# ---------------------------------------------------------------------
+#
+#   Helpers pour mails
+#
+# ---------------------------------------------------------------------
+def veille_humaine
+  @veille_humaine ||= begin
+    formate_date(Time.at(veille_start))
+  end
+end #/ veille_humaine
+
+def bouton_nomore_news(icarien)
+  "[Bouton ticket pour icarien ##{icarien.id} lui permettant d'arrêter ça]"
+end #/ bouton_nomore_news
 
 REQUEST_GET_ACTUALITES = "SELECT * FROM actualites WHERE created_at >= ? AND created_at < ?"
 end #/Cronjob

@@ -4,10 +4,14 @@ class MailSender
 class << self
   attr_reader :mail_subject
 
-  # Pour définir le titre à l'intérieur du mail
-  def subject(titre)
-    @mail_subject = titre
-  end #/ title
+  def maillog(msg)
+    if defined?(html) && html.respond_to?(:res)
+      html.res << msg
+    else
+      log(msg)
+    end
+  end #/ log
+
 
   # La méthode qui wrap l'envoi de mail, pour permettre une définition plus
   # simple des mails, et notamment du sujet qui sera, ici, contenu dans le
@@ -56,13 +60,18 @@ class << self
     implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))
     # On construit le texte avant pour définir le titre
     message = deserb(dmail[:file], dmail[:bind])
+    sujet_mail = dmail[:bind].mail_subject
+
+    maillog("Sujet du message : #{sujet_mail.inspect}")
+    maillog("Le message template final : #{message}")
+
     if options[:noop]
       simuler(message, destinataires, options)
     else # On procède vraiment à l'opération
       envois = destinataires.collect do |dd|
         # Si c'est un destinataire sans mail, on ne le traite pas
-        if not(dd.key?(:mail))
-          html.res << "<div class='error'>Donnée destinataire sans mail : #{dd.inspect}. Pas d'envoi possible.</div>"
+        if not(dd.key?(:mail)) || dd[:mail].nil_if_empty.nil?
+          maillog("<div class='error'>Donnée destinataire sans mail : #{dd.inspect}. Pas d'envoi possible.</div>")
           next
         end
         # Si le sexe est défini dans les données, on renseigne des propriétés
@@ -70,14 +79,16 @@ class << self
         # méthode :sexize_destinataire_properties
         dd = sexize_destinataire_properties(dd) if dd.key?(:sexe)
         begin
-          Mail.send(to: dd[:mail], subject:bind.mail_subject, message:(message % dd))
+          Mail.send(to: dd[:mail], subject: sujet_mail, message: (message % dd))
           "<li>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
         rescue Exception => e
-          html.res << "<div class='error'>PROBLÈME D'ENVOI DE MAIL : #{e.message} (avec dd = #{dd.inspect})</div>"
+          maillog "<div class='error'>PROBLÈME D'ENVOI DE MAIL : #{e.message} (avec dd = #{dd.inspect})</div>"
           "<li class='error'>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
         end
       end
-      html.res << "<ul>#{envois.join}</ul><div>= #{destinataires.count} messages envoyés. =</div>"
+      if options[:verbose]
+        maillog("<ul>#{envois.join}</ul><div>= #{destinataires.count} messages envoyés. =</div>")
+      end
     end
   end #/ send
 
@@ -100,7 +111,7 @@ class << self
     destinataire_femme = sexize_destinataire_properties(destinataire_femme)
     destinataire_homme = sexize_destinataire_properties(destinataire_homme)
 
-    html.res << <<-HTML
+    maillog <<-HTML
 <div class="simulation">
 <p class="bold">Envoi du mail :<br> “#{mail_subject}”</p>
 <div class="bold">Version féminine</div>
