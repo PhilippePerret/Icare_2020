@@ -11,9 +11,9 @@ const EVALUATOR_ID = <%= user.id %>;
   # le pourcentage de travail
   checklist
 %>
-
+<%= sorting_tools(param(:ks), param(:ss)) %>
 <div id="synopsis-container" class="nolimit">
-  <% Synopsis.all_courant.each do |synopsis| %>
+  <% Synopsis.sorted_by(param(:ks),param(:ss)).each do |synopsis| %>
     <%= synopsis.out(user.id) %>
   <% end %>
 </div>

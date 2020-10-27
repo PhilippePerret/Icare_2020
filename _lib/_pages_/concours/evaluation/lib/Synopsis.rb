@@ -43,20 +43,39 @@ SQL
   def all_courant
     @all_courant ||= begin
       db_exec(REQUEST_ALL_CONCURRENTS, [ANNEE_CONCOURS_COURANTE]).collect do |dc|
+        dc.merge!(evaluator_id: Concours.evaluator.id)
         log("dc : #{dc.inspect}")
         Synopsis.new(dc[:concurrent_id], ANNEE_CONCOURS_COURANTE, dc)
       end
     end
   end #/ all_courant
 
-  # OUT   Liste Array des instances de Synopsis, classés par note
-  def all_sorted
-    @all_sorted ||= begin
-      sorteds = all_courant.dup.sort_by { |syno| syno.fiche_lecture.total.note }.reverse
-      sorteds.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total.undefined? }
-      sorteds
+  # IN    La clé de classement ('note' ou 'progress')
+  #       Le sens de classement ('desc' ou 'asc')
+  # OUT   La liste des instances {Synopsis}
+  # Note  Les synopsis sans fichiers sont toujours mis à la fin
+  def sorted_by(key = 'note', sens = 'desc')
+    # 1) On ne prend que les synopsis avec fichier
+    avec_fichiers = []
+    sans_fichiers = []
+    all_courant.each do |syno|
+      if syno.fichier?
+        avec_fichiers << syno
+      else
+        sans_fichiers << syno
+      end
     end
-  end #/ all_sorted
+    # 2) On peut classer les synopsis avec fichier
+    if key == 'note'
+      # avec_fichiers = avec_fichiers.sort_by{ |syno| syno.fiche_lecture.total.note }.reverse
+      avec_fichiers = avec_fichiers.sort_by{ |syno| syno.note_generale.to_f }
+      avec_fichiers.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total.undefined? }
+    else # ket = :progress
+      avec_fichiers.sort_by! { |syno| syno.nombre_reponses }
+    end
+    avec_fichiers = avec_fichiers.reverse if sens == 'desc'
+    avec_fichiers + sans_fichiers
+  end #/ sorted_by
 end # /<< self
 # ---------------------------------------------------------------------
 #
@@ -66,7 +85,9 @@ end # /<< self
 attr_reader :concurrent_id, :annee, :data, :id
 # Les données de score pour un évaluator donné
 # Note : pour le moment, l'évaluateur se donne dans :out
-attr_reader :data_score, :evaluator_id
+attr_reader :data_score
+# L'évaluator courant
+attr_accessor :evaluator_id
 # Position de classement par rapport à la note
 attr_accessor :position
 # Instanciation
@@ -74,6 +95,7 @@ def initialize concurrent_id, annee, data = nil
   @concurrent_id = concurrent_id
   @annee = annee
   @id = "#{concurrent_id}-#{annee}"
+  @evaluator_id = data[:evaluator_id]
   @data = data
 end #/ initialize
 
@@ -98,13 +120,13 @@ TEMPLATE_FICHE_SYNOPSIS = <<-HTML
 HTML
 
 def out(evaluator_id)
-  @evaluator_id = evaluator_id
+  @evaluator_id ||= evaluator_id
   TEMPLATE_FICHE_SYNOPSIS % {
     id:"#{concurrent_id}-#{annee}",
     class:css_classes,
     titre: titre,
     pseudo: concurrent.patronyme,
-    note: note_generale,
+    note: formated_note_generale,
     pct_reponses: pourcentage_reponses,
     keywords: formated_keywords # Pour se remémorer le synopsis
   }
@@ -151,20 +173,34 @@ def fiche_lecture
   @fiche_lecture ||= FicheLecture.new(self)
 end #/ fiche_lecture
 
+def formated_note_generale
+  note_generale || "---"
+end
+
 def note_generale
   data_score || get_data_score
-  data_score[:note_generale] || "---"
+  data_score[:note_generale]
 end #/ note_generale
 
+# OUT   {Float} Pourcentage de réponses données
 def pourcentage_reponses
   data_score || get_data_score
-  data_score[:pourcentage_reponses] || 0
+  data_score[:pourcentage_reponses] || 0.0
 end #/ pourcentage_reponses
+alias :progress :pourcentage_reponses
+
+def nombre_reponses
+  data_score || get_data_score
+  data_score[:nombre_reponses] || 0
+end #/ nombre_reponses
 
 def get_data_score
+  log("-> get_data_score")
   dscore = {}
+  log("folder : #{folder} existe ? #{File.exists?(folder).inspect}")
   if File.exists?(folder)
     score_evaluator_path = score_path(evaluator_id)
+    log("Score path : #{score_evaluator_path} existe ? #{File.exists?(score_evaluator_path).inspect}")
     if File.exists?(score_evaluator_path)
       dscore = JSON.parse(File.read(score_evaluator_path))
     end
@@ -172,6 +208,8 @@ def get_data_score
   @data_score = ConcoursCalcul.note_generale_et_pourcentage_from(dscore)
   if not dscore.empty?
     log("@data_score obtenu pour #{id} : #{@data_score.inspect}")
+  else
+    log("@data_score est vide")
   end
 end #/ data_score
 
@@ -201,7 +239,8 @@ end #/ fichier?
 #   Méthods de chemins
 # ---------------------------------------------------------------------
 
-# Chemin d'accès au fichier d'évaluation (score) pour l'évaluator evaluator_id
+# IN    ID de l'évaluateur (pour la session 2020, ça correspond à l'ID User)
+# OUT   Chemin d'accès au fichier d'évaluation (score) pour l'évaluator evaluator_id
 def score_path(evaluator_id)
   File.join(folder, "evaluation-#{evaluator_id}.json")
 end #/ score_path

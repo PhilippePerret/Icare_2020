@@ -12,7 +12,12 @@ class Concours
 #
 # ---------------------------------------------------------------------
 class << self
-
+  # L'évaluateur courant
+  # (pour le moment, c'est l'user connecté, plus tard, ce sera une
+  #  classe spéciale qui devra au moins répondre à la méthode :id)
+  def evaluator
+    user
+  end #/ evaluator
 end # / << self
 # ---------------------------------------------------------------------
 #
