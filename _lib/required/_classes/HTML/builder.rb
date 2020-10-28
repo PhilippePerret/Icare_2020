@@ -6,7 +6,10 @@ class HTML
   # Construction complète de la page
   def build_page
     Page.load(route)
-    proceed_exec if self.respond_to?(:exec) # la route chargée
+    if self.respond_to?(:exec) # la route chargée
+      # C'est là notamment qu'est joué le ticket éventuel
+      proceed_exec
+    end
     build_body
     build_header
     build_titre

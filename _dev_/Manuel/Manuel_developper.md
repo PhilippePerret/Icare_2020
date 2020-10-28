@@ -2315,10 +2315,16 @@ def ma_methode_avec_ticket
 end
 ~~~
 
+Note : si c’est un ticket sans authentification requise (i.e. sans que l’icarien doive s’identifier, ce qui est la procédure normale), on ajouter aux données :
+
+~~~ruby
+authentified: false
+~~~
+
 
 
 ~~~ruby
-# Dans la notification
+# Dans la notification/le mail
 <p class="center">
     @ticket1.lien("Envoyer le ticket", {route: "bureau/home"})
 </p>
@@ -2363,7 +2369,7 @@ Pour instancier un ticket, on utilise la méthode `Ticket.create(<param>)`.
 
 
 
-### Ticket devant runner un watcher
+### Ticket qui doit runner un watcher
 
 Mettre son code à :
 
@@ -2372,7 +2378,7 @@ Mettre son code à :
 
 # Donc :
 require_module('ticket')
-ticket = Ticket.create(user_id: user.id, code:"run_watcher(#{watcher_id})".freeze)
+ticket = Ticket.create(user_id: user.id, code:"run_watcher(#{watcher_id})")
 
 ~~~
 
@@ -2382,6 +2388,12 @@ ticket = Ticket.create(user_id: user.id, code:"run_watcher(#{watcher_id})".freez
 
 cf. [ Insertion d'un lien vers un ticket dans les mails](#insertticketinmail).
 
+
+### Ticket sans authentification
+
+On peut utiliser des tickets sans authentification en ajoutant `authentified: false` à leur création.
+
+Fonctionnement : on établit alors un code d'authentification aléatoire qu'on joint à l'url du ticket et qu'on insert dans la donnée enregistrée, dans la colonne `authentif` du ticket. À la lecture du ticket, s'il contient un code d'authentification et qu'il n'est pas fourni ou que ce n'est pas le bon, l'application rejette l'opération.
 
 
 ---
@@ -3428,7 +3440,7 @@ TMails.for(<mail destinataire>[,<options>])							TMails.for("phil@chez.moi")
 Cette méthode retourne donc une liste d’instance `TMail` qui répond aux méthodes suivantes :
 
 ~~~ruby
-tmail.contains?(str)		# retourne true si contient le texte +str+
+tmail.contains?(str)		# retourne true si contient le texte +str+ (cf. ci-dessous)
 tmail.content						# le contenu textuel du mail
 tmail.time							# Le temps de l'envoi
 tmail.destinataire			# le destinataire de l'envoi
@@ -3436,7 +3448,22 @@ tmail.expediteur				# l'expéditeur de l'envoi
 tmail.filename					# le nom du fichier
 ~~~
 
+#### Tester le contenu d'un mail (contains?)
 
+La méthode `contains?` ci-dessus permet donc de tester par :
+
+~~~ruby
+tmail = TMails.for("expe@chez.lui", {after: start_time})
+expect(tmail).to be_contains("<string>")
+~~~
+
+Noter que pour utiliser la méthode `contains?` sans lever d'exception en cas d'absence, il faut ajouter en second paramètre l'option `no_test: true`. Dans ce cas, la méthode ne fera que retourner `true` ou `false`.
+
+~~~ruby
+if tmail.contains?("<string>", no_test:true)
+	# ...
+end 
+~~~
 
 <a name="optionsmails"></a>
 

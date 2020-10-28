@@ -219,15 +219,33 @@ describe 'Le job envoi_actualites' do
           expect(code_report).not_to include("Aucune actualité pour la veille.")
           expect(code_report).to include("Nombre d'actualités de la veille : 3.")
 
-          # Tester le contenu des mails
+          # Tester l'existence des mails
           icariens_news_hebdo.each do |di|
             expect(TMails).to be_exists(di[:mail], {after: start_time})
           end
-          veille = realtime(@thetime).to_i - 24*3600
-          veille = formate_date(Time.at(veille))
+          veille_date = Time.at(realtime(@thetime).to_i - 24*3600)
+          veille = formate_date(veille_date)
           icariens_news_quoti.each do |di|
             expect(TMails).to be_exists(di[:mail], {after: start_time})
           end
+
+          # Tester le contenu des mails
+          ic = icariens_news_hebdo.first
+          mail_hebdo = TMails.for(ic[:mail], {after: start_time}).first
+          expect(mail_hebdo).to be_contains("<div class=\"date-news\"")
+
+          expect(mail_hebdo).to be_contains(">#{formate_date(veille_date, jour:true)}<")
+          expect(mail_hebdo).to be_contains("Actualité veille 1")
+          expect(mail_hebdo).to be_contains("Actu veille 2")
+          expect(mail_hebdo).to be_contains("Actu veille 3")
+          expect(mail_hebdo).to be_contains(">#{formate_date(veille_date - 3.days, jour:true)}<")
+          expect(mail_hebdo).to be_contains("Actualité d'il y a 4 jours")
+          expect(mail_hebdo).to be_contains(">#{formate_date(veille_date - 1.days, jour:true)}<")
+          expect(mail_hebdo).to be_contains("Actu d'il y a 2 jours")
+
+          # Test du lien pour le ticket
+          # TODO
+
         end
       end #/ context actualité veille et semaine
     end #/ context un samedi

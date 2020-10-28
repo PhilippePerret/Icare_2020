@@ -12,6 +12,7 @@ class Cronjob
   def envoi_actualites
     runnable? || return
     require_module('mail')
+    require_module('ticket')
     envoi_actualites_hebdomadaires if Cronjob.current_time.wday == 6
     envoi_actualites_quotidiennes
     return true
@@ -136,7 +137,8 @@ def veille_humaine
 end #/ veille_humaine
 
 def bouton_nomore_news(icarien)
-  "[Bouton ticket pour icarien ##{icarien.id} lui permettant d'arrêter ça]"
+  tck = Ticket.create(user_id: icarien.id, code:"User.get(#{icarien.id}).nomore_news", authentified: false)
+  tck.lien("Ne plus recevoir ces annonces, merci", {route: ''})
 end #/ bouton_nomore_news
 
 REQUEST_GET_ACTUALITES = "SELECT * FROM actualites WHERE created_at >= ? AND created_at < ?"

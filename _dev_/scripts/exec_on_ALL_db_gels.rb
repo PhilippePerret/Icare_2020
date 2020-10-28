@@ -7,7 +7,7 @@
 
 # Le traitement qu'il faut appliquer À TOUS LES GELS des tests
 DB_REQUEST = <<-SQL.strip
-ALTER TABLE `concours` ADD COLUMN `theme_d` TEXT DEFAULT NULL AFTER `theme`;
+ALTER TABLE `tickets` ADD COLUMN `authentif` VARCHAR(10) DEFAULT NULL AFTER `id`;
 SQL
 DB_VALUES = nil
 
