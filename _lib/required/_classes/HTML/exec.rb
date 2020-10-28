@@ -6,8 +6,8 @@ class HTML
 #
 # ---------------------------------------------------------------------
   def proceed_exec
+    # log("-> HTML#proceed_exec")
     begin
-      run_ticket if param(:tik)
       self.exec
     rescue IdentificationRequiredError => e
       # L'user doit être identifié pour atteindre la page voulue.
@@ -22,12 +22,13 @@ class HTML
       # page sans issue
       Route.redirect_to('errors/acces_interdit')
     end
-
   end #/proceed_exec
 
   def run_ticket
+    log("-> HTML#run_ticket")
     require_module('ticket')
     Ticket.run(param(:tik).to_i, param(:tckauth))
+    log("<- HTML#run_ticket")
   end #/ run_ticket
 
 end

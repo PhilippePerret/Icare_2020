@@ -5,9 +5,10 @@ class HTML
 
   # Construction complète de la page
   def build_page
+    # log("-> HTML#build_page")
     Page.load(route)
+    run_ticket if param(:tik) # Est-ce vraiment le meilleur endroit ?
     if self.respond_to?(:exec) # la route chargée
-      # C'est là notamment qu'est joué le ticket éventuel
       proceed_exec
     end
     build_body
