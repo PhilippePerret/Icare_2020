@@ -166,8 +166,12 @@ TMail = Struct.new(:path) do
   def content
     @content ||= File.read(path).force_encoding('utf-8')
   end #/ content
-  def contains?(searched)
-    content.include?(searched)
+  def contains?(searched, options = nil)
+    oui = content.include?(searched)
+    unless options && options[:no_test]
+      raise("Le mail “#{subject}” à #{destinataire} devrait contenir “#{searched}”.\n\nContenu du mail :\n#{content}") if not(oui)
+    end
+    return oui
   end #/ contains?
   def time
     @time ||= Time.at(timestamp)
