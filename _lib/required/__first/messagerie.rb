@@ -8,6 +8,7 @@ DIV_OUT = '<div class="%{css}"><span class="picto-message">%{picto}</span>%{str}
 class << self
   def add msg
     return if msg.nil?
+    msg = msg.message if msg.respond_to?(:message)
     @messages ||= []
     @messages << msg.strip
   end
