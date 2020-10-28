@@ -44,6 +44,109 @@ class << self
       u
     end
   end #/ get_user_by_mail
+
+  # Méthode qui s'assure qu'il y ait +nombre+ icariens contactable en
+  # définissant le nombre contactable hebdomadairement et le nombre contactable
+  # quotidiennement.
+  #
+  # +options+
+  #   strict:     Si TRUE, il faut le nombre et seulement le nombre
+  #   hebdo:      Le nombre contactable hebdomadairement
+  #   quoti:      Le nombre contactable quotidiennement
+  #
+  def set_contactables(options)
+
+    users_quoti, users_hebdo = get_contactables
+    oper = options[:strict] ? :== : :>
+    quoti_ok = users_quoti.count.send(oper, options[:quoti])
+    hebdo_ok = users_hebdo.count.send(oper, options[:hebdo])
+    if quoti_ok && hebdo_ok
+      return [users_quoti, users_hebdo]
+    end
+
+    # *** Si on passe par ici, c'est que ça ne correspond pas ***
+
+    # On vérifie d'abord qu'on a assez d'user pour réaliser la chose
+    if db_count('users', "id > 9") < options[:quoti] + options[:hebdo]
+      raise "Il n'y a pas assez d'user dans la table pour réaliser :\nset_contactables(#{options.inspect})."
+    end
+
+    # La requête générale permettant d'updater les options
+    req_update_options = "UPDATE users SET options = ? WHERE id = ?"
+
+    # Pour simplifier, on fait une opération radicale : on met tous
+    # les users à non contactables et on règle ensuite le nombre voulu
+    # pour chaque fréquence
+    # Dans un premier temps, on regarde si on n'a pas ce qu'il nous faut
+    values = []
+    contactables = db_exec(req_contactables).each do |du|
+      opts = du[:options].split('')
+      opts[26] = "0"
+      values << [opts.join(''), du[:id]]
+    end
+    db_exec(req_update_options, values)
+
+    # Ensuite, on fait le nombre de quotidiens voulu
+    req_get_uncontactables = "SELECT id, options FROM users WHERE #{where_constants} AND SUBSTRING(options,27,1) = 0 LIMIT ?"
+    values_quoti = db_exec(req_get_uncontactables, [options[:quoti]]).collect do |du|
+      opts = du[:options].split('')
+      opts[26] = "1" # contactable par l'administration
+      opts[4] = "0"   # contact quotidien
+      [opts.join(''), du[:id]]
+    end
+    nombre_quoti_traited = values_quoti.count
+    if nombre_quoti_traited != options[:quoti]
+      raise "Mauvais nombre de quotidien dans TUser::set_contactables(#{options.inspect})"
+    else
+      db_exec(req_update_options, values_quoti)
+      # puts "Quotidiens créés : #{values_quoti.inspect}"
+    end
+
+    values_hebdo = db_exec(req_get_uncontactables, [options[:hebdo]]).collect do |du|
+      opts = du[:options].split('')
+      opts[26] = "1" # contactable par l'administration
+      opts[4] = "1"  # hebdomadaire
+      [opts.join(''), du[:id]]
+    end
+    nombre_hebdo_traited = values_hebdo.count
+    if nombre_hebdo_traited != options[:hebdo]
+      raise "Mauvais nombre d'hebdomadaire dans TUser::set_contactables(#{options.inspect})"
+    else
+      db_exec(req_update_options, values_hebdo)
+      puts "Hebdomadaires créés : #{values_hebdo.inspect}"
+    end
+
+
+    users_quoti, users_hebdo = get_contactables
+    oper = options[:strict] ? :== : :>
+    quoti_ok = users_quoti.count.send(oper, options[:quoti])
+    hebdo_ok = users_hebdo.count.send(oper, options[:hebdo])
+    if quoti_ok && hebdo_ok
+      return [users_quoti, users_hebdo]
+    else
+      raise "Impossible de définir les contactables avec options:#{options.inspect} (users_quoti obtenus : #{users_quoti.count}/users_hebdo obtenus: #{users_hebdo.count})"
+    end
+  end #/ set_contactables
+
+  def get_contactables
+    # Les clauses where qu'on doit avoir dans tous les cas
+    req_quoti = "#{req_contactables} AND SUBSTRING(options,5,1) = 0"
+    users_quoti = db_exec(req_quoti)
+    req_hebdo = "#{req_contactables} AND SUBSTRING(options,5,1) = 1"
+    users_hebdo = db_exec(req_hebdo)
+
+    return [users_quoti, users_hebdo]
+  end #/ get_contactables
+
+  # Utile pour get_contactables et set_contactables
+  def where_constants
+    @where_constants ||= "id > 9 AND SUBSTRING(options,4,1) = 0"
+  end #/ where_constants
+
+  # Utile pour get_contactables et set_contactables
+  def req_contactables
+    @req_contactables ||= "SELECT * FROM users WHERE #{where_constants} AND SUBSTRING(options,27,1) IN (1,3)"
+  end #/ req_contactables
 end # /<< self
 
 # ---------------------------------------------------------------------

@@ -16,7 +16,18 @@ describe 'Le job envoi_actualites' do
   before(:all) do
     require_support('cronjob')
     degel('real-icare')
+    # On doit s'assurer qu'il y a exactement :
+    #   - 5 et seulement 5 icariens qui veulent recevoir les activités
+    #       quotidiennes.
+    #   - 7 et seulement 7 icariens qui veulent recevoir les activites
+    #       hebdomadairement.
+    @icariens_news_quoti, @icariens_news_hebdo = TUser.set_contactables(strict:true, quoti:5, hebdo:7)
+    # puts "@icariens_news_hebdo:\n-- #{@icariens_news_hebdo.join("\n-- ")}"
   end
+
+  let(:icariens_news_hebdo) { @icariens_news_hebdo }
+  let(:icariens_news_quoti) { @icariens_news_quoti }
+
   before(:each) do
     TMails.remove_all
     remove_main_log
@@ -58,50 +69,8 @@ describe 'Le job envoi_actualites' do
 
     context 'un samedi' do
 
-      before(:all) do
-        # On doit s'assurer qu'il y a au moins 4 icariens qui veulent recevoir
-        # les actualités de la semaine et 4 qui veulent recevoir les actualités
-        # de la veille.
-        # 27e bit à 1 ou 3
-        # 5e bit à 0 pour quotidien, 1 pour hebdomadaire
-        where_clause = "id > 10 AND SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 0"
-        request = "SELECT * FROM users WHERE #{where_clause} LIMIT 10"
-        icariens_news_quoti = db_exec(request)
-        nombre_pour_mail_quoti = icariens_news_quoti.count
-        where_clause = "id > 10 AND SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 1"
-        request = "SELECT * FROM users WHERE #{where_clause} LIMIT 10"
-        icariens_news_hebdo = db_exec(request)
-        nombre_pour_mail_hebdo = icariens_news_hebdo.count
-        if nombre_pour_mail_quoti < 4
-          raise "Pas assez pour mail quotidien"
-        end
-        if nombre_pour_mail_hebdo < 5
-          requis_hebdo = 5 - nombre_pour_mail_hebdo
-          request = "SELECT id, options FROM users WHERE id > 10 AND SUBSTRING(options,4,1) = 0 LIMIT 50"
-          update_request = "UPDATE users SET options = ? WHERE id = ?"
-          db_exec(request).shuffle[0...requis_hebdo].each do |du| # donc 5
-            opts = du[:options].split('')
-            opts[4] = "1"
-            db_exec(update_request, [opts.join(''), du[:id]])
-          end
-          # On vérifie
-          where_clause = "id > 10 AND SUBSTRING(options,4,1) = 0 AND SUBSTRING(options,27,1) IN (1,3) AND SUBSTRING(options,5,1) = 1"
-          request = "SELECT * FROM users WHERE #{where_clause} LIMIT 10"
-          icariens_news_hebdo = db_exec(request)
-          nombre_pour_mail_hebdo = icariens_news_hebdo.count
-          if nombre_pour_mail_hebdo < 5
-            raise "Impossible de définir 5 users recevant les news hebdomadaires…"
-          end
-        end
-
-        @icariens_news_hebdo = icariens_news_hebdo
-        @icariens_news_quoti = icariens_news_quoti
-      end
-
       let(:thetime) { @thetime }
       let(:reportpath) { @reportpath }
-      let(:icariens_news_hebdo) { @icariens_news_hebdo }
-      let(:icariens_news_quoti) { @icariens_news_quoti }
 
       context 'sans aucune actualités' do
         before(:each) do
@@ -144,7 +113,7 @@ describe 'Le job envoi_actualites' do
           # puts "\n\n---Report:\n#{code_report}"
           code = File.read(MAIN_LOG_PATH)
           expect(code).to include "RUN JOB [envoi_actualites]"
-          expect(code_report).to include("Nombre de destinataires news semaine : 5.")
+          expect(code_report).to include("Nombre de destinataires news semaine : 7.")
           expect(code_report).not_to include("Aucune actualité pour la semaine.")
           expect(code_report).to include("Nombre d'actualités de la semaine : 2.")
           expect(code_report).to include("Aucune actualité pour la veille.")
@@ -173,7 +142,7 @@ describe 'Le job envoi_actualites' do
           # puts "\n\n---Report:\n#{code_report}"
           code = File.read(MAIN_LOG_PATH)
           expect(code).to include "RUN JOB [envoi_actualites]"
-          expect(code_report).to include("Nombre de destinataires news semaine : 5.")
+          expect(code_report).to include("Nombre de destinataires news semaine : 7.")
           expect(code_report).to include("Nombre d'actualités de la semaine : 3.")
           expect(code_report).to include("Nombre d'actualités de la veille : 3.")
           expect(code_report).not_to include("Aucune actualité pour la veille.")
@@ -213,7 +182,8 @@ describe 'Le job envoi_actualites' do
           # puts "\n\n---Report:\n#{code_report}"
           code = File.read(MAIN_LOG_PATH)
           expect(code).to include "RUN JOB [envoi_actualites]"
-          expect(code_report).to include("Nombre de destinataires news semaine : 5.")
+          expect(code_report).to include("Nombre de destinataires news semaine : 7.")
+          expect(code_report).to include("Nombre de destinataires news veille : 5.")
           expect(code_report).not_to include("Aucune actualité pour la semaine.")
           expect(code_report).to include("Nombre d'actualités de la semaine : 5.")
           expect(code_report).not_to include("Aucune actualité pour la veille.")

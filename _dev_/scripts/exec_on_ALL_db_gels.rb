@@ -7,7 +7,7 @@
 
 # Le traitement qu'il faut appliquer À TOUS LES GELS des tests
 DB_REQUEST = <<-SQL.strip
-ALTER TABLE `tickets` ADD COLUMN `authentif` VARCHAR(10) DEFAULT NULL AFTER `id`;
+DELETE FROM users WHERE id = 99;
 SQL
 DB_VALUES = nil
 

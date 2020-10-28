@@ -13,8 +13,8 @@ class Cronjob
     runnable? || return
     require_module('mail')
     require_module('ticket')
-    envoi_actualites_hebdomadaires if Cronjob.current_time.wday == 6
     envoi_actualites_quotidiennes
+    envoi_actualites_hebdomadaires if Cronjob.current_time.wday == 6
     return true
   end #/ send_actualites
 
@@ -32,15 +32,16 @@ class Cronjob
       Report << "Nombre d'actualités de la veille : #{actualites_veille.count}."
     end
     destinataires = []
+    Logger << "++++ Icarien.who_want_quotidien_news: #{Icarien.who_want_quotidien_news}"
     Icarien.who_want_quotidien_news.each do |icarien|
       destinataires << icarien.data.merge(bouton_nomore_news: bouton_nomore_news(icarien))
     end
     if destinataires.empty?
-      Report << "Aucun destinataires pour les actualités quotidiennes."
+      Report << "Aucun destinataire pour les actualités quotidiennes."
     else
-
+      # --- On fait des mails pour des activités ---
+      require_relative './envoi_actualites/Activites_helpers'
       news = actualites_veille
-
       Report << "Nombre de destinataires news veille : #{destinataires.count}."
       mail_path = File.join(__dir__,'envoi_actualites','mail_quotidien.erb')
       MailSender.send_mailing(to: destinataires, file: mail_path, bind: self)
@@ -63,6 +64,8 @@ class Cronjob
     if destinataires.empty?
       Report << "Aucun destinataires pour les actualités hebdomadaires."
     else
+      # --- On fait des mails pour des activités ---
+      require_relative './envoi_actualites/Activites_helpers'
       Report << "Nombre de destinataires news semaine : #{destinataires.count}."
       mail_path = File.join(__dir__,'envoi_actualites','mail_hebdomadaire.erb')
       MailSender.send_mailing(to:destinataires, file:mail_path, bind: self)
@@ -72,23 +75,6 @@ class Cronjob
   # ---------------------------------------------------------------------
   #   Méthodes pour les actualités
   # ---------------------------------------------------------------------
-
-  # OUT   Code HTML de la section des actualités quotidiennes (en fait,
-  #       les actualités de la veille)
-  #
-  def section_actualites_quotidienne
-    news = actualites_veille
-    puts "news veille : #{news}"
-    return "[ACTUALITES VEILLE]"
-  end #/ section_actualites_quotidienne
-
-  # OUT   Code HTML de l'actualité de la semaine
-  #
-  def section_actualites_semaine
-    news = actualites_semaine
-    puts "news semaine : #{news}"
-    return "[ACTUALITES SEMAINE]"
-  end #/ section_actualites_semaine
 
   # OUT   Retourne la liste des actualités de la veille
   def actualites_veille
@@ -141,5 +127,8 @@ def bouton_nomore_news(icarien)
   tck.lien("Ne plus recevoir ces annonces, merci", {route: ''})
 end #/ bouton_nomore_news
 
-REQUEST_GET_ACTUALITES = "SELECT * FROM actualites WHERE created_at >= ? AND created_at < ?"
+# Requête pour relever les activités
+# Note : l'ordre des colonnes doit correspondre à la définition de la
+# structure Activite dans envoi_actualites/Activite_helpers.rb
+REQUEST_GET_ACTUALITES = "SELECT id, type, user_id, message, created_at FROM actualites WHERE created_at >= ? AND created_at < ?"
 end #/Cronjob

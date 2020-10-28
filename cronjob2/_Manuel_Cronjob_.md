@@ -14,11 +14,11 @@ Le cronjob est appelé toutes les heures entre 0 et 5 heures du matin.
 
 
 
-Un « job » est un travail à exécuté. Il est défini par un unique fichier dans `cronjob2/_lib/JOBS/` (ce fichier peut inclure bien sûr des fichiers qui se trouveront dans un dossier portant le même nom — sans l’extension). Donc :
+Un « job » est un travail à exécuté. Il est défini par un unique fichier dans `cronjob2/JOBS/` (ce fichier peut inclure bien sûr des fichiers qui se trouveront dans un dossier portant le même nom — sans l’extension). Donc :
 
 ~~~bash
 
-./cronjob2/_lib/JOBS/mon_job.rb
+./cronjob2/JOBS/mon_job.rb
 										/mon_job/lib.rb
 										        /classe.rb
 ~~~
@@ -65,7 +65,7 @@ class Cronjob
       frequency: {définition de la fréquence}
     }
   end
-  
+
   def mon_job
     ...
   end
@@ -81,7 +81,7 @@ La fréquence se définit dans `data[:frequency]` de la manière suivante :
 ~~~
 frequency: {hour:<heure>[, day:<week day>]}
 
-:hour			Définit l'heure à laquelle doit être joué le job. Comme le cronjob n'est 
+:hour			Définit l'heure à laquelle doit être joué le job. Comme le cronjob n'est
 					appelé que toutes les heures, le job ne sera joué qu'une fois
 :day			Définit le jour de la semaine où doit être joué le job. 0 : dimanche,
 					6 : samedi.

@@ -27,35 +27,39 @@ class << self
   #       :even_destroyed         Si true, on renvoie même les détruit, alors
   #                               que par défaut on ne les prend pas.
   def select(filtre)
-    where_clause = []
+    where = []
 
-    # Simple icarien
+    # Simple icarien ou administrateurs
     if filtre[:admins]
-      where_clause << "SUBSTRING(options,1,1) <> '0'"
+      where << "id < 9"
     else
-      where_clause << "SUBSTRING(options,1,1) = '0'"
+      where << "id > 9"
     end
 
     # Contactables par mail
     if filtre[:contactable]
-      where_clause << "SUBSTRING(options,27,1) IN ('1','3')"
+      where << "SUBSTRING(options,27,1) IN (1,3)"
     end
 
     # Non détruits (4e bit <> 1)
     if not(filtre[:even_destroyed])
-      where_clause << "SUBSTRING(options,4,1) = '0'"
+      where << "SUBSTRING(options,4,1) = 0"
     end
 
-    # Mails hebdomadaire
-    if filtre[:contact_hebdomadaire]
-      where_clause << "SUBSTRING(options,5,1) = '1'"
-    elsif filtre[:contact_quotidien]
-      where_clause << "SUBSTRING(options,5,1) = '0'"
+    # Mails fréquence
+    case filtre[:contact]
+    when 'quoti'
+      where << "SUBSTRING(options,5,1) = 0"
+    when 'hebdo'
+      where << "SUBSTRING(options,5,1) = 1"
+    when 'none'
+      where << "SUBSTRING(options,5,1) = 9"
     end
 
-    where_clause = where_clause.join(' AND ')
+    where = where.join(' AND ')
 
-    request = "SELECT id, pseudo, mail, options FROM users WHERE #{where_clause}"
+    request = "SELECT id, pseudo, mail, options FROM users WHERE #{where}"
+    Logger << "Request: #{request}"
     db_exec(request).collect do |di|
       new(di)
     end
@@ -64,13 +68,13 @@ class << self
   # OUT   Liste d'instances {Icarien} est icarien contactables qui veulent les
   #       informations hebdomadaires
   def who_want_hebdo_news
-    @who_want_hebdo_news ||= select(contactable: true, contact_hebdomadaire: true)
+    @who_want_hebdo_news ||= select(contactable:true, contact:'hebdo')
   end #/ who_want_hebdo_news
 
   # OUT   Liste d'instances {Icarien} est icarien contactables qui veulent les
   #       informations quotidiennes
   def who_want_quotidien_news
-    @who_want_quotidien_news ||= select(contactable: true, contact_quotidien: true)
+    @who_want_quotidien_news ||= select(contactable:true, contact:'quoti')
   end #/ who_want_quotidien_news
 
 end # /<< self

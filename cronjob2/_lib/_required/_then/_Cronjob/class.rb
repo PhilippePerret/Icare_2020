@@ -24,7 +24,7 @@ class << self
   end #/ init
 
   def run_jobs
-    Dir["#{CRON_FOLDER}/_lib/JOBS/*.rb"].each do |jpath|
+    Dir["#{CRON_FOLDER}/JOBS/*.rb"].each do |jpath|
       new(jpath).run
     end
   end #/ run_jobs
