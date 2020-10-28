@@ -4,6 +4,7 @@
   Module qui tester le cronjob au niveau des actualités
 
 =end
+include Capybara::DSL # exceptionnellement
 
 def delete_actualites_semaine_of_jour(time)
   request = "DELETE FROM actualites WHERE created_at >= ? AND created_at < ?"
@@ -172,9 +173,11 @@ describe 'Le job envoi_actualites' do
         end #/before :each
 
 
-        it 'il envoie les mails d’activité de la semaine et de la veille', only:true do
+        it 'il envoie les mails d’activité de la semaine et de la veille et produit le lien pour ne plus les recevoir', only:true do
 
-          start_time = Time.now.to_i
+          pitch("Le cronjob produit bien des mails d'activités quotidiennes et hebdomadaires conformes aux attentes, les envoie aux bonnes personnes en ajoutant un lien permettant de ne plus les recevoir sans avoir à s'identifier.")
+
+          start_time = Time.now.to_i - 1
 
           res = run_cronjob(time:thetime)
           # puts "\n\n---res:\n#{res}"
@@ -214,7 +217,27 @@ describe 'Le job envoi_actualites' do
           expect(mail_hebdo).to be_contains("Actu d'il y a 2 jours")
 
           # Test du lien pour le ticket
-          # TODO
+          require_support('ticket')
+          # On prend le mail qu'on vient d'étudier
+          expect(mail_hebdo).to be_contains("?tik=")
+          mlien = mail_hebdo.content.match(/href="((?:.*?)\?tik=(?:[0-9]+)\&tckauth=(?:[a-zA-Z0-9]+))"/).to_a
+          tout, lien_complet = mlien
+          qs = mail_hebdo.content.match(/\?tik=([0-9]+)\&tckauth=([a-zA-Z0-9]+)"/).to_a
+          tout, tik, tckauth = qs
+          # On vérifie que le ticket existe
+          # dt = db_exec("SELECT * FROM tickets WHERE id = ?", [tik]).first
+          expect(TTicket).to be_exists(id: tik), "Le ticket d'ID ##{tik} devrait exister…"
+          tticket = TTicket.get(tik)
+          expect(tticket).to have_properties(authentif: tckauth),
+            "La propriété :authenthif du ticket #{tticket.data[:id].inspect} ne correspond pas… (tticket.authentif=#{tticket.data[:authentif].inspect}/dans mail:#{tckauth.inspect})"
+          # puts "lien_complet: #{lien_complet.inspect}"
+          visit(lien_complet)
+          expect(page).to have_message("vous ne recevrez plus les mails d'activité de l'atelier Icare."),
+            "La page devrait contenir le message informant l'icarien qu'il ne recevra plus les annonces"
+
+          # Le ticket n'existe plus
+          expect(TTicket).not_to be_exists(id: tik),
+            "Le ticket d'ID ##{tik} devrait avoir été détruit…"
 
         end
       end #/ context actualité veille et semaine
