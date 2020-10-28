@@ -49,9 +49,11 @@ def data
     # Particulariré de cette propriété : si le concours n'existe pas pour
     # l'année demandée, on crée sa donnée
     if db_count(dbtable, {annee: annee}) == 0
-      db_compose_insert(dbtable, data_default.dup)
+      # db_compose_insert(dbtable, data_default.dup) # trop risqué (+ data_default n'existe pas ici)
+      {step:0,annee:0}
+    else
+      db_get(dbtable, {annee: annee})
     end
-    db_get(dbtable, {annee: annee})
   end
 end #/ data
 
@@ -69,7 +71,7 @@ end #/ h_echeance
 
 # Retourne TRUE is le concours est démarré
 def started?
-  data[:step] > 0
+  step > 0
 end #/ started?
 
 end #/Concours
