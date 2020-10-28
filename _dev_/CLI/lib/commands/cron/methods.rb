@@ -1,0 +1,14 @@
+# encoding: UTF-8
+# frozen_string_literal: true
+class IcareCLI
+class << self
+  def cron_load_and_display_main_log
+    display_distant_file("JOURNAL CRON", log_path)
+  end
+
+  def log_path
+    @log_path ||= './www/cronjob2/tmp/main.log'
+  end #/ path
+
+end #/<< self
+end #/IcareCLI

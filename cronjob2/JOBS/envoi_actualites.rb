@@ -43,7 +43,7 @@ class Cronjob
       news = actualites_veille
       Report << "Nombre de destinataires news veille : #{destinataires.count}."
       mail_path = File.join(__dir__,'envoi_actualites','mail_quotidien.erb')
-      MailSender.send_mailing(to: destinataires, file: mail_path, bind: self)
+      MailSender.send_mailing(to: destinataires, file: mail_path, bind: self, noop: Cronjob.noop?)
     end
   end #/ envoi_actualites_quotidiennes
 
@@ -67,7 +67,7 @@ class Cronjob
       require_relative './envoi_actualites/Activites_helpers'
       Report << "Nombre de destinataires news semaine : #{destinataires.count}."
       mail_path = File.join(__dir__,'envoi_actualites','mail_hebdomadaire.erb')
-      MailSender.send_mailing(to:destinataires, file:mail_path, bind: self)
+      MailSender.send_mailing(to:destinataires, file:mail_path, bind: self, noop: Cronjob.noop?)
     end
   end #/ envoi_actualites_hebdomadaires
 

@@ -4,6 +4,8 @@
   Module pour travailler avec le cron distant
 =end
 require_relative './cron/constants'
+require_relative './cron/methods'
+
 class IcareCLI
 class << self
 
@@ -28,13 +30,49 @@ def proceed_cron
   end
 end #/ degel
 
+MODES_NOOP = [
+  {name: "NOOP (aucune opération vraiment jouée)", value: true},
+  {name: "OP (les opérations seront vraiment jouées)", value: false},
+  {name: "Renoncer", value: :cancel}
+]
+HEURES_CHOICES = [
+  {name: "5 h (produit le test)", value: 5},
+  {name: "3 h (envoi des activités, etc.)", value: 3},
+  {name: "1 h (nettoyage mails, etc.)", value: 1},
+  {name: "2 h (nettoyage des dossiers, etc.)", value: 2},
+  {name: "Renoncer", value: :cancel}
+]
+
 # Pour jour le cron distant (et afficher le résultat)
 def run_distant_cron
   puts "#{RC*2}=== ACTIVATION DU CRONJOB DISTANT ===".bleu
-  cmd = "ssh icare@ssh-icare.alwaysdata.net ruby ./www/cronjob/cronjob.rb"
+  mode_noop = Q.select("Quel mode choisir ?") do |q|
+    q.choices MODES_NOOP
+    q.per_page MODES_NOOP.count
+  end
+  mode_noop != :cancel || return
+
+  heure = Q.select("À quelle heure simuler l'appel aujourd'hui ?") do |q|
+    q.choices HEURES_CHOICES
+    q.per_page HEURES_CHOICES.count
+  end
+  heure != :cancel || return
+
+  now = Time.now
+
+  cmd = []
+  cmd << "ssh #{SSH_ICARE_SERVER}"
+  cmd << "ONLINE=true"
+  cmd << "NOOP=true" if mode_noop
+  cmd << "CRON_CURRENT_TIME='#{now.year}/#{now.month}/#{now.day}/#{heure}/18'"
+  cmd << "ruby"
+  cmd << "./www/cronjob2/runner.rb"
+  cmd = cmd.join(' ')
+  puts "Commande finale : #{cmd}"
   res = system(cmd)
   puts "Résultat obtenu : #{res.inspect}"
-  display_today_report
+  # RAPATRIER et afficher LE LOG
+  cron_load_and_display_main_log
 end #/ run_distant_cron
 
 # Pour afficher le rapport du jour
@@ -42,10 +80,6 @@ def display_today_report
   display_distant_file("RAPPORT DU #{todayJJMMAAAA}", today_report_path)
 end #/ display_today_report
 
-# Pour lire et afficher le journal.log distant
-def read_journal
-  display_distant_file("JOURNAL CRON", log_path)
-end #read_journal
 
 # Pour détruire le journal distant
 def remove_distant_journal
@@ -54,9 +88,6 @@ def remove_distant_journal
   run_ruby_command(cmd)
 end #/ remove_distant_journal
 
-def log_path
-  @log_path ||= './www/cronjob/journal.log'
-end #/ path
 
 def today_report_path
   @today_report_path ||= report_path_of(Time.now)

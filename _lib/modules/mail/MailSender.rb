@@ -50,11 +50,16 @@ class << self
   # IN    to:         Array des destinataires
   #       file:       Chemin d'accès au mail (fichier ERB)
   #       bind:       Objet bindé au fichier ERB.
+  #       noop:       Simuler seulement l'envoi
+  #                   Sera mis dans +options+ et supprimé
+  # IN    +options+
+  #         noop:     Pour simuler seulement l'envoi.
   # OUT   void
   # DO    Envoi le mail +mail+ à tous les +destinataires+
   #
   def send_mailing(dmail, options = nil)
     options ||= {}
+    options.merge!(noop: dmail.delete(:noop)) unless options.key?(:noop)
     destinataires = dmail[:to]
     # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
     implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))

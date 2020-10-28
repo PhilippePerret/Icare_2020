@@ -11,7 +11,7 @@ REPORT_PATH = File.join(CRONJOB_FOLDER,'tmp', "report-#{Time.now.strftime('%Y-%m
 def run_cronjob(params = nil)
   params ||= {}
   cmd = "ONLINE=false ruby #{RUNNER_PATH}"
-  cmd = "CURRENT_TIME='#{params[:time]}' #{cmd}" if params.key?(:time)
+  cmd = "CRON_CURRENT_TIME='#{params[:time]}' #{cmd}" if params.key?(:time)
   cmd = "NOOP=true #{cmd}" if params[:noop]
   # puts "Command cronjob: #{cmd.inspect}"
   res = `#{cmd}`

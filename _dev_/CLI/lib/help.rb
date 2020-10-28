@@ -52,6 +52,11 @@ AIDE = <<-BASH
       Gestion du concours de synopsis. Utiliser la sous-commande 'help'
       pour avoir toutes les informations
 
+  #{'icare cron[ <command>]'.jaune}
+
+      Pour interagir avec le cron distant (ou pas).
+      Jouer simplement 'icare cron' pour avoir les propositions.
+
   #{'icare goto la/route'.jaune}
 
       Pour rejoindre la route voulue dans un navigateur. Ajouter l'option

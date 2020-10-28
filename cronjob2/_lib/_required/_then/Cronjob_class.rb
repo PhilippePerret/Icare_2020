@@ -46,8 +46,8 @@ class << self
   #       où le temps fourni a le format 'AAAA/MM/JJ/HH/MM/SS'
   def current_time
     @current_time ||= begin
-      if TEST_MODE && ENV['CURRENT_TIME']
-        Time.new(*(ENV['CURRENT_TIME'].split('/').collect { |i| i.to_i }))
+      if ENV['CRON_CURRENT_TIME']
+        Time.new(*(ENV['CRON_CURRENT_TIME'].split('/').collect { |i| i.to_i }))
       else
         Time.now
       end
@@ -56,7 +56,7 @@ class << self
 
   def noop?
     (@is_noop ||= begin
-      ENV['NOOP'] == "true" ? :true : :false
+      ["true", "1"].include?(ENV['NOOP']) ? :true : :false
     end) == :true
   end #/ noop?
 
