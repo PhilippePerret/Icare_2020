@@ -113,7 +113,7 @@ class << self
       raise "Mauvais nombre d'hebdomadaire dans TUser::set_contactables(#{options.inspect})"
     else
       db_exec(req_update_options, values_hebdo)
-      puts "Hebdomadaires créés : #{values_hebdo.inspect}"
+      # puts "Hebdomadaires créés : #{values_hebdo.inspect}"
     end
 
 

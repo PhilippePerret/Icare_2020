@@ -32,7 +32,6 @@ class Cronjob
       Report << "Nombre d'actualités de la veille : #{actualites_veille.count}."
     end
     destinataires = []
-    Logger << "++++ Icarien.who_want_quotidien_news: #{Icarien.who_want_quotidien_news}"
     Icarien.who_want_quotidien_news.each do |icarien|
       destinataires << icarien.data.merge(bouton_nomore_news: bouton_nomore_news(icarien))
     end
