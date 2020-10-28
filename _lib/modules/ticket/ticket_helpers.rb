@@ -14,15 +14,15 @@ class Ticket
   # [1] Ne pas utiliser distant:true, pour pouvoir essayer le ticket en
   #     local au cours des tests.
   def lien titre, options = nil
-    data_lien = options || {}
-    route = data_lien[:route]
+    dlien = options || {}
+    route = dlien[:route]
     route ||= "bureau/home"
     route = "#{route}?tik=#{id}"
-    if @authentif_code_genered
-      route = "#{route}&tckauth=#{authentif_code_genered}"
+    if auto_authentified?
+      route = "#{route}&tckauth=#{authentif}"
     end
-    data_lien.merge!(route: route, text:titre, full:true) # [1]
-    Tag.lien(data_lien)
+    dlien.merge!(route: route, text:titre, full:true) # [1]
+    Tag.lien(dlien)
   end #/ lien
 
 end #/Ticketa

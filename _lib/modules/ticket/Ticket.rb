@@ -11,7 +11,8 @@ class << self
   # Return l'instance {Ticket} du ticket d'identifiant +tid+
   # Retourne NIL si le ticket n'existe pas/plus
   def get tid
-    dticket = db_get('tickets', {id: tid.to_i})
+    tid = tid.to_i
+    dticket = db_get('tickets', tid)
     return if dticket.nil?
     new(dticket)
   end #/ get
@@ -37,10 +38,10 @@ end #/ initialize
 
 def save
   now = Time.now.to_i
-  data.merge!(created_at: now.to_s, updated_at:now.to_s)
-  if data.delete(:authentified) === false
+  @data.merge!(created_at: now.to_s, updated_at:now.to_s)
+  if @data.delete(:authentified) === false
     # (cf. ci-dessous la méthode get_uniq_id)
-    data.merge!(id: get_uniq_id, authentif: authentif_code_genered)
+    @data.merge!(id: get_uniq_id, authentif: authentif_code_genered)
   end
   db_compose_insert('tickets', data)
   @data.merge!(id: db_last_id) unless data.key?(:id)
@@ -57,19 +58,9 @@ def belongs_to?(u)
 end #/ belongs_to?
 
 # OUT   True si le ticket possède un code d'authentification
-def auto_authenfied?
+def auto_authentified?
   not(authentif.nil?)
 end #/ auto_authenfied?
-
-def run
-  begin
-    eval(data[:code])
-    delete # toujours, après son exécution réussie
-  rescue Exception => e
-    erreur(e)
-    log(e)
-  end
-end #/ run
 
 def delete
   db_exec("DELETE FROM tickets WHERE id = #{id}")
