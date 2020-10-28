@@ -14,8 +14,13 @@ class HTML
   def bouton_formulaire
     btn_key = Concours.current.step < 2 ? :concours_bouton_inscription : :concours_btn_signup_next
     cont = Tag.link(class:'btn main green pd1', text:UI_TEXTS[btn_key], route:"concours/inscription")
-    Tag.div(class:'mt2 mb2 center', text: cont)
+    Tag.div(class:'mt2 mb2 center', text: cont) + div_avantages_signup_before
   end #/ bouton_formulaire
+
+  def div_avantages_signup_before
+    cont = Tag.link(route:"concours/faq", text: "☞ Les avantages d'une inscription anticipée")
+    Tag.div(class:"mt2 center", text:cont)
+  end #/ div_avantages_signup_before
 
   # Produit un bouton pour s'identifier ou, si on est identifié, pour
   # rejoindre son section à soi

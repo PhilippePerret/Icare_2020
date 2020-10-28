@@ -5,6 +5,10 @@
 =end
 QUESTIONS_REPONSES = [
   {
+    question: "Pourquoi s'inscrire avant l'échéance ?",
+    reponse: "La réponse est simple : s’inscrire le plus tôt possible permet d’être informé de l’avancée du concours — du nombre de candidats par exemple — et de recevoir régulièrement — mais pas plus d’une fois par semaine ! — un rappel encourageant de l’échéance, histoire de bien s’y préparer et de ne pas la rater !"
+  },
+  {
     question: "Où trouver le formulaire d'inscription ?",
     reponse: "Le formulaire d'inscription se trouve à l'adresse #{CONCOURS_SIGNUP.with("https://www.atelier-icare.net/concours/inscription")}."
   },
