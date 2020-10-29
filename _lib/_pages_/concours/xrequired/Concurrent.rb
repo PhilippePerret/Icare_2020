@@ -97,6 +97,12 @@ def initialize(ini_data)
   @concurrent_id ||= raise("Initialisation impossible sans numéro d'inscription.")
   @session_id     = ini_data[:session_id]
 end #/ initialize
+
+# OUT   Référence au concurrent
+def ref
+  @ref ||= "#{patronyme} (##{id} - #{mail})"
+end #/ ref
+
 # Pour charger le concurrent depuis la table
 # On doit réussir à le faire avec l'ID de session et l'concurrent_id gardé en session
 def data

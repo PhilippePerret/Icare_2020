@@ -1,0 +1,14 @@
+<%
+# frozen_string_literal: true
+# NOTE C'est le fichier {Concours::CFile} qui est bindé à cette vue.
+
+subject("Concours : dépôt d'un fichier de candidature")
+%>
+<p>Phil,</p>
+<p>Je t'informe d'une dépôt d'un nouveau fichier de cancidature pour le Concours de Synopsis <%= ANNEE_CONCOURS_COURANTE %>.</p>
+<p>Informations :</p>
+<div>Concurrent : <%= concurrent.ref %></div>
+<div>Fichier : <%= name %></div>
+<div style="font-size:0.85em;">Chemin d'accès complet : <%= path %></div>
+<p>Pour télécharger ce fichier, utilise la commande 'icare concours download <%= name %>'.</p>
+<%= le_bot %>

@@ -58,6 +58,8 @@ DBTBL_CONCURS_PER_CONCOURS = "concurrents_per_concours"
 
 REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
 
+require './_lib/data/secret/concours' # => CONCOURS_MAIL
+
 CONCOURS_LINK   = Linker.new(route:"concours/accueil", text:"Concours de Synopsis de l'atelier ICARE")
 DOSSIER_LINK    = Linker.new(route:"concours/dossier", text:"fichier de candidature")
 CONCOURS_SIGNUP = Linker.new(route:'concours/inscription', text:"formulaire d'inscription")

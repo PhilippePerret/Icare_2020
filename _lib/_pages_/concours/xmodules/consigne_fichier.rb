@@ -10,9 +10,22 @@ class HTML
     file = Concours::CFile.new(concurrent, ANNEE_CONCOURS_COURANTE)
     if file.consigne_file(param(:p_fichier_candidature))
       informe_concurrent_consignation_fichier(file)
+      informe_admin_consignation_fichier(file)
       message(MESSAGES[:merci_fichier_et_titre] % [concurrent.pseudo])
     end
   end #/ consigne_fichier_candidature
+
+  # Envoi d'un mail à l'administration pour informer sur le dépôt d'un fichier
+  def informe_admin_consignation_fichier(file)
+    require_module('mail')
+    MailSender.send({
+      to: CONCOURS_MAIL,
+      path: File.join(XMODULES_FOLDER,'mails','step1','inform_depot_fichier.erb'),
+      bind: file
+    })
+  rescue Exception => e
+    erreur(e)
+  end #/ informe_admin_consignation_fichier
 
   # On envoie un mail au concurrent pour lui signaler que son fichier a
   # bien été pris en compte
