@@ -21,7 +21,7 @@ class HTML
     @candidature_filename = file.original_name
     MailSender.send({
       to:concurrent.mail,
-      path: File.join(XMODULES_FOLDER,"mails","step1','confirm_reception_fichier.erb"),
+      path: File.join(XMODULES_FOLDER,'mails','step1','confirm_reception_fichier.erb'),
       bind: self
     })
   rescue Exception => e
