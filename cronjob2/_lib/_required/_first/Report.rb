@@ -4,6 +4,7 @@ class Report
 class << self
   def << msg
     reffile.puts("#{Time.now} --- #{msg}")
+    Logger << msg
   end
   def reffile
     @reffile ||= begin

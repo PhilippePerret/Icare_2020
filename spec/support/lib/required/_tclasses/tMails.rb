@@ -24,8 +24,41 @@ class << self
   end #/ remove_all
 
   # OUT   Le nombre de mails présent dans le dossier
-  def count
-    Dir["./tmp/mails/*.*"].count
+  # IN    +params+  Table définissant ce qu'on recherche.
+  #                 Si non fourni, retourne le nombre de mails, simplement
+  def count(params = nil)
+    allmails = Dir["./tmp/mails/*.*"]
+    return allmails.count if params.nil?
+    return 0 if allmails.empty?
+    # On en fait des instances TMail pour pouvoir les manipuler plus facilement
+    allmails = allmails.collect { |mpath|TMail.new(mpath) }
+    params.merge!(subject_contains: params.delete(:subject)) if params.key?(:subject)
+    if params.key?(:subject_contains)
+      allmails = allmails.select{|tmail| tmail.subject.match?(params[:subject_contains])}
+    end
+    return 0 if allmails.empty?
+
+    if params.key?(:to)
+      allmails = allmails.select{|tmail| tmail.destinataire == params[:to]}
+    end
+    return 0 if allmails.empty?
+
+    if params.key?(:message)
+      allmails = allmails.select{|tmail| tmail.content.match?(params[:message])}
+    end
+    return 0 if allmails.empty?
+
+    if params.key?(:after)
+      allmails = allmails.select{|tmail| tmail.time >= params[:after]}
+    end
+    return 0 if allmails.empty?
+
+    if params.key?(:before)
+      allmails = allmails.select{|tmail| tmail.time < params[:before]}
+    end
+    return 0 if allmails.empty?
+
+    return allmails.count
   end #/ count
 
   # Retourne TRUE si un message au moins parmi les messages transmis à

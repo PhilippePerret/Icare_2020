@@ -91,18 +91,26 @@ attr_accessor :evaluator_id
 # Position de classement par rapport à la note
 attr_accessor :position
 # Instanciation
-def initialize concurrent_id, annee, data = nil
+def initialize concurrent_id, annee, dat = nil
   @concurrent_id = concurrent_id
   @annee = annee
   @id = "#{concurrent_id}-#{annee}"
+  @data = dat || get_data
   @evaluator_id = data[:evaluator_id]
-  @data = data
 end #/ initialize
 
 # OUT   True si la conformité du synopsis a été marquée
 def confirmed?
   concurrent.spec(1) == 1
 end #/ confirmed?
+
+def sent?
+  concurrent.spec(0) == 1
+end #/ sent?
+
+def to_modify?
+  concurrent.spec(1) == 2
+end #/ to_modify?
 
 def cfile
   @cfile ||= Concours::CFile.new(concurrent, annee, self)
@@ -251,4 +259,12 @@ end #/ path
 def affixe
   @affixe ||= "#{concurrent_id}-#{annee}"
 end #/ affixe
+
+
+private
+
+  def get_data
+    db_exec(REQUEST_SYNOPSIS, [concurrent_id, annee]).first
+  end #/ get_data
+
 end #/Synopsis

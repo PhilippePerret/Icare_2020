@@ -1,5 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_relative './constants'
+require './_lib/required/__first/feminines'
 
 class HTML
 
@@ -103,6 +105,8 @@ def ref
   @ref ||= "#{patronyme} (##{id} - #{mail})"
 end #/ ref
 
+def bind; binding() end
+
 # Pour charger le concurrent depuis la table
 # On doit réussir à le faire avec l'ID de session et l'concurrent_id gardé en session
 def data
@@ -132,11 +136,7 @@ def folder
   # Note : ne pas le créer ici
 end #/ folder
 # === Options ===
-#   (ou "specs")
-#
-#   bit 0     1 si le concurrent veut recevoir des informations par mail
-#   bit 1     1 si le concurrent veut recevoir sa fiche de lecture.
-#   bit 2     1 si le concurrent est un icarien
+# Cf. le manuel (icare read/write concours)
 #
 def options
   @options ||= data[:options]

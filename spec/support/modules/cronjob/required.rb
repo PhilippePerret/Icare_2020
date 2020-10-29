@@ -42,6 +42,10 @@ def remove_report(time = nil)
   return path
 end #/ remove_report
 
+def remove_all_reports
+  Dir["#{CRONJOB_FOLDER}/tmp/report-*.txt"].each{|fp|File.delete(fp)}
+end #/ remove_all_reports
+
 def realtime(time)
   Time.new(*(time.split('/').collect { |i| i.to_i })) if time.is_a?(String)
 end #/ real_time

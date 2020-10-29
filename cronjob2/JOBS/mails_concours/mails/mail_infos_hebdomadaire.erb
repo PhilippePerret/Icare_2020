@@ -1,0 +1,72 @@
+<%
+# frozen_string_literal: true
+=begin
+  Mail d'information hebdomadaire envoyé à ceux qui veulent le recevoir
+=end
+CONCOURS = Concours.current unless defined?(CONCOURS)
+ANNEE = CONCOURS.annee unless defined?(ANNEE)
+subject("[CONCOURS #{ANNEE}] Mail hebdomadaire d'information")
+%>
+<p>
+Ch<%=fem(:ere)%> <%= patronyme.titleize %>,
+</p>
+<p>Veuillez trouver ci-dessous les informations sur le Concours de Synopsis <%= ANNEE %> de l'atelier Icare.</p>
+<%
+# Ici une partie qui dépend du fait que le concurrent a envoyé ou non son fichier
+%>
+
+<p style="font-weight:bold;margin-top:50px;">ÉTAT DE VOTRE CANDIDATURE</p>
+
+<% if synopsis.sent? && synopsis.confirmed? %>
+
+  <p>Votre fichier de candidature a été reçu et validé, il ne vous reste donc plus qu'à patienter jusqu'aux premiers résultats. Nous espérons que cette attente n'est pas trop stressante pour vous ;-).</p>
+
+<% elsif synopsis.sent? && not(synopsis.confirmed?) %>
+
+  <p>Nous avons bien reçu votre fichier de candidature, mais il nous faut valider sa conformité, ce que nous ne manquerons pas de faire très prochainement.</p>
+
+<% elsif synopsis.sent? && synopsis.to_modify? %>
+
+  <p><span>Nous vous rappelons que nous attendons votre fichier de candidature corrigé.</span><% if CONCOURS.nombre_jours_echeance < 15
+  %><span> Ne trainez pas trop, car l'échéance approche ;-).</span>
+  <% end
+  %></p>
+
+<% else %>
+  <%# CAS D'UN FICHIER PAS ENCORE ENVOYÉ %>
+  <%# --- Ici un message qui guidera l'auteur sur l'étape où il devrait être --- %>
+  <% nbjours = CONCOURS.nombre_jours_echeance %>
+  <p>Il vous reste <%= nbjours %> jour<%= nbjours > 1 ? 's' : '' %> avant l'échéance,
+  <%= CONCOURS.conseil_per_nombre_jours_echeance %>
+<% end %>
+
+<p style="font-size:1.1em;">Votre projet “<span style="font-weight:bold;"><%= synopsis.titre %></span>” est en ce moment en lice contre <span style="font-weight:bold;"><%= Concurrent.count - 1 %> autres concurrents</span> (*).<br/><span style="font-size:0.8em;">(*) Mais attention : beaucoup de concurrents s’inscrivent au tout dernier moment.</span></p>
+
+
+<p style="font-weight:bold;margin-top:50px;">ÉCHÉANCIER</p>
+<table style="font-size:0.9em;" border="1" cellpadding="8">
+  <tr>
+    <td>Démarrage du concours</td><td>le <%= formate_date(CONCOURS.date_lancement) %>.</td>
+  </tr>
+  <tr>
+    <td>Rendu des fichiers de candidature</td><td>le <%= formate_date(CONCOURS.date_echeance) %> à minuit.</td>
+  </tr>
+  <tr>
+    <td></td><td>L'organisation de l'atelier Icare procède à une première sélection.</td>
+  </tr>
+  <tr>
+    <td>Résultats de la préselection</td><td>le <%= formate_date(CONCOURS.date_fin_preselection) %> environ.</td>
+  </tr>
+  <tr>
+    <td></td><td>Le jury procède à la sélection finale.</td>
+  </tr>
+  <tr>
+    <td>Palmarès final</td><td>le <%= formate_date(CONCOURS.date_palmares) %> environ.</td>
+  </tr>
+</table>
+
+<p style="font-size:0.85em;">Rappel : si vous ne voulez plus recevoir ces mails d'information, modifiez vos réglages dans votre <%= Tag.link(route:"concours/espace_concurrent", full:true, text:"espace personnel") %> dans la section “Concours” de l'atelier.</p>
+
+<p>Bien à vous et bonne chance !</p>
+
+<p>L’administration du Concours</p>

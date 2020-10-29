@@ -18,6 +18,13 @@ class << self
     end
   end #/ all
 
+  # OUT   Liste ARRAY de tous les concurrents du concours courant
+  def all_current
+    @all_current ||= begin
+      db_exec(REQUEST_CONCURRENTS_COURANTS, [Concours.current.annee]).collect{|dc|new(dc)}
+    end
+  end #/ all_current
+
   # Pour inscrire un {TUser} qui est un icarien
   # Noter que cette inscription se fera toujours sur un concours précédent,
   # jamais sur le concours présent.
@@ -75,4 +82,12 @@ alias :id :concurrent_id
 def folder
   @folder ||= File.join(CONCOURS_DATA_FOLDER, self.id)
 end #/ folder
+
+REQUEST_CONCURRENTS_COURANTS = <<-SQL
+SELECT
+  cc.*, cpc.titre, cpc.auteurs, cpc.keywords, cpc.specs, cpc.prix
+  FROM concours_concurrents cc
+  INNER JOIN concurrents_per_concours cpc ON cc.concurrent_id = cpc.concurrent_id
+  WHERE cpc.annee = ?
+SQL
 end #/TConcurrent

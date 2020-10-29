@@ -10,6 +10,7 @@ ONLINE = ENV['ONLINE'] != "false"
 Dir.chdir(APPFOLDER) do
   require './_lib/required/__first/extensions/Formate_helpers'
   require './_lib/required/__first/require_methods'
+  require './_lib/required/__first/extensions/String'
   require './_lib/required/__first/db'
 end
 
@@ -18,5 +19,5 @@ Dir["#{CRON_LIB_FOLDER}/_required/_then/**/*.rb"].each{|m| require m}
 require_relative './_required/post_constants'
 
 # Réglage du serveur de données
-SANDBOX = ONLINE ? false : true
+SANDBOX = ONLINE ? false : true unless defined?(SANDBOX)
 MyDB.DBNAME = DB_NAME

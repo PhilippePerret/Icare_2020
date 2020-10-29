@@ -37,6 +37,7 @@ class << self
     return ERB.new(code).result(owner&.bind)
   rescue Exception => e
     log(ERRORS[:erb_error_with] % path)
+    log(e.backtrace.join("\n"))
     log(e)
     if defined?(Tag)
       return Tag.div(text: "#{e.message} (#{File.basename(path)})", class:'warning')

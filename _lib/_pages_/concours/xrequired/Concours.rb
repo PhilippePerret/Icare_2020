@@ -1,5 +1,8 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_relative './Concours_mini'
+require_relative './constants'
+
 class HTML
   attr_reader :concours
 end
@@ -73,6 +76,9 @@ end #/ nombre_concurrents
 #   Dates et helpers de date
 #
 # ---------------------------------------------------------------------
+def date_lancement
+  @date_lancement ||= Time.new(annee - 1, 11, 1)
+end #/ date_lancement
 
 def date_echeance
   @date_echeance ||= Time.new(annee, 3, 1)

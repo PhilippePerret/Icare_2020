@@ -1,0 +1,21 @@
+# encoding: UTF-8
+# frozen_string_literal: true
+=begin
+  Tout ce qui concerne le CONCOURS DE SCÉNARIO
+=end
+class Cronjob
+
+  def data
+    @data ||= {
+      name: "TITRE DU JOB",         # <==== RÉGLER LE TITRE
+      frequency: {hour: 3}          # <==== RÉGLER LA FRÉQUENCE
+    }
+  end #/ data
+
+  def NOM_DU_FICHIER                # <==== METTRE LE NOM DU FICHIER
+    runnable? || return
+                                    # <==== LE CODE DU PROGRAMME
+    return true
+  end #/
+
+end #/Cronjob

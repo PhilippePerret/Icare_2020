@@ -17,10 +17,12 @@ class << self
   # DO    Ecrit notamment les variables générales (temps, noop, etc.)
   #
   def init
+    formated_current_time = current_time.strftime('%d %m %Y - %H:%M')
     # Informations préliminaires (servent notamment aux tests)
-    puts "CRON-CURRENT-TIME: #{current_time.strftime('%d %m %Y - %H:%M')}"
+    puts "CRON-CURRENT-TIME: #{formated_current_time}"
     puts "CRON-NOOP: #{noop?.inspect} #{'(SIMULATION)' if noop?}"
     puts "CRON-START: #{Time.now}"
+    Report << "--- START OPÉRATIONS #{formated_current_time} ---"
   end #/ init
 
   def run_jobs

@@ -50,6 +50,26 @@ STEPS_DATA = {
 
 
 
+## Les concurrents
+
+
+
+### Options
+
+| bit  | Description                                         | Valeurs            |
+| ---- | --------------------------------------------------- | ------------------ |
+| 0    | Réception des informations régulières par mail      | 0: non, 1: oui     |
+| 1    | Réception de la fiche de lecture en fin de concours | 0: non, 1: oui     |
+| 2    | Le concurrent est-il un icarien ?                   | 0: non, 1: icarien |
+| 3    |                                                     |                    |
+| 4    |                                                     |                    |
+
+
+
+---
+
+
+
 ## Les documents (fichier de candidature)
 
 On peut évaluer les fichiers de candidature dans la section `concours/administration`.
@@ -60,7 +80,8 @@ La propriété `specs` de la donnée du concurrent dans la table `concurrents_pe
 | ---- | ------------------------------------------------------------ | -------------------------------------------- |
 | 0    | État de dépôt du fichier                                     | 0: non déposé, 1: déposé                     |
 | 1    | Conformité du fichier (après vérification par l'administration) | 0: non vérifié, 1: conforme, 2: non conforme |
-|      |                                                              |                                              |
+| 2    |                                                              |                                              |
+| 3    |                                                              |                                              |
 
 
 
