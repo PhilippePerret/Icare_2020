@@ -35,14 +35,14 @@ def mise_en_forme_news(news)
 end #/ mise_en_forme_news
 
 def date_news_style
-  @date_news_style ||= "font-weight:bold;margin-top:1em;text-align:right;"
+  @date_news_style ||= "font-weight:bold;text-align:center;margin-top:1em;margin-bottom:0.5em;"
 end #/ date_news_style
 
 end #/Cronjob
 
 Activite = Struct.new(:id, :type, :user_id, :message, :created_at) do
 def out
-  Tag.div(text: message, class:"message", style:"font-size:0.9em;margin-left:1.5em;")
+  "<li class=\"activite\" style=\"font-size:0.9em;margin-left:1.5em;\">#{message}</li>"
 end #/ out
 
 def human_day

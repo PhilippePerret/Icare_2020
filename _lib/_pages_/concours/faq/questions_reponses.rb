@@ -17,6 +17,10 @@ QUESTIONS_REPONSES = [
     reponse: "Le formulaire d'identification se trouve à l'adresse #{CONCOURS_LOGIN.with("https://www.atelier-icare.net/concours/identification")}."
   },
   {
+    question: "Faut-il raconter l'histoire dans son intégralité ?",
+    reponse: "Oui, tout à fait. Ce n'est pas un pitch, mais un synopsis composé en général de trois parties distinctes : l'exposition (commencement), le développement et le dénouement (résolution). On peut trouve d'autres informations sur la #{Tag.link(route:"http://scenariopole.fr/narration/page/65", text:"Collection Narration", target: :blank)} de Philippe Perret."
+  },
+  {
     question: "À quoi doit ressembler le fichier à envoyer ?",
     reponse: "Vous trouverez une explication précise sur le page #{DOSSIER_LINK.with("https://www.atelier-icare.net/concours/dossier")} et même un modèle à télécharger."
   },
