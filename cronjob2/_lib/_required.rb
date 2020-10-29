@@ -4,6 +4,8 @@
 CRON_LIB_FOLDER   = File.join(CRON_FOLDER,'_lib')
 APPFOLDER         = File.dirname(CRON_FOLDER)
 
+ONLINE = ENV['ONLINE'] != "false"
+
 # Les modules du site utiles pour le cron
 Dir.chdir(APPFOLDER) do
   require './_lib/required/__first/extensions/Formate_helpers'
@@ -14,3 +16,7 @@ end
 Dir["#{CRON_LIB_FOLDER}/_required/_first/**/*.rb"].each{|m| require m}
 Dir["#{CRON_LIB_FOLDER}/_required/_then/**/*.rb"].each{|m| require m}
 require_relative './_required/post_constants'
+
+# Réglage du serveur de données
+SANDBOX = ONLINE ? false : true
+MyDB.DBNAME = DB_NAME

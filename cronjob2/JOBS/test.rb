@@ -16,9 +16,17 @@ class Cronjob
 
   def proceed_test
     if Cronjob.noop?
-      Logger << "Ceci est le test sans opération (noop)."
+      Logger << "C'est un test sans opération (noop)."
     else
-      Logger << "Ceci est le test avec opération"
+      Logger << "C'est un test avec opération"
+    end
+    Logger << "ENV['ONLINE'] = #{ENV['ONLINE'].inspect}"
+    Logger << "ONLINE  = #{ONLINE.inspect}"
+    Logger << "DB_NAME = #{DB_NAME.inspect} (constante) #{MyDB.DBNAME.inspect} (db.rb)"
+    Logger << "Tentative de relève de quelques users"
+    request = "SELECT id, pseudo, mail FROM users WHERE id > 100 && id < 120"
+    db_exec(request).each do |du|
+      Logger << du.inspect
     end
   end #/ proceed_test
 end #/Cronjob

@@ -20,7 +20,7 @@ def proceed_cron
   end
   case what
   when 'log', 'journal'
-    read_journal
+    cron_load_and_display_main_log
   when 'run'
     run_distant_cron
   when 'report'
