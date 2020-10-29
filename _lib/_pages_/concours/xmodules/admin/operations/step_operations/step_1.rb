@@ -18,7 +18,7 @@ class Operation
   end
 
   def add_actualite_concours_start(options)
-    msg = "🔰 LANCEMENT DE LA SESSION #{Concours.current.annee} DU CONCOURS DE SYNOPSIS. 🔰"
+    msg = "LANCEMENT DE LA SESSION #{Concours.current.annee} DU CONCOURS DE SYNOPSIS."
     if options[:noop]
       html.res << "<div class='ml2'>Message : #{msg}</div>"
     else

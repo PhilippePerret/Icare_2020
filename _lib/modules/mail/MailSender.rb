@@ -55,14 +55,15 @@ def send(dmail)
   dmail.merge!(subject: dmail[:bind].mail_subject, message: mail_message)
   # log("Data mail final: #{dmail.inspect}")
   # Envoyer le mail ou simuler son envoi
-  if noop?(options)
-    simuler_unique_message(dmail, options)
+  if noop?(dmail)
+    simuler_unique_message(dmail)
   else
     Mail.send(dmail)
   end
 end #/ send
 
-def simuler_unique_message(dmail, options)
+def simuler_unique_message(dmail, options = nil)
+  options ||= {}
   retour = case options[:format]
   when 'html'
     <<-HTML

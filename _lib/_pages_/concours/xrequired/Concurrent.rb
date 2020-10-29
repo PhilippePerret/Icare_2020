@@ -182,11 +182,16 @@ def spec(bit)
   log("data_current_concours: #{data_current_concours.inspect}")
   data_current_concours[:specs][bit].to_i
 end #/ spec
-def set_spec(bit, value)
+def set_spec(bit, value, options = nil)
   opts = data_current_concours[:specs].dup
   opts[bit] = value.to_s
   data_current_concours[:specs] = opts
+  save_specs unless options && options[:no_save]
 end #/ set_spec
+def specs
+  data_current_concours[:specs]
+end #/ specs
+
 def save_specs
   db_exec("UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET specs = ? WHERE concurrent_id = ? AND annee = ?", [data_current_concours[:specs], id, ANNEE_CONCOURS_COURANTE])
 end #/ save_specs
@@ -239,7 +244,7 @@ end #/ warned?
 
 # Retourne TRUE si le dossier de participation a été transmis
 # Deux conditions :
-#   - la propriété dossier_complete dans la DB est à 1
+#   - le bit 0 de la propriété specs dans la DB est à 1
 #   - le fichier physique existe
 def dossier_transmis?
   (@dossier_transmis ||= begin
@@ -275,9 +280,7 @@ end #/ update_options
     # *** Options pour le concours courant ***
     #     (pas les options générales)
     #
-    # bit 0   1 si le projet a été envoyé
-    # ...
-    # bit 7
+    # Valeurs : cf. le mode d'emploi (icare read concours)
     def specs
       @specs ||= data[:specs]
     end #/ options

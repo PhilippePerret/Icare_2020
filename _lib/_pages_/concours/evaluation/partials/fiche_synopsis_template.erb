@@ -1,0 +1,25 @@
+<%
+# frozen_string_literal: true
+
+%>
+<div id="synopsis-<%=id%>" class="<%=css_classes%>" data-id="<%=id%>">
+  <div id="synopsis-<%=id%>-titre" class="titre"><%=titre%></div>
+  <div class="auteur">de <span id="synopsis-<%=id%>-pseudo" class=""><%=concurrent.patronyme%></span></div>
+  <div id="synopsis-<%=id%>-note-generale" class="note-generale"><%=formated_note_generale%></div>
+  <div id="synopsis-<%=id%>-pct-reponses" class="div-pct-reponses"><span class="pct-reponses"><%=pourcentage_reponses%></span> %</div>
+  <div id="synopsis-<%=id%>-jauge-pct-reponses" class="jauge-pct-reponses">
+    <span class="jauge-pct-reponses-done" style="width:<%=pourcentage_reponses%>%;"></span>
+  </div>
+  <div id="synopsis-<%=id%>-keywords" class="keywords"><%=formated_keywords%></div>
+  <div class="fiche-buttons" class="right">
+    <% if confirmed? %>
+      <a class="btn-edit small btn" href="concours/evaluation?view=body_form_synopsis&synoid=<%=id%>">Éditer</a>
+      <button type="button" class="btn-evaluate small btn">Évaluer</button>
+    <% else %>
+      <div class="center">
+        <a class="btn-confirm small btn" href="concours/evaluation?synoid=<%=id%>&op=mark_conforme" title="Confirmer la conformité du synopsis">Marquer conforme</a>
+      </div>
+    <% end %>
+  </div>
+  <div class="synopsis-id"><%=id%></div>
+</div>

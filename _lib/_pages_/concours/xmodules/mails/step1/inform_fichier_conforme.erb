@@ -1,0 +1,18 @@
+<%
+# frozen_string_literal: true
+=begin
+  Mail pour informer le concurrent que son dossier a été accepté car il
+  est conforme.
+=end
+subject("[Concours] Votre fichier de candidature est conforme")
+%>
+<p>
+  Ch<%= concurrent.fem(:ere) %> <%= concurrent.pseudo %>,
+</p>
+<p>
+  J'ai le plaisir de vous informer que le fichier de candidature que vous avez déposé pour le Concours de Synopsis <%= Concours.current.annee %>, portant le titre “<%= synopsis.titre %>”, a été jugé tout à fait conforme au règlement et sera donc pris en compte.
+</p>
+<p>
+  Bien à vous et bonne chance !
+</p>
+<p>L'administration du concours</p>

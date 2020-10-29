@@ -46,6 +46,28 @@ STEPS_DATA = {
 
 
 
+---
+
+
+
+## Les documents (fichier de candidature)
+
+On peut évaluer les fichiers de candidature dans la section `concours/administration`.
+
+La propriété `specs` de la donnée du concurrent dans la table `concurrents_per_concours` permet de tenir à jour les informations et l’état du fichier de candidature :
+
+| bit  | Description                                                  | Valeurs                                      |
+| ---- | ------------------------------------------------------------ | -------------------------------------------- |
+| 0    | État de dépôt du fichier                                     | 0: non déposé, 1: déposé                     |
+| 1    | Conformité du fichier (après vérification par l'administration) | 0: non vérifié, 1: conforme, 2: non conforme |
+|      |                                                              |                                              |
+
+
+
+---
+
+
+
 ## Envoi de mailing
 
 L’envoi de mails est facilité pour le concours (le fonctionnement doit d’ailleurs être repris sur le site [Note du 25 octobre 2020]).

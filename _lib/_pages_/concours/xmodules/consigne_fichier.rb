@@ -57,14 +57,6 @@ end # /<< self
 #   INSTANCE FICHIER DE CANDIDATURE
 #
 # ---------------------------------------------------------------------
-attr_reader :concurrent, :annee
-attr_reader :original_name
-def initialize(concurrent, annee)
-  @concurrent = concurrent
-  @annee      = annee
-end #/ initialize
-
-
 # Méthode appelée avec le champ file du formulaire pour consigner le fichier
 def consigne_file(ffile) # ffile pour "form-file"
   titre = titre_valide? # ou raise avec l'erreur
@@ -81,22 +73,11 @@ def consigne_file(ffile) # ffile pour "form-file"
   # Si tout est OK, on marque que le dossier est envoyé dans les
   # specs du concurrent.
   concurrent.set_spec(0, 1)
-  concurrent.save_specs
   return true # si tout est OK
 rescue Exception => e
   log(e)
   return erreur(e.message)
 end #/ consigne_file
-
-# Le nom conforme du fichier
-def name
-  @name ||= "#{concurrent.id}-#{annee}#{@extname}"
-end #/ name
-
-# Le path conforme du fichier
-def path
-  @path ||= File.join(concurrent.folder,name).tap{|p|`mkdir -p #{File.dirname(p)}`}
-end #/ path
 
 private
 

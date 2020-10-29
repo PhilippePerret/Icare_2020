@@ -30,11 +30,17 @@ class HTML
   def exec
     admin_required # TODO evaluators_required
     add_js('./js/modules/ajax')
-    case param(:view)
-    when "body_form_synopsis"
+
+    # Pour tous les cas où synoid est défini => un synopsis est choisi pour
+    # une opération quelconque.
+    if param(:synoid)
       args = param(:synoid).split('-')
       args << db_exec(Synopsis::REQUEST_SYNOPSIS, args).first
       @synopsis = Synopsis.new(*args)
+    end
+
+    case param(:view)
+    when "body_form_synopsis"
       if param(:op) == 'save_synopsis' && user.admin?
         if param(:form_id) && Form.new.conform?
           synopsis.save(titre: param(:syno_titre), auteurs:param(:syno_auteurs), keywords:param(:syno_keywords))
@@ -42,8 +48,12 @@ class HTML
         end
       end
     else
-      require_xmodule('evaluation/module_calculs')
-      check_up_to_date
+      if param(:op) == 'mark_conforme'
+        require_xmodule('admin/mark_fichier_conforme')
+        synopsis.cfile.confirme_validite
+      end
+        require_xmodule('evaluation/module_calculs')
+        check_up_to_date
     end
   end # /exec
 

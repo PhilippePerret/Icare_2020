@@ -99,37 +99,26 @@ def initialize concurrent_id, annee, data = nil
   @data = data
 end #/ initialize
 
-# Pour la fiche du synopsis
-# -------------------------
-TEMPLATE_FICHE_SYNOPSIS = <<-HTML
-<div id="synopsis-%{id}" class="%{class}" data-id="%{id}">
-  <div id="synopsis-%{id}-titre" class="titre">%{titre}</div>
-  <div class="auteur">de <span id="synopsis-%{id}-pseudo" class="">%{pseudo}</span></div>
-  <div id="synopsis-%{id}-note-generale" class="note-generale">%{note}</div>
-  <div id="synopsis-%{id}-pct-reponses" class="div-pct-reponses"><span class="pct-reponses">%{pct_reponses}</span> %%</div>
-  <div id="synopsis-%{id}-jauge-pct-reponses" class="jauge-pct-reponses">
-    <span class="jauge-pct-reponses-done" style="width:%{pct_reponses}%%;"></span>
-  </div>
-  <div id="synopsis-%{id}-keywords" class="keywords">%{keywords}</div>
-  <div class="fiche-buttons" class="right">
-    <a class="btn-edit small btn" href="concours/evaluation?view=body_form_synopsis&synoid=%{id}">Éditer</a>
-    <button type="button" class="btn-evaluate small btn">Évaluer</button>
-  </div>
-  <div class="synopsis-id">%{id}</div>
-</div>
-HTML
+# OUT   True si la conformité du synopsis a été marquée
+def confirmed?
+  concurrent.spec(1) == 1
+end #/ confirmed?
+
+def cfile
+  @cfile ||= Concours::CFile.new(concurrent, annee, self)
+end #/ cfile
+
+def template_fiche_synopsis
+  @template_fiche_synopsis ||= begin
+    deserb('../partials/fiche_synopsis_template', self)
+  end
+end #/ template_fiche_synopsis
+
+def bind; binding() end
 
 def out(evaluator_id)
   @evaluator_id ||= evaluator_id
-  TEMPLATE_FICHE_SYNOPSIS % {
-    id:"#{concurrent_id}-#{annee}",
-    class:css_classes,
-    titre: titre,
-    pseudo: concurrent.patronyme,
-    note: formated_note_generale,
-    pct_reponses: pourcentage_reponses,
-    keywords: formated_keywords # Pour se remémorer le synopsis
-  }
+  template_fiche_synopsis
 end #/ out
 
 def css_classes
@@ -197,10 +186,10 @@ end #/ nombre_reponses
 def get_data_score
   log("-> get_data_score")
   dscore = {}
-  log("folder : #{folder} existe ? #{File.exists?(folder).inspect}")
+  # log("folder : #{folder} existe ? #{File.exists?(folder).inspect}")
   if File.exists?(folder)
     score_evaluator_path = score_path(evaluator_id)
-    log("Score path : #{score_evaluator_path} existe ? #{File.exists?(score_evaluator_path).inspect}")
+    # log("Score path : #{score_evaluator_path} existe ? #{File.exists?(score_evaluator_path).inspect}")
     if File.exists?(score_evaluator_path)
       dscore = JSON.parse(File.read(score_evaluator_path))
     end
@@ -214,7 +203,7 @@ def get_data_score
 end #/ data_score
 
 def formated_keywords
-  @formated_keywords ||= data[:keywords].split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
+  @formated_keywords ||= (data[:keywords]||'').split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
 end #/ keywords
 
 # Son instance de formulaire d'évaluation, pour un évaluateur donné
