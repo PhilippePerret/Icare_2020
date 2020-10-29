@@ -40,7 +40,8 @@ Ch<%=fem(:ere)%> <%= patronyme.titleize %>,
   <%= CONCOURS.conseil_per_nombre_jours_echeance %>
 <% end %>
 
-<p style="font-size:1.1em;">Votre projet “<span style="font-weight:bold;"><%= synopsis.titre %></span>” est en ce moment en lice contre <span style="font-weight:bold;"><%= Concurrent.count - 1 %> autres concurrents</span> (*).<br/><span style="font-size:0.8em;">(*) Mais attention : beaucoup de concurrents s’inscrivent au tout dernier moment.</span></p>
+<% nom_projet = synopsis.titre.nil_if_empty.nil? ? "(qui n'a pas encore de titre)" : "“<span style="font-weight:bold;">#{synopsis.titre}</span>”" %>
+<p style="font-size:1.1em;">Votre projet <%=nom_projet%> est en ce moment en lice contre <span style="font-weight:bold;"><%= Concurrent.count - 1 %> autres concurrents</span> (*).<br/><span style="font-size:0.8em;">(*) Mais attention : beaucoup de concurrents s’inscrivent au tout dernier moment.</span></p>
 
 
 <p style="font-weight:bold;margin-top:50px;">ÉCHÉANCIER</p>

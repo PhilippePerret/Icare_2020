@@ -32,7 +32,7 @@ def conseil_per_nombre_jours_echeance
   when (15..30) then "vous devriez être en train de parachever votre synopsis."
   when (30..60) then "votre histoire est prête, vous devriez être en train de rédiger le synopsis lui-même."
   when (60..90) then "vous devriez être en train de concevoir l'histoire, sa forme, ses personnages, etc. autour du thème imposé pour cette session #{Concours.current.annee}, #{Concours.current.theme.downcase}."
-  else "vous avez encore tout le temps de chercher la bonne histoire, autour du thème “#{Concours.current.theme.downcase}” proposé cette année."
+  else "vous avez encore tout le temps de chercher la bonne histoire — si vous ne l'avez pas déjà — autour du thème “#{Concours.current.theme.downcase}” proposé cette année."
   end
 end #/ conseil_per_nombre_jours_echeance
 
