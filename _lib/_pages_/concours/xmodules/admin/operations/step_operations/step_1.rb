@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_module('mail')
 class ConcoursStep
 class Operation
   def send_mail_icariens_annonce_start(options)
