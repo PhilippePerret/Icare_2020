@@ -34,7 +34,11 @@ class Cronjob
 
   # OUT   Retourne le plus grand identifiant de ticket
   def max_id_tickets
-    res = db_exec("SELECT id FROM tickets ORDER BY id DESC LIMIT 1")
-    return res.first&[:id]
+    res = db_exec("SELECT id FROM tickets ORDER BY id DESC LIMIT 1").first
+    if res.nil?
+      return nil
+    else
+      res.first[:id]
+    end
   end #/ max_id_tickets
 end #/Cronjob
