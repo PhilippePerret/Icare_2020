@@ -26,7 +26,7 @@ describe 'CRON:Nettoyage des mails' do
     remove_main_log
     cur_report_path = remove_report(test_time)
     res = run_cronjob(time:test_time)
-    puts res
+    # puts res
     # = On vérifie =
     code = read_main_log
     expect(code).not_to include("JOB [nettoyage_mails] NOT TIME"),
