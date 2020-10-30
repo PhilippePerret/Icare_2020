@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 CRONJOB_FOLDER = File.expand_path(File.join('.','cronjob2'))
 RUNNER_PATH = File.join(CRONJOB_FOLDER, 'runner.rb')
-MAIN_LOG_PATH = File.join(CRONJOB_FOLDER,'tmp','main.log')
+MAIN_LOG_PATH = File.join('.','tmp','logs','cronjob.log')
 CRON_REPORT_PATH = File.join(CRONJOB_FOLDER,'tmp', "report-#{Time.now.strftime('%Y-%m-%d')}.txt")
 
 # Pour jouer le cron job à une certaine heure, ajouter

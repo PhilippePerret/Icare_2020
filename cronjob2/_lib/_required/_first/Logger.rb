@@ -12,7 +12,9 @@ class << self
   end #/ reffile
 
   def path
-    @path ||= File.join(CRON_FOLDER,'tmp','main.log')
+    @path ||= begin
+      File.join(APPFOLDER,'tmp','logs','cronjob.log').tap{|p|`mkdir -p "#{File.dirname(p)}"`}
+    end
   end #/ path
 end # /<< self
 end #/Logger

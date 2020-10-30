@@ -44,7 +44,7 @@ class << self
     read_it(path)
   end #/ read_log
   def read_cronjob
-    path = './www/cronjob/journal.log'
+    path = './www/tmp/logs/cronjob.log'
     read_it(path)
   end #/ read_cronjob
   # Pour lire tous les rapports de cronjob
