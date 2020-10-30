@@ -13,7 +13,6 @@ class Cronjob
   end #/ data
 
   def NOM_DU_FICHIER                # <==== METTRE LE NOM DU FICHIER
-    runnable? || return
                                     # <==== LE CODE DU PROGRAMME
     return true
   end #/

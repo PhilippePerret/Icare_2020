@@ -28,12 +28,13 @@ class Cronjob
   end #/ supprimer_tickets_older_than_30_days
 
   def update_auto_increment
-    db_exec("ALTER TABLE tickets AUTO_INCREMENT=#{max_id_tickets}")
+    maxid = max_id_tickets
+    db_exec("ALTER TABLE tickets AUTO_INCREMENT=#{maxid}") if not maxid.nil?
   end #/ update_auto_increment
 
   # OUT   Retourne le plus grand identifiant de ticket
   def max_id_tickets
     res = db_exec("SELECT id FROM tickets ORDER BY id DESC LIMIT 1")
-    return res.first[:id]
+    return res.first&[:id]
   end #/ max_id_tickets
 end #/Cronjob

@@ -9,7 +9,6 @@ class Cronjob
     }
   end #/ data
   def test
-    runnable? || return
     proceed_test
     return true
   end #/ test

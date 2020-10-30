@@ -24,8 +24,14 @@ describe 'Le job envoi_actualites' do
     #       hebdomadairement.
     @icariens_news_quoti, @icariens_news_hebdo = TUser.set_contactables(strict:true, quoti:5, hebdo:7)
     # puts "@icariens_news_hebdo:\n-- #{@icariens_news_hebdo.join("\n-- ")}"
+
+    @old_current_driver = Capybara.current_driver.freeze
+    Capybara.current_driver = :selenium_headless
   end
 
+  after(:all) do
+    Capybara.current_driver = @old_current_driver
+  end
   let(:icariens_news_hebdo) { @icariens_news_hebdo }
   let(:icariens_news_quoti) { @icariens_news_quoti }
 
@@ -40,7 +46,7 @@ describe 'Le job envoi_actualites' do
       expect(TMails.count).to eq(0)
       res = run_cronjob(noop:false, time:"2020/10/24/3/55")
       code = File.read(MAIN_LOG_PATH)
-      expect(code).to include "RUN JOB [envoi_actualites]"
+      expect(code).to include "JOB [envoi_actualites]"
       expect(TMails.count).to eq(1) # seulement le rapport à l'administration
     end
   end #/context "sans activité de la veille"
@@ -51,7 +57,7 @@ describe 'Le job envoi_actualites' do
       expect(TMails.count).to eq(0)
       res = run_cronjob(noop:false, time:"2020/10/24/3/55")
       code = File.read(MAIN_LOG_PATH)
-      expect(code).to include "RUN JOB [envoi_actualites]"
+      expect(code).to include "JOB [envoi_actualites]"
       expect(TMails.count).to eq(1) # seulement le rapport à l'administration
     end
   end #/context "sans activté de la semaine"
@@ -61,7 +67,7 @@ describe 'Le job envoi_actualites' do
     it 'ne produit rien' do
       res = run_cronjob(noop:false, time:"2020/10/24/1/12")
       code = File.read(MAIN_LOG_PATH)
-      expect(code).not_to include "RUN JOB [envoi_actualites]"
+      expect(code).to include "[envoi_actualites] NOT TIME"
     end
   end # context pas 3 heures
 
@@ -87,7 +93,7 @@ describe 'Le job envoi_actualites' do
           code_report = File.read(reportpath)
           # puts "\n\n---Report:\n#{code_report}"
           code = File.read(MAIN_LOG_PATH)
-          expect(code).to include "RUN JOB [envoi_actualites]"
+          expect(code).to include "JOB [envoi_actualites]"
           expect(code_report).to include("Aucune actualité pour la semaine.")
           expect(code_report).to include("Aucune actualité pour la veille.")
         end
@@ -113,7 +119,7 @@ describe 'Le job envoi_actualites' do
           code_report = File.read(reportpath)
           # puts "\n\n---Report:\n#{code_report}"
           code = File.read(MAIN_LOG_PATH)
-          expect(code).to include "RUN JOB [envoi_actualites]"
+          expect(code).to include "JOB [envoi_actualites]"
           expect(code_report).to include("Nombre de destinataires news semaine : 7.")
           expect(code_report).not_to include("Aucune actualité pour la semaine.")
           expect(code_report).to include("Nombre d'actualités de la semaine : 2.")
@@ -142,7 +148,7 @@ describe 'Le job envoi_actualites' do
           code_report = File.read(reportpath)
           # puts "\n\n---Report:\n#{code_report}"
           code = File.read(MAIN_LOG_PATH)
-          expect(code).to include "RUN JOB [envoi_actualites]"
+          expect(code).to include "JOB [envoi_actualites]"
           expect(code_report).to include("Nombre de destinataires news semaine : 7.")
           expect(code_report).to include("Nombre d'actualités de la semaine : 3.")
           expect(code_report).to include("Nombre d'actualités de la veille : 3.")
@@ -184,7 +190,7 @@ describe 'Le job envoi_actualites' do
           code_report = File.read(reportpath)
           # puts "\n\n---Report:\n#{code_report}"
           code = File.read(MAIN_LOG_PATH)
-          expect(code).to include "RUN JOB [envoi_actualites]"
+          expect(code).to include "JOB [envoi_actualites]"
           expect(code_report).to include("Nombre de destinataires news semaine : 7.")
           expect(code_report).to include("Nombre de destinataires news veille : 5.")
           expect(code_report).not_to include("Aucune actualité pour la semaine.")
@@ -249,7 +255,7 @@ describe 'Le job envoi_actualites' do
         res = run_cronjob(time:"2020/10/22/3/8")
         puts "\n\n---res: #{res}"
         code = File.read(MAIN_LOG_PATH)
-        expect(code).to include "RUN JOB [envoi_actualites]"
+        expect(code).to include "JOB [envoi_actualites]"
       end
     end #/ context pas un samedi, mais à 3 heures
 

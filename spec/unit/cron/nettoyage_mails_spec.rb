@@ -7,6 +7,8 @@ describe 'CRON:Nettoyage des mails' do
   it 'le job nettoie les mails et enregistre le résultat' do
     # = Préparation =
     folder_mails = File.expand_path(File.join('.','tmp','mails'))
+    test_time = "2020/10/24/1/23"
+    text_real_time = realtime(test_time)
     # Un mail récent
     path_mail_recent = File.join(folder_mails,'mail-recent.html')
     File.open(path_mail_recent,'wb'){|f|f.write("C'est un mail récent")}
@@ -14,22 +16,21 @@ describe 'CRON:Nettoyage des mails' do
     File.open(path_autre_recent,'wb'){|f|f.write("C'est un autre mail récent")}
     path_mail_ancien = File.join(folder_mails,'mail-ancien.html')
     File.open(path_mail_ancien,'wb'){|f|f.write("C'est un mail ancien")}
-    FileUtils.touch(path_mail_ancien, :mtime => Time.now - 20.days)
+    FileUtils.touch(path_mail_ancien, :mtime => text_real_time - 20.days)
     path_mail_tres_ancien = File.join(folder_mails,'mail-tres-ancien.html')
     File.open(path_mail_tres_ancien,'wb'){|f|f.write("C'est un mail très ancien")}
-    FileUtils.touch(path_mail_tres_ancien, :mtime => Time.now - 40.days)
+    FileUtils.touch(path_mail_tres_ancien, :mtime => text_real_time - 40.days)
 
 
     # = On test =
-    test_time = "2020/10/24/1/23"
     remove_main_log
     cur_report_path = remove_report(test_time)
     res = run_cronjob(time:test_time)
     puts res
     # = On vérifie =
     code = read_main_log
-    expect(code).to include("RUN JOB [nettoyage_mails]"),
-      "Le job aurait dû être joué"
+    expect(code).not_to include("JOB [nettoyage_mails] NOT TIME"),
+      "Le job de nettoyage des mails aurait dû être joué"
 
     expect(File).to be_exists(path_mail_recent),
       "Le fichier récent n'aurait pas dû être touché"

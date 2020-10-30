@@ -13,7 +13,6 @@ class Cronjob
   end #/ data
 
   def nettoyage_mails
-    runnable? || return
     proceed_nettoyage_mails
     return true
   end #/ nettoyage_mails
@@ -21,11 +20,11 @@ class Cronjob
   def proceed_nettoyage_mails
     nombre_detruits = 0
     Dir["#{mails_folder}/*.*"].each do |fmail|
-      next if File.stat(fmail).mtime.to_i > QUINZE_JOUR_AGO
+      next if File.stat(fmail).mtime.to_i > QUINZE_JOURS_AGO
       File.delete(fmail)
       nombre_detruits += 1
     end
-    Report << "[#{method_name}] Nombre mails détruits : #{nombre_detruits}."
+    Report << "= Nombre mails détruits : #{nombre_detruits}."
   end #/ proceed_nettoyage_mails
 
   def mails_folder

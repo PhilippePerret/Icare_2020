@@ -13,7 +13,6 @@ class Cronjob
   end #/ data
 
   def mails_concours
-    runnable? || return
     require_relative './mails_concours/required'
     Concurrent.send_mail_info_hebdomadaire
     return true

@@ -14,10 +14,7 @@ end #/ initialize
 
 # DO    Joue le job
 def run
-  Report << "JOB [#{method_name}] (#{name})"
-  return if not runnable?
-  Report.prefix = " " * 4
-  Report << "RUN IT!"
+  start_mark_report || return
   finish if self.send(method_name)
 rescue Exception => e
   Logger << "# ERREUR [#{method_name}] : #{e.message}\n#{e.backtrace.join("\n")}"
@@ -25,24 +22,32 @@ ensure
   Report.prefix = ''
 end #/ run
 
+# Juste pour la ligne de rapport, pour préciser si le job doit être
+# joué ou non.
+def start_mark_report
+  msg = "JOB [#{method_name}]"
+  if not runnable?
+    Report << "#{msg} NOT TIME"
+    return
+  else
+    Report << "#{msg} (#{name})"
+  end
+  Report.prefix = " " * 4
+  Report << "RUN IT!"
+  return true
+end #/ start_mark_report
+
 def finish
   Report << "END [#{method_name}]"
 end #/ finish
 
 # OUT   True s'il faut jouer le job.
-# DO    Quand le job n'est pas à jouer, on l'indique sur l'historique
 #
-# Le job n'est pas aà jouer si :
+# Le job n'est pas à jouer si :
 #   - Sa fréquence ne correspond pas à l'heure/jour courant
 #   - Il a déjà été joué (est-ce qu'on tient vraiment compte de ça ?)
 def runnable?
-  runit = good_hour? && good_day?
-  if runit
-    Logger << "---> RUN JOB [#{method_name}] (#{name})"
-  else
-    Logger << "Le job “#{name}” n'est pas à jouer [#{method_name}]"
-  end
-  return runit
+  return good_hour? && good_day?
 end #/ runnable?
 
 def name; @name ||= data[:name] end

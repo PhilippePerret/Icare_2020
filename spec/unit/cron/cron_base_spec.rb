@@ -32,16 +32,16 @@ describe 'Le runner du cronjob' do
     remove_main_log
     res = run_cronjob(noop:true, time:"2020/10/24/1/12")
     code = File.read(MAIN_LOG_PATH)
-    expect(code).to include "RUN JOB [nettoyage_mails]"
-    expect(code).not_to include "RUN JOB [nettoyage_dossiers]"
+    expect(code).not_to include "JOB [nettoyage_mails] NOT TIME"
+    expect(code).to include "JOB [nettoyage_dossiers] NOT TIME"
   end
 
   it 'le nettoyage des dossiers se fait seulement le samedi, à 2 heures' do
     remove_main_log
     res = run_cronjob(noop:true, time:"2020/10/24/2/0")
     code = File.read(MAIN_LOG_PATH)
-    expect(code).to include "RUN JOB [nettoyage_dossiers]"
-    expect(code).not_to include "RUN JOB [nettoyage_mails]"
+    expect(code).not_to include "JOB [nettoyage_dossiers] NOT TIME"
+    expect(code).to include "JOB [nettoyage_mails] NOT TIME"
   end
 
   it 'l’envoi des actualités se fait tous les jours, à 3 heures' do
@@ -53,9 +53,9 @@ describe 'Le runner du cronjob' do
       remove_main_log
       res = run_cronjob(noop:true, time:time)
       code = File.read(MAIN_LOG_PATH)
-      expect(code).to include "RUN JOB [send_actualites]"
-      expect(code).not_to include "RUN JOB [nettoyage_dossiers]"
-      expect(code).not_to include "RUN JOB [nettoyage_mails]"
+      expect(code).not_to include "JOB [envoi_actualites] NOT TIME"
+      expect(code).to include "JOB [nettoyage_dossiers] NOT TIME"
+      expect(code).to include "JOB [nettoyage_mails] NOT TIME"
     end
     [
       "2020/10/24/1/0",
@@ -65,7 +65,7 @@ describe 'Le runner du cronjob' do
       remove_main_log
       res = run_cronjob(noop:true, time:time)
       code = File.read(MAIN_LOG_PATH)
-      expect(code).not_to include "RUN JOB [send_actualites]"
+      expect(code).to include "JOB [envoi_actualites] NOT TIME"
     end
 
   end

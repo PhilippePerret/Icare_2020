@@ -10,7 +10,6 @@ class Cronjob
   end #/ data
 
   def envoi_actualites
-    runnable? || return
     require_module('mail')
     require_module('ticket')
     envoi_actualites_quotidiennes

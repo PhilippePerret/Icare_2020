@@ -5,7 +5,7 @@ class << self
   attr_accessor :prefix # à ajouter avant le message
   def << msg
     reffile.puts("#{Time.now} --- #{prefix}#{msg}")
-    Logger << msg
+    Logger << "#{prefix}#{msg}"
   end
   def reffile
     @reffile ||= begin

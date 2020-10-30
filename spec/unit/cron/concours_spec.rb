@@ -57,8 +57,8 @@ describe 'CRONJOB' do
 
   end #/ contexte : aà la bonne heure en se rapprochant de l'échéance
 
-  context 'À une autre heure le samedi' do
-    it 'aucun mail n’est envoyé' do
+  context 'À plusieurs heures le samedi' do
+    it 'aucun mail n’est envoyé en dehors de 11 heures' do
       # *** Vérification préliminaire ***
 
       expect(TMails.count).to eq(0)
@@ -70,7 +70,7 @@ describe 'CRONJOB' do
       expect(nombre_mails_info_concours).to eq(0)
       res = run_cronjob(noop:false, time:"2020/10/24/2/20")
       expect(nombre_mails_info_concours).to eq(0)
-      res = run_cronjob(noop:false, time:"2020/10/24/3/20")
+      res = run_cronjob(noop:false, time:"2020/10/24/11/20")
       expect(nombre_mails_info_concours).not_to eq(0)
       TMails.remove_all
       res = run_cronjob(noop:false, time:"2020/10/24/4/10")

@@ -10,7 +10,6 @@ class Cronjob
   end #/ data
 
   def nettoyage_dossiers
-    runnable? || return
 
     return true
   end #/ nettoyage_dossiers

@@ -12,7 +12,7 @@ MESSAGES.merge!({
   nombre_files_nettoyed: '  = Nombre de fichiers nettoyés : %i',
 })
 
-QUINZE_JOUR_AGO = NOW_S - 15.days
+QUINZE_JOURS_AGO = NOW_S - 15.days
 
 class CJFolders
 class << self
@@ -44,7 +44,7 @@ def nettoie
   elements.each do |element_path|
     if File.directory?(element_path)
       self.class.nettoie(element_path)
-    elsif File.stat(element_path).mtime.to_i < QUINZE_JOUR_AGO
+    elsif File.stat(element_path).mtime.to_i < QUINZE_JOURS_AGO
       File.delete(element_path)
     else
       # Le fichier est moins vieux que 15 jours, on le conserve
