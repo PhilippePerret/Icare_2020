@@ -36,7 +36,21 @@ class Cronjob
   # Nettoyage du dossier qui contient les téléchargements
   def nettoie_dossier_downloads
     Logger << "-> nettoie_dossier_downloads"
-
+    ilya30jours = Time.now.to_i - 30.days
+    nombre_total    = 0
+    nombre_detruits = 0
+    Dir["#{DOWNLOADS_TMP_FOLDER}/*"].each do |fpath|
+      # Des dossiers ou des fichiers
+      nombre_total += 1
+      next if File.stat(fpath).mtime.to_i > ilya30jours
+      if File.directory?(fpath)
+        FileUtils.rm_rf(fpath)
+      else
+        File.delete(fpath)
+      end
+      nombre_detruits += 1
+    end
+    Report << "= Nombre éléments downloads détruits : #{nombre_detruits}/#{nombre_total}"
     Logger << "<- nettoie_dossier_downloads"
   end #/ nettoie_dossier_downloads
 
@@ -53,5 +67,6 @@ class Cronjob
 
 TMP_FOLDER = File.join(APPFOLDER,'tmp')
 FORMS_TMP_FOLDER = File.join(TMP_FOLDER,'forms')
+DOWNLOADS_TMP_FOLDER = File.join(TMP_FOLDER,'downloads')
 
 end #/Cronjob
