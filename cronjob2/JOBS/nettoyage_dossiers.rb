@@ -61,12 +61,22 @@ class Cronjob
   # sans souci).
   def nettoie_dossier_signups
     Logger << "-> nettoie_dossier_signups"
-
+    elements = Dir["#{SIGNUPS_TMP_FOLDER}/*"]
+    nombre_elements_init = elements.count.freeze
+    ilya60jours = Time.now.to_i - 60.days
+    nombre_detruits = 0
+    elements.each do |fpath|
+      next if File.stat(fpath).mtime.to_i > ilya60jours
+      FileUtils.rm_rf(fpath)
+      nombre_detruits += 1 unless File.exists?(fpath)
+    end
+    Report << "= Nombre dossiers inscription détruits : #{nombre_detruits}/#{nombre_elements_init}"
     Logger << "<- nettoie_dossier_signups"
   end #/ nettoie_dossier_downloads
 
 TMP_FOLDER = File.join(APPFOLDER,'tmp')
 FORMS_TMP_FOLDER = File.join(TMP_FOLDER,'forms')
 DOWNLOADS_TMP_FOLDER = File.join(TMP_FOLDER,'downloads')
+SIGNUPS_TMP_FOLDER = File.join(TMP_FOLDER,'signups')
 
 end #/Cronjob

@@ -5,6 +5,14 @@ describe 'Le nettoyage des dossiers' do
   def folder_forms_count
     Dir["./tmp/forms/*"].count
   end #/ folder_forms_count
+  # OUT   Nombre d'éléments dans le dossier des downloads
+  def nombre_downloads
+    Dir["./tmp/downloads/*"].count
+  end #/ nombre_downloads
+  # OUT   Nombre d'éléments dans le dossier des signups
+  def nombre_signups
+    Dir["./tmp/signups/*"].count
+  end #/ nombre_signups
 
   before(:all) do
     require_support('cronjob')
@@ -47,12 +55,16 @@ describe 'Le nettoyage des dossiers' do
     FileUtils.touch(dest2file2, :mtime => datefile2)
     FileUtils.touch(folder2, :mtime => datefile2)
 
-  end
+    # *** Pour le dossier des signups ***
+    Dir["./spec/support/asset/dossiers/signups/*"].each do |fpath|
+      FileUtils.cp_r(fpath, "./tmp/signups/")
+    end
+    @nombre_signups_init = nombre_signups.freeze
+    elements = Dir["./tmp/signups/*"]
+    FileUtils.touch(elements[0], :mtime => @test_real_time - rand(62..100).days)
+    FileUtils.touch(elements[3], :mtime => @test_real_time - rand(62..100).days)
 
-  # OUT   Nombre d'éléments dans le dossier des downloads
-  def nombre_downloads
-    Dir["./tmp/downloads/*"].count
-  end #/ nombre_downloads
+  end
 
   context 'à l’heure voulue' do
     before(:all) do
@@ -69,7 +81,8 @@ describe 'Le nettoyage des dossiers' do
     end
 
     it 'nettoie le dossier des inscriptions' do
-
+      expect(nombre_signups).to eq(@nombre_signups_init - 2)
+      expect(cron_report(@test_time)).to include "= Nombre dossiers inscription détruits : 2/5"
     end
   end
 
