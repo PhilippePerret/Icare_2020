@@ -92,37 +92,53 @@ class << self
 
     # Fort de ces données, on peut faire la liste finale pour tty-prompt
     data_tty_prompt = []
+    data_tty_prompt << {name:"Tous les fichiers non téléchargés", value: {not_downloads: true}}
     DATA_CONCOURS[:fichiers].each do |annee, fichiers|
-      data_tty_prompt << {name: annee.rouge, disabled: "---".rouge}
+      data_tty_prompt << {name: annee.bleu, disabled: "---".bleu, value: {}}
       fichiers.each do |df|
         name = "#{df[:local_exists] ? '* ' : ''}Fichier de #{df[:concurrent][:patronyme]} (#{df[:id]})"
         # data_tty_prompt << {name: name, value: df[:id]}
         data_tty_prompt << {name: name, value: df}
       end
     end
-    data_tty_prompt << {name:'Renoncer', value: nil}
 
-    data_fichier = Q.select("Quel fichier downloader ? (les fichiers précédés d'une astérisque sont déjà chargés)") do |q|
+    data_fichiers = Q.multi_select("Quel fichier downloader ? (les fichiers précédés d'une astérisque sont déjà chargés)") do |q|
       q.choices data_tty_prompt
       q.per_page data_tty_prompt.count
     end
-    return if data_fichier.nil? # Renoncement
+    return if data_fichiers.empty? # Renoncement
 
-    # puts "CHOIX FINAL: #{data_fichier}"
+    if data_fichiers.first[:not_downloads] === true
+      data_fichiers = data_tty_prompt.select do |h|
+        next if h[:disabled]
+        next if h[:value][:not_downloads]
+        not(h[:value][:local_exists] === true)
+      end.collect { |h| h[:value] }
+    end
 
-    `mkdir -p "#{File.dirname(data_fichier[:local_path])}"`
-    cmd_download = SSH_CONCOURS_DOWNLOAD_FILE % {local_path: data_fichier[:local_path], cid: data_fichier[:concurrent][:id], fname: data_fichier[:filename]}
-    res = `#{cmd_download} 2>&1`
-    puts "Résulat du download : #{res.inspect}"
+    if data_fichiers.empty?
+      puts "Aucun fichier n'est à télécharger.".bleu
+      return
+    end
 
-    data_fichier.delete(:local_exists)
-    data_fichier[:concurrent].delete(:fichiers)
-    infos_file = File.join(File.dirname(data_fichier[:local_path]), "#{data_fichier[:id]}.json")
-    # puts "data_fichier: #{data_fichier.inspect}"
-    File.open(infos_file, 'wb') { |f| f.write(data_fichier.to_json) }
+    data_fichiers.each do |data_fichier|
+      # puts "CHOIX FINAL: #{data_fichier}"
 
-    puts "Le fichier a été chargé dans '#{data_fichier[:local_path]}' avec succès (cf. dans le Finder)".vert
-    `open -a Finder "#{File.dirname(data_fichier[:local_path])}"`
+      `mkdir -p "#{File.dirname(data_fichier[:local_path])}"`
+      cmd_download = SSH_CONCOURS_DOWNLOAD_FILE % {local_path: data_fichier[:local_path], cid: data_fichier[:concurrent][:id], fname: data_fichier[:filename]}
+      res = `#{cmd_download} 2>&1`
+      puts "Résulat du download : #{res.inspect}"
+
+      data_fichier.delete(:local_exists)
+      data_fichier[:concurrent].delete(:fichiers)
+      infos_file = File.join(File.dirname(data_fichier[:local_path]), "#{data_fichier[:id]}.json")
+      # puts "data_fichier: #{data_fichier.inspect}"
+      File.open(infos_file, 'wb') { |f| f.write(data_fichier.to_json) }
+
+      puts "-> '#{data_fichier[:local_path]}'".vert
+    end#/fin de boucle sur tous les fichiers à télécharger
+
+    `open -a Finder "#{File.dirname(data_fichiers.first[:local_path])}"`
   end #/ proceed_concours_download
 
 
