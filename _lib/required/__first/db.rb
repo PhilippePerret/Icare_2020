@@ -100,6 +100,13 @@ def db_last_id
   MyDB.db.last_id_of(MyDB.DBNAME)
 end
 
+# IN    {String} Nom de la table dans la base de données courante
+# OUT   Valeur de l'auto-incrément de la table +tbl_name+
+def db_auto_increment(tbl_name)
+  res = db_exec("SHOW TABLE STATUS WHERE `name` LIKE '#{tbl_name}'")
+  return auto_increment = res.first[:Auto_increment]
+end #/ db_auto_increment
+
 # Supprime une ou plusieurs valeurs
 def db_delete(table, filter)
   filter = {id: filter} if filter.is_a?(Integer)

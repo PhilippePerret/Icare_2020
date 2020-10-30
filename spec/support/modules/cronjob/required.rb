@@ -3,7 +3,7 @@
 CRONJOB_FOLDER = File.expand_path(File.join('.','cronjob2'))
 RUNNER_PATH = File.join(CRONJOB_FOLDER, 'runner.rb')
 MAIN_LOG_PATH = File.join(CRONJOB_FOLDER,'tmp','main.log')
-REPORT_PATH = File.join(CRONJOB_FOLDER,'tmp', "report-#{Time.now.strftime('%Y-%m-%d')}.txt")
+CRON_REPORT_PATH = File.join(CRONJOB_FOLDER,'tmp', "report-#{Time.now.strftime('%Y-%m-%d')}.txt")
 
 # Pour jouer le cron job à une certaine heure, ajouter
 # params[:time] = 'AAAA/MM/JJ/HH/MM[/SS]'
@@ -29,13 +29,21 @@ def read_main_log
   File.read(MAIN_LOG_PATH) if File.exists?(MAIN_LOG_PATH)
 end #/ read_main_log
 
-def report_path(time)
+# IN    {String}  Le temps, sous la forme d'un "AAAA/MM/DD/H/M"
+# OUT   {String}  Le contenu du rapport de cron du temps +time+
+#                 Nil s'il n'existe pas.
+def cron_report(time)
+  cpath = cron_report_path(time)
+  File.read(cpath) if File.exists?(cpath)
+end #/ cron_report
+
+def cron_report_path(time)
   time = realtime(time)
   File.join(CRONJOB_FOLDER,'tmp', "report-#{time.strftime('%Y-%m-%d')}.txt")
-end #/ report_path
+end #/ cron_report_path
 
 def remove_report(time = nil)
-  path =  time.nil? ? REPORT_PATH : report_path(time)
+  path =  time.nil? ? CRON_REPORT_PATH : cron_report_path(time)
   # On procède à la suppression
   File.delete(path) if File.exists?(path)
   # On retourne le path dont le test peut avoir besoin
@@ -46,6 +54,8 @@ def remove_all_reports
   Dir["#{CRONJOB_FOLDER}/tmp/report-*.txt"].each{|fp|File.delete(fp)}
 end #/ remove_all_reports
 
+# IN    {String}  Un temps sous la forme "AAAA/MM/DD/HH/MM"
+# OUT   {Time}    Le temps correspondant à l'entrée
 def realtime(time)
   Time.new(*(time.split('/').collect { |i| i.to_i })) if time.is_a?(String)
 end #/ real_time

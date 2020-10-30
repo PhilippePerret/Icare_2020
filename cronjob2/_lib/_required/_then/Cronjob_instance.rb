@@ -14,16 +14,19 @@ end #/ initialize
 
 # DO    Joue le job
 def run
-  Report << "RUN JOB [#{method_name}]"
-  if self.send(method_name)
-    finish
-  end
+  Report << "JOB [#{method_name}] (#{name})"
+  return if not runnable?
+  Report.prefix = " " * 4
+  Report << "RUN IT!"
+  finish if self.send(method_name)
 rescue Exception => e
   Logger << "# ERREUR [#{method_name}] : #{e.message}\n#{e.backtrace.join("\n")}"
+ensure
+  Report.prefix = ''
 end #/ run
 
 def finish
-  Logger << "     FIN JOB [#{method_name}] (#{name})"
+  Report << "END [#{method_name}]"
 end #/ finish
 
 # OUT   True s'il faut jouer le job.

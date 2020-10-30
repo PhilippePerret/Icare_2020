@@ -34,29 +34,22 @@ describe 'CRONJOB' do
     TMails.count(subject_contains:"CONCOURS")
   end #/ nombre_mails_info_concours
 
-  context 'À 3 heure le samedi' do
-    it 'le mail d’information est envoyé à tous les concurrents qui le désirent' do
+  context 'À la bonne heure (11 heures), plus ou moins loin de l’échéance' do
 
-    end
-  end #/Context 3 heures le samedi
-
-  context 'À la bonne heure, proche de l’échéance' do
-
-
-    it 'à un mois, les messages contiennent les bons textes', only:true do
-      res = run_cronjob(noop:false, time:"2021/1/30/3/12")
+    it 'à un mois, les messages contiennent les bons textes' do
+      res = run_cronjob(noop:false, time:"2021/1/30/11/12")
       expect(nombre_mails_info_concours).to be > 4
       # TODO Vérifier l'exactitude du message d'échéance
     end
 
     it 'à quinze jours, les messages contiennent les bons textes' do
-      res = run_cronjob(noop:false, time:"2021/2/13/3/20")
+      res = run_cronjob(noop:false, time:"2021/2/13/11/20")
       expect(nombre_mails_info_concours).to be > 4
       # TODO Vérifier l'exactitude du message d'échéance
     end
 
     it 'à deux jours, les messages contiennent les bons textes' do
-      res = run_cronjob(noop:false, time:"2021/2/27/3/20")
+      res = run_cronjob(noop:false, time:"2021/2/27/11/20")
       expect(nombre_mails_info_concours).to be > 4
       # TODO Vérifier l'exactitude du message d'échéance
     end
@@ -73,6 +66,8 @@ describe 'CRONJOB' do
       # *** Opération ***
       res = run_cronjob(noop:false, time:"2020/10/24/0/20")
       expect(nombre_mails_info_concours).to eq(0)
+      res = run_cronjob(noop:false, time:"2020/10/24/1/4")
+      expect(nombre_mails_info_concours).to eq(0)
       res = run_cronjob(noop:false, time:"2020/10/24/2/20")
       expect(nombre_mails_info_concours).to eq(0)
       res = run_cronjob(noop:false, time:"2020/10/24/3/20")
@@ -85,9 +80,11 @@ describe 'CRONJOB' do
     end
   end #/context : une autre heure le samedi
 
-  context 'À 3 heures les autres jours' do
+  context 'À 11 heures les autres jours' do
     it 'Aucun mail n’est envoyé' do
-
+      expect(TMails.count).to eq(0)
+      res = run_cronjob(noop:false, time:"2020/10/22/11/4")
+      expect(nombre_mails_info_concours).to eq(0)
     end
   end# /context: à 3 heures les autres jours
 

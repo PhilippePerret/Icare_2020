@@ -22,7 +22,7 @@ class << self
     puts "CRON-CURRENT-TIME: #{formated_current_time}"
     puts "CRON-NOOP: #{noop?.inspect} #{'(SIMULATION)' if noop?}"
     puts "CRON-START: #{Time.now}"
-    Report << "--- START OPÉRATIONS #{formated_current_time} ---"
+    Report << "***** START OPÉRATIONS #{formated_current_time} *****"
   end #/ init
 
   def run_jobs

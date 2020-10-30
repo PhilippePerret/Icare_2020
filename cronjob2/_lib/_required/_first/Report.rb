@@ -2,8 +2,9 @@
 # frozen_string_literal: true
 class Report
 class << self
+  attr_accessor :prefix # à ajouter avant le message
   def << msg
-    reffile.puts("#{Time.now} --- #{msg}")
+    reffile.puts("#{Time.now} --- #{prefix}#{msg}")
     Logger << msg
   end
   def reffile

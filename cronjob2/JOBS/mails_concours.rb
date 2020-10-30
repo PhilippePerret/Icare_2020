@@ -8,7 +8,7 @@ class Cronjob
   def data
     @data ||= {
       name: "Traitement du Concours de Scénario",
-      frequency: {hour:3, day:6} # seulement le samedi
+      frequency: {hour:11, day:6} # seulement le samedi
     }
   end #/ data
 

@@ -173,7 +173,7 @@ describe 'Le job envoi_actualites' do
         end #/before :each
 
 
-        it 'il envoie les mails d’activité de la semaine et de la veille et produit le lien pour ne plus les recevoir', only:true do
+        it 'il envoie les mails d’activité de la semaine et de la veille et produit le lien pour ne plus les recevoir' do
 
           pitch("Le cronjob produit bien des mails d'activités quotidiennes et hebdomadaires conformes aux attentes, les envoie aux bonnes personnes en ajoutant un lien permettant de ne plus les recevoir sans avoir à s'identifier.")
 
