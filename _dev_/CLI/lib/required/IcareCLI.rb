@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class IcareCLI
   -----------
@@ -53,11 +54,13 @@ class << self
       end
     end
     @delim = '-'*40
-    puts "\n#{delim}".bleu
-    puts "Command: #{command.inspect}".bleu.freeze
-    puts "Params : #{params.inspect}".bleu.freeze
-    puts "Options: #{options.inspect}".bleu.freeze
-    puts delim.bleu
+    if verbose?
+      puts "\n#{delim}".bleu
+      puts "Command: #{command.inspect}".bleu
+      puts "Params : #{params.inspect}".bleu
+      puts "Options: #{options.inspect}".bleu
+      puts delim.bleu
+    end
   end #/ analyse_command
 
 
