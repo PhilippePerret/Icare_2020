@@ -9,7 +9,7 @@ class << self
   end
 
   def log_path
-    @log_path ||= './www/cronjob2/tmp/main.log'
+    @log_path ||= './www/tmp/logs/cronjob.log'
   end #/ path
 
 end #/<< self

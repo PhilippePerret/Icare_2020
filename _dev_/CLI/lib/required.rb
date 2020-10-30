@@ -7,7 +7,7 @@ require 'tty-prompt'
 require './_lib/required/__first/extensions/Formate_helpers'
 
 
-Q = TTY::Prompt.new
+Q = TTY::Prompt.new(symbols: {cross: "---"}) # cross : essai pour utiliser disabled dans les listes pour des sous-titres
 
 LIB_FOLDER = File.join(APP_FOLDER, '_lib') # NOTE ATTENTION : celui du site
 DEV_FOLDER = File.join(APP_FOLDER, '_dev_')

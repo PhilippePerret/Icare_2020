@@ -161,7 +161,7 @@ class << self
   # distant.
   def empty_distant_folder_deployment
     ssh_request = <<-SSH
-    ssh #{SERVEUR_SSH} bash << BASH
+    ssh #{SSH_ICARE_SERVER} bash << BASH
 rm -rf "deploiement/db"
 mkdir -p "deploiement/db"
 BASH
@@ -383,7 +383,7 @@ end #/TableGetter
 # dans la base %{base} et en faire un fichier .sql dans le dossier distant
 # ./deploiement/db/
 GET_TABLE_REQUEST = <<-SQL
-ssh #{SERVEUR_SSH} bash << BASH
+ssh #{SSH_ICARE_SERVER} bash << BASH
 mysqldump -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} %{base} %{old_tbname} > "%{distant_path}"
 BASH
 SQL
@@ -391,24 +391,24 @@ SQL
 # Commande qui va rapatrier le fichier .sql de la table en local
 # NOte : option `-p` pour conserver les dates de modifications et permissions,
 # etc.
-SCP_DOWNLOAD_COMMAND  = "scp -pv #{SERVEUR_SSH}:%{distant_path} \"%{local_path}\""
-SCP_UPLOAD_COMMAND    = "scp -pv \"%{local_good_path}\" #{SERVEUR_SSH}:%{distant_path}"
+SCP_DOWNLOAD_COMMAND  = "scp -pv #{SSH_ICARE_SERVER}:%{distant_path} \"%{local_path}\""
+SCP_UPLOAD_COMMAND    = "scp -pv \"%{local_good_path}\" #{SSH_ICARE_SERVER}:%{distant_path}"
 
 # Requête pour vérifier l'existence d'un fichier distant
 REQUEST_CHECK_EXISTENCE_DISTANT = <<-SSH
-ssh #{SERVEUR_SSH} ruby <<RBCODE
+ssh #{SSH_ICARE_SERVER} ruby <<RBCODE
 STDOUT.write File.exists?('%{path}').inspect
 RBCODE
 SSH
 
 REQUEST_ERASE_DISTANT_FILE = <<-SSH
-ssh #{SERVEUR_SSH} bash << BASH
+ssh #{SSH_ICARE_SERVER} bash << BASH
 rm -f "%{path}"
 BASH
 SSH
 
 SSH_COMMAND_LOAD_TABLE = <<SSH
-ssh #{SERVEUR_SSH} bash <<BASH
+ssh #{SSH_ICARE_SERVER} bash <<BASH
 mysql -h mysql-icare.alwaysdata.net -u icare -p#{DATA_MYSQL[:distant][:password]} icare_db < %{distant_path}
 BASH
 SSH

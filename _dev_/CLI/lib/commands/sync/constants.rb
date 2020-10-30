@@ -3,8 +3,6 @@
 
 VERBOSE = IcareCLI.options[:verbose]
 
-SERVEUR_SSH = "icare@ssh-icare.alwaysdata.net"
-
 # Path au fichier qui contient les opérations à faire relevées au cours
 # de la dernière analyse de synchro
 OPERATIONS_PATH = File.join(THIS_FOLDER,'last_operations.msh')
@@ -13,7 +11,7 @@ IGNORE_FILE_PATH = File.join(THIS_FOLDER, '.syncignore')
 require_relative './classes/usual_methods'
 
 SSH_REQUEST_FOLDER = <<-SSH
-ssh #{SERVEUR_SSH} ruby << RUBY
+ssh #{SSH_ICARE_SERVER} ruby << RUBY
 require 'json'
 folder = '%{folder}'
 alist = []
@@ -28,7 +26,7 @@ RUBY
 SSH
 
 SSH_REQUEST_FILE = <<-SSH
-ssh #{SERVEUR_SSH} ruby << RUBY
+ssh #{SSH_ICARE_SERVER} ruby << RUBY
 require 'json'
 fpath = '%{dis_path}'
 hdata = {path: fpath, mtime: nil}
@@ -40,7 +38,7 @@ RUBY
 SSH
 
 SSH_REQUEST_DELETE_FILES = <<-SSH
-ssh #{SERVEUR_SSH} ruby << RUBY
+ssh #{SSH_ICARE_SERVER} ruby << RUBY
 require 'json'
 resultat = []
 %{files}.each do |fpath|
