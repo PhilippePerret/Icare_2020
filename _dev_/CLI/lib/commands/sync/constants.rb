@@ -38,3 +38,15 @@ end
 puts hdata.to_json
 RUBY
 SSH
+
+SSH_REQUEST_DELETE_FILES = <<-SSH
+ssh #{SERVEUR_SSH} ruby << RUBY
+require 'json'
+resultat = []
+%{files}.each do |fpath|
+  File.delete(fpath)
+  resultat << "\#{fpath} détruit" unless File.exists?(fpath)
+end
+puts resultat.to_json
+RUBY
+SSH

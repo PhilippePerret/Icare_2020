@@ -39,9 +39,30 @@ def synchronize(operations)
   operations[:updates].each do |sfile|
     sfile.synchronize
   end
+  files_to_delete = []
   operations[:deletes].each do |df|
-    puts "Pour le moment, je ne détruis pas #{df[:path].inspect}"
+    k = Q.keypress("\n\nDois-je détruire le fichier distant “#{df['path'].jaune}” ? (return: Oui, space: Non, tab: Tout abandonner)", keys: [:return, :space, :tab])
+    case k
+    when "\t" then return
+    when "\r" then files_to_delete << df['path']
+    when " "  then next
+    end
   end
+
+  # S'il y a des fichiers à détruire, on les détruit.
+  unless files_to_delete.empty?
+    cmd = SSH_REQUEST_DELETE_FILES % {files: files_to_delete.inspect}
+    # puts "Commande destruction : #{cmd}"
+    res = `#{cmd} 2>&1`
+    res = JSON.parse(res)
+    if files_to_delete.count == res.count
+      puts "Tous les fichiers choisis ont été correctement détruits.".vert
+    else
+      puts "Apparemment, tous les fichiers n'ont pas pu être détruit… (#{res.count} détruit(s) contre #{files_to_delete.count} attendu(s)).".rouge
+      puts "Seuls les fichiers suivants ont pu être détruits :\n- #{res.join("\n- ")}".rouge
+    end
+  end
+
 end #/ synchronise
 
 end # / << self

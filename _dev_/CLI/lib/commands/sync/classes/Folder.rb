@@ -54,7 +54,7 @@ def check_folder(loc_path)
     end
   end
   unless distant_files_not_locaux.empty?
-    puts "\n\n==== distant_files_not_locaux (restants) : #{distant_files_not_locaux.inspect}"
+    # puts "\n\n==== distant_files_not_locaux (restants) : #{distant_files_not_locaux.inspect}"
     OPERATIONS[:deletes] += distant_files_not_locaux.values
   end
 
