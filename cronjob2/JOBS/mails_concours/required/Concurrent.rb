@@ -37,7 +37,7 @@ class << self
   end #/ send_mail_info_hebdomadaire
 
   def info_hebdo_mail_path
-    @info_hebdo_mail_path ||= File.join(CRON_FOLDER,'JOBS','mails_concours','mails','mail_infos_hebdomadaire.erb')
+    @info_hebdo_mail_path ||= File.join(APPFOLDER,'_lib','_pages_','concours','xmodules','mails','step1','mail_infos_hebdomadaire.erb')
   end #/ info_hebdo_mail_path
 end # /<< self
 # ---------------------------------------------------------------------
