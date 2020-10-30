@@ -82,10 +82,21 @@ def out_of_date?
   end) == :true
 end #/ out_of_date?
 
-# Retourne TRUE si le fichier doit être ignoré
+# OUT   TRUE si le fichier doit être ignoré
+#
+# Note : maintenant, on arrive ici avec tous les fichiers, dont il faut
+# un traitement différent du traitement par dossier.
 def ignored?
   is_ignored = false
-  unless IGNORES[:paths].empty?
+  unless IGNORES[:folders].empty?
+    IGNORES[:folders].each do |pfolder|
+      if rel_path.start_with?(pfolder)
+        is_ignored = true
+        break
+      end
+    end
+  end
+  unless is_ignored || IGNORES[:paths].empty?
     is_ignored = true if IGNORES[:paths].include?(rel_path)
   end
   unless is_ignored || IGNORES[:regs].empty?

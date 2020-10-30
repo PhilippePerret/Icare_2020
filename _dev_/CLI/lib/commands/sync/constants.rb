@@ -17,7 +17,8 @@ ssh #{SERVEUR_SSH} ruby << RUBY
 require 'json'
 folder = '%{folder}'
 alist = []
-Dir["\#{folder}/*"].each do |path|
+# Dir["\#{folder}/*"].each do |path|
+Dir["\#{folder}/**/*"].each do |path|
   next if File.directory?(path)
   hdata = {path:path, mtime: File.stat(path).mtime.to_i}
   alist << hdata

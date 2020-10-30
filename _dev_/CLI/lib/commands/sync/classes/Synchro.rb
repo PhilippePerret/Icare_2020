@@ -40,7 +40,7 @@ def synchronize(operations)
     sfile.synchronize
   end
   operations[:deletes].each do |df|
-    puts "Pour le moment, je ne détruis pas #{df.inspect}"
+    puts "Pour le moment, je ne détruis pas #{df[:path].inspect}"
   end
 end #/ synchronise
 

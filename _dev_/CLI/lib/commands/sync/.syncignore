@@ -8,8 +8,9 @@ _dev_/
 # Ignore tous les tests
 spec/
 
-# Ignore le dossier temporaire
+# Ignore les dossiers temporaires
 tmp/
+cronjob2/tmp/
 
 # Ignorer les fichiers de base
 .htaccess

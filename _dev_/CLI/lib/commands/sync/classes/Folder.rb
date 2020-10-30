@@ -31,11 +31,13 @@ def check_folder(loc_path)
   # puts "\n\ntable_distant_files: #{table_distant_files.inspect}"
 
   # Traitement des fichiers locaux
-  Dir["#{loc_path}/*"].each do |fpath|
+  # Dir["#{loc_path}/*"].each do |fpath|
+  Dir["#{loc_path}/**/*"].each do |fpath|
     if File.directory?(fpath)
-      check_folder(fpath)
+      # check_folder(fpath)
     else
       sfile = SFile.new(fpath)
+      next if sfile.ignored?
       ALLFILES.merge!(sfile.rel_path => sfile)
     end
   end

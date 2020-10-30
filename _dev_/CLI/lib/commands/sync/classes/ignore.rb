@@ -1,11 +1,17 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-IGNORES = {paths:[], regs:[]}
+IGNORES = {folders:[], paths:[], regs:[]}
 
 class IcareCLI
 class << self
 
   # Pour charger les données du fichier .syncignore
+  # DO    Produit deux listes qui vont contenir les données des éléments
+  #       à ignorer :
+  #       IGNORES[:paths]   Liste des paths explicites non régulières
+  #       IGNORES[:folders] Liste des dossiers à éviter
+  #       IGNORES[:regs]    Liste des expressions régulières
+  #
   def load_sync_ignore
     if File.exists?(IGNORE_FILE_PATH)
       code = File.read(IGNORE_FILE_PATH).encode('utf-8')
@@ -19,12 +25,12 @@ class << self
           line = line.gsub(/__INTERRO__/,'?')
           line = line.gsub(/([*?])/, '.\1')
           IGNORES[:regs] << /#{line}/
-          next
         elsif line.end_with?('/') # => tout un dossier à ignorer
-          line = line[0...-1]
+          IGNORES[:folders] << line
+        else
+          line = line[2..-1] if line.start_with?('./')
+          IGNORES[:paths] << line
         end
-        line = line[2..-1] if line.start_with?('./')
-        IGNORES[:paths] << line
       end
       # puts "IGNORES: #{IGNORES.inspect}"
     end
