@@ -10,7 +10,7 @@ def check_if_synchronization_required
   end
   nombre_deletion_required = OPERATIONS[:deletes].count
   if nombre_deletion_required > 0
-    puts "\n\nNombre de destructions requises : #{nombre_deletion_required}".rouge
+    puts "Nombre de destructions requises : #{nombre_deletion_required}".rouge
   end
   OPERATIONS.merge!(synchro_required: (nombre_update_required+nombre_deletion_required > 0))
 end #/ check_if_synchronization_required
