@@ -1,13 +1,39 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class TConcurrent
+  include RSpec::Matchers
+
   include Capybara::DSL
+# ---------------------------------------------------------------------
+#
+#   MÉTHODES PUBLIQUES DE TEST
+#
+# ---------------------------------------------------------------------
+
+# Pour savoir si le concurrent a reçu un mail
+def has_mail?(data)
+  expect(TMails).to have_mail(data.merge(destinataire: mail))
+end #/ has_mail?
+
+# Méthode de feature pour identifier le concurrent
+# Il rejoint le formulaire d'identification, le remplit et le soumet
+def identify
+  visit("http://localhost/AlwaysData/Icare_2020/concours/identification")
+  expect(page).to have_css("form#concours-login-form")
+  within("form#concours-login-form") do
+    fill_in("p_mail", with: mail)
+    fill_in("p_concurrent_id", with:id)
+    click_on(UI_TEXTS[:concours_bouton_sidentifier])
+  end
+end #/ identify
+
+def set_specs(new_specs)
+  request = "UPDATE concurrents_per_concours SET specs = ? WHERE concurrent_id = ? AND annee = ?"
+  db_exec(request, [new_specs, id, ANNEE_CONCOURS_COURANTE])
+end #/ set_specs
+
 
 class << self
-
-  def reset
-    @allconcurrents = nil
-  end #/ reset
 
   # Retourne une instance TConcurrent choisie au hasard
   #
@@ -19,19 +45,43 @@ class << self
   #       conditions optionnellement définies par +options+.
   #       Mais c'est forcément un candidat courant
   #
-  def get_random(options = nil)
+  def get_random(params)
+    proceed_get_random(params)
+  end #/ get_random
+
+
+  # Pour inscrire un icarien au concours
+  def inscrire_icarien(u, options)
+    proceed_inscrire_icarien(u, options)
+  end #/ self.inscrire_icarien
+
+end #/ << self
+# ---------------------------------------------------------------------
+#
+#   MÉTHODES FONCTIONNELLES
+#
+# ---------------------------------------------------------------------
+
+class << self
+
+  def reset
+    @allconcurrents = nil
+  end #/ reset
+
+  def proceed_get_random(options = nil)
     candidat =  if options[:femme]
                   get_une_femme
                 else
                   all_current[rand(all.count)]
                 end
     # Si on veut un candidat sans synopsis
-    if options[:without_synopsis] && File.exists?(candidat.folder)
+    if options[:without_synopsis]
       # On doit détruire son dossier
       FileUtils.rm_rf(candidat.folder)
       # On doit régler ses options (specs à "00000000")
       candidat.set_specs("0"*8)
     end
+    # puts "candidat : #{candidat.inspect}"
     return candidat
   end #/ get_a_concurrent
 
@@ -62,7 +112,7 @@ class << self
   #       +options+   {Hash} d'options, donc :
   #         :session_courante   Si true, on l'inscrit à la session courante
   #                             Sinon, non.
-  def inscrire_icarien(u, options)
+  def proceed_inscrire_icarien(u, options)
     data_cc = {
       patronyme: u.patronyme||u.pseudo,
       mail: u.mail,
@@ -117,22 +167,6 @@ end #/ reset
 def dispatch(d)
   d.each{|k,v|instance_variable_set("@#{k}",v)}
 end #/ dispatch
-
-# Méthode de feature pour identifier le concurrent
-# Il rejoint le formulaire d'identification, le remplit et le soumet
-def identify
-  visit("http://localhost/AlwaysData/Icare_2020/concours/identification")
-  within("form#concours-login-form") do
-    fill_in("p_mail", with: mail)
-    fill_in("p_concurrent_id", with:id)
-    click_on(UI_TEXTS[:concours_bouton_sidentifier])
-  end
-end #/ identify
-
-def set_specs(new_specs)
-  request = "UPDATE concurrents_per_concours SET specs = ? WHERE concurrent_id = ? AND annee = ?"
-  db_exec(request, [new_specs, id, ANNEE_CONCOURS_COURANTE])
-end #/ set_specs
 
 def folder
   @folder ||= File.join(CONCOURS_DATA_FOLDER, self.id)

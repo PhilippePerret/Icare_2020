@@ -11,6 +11,7 @@ class HTML
     if file.consigne_file(param(:p_fichier_candidature))
       informe_concurrent_consignation_fichier(file)
       informe_admin_consignation_fichier(file)
+      annonce_depot_fichier
       message(MESSAGES[:merci_fichier_et_titre] % [concurrent.pseudo])
     end
   end #/ consigne_fichier_candidature
@@ -40,6 +41,10 @@ class HTML
   rescue Exception => e
     log(e)
   end #/ informe_concurrent_consignation_fichier
+
+  def annonce_depot_fichier
+    Actualite.add(type:'CONCOURSFILE', message:"<strong>#{concurrent.pseudo}</strong> envoie son fichier pour le <a href=\"concours/accueil\">Concours de Synopsis</a>. Bonne chance à #{concurrent.fem(:elle)} !")
+  end #/ annonce_depot_fichier
 end #/HTML
 
 class Concours

@@ -105,7 +105,7 @@
 # proposer de le faire avec un formulaire
 #
 # ---------------------------------------------------------------------
-if Concours.current.started?
+if Concours.current.step == 1
   # Le concours est en route
   if concurrent.current? && not(concurrent.dossier_transmis?)
     form = Form.new(id: "concours-dossier-form", route:route.to_s, class:"nomargin noborder nobackground", file: true, value_size: "600px")
@@ -117,7 +117,6 @@ if Concours.current.started?
     }
     form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
   end
-end # Si le concours est en route
 %>
 <fieldset id="concours-envoi-dossier">
   <legend>Fichier de candidature</legend>
@@ -136,7 +135,8 @@ end # Si le concours est en route
   <% end %>
 </fieldset>
 
-
+<% end # Si le concours est en phase 1
+%>
 <%
 # ---------------------------------------------------------------------
 #

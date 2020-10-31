@@ -51,5 +51,12 @@ class << self
     end
   end #/ peuple
 
+  # Pour changer la phase courante du concours
+  def set_step(phase, annee = nil)
+    db_exec(REQUEST_CHANGE_STEP, [phase, annee || ANNEE_CONCOURS_COURANTE])
+  end #/ set_step
+
+
 end # /<< self
+REQUEST_CHANGE_STEP = "UPDATE concours SET step = ? WHERE annee = ?"
 end #/TConcours

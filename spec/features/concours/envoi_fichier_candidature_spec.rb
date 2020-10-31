@@ -27,13 +27,22 @@ feature "Dépôt du fichier de candidature" do
     require './_lib/_pages_/concours/xrequired/constants'
     require_support('concours')
     degel('concours')
+    TMails.remove_all
+    require './_lib/data/secret/phil'
+    phil.instance_variable_set("@mail", 'concours@atelier-icare.net')
+  end
+
+  after(:all) do
+    phil.instance_variable_set("@mail", PHIL_MAIL)
   end
 
   context 'Quand le concours est en route (step 1)' do
 
     context 'Un visiteur quelconque' do
       scenario 'ne peut pas déposer de fichier de candidature' do
-        implementer(__FILE__,__LINE__)
+        goto("concours/espace_concurrent")
+        expect(page).not_to have_titre("Espace personnel")
+        expect(page).to have_titre("Identification")
       end
     end #/context un visiteur quelconque
 
@@ -41,9 +50,11 @@ feature "Dépôt du fichier de candidature" do
 
 
     context 'Un concurrent inscrit' do
-      scenario 'peut déposer son fichier de candidature', only:true do
+      scenario 'peut déposer son fichier de candidature' do
         # *** Préparation ***
+        start_time = Time.now.to_i
         concurrent = TConcurrent.get_random(without_synopsis: true)
+        concurrent.reset
         expect(concurrent.specs[0]).not_to eq "1"
         # *** Test ***
         syno_path = File.expand_path(File.join('.','spec','support','asset','documents','synopsis_concours.pdf'))
@@ -56,28 +67,44 @@ feature "Dépôt du fichier de candidature" do
         expect(File).to be_exists(path)
         expect(File.stat(syno_path).size).to eq(File.stat(path).size)
         # Un mail de confirmation a été envoyé au concurrent
-        # TODO
+        expect(concurrent).to have_mail(subject:"[CONCOURS] Réception de votre fichier de candidature", after: start_time)
         # Les specs de son enregistrement pour le concours ont été modifiée
         concurrent.reset
         expect(concurrent.specs[0..1]).to eq "10"
         # J'ai reçu un mail m'informant de l'envoi du synopsis
-        # TODO
+        expect(phil).to have_mail(subject:"[CONCOURS] Dépôt d'un fichier de candidature", after: start_time)
         # Une actualité annonce l'envoi du synopsis
-        # TODO
+        expect(TActualites).to be_exists(after:start_time, type:"CONCOURSFILE"),
+          "Une actualité devrait annoncer l'envoi du fichier"
       end
     end #/ Context Un concurrent inscrit
   end #/ Context concours en route (step 1)
 
 
-  context 'Quand le concours est en phase 2' do
-    scenario 'Personne ne peut déposer de fichier de candidature' do
-      implementer(__FILE__,__LINE__)
+  context 'Quand le concours est en phase 2 (préselections en cours)' do
+    before(:all) do
+      TConcours.set_step(2, ANNEE_CONCOURS_COURANTE)
+    end
+    scenario 'Un concurrent ne peut plus déposer de fichier de candidature'do
+      concurrent = TConcurrent.get_random(without_synopsis: true)
+      concurrent.identify
+      goto("concours/espace_concurrent")
+      expect(page).to have_titre("Espace personnel")
+      expect(page).to have_no_erreur
+      expect(page).not_to have_css("form#concours-dossier-form")
     end
   end
 
-  context 'Quand le concours est en phase autre que 1' do
-    scenario 'Personne ne peut déposer de fichier de candidature' do
-      implementer(__FILE__,__LINE__)
+  context 'Quand le concours est en phase 0 (non lancé)'  do
+    before(:all) do
+      TConcours.set_step(0, ANNEE_CONCOURS_COURANTE)
+    end
+    scenario 'Un concurrent peut rejoindre l’espace personnel, mais pas déposer de fichier de candidature' do
+      concurrent = TConcurrent.get_random(without_synopsis: true)
+      concurrent.identify
+      goto("concours/espace_concurrent")
+      expect(page).to have_titre("Espace personnel")
+      expect(page).not_to have_css("form#concours-dossier-form")
     end
   end
 

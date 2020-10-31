@@ -54,7 +54,9 @@ class << self
     end
     if params.key?(:after)
       params[:after] = Time.at(params[:after].to_i) unless params[:after].is_a?(Time)
-      pr = pr >> proc { |tactu| tactu if tactu && tactu.time > params[:after]}
+      pr = pr >> proc do |tactu|
+        tactu if tactu && tactu.time > params[:after]
+      end
     end
     if params.key?(:before)
       params[:before] = Time.at(params[:before].to_i) unless params[:before].is_a?(Time)

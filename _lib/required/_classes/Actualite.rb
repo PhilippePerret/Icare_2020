@@ -64,7 +64,7 @@ class << self
     if type.is_a?(Hash)
       user_id = type[:user]||type[:user_id]
       message = type[:message]
-      date    = type[:date]
+      date    = type[:date] || Time.now
       type    = type[:type]
     else
       user_id = user_id.id if user_id.is_a?(User)
