@@ -29,6 +29,10 @@ def identify
   end
 end #/ identify
 
+def logout
+  click_on("Se déconnecter")
+end #/ logout
+
 def set_specs(new_specs)
   request = "UPDATE concurrents_per_concours SET specs = ? WHERE concurrent_id = ? AND annee = ?"
   db_exec(request, [new_specs, id, ANNEE_CONCOURS_COURANTE])
@@ -46,6 +50,7 @@ class << self
 #                 :with_synopsis  Si true, un concurrent avec déjà un fichier
 #                       pour la session courante.
 #                 :non_inscrit    Si true, il faut renvoyer un ancien concurrent
+#                 :current        Inverse de :non_inscrit
 # OUT   Un concurrent pris au hasard, qui peut remplir certaines
 #       conditions optionnellement définies par +options+.
 #       Mais c'est forcément un candidat courant
@@ -74,6 +79,8 @@ class << self
   end #/ reset
 
   def proceed_get_random(options = nil)
+    options ||= {}
+    options[:current] = !options[:non_inscrit] if options.key?(:non_inscrit)
     candidat =  if options[:with_synopsis] # tiendra compte de options[:femme]
                   get_concurrent_with_synopsis(options)
                 elsif options[:femme]
@@ -84,7 +91,7 @@ class << self
 
     # puts "Candidat: #{candidat.inspect}"
     # Si on veut un ancien concurrent
-    if options[:non_inscrit]
+    if options[:current] === false
       request = "DELETE FROM concurrents_per_concours WHERE annee = ? AND concurrent_id = ?"
       db_exec(request, [ANNEE_CONCOURS_COURANTE, candidat.id])
     end

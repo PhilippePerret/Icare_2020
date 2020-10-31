@@ -88,11 +88,10 @@
 
   <div class="row">
     <% if concurrent.warned?  %>
-      <div>Vous recevez des informations sur le concours (échéances, inscrits, etc.).
+      <div>Vous recevez des informations sur le concours (échéances, inscrits, etc.).</div>
       <div class="small right"><a href="<%= route.to_s %>?op=nonwarn">Je ne veux plus recevoir ces informations</a>.</div>
-      </div>
     <% else %>
-    <div>Vous ne recevez pas les informations sur le concours.
+    <div>Vous ne recevez pas les informations sur le concours.</div>
     <div class="small right"><a href="<%= route.to_s %>?op=ouiwarn">Finalement, je voudrais bien recevoir ces informations (échéances, inscrits, etc.)</a>.</div>
     <% end %>
   </div>

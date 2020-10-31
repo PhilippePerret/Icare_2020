@@ -104,6 +104,8 @@ RSpec.configure do |config|
     vide_db
     File.open('./TESTS_ON','wb'){|f|f.write(Time.now.to_i.to_s)}
 
+    Capybara.page.driver.browser.manage.window.resize_to(1000,700)
+
   end
   config.after :suite do
     # À EXÉCUTER APRÈS LES TESTS
