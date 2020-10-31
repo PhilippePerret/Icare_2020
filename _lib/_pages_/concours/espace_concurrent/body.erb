@@ -101,42 +101,15 @@
 <%
 # ---------------------------------------------------------------------
 #
-# Si le concurrent n'a pas encore envoyé son dossier, il faut lui
-# proposer de le faire avec un formulaire
+# FORMULAIRE DE DÉPÔT DU FICHIER DE CANDIDATURE (if any)
 #
 # ---------------------------------------------------------------------
-if Concours.current.step == 1
-  # Le concours est en route
-  if concurrent.current? && not(concurrent.dossier_transmis?)
-    form = Form.new(id: "concours-dossier-form", route:route.to_s, class:"nomargin noborder nobackground", file: true, value_size: "600px")
-    form.rows = {
-      "Titre du projet" => {type:"text", name:"p_titre"},
-      "Auteur·e·(s)"    => {type:"text", name:"p_auteurs", placeholder:"Patronymes séparés par des virgules"},
-      "Votre fichier"   => {type:"file", name:"p_fichier_candidature"},
-      "<lien dossier/>" => {type:"raw", content:"<div class=\"italic small\">Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
-    }
-    form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
-  end
 %>
 <fieldset id="concours-envoi-dossier">
   <legend>Fichier de candidature</legend>
-  <% if Concours.current.started? %>
-    <% if concurrent.current? && concurrent.dossier_transmis? %>
-      <p>Votre fichier de candidature a bien été transmis.</p>
-    <% elsif not(concurrent.current?) %>
-      <div>Vous devez <%= CONCOURS_SIGNUP.with("vous inscrire à la session #{Concours.current.annee}") %> du concours pour transmettre votre fichier.</div>
-    <% else %>
-      <%= form.out %>
-    <% end %>
-  <% else %>
-    <div>
-      Votre fichier de candidature pourra être transmis lorsque le prochain concours sera lancé et que vous y serez inscrit.
-    </div>
-  <% end %>
+  <%= section_fichier_candidature %>
 </fieldset>
 
-<% end # Si le concours est en phase 1
-%>
 <%
 # ---------------------------------------------------------------------
 #

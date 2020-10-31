@@ -144,7 +144,7 @@ end #/ options
 
 def data_current_concours
   @data_current_concours ||= begin
-    db_exec(REQUEST_DATA_CONCURRENT_CURRENT_CONCOURS, [id, Concours.annee_courante]).first
+    db_exec(REQUEST_DATA_CONCURRENT_CURRENT_CONCOURS, [id, Concours.current.annee]).first
   end
 end #/ data_current_concours
 
