@@ -37,7 +37,6 @@ class << self
   #
   def finish
     puts "CRON-FIN: #{Time.now}"
-    Report.send
   end #/ finish
 
   def bind; binding() end
