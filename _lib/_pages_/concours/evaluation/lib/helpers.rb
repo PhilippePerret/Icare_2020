@@ -23,7 +23,7 @@ class HTML
       dtool.merge!(class:"discret bold") if key == ks && sens == ss
       Tag.link(dtool)
     end
-    Tag.div(text:"Classement : #{links.join(' | ')}", class:"mb1 small")
+    Tag.div(text:"Classement : #{links.join(' | ')} |", class:"mb1 small")
   end #/ sorting_tools
 
 

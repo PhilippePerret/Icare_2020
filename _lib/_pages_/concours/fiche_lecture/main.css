@@ -1,0 +1,18 @@
+body, * {
+  color:black!important;
+}
+@media print {
+  section#header {display:none;}
+}
+section#header,
+section#footer,
+h2.page-title,
+.noprint
+{
+  display:none;
+}
+
+
+.header.hidden,
+.detail.hidden
+{display:block!important;}

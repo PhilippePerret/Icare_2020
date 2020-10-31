@@ -57,9 +57,9 @@ private
 
   def calcul_note
     n = self.class.calcul_note_from_enotes(enotes)
-    log("n pour #{key} : #{n.inspect}")
+    # log("n pour #{key} : #{n.inspect}")
     @is_undefined = (n == '---') ? :true : :false
-    log("undefined? (#{key}) est #{undefined?.inspect}")
+    # log("undefined? (#{key}) est #{undefined?.inspect}")
     n = 0 if n == '---'
     @note = n
   end #/ calcul_note

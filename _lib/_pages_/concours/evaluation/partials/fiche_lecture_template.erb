@@ -3,7 +3,9 @@
     <div class="grand-titre"><%= ecusson %>&nbsp;Concours de Synopsis de L'atelier Icare&nbsp;<%= ecusson %></div>
     <div class="div-annee">Édition <span class="annee"><%= annee_edition %></span></div>
   </div>
-
+  <div class="right">
+    <%= Tag.link(class:"noprint", text:'Imprimer', route:"concours/fiche_lecture?cid=#{synopsis.concurrent.id}&an=#{annee_edition}") %>
+  </div>
   <div class="infos-projet">
     <div class="projet-titre">
       <div class="titre"><%= synopsis.titre %></div>

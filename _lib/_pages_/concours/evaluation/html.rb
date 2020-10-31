@@ -51,9 +51,13 @@ class HTML
       if param(:op) == 'mark_conforme'
         require_xmodule('admin/mark_fichier_conforme')
         synopsis.cfile.confirme_validite
+      elsif param(:op) == 'exportfiches'
+        require_xmodule('evaluation/export_fiches')
+        message("Exportation des fiches…")
+        Synopsis.exporter_les_fiches
       end
-        require_xmodule('evaluation/module_calculs')
-        check_up_to_date
+      require_xmodule('evaluation/module_calculs')
+      check_up_to_date
     end
   end # /exec
 

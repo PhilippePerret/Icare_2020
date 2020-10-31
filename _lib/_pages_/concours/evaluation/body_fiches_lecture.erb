@@ -3,7 +3,11 @@
 
 # Boucle sur la liste des synopsis classés par note
 %>
-<%= sorting_tools(param(:ks), param(:ss)) %>
+
+<div class="left">
+  <%= Tag.link(text:"Exporter toutes les fiches", route:"#{route}?view=body_fiches_lecture&op=exportfiches", class:'fright') %>
+  <%= sorting_tools(param(:ks), param(:ss)) %>
+</div>
 <div id="fiches-lecture">
   <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss)) %>
   <% if fiches_synopsis.count > 0 %>
