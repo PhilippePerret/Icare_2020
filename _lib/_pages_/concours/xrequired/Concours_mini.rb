@@ -69,6 +69,9 @@ def h_echeance
   @h_echeance ||= formate_date(Time.new(self.class.annee_courante, 3, 1), {duree: true})
 end #/ h_echeance
 
+# Phase de dépôt des fichiers de candidature
+def phase1?; step == 1 end
+
 # Retourne TRUE is le concours est démarré
 def started?
   step > 0

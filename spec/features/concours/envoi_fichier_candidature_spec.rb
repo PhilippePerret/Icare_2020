@@ -36,6 +36,8 @@ feature "Dépôt du fichier de candidature" do
     phil.instance_variable_set("@mail", PHIL_MAIL)
   end
 
+  let(:concurrent) { @concurrent }
+
   context 'Quand le concours est en route (step 1)' do
 
     context 'Un visiteur quelconque' do
@@ -47,9 +49,36 @@ feature "Dépôt du fichier de candidature" do
     end #/context un visiteur quelconque
 
 
+    context 'Un ancien concurrent non inscrit' do
+      before(:all) do
+        @concurrent = TConcurrent.get_random(non_inscrit: true)
+      end
+      scenario 'trouve un message l’invitant à s’inscrire' do
+        concurrent.identify
+        expect(page).to have_titre("Inscription") # on est renvoyé là
+        goto("concours/espace_concurrent")
+        screenshot("ancien-concurent-espace-personnel")
+        expect(page).to have_css("fieldset#concours-envoi-dossier")
+        expect(page).not_to have_css("form#concours-dossier-form")
+        expect(page).to have_content("Vous devez vous inscrire à la session #{ANNEE_CONCOURS_COURANTE}")
+      end
+    end
+
+    context 'Un concurrent ayant déjà déposé son fichier' do
+      before(:all) do
+        @concurrent = TConcurrent.get_random(with_synopsis: true)
+      end
+      scenario 'trouve un message lui confirmant son dépôt' do
+        concurrent.identify
+        screenshot("concurrent-with-synopsis")
+        expect(page).to have_titre("Espace personnel")
+        expect(page).not_to have_css("form#concours-dossier-form")
+        expect(page).to have_content("Votre fichier de candidature a bien été transmis.")
+      end
+    end
 
 
-    context 'Un concurrent inscrit' do
+    context 'Un concurrent inscrit sans fichier déposé' do
       scenario 'peut déposer son fichier de candidature' do
         # *** Préparation ***
         start_time = Time.now.to_i

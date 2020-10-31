@@ -1,6 +1,8 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class TConcurrent
+  # extend RSpec::Matchers
+
   include RSpec::Matchers
 
   include Capybara::DSL
@@ -35,25 +37,28 @@ end #/ set_specs
 
 class << self
 
-  # Retourne une instance TConcurrent choisie au hasard
-  #
-  # IN    +options+ Table d'options:
-  #                 :femme    Si true on doit retourner une femme
-  #                 :without_synopsis   Si true, on doit retourner un
-  #                       concurrent sans synopsis.
-  # OUT   Un concurrent pris au hasard, qui peut remplir certaines
-  #       conditions optionnellement définies par +options+.
-  #       Mais c'est forcément un candidat courant
-  #
-  def get_random(params)
-    proceed_get_random(params)
-  end #/ get_random
+# Retourne une instance TConcurrent choisie au hasard
+#
+# IN    +options+ Table d'options:
+#                 :femme    Si true on doit retourner une femme
+#                 :without_synopsis   Si true, on doit retourner un
+#                       concurrent sans synopsis.
+#                 :with_synopsis  Si true, un concurrent avec déjà un fichier
+#                       pour la session courante.
+#                 :non_inscrit    Si true, il faut renvoyer un ancien concurrent
+# OUT   Un concurrent pris au hasard, qui peut remplir certaines
+#       conditions optionnellement définies par +options+.
+#       Mais c'est forcément un candidat courant
+#
+def get_random(params)
+  proceed_get_random(params)
+end #/ get_random
 
 
-  # Pour inscrire un icarien au concours
-  def inscrire_icarien(u, options)
-    proceed_inscrire_icarien(u, options)
-  end #/ self.inscrire_icarien
+# Pour inscrire un icarien au concours
+def inscrire_icarien(u, options)
+  proceed_inscrire_icarien(u, options)
+end #/ self.inscrire_icarien
 
 end #/ << self
 # ---------------------------------------------------------------------
@@ -69,19 +74,32 @@ class << self
   end #/ reset
 
   def proceed_get_random(options = nil)
-    candidat =  if options[:femme]
+    candidat =  if options[:with_synopsis] # tiendra compte de options[:femme]
+                  get_concurrent_with_synopsis(options)
+                elsif options[:femme]
                   get_une_femme
                 else
                   all_current[rand(all.count)]
                 end
+
+    # puts "Candidat: #{candidat.inspect}"
+    # Si on veut un ancien concurrent
+    if options[:non_inscrit]
+      request = "DELETE FROM concurrents_per_concours WHERE annee = ? AND concurrent_id = ?"
+      db_exec(request, [ANNEE_CONCOURS_COURANTE, candidat.id])
+    end
+
     # Si on veut un candidat sans synopsis
     if options[:without_synopsis]
       # On doit détruire son dossier
       FileUtils.rm_rf(candidat.folder)
       # On doit régler ses options (specs à "00000000")
       candidat.set_specs("0"*8)
+    elsif options[:with_synopsis]
+      raise if candidat.specs[0] != "1"
     end
     # puts "candidat : #{candidat.inspect}"
+    candidat.reset
     return candidat
   end #/ get_a_concurrent
 
@@ -90,6 +108,16 @@ class << self
       return concurrent if concurrent.femme?
     end
   end #/ get_femme
+
+  def get_concurrent_with_synopsis(options)
+    all_current.each do |concurrent|
+      cond = concurrent.specs[0] == "1"
+      next if not cond
+      cond = cond && concurrent.femme? if options[:femme]
+      return concurrent if cond
+    end
+    return nil
+  end #/ get_concurrent_with_synopsis
 
   def all
     @allconcurrents ||= begin
@@ -154,14 +182,19 @@ attr_reader :patronyme, :mail, :concurrent_id, :options, :created_at, :updated_a
 attr_reader :specs, :titre, :auteurs, :keywords, :prix
 def initialize(data)
   # puts "Data : #{data.inspect}"
-  dispatch(data)
+  dispatch(data) unless data.nil?
 end #/ initialize
 
 alias :pseudo :patronyme
 alias :id :concurrent_id
 
 def reset
-  dispatch(db_exec(REQUEST_CONCURRENT_ALL_DATA, [ANNEE_CONCOURS_COURANTE, id]).first)
+  d = db_exec(REQUEST_CONCURRENT_ALL_DATA, [ANNEE_CONCOURS_COURANTE, id]).first
+  # Mais si le concurrent n'est pas inscrit à la session courante, la commande
+  # ci-dessus renverra nil. Il faut alors prendre les données seulement  dans
+  # la table concours_concurrents
+  d = db_exec(REQUEST_CONCURRENT_MIN_DATA, [id]).first if d.nil?
+  dispatch(d)
 end #/ reset
 
 def dispatch(d)
@@ -190,5 +223,9 @@ SELECT
   FROM concours_concurrents cc
   INNER JOIN concurrents_per_concours cpc ON cc.concurrent_id = cpc.concurrent_id
   WHERE cpc.annee = ? AND cc.concurrent_id = ?
+SQL
+
+REQUEST_CONCURRENT_MIN_DATA = <<-SQL
+SELECT * FROM concours_concurrents WHERE concurrent_id = ?
 SQL
 end #/TConcurrent
