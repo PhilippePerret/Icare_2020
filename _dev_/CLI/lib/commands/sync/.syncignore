@@ -15,3 +15,8 @@ cronjob2/tmp/
 # Ignorer les fichiers de base
 .htaccess
 index.rb
+
+# Ignorer les data qdd et concours
+_lib/data/qdd/
+_lib/data/concours/
+
