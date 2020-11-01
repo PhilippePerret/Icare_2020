@@ -6,9 +6,6 @@
   Gestion d'un étape du concours
 =end
 class ConcoursPhase
-class << self
-
-end # /<< self
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
@@ -53,6 +50,13 @@ def run_operations(options = nil)
     html.res << "<div class='buttons'><input type='submit' class='btn main' value='Procéder aux opérations cochées' /></div>"
   end
 end #/ run_operations
+
+# Méthode appelée à la fin du changement de phase pour voir si tout
+# est OK
+def checke
+  message("Lancer 'icare test concours' en local pour tester que la phase est bien activée et conforme.")
+end #/ checke
+
 # ---------------------------------------------------------------------
 #   Properties
 # ---------------------------------------------------------------------

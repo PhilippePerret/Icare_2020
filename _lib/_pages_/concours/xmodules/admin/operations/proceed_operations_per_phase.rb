@@ -9,5 +9,6 @@ class Concours
     require_relative './ConcoursPhase'
     iphase = ConcoursPhase.new(self, data_phase)
     iphase.run_operations(options)
+    iphase.checke
   end #/ proceed_operations_per_phase
 end

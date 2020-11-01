@@ -1,0 +1,51 @@
+- :name: Accueil du concours
+  :route: concours/accueil
+  :seek_and_do:
+    0:
+      - :tag: h2.page-title
+        :text: Concours de synopsis de l’atelier Icare
+      - :tag: div
+        :text: Le prochain concours de synopsis de l'atelier Icare n'est pas encore lancé.
+    1:
+      - :tag: h2.page-title
+        :text: Concours de synopsis de l’atelier Icare
+      - :tag: a.btn-faq
+        :text: Foire Aux Questions
+      - :tag: a[href="public/Concours_ICARE_2021.pdf"]
+        :text: Règlement du concours
+      - :tag: a[href="concours/dossier"]
+        :text: format du fichier de candidature
+- :name: "Accueil du site"
+  :route: "home"
+  :seek_and_do:
+    0:
+      - :no_tag: 'a#annonce'
+      - :no_tag: 'a#annonce span'
+        :text: "Concours"
+    1:
+      - :tag: 'a#annonce'
+      - :tag: 'a#annonce span'
+        :text: "Concours"
+
+- :name: Espace personnel
+  :route: "concours/espace_concurrent"
+  :seek_and_do:
+    0:
+      - :no_tag: form#concours-login-form
+    1:
+      - :tag: form#concours-login-form
+      - :doit: |
+          within("form#concours-login-form") do
+            require './_lib/data/secret/concours'
+            fill_in("p_mail", with: CONCOURS_DATA[:me][:mail])
+            fill_in("p_concurrent_id", with: CONCOURS_DATA[:me][:concurrent_id])
+            click_on("S’identifier")
+          end
+        :success: "Peut s'identifier pour rejoindre l'espace personnel"
+      - :tag: h2.page-title
+        :text: Espace personnel
+      - :tag: fieldset#concours-informations
+      - :tag: fieldset#concours-preferences
+      - :tag: fieldset#concours-envoi-dossier
+      - :tag: a
+        :text: Se déconnecter

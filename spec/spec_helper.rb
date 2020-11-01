@@ -16,6 +16,7 @@ Capybara.default_driver = :selenium
 
 
 Capybara.save_path = './spec/tmp/screenshots'
+Capybara.match = :first
 
 # Les requisitions pour les tests
 require './spec/support/lib/required'
