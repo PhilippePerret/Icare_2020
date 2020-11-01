@@ -26,7 +26,6 @@ Gel pour des données de base de concours.
     start_time = Time.now.to_i
 
     # La page contient les bons éléments
-    expect(page).to have_css("fieldset#signup-section")
     expect(page).to have_css("form#concours-signup-form")
 
     # Un utilisateur s'inscrit
@@ -121,13 +120,18 @@ Gel pour des données de base de concours.
     end
   end #/ proceed_inscription_with
 
-  context 'un candidat avec une adresse mail invalide ou existante' do
-    scenario 'ne parvient pas à s’inscrire' do
+  context 'un candidat avec une adresse existante' do
+    scenario 'est renvoyé à l’identification' do
       dc = db_exec("SELECT mail FROM #{DBTBL_CONCURRENTS} LIMIT 1").first
       proceed_inscription_with(mail: dc[:mail])
       expect(page).not_to have_titre(UI_TEXTS[:concours_titre_participant])
-      expect(page).to have_titre(UI_TEXTS[:titre_page_inscription])
-      expect(page).to have_erreur(ERRORS[:concours_mail_exists])
+      expect(page).to have_titre("Identification")
+      expect(page).to have_message("Vous êtes déjà concurrent du concours")
+    end
+  end
+
+  context 'un candidat avec une adresse mail invalide ou existante' do
+    scenario 'ne parvient pas à s’inscrire' do
       proceed_inscription_with(mail: "#{'xy'*150}@chez.lui")
       expect(page).not_to have_titre(UI_TEXTS[:concours_titre_participant])
       expect(page).to have_titre(UI_TEXTS[:titre_page_inscription])

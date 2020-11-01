@@ -55,8 +55,8 @@ class << self
 #       conditions optionnellement définies par +options+.
 #       Mais c'est forcément un candidat courant
 #
-def get_random(params)
-  proceed_get_random(params)
+def get_random(params = nil)
+  proceed_get_random(params || {})
 end #/ get_random
 
 
@@ -205,6 +205,7 @@ def reset
 end #/ reset
 
 def dispatch(d)
+  return if d.nil?
   d.each{|k,v|instance_variable_set("@#{k}",v)}
 end #/ dispatch
 

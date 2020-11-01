@@ -38,7 +38,7 @@ feature "Dépôt du fichier de candidature" do
 
   let(:concurrent) { @concurrent }
 
-  context 'Quand le concours est en route (step 1)' do
+  context 'Quand le concours est en route (phase 1)' do
 
     context 'Un visiteur quelconque' do
       scenario 'ne peut pas déposer de fichier de candidature' do
@@ -107,12 +107,12 @@ feature "Dépôt du fichier de candidature" do
           "Une actualité devrait annoncer l'envoi du fichier"
       end
     end #/ Context Un concurrent inscrit
-  end #/ Context concours en route (step 1)
+  end #/ Context concours en route (phase 1)
 
 
   context 'Quand le concours est en phase 2 (préselections en cours)' do
     before(:all) do
-      TConcours.set_step(2, ANNEE_CONCOURS_COURANTE)
+      TConcours.set_phase(2, ANNEE_CONCOURS_COURANTE)
     end
     scenario 'Un concurrent ne peut plus déposer de fichier de candidature'do
       concurrent = TConcurrent.get_random(without_synopsis: true)
@@ -126,7 +126,7 @@ feature "Dépôt du fichier de candidature" do
 
   context 'Quand le concours est en phase 0 (non lancé)'  do
     before(:all) do
-      TConcours.set_step(0, ANNEE_CONCOURS_COURANTE)
+      TConcours.set_phase(0, ANNEE_CONCOURS_COURANTE)
     end
     scenario 'Un concurrent peut rejoindre l’espace personnel, mais pas déposer de fichier de candidature' do
       concurrent = TConcurrent.get_random(without_synopsis: true)

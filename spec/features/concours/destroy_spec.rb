@@ -20,7 +20,7 @@ feature "Destruction d'un participant au concours" do
       goto("concours/accueil")
       click_on("Identifiez-vous")
       expect(page).to have_titre("Identification au concours") # juste pour être sûr
-      within("form#concours-signedup-form") do
+      within("form#concours-login-form") do
         fill_in("p_mail", with: concurrent.mail)
         fill_in("p_concurrent_id", with:concurrent.id)
         click_on(UI_TEXTS[:concours_bouton_sidentifier])
@@ -48,7 +48,7 @@ feature "Destruction d'un participant au concours" do
       goto("concours/accueil")
       click_on("Identifiez-vous")
       expect(page).to have_titre("Identification au concours") # juste pour être sûr
-      within("form#concours-signedup-form") do
+      within("form#concours-login-form") do
         fill_in("p_mail", with: concurrent.mail)
         fill_in("p_concurrent_id", with:concurrent.id)
         click_on(UI_TEXTS[:concours_bouton_sidentifier])

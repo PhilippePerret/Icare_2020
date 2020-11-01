@@ -6,6 +6,7 @@
 feature "Accueil du concours de synopsis" do
   before(:all) do
     require_support('concours')
+    degel('concours')
   end
   scenario "Un visiteur quelconque tombe sur une page valide" do
     pitch("Un visiteur quelconque trouve une page de concours valide.")
@@ -20,12 +21,12 @@ feature "Accueil du concours de synopsis" do
     expect(page).to have_css("h3", text: "Objet du concours")
     expect(page).to have_css("h3", text: "Trois Prix")
     expect(page).to have_css("h3", text: "Thème")
-    expect(page).to have_css("span.concours-theme", text: Concours.current.theme.upcase),
-      "La page devrait présenter le thème du concours"
+    expect(page).to have_css("span.concours-theme", text: /#{TConcours.current.theme.upcase}/i),
+      "La page devrait présenter le thème du concours : #{TConcours.current.theme.upcase}"
     expect(page).to have_css("h3", text: "Fichier de candidature")
     expect(page).to have_link("format du fichier de candidature", href: "concours/dossier"),
       "La page devrait présenter un lien pour voir le format du fichier de candidature"
-    expect(page).to have_css("h3", text: "Réglement complet")
+    expect(page).to have_css("h3", text: "Règlement complet")
     expect(page).to have_link("Règlement du concours"),
       "La page devrait posséder un lien vers le règlement du concours"
     expect(page).to have_css("h3", text: "Faq")
@@ -52,7 +53,8 @@ feature "Accueil du concours de synopsis" do
     expect(page).to have_titre("Fichier du concours")
     revenir_accueil
     expect(page).to have_link("Foire Aux Questions", href:"concours/faq")
-    click_on("Foire Aux Questions")
+    # first(text:"Foire Aux Questions").click
+    click_on(class:'btn-faq')
     expect(page).to have_titre("FAQ du concours")
     revenir_accueil
     expect(page).to have_link("Règlement du concours")

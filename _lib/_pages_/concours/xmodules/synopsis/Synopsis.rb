@@ -8,14 +8,6 @@
   pas été envoyé. Mais dans ce cas, l'évaluation n'est pas encore possible.
 =end
 class Synopsis
-
-# Pour récupérer les données d'un ~synopsis en particulier.
-REQUEST_SYNOPSIS = <<-SQL
-SELECT *
-  FROM #{DBTBL_CONCURS_PER_CONCOURS}
-  WHERE concurrent_id = ? AND annee = ?
-SQL
-
 # ---------------------------------------------------------------------
 #
 #   CLASSE
@@ -96,7 +88,7 @@ def initialize concurrent_id, annee, dat = nil
   @annee = annee
   @id = "#{concurrent_id}-#{annee}"
   @data = dat || get_data
-  @evaluator_id = data[:evaluator_id]
+  @evaluator_id = @data[:evaluator_id]
 end #/ initialize
 
 # OUT   True si la conformité du synopsis a été marquée
@@ -227,7 +219,7 @@ end #/ evaluation
 #   Méthodes d'état
 # ---------------------------------------------------------------------
 
-# OUT   True si le fichier a été envoyé
+# OUT   True si le fichier de candidature a été envoyé
 def fichier?
   data[:with_fichier] == 1
 end #/ fichier?
@@ -264,7 +256,22 @@ end #/ affixe
 private
 
   def get_data
-    db_exec(REQUEST_SYNOPSIS, [concurrent_id, annee]).first
+    cpc_data = db_exec(REQUEST_SYNOPSIS, [concurrent_id, annee]).first
+    @synopsis_exists = !cpc_data.nil?
+    cpc_data || {}
   end #/ get_data
+
+# ---------------------------------------------------------------------
+#
+#   CONSTANTES
+#
+# ---------------------------------------------------------------------
+
+# Pour récupérer les données d'un ~synopsis en particulier.
+REQUEST_SYNOPSIS = <<-SQL
+SELECT *
+  FROM #{DBTBL_CONCURS_PER_CONCOURS}
+  WHERE concurrent_id = ? AND annee = ?
+SQL
 
 end #/Synopsis
