@@ -8,11 +8,14 @@ static prepare(){
 static toggleFiche(ev){
   const fiche = $(ev.currentTarget).parent();
   const header = fiche.find('div.header');
+  const toolsbar = fiche.find('div.bande-buttons');
   const isHidden = header.hasClass('hidden');
   const method = isHidden ? 'removeClass' : 'addClass';
+  const contre_method = isHidden ? 'addClass' : 'removeClass';
   header[method]('hidden');
+  toolsbar[contre_method]('hidden');
   fiche.find('div.detail')[method]('hidden');
-  fiche[isHidden?'addClass':'removeClass']('exergue')
+  fiche[contre_method]('exergue')
 }
 constructor() {
 

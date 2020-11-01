@@ -97,7 +97,7 @@ end #/ download_link
 # OUT   Retourne le code HTML de la fiche de lecture complète pour le
 #       synopsis.
 def out_for_concurrent
-  deserb('../partials/fiche_lecture_template', self)
+  deserb('./_lib/_pages_/concours/evaluation/partials/fiche_lecture_template.erb', self)
 end #/ out_for_concurrent
 
 def ecusson

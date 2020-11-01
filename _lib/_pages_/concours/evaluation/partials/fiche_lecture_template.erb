@@ -3,8 +3,9 @@
     <div class="grand-titre"><%= ecusson %>&nbsp;Concours de Synopsis de L'atelier Icare&nbsp;<%= ecusson %></div>
     <div class="div-annee">Édition <span class="annee"><%= annee_edition %></span></div>
   </div>
-  <div class="right">
-    <%= Tag.link(class:"noprint", text:'Imprimer', route:"concours/fiche_lecture?cid=#{synopsis.concurrent.id}&an=#{annee_edition}") %>
+  <div class="bande-buttons right noprint">
+    <%= Tag.div(class:'fleft small', text:'(cliquer sur le titre pour ouvrir/fermer la fiche)') %>
+    <%= Tag.link(class:"small", text:'Afficher', target: :blank, route:"concours/fiche_lecture?cid=#{synopsis.concurrent.id}&an=#{annee_edition}") %>
   </div>
   <div class="infos-projet">
     <div class="projet-titre">
@@ -19,6 +20,10 @@
 
 
   <div class="detail hidden">
+
+    <div class="type-fiche">
+      FICHE DE LECTURE
+    </div>
 
     <div class="divnote note-projet">
       <span class="value note"><%= projet.human_note %></span>

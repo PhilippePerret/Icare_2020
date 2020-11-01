@@ -15,9 +15,17 @@ div.fiche-lecture.exergue {
   opacity:1;
 }
 div.fiche-lecture div.header {
-  margin-top:1em;
-  margin-bottom:1em;
+  padding-top:1em;
+  padding-bottom:1em;
 }
+
+div.fiche-lecture div.header,
+div.detail div.type-fiche
+{
+  background-color:rgb(199, 199, 199);
+}
+
+
 div.fiche-lecture div.grand-titre,
 div.fiche-lecture div.div-annee
 {
@@ -78,7 +86,13 @@ div.fiche-lecture div.detail {
   border-style:solid;
   border-width:1px 0;
   border-color:#CCC;
-  padding-top:1em;
+}
+
+div.detail div.type-fiche {
+  font-weight:bold;
+  padding:1em;
+  text-align:center;
+  font-size:13.8pt;
 }
 
 div.fiche-lecture div.detail div.divnote {

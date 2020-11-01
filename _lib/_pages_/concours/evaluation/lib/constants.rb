@@ -3,6 +3,7 @@
 =begin
 
 =end
+require './_lib/_pages_/concours/xmodules/synopsis/constants'
 
 # * Dossiers *
 PARTIAL_FOLDER      = File.join(EVALUATION_FOLDER,'partials')
