@@ -8,7 +8,7 @@ ilya_un_resultat = not(resultat.nil_if_empty.nil?)
 #   FORMULAIRE POUR LES ÉTAPES
 #
 # ---------------------------------------------------------------------
-STEPS_VALUES = Concours::STEPS_DATA.collect do |k,v|
+STEPS_VALUES = Concours::PHASES_DATA.collect do |k,v|
   # message("#{k}::#{k.class} < #{concours.phase}::#{concours.phase.class} ? #{(k < concours.phase).inspect}")
   name = if k == concours.phase
     v[:name_current]

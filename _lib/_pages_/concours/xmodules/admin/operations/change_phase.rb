@@ -11,6 +11,6 @@ class Concours
     else
       options.merge!(noop: true)
     end
-    proceed_operations_per_phase(STEPS_DATA[@phase].merge(phase: @phase), options)
+    proceed_operations_per_phase(PHASES_DATA[@phase].merge(phase: @phase), options)
   end #/ change_phase
 end
