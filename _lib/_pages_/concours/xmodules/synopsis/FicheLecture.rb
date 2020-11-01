@@ -62,8 +62,11 @@ def export
   log("     Res: #{res.inspect}")
 end #/ export
 def pdf_file_path
-  @pdf_file_path ||=  File.join(TEMP_FOLDER,'concours',"fiche-#{synopsis.concurrent_id}-#{Concours.current.annee}.pdf")
+  @pdf_file_path ||=  File.join(TEMP_FOLDER,'concours',pdf_filename)
 end #/ pdf_file_path
+def pdf_filename
+  @pdf_filename ||= "fiche-#{synopsis.concurrent_id}-#{Concours.current.annee}.pdf"
+end #/ pdf_filename
 
 # Sortie de la fiche de lecture du synopsis
 def out(options = nil)
@@ -76,6 +79,20 @@ def out(options = nil)
     puts "Je ne sais pas encore faire ça"
   end
 end #/ out
+
+# OUT   True si la fiche de lecture est téléchargeable.
+# Note  Pour qu'elle soit téléchargeable, il faut :
+#       - qu'elle existe en tant que fichier pdf (dans tmp/concours)
+#       - que le concours ne soit plus en phase 1, qu'il soit en phase
+#         3 si le concurrent n'a pas été sélectionné pour la phase finale,
+#         ou en phase 5 si le concurrent a été sélectionné.
+def downloadable?
+  Concours.current.step > 1 && File.exists?(pdf_file_path)
+end #/ downloadable?
+
+def download_link
+  "#{App::URL}/tmp/concours/#{pdf_filename}"
+end #/ download_link
 
 # OUT   Retourne le code HTML de la fiche de lecture complète pour le
 #       synopsis.

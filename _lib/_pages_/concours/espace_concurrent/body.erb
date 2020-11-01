@@ -100,6 +100,19 @@
 <%
 # ---------------------------------------------------------------------
 #
+#   CHARGEMENT DE LA FICHE DE LECTURE
+#
+# ---------------------------------------------------------------------
+%>
+<% if concurrent.synopsis.fiche_lecture.downloadable? %>
+  <div class="border center mt2 big air">
+    <%= Tag.link(text:"TÉLÉCHARGER LA FICHE DE LECTURE", route:concurrent.synopsis.fiche_lecture.download_link) %>
+  </div>
+<% end %>
+
+<%
+# ---------------------------------------------------------------------
+#
 # FORMULAIRE DE DÉPÔT DU FICHIER DE CANDIDATURE (if any)
 #
 # ---------------------------------------------------------------------

@@ -153,6 +153,13 @@ def concours
   @concours ||= ConcurrentConcours.new(self)
 end #/ concours
 
+def synopsis
+  @synopsis ||= begin
+    html.require_xmodule('synopsis')
+    Synopsis.new(id, ANNEE_CONCOURS_COURANTE)
+  end
+end #/ synopsis
+
 # Retourne la liste Array de tous les concours du concurrent
 def all_concours
   @all_concours ||= begin

@@ -30,6 +30,7 @@ class HTML
   def exec
     admin_required # TODO evaluators_required
     add_js('./js/modules/ajax')
+    require_xmodule('synopsis')
 
     # Pour tous les cas où synoid est défini => un synopsis est choisi pour
     # une opération quelconque.
