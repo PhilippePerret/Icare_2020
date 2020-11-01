@@ -27,7 +27,7 @@ end # /<< self
 def confirme_validite
   concurrent.set_spec(1,1)
   require_module('mail')
-  mail_path = File.join(XMODULES_FOLDER, 'mails','step1','inform_fichier_conforme.erb')
+  mail_path = File.join(XMODULES_FOLDER, 'mails','phase1','inform_fichier_conforme.erb')
   MailSender.send(to:concurrent.mail, from:CONCOURS_MAIL, file:mail_path, bind:self)
   message("Le projet “#{synopsis.titre}” (#{name}) a bien été marqué conforme.<br/>#{concurrent.pseudo}, son auteur#{concurrent.fem(:e)}, a été informé#{concurrent.fem(:e)}.")
 end #/ confirme_validite

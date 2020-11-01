@@ -21,7 +21,7 @@ class HTML
     require_module('mail')
     MailSender.send({
       to: CONCOURS_MAIL,
-      path: File.join(XMODULES_FOLDER,'mails','step1','inform_depot_fichier.erb'),
+      path: File.join(XMODULES_FOLDER,'mails','phase1','inform_depot_fichier.erb'),
       bind: file
     })
   rescue Exception => e
@@ -35,7 +35,7 @@ class HTML
     @candidature_filename = file.original_name
     MailSender.send({
       to:concurrent.mail,
-      path: File.join(XMODULES_FOLDER,'mails','step1','confirm_reception_fichier.erb'),
+      path: File.join(XMODULES_FOLDER,'mails','phase1','confirm_reception_fichier.erb'),
       bind: self
     })
   rescue Exception => e

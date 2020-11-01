@@ -1,6 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-class ConcoursStep
+class ConcoursPhase
 class Operation
   def bind; binding() end
   # IN    Nom ou chemin relatif du mail

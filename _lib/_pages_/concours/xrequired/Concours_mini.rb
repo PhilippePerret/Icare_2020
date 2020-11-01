@@ -50,7 +50,7 @@ def data
     # l'année demandée, on crée sa donnée
     if db_count(dbtable, {annee: annee}) == 0
       # db_compose_insert(dbtable, data_default.dup) # trop risqué (+ data_default n'existe pas ici)
-      {step:0,annee:0}
+      {phase:0,annee:0}
     else
       db_get(dbtable, {annee: annee})
     end
@@ -62,7 +62,7 @@ end #/ data
 #   Property
 #
 # ---------------------------------------------------------------------
-def step;   @step   ||= data[:step]   end
+def phase;   @phase   ||= data[:phase]   end
 
 # Helper pour indiquer l'échéance, avec le nombre de jours restants
 def h_echeance
@@ -70,11 +70,11 @@ def h_echeance
 end #/ h_echeance
 
 # Phase de dépôt des fichiers de candidature
-def phase1?; step == 1 end
+def phase1?; phase == 1 end
 
 # Retourne TRUE is le concours est démarré
 def started?
-  step > 0
+  phase > 0
 end #/ started?
 
 end #/Concours

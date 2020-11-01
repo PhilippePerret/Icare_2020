@@ -12,8 +12,8 @@ class HTML
 
   # Fabrication du body
   def build_body
-    step = Concours.current.step
-    partial = case step
+    phase = Concours.current.phase
+    partial = case phase
     when 0 then 'no_concours'
     when 1 then '1_en_cours'
     when 2 then '2_preselection'
@@ -22,7 +22,7 @@ class HTML
     when 8 then '8_acheved'
     when 9 then 'no_concours'
     end
-    @body = deserb("partials/steps/#{partial}", self)
+    @body = deserb("partials/phases/#{partial}", self)
   end # /build_body
 
 end #/HTML

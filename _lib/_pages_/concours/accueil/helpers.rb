@@ -22,7 +22,7 @@ class HTML
 
 
   def description_etape_courante
-    t = case Concours.current.step
+    t = case Concours.current.phase
         when 0 then ""
         when 1 then
           # Étape 1 (concours en cours)
@@ -57,7 +57,7 @@ class HTML
         else "<strong>Le concours est achevé</strong> mais vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire pour la prochaine session')}.<br/><br/>Rendez-vous pour la prochaine session !"
         end
     # Composer le texte final
-    "<div id=\"description-step-concours\">#{t}</div>"
+    "<div id=\"description-phase-concours\">#{t}</div>"
   end #/ description_etape_courante
 
   def description_concours

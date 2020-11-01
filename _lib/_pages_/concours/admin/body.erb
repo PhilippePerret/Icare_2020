@@ -9,27 +9,27 @@ ilya_un_resultat = not(resultat.nil_if_empty.nil?)
 #
 # ---------------------------------------------------------------------
 STEPS_VALUES = Concours::STEPS_DATA.collect do |k,v|
-  # message("#{k}::#{k.class} < #{concours.step}::#{concours.step.class} ? #{(k < concours.step).inspect}")
-  name = if k == concours.step
+  # message("#{k}::#{k.class} < #{concours.phase}::#{concours.phase.class} ? #{(k < concours.phase).inspect}")
+  name = if k == concours.phase
     v[:name_current]
   else
-    k < concours.step ? v[:name_done] : v[:name]
+    k < concours.phase ? v[:name_done] : v[:name]
   end
   [k, name]
 end
-stepform = Form.new(id:"concours-step-from", route:route.to_s, class:"nogrid nobackground nomargin")
-stepform.rows = {
-  "<op/>" => {type:"hidden", name:"op", value:"change_step"},
-  "Étape courante" => {type:"select", class:"", name:"current_step", values:STEPS_VALUES, value:concours.step},
+phaseform = Form.new(id:"concours-phase-from", route:route.to_s, class:"nogrid nobackground nomargin")
+phaseform.rows = {
+  "<op/>" => {type:"hidden", name:"op", value:"change_phase"},
+  "Étape courante" => {type:"select", class:"", name:"current_phase", values:STEPS_VALUES, value:concours.phase},
 }
-stepform.submit_button = "Simuler et procéder à cette étape…"
-stepform.submit_button_class = "small btn"
+phaseform.submit_button = "Simuler et procéder à cette étape…"
+phaseform.submit_button_class = "small btn"
 %>
 
 <%= lien_vers_evaluations %>
 <%= lien_concours_data if ilya_un_resultat %>
 
-<div><%= stepform.out %></div>
+<div><%= phaseform.out %></div>
 
 <% if ilya_un_resultat %>
   <div id="concours-resultat"><%= resultat %></div>

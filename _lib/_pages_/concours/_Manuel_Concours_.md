@@ -2,9 +2,9 @@
 
 # Étape du concours
 
-L'étape courante du concours détermine là où on se trouve du concours. Elle est maintenue par la propriété `step` dans la base de données
+L'étape courante du concours détermine là où on se trouve du concours. Elle est maintenue par la propriété `phase` dans la base de données
 
-| step | Description                |          | Note                                                         |
+| phase | Description                |          | Note                                                         |
 | ---- | -------------------------- | -------- | ------------------------------------------------------------ |
 | 0    | Concours en attente        | *état*   | Le concours est en attente, rien n’est affiché.<br />Un visiteur quelconque peut s’inscrire (notamment pour être averti) |
 |      |                            | *action* | Déterminer le prochain thème.<br />Composer le jury.         |
@@ -24,7 +24,7 @@ L'étape courante du concours détermine là où on se trouve du concours. Elle 
 
 ### Opérations pour chaque étape
 
-On peut définir les opérations et les informations à donner à chaque passage d’étape dans le fichier [steps_data](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/admin/lib/steps_data.rb). On trouve par exemple :
+On peut définir les opérations et les informations à donner à chaque passage d’étape dans le fichier [phases_data](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/admin/lib/phases_data.rb). On trouve par exemple :
 
 ~~~ruby
 STEPS_DATA = {
@@ -40,7 +40,7 @@ STEPS_DATA = {
 
 
 
-(1) Pour définir une méthode à jouer lorsque l'on passe à cette étape. Cette méthode doit être définie (avec argument `options`) dans le fichier `concours/xmodules/admin/operations/step_operations/step_X.rb` ([step_5.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/xmodules/admin/operations/step_operations/step_5.rb) pour l’étape 5).
+(1) Pour définir une méthode à jouer lorsque l'on passe à cette étape. Cette méthode doit être définie (avec argument `options`) dans le fichier `concours/xmodules/admin/operations/phase_operations/phase_X.rb` ([phase_5.rb](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/xmodules/admin/operations/phase_operations/phase_5.rb) pour l’étape 5).
 
 (2) Pour définir une ligne informative qui donnera juste une information, par exemple en disant ce que ce passage à l’étape va entrainer comme changement sur l’espace personnel des concurrents, sur la page d’accueil, etc.
 

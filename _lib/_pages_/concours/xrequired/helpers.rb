@@ -12,7 +12,7 @@ class HTML
   # Retourne le code HTML du bouton pour rejoindre le formulaire
   # d'inscription au concours.
   def bouton_formulaire
-    btn_key = Concours.current.step < 2 ? :concours_bouton_inscription : :concours_btn_signup_next
+    btn_key = Concours.current.phase < 2 ? :concours_bouton_inscription : :concours_btn_signup_next
     cont = Tag.link(class:'btn main green pd1', text:UI_TEXTS[btn_key], route:"concours/inscription")
     Tag.div(class:'mt2 mb2 center', text: cont) + div_avantages_signup_before
   end #/ bouton_formulaire

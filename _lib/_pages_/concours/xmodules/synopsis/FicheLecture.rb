@@ -87,7 +87,7 @@ end #/ out
 #         3 si le concurrent n'a pas été sélectionné pour la phase finale,
 #         ou en phase 5 si le concurrent a été sélectionné.
 def downloadable?
-  Concours.current.step > 1 && File.exists?(pdf_file_path)
+  Concours.current.phase > 1 && File.exists?(pdf_file_path)
 end #/ downloadable?
 
 def download_link

@@ -7,7 +7,7 @@ CREATE TABLE `concours` (
   annee       VARCHAR(4) NOT NULL,
   theme       VARCHAR(100) NOT NULL,
   theme_d     TEXT DEFAULT NULL,
-  step        INTEGER(1) NOT NULL DEFAULT 0,
+  phase       INTEGER(1) NOT NULL DEFAULT 0,
   prix1       VARCHAR(200),
   prix2       VARCHAR(200),
   prix3       VARCHAR(200),
