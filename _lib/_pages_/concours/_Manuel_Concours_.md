@@ -143,6 +143,35 @@ Dans le mail, on utilise deux sortes de variables :
 ~~~
 
 
+---------------------------------------------------------------------
+
+## Le Jury
+
+Pour le moment, les membres du jury sont définis dans le fichier `./_lib/data/secret/concours.rb`, dans la données `CONCOURS_DATA[:evaluators]`
+
+Dans le programme, un évaluateur est une classe `Evaluator`.
+
+### Exécuter une action sur l'ensemble des membres du jury
+
+~~~ruby
+Evalutors.each do |evaluator|
+  # evaluator est une instance {Evaluator}
+  # ... action ...
+end
+~~~
+
+### Envoi de mails aux jurys
+
+~~~ruby
+
+Evaluators.send(file:"le/path/au/fichier", jury:1|2|3)
+
+~~~
+
+> Note jury: 3 signifie les membres du jury qui appartiennent aux deux impérativement.
+
+---------------------------------------------------------------------
+
 
 ## Résultats (messages)
 
@@ -161,4 +190,3 @@ html.res << "Mon message de résultat"
 
 <%= html.resultat %>
 ~~~
-
