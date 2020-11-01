@@ -344,9 +344,11 @@ def login
   goto_login_form
   login_icarien(1)
 end #/ login
+
 def deconnect
   logout
 end #/ deconnect
+alias :se_deconnecte :deconnect
 
 # ---------------------------------------------------------------------
 #

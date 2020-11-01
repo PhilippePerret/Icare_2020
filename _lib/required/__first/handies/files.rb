@@ -33,6 +33,7 @@ end #/ file_read
 def full_path(relpath)
   fromCaller(relpath, Kernel.caller)
 end #/ full_path
+alias :fullpath :full_path
 
 def fromCaller(relpath, from)
   File.join(File.dirname(from[0].split(':')[0]), relpath.to_s)

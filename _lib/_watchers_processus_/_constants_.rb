@@ -39,7 +39,8 @@ DATA_WATCHERS = {
   start_module:  {
     titre:  'Démarrage du module d’apprentissage',
     relpath:'IcModule/start',
-    actu_id: 'STARTMOD'
+    actu_id: 'STARTMOD',
+    major: true
   },
   paiement_module: {
     titre: 'Paiement du module',
@@ -75,7 +76,6 @@ DATA_WATCHERS = {
   },
   send_comments: {
     titre: 'Travail à l’étude',
-    titre_mail_user: "Transmission des commentaires",
     relpath: 'IcEtape/send_comments',
     next: 'download_comments',
     actu_id: "COMMENTS"

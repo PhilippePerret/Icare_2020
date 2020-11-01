@@ -166,6 +166,8 @@ def owner
   @owner ||= User.get(user_id)
 end #/ owner
 
+# OBSOLÈTE Normalement, si cette méthode ne servait que pour les mails,
+# elle n'est plus utile aujourd'hui.
 def titre
   @titre ||= absdata[:titre]
 end #/ titre
@@ -223,32 +225,34 @@ private
 
   # Procédure d'envoi de mail si tout s'est bien passé
   def _send_mails
+    require_module('mail')
     _send_mail_to(:admin) if File.exists?(path_mail(:admin))
-    _send_mail_to(:user) if File.exists?(path_mail(:user))
+    _send_mail_to(:user)  if File.exists?(path_mail(:user))
   end #/ _send_mail
   def send_contre_mails
+    require_module('mail')
     _send_contre_mail_to(:admin) if File.exists?(path_contre_mail(:admin))
     _send_contre_mail_to(:user) if File.exists?(path_contre_mail(:user))
   end #/ contre_send_mail
 
   def _send_mail_to(who)
-    _send_mail(who, {body: deserb(path_mail(who), self)})
+    _send_mail(to:who, file:path_mail(who))
   end #/ _send_mail_to
 
   def _send_contre_mail_to(who)
-    _send_mail(who, {body: deserb(path_contre_mail(who), self)})
+    _send_mail(to:who, file:path_contre_mail(who))
   end #/ _send_mail_to
 
-  def _send_mail(who, data)
-    require_module('mail')
-    whouser   = who_is(who)
-    otheruser = other_who_is(who)
-    Mail.send(
-      to: whouser.mail,
-      from:otheruser.mail,
-      message: data[:body],
-      subject: titre # pour le moment
-    )
+  def _send_mail(dmail)
+    tou   = who_is(dmail[:to])
+    fromu = other_who_is(dmail[:to])
+    MailSender.send(to:tou.mail, from:fromu.mail, file:dmail[:file], bind: self)
+    # Mail.send(
+    #   to: whouser.mail,
+    #   from:otheruser.mail,
+    #   message: data[:body],
+    #   subject: titre # pour le moment
+    # )
   end #/ _send_mail
 
   def who_is(who)

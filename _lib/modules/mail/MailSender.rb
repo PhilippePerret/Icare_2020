@@ -227,7 +227,7 @@ private
   # s'il ne connait pas ces méthodes.
   def implemente_subject_to(bindee)
     eval("def subject(sujet);@mail_subject = sujet end\n", bindee.bind)
-    eval("def mail_subject;suj=@mail_subject.dup;@mail_subject=nil;return suj;end\n", bindee.bind)
+    eval("def mail_subject;return nil if @mail_subject.nil?;suj=@mail_subject.dup;@mail_subject=nil;return suj;end\n", bindee.bind)
   end #/ implemente_subject_to
 
 

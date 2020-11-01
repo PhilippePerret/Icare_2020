@@ -23,6 +23,7 @@ class << self
     # Quel que soit le module, un watcher de démarrage
     owner.watchers.add(:start_module, {objet_id: icmodule_id})
     # Et un watcher de paiement
+    # Note : non, c'est seulement lorsqu'elle le démarrera
 
     return icmodule_id
   end #/ create

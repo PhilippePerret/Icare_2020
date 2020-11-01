@@ -193,9 +193,7 @@ class ContainerClass
     @id = id
   end #/ initialize
 
-  def bind
-    binding()
-  end #/ bind
+  def bind; binding() end
 
   def method_missing method_name, *args, &block
     # log("-> method_missing(#{method_name.inspect})")

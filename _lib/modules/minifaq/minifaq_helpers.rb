@@ -66,7 +66,6 @@ class << self
     reponses = db_exec(request.strip.freeze).collect do |dquest|
       MiniFaq.instantiate(dquest)
     end
-    log("réponses: #{reponses.inspect}")
 
     reponses.collect(&:out).join
   end #/ block_reponses

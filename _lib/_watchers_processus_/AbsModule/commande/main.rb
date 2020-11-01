@@ -9,7 +9,7 @@ class Watcher < ContainerClass
     # Créer un nouvel IcModule pour l'icarien
     # ATTENTION : les données envoyées sont celles qui seront ajoutées
     # dans la base de données
-    icmodule_id = IcModule.create_new_for({user_id:owner.id, absmodule_id:objet_id}, owner)
+    icmodule_id = IcModule.create_new_for(user_id:owner.id, absmodule_id:objet_id, user:owner)
     # Message de confirmation
     message "Le nouveau module ##{icmodule_id} a été préparé pour #{owner.pseudo}."
   end #/ commande

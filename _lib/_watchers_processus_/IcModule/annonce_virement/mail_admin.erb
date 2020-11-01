@@ -1,6 +1,10 @@
+<%
+# frozen_string_literal: true
+subject("Annonce de virement IBAN")
+%>
 <p>Bonjour Phil,</p>
 
-<p><%= owner.pseudo %> vient de procéder au paiement de son module “<%= objet.absmodule.name %>”.</p>
+<p><%= owner.pseudo %> vient de procéder au paiement par virement de son module “<%= objet.absmodule.name %>”.</p>
 <p>Il faut vérifier que le virement a bien été effectué et marquer le module payé depuis ta <%= section_notifications %>.</p>
 <p>Informations précises :</p>
 <pre><code>

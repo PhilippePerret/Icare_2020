@@ -1,9 +1,13 @@
+<%
+# frozen_string_literal: true
+subject("Votre commande de module a été acceptée")
+%>
 <p>
-<%= owner.pseudo %>,
+Ch<%= owner.fem(:ere) %> <%= owner.pseudo %>,
 </p>
 <p>J'ai le plaisir de vous annoncer que le module « <%= objet.name %> » vient de vous être attribué.</p>
 <p>
-  Pour le commencer, vous devez le démarrer. Une notification se trouve sur <%= votre_bureau %> pour le faire.
+  Pour le commencer, il vous suffit de le démarrer. Une notification se trouve sur <%= votre_bureau %> pour le faire.
 </p>
 <p>En vous remerciant de votre confiance,</p>
 <p>Bien à vous,</p>
