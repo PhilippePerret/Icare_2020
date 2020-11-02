@@ -1,7 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_module('form')
-require_xmodule('admin/constants')
 class HTML
   attr_reader :concours
   def titre
@@ -15,6 +14,7 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     admin_required
+    require_xmodule('admin/constants')
     @concours = Concours.new(ANNEE_CONCOURS_COURANTE)
     run_operation(param(:op)) if param(:op)
   end # /exec

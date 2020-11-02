@@ -7,11 +7,6 @@ class HTML
     Tag.div(text:lien, class:"mb2 right")
   end #/ lien_concours_data
 
-  def lien_vers_evaluations
-    lien = Tag.link(route:"concours/evaluation", text:"Évaluation des synopsis")
-    Tag.div(text:lien, class:"right")
-  end #/ lien_vers_evaluations
-
   # OUT   Formulaire pour les données du formulaire
   def concours_data_form
     form = Form.new(id:"concours-form", route:route.to_s, class:"nomargin nolimit", size:1000)
