@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-10-25 08:49:14 +0100
+ *    Date dernière modification : 2020-11-02 06:56:52 +0100
  *
  --------------------------------------------------------------------- */
 :root {
@@ -767,7 +767,12 @@ h2, h3, h4, h5 {
   font-weight: normal;
   /* color: var(--dark-color-normal); */
   color:#333333;
+}
+H2:not(.page-title), H3,H4, H5 {
   max-width: var(--text-max-width);
+}
+H2.page-title {
+  position:relative;
 }
 
 pre {
@@ -782,16 +787,63 @@ H2 {
   font-size: 1.6em;
   margin-bottom: 1.4em;
 }
+@media only screen and (min-width: 767px) {
+  /* ÉCRAN */
+
+}
+@media only screen and (max-width: 767px) {
+  /* SMARTPHONE */
+  H2 div.usefull-links {display:none;}
+}
+
+/* Les liens en regard */
 H2 div.usefull-links {
-  float:right;
-  font-size: 11pt;
+  position:absolute;
+  right:0;
+  font-size: 12pt;
+  width:180px;
+  overflow:hidden;
+  background-color: white;
+  /* Refermeture */
+  height:30px;transition:0.5s;
+  z-index:100;
+}
+div.usefull-links:hover {
+  /* Ouverture */
+  height:300px; transition:0.5s;
+  box-shadow:11px 11px 22px #CCCCCC;
+}
+
+H2 div.usefull-links div.handler {
+  height:30px;transition:0.5s;
+  z-index:101;
+  background-image:url('https://www.atelier-icare.net/img/icones/menu-long-discret.png');
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+}
+
+H2 div.usefull-links div.menus {
+  z-index:100;
+  padding:0 1em 1em 1em;
+  /* height:0px;transition:0.3s; */
+  height:270px;
+  background-color: white;
+  overflow:hidden;
+}
+H2 div.usefull-links:hover div.menus {
+  /* height:270px;transition:0.5s; */
+  overflow:auto;transition:1s;
 }
 
 H2 div.usefull-links a,
 H2 div.usefull-links button,
 H2 div.usefull-links form {
-  margin-left: 12px;
+  display:block;
+  margin-top:1em;
+  /* margin-left: 12px; */
 }
+
+/* --------------------------------------------------------------------- */
 
 H3 {
   font-size: 1.3em;

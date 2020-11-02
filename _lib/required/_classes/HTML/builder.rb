@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 require_relative '../App'
 class HTML
   include StringHelpersMethods
@@ -18,7 +19,7 @@ class HTML
     build_footer
     build_messages
     css = route.home? ? 'home' : ''
-    @page = <<-HTML.strip.freeze
+    @page = <<-HTML.strip
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   #{head}
@@ -43,7 +44,7 @@ class HTML
 
   # Retourne le bouton pour remonter en haut de la page
   def top_page_button
-    '<div id="to-top-button-div"><button class="hidden" id="to-top-button">^</a></div>'.freeze
+    '<div id="to-top-button-div"><button class="hidden" id="to-top-button">^</a></div>'
   end #/ top_page_button
 
   # Méthode qui est appelée si les paramètres contiennent 'tikd' qui est un
@@ -56,7 +57,7 @@ class HTML
 
   #
   def build_head
-    @head = <<-HTML.freeze
+    @head = <<-HTML
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -80,17 +81,10 @@ class HTML
     t = respond_to?(:titre) ? titre : "Titre page manquant"
     ulinks = EMPTY_STRING
     if respond_to?(:usefull_links)
-      ulinks = '<div class="usefull-links">%s</div>'.freeze % usefull_links.join
+      ulinks = DIV_USEFULL_LINKS % {menus: usefull_links.join }
     end
-    # # Si le titre possède un faux-émoji, on le récupère
-    # # Malheureusement, on ne peut pas mettre d'image dans la balise TITLE
-    # REG_FAUX_EMOJI = /<img(.*?)emoji(.*?)\/>/.freeze (à replacer en dehors si utilisé)
-    # picto = EMPTY_STRING
-    # if t.match?(REG_FAUX_EMOJI)
-    #   emoji = t.match(REG_FAUX_EMOJI).to_a.first
-    # end
     @raw_titre ||= t.dup&.safetize
-    @titre = "<h2 class=\"page-title\">#{ulinks}#{t}</h2>".freeze
+    @titre = "<h2 class=\"page-title\">#{ulinks}#{t}</h2>"
   end
 
   def build_header
@@ -117,8 +111,8 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
   def build_footer
     @footer = <<-HTML
 
-#{Tag.lien(route:'home',text:'atelier icare'.freeze)}
-#{Tag.link(route:'overview/home'.freeze, text:'en savoir plus'.freeze)}
+#{Tag.lien(route:'home',text:'atelier icare')}
+#{Tag.link(route:'overview/home', text:'en savoir plus')}
 #{MainLink[:aide].simple}
 #{MainLink[:contact].simple}
 #{MainLink[:plan].simple}
@@ -151,9 +145,19 @@ Le body de la route <code>#{route.to_s}</code> n'est pas défini.
     # ajax par exemple
     def protection_injection
       data_uuid = UUID.create(user_id: user.id, session_id: session.id)
-      <<-JAVASCRIPT.strip.freeze
+      <<-JAVASCRIPT.strip
 const UUID = "#{data_uuid[:uuid]}";
 const UID  = #{user.id};
       JAVASCRIPT
     end #/ protection_injection
+
+# ---------------------------------------------------------------------
+#
+#   CONSTANTES
+#
+# ---------------------------------------------------------------------
+
+DIV_USEFULL_LINKS = '<div class="usefull-links"><div class="handler"></div><div class="menus">%{menus}</div></div>'
+
+
 end

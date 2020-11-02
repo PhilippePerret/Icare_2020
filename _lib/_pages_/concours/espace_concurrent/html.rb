@@ -6,6 +6,21 @@ class HTML
     "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:concours_titre_participant]}"
   end #/titre
 
+  def usefull_links
+    ul = []
+    ul << Tag.link(route:"#{route}#concours-informations", text: "Informations concours")
+    ul << Tag.link(route:"#{route}#concours-preferences", text: "Vos préférences")
+    if concurrent.synopsis.fiche_lecture.downloadable?
+      ul << Tag.link(route:"#{route}#chargement-fiche-lecture", text: "Fiche lecture")
+    end
+    if Concours.current.phase1?
+      ul << Tag.link(route:"#{route}#concours-envoi-dossier", text: "Envoi fichier")
+    end
+    ul << Tag.link(route:"#{route}#concours-historique", text: "Historique participations")
+    ul << Tag.link(route:"#{route}#concours-destruction", text:"Destruction profil")
+    return ul
+  end #/ usefull_links
+
   # Code à exécuter avant la construction de la page
   def exec
     try_reconnect_concurrent(required = true)
