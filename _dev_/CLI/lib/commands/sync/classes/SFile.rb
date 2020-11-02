@@ -5,7 +5,32 @@
 =end
 class SFile
 class << self
-
+  def ignored?(relpath)
+    is_ignored = false
+    unless IGNORES[:folders].empty?
+      IGNORES[:folders].each do |pfolder|
+        if relpath.start_with?(pfolder)
+          is_ignored = true
+          break
+        end
+      end
+    end
+    unless is_ignored || IGNORES[:paths].empty?
+      is_ignored = true if IGNORES[:paths].include?(relpath)
+    end
+    unless is_ignored || IGNORES[:regs].empty?
+      IGNORES[:regs].each do |reg|
+        if relpath.match?(reg)
+          is_ignored = true
+          break
+        end
+      end
+    end
+    if VERBOSE && is_ignored
+      puts "IGNORED".bleu
+    end
+    return is_ignored
+  end #/ filtred?
 end # /<< self
 
 
@@ -87,30 +112,7 @@ end #/ out_of_date?
 # Note : maintenant, on arrive ici avec tous les fichiers, dont il faut
 # un traitement différent du traitement par dossier.
 def ignored?
-  is_ignored = false
-  unless IGNORES[:folders].empty?
-    IGNORES[:folders].each do |pfolder|
-      if rel_path.start_with?(pfolder)
-        is_ignored = true
-        break
-      end
-    end
-  end
-  unless is_ignored || IGNORES[:paths].empty?
-    is_ignored = true if IGNORES[:paths].include?(rel_path)
-  end
-  unless is_ignored || IGNORES[:regs].empty?
-    IGNORES[:regs].each do |reg|
-      if rel_path.match?(reg)
-        is_ignored = true
-        break
-      end
-    end
-  end
-  if VERBOSE && is_ignored
-    puts "IGNORED".bleu
-  end
-  return is_ignored
+  self.class.ignored?(rel_path)
 end #/ ignored?
 
 # ---------------------------------------------------------------------

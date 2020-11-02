@@ -26,6 +26,9 @@ def check_folder(loc_path)
   table_distant_files = {}
   data_files.each do |df|
     rel_path = df['path'].sub(/^www\//,'')
+    # Il ne faut prendre les fichiers distants que s'ils ne sont pas à
+    # filtrer
+    next if SFile.ignored?(rel_path)
     table_distant_files.merge!(rel_path => df.merge(rel_path:rel_path))
   end
   # puts "\n\ntable_distant_files: #{table_distant_files.inspect}"
