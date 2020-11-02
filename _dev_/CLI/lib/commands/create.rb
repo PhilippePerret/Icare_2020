@@ -179,7 +179,7 @@ class << self
       :usefull_links, :body_erb, :form, :module_user, :icarien_required, :admin_required, :fichier_constantes
     ].each do |key|
       DATA_PAGE[key] = Q.select(MESSAGES["ask_if_#{key}".to_sym]) do |q|
-        q.choices [{name:'oui', value:true}, {name:'non', value:false}]
+        q.choices [{name:'non', value:false}, {name:'oui', value:true}]
       end
     end
 
