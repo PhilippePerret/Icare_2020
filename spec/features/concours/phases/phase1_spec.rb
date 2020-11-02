@@ -10,14 +10,14 @@ feature "Phase 1 du concours" do
   before(:each) do
     # Il faut avoir un concours courant en phase 0
     TConcours.current.set_phase(0)
+    TConcours.current.reset
   end
   context 'Un administrateur' do
 
-    scenario 'peut lancer la phase 1 du concours en se rendant à l’administration', only:true do
+    scenario 'peut lancer la phase 1 du concours en se rendant à l’administration' do
 
       # *** Vérifications préliminaires
-      dc = db_exec("SELECT phase FROM concours WHERE annee = #{ANNEE_CONCOURS_COURANTE}").first
-      expect(dc[:phase]).to eq(0)
+      expect(TConcours.current.phase).to eq 0
       goto("concours/accueil")
       expect(page).to have_content("Le prochain concours de synopsis de l'atelier Icare n'est pas encore lancé.")
 
@@ -52,8 +52,9 @@ feature "Phase 1 du concours" do
 
       # *** On vérifie que le concours soit bien passé en phase 1
       # Le concours dans la base possède la phase 1
-      dc = db_exec("SELECT phase FROM concours WHERE annee = #{ANNEE_CONCOURS_COURANTE}").first
-      expect(dc[:phase]).to eq(1)
+      TConcours.current.reset
+      expect(TConcours.current.phase).to eq 1
+
       # La page d'accueil du concours présente le concours
       goto("concours/accueil")
       expect(page).not_to have_content("Le prochain concours de synopsis de l'atelier Icare n'est pas encore lancé.")
@@ -68,6 +69,7 @@ feature "Phase 1 du concours" do
         expect(tuser).to have_mail(subject:"Lancement du Concours de Synopsis de l'atelier", after: start_time),
           "#{tuser.pseudo} (icarien) aurait dû recevoir un mail lui annonçant le démarrage du concours."
       end
+
 
       phil.se_deconnecte
 
@@ -96,9 +98,13 @@ feature "Phase 1 du concours" do
     end
 
     scenario 'peut lancer la phase 1 du concours par route directe' do
+      TConcours.current.reset
+      expect(TConcours.current.phase).to eq 0
       phil.rejoint_le_site
       goto("concours/admin?op=change_phase&current_phase=1")
       phil.se_deconnecte
+      TConcours.current.reset
+      expect(TConcours.current.phase).to eq 1
     end
   end #/contexte un administrateur
 
@@ -108,7 +114,12 @@ feature "Phase 1 du concours" do
       expect(page).not_to have_titre "Administration du concours"
     end
     scenario 'ne peut pas lancer la phase 1 par route directe' do
+      TConcours.current.reset
+      expect(TConcours.current.phase).to eq 0
       goto("concours/admin?op=change_phase&current_phase=1")
+      TConcours.current.reset
+      expect(TConcours.current.phase).not_to eq 1
+      expect(TConcours.current.phase).to eq 0
     end
   end
 end

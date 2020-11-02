@@ -86,9 +86,14 @@ def initialize(annee)
   @annee = annee
 end #/ initialize
 
-def theme
-  @theme ||= data[:theme]
-end #/ theme
+def reset
+  @data   = nil
+  @theme  = nil
+  @phase  = nil
+end #/ reset
+
+def theme;    @theme ||= data[:theme]   end
+def phase;    @phase ||= data[:phase]   end
 
 def data
   @data ||= db_exec(REQUEST_DATA_CONCOURS,annee).first || {}
