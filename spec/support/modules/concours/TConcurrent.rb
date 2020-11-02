@@ -81,13 +81,18 @@ class << self
   def proceed_get_random(options = nil)
     options ||= {}
     options[:current] = !options[:non_inscrit] if options.key?(:non_inscrit)
-    candidat =  if options[:with_synopsis] # tiendra compte de options[:femme]
-                  get_concurrent_with_synopsis(options)
-                elsif options[:femme]
-                  get_une_femme
-                else
-                  all_current[rand(all.count)]
-                end
+    candidat = nil
+    begin
+      candidat =  if options[:with_synopsis] # tiendra compte de options[:femme]
+                    get_concurrent_with_synopsis(options)
+                  elsif options[:femme]
+                    get_une_femme
+                  elsif options[:current]
+                    all_current[rand(all_current.count)]
+                  else
+                    all[rand(all.count)]
+                  end
+    end while candidat.nil?
 
     # puts "Candidat: #{candidat.inspect}"
     # Si on veut un ancien concurrent

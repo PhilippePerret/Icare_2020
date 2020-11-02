@@ -45,6 +45,12 @@ class << self
     end
   end #/ get_user_by_mail
 
+  # Retourne la liste Array des instances {TUsers} des icariens contactables
+  # par l'administration de l'atelier
+  def contactables
+    get_contactables[2].collect { |dic| instantiate(dic) }
+  end #/ contactables
+
   # Méthode qui s'assure qu'il y ait +nombre+ icariens contactable en
   # définissant le nombre contactable hebdomadairement et le nombre contactable
   # quotidiennement.
@@ -79,7 +85,7 @@ class << self
     # pour chaque fréquence
     # Dans un premier temps, on regarde si on n'a pas ce qu'il nous faut
     values = []
-    contactables = db_exec(req_contactables).each do |du|
+    db_exec(req_contactables).each do |du|
       opts = du[:options].split('')
       opts[26] = "0"
       values << [opts.join(''), du[:id]]
@@ -128,14 +134,19 @@ class << self
     end
   end #/ set_contactables
 
+  # OUT   Une liste contenant :
+  #       [0] Les données des contactables quotidien (mail actualités)
+  #       [1] Les données des contactables hebdomadaires (mail actualités)
+  #       [2] Les données de tous les icariens contactables par l'administration
   def get_contactables
     # Les clauses where qu'on doit avoir dans tous les cas
+    users_all = db_exec(req_contactables)
     req_quoti = "#{req_contactables} AND SUBSTRING(options,5,1) = 0"
     users_quoti = db_exec(req_quoti)
     req_hebdo = "#{req_contactables} AND SUBSTRING(options,5,1) = 1"
     users_hebdo = db_exec(req_hebdo)
 
-    return [users_quoti, users_hebdo]
+    return [users_quoti, users_hebdo, users_all]
   end #/ get_contactables
 
   # Utile pour get_contactables et set_contactables

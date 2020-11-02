@@ -98,7 +98,7 @@ class << self
 
 
   def has_mails?(params)
-    destinataire = params[:destinataire]
+    destinataire = params[:destinataire]||params[:to]
     destinataire = destinataire.mail if destinataire.is_a?(TUser)
     exists?(destinataire, params[:content], params)
   end #/ has_mails?

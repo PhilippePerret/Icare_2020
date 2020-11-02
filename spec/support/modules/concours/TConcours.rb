@@ -59,6 +59,19 @@ class << self
   # Pour changer la phase courante du concours
   def set_phase(phase, annee = nil)
     db_exec(REQUEST_CHANGE_STEP, [phase, annee || ANNEE_CONCOURS_COURANTE])
+
+    # Pour la phase 0, il faut également s'assurer qu'il n'y a aucun document
+    # pour cette année là dans les synopsis.
+    # Il faut aussi supprimer toutes les inscriptions (pas les concurrents) pour
+    # cette année-là.
+    if phase == 0
+      Dir["#{CONCOURS_DATA_FOLDER}/**/*-#{ANNEE_CONCOURS_COURANTE}.*"].each do |f|
+        puts "DELETE #{f}"
+        File.delete(f)
+      end
+      request = "DELETE FROM concurrents_per_concours WHERE annee = ?"
+      db_exec(request, [ANNEE_CONCOURS_COURANTE])
+    end
   end #/ set_phase
 
 
@@ -80,6 +93,10 @@ end #/ theme
 def data
   @data ||= db_exec(REQUEST_DATA_CONCOURS,annee).first || {}
 end #/ data
+
+def set_phase(value)
+  self.class.set_phase(value, annee)
+end #/ set_phase
 # ---------------------------------------------------------------------
 #
 #   CONSTANTES
