@@ -5,7 +5,7 @@ require_js_module(['flash','jquery'])
 class HTML
   attr_reader :synopsis
   def titre
-    titre = case param(:view)
+    case param(:view)
     when "body_fiches_lecture"
       "Fiches de lecture"
     when "body_form_synopsis"
@@ -13,24 +13,18 @@ class HTML
     else
       "Évaluation des synopsis"
     end
-    "<span class='fright small'>#{opposite_link}</span>#{titre}"
   end #/titre
 
-  def opposite_link
-    case param(:view)
-    when "body_fiches_lecture", "body_form_synopsis"
-      Tag.link(route:"concours/evaluation", text:"➵ Évaluation des fiches", class:"discret")
-    else
-      Tag.link(route:"concours/evaluation?view=body_fiches_lecture", text:"➵ Fiches de lecture", class:"discret")
-    end
-  end #/ opposite_link
-
+  def usefull_links
+    ADMIN_USEFULL_LINKS
+  end #/ usefull_links
 
   # Code à exécuter avant la construction de la page
   def exec
     admin_required # TODO evaluators_required
     add_js('./js/modules/ajax')
     require_xmodule('synopsis')
+    require_xmodule('admin/constants')
 
     # Pour tous les cas où synoid est défini => un synopsis est choisi pour
     # une opération quelconque.

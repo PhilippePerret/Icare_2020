@@ -1,11 +1,16 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_module('form')
+require_xmodule('admin/constants')
 class HTML
   attr_reader :concours
   def titre
     "Administration du concours"
   end #/titre
+
+  def usefull_links
+    ADMIN_USEFULL_LINKS
+  end #/ usefull_links
 
   # Code à exécuter avant la construction de la page
   def exec
