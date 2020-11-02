@@ -1,0 +1,16 @@
+<%
+# frozen_string_literal: true
+=begin
+  Mail pour informer les concurrents que l'échéance est arrivée
+  Il s'agit ici du mail pour les concurrents qui n'ont pas transmis leur fichier
+  ou un fichier non conforme.
+=end
+subject("[CONCOURS] Fin de l’échéance des dépôts")
+%>
+<p>
+Bonjour %{pseudo} !
+</p>
+<p>Je vous annonce par la présente l'échéance de fin des dépôts pour le <%= CONCOURS_LINK.with(text:"Concours de Synopsis de l'atelier Icare", full:true) %>.</p>
+<p>Vous n'avez pas transmis de fichier de candidature conforme, votre participation est donc annulée pour cette session.</p>
+<p>Bien cordialement,</p>
+<p>L'administration de l'atelier Icare</p>

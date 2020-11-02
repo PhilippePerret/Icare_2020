@@ -51,7 +51,7 @@ class HTML
           end
           segs << "#{ESPACE_LINK.with('envoyer votre synopsis')}."
           segs.join(" ")
-        when 2 then "<strong>Les #{nombre_synopsis} synopsis sont en préselection</strong>.<br/><br/>Rendez-vous aux alentours du #{date_premiere_selection} pour les résultats de la première sélection !"
+        when 2 then "<strong>Les #{nombre_synopsis} synopsis sont en cours de préselection</strong>.<br/><br/>Rendez-vous aux alentours du #{date_premiere_selection} pour les résultats de la première sélection !"
         when 3 then "<strong>Les 10 synopsis sélectionnés sont en pleiniaire</strong>.<br/>(#{PALMARES_LINK.with('voir les synopsis retenus')})<br/><br/>Rendez-vous aux alentours du #{date_selection_finale} pour le palmarès final."
         when 5 then "<strong>Les synopsis lauréats ont été choisis !</strong><br/><br/>Voir le #{PALMARES_LINK}."
         else "<strong>Le concours est achevé</strong> mais vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire pour la prochaine session')}.<br/><br/>Rendez-vous pour la prochaine session !"
@@ -86,9 +86,11 @@ private
     @date_selection_finale ||= "1<exp>er</exp> juin #{ANNEE_CONCOURS_COURANTE}"
   end #/ date_selection_finale
 
+  # OUT   Le nombre de synopsis
+  # Note : il ne correspond pas nécessaire au nombre de concurrents.
   def nombre_synopsis
     @nombre_synopsis ||= begin
-      db_count(DBTBL_CONCURS_PER_CONCOURS, {annee:ANNEE_CONCOURS_COURANTE})
+      db_count(DBTBL_CONCURS_PER_CONCOURS, "annee = #{ANNEE_CONCOURS_COURANTE} AND SUBSTRING(specs,2,1) = 1")
     end
   end #/ nombre_synopsis
 end #/HTML

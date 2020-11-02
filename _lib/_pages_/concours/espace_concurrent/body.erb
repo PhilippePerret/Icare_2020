@@ -16,7 +16,7 @@
   end
 %></p>
 
-<% if not(concurrent.current?) %>
+<% if not(concurrent.current?) && Concours.current.phase < 2 %>
   <div class="right mt2 mb2">
     <%= CONCOURS_SIGNUP.with("☞#{ISPACE}S’inscrire à la session #{Concours.current.annee} du concours.") %>
   </div>
@@ -44,18 +44,34 @@
       <span class="value bold"><%= concours.theme.upcase %></span>
     </div>
     <div class="row">
-      <span class="libelle">Échéance</span>
-      <span class="value bold"><%= concours.h_echeance %></span>
+      <% if concours.phase1? %>
+        <span class="libelle">Échéance</span>
+        <span class="value bold"><%= concours.h_echeance %></span>
+      <% elsif concours.phase2? %>
+        <span class="libelle">Phase</span>
+        <span class="concours-phase value bold">Présélections</span>
+      <% elsif concours.phase3? %>
+        <span class="libelle">Phase</span>
+        <span class="value bold">Sélection finale</span>
+      <% elsif concours.phase > 3 %>
+        <span class="libelle">Phase</span>
+        <span class="value bold">Concours achevé</span>
+      <% end %>
     </div>
     <div class="row right mt2">
-      <span class="italic">Nombre de concurrents inscrits : </span>
-      <span id="nombre-concurrents">
-        <% if concours.nombre_concurrents == 0 %>
-          Vous serez le premier inscrit au concours !
-        <% else %>
-          <%= concours.nombre_concurrents.to_s.rjust(3, "0") %>
-        <% end %>
-      </span>
+      <% if concours.phase1? %>
+        <span class="italic">Nombre de concurrents inscrits : </span>
+        <span id="nombre-concurrents">
+          <% if concours.nombre_concurrents == 0 %>
+            Vous serez le premier inscrit au concours !
+          <% else %>
+            <%= concours.nombre_concurrents.to_s.rjust(3, "0") %>
+          <% end %>
+        </span>
+      <% elsif concours.phase > 1 %>
+        <span class="italic">Nombre de synopsis en lice : <span id="nombre-concurrents"><%= concours.nombre_synopsis_conformes %></span></span>
+
+      <% end %>
     </div>
   <%
     else # si le concours n'est pas en cours
@@ -114,12 +130,23 @@
 # ---------------------------------------------------------------------
 #
 # FORMULAIRE DE DÉPÔT DU FICHIER DE CANDIDATURE (if any)
+# OU    Annonce en lice ou pas suivant dépôt de fichier et conformité
+# OU    Téléchargement de la fiche de lecture
 #
 # ---------------------------------------------------------------------
 %>
-<fieldset id="concours-envoi-dossier">
+<fieldset id="concours-fichier-candidature">
   <legend>Fichier de candidature</legend>
-  <%= section_fichier_candidature %>
+  <% if concours.phase1? %>
+    <%= section_fichier_candidature %>
+  <% elsif concours.phase2? %>
+    <p><% if concurrent.fichier_conforme? %>
+      <span>Votre synopsis est conforme, il est en lice</span>
+    <% else %>
+      <span>Vous n'êtes pas en lice</span>
+    <% end %>
+    <span> pour la session <%=ANNEE_CONCOURS_COURANTE%></span>.</p>
+  <% end %>
 </fieldset>
 
 <%

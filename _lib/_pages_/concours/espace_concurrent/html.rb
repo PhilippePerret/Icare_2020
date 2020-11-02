@@ -14,7 +14,7 @@ class HTML
       ul << Tag.link(route:"#{route}#chargement-fiche-lecture", text: "Fiche lecture")
     end
     if Concours.current.phase1?
-      ul << Tag.link(route:"#{route}#concours-envoi-dossier", text: "Envoi fichier")
+      ul << Tag.link(route:"#{route}#concours-fichier-candidature", text: "Envoi fichier")
     end
     ul << Tag.link(route:"#{route}#concours-historique", text: "Historique participations")
     ul << Tag.link(route:"#{route}#concours-destruction", text:"Destruction profil")

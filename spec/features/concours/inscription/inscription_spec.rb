@@ -77,7 +77,7 @@ Gel pour des données de base de concours.
       "La page devrait contenir la section des informations sur le concours"
     expect(page).to have_css("fieldset#concours-preferences"),
       "La page devrait contenir une partie pour ses préférences…"
-    expect(page).to have_css("fieldset#concours-envoi-dossier"),
+    expect(page).to have_css("fieldset#concours-fichier-candidature"),
       "La page devrait contenir la section permettant d'envoyer le dossier"
     expect(page).to have_css("section#concours-historique"),
       "La page devrait contenir l'historique de concours du concurrent"

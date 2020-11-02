@@ -58,7 +58,7 @@ feature "Dépôt du fichier de candidature" do
         expect(page).to have_titre("Inscription") # on est renvoyé là
         goto("concours/espace_concurrent")
         screenshot("ancien-concurent-espace-personnel")
-        expect(page).to have_css("fieldset#concours-envoi-dossier")
+        expect(page).to have_css("fieldset#concours-fichier-candidature")
         expect(page).not_to have_css("form#concours-dossier-form")
         expect(page).to have_content("Vous devez vous inscrire à la session #{ANNEE_CONCOURS_COURANTE}")
       end

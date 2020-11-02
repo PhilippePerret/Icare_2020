@@ -3,9 +3,9 @@
 class Concours
 PHASES_DATA = {
   0 => {name: "En attente", name_current:"En attente", name_done: "Préparé"},
-  1 => {name: "Lancer et annoncer le concours", name_current:"Lancement du concours en cours", name_done: "Concours lancé et annoncé"},
-  2 => {name: "Statuer l'échéance des rendus", name_current: "Première sélection en cours", name_done: "Première sélection effectuée"},
-  3 => {name: "Annoncer première sélection", name_current: "Seconde sélection en cours", name_done: "Sélection finale effectuée"},
+  1 => {name: "Lancer et annoncer le concours", name_current:"Concours lancé et annoncé", name_done: "Concours en cours"},
+  2 => {name: "Annoncer l'échéance des dépôts", name_current: "Première sélection en cours", name_done: "Première sélection effectuée"},
+  3 => {name: "Annoncer fin de pré-sélection", name_current: "Seconde sélection en cours", name_done: "Sélection finale effectuée"},
   5 => {name: "Annoncer le palmarès", name_current:"Annonce du palmarès en cours", name_done: "Palmarès annoncé"},
   8 => {name: "Annoncer fin officielle du concours", name_current:"Annonce de la fin du concours", name_done: "Fin officielle du concours"},
   9 => {name: "Nettoyer le concours", name_current:"Nettoyage du concours en cours", name_done:"Concours nettoyé"}
@@ -24,9 +24,11 @@ PHASES_DATA[1].merge!(operations: [
   {name:"📣 Actualité annonçant l'ouverture du concours", method: :add_actualite_concours_start}
 ])
 PHASES_DATA[2].merge!(operations:[
-  {name:"📤 Envoi du mail aux concurrents annonçant la fin de l’échéance"},
-  {name:"📤 Envoi du mail aux jurés annonçant la fin de l'échéance"},
+  {name:"📤 Envoi du mail aux concurrents annonçant la fin de l’échéance", method: :send_mail_concurrents_echeance},
+  {name:"📤 Envoi du mail aux jurés annonçant la fin de l'échéance", method: :send_mail_jury_echeance},
+  {name:"Vérification du réglage de la conformité de tous les fichiers de candidature", method: :check_reglage_conformite, explication:"Avant de passer à cette étape, il convient de s'assurer que tous les fichiers soient marqués conformes (1) ou non conformes (2), mais en aucun cas 0."},
   {name:"Retrait du formulaire pour envoyer son dossier", info: true},
+  {name:"📣 Actualité annonçant la fin de l'échéance du concours", method: :add_actualite_concours_echeance}
 ])
 PHASES_DATA[3].merge!(operations:[
   {name:"📤 Envoi du mail aux concurrents annonçant les résultats de la pré-sélection"},

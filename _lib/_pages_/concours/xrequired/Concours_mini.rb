@@ -71,6 +71,8 @@ end #/ h_echeance
 
 # Phase de dépôt des fichiers de candidature
 def phase1?; phase == 1 end
+def phase2?; phase == 2 end
+def phase3?; phase == 3 end
 
 # Retourne TRUE is le concours est démarré
 def started?

@@ -742,7 +742,22 @@ ERRORS = {
 
 
 
-### Envoi de mail
+### Envoi des erreurs à l'administration
+
+Pour pouvoir signaler (par mail) des erreurs à l'administration, on utilise la méthode :
+
+~~~ruby
+
+send_error("<message d'erreur>"[, {<data>}])
+# => Produit un mail qui m'est envoyé
+
+~~~
+
+
+---
+
+
+## Envoi de mail
 
 Pour l'envoi des mails, on utilise maintenant au maximum la class `MailSender` qui présente deux avantages et non des moindres :
 
@@ -764,16 +779,26 @@ MailSender.send(to:user.mail, file:"mon/fichier/mail", bind: user)
 
 > On peut ajouter `no_citation:true` pour ne pas écrire de citation dans le mail.
 
-#### Envoi de mailing
+### Envoi de mailing
 
 Pour envoyer un mailing, on utilise la méthode `MailSender#send_mailing` avec les paramètres :
 
 ~~~ruby
 require_module('mail')
-MailSender.send_mail([destinataires], "path/to/mail", bindee)
+MailSender.send_mail({to: [destinataires], file: "path/to/mail", bind:bindee}, {options})
 ~~~
 
-#### Ancienne méthode (éviter de l'utiliser)
+où `options` est une table optionnelle pouvant contenir :
+
+~~~
+
+:noop			Si TRUE, on se contente de simuler l'envoi
+
+~~~
+
+
+
+### Ancienne méthode (éviter de l'utiliser)
 
 Pour envoyer un mail à un destinataire quelconque, on utilise la méthode générique :
 
@@ -782,19 +807,6 @@ Mail.send(to: "<email>", subject: "<sujet>", message: "<message>")
 ~~~
 
 > Note : par défaut, le `:to` (destinataire) et le `:from` (expéditeur) sont mis à l'adresse du site. Donc quand on veut m'envoyer un message, il suffit de ne pas mettre de `:to`.
-
-
-
-### Envoi des erreurs à l'administration
-
-Pour pouvoir signaler (par mail) des erreurs à l'administration, on utilise la méthode :
-
-~~~ruby
-
-send_error("<message d'erreur>"[, {<data>}])
-# => Produit un mail qui m'est envoyé
-
-~~~
 
 
 

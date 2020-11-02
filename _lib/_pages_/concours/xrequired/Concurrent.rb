@@ -259,6 +259,13 @@ def dossier_transmis?
   end) == :true
 end #/ dossier_complete?
 
+# OUT   True si le fichier a été transmis et qu'il est conforme.
+def fichier_conforme?
+  (@fichier_is_conforme ||= begin
+    dossier_transmis? && (spec(1) == 1) ? :true : :false
+  end) == :true
+end #/ fichier_conforme?
+
 # ---------------------------------------------------------------------
 #
 #   Méthodes de changement des données

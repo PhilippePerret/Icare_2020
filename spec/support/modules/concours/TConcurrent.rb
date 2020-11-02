@@ -6,9 +6,10 @@ class TConcurrent
   include RSpec::Matchers
 
   include Capybara::DSL
+
 # ---------------------------------------------------------------------
 #
-#   MÉTHODES PUBLIQUES DE TEST
+#   MÉTHODES D'INSTANCE PUBLIQUES DE TEST
 #
 # ---------------------------------------------------------------------
 
@@ -39,16 +40,26 @@ def set_specs(new_specs)
 end #/ set_specs
 
 
+# ---------------------------------------------------------------------
+#
+#   CLASSE
+#
+# ---------------------------------------------------------------------
+
 class << self
 
 # Retourne une instance TConcurrent choisie au hasard
 #
 # IN    +options+ Table d'options:
 #                 :femme    Si true on doit retourner une femme
+#                 :without_fichier
 #                 :without_synopsis   Si true, on doit retourner un
 #                       concurrent sans synopsis.
+#                 :avec_fichier
 #                 :with_synopsis  Si true, un concurrent avec déjà un fichier
 #                       pour la session courante.
+#                 :avec_fichier_conforme
+#                     Si true, un concurrent avec un fichier conforme.
 #                 :non_inscrit    Si true, il faut renvoyer un ancien concurrent
 #                 :current        Inverse de :non_inscrit
 # OUT   Un concurrent pris au hasard, qui peut remplir certaines
@@ -65,6 +76,14 @@ def inscrire_icarien(u, options)
   proceed_inscrire_icarien(u, options)
 end #/ self.inscrire_icarien
 
+# Retourne la liste des jurés
+def jury
+  @jury ||= begin
+    require './_lib/data/secret/concours'
+    CONCOURS_DATA[:evaluators]
+  end
+end #/ jury
+
 end #/ << self
 # ---------------------------------------------------------------------
 #
@@ -80,11 +99,18 @@ class << self
 
   def proceed_get_random(options = nil)
     options ||= {}
+    options.merge!(avec_fichier: options.delete(:with_fichier)) if options.key?(:with_fichier)
+    options.merge!(avec_fichier: options.delete(:with_synopsis)) if options.key?(:with_synopsis)
+    options.merge!(sans_fichier: true) if options[:avec_fichier] === false
+    options.merge!(avec_fichier: true) if options.key?(:avec_fichier_conforme)
     options[:current] = !options[:non_inscrit] if options.key?(:non_inscrit)
     candidat = nil
     begin
-      candidat =  if options[:with_synopsis] # tiendra compte de options[:femme]
-                    get_concurrent_with_synopsis(options)
+      candidat =  if options[:avec_fichier]
+                    # tiendra compte de options[:femme] et :avec_fichier_conforme
+                    get_concurrent_avec_fichier(options)
+                  elsif options[:sans_fichier]
+                    get_concurrent_sans_fichier(options)
                   elsif options[:femme]
                     get_une_femme
                   elsif options[:current]
@@ -100,16 +126,6 @@ class << self
       request = "DELETE FROM concurrents_per_concours WHERE annee = ? AND concurrent_id = ?"
       db_exec(request, [ANNEE_CONCOURS_COURANTE, candidat.id])
     end
-
-    # Si on veut un candidat sans synopsis
-    if options[:without_synopsis]
-      # On doit détruire son dossier
-      FileUtils.rm_rf(candidat.folder)
-      # On doit régler ses options (specs à "00000000")
-      candidat.set_specs("0"*8)
-    elsif options[:with_synopsis]
-      raise if candidat.specs[0] != "1"
-    end
     # puts "candidat : #{candidat.inspect}"
     candidat.reset
     return candidat
@@ -121,15 +137,36 @@ class << self
     end
   end #/ get_femme
 
-  def get_concurrent_with_synopsis(options)
-    all_current.each do |concurrent|
-      cond = concurrent.specs[0] == "1"
+  # On s'assure d'avoir un concurrent sans fichier
+  def get_concurrent_sans_fichier(options)
+    all_current.each do |conc|
+      cond = conc.specs[0] == "0"
       next if not cond
-      cond = cond && concurrent.femme? if options[:femme]
-      return concurrent if cond
+      # On s'assure que le fichier n'existe pas
+      conc.destroy_fichier if conc.dossier_transmis?
+      cond = cond && conc.femme? if options[:femme]
+      return conc if cond
     end
     return nil
-  end #/ get_concurrent_with_synopsis
+  end #/ get_concurrent_sans_fichier
+  def get_concurrent_avec_fichier(options)
+    all_current.each do |conc|
+      cond = conc.specs[0] == "1"
+      next if not cond
+      # On s'assure que le fichier existe
+      conc.make_fichier if not conc.dossier_transmis?
+      cond = cond && conc.specs[1] == "1" if options[:avec_fichier_conforme]
+      cond = cond && conc.femme? if options[:femme]
+      return conc if cond
+    end
+    conc = all_current.first
+    sps = conc.specs.split('')
+    sps[0] = "1"
+    sps[1] = "1" if options[:avec_fichier_conforme]
+    conc_set_specs(sps.join(''))
+    conc.make_fichier if not conc.dossier_transmis?
+    return conc
+  end #/ get_concurrent_avec_fichier
 
   def all
     @allconcurrents ||= begin
@@ -200,6 +237,26 @@ end #/ initialize
 alias :pseudo :patronyme
 alias :id :concurrent_id
 
+# ---------------------------------------------------------------------
+#
+#   Méthodes d'interaction
+#
+# ---------------------------------------------------------------------
+
+# Pour se déconnecter, le concurrent rejoint la page d'accueil du
+# concours et clique sur "Se déconnecter".
+# Noter que cette déconnexion n'a rien à voir avec la connexion de l'atelier
+def se_deconnecte
+  visit("#{App::URL}/concours/espace_concurrent")
+  click_link("Se déconnecter")
+end #/ se_deconnecte
+
+# ---------------------------------------------------------------------
+#
+#   Méthodes publiques
+#
+# ---------------------------------------------------------------------
+
 def reset
   d = db_exec(REQUEST_CONCURRENT_ALL_DATA, [ANNEE_CONCOURS_COURANTE, id]).first
   # Mais si le concurrent n'est pas inscrit à la session courante, la commande
@@ -209,6 +266,49 @@ def reset
   dispatch(d)
 end #/ reset
 
+# Fabrique un fichier de candidature pour le concurrent pour l'année +annee+
+# (ou l'année courante si nil), en réglant ses specs à "11" pour les
+# deux premières
+def make_fichier_conforme(annee = nil)
+  annee ||= ANNEE_CONCOURS_COURANTE
+  make_fichier(annee)
+  dc = db_get(DBTBL_CONCURS_PER_CONCOURS,"annee = #{annee} AND concurrent_id = #{id}")
+  sp = dc[:specs].split('')
+  sp[0] = "1"
+  sp[1] = "1"
+  request = "UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET specs = ? WHERE annee = ? AND concurrent_id = ?"
+  db_exec(request, [sp.join(''), annee, id])
+  reset
+end #/ make_fichier
+
+def make_fichier(annee)
+  annee ||= ANNEE_CONCOURS_COURANTE
+  fsrc = File.join(SPEC_SUPPORT_FOLDER,'asset','documents','autre_doc.pdf')
+  fdst = File.join(folder, "#{id}-#{annee}.pdf")
+  FileUtils.copy(fsrc, fdst)
+end #/ make_fichier
+
+# Méthode qui permet de détruire le fichier de candidature du concurrent
+# Si aucune année n'est précisée, c'est l'année courante
+# DO    - Détruit le fichier du concurrent
+#       - Mets ses specs à "0"
+def destroy_fichier(annee = nil)
+  annee ||= ANNEE_CONCOURS_COURANTE
+  fpath = fichier_path(annee)
+  File.delete(fpath) if File.exists?(fpath)
+  set_specs("0"*8)
+end #/ destroy_fichier
+
+def dossier_transmis?
+  not fichier_path(ANNEE_CONCOURS_COURANTE).nil?
+end #/ dossier_transmis?
+
+# ---------------------------------------------------------------------
+#
+#   Méthodes fonctionnelles
+#
+# ---------------------------------------------------------------------
+
 def dispatch(d)
   return if d.nil?
   d.each{|k,v|instance_variable_set("@#{k}",v)}
@@ -217,6 +317,10 @@ end #/ dispatch
 def folder
   @folder ||= File.join(CONCOURS_DATA_FOLDER, self.id)
 end #/ folder
+
+def fichier_path(annee)
+  Dir["#{folder}/#{id}-#{annee}.*"].first
+end #/ fichier_path
 
 def femme?
   sexe == 'F'

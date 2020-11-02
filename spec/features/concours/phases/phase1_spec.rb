@@ -39,12 +39,12 @@ feature "Phase 1 du concours" do
       screenshot("admin-passe-phase-1")
 
       # *** On vérifie grossièrement la page ***
-      expect(page).to have_css("div.etape-titre", text:"ÉTAPE 1. Lancement du concours en cours")
+      expect(page).to have_css("div.etape-titre", text:"ÉTAPE 1. Lancer et annoncer le concours")
       btn_proceder = "Procéder aux opérations cochées"
       expect(page).to have_button(btn_proceder)
       # Le menu a changé
       expect(page).not_to have_select("current_phase", selected:"En attente")
-      expect(page).to have_select("current_phase", selected:"Lancement du concours en cours")
+      expect(page).to have_select("current_phase", selected:"Concours lancé et annoncé")
 
       # *** On procède vraiment au changement ***
       start_time = Time.now.to_i.freeze

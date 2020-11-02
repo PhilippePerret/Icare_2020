@@ -8,19 +8,15 @@ ilya_un_resultat = not(resultat.nil_if_empty.nil?)
 #   FORMULAIRE POUR LES ÉTAPES
 #
 # ---------------------------------------------------------------------
-STEPS_VALUES = Concours::PHASES_DATA.collect do |k,v|
+PHASES_VALUES = Concours::PHASES_DATA.collect do |k,v|
   # message("#{k}::#{k.class} < #{concours.phase}::#{concours.phase.class} ? #{(k < concours.phase).inspect}")
-  name = if k == concours.phase
-    v[:name_current]
-  else
-    k < concours.phase ? v[:name_done] : v[:name]
-  end
+  name = k < concours.phase ? v[:name_done] : (k == concours.phase ? v[:name_current] : v[:name])
   [k, name]
 end
 phaseform = Form.new(id:"concours-phase-form", route:route.to_s, class:"nogrid nobackground nomargin")
 phaseform.rows = {
   "<op/>" => {type:"hidden", name:"op", value:"change_phase"},
-  "Étape courante" => {type:"select", class:"", name:"current_phase", values:STEPS_VALUES, value:concours.phase},
+  "Étape courante" => {type:"select", class:"", name:"current_phase", values:PHASES_VALUES, value:concours.phase},
 }
 phaseform.submit_button = "Simuler pour procéder à cette étape…"
 phaseform.submit_button_class = "small btn"

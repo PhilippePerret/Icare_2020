@@ -108,6 +108,7 @@ def send_mailing(dmail, options = nil)
   options ||= {}
   options.merge!(noop: dmail.delete(:noop)) unless options.key?(:noop)
   destinataires = dmail[:to]
+  log("Destinataires du mailing: #{destinataires}")
   # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
   implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))
   # On construit le texte avant pour définir le titre

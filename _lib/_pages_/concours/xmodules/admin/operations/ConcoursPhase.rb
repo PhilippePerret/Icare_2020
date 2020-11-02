@@ -21,7 +21,7 @@ end #/ initialize
 #   Méthodes d'action
 # ---------------------------------------------------------------------
 def run_operations(options = nil)
-  html.res << Tag.div(class:'etape-titre', text:"ÉTAPE #{numero}. #{name_current}")
+  html.res << Tag.div(class:'etape-titre', text:"ÉTAPE #{numero}. #{name}")
   require_relative "./phase_operations/phase_#{data[:phase]}"
   # On joue toutes les opérations de l'étape, sauf celle décochées
   operations.each_with_index do |dop, idx|
