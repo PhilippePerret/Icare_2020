@@ -67,6 +67,7 @@ CONCOURS_LOGIN  = Linker.new(route:'concours/identification', text:"formulaire d
 ESPACE_LINK     = Linker.new(route:'concours/espace_concurrent', text:"espace personnel")
 PALMARES_LINK   = Linker.new(route:'concours/palmares', text:"palmarès #{ANNEE_CONCOURS_COURANTE}")
 RESULTATS_LINKS = Linker.new(route:'concours/resultats', text:"Résultats")
+EVALUATION_LINK = Linker.new(route:'concours/evaluation', text: "section “Évaluation”")
 
 # Lien conduisant au règlement du concours de l'année en cours
 REGLEMENT_LINK = Linker.new(route:"public/Concours_ICARE_#{ANNEE_CONCOURS_COURANTE}.pdf", target: :blank, text:"Règlement du concours")

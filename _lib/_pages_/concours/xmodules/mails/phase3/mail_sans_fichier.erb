@@ -1,0 +1,13 @@
+<%
+# frozen_string_literal: true
+
+subject("[CONCOURS #{Concours.current.annee}] Fin des présélections")
+%>
+<p>
+Ch%{ere} %{pseudo},
+</p>
+<p>Je vous annonce la fin des présélections du <%= CONCOURS_LINK.with(full:true, text:"Concours de Synopsis de l'atelier Icare") %>.</p>
+<p>Votre fichier n'ayant pas été envoyé à temps ou jugé conforme, vous n'avez malheureusement pas pu concourir pour cette présélection.</p>
+<p>Vous pouvez néanmoins retrouver toutes les informations dans la section “<%= RESULTATS_LINKS.with(full:true) %>” du concours, sur le site de l'atelier Icare.</p>
+<p>Bien à vous,</p>
+<p>L’administration du concours de l'atelier Icare</p>

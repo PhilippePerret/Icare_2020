@@ -76,6 +76,17 @@ class << self
       session.delete('concours_user_id')
     end
   end #/ authentify
+
+  def all_current
+    @all_current ||= begin
+      db_exec(REQUEST_ALL_DATA_CONCURRENTS_CURRENT, [Concours.current.annee]).collect do |dc|
+        conc = new(concurrent_id: dc[:concurrent_id])
+        conc.set_all_data(dc)
+        conc
+      end
+    end
+  end #/ all_current
+
   def table_concurrents
     @table_concurrents ||= begin
       h = {}
@@ -87,6 +98,7 @@ class << self
     end
   end #/ table_concurrents
 end # << self
+
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
@@ -105,7 +117,21 @@ def ref
   @ref ||= "#{patronyme} (##{id} - #{mail})"
 end #/ ref
 
+# OUT   Les datas minimum du concurrent (pour les mails)
+def min_data
+  @min_data ||= {pseudo:pseudo, mail:mail, sexe:sexe, id:id}
+end #/ min_data
+
 def bind; binding() end
+
+# Quand on charge toutes les données du concurrent pour le concours courant,
+# on peut utiliser cette méthode pour définir toutes les données.
+#   @data   Ce sont les données du concurrent, hors concours
+#   @data_current_concours    Ce sont les données propres au concours courant
+def set_all_data(alldata)
+  @data = alldata
+  @data_current_concours = alldata
+end #/ set_all_data
 
 # Pour charger le concurrent depuis la table
 # On doit réussir à le faire avec l'ID de session et l'concurrent_id gardé en session
@@ -127,9 +153,14 @@ def patronyme ; @patronyme ||= data[:patronyme] end
 alias :pseudo :patronyme
 
 def mail ; @mail ||= data[:mail] end
+def sexe ; @sexe ||= data[:sexe] end
 
 def concurrent_id; @concurrent_id end #/ concurrent_id
 alias :id :concurrent_id
+
+def projet_titre
+  @projet_titre ||= data_current_concours[:titre]
+end #/ projet_titre
 
 def folder
   @folder ||= File.join(CONCOURS_DATA_FOLDER, id)
@@ -224,7 +255,7 @@ end #/ exists?
 
 def femme?
   (@is_femme ||= begin
-    data[:sexe] == 'F' ? :true : :false
+    sexe == 'F' ? :true : :false
   end) == :true
 end #/ femme?
 
@@ -265,6 +296,20 @@ def fichier_conforme?
     dossier_transmis? && (spec(1) == 1) ? :true : :false
   end) == :true
 end #/ fichier_conforme?
+
+# OUT   True si le concurrent, pour le concours courant, a été présélectionné
+def preselected?
+  (@is_preselected ||= begin
+    spec(2) == 1 ? :true : :false
+  end) == :true
+end #/ preselected?
+
+# OUT   Le prix reçu (1, 2 ou 3) ou nil
+def prix
+  p = spec(3)
+  p = nil if p == 0
+  return p
+end #/ prix
 
 # ---------------------------------------------------------------------
 #
@@ -310,9 +355,17 @@ SELECT
   cc.*,
   cpc.specs AS specs, -- pour savoir si le projet est envoyé
   cpc.titre
-  FROM concours_concurrents cc
-  INNER JOIN concurrents_per_concours cpc ON cpc.concurrent_id = cc.concurrent_id
+  FROM #{DBTBL_CONCURRENTS} cc
+  INNER JOIN #{DBTBL_CONCURS_PER_CONCOURS} cpc ON cpc.concurrent_id = cc.concurrent_id
   WHERE cc.concurrent_id = ? AND cc.session_id = ?
+SQL
+
+REQUEST_ALL_DATA_CONCURRENTS_CURRENT = <<-SQL
+SELECT
+  cc.*, cpc.*
+  FROM #{DBTBL_CONCURRENTS} cc
+  INNER JOIN #{DBTBL_CONCURS_PER_CONCOURS} cpc ON cpc.concurrent_id = cc.concurrent_id
+  WHERE cpc.annee = ?
 SQL
 
 REQUEST_DATA_CONCURRENT_CURRENT_CONCOURS = <<-SQL

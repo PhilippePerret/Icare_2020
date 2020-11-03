@@ -108,7 +108,7 @@ def send_mailing(dmail, options = nil)
   options ||= {}
   options.merge!(noop: dmail.delete(:noop)) unless options.key?(:noop)
   destinataires = dmail[:to]
-  log("Destinataires du mailing: #{destinataires}")
+  # log("Destinataires du mailing: #{destinataires}")
   # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
   implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))
   # On construit le texte avant pour définir le titre
@@ -164,10 +164,10 @@ end #/ send
 # Ajouter quelques féminines communes aux propriétés du destinataire
 def sexize_destinataire_properties(props)
   is_femme = props[:sexe] == 'F'
-  props.merge!({
-    e:  is_femme  ? "e" : "",
-    ve: is_femme  ? "ve" : "f", # active/actif
-    })
+  FemininesMethods::FEMININES.each do |key, dkey|
+    props.merge!(key => is_femme ? dkey[0] : dkey[1])
+  end
+  return props
 end #/ sexize_destinataire_properties
 
 # Simuler l'envoi du message +message+ aux +destinataires+

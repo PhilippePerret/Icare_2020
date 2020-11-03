@@ -1,8 +1,8 @@
 # Concours<br>Manuel d'utilisation
 
-# Étape du concours
+# Phases du concours
 
-L'étape courante du concours détermine là où on se trouve du concours. Elle est maintenue par la propriété `phase` dans la base de données
+La phase courante du concours détermine là où on se trouve du concours. Elle est maintenue par la propriété `phase` dans la base de données
 
 | phase | Description                |          | Note                                                         |
 | ---- | -------------------------- | -------- | ------------------------------------------------------------ |
@@ -22,7 +22,7 @@ L'étape courante du concours détermine là où on se trouve du concours. Elle 
 
 
 
-### Opérations pour chaque étape
+### Opérations pour chaque phase
 
 On peut définir les opérations et les informations à donner à chaque passage d’étape dans le fichier [phases_data](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/admin/lib/phases_data.rb). On trouve par exemple :
 
@@ -70,7 +70,7 @@ STEPS_DATA = {
 
 
 
-## Les documents (fichier de candidature)
+## Les fichiers de candidature
 
 On peut évaluer les fichiers de candidature dans la section `concours/administration`.
 
@@ -78,10 +78,23 @@ La propriété `specs` de la donnée du concurrent dans la table `concurrents_pe
 
 | bit  | Description                                                  | Valeurs                                      |
 | ---- | ------------------------------------------------------------ | -------------------------------------------- |
-| 0    | État de dépôt du fichier                                     | 0: non déposé, 1: déposé                     |
-| 1    | Conformité du fichier (après vérification par l'administration) | 0: non vérifié, 1: conforme, 2: non conforme |
-| 2    |                                                              |                                              |
-| 3    |                                                              |                                              |
+| 0    | État de dépôt du fichier<br />Répond à `<concurrent>.dossier_transmis?` | 0: non déposé, 1: déposé                     |
+| 1    | Conformité du fichier (après vérification par l'administration)<br />Répond à `<concurrent>.fichier_conforme?` | 0: non vérifié, 1: conforme, 2: non conforme |
+| 2    | Présélectionné ?<br />Répond à `<concurrent>.preselected?`   | 0: non, 1: oui                               |
+| 3    | Lauréat<br />Répond à `<concurrent>.prix`                    | 0: non, 1: 1er prix, 2: 2e, 3: 3e            |
+| 4    |                                                              |                                              |
+| 5    |                                                              |                                              |
+| 6    |                                                              |                                              |
+| 7    |                                                              |                                              |
+| 8    |                                                              |                                              |
+
+
+
+### Notes obtenues
+
+**`note1`**, est la note obtenue pour les présélections, pour tous les projets.
+
+**`note2`** est la note obtenue lors de la sélection finale par les projets présélectionnés (note : la première doit être obligatoirement supérieure aux notes des autres projets non présélectionnés mais cette note-ci peut être inférieure, puisque le jury peut se montrer plus dur.)
 
 
 

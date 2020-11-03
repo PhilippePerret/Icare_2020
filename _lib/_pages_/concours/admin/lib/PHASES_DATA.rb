@@ -31,7 +31,9 @@ PHASES_DATA[2].merge!(operations:[
   {name:"📣 Actualité annonçant la fin de l'échéance du concours", method: :add_actualite_concours_echeance}
 ])
 PHASES_DATA[3].merge!(operations:[
-  {name:"📤 Envoi du mail aux concurrents annonçant les résultats de la pré-sélection"},
+  {name:"📤 Envoi du mail aux concurrents annonçant les résultats de la pré-sélection", method: :send_mail_concurrents_preselection},
+  {name:"📤 Envoi du mail aux membres des deux jurys", method: :send_mail_jury_preselection},
+  {name:"📣 Actualité annonçant la fin des présélections", method: :add_actualite_concours_fin_preselection},
   {name:"Panneau dans la section “Résultats” pour voir les pré-sélections", info: true}
 ])
 PHASES_DATA[5].merge!(operations:[

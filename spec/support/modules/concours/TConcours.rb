@@ -21,6 +21,13 @@ class << self
     @current ||= new(ANNEE_CONCOURS_COURANTE)
   end #/ current
 
+  def jury
+    @jury ||= begin
+      require './_lib/data/secret/concours'
+      CONCOURS_DATA[:evaluators]
+    end
+  end #/ jury
+
   # Peuple les tables concours avec des données aléatoires
   #
   # - Chaque concurrent a participé à chaque concours

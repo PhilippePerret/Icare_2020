@@ -37,8 +37,34 @@ end #/ logout
 def set_specs(new_specs)
   request = "UPDATE concurrents_per_concours SET specs = ? WHERE concurrent_id = ? AND annee = ?"
   db_exec(request, [new_specs, id, ANNEE_CONCOURS_COURANTE])
+  reset
 end #/ set_specs
 
+def dossier_transmis?
+  (@dossier_is_transmis ||= begin
+    fichier_path(ANNEE_CONCOURS_COURANTE).nil? ? :false : :true
+  end) == :true
+end #/ dossier_transmis?
+
+def fichier_conforme?
+  (@fichier_is_conforme ||= begin
+    dossier_transmis? && (specs[1] == "1") ? :true : :false
+  end) == :true
+end #/ fichier_conforme?
+
+def preselected?
+  (@is_preselected ||= begin
+    specs[2] == "1" ? :true : :false
+  end) == :true
+end #/ preselected?
+
+def set_preselected
+  set_spec(2,1)
+end #/ set_preselected
+
+def set_not_preselected
+  set_spec(2,0)
+end #/ set_not_preselected
 
 # ---------------------------------------------------------------------
 #
@@ -84,14 +110,11 @@ def jury
   end
 end #/ jury
 
-end #/ << self
 # ---------------------------------------------------------------------
 #
 #   MÉTHODES FONCTIONNELLES
 #
 # ---------------------------------------------------------------------
-
-class << self
 
   def reset
     @allconcurrents = nil
@@ -105,6 +128,7 @@ class << self
     options.merge!(avec_fichier: true) if options.key?(:avec_fichier_conforme)
     options[:current] = !options[:non_inscrit] if options.key?(:non_inscrit)
     candidat = nil
+    options.merge!(not_mail: []) unless options.key?(:not_mail)
     begin
       candidat =  if options[:avec_fichier]
                     # tiendra compte de options[:femme] et :avec_fichier_conforme
@@ -118,6 +142,7 @@ class << self
                   else
                     all[rand(all.count)]
                   end
+      candidat = nil if options[:not_mail].include?(candidat.mail)
     end while candidat.nil?
 
     # puts "Candidat: #{candidat.inspect}"
@@ -132,14 +157,14 @@ class << self
   end #/ get_a_concurrent
 
   def get_une_femme
-    all.each do |concurrent|
+    all.shuffle.each do |concurrent|
       return concurrent if concurrent.femme?
     end
   end #/ get_femme
 
   # On s'assure d'avoir un concurrent sans fichier
   def get_concurrent_sans_fichier(options)
-    all_current.each do |conc|
+    all_current.shuffle.each do |conc|
       cond = conc.specs[0] == "0"
       next if not cond
       # On s'assure que le fichier n'existe pas
@@ -150,7 +175,7 @@ class << self
     return nil
   end #/ get_concurrent_sans_fichier
   def get_concurrent_avec_fichier(options)
-    all_current.each do |conc|
+    all_current.shuffle.each do |conc|
       cond = conc.specs[0] == "1"
       next if not cond
       # On s'assure que le fichier existe
@@ -159,7 +184,7 @@ class << self
       cond = cond && conc.femme? if options[:femme]
       return conc if cond
     end
-    conc = all_current.first
+    conc = all_current.shuffle.first
     sps = conc.specs.split('')
     sps[0] = "1"
     sps[1] = "1" if options[:avec_fichier_conforme]
@@ -264,6 +289,9 @@ def reset
   # la table concours_concurrents
   d = db_exec(REQUEST_CONCURRENT_MIN_DATA, [id]).first if d.nil?
   dispatch(d)
+  @fichier_is_conforme = nil
+  @dossier_is_transmis = nil
+  @is_preselected = nil
 end #/ reset
 
 # Fabrique un fichier de candidature pour le concurrent pour l'année +annee+
@@ -281,7 +309,7 @@ def make_fichier_conforme(annee = nil)
   reset
 end #/ make_fichier
 
-def make_fichier(annee)
+def make_fichier(annee = nil)
   annee ||= ANNEE_CONCOURS_COURANTE
   fsrc = File.join(SPEC_SUPPORT_FOLDER,'asset','documents','autre_doc.pdf')
   fdst = File.join(folder, "#{id}-#{annee}.pdf")
@@ -298,10 +326,6 @@ def destroy_fichier(annee = nil)
   File.delete(fpath) if File.exists?(fpath)
   set_specs("0"*8)
 end #/ destroy_fichier
-
-def dossier_transmis?
-  not fichier_path(ANNEE_CONCOURS_COURANTE).nil?
-end #/ dossier_transmis?
 
 # ---------------------------------------------------------------------
 #
@@ -325,6 +349,13 @@ end #/ fichier_path
 def femme?
   sexe == 'F'
 end #/ femme?
+
+
+def set_spec(bit,value)
+  sp = specs.dup.split('')
+  sp[bit] = value.to_s
+  set_specs(sp.join(''))
+end
 
 REQUEST_CONCURRENTS_COURANTS = <<-SQL
 SELECT

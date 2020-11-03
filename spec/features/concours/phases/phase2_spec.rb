@@ -89,7 +89,7 @@ feature "Phase 2 du concours" do
       expect(page).to have_content("Les #{@nombre_synopsis} synopsis sont en cours de préselection")
       # Les anciens concurrents ont reçu un mail d'annonce.
       dcs = db_exec("SELECT mail, patronyme FROM concours_concurrents")
-      TConcurrent.all_current do |conc|
+      TConcurrent.all_current.each do |conc|
         # Faire une différence entre un concurrent ayant envoyé un fichier
         # de candidature et un autre
         msg = if conc.dossier_transmis?

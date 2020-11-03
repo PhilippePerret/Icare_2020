@@ -1,1 +1,36 @@
-<p>Ici seront annoncés les résultats du prochain <%= CONCOURS_LINK %></p>
+<%
+# frozen_string_literal: true
+%>
+<% if concours.phase > 3 %>
+  <h3>Lauréats du Concours de Synopsis <%= concours.annee %></h3>
+  <%
+    data_prix ={1 => "PREMIER", 2 => "DEUXIÈME", 3 => "TROISIÈME"}
+  %>
+  <% data_prix.each do |idprix, prix_name| %>
+    <% syno = concours.send("synopsis_prix#{idprix}".to_sym) %>
+    <div class="laureat">
+      <span class="laureat-prix"><%= prix_name %> PRIX</span>
+      <span class="laureat-titre"><%= syno.titre %></span>
+      <span class="laureat-auteurs"><%= syno.formated_auteurs %></span>
+    </div>
+  <% end %>
+<% end %>
+<%
+# ---------------------------------------------------------------------
+#
+#   Fin de si c'est le palmarès final
+#
+# ---------------------------------------------------------------------
+%>
+<% if concours.phase1? %>
+  <p>Ici seront annoncés les résultats du prochain <%= CONCOURS_LINK %>.</p>
+<% elsif concours.phase2? %>
+  <p>Les présélections sont en cours, les résultats seront affichés très prochainement.</p>
+<% elsif concours.phase > 2 %>
+  <h3>Synopsis présélectionnés</h3>
+  <ol>
+    <% Synopsis.selecteds.each do |syno| %>
+      <li><%= "“#{syno.titre}” de #{syno.formated_auteurs}" %></li>
+    <% end %>
+  </ol>
+<% end %>
