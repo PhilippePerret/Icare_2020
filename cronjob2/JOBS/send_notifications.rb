@@ -21,13 +21,10 @@ class Cronjob
     rests = [] # pour mettre les notifications qui resteront à envoyer
     sends = [] # pour mettre les notifications à envoyer
     File.read(path_notifications).split("\n").each do |line|
-      log("Line: #{line.inspect}")
       notify = NotifyLine.new(*line.split('___'))
       if notify.today?
-        log("TODAY")
         sends << notify
       else
-        log("NOT TODAY")
         rests << line
       end
     end
@@ -44,7 +41,6 @@ class Cronjob
   end #/ proceed_send_notifications(sends)
 
   def consigne_autres_notifications(rests)
-    log("Liste rests: #{rests.inspect}")
     File.delete(path_notifications)
     unless rests.empty?
       File.open(path_notifications,'wb') { |f| f.write rests.join("\n") + "\n" }
@@ -67,7 +63,6 @@ NotifyLine = Struct.new(:datestr, :message) do
 # OUT   TRUE Si c'est une notification a envoyer aujourd'hui
 def today?
   n = Cronjob.current_time
-  log("datestr: #{datestr} / current time : #{n} / time: #{time}")
   time.year == n.year && time.month == n.month && time.day == n.day
 end #/ today?
 
