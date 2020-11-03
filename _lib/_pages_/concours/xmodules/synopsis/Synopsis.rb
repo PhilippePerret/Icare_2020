@@ -7,6 +7,10 @@
   Noter que l'instance existe même lorsque le fichier de candidature n'a
   pas été envoyé. Mais dans ce cas, l'évaluation n'est pas encore possible.
 =end
+require_relative './constants'
+require_relative './ENotesFL'
+require_relative './FicheLecture'
+
 class Synopsis
 # ---------------------------------------------------------------------
 #

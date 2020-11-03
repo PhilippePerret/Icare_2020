@@ -186,7 +186,7 @@ def set_option(bit, value)
 end #/ set_option
 
 def spec(bit)
-  log("data_current_concours: #{data_current_concours.inspect}")
+  # log("data_current_concours: #{data_current_concours.inspect}")
   data_current_concours[:specs][bit].to_i
 end #/ spec
 def set_spec(bit, value, options = nil)

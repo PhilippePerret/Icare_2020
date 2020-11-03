@@ -36,14 +36,28 @@ class << self
     not(message.empty?) || raise("Il faut donner le message !")
 
     # On peut enregistrer le message
-    ssh_request = <<-SSH
+    # Si on est en mode normal (non test), on l'enregistre dans le
+    # fichier distant, sinon, on l'enregistre en local
+    if not(tests?) && not(options[:simuler])
+      ssh_request = <<-SSH
 ssh #{SSH_ICARE_SERVER} ruby << RUBY
 File.open('#{cron_notifications_file}','a') do |f|
   f.write %Q{#{datestr}___#{message.gsub(/\}/,'\}').gsub(/\n/,'\n')}}
   f.write "\n"
 end
 RUBY
-    SSH
+      SSH
+    else
+      ssh_request = <<-BASH
+texte=$(cat <<'TEXT'
+#{datestr}___#{message.gsub(/\}/,'\}').gsub(/\n/,'\n')}
+TEXT
+)
+echo "$texte" >> "#{APP_FOLDER}/#{cron_notify_relpath}"
+      BASH
+    end
+
+    puts ssh_request
 
     res = `#{ssh_request} 2>&1`
     if res.nil_if_empty.nil?
@@ -57,8 +71,11 @@ RUBY
   # OUT   Le chemin d'accès au fichier qui contient les données de notification
   #       du cron distant (c'est en distant qu'on ).
   def cron_notifications_file
-    @cron_notifications_file ||= "www/cronjob2/_lib/notifications.data"
+    @cron_notifications_file ||= "www/#{cron_notify_relpath}"
   end #/ cron_notifications_file
+  def cron_notify_relpath
+    @cron_notify_relpath ||= "cronjob2/_lib/notifications.data"
+  end #/ cron_notify_relpath
 
 private
 

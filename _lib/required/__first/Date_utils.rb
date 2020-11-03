@@ -36,6 +36,7 @@ attr_reader :jour, :mois, :annee, :heure, :minutes, :seconds
 attr_reader :error
 def initialize(init_value)
   @init_value ||= init_value
+  check_formatage
 end #/ initialize
 
 # OUT   La date au format {Time}

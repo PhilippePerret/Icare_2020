@@ -24,6 +24,7 @@
     * Note d'équilibre U/O (facteur U et facteur O)
 
 =end
+require 'yaml'
 require_relative './constants'
 require_relative './ENotesFL'
 

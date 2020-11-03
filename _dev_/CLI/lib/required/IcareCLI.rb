@@ -90,5 +90,12 @@ class << self
     options[:simuler]
   end #/ mode_simulation?
 
+  def test?
+    (@is_on_test ||= begin
+      File.exists?("./TESTS_ON") ? :true : :false
+    end) == :true
+  end #/ test?
+  alias :tests? :test?
+
 end # /<< self
 end #/IcareCLI

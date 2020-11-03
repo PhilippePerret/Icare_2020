@@ -17,32 +17,38 @@ class Cronjob
   end #/ data
 
   def send_notifications
-    return if not(File.exists?(path))
+    return if not(File.exists?(path_notifications))
     rests = [] # pour mettre les notifications qui resteront à envoyer
     sends = [] # pour mettre les notifications à envoyer
-    File.read(path).split("\n").each do |line|
+    File.read(path_notifications).split("\n").each do |line|
+      log("Line: #{line.inspect}")
       notify = NotifyLine.new(*line.split('___'))
       if notify.today?
+        log("TODAY")
         sends << notify
       else
+        log("NOT TODAY")
         rests << line
       end
     end
-    send_notifications(sends) unless sends.empty?
-    consigne_autres_notifications(rests) unless rests.empty?
+    proceed_send_notifications(sends) unless sends.empty?
+    consigne_autres_notifications(rests)
 
     return true
   end #/
 
-  def send_notifications(sends)
+  def proceed_send_notifications(sends)
     require_module('mail')
     @liste_notifications = sends.collect{|note|"<li>#{note.message}</li>"}.join
     MailSender.send(file:mail_path, bind:self)
-  end #/ send_notifications(sends)
+  end #/ proceed_send_notifications(sends)
 
   def consigne_autres_notifications(rests)
-    File.delete(path)
-    File.open(path,'wb') { |f| f.write rests.join("\n") + "\n" }
+    log("Liste rests: #{rests.inspect}")
+    File.delete(path_notifications)
+    unless rests.empty?
+      File.open(path_notifications,'wb') { |f| f.write rests.join("\n") + "\n" }
+    end
   end
 
   def mail_path
@@ -50,9 +56,9 @@ class Cronjob
   end #/ mail_path
 
   # Le fichier qui contient les notifications à envoyer
-  def path
-    @path ||= File.join(CRON_FOLDER,'_lib','notifications.data')
-  end #/ path
+  def path_notifications
+    @path_notifications ||= File.join(CRON_FOLDER,'_lib','notifications.data')
+  end #/ path_notifications
 
 
 end #/Cronjob
@@ -60,7 +66,8 @@ end #/Cronjob
 NotifyLine = Struct.new(:datestr, :message) do
 # OUT   TRUE Si c'est une notification a envoyer aujourd'hui
 def today?
-  n = Time.now
+  n = Cronjob.current_time
+  log("datestr: #{datestr} / current time : #{n} / time: #{time}")
   time.year == n.year && time.month == n.month && time.day == n.day
 end #/ today?
 

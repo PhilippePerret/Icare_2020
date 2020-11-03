@@ -4,7 +4,7 @@
   Extension de la classe Concurrent pour le cronjob
 =end
 require_site('./_lib/_pages_/concours/xrequired/Concurrent')
-require_site('./_lib/_pages_/concours/evaluation/lib/Synopsis')
+require_site('./_lib/_pages_/concours/xmodules/synopsis/Synopsis')
 require_site('./_lib/_pages_/concours/xrequired/CFile')
 
 class Concurrent
@@ -37,7 +37,7 @@ class << self
   end #/ send_mail_info_hebdomadaire
 
   def info_hebdo_mail_path
-    @info_hebdo_mail_path ||= File.join(APPFOLDER,'_lib','_pages_','concours','xmodules','mails','step1','mail_infos_hebdomadaire.erb')
+    @info_hebdo_mail_path ||= File.join(APPFOLDER,'_lib','_pages_','concours','xmodules','mails','phase1','mail_infos_hebdomadaire.erb')
   end #/ info_hebdo_mail_path
 end # /<< self
 # ---------------------------------------------------------------------

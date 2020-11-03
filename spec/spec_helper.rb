@@ -1,4 +1,7 @@
 # encoding: UTF-8
+# frozen_string_literal: true
+
+# VERBOSE = false
 
 # Le fait de prendre des screenshots est très dispendieux en temps
 # On peut les zapper en mettant cette constante à true
@@ -92,12 +95,21 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.before :suite do
+
+    # puts "Formateur : #{RSpec.configuration.formatters.first.inspect}"
+
     # puts "Je commance la suite de tests"
     # À EXÉCUTER AVANT LES TESTS
     ENV['SPEC_FORMATTER'] = case config.formatters.first.class.name
-    when /DocumentationFormatter$/ then "Documentation"
-    when /ProgressFormatter$/ then "Progress"
-    else config.formatters.first.class.name.split('::').last
+    when /DocumentationFormatter$/ then
+      VERBOSE = true
+      "Documentation"
+    when /ProgressFormatter$/ then
+      VERBOSE = false
+      "Progress"
+    else
+      VERBOSE = false
+      config.formatters.first.class.name.split('::').last
     end
     # puts "config.formatters.first: #{config.formatters.first.class.name}"
     # puts "ENV['SPEC_FORMAT']: #{ENV['SPEC_FORMAT'].inspect}"
@@ -105,7 +117,10 @@ RSpec.configure do |config|
     vide_db
     File.open('./TESTS_ON','wb'){|f|f.write(Time.now.to_i.to_s)}
 
-    Capybara.page.driver.browser.manage.window.resize_to(1000,700)
+    # La ligne ci-dessous permet de définir la taille de la fenêtre
+    # du navigateur. Mais si on la met pour les tests unitaires,
+    # ça ouvre le navigateur et ça se bloque en attente.
+    # Capybara.page.driver.browser.manage.window.resize_to(1000,700)
 
   end
   config.after :suite do
@@ -117,6 +132,10 @@ RSpec.configure do |config|
   config.before :each do
     extend SpecModuleNavigation
   end
+
+  def verbose?
+    VERBOSE
+  end #/ verbose?
 
   def pitch msg
     unless ENV['SPEC_FORMATTER'] == 'Documentation'

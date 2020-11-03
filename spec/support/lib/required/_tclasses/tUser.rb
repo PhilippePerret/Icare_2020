@@ -203,6 +203,12 @@ def has_mail?(params)
   TMails.has_mails?(params.merge(destinataire: self))
 end #/ has_mail?
 
+def has_no_mail?(params = nil)
+  params ||= {}
+  !has_mail?(params)
+end #/ has_no_mail?(params)
+alias :has_no_mails? :has_no_mail?
+
 def has_document?(data)
   TDocuments.has_one?(data.merge(user_id: self.id))
 end #/ has_document?

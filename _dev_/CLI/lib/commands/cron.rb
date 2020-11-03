@@ -11,7 +11,7 @@ class << self
 
 # = main =
 def proceed_cron
-  clear
+  clear unless tests?
   what = params[1] || begin
     Q.select("Commande à jouer : ", required: true) do |q|
       q.choices formate_choices('cron', DATA_COMMANDES)
