@@ -17,7 +17,7 @@ class << self
     dstring.valid? || raise("Date invalide : #{dstring.error}.")
     date = dstring.to_time
 
-    puts "Date d'envoi de la notification : #{formate_date(date, {jour:true, hour:true})}"
+    puts "Date d'envoi de la notification : #{formate_date(date, {jour:true, hour:true})}".bleu
     datestr = date.strftime("%d/%m/%Y/%H:%M")
 
     if date.hour != 0 || date.min != 0
@@ -57,7 +57,7 @@ echo "$texte" >> "#{APP_FOLDER}/#{cron_notify_relpath}"
       BASH
     end
 
-    puts ssh_request
+    # puts ssh_request
 
     res = `#{ssh_request} 2>&1`
     if res.nil_if_empty.nil?
