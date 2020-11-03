@@ -12,6 +12,8 @@ spec/
 tmp/
 cronjob2/tmp/
 
+cronjob2/_lib/notifications.data
+
 # Ignorer les fichiers de base
 .htaccess
 index.rb

@@ -33,7 +33,7 @@ def formate_date(time = nil, options = nil)
           else
             ["%-d #{mois} %Y"]
           end
-  temp << "%H:%M" if options[:time] || options[:hour]
+  temp << "à %H:%M" if options[:time] || options[:hour]
   temp = temp.join(SPACE)
   d = "#{options[:jour] || options[:day] ? DAYNAMES[time.wday]+' ' : ''}#{time.strftime(temp)}"
   if options[:duree]

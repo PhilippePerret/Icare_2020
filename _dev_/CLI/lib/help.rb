@@ -55,7 +55,7 @@ AIDE = <<-BASH
   #{'icare cron[ <command>]'.jaune}
 
       Pour interagir avec le cron distant (ou pas).
-      Jouer simplement 'icare cron' pour avoir les propositions.
+      Jouer simplement 'icare cron' pour avoir les différentes propositions.
 
   #{'icare goto la/route'.jaune}
 

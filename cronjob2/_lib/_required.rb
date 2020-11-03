@@ -9,6 +9,7 @@ ONLINE = ENV['ONLINE'] != "false"
 # Les modules du site utiles pour le cron
 Dir.chdir(APPFOLDER) do
   require './_lib/required/__first/extensions/Formate_helpers'
+  require './_lib/required/__first/Date_utils'
   require './_lib/required/__first/require_methods'
   require './_lib/required/__first/extensions/String'
   require './_lib/required/__first/db'

@@ -18,3 +18,12 @@ def user
   def id; 1 end
   def admin?; true end
 end #/ user
+
+# OUT   Les choix pour tty-prompt
+def formate_choices(command, data)
+  data.each do |h|
+    next if h[:value].nil?
+    h.merge!(name: "#{h[:name]} [#{"'icare #{command} #{h[:value]}'".jaune}]")
+  end
+  return data
+end #/ formate_choices

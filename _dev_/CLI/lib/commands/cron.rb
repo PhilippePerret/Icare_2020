@@ -14,7 +14,7 @@ def proceed_cron
   clear
   what = params[1] || begin
     Q.select("Commande à jouer : ", required: true) do |q|
-      q.choices DATA_COMMANDES
+      q.choices formate_choices('cron', DATA_COMMANDES)
       q.per_page DATA_COMMANDES.count
     end
   end
@@ -27,6 +27,9 @@ def proceed_cron
     display_today_report
   when 'remove-log'
     remove_distant_journal
+  when 'add'
+    require_relative './cron/notification_ponctuelle'
+    add_notification_ponctuelle
   end
 end #/ degel
 
