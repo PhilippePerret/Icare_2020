@@ -46,6 +46,6 @@
         :text: Espace personnel
       - :tag: fieldset#concours-informations
       - :tag: fieldset#concours-preferences
-      - :tag: fieldset#concours-envoi-dossier
+      - :tag: fieldset#concours-fichier-candidature
       - :tag: a
         :text: Se déconnecter

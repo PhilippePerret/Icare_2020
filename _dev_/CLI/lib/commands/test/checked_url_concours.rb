@@ -21,7 +21,7 @@ class << self
     end
   end #/ phase_concours
 
-DATA_TESTS_PER_PHASE = YAML.load_file(File.join(__dir__,'TESTS_CONCOURS_PER_PHASE.yaml'))
+DATA_TESTS_PER_PHASE = YAML.load_file(File.join(__dir__,'_DATA_CONCOURS_PER_PHASE_.yaml'))
 
   # DO    Relève la phase courante sur le site distant
   def define_current_phase

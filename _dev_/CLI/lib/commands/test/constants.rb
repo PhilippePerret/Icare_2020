@@ -5,4 +5,4 @@ require 'yaml'
 TABU = "    "
 URL_BASE = "https://www.atelier-icare.net"
 
-DATA_URLS = YAML.load_file(File.join(__dir__,'data_urls.yaml'))
+DATA_URLS = YAML.load_file(File.join(__dir__,'_DATA_URLS_.yaml'))
