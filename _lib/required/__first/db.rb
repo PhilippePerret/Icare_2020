@@ -36,6 +36,9 @@ ERREUR MYSQL - Impossible d'exécuter la requête suivante :
 end #/MyDBError < StandardError
 
 SANDBOX = false unless defined?(SANDBOX)
+PV = ";".freeze unless defined?(PV)
+VG = ", ".freeze unless defined?(VG)
+
 # On line ou off line
 # -------------------
 # Par défaut, et pour éviter les erreurs, on considère que si ONLINE n'est

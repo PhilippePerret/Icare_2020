@@ -44,13 +44,15 @@ CREATE TABLE `concours_concurrents` (
 ~~~SQL
 
 DROP TABLE IF EXISTS `concurrents_per_concours`;
-CREATE TABLE `concurrents_per_concours`(
+CREATE TABLE `concurrents_per_concours` (
   annee             VARCHAR(4) NOT NULL,
   concurrent_id     VARCHAR(14) NOT NULL,
   titre             VARCHAR(200),
   auteurs           VARCHAR(255) DEFAULT NULL,
   keywords          VARCHAR(255) DEFAULT NULL,
   prix              VARCHAR(1), --  0, 1, 2, ou 3
+  pre_note          TINYINT DEFAULT NULL,
+  fin_note          TINYINT DEFAULT NULL,
   specs             VARCHAR(8) DEFAULT "00000000",
   created_at        VARCHAR(10),
   updated_at        VARCHAR(10)

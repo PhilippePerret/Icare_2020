@@ -1,6 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_relative './Concours_mini'
+require_relative './constants_mini'
 
 require './_lib/required/__first/constants/paths'
 require './_lib/required/__first/helpers/Linker'
@@ -44,17 +45,6 @@ MESSAGES.merge!({
   concours_confirm_inscription_session_courante: "Vous êtes maintenant inscrit%{e} à la session courante du concours.",
   concurrent_login_required: "Vous êtes déjà concurrent du concours, vous devez vous identifier (pour participer à la nouvelle session ou rejoindre votre espace personnel).",
 })
-
-CONCOURS_FOLDER = File.join(PAGES_FOLDER,'concours')
-XMODULES_FOLDER = File.join(CONCOURS_FOLDER,'xmodules')
-CONCOURS_DATA_FOLDER = File.expand_path(File.join(DATA_FOLDER,'concours')).tap{|p|`mkdir -p #{p}`}
-NOMBRE_QUESTIONS_PATH = File.join(CONCOURS_DATA_FOLDER,'NOMBRE_QUESTIONS')
-
-ANNEE_CONCOURS_COURANTE = Concours.annee_courante
-
-DBTBL_CONCOURS = Concours.table
-DBTBL_CONCURRENTS = "concours_concurrents"
-DBTBL_CONCURS_PER_CONCOURS = "concurrents_per_concours"
 
 REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
 
