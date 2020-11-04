@@ -60,7 +60,7 @@ echo "$texte" >> "#{APP_FOLDER}/#{cron_notify_relpath}"
     # puts ssh_request
 
     res = `#{ssh_request} 2>&1`
-    if res.nil_if_empty.nil?
+    if not res.nil_if_empty.nil?
       puts "Retour du travail SSH : #{res.inspect}"
     end
 
