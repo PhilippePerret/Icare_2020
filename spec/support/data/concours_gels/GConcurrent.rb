@@ -10,30 +10,34 @@
 class GConcurrent
 class << self
   attr_reader :nombre_courants, :nombre_cur_file_conforme, :nombre_selecteds, :nombre_primeds, :nombre_avec_fiche_lecture, :nombre_avec_informations
+
+  def reset_all
+    @nombre_courants = 0
+    @nombre_cur_file_conforme = 0
+    @nombre_selecteds = 0
+    @nombre_primeds = 0
+    @nombre_avec_fiche_lecture = 0
+    @nombre_avec_informations = 0
+  end #/ reset_all
+
   def incremente_nombre_courants
-    @nombre_courants ||= 0
     @nombre_courants += 1
   end #/ incremente_nombre_courants
   def incremente_fichiers_cur_conformes
-    @nombre_cur_file_conforme ||= 0
     @nombre_cur_file_conforme += 1
   end #/ incremente_fichiers_cur_conformes
   def incremente_selecteds
-    @nombre_selecteds ||= 0
     @nombre_selecteds += 1
   end #/ incremente_selecteds
   def incremente_primeds
-    @nombre_primeds ||= 0
     @nombre_primeds += 1
   end #/ incremente_primeds
 
   def incremente_avec_fiche_lecture
-    @nombre_avec_fiche_lecture ||= 0
     @nombre_avec_fiche_lecture += 1
   end #/ incremente_avec_fiche_lecture
 
   def incremente_avec_informations
-    @nombre_avec_informations ||= 0
     @nombre_avec_informations += 1
   end #/ incremente_avec_informations
 
@@ -128,7 +132,7 @@ end
 # ---------------------------------------------------------------------
 class Participation
   attr_reader :concurrent, :data_ini
-  attr_reader :annee, :fichier, :titre
+  attr_reader :annee, :fichier, :titre, :notes
   attr_reader :preselected, :prix, :pre_note, :fin_note
   attr_accessor :specs # composé ici
   def initialize(concurrent, data_ini)
@@ -169,8 +173,8 @@ class Participation
   # le concurrent
   def build
     compose_specs
-    calcule_notes if PHASE_GEL > 2
-    make_folder_evaluations
+    make_folder_evaluations if not(current? && PHASE_GEL == 0)
+    make_evaluations_and_calc_notes if PHASE_GEL > 2
     save_data_in_db
   end #/ build
   # ---------------------------------------------------------------------
@@ -188,7 +192,8 @@ class Participation
     FileUtils.copy(TEMPLATE_FICHIER_CANDIDATURE, fichier_candidature_path)
   end #/ make_fichier_candidature
   def make_folder_evaluations
-    `mkdir -p "#{folder_evaluations_path}"`
+    FileUtils.mkdir_p(folder_evaluations_path)
+    # `mkdir -p "#{folder_evaluations_path}"`
   end #/ make_folder_evaluations
   # ---------------------------------------------------------------------
   #   MÉTHODES DE FABRICATION DE DONNÉES
@@ -243,14 +248,22 @@ class Participation
 
   # Pour le calcul de la note finale du concurrent (champ pre_note pour la
   # note de présélection et fin_note pour la note finale si présélectionné)
-  def calcule_notes
-    if preselected
-      puts "Je dois calculer la note de présélection"
+  # Note : pour le moment, dans les notes, pour les lauréats, on prend pour la
+  # note finale la même que la note de présélection
+  def make_evaluations_and_calc_notes
+    return if not(current?) || notes.nil?
+    note = 0
+    notes.each_with_index do |n, idx|
+      note += n.to_i
+      filename = "evaluation-#{idx + 1}.json"
+      dst = File.join(folder_evaluations_path, filename)
+      src = File.join(__dir__,'modeles','evaluations',"note#{n}.json")
+      FileUtils.copy(src,dst)
     end
-    if primed?
-      puts "Je dois calculer la note finale"
-    end
-  end #/ calcule_notes
+    note = (note.to_f / notes.count).to_i
+    @pre_note = note
+    @fin_note = note if primed?
+  end #/ make_evaluations_and_calc_notes
   # ---------------------------------------------------------------------
   #   DONNÉES
   # ---------------------------------------------------------------------

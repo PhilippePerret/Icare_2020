@@ -26,6 +26,8 @@ COMMIT;
     # Effacement des dossiers concours
     FileUtils.rm_rf(CONCOURS_DATA_FOLDER)
     `mkdir "#{CONCOURS_DATA_FOLDER}"`
+
+    GConcurrent.reset_all
   end #/ reset_all
 end # /<< self
 # ---------------------------------------------------------------------

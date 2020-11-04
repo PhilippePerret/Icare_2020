@@ -25,8 +25,6 @@
 
 =end
 
-# Phase pour laquelle il faut faire le gel.
-PHASE_GEL = 5
 # Note : des différences importantes sont faites. Par exemple, pour la phase
 # 0, il n'y a aucun concurrent inscrit à la session courante
 # Pour la phase 1, la propriété :preselected et :prix des concurrents est
@@ -41,6 +39,7 @@ require 'yaml'
 require 'fileutils'
 require './_lib/required/__first/Date_utils'
 require './_lib/required/__first/extensions/Integer'
+require './_lib/required/__first/constants/String'
 require './_lib/required/__first/db'
 MyDB.DBNAME = 'icare_test'
 # Propre au concours
@@ -51,43 +50,62 @@ require_relative './GConcours'
 require_relative './polyfill'
 require_relative './String_CLI'
 
-GEL_NAME = "concours-phase-#{PHASE_GEL}"
+require './spec/support/Gel/lib/Gel'
 
-# *** Initialisation de tout ***
-GConcours.reset_all
-
-# *** Fabrication des concours ***
-CONCOURS_GEL_DATA[:concours].each do |data_concours|
-  # puts "+ data_concours: #{data_concours}"
-  GConcours.new(data_concours).build
-end
-# *** Fabrication des concurrents ***
-CONCOURS_GEL_DATA[:concurrents].each do |data_concurrent|
-  GConcurrent.new(data_concurrent).build
+FileUtils.rm_rf('./tmp') if File.exists?('./tmp')
+['concours','downloads','forms','logs','mails','signups'].each do |dossier|
+  `mkdir -p "./tmp/#{dossier}"`
 end
 
-nb_selecteds = GConcurrent.nombre_selecteds.to_i
-if nb_selecteds == 10
-  nb_selecteds = nb_selecteds.to_s.vert
-elsif nb_selecteds > 10
-  nb_selecteds = nb_selecteds.to_s.rouge
-end
-nb_primeds = GConcurrent.nombre_primeds.to_i
-if nb_primeds == 3
-  nb_primeds = nb_primeds.to_s.vert
-elsif nb_primeds > 3
-  nb_primeds = nb_primeds.to_s.rouge
-end
+[0,1,2,3,5,8,9].each do |phase|
+  PHASE_GEL = phase
+  GEL_NAME = "concours-phase-#{PHASE_GEL}"
 
-linesep = "-"*90
-puts linesep
-puts "PHASE : #{PHASE_GEL}"
-puts "NOMBRE CONCURRENTS (*)        : #{GConcurrent.nombre_courants.to_i}"
-puts "Nombre fichiers conformes (*) : #{GConcurrent.nombre_cur_file_conforme.to_i}"
-puts "Nombre sélectionnés (*)       : #{nb_selecteds}"
-puts "Nombre primés (*)             : #{nb_primeds}"
-puts "Nombre avec fiche lecture     : #{GConcurrent.nombre_avec_fiche_lecture.to_i}"
-puts "Nombre avec informations      : #{GConcurrent.nombre_avec_informations.to_i}"
-puts linesep
-puts "(*) Pour le concours courant"
-puts "\n\n\n"
+  # *** Initialisation de tout ***
+
+  GConcours.reset_all
+
+  # *** Fabrication des concours ***
+  CONCOURS_GEL_DATA[:concours].each do |data_concours|
+    # puts "+ data_concours: #{data_concours}"
+    GConcours.new(data_concours).build
+  end
+  # *** Fabrication des concurrents ***
+  CONCOURS_GEL_DATA[:concurrents].each do |data_concurrent|
+    GConcurrent.new(data_concurrent).build
+  end
+
+  nb_selecteds = GConcurrent.nombre_selecteds.to_i
+  if nb_selecteds == 10
+    nb_selecteds = nb_selecteds.to_s.vert
+  elsif nb_selecteds > 10
+    nb_selecteds = nb_selecteds.to_s.rouge
+  end
+  nb_primeds = GConcurrent.nombre_primeds.to_i
+  if nb_primeds == 3
+    nb_primeds = nb_primeds.to_s.vert
+  elsif nb_primeds > 3
+    nb_primeds = nb_primeds.to_s.rouge
+  end
+
+  linesep = "-"*90
+  puts linesep
+  puts "PHASE : #{PHASE_GEL}"
+  puts "NOMBRE CONCURRENTS (*)        : #{GConcurrent.nombre_courants.to_i}"
+  puts "Nombre fichiers conformes (*) : #{GConcurrent.nombre_cur_file_conforme.to_i}"
+  puts "Nombre sélectionnés (*)       : #{nb_selecteds}"
+  puts "Nombre primés (*)             : #{nb_primeds}"
+  puts "Nombre avec fiche lecture     : #{GConcurrent.nombre_avec_fiche_lecture.to_i}"
+  puts "Nombre avec informations      : #{GConcurrent.nombre_avec_informations.to_i}"
+  puts linesep
+  puts "(*) Pour le concours courant"
+  puts "\n\n"
+
+  # On produit le gel
+  gel(GEL_NAME)
+
+  puts "GEL PHASE #{PHASE_GEL} (#{GEL_NAME}) PRODUIT AVEC SUCCÈS".vert
+  puts "\n\n"
+  # break
+
+end #/fin de boucle sur toutes les phases

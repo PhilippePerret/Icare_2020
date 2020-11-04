@@ -2132,3 +2132,277 @@ DATABASE = icare_test
 = Script : concours/save_score.rb
 evaluator: 1, synopsis_id:20190807141456-2021, score:{"po"=>"-", "po-fO"=>"-", "po-fU"=>"-", "po-adth"=>"-", "po-ti"=>"-", "po-ti-fO"=>"-", "po-ti-fU"=>"-", "po-ti-adth"=>"-", "po-p"=>5, "po-p-fO"=>5, "po-p-fU"=>5, "po-p-adth"=>5, "po-p-cohe"=>3, "po-p-idio"=>"-", "po-p-prota"=>"-", "po-p-prota-fO"=>"-", "po-p-prota-fU"=>"-", "po-p-prota-adth"=>"-", "po-p-prota-cohe"=>"-", "po-p-prota-idio"=>"-", "po-p-anta"=>"-", "po-p-anta-fO"=>"-", "po-p-anta-fU"=>"-", "po-p-anta-adth"=>"-", "po-p-anta-cohe"=>"-", "po-p-anta-idio"=>"-", "po-p-psec"=>"-", "po-p-psec-fO"=>"-", "po-p-psec-fU"=>"-", "po-p-psec-adth"=>"-", "po-p-psec-cohe"=>"-", "po-p-psec-idio"=>"-", "po-p-autp"=>"-", "po-p-autp-fO"=>"-", "po-p-autp-fU"=>"-", "po-p-autp-adth"=>"-", "po-p-autp-cohe"=>"-", "po-p-autp-idio"=>"-", "po-p-dials"=>"-", "po-p-dials-fO"=>"-", "po-p-dials-fU"=>"-", "po-p-dials-adth"=>"-", "po-p-dials-cohe"=>"-", "po-p-dials-idio"=>"-", "po-f"=>"-", "po-f-fO"=>"-", "po-f-fU"=>"-", "po-f-adth"=>"-", "po-f-pfa"=>"-", "po-f-3acts"=>"-", "po-f-foncact"=>"-", "po-f-pvts"=>"-", "po-i"=>"-", "po-i-fO"=>"-", "po-i-fU"=>"-", "po-i-adth"=>"-", "po-i-cohe"=>"-", "po-i-menee"=>"-", "po-i-predic"=>"-", "po-i-mainint"=>"-", "po-i-mainint-fO"=>"-", "po-i-mainint-fU"=>"-", "po-i-mainint-adth"=>"-", "po-i-mainint-cohe"=>"-", "po-i-mainint-menee"=>"-", "po-i-mainint-predic"=>"-", "po-i-secint"=>"-", "po-i-secint-fO"=>"-", "po-i-secint-fU"=>"-", "po-i-secint-adth"=>"-", "po-i-secint-cohe"=>"-", "po-i-secint-menee"=>"-", "po-i-secint-predic"=>"-", "po-i-autint"=>"-", "po-i-autint-fO"=>"-", "po-i-autint-fU"=>"-", "po-i-autint-adth"=>"-", "po-i-autint-cohe"=>"-", "po-i-autint-menee"=>"-", "po-i-autint-predic"=>"-", "po-t"=>"-", "po-t-fO"=>"-", "po-t-fU"=>"-", "po-t-adth"=>"-", "po-t-cla"=>"-", "po-t-cohe"=>"-", "po-t-antithese"=>"-", "po-t-thprinc"=>"-", "po-t-thprinc-fO"=>"-", "po-t-thprinc-fU"=>"-", "po-t-thprinc-adth"=>"-", "po-t-thprinc-cla"=>"-", "po-t-thprinc-cohe"=>"-", "po-t-thprinc-antithese"=>"-", "po-t-thsec"=>"-", "po-t-thsec-fO"=>"-", "po-t-thsec-fU"=>"-", "po-t-thsec-adth"=>"-", "po-t-thsec-cla"=>"-", "po-t-thsec-cohe"=>"-", "po-t-thsec-antithese"=>"-", "po-r"=>"-", "po-r-cla"=>"-", "po-r-cla-fO"=>"-", "po-r-cla-fU"=>"-", "po-r-cla-adth"=>"-", "po-r-cla-ortho"=>"-", "po-r-cla-ortho-fO"=>"-", "po-r-cla-ortho-fU"=>"-", "po-r-cla-ortho-adth"=>"-", "po-r-cla-style"=>"-", "po-r-cla-style-fO"=>"-", "po-r-cla-style-fU"=>"-", "po-r-cla-style-adth"=>"-", "po-r-sim"=>"-", "po-r-sim-fO"=>"-", "po-r-sim-fU"=>"-", "po-r-sim-adth"=>"-", "po-r-emo"=>"-", "po-r-emo-fO"=>"-", "po-r-emo-fU"=>"-", "po-r-emo-adth"=>"-"}
 Résultat des calculs : {:note_generale=>18.4, :pourcentage_reponses=>4.1, :nombre_questions=>122, :nombre_reponses=>5, :nombre_missings=>117}
+
+
+--- [2020-11-04 11:17:59 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:19:09 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:23102019102649-2021, score:{"po"=>5, "po-fO"=>5, "po-fU"=>5, "po-adth"=>5, "po-ti"=>5, "po-ti-fO"=>5, "po-ti-fU"=>5, "po-ti-adth"=>5, "po-p"=>5, "po-p-fO"=>5, "po-p-fU"=>5, "po-p-adth"=>5, "po-p-cohe"=>5, "po-p-idio"=>5, "po-p-prota"=>5, "po-p-prota-fO"=>5, "po-p-prota-fU"=>5, "po-p-prota-adth"=>5, "po-p-prota-cohe"=>5, "po-p-prota-idio"=>5, "po-p-anta"=>5, "po-p-anta-fO"=>5, "po-p-anta-fU"=>5, "po-p-anta-adth"=>5, "po-p-anta-cohe"=>5, "po-p-anta-idio"=>5, "po-p-psec"=>5, "po-p-psec-fO"=>5, "po-p-psec-fU"=>5, "po-p-psec-adth"=>5, "po-p-psec-cohe"=>5, "po-p-psec-idio"=>5, "po-p-autp"=>5, "po-p-autp-fO"=>5, "po-p-autp-fU"=>5, "po-p-autp-adth"=>5, "po-p-autp-cohe"=>5, "po-p-autp-idio"=>5, "po-p-dials"=>5, "po-p-dials-fO"=>5, "po-p-dials-fU"=>5, "po-p-dials-adth"=>5, "po-p-dials-cohe"=>5, "po-p-dials-idio"=>5, "po-f"=>5, "po-f-fO"=>5, "po-f-fU"=>5, "po-f-adth"=>5, "po-f-pfa"=>5, "po-f-3acts"=>5, "po-f-foncact"=>5, "po-f-pvts"=>5, "po-i"=>5, "po-i-fO"=>5, "po-i-fU"=>5, "po-i-adth"=>5, "po-i-cohe"=>5, "po-i-menee"=>5, "po-i-predic"=>5, "po-i-mainint"=>5, "po-i-mainint-fO"=>5, "po-i-mainint-fU"=>5, "po-i-mainint-adth"=>5, "po-i-mainint-cohe"=>5, "po-i-mainint-menee"=>5, "po-i-mainint-predic"=>5, "po-i-secint"=>5, "po-i-secint-fO"=>5, "po-i-secint-fU"=>5, "po-i-secint-adth"=>5, "po-i-secint-cohe"=>5, "po-i-secint-menee"=>5, "po-i-secint-predic"=>5, "po-i-autint"=>5, "po-i-autint-fO"=>5, "po-i-autint-fU"=>5, "po-i-autint-adth"=>5, "po-i-autint-cohe"=>5, "po-i-autint-menee"=>5, "po-i-autint-predic"=>5, "po-t"=>5, "po-t-fO"=>5, "po-t-fU"=>5, "po-t-adth"=>5, "po-t-cla"=>5, "po-t-cohe"=>5, "po-t-antithese"=>5, "po-t-thprinc"=>5, "po-t-thprinc-fO"=>5, "po-t-thprinc-fU"=>5, "po-t-thprinc-adth"=>5, "po-t-thprinc-cla"=>5, "po-t-thprinc-cohe"=>5, "po-t-thprinc-antithese"=>5, "po-t-thsec"=>5, "po-t-thsec-fO"=>5, "po-t-thsec-fU"=>5, "po-t-thsec-adth"=>5, "po-t-thsec-cla"=>5, "po-t-thsec-cohe"=>5, "po-t-thsec-antithese"=>5, "po-r"=>5, "po-r-cla"=>5, "po-r-cla-fO"=>5, "po-r-cla-fU"=>5, "po-r-cla-adth"=>5, "po-r-cla-ortho"=>5, "po-r-cla-ortho-fO"=>5, "po-r-cla-ortho-fU"=>5, "po-r-cla-ortho-adth"=>5, "po-r-cla-style"=>5, "po-r-cla-style-fO"=>5, "po-r-cla-style-fU"=>5, "po-r-cla-style-adth"=>5, "po-r-sim"=>5, "po-r-sim-fO"=>5, "po-r-sim-fU"=>5, "po-r-sim-adth"=>5, "po-r-emo"=>5, "po-r-emo-fO"=>5, "po-r-emo-fU"=>5, "po-r-emo-adth"=>5}
+Résultat des calculs : {:note_generale=>20.0, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:20:44 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:21:01 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:21072016091010-2021, score:{"po"=>4, "po-fO"=>4, "po-fU"=>4, "po-adth"=>4, "po-ti"=>4, "po-ti-fO"=>4, "po-ti-fU"=>4, "po-ti-adth"=>4, "po-p"=>4, "po-p-fO"=>4, "po-p-fU"=>4, "po-p-adth"=>4, "po-p-cohe"=>4, "po-p-idio"=>4, "po-p-prota"=>4, "po-p-prota-fO"=>4, "po-p-prota-fU"=>4, "po-p-prota-adth"=>4, "po-p-prota-cohe"=>4, "po-p-prota-idio"=>4, "po-p-anta"=>4, "po-p-anta-fO"=>4, "po-p-anta-fU"=>4, "po-p-anta-adth"=>4, "po-p-anta-cohe"=>4, "po-p-anta-idio"=>4, "po-p-psec"=>4, "po-p-psec-fO"=>4, "po-p-psec-fU"=>4, "po-p-psec-adth"=>4, "po-p-psec-cohe"=>4, "po-p-psec-idio"=>4, "po-p-autp"=>4, "po-p-autp-fO"=>4, "po-p-autp-fU"=>4, "po-p-autp-adth"=>4, "po-p-autp-cohe"=>4, "po-p-autp-idio"=>4, "po-p-dials"=>4, "po-p-dials-fO"=>4, "po-p-dials-fU"=>4, "po-p-dials-adth"=>4, "po-p-dials-cohe"=>4, "po-p-dials-idio"=>4, "po-f"=>4, "po-f-fO"=>4, "po-f-fU"=>4, "po-f-adth"=>4, "po-f-pfa"=>4, "po-f-3acts"=>4, "po-f-foncact"=>4, "po-f-pvts"=>4, "po-i"=>4, "po-i-fO"=>4, "po-i-fU"=>4, "po-i-adth"=>4, "po-i-cohe"=>4, "po-i-menee"=>4, "po-i-predic"=>4, "po-i-mainint"=>4, "po-i-mainint-fO"=>4, "po-i-mainint-fU"=>4, "po-i-mainint-adth"=>4, "po-i-mainint-cohe"=>4, "po-i-mainint-menee"=>4, "po-i-mainint-predic"=>4, "po-i-secint"=>4, "po-i-secint-fO"=>4, "po-i-secint-fU"=>4, "po-i-secint-adth"=>4, "po-i-secint-cohe"=>4, "po-i-secint-menee"=>4, "po-i-secint-predic"=>4, "po-i-autint"=>4, "po-i-autint-fO"=>4, "po-i-autint-fU"=>4, "po-i-autint-adth"=>4, "po-i-autint-cohe"=>4, "po-i-autint-menee"=>4, "po-i-autint-predic"=>4, "po-t"=>4, "po-t-fO"=>4, "po-t-fU"=>4, "po-t-adth"=>4, "po-t-cla"=>4, "po-t-cohe"=>4, "po-t-antithese"=>4, "po-t-thprinc"=>4, "po-t-thprinc-fO"=>4, "po-t-thprinc-fU"=>4, "po-t-thprinc-adth"=>4, "po-t-thprinc-cla"=>4, "po-t-thprinc-cohe"=>4, "po-t-thprinc-antithese"=>4, "po-t-thsec"=>4, "po-t-thsec-fO"=>4, "po-t-thsec-fU"=>4, "po-t-thsec-adth"=>4, "po-t-thsec-cla"=>4, "po-t-thsec-cohe"=>4, "po-t-thsec-antithese"=>4, "po-r"=>4, "po-r-cla"=>4, "po-r-cla-fO"=>4, "po-r-cla-fU"=>4, "po-r-cla-adth"=>4, "po-r-cla-ortho"=>4, "po-r-cla-ortho-fO"=>4, "po-r-cla-ortho-fU"=>4, "po-r-cla-ortho-adth"=>4, "po-r-cla-style"=>4, "po-r-cla-style-fO"=>4, "po-r-cla-style-fU"=>4, "po-r-cla-style-adth"=>4, "po-r-sim"=>4, "po-r-sim-fO"=>4, "po-r-sim-fU"=>4, "po-r-sim-adth"=>4, "po-r-emo"=>4, "po-r-emo-fO"=>4, "po-r-emo-fU"=>4, "po-r-emo-adth"=>4}
+Résultat des calculs : {:note_generale=>16.0, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:21:37 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:21:47 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:21072018090000-2021, score:{"po"=>3, "po-fO"=>3, "po-fU"=>3, "po-adth"=>3, "po-ti"=>3, "po-ti-fO"=>3, "po-ti-fU"=>3, "po-ti-adth"=>3, "po-p"=>3, "po-p-fO"=>3, "po-p-fU"=>3, "po-p-adth"=>3, "po-p-cohe"=>3, "po-p-idio"=>3, "po-p-prota"=>3, "po-p-prota-fO"=>3, "po-p-prota-fU"=>3, "po-p-prota-adth"=>3, "po-p-prota-cohe"=>3, "po-p-prota-idio"=>3, "po-p-anta"=>3, "po-p-anta-fO"=>3, "po-p-anta-fU"=>3, "po-p-anta-adth"=>3, "po-p-anta-cohe"=>3, "po-p-anta-idio"=>3, "po-p-psec"=>3, "po-p-psec-fO"=>3, "po-p-psec-fU"=>3, "po-p-psec-adth"=>3, "po-p-psec-cohe"=>3, "po-p-psec-idio"=>3, "po-p-autp"=>3, "po-p-autp-fO"=>3, "po-p-autp-fU"=>3, "po-p-autp-adth"=>3, "po-p-autp-cohe"=>3, "po-p-autp-idio"=>3, "po-p-dials"=>3, "po-p-dials-fO"=>3, "po-p-dials-fU"=>3, "po-p-dials-adth"=>3, "po-p-dials-cohe"=>3, "po-p-dials-idio"=>3, "po-f"=>3, "po-f-fO"=>3, "po-f-fU"=>3, "po-f-adth"=>3, "po-f-pfa"=>3, "po-f-3acts"=>3, "po-f-foncact"=>3, "po-f-pvts"=>3, "po-i"=>3, "po-i-fO"=>3, "po-i-fU"=>3, "po-i-adth"=>3, "po-i-cohe"=>3, "po-i-menee"=>3, "po-i-predic"=>3, "po-i-mainint"=>3, "po-i-mainint-fO"=>3, "po-i-mainint-fU"=>3, "po-i-mainint-adth"=>3, "po-i-mainint-cohe"=>3, "po-i-mainint-menee"=>3, "po-i-mainint-predic"=>3, "po-i-secint"=>3, "po-i-secint-fO"=>3, "po-i-secint-fU"=>3, "po-i-secint-adth"=>3, "po-i-secint-cohe"=>3, "po-i-secint-menee"=>3, "po-i-secint-predic"=>3, "po-i-autint"=>3, "po-i-autint-fO"=>3, "po-i-autint-fU"=>3, "po-i-autint-adth"=>3, "po-i-autint-cohe"=>3, "po-i-autint-menee"=>3, "po-i-autint-predic"=>3, "po-t"=>3, "po-t-fO"=>3, "po-t-fU"=>3, "po-t-adth"=>3, "po-t-cla"=>3, "po-t-cohe"=>3, "po-t-antithese"=>3, "po-t-thprinc"=>3, "po-t-thprinc-fO"=>3, "po-t-thprinc-fU"=>3, "po-t-thprinc-adth"=>3, "po-t-thprinc-cla"=>3, "po-t-thprinc-cohe"=>3, "po-t-thprinc-antithese"=>3, "po-t-thsec"=>3, "po-t-thsec-fO"=>3, "po-t-thsec-fU"=>3, "po-t-thsec-adth"=>3, "po-t-thsec-cla"=>3, "po-t-thsec-cohe"=>3, "po-t-thsec-antithese"=>3, "po-r"=>3, "po-r-cla"=>3, "po-r-cla-fO"=>3, "po-r-cla-fU"=>3, "po-r-cla-adth"=>3, "po-r-cla-ortho"=>3, "po-r-cla-ortho-fO"=>3, "po-r-cla-ortho-fU"=>3, "po-r-cla-ortho-adth"=>3, "po-r-cla-style"=>3, "po-r-cla-style-fO"=>3, "po-r-cla-style-fU"=>3, "po-r-cla-style-adth"=>3, "po-r-sim"=>3, "po-r-sim-fO"=>3, "po-r-sim-fU"=>3, "po-r-sim-adth"=>3, "po-r-emo"=>3, "po-r-emo-fO"=>3, "po-r-emo-fU"=>3, "po-r-emo-adth"=>3}
+Résultat des calculs : {:note_generale=>12.0, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:22:16 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:22:29 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:21122020192312-2021, score:{"po"=>2, "po-fO"=>2, "po-fU"=>2, "po-adth"=>2, "po-ti"=>2, "po-ti-fO"=>2, "po-ti-fU"=>2, "po-ti-adth"=>2, "po-p"=>2, "po-p-fO"=>2, "po-p-fU"=>2, "po-p-adth"=>2, "po-p-cohe"=>2, "po-p-idio"=>2, "po-p-prota"=>2, "po-p-prota-fO"=>2, "po-p-prota-fU"=>2, "po-p-prota-adth"=>2, "po-p-prota-cohe"=>2, "po-p-prota-idio"=>2, "po-p-anta"=>2, "po-p-anta-fO"=>2, "po-p-anta-fU"=>2, "po-p-anta-adth"=>2, "po-p-anta-cohe"=>2, "po-p-anta-idio"=>2, "po-p-psec"=>2, "po-p-psec-fO"=>2, "po-p-psec-fU"=>2, "po-p-psec-adth"=>2, "po-p-psec-cohe"=>2, "po-p-psec-idio"=>2, "po-p-autp"=>2, "po-p-autp-fO"=>2, "po-p-autp-fU"=>2, "po-p-autp-adth"=>2, "po-p-autp-cohe"=>2, "po-p-autp-idio"=>2, "po-p-dials"=>2, "po-p-dials-fO"=>2, "po-p-dials-fU"=>2, "po-p-dials-adth"=>2, "po-p-dials-cohe"=>2, "po-p-dials-idio"=>2, "po-f"=>2, "po-f-fO"=>2, "po-f-fU"=>2, "po-f-adth"=>2, "po-f-pfa"=>2, "po-f-3acts"=>2, "po-f-foncact"=>2, "po-f-pvts"=>2, "po-i"=>2, "po-i-fO"=>2, "po-i-fU"=>2, "po-i-adth"=>2, "po-i-cohe"=>2, "po-i-menee"=>2, "po-i-predic"=>2, "po-i-mainint"=>2, "po-i-mainint-fO"=>2, "po-i-mainint-fU"=>2, "po-i-mainint-adth"=>2, "po-i-mainint-cohe"=>2, "po-i-mainint-menee"=>2, "po-i-mainint-predic"=>2, "po-i-secint"=>2, "po-i-secint-fO"=>2, "po-i-secint-fU"=>2, "po-i-secint-adth"=>2, "po-i-secint-cohe"=>2, "po-i-secint-menee"=>2, "po-i-secint-predic"=>2, "po-i-autint"=>2, "po-i-autint-fO"=>2, "po-i-autint-fU"=>2, "po-i-autint-adth"=>2, "po-i-autint-cohe"=>2, "po-i-autint-menee"=>2, "po-i-autint-predic"=>2, "po-t"=>2, "po-t-fO"=>2, "po-t-fU"=>2, "po-t-adth"=>2, "po-t-cla"=>2, "po-t-cohe"=>2, "po-t-antithese"=>2, "po-t-thprinc"=>2, "po-t-thprinc-fO"=>2, "po-t-thprinc-fU"=>2, "po-t-thprinc-adth"=>2, "po-t-thprinc-cla"=>2, "po-t-thprinc-cohe"=>2, "po-t-thprinc-antithese"=>2, "po-t-thsec"=>2, "po-t-thsec-fO"=>2, "po-t-thsec-fU"=>2, "po-t-thsec-adth"=>2, "po-t-thsec-cla"=>2, "po-t-thsec-cohe"=>2, "po-t-thsec-antithese"=>2, "po-r"=>2, "po-r-cla"=>2, "po-r-cla-fO"=>2, "po-r-cla-fU"=>2, "po-r-cla-adth"=>2, "po-r-cla-ortho"=>2, "po-r-cla-ortho-fO"=>2, "po-r-cla-ortho-fU"=>2, "po-r-cla-ortho-adth"=>2, "po-r-cla-style"=>2, "po-r-cla-style-fO"=>2, "po-r-cla-style-fU"=>2, "po-r-cla-style-adth"=>2, "po-r-sim"=>2, "po-r-sim-fO"=>2, "po-r-sim-fU"=>2, "po-r-sim-adth"=>2, "po-r-emo"=>2, "po-r-emo-fO"=>2, "po-r-emo-fU"=>2, "po-r-emo-adth"=>2}
+Résultat des calculs : {:note_generale=>8.0, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:23:30 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:23:38 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:21072020192312-2021, score:{"po"=>1, "po-fO"=>1, "po-fU"=>1, "po-adth"=>1, "po-ti"=>1, "po-ti-fO"=>1, "po-ti-fU"=>1, "po-ti-adth"=>1, "po-p"=>1, "po-p-fO"=>1, "po-p-fU"=>1, "po-p-adth"=>1, "po-p-cohe"=>1, "po-p-idio"=>1, "po-p-prota"=>1, "po-p-prota-fO"=>1, "po-p-prota-fU"=>1, "po-p-prota-adth"=>1, "po-p-prota-cohe"=>1, "po-p-prota-idio"=>1, "po-p-anta"=>1, "po-p-anta-fO"=>1, "po-p-anta-fU"=>1, "po-p-anta-adth"=>1, "po-p-anta-cohe"=>1, "po-p-anta-idio"=>1, "po-p-psec"=>1, "po-p-psec-fO"=>1, "po-p-psec-fU"=>1, "po-p-psec-adth"=>1, "po-p-psec-cohe"=>1, "po-p-psec-idio"=>1, "po-p-autp"=>1, "po-p-autp-fO"=>1, "po-p-autp-fU"=>1, "po-p-autp-adth"=>1, "po-p-autp-cohe"=>1, "po-p-autp-idio"=>1, "po-p-dials"=>1, "po-p-dials-fO"=>1, "po-p-dials-fU"=>1, "po-p-dials-adth"=>1, "po-p-dials-cohe"=>1, "po-p-dials-idio"=>1, "po-f"=>1, "po-f-fO"=>1, "po-f-fU"=>1, "po-f-adth"=>1, "po-f-pfa"=>1, "po-f-3acts"=>1, "po-f-foncact"=>1, "po-f-pvts"=>1, "po-i"=>1, "po-i-fO"=>1, "po-i-fU"=>1, "po-i-adth"=>1, "po-i-cohe"=>1, "po-i-menee"=>1, "po-i-predic"=>1, "po-i-mainint"=>1, "po-i-mainint-fO"=>1, "po-i-mainint-fU"=>1, "po-i-mainint-adth"=>1, "po-i-mainint-cohe"=>1, "po-i-mainint-menee"=>1, "po-i-mainint-predic"=>1, "po-i-secint"=>1, "po-i-secint-fO"=>1, "po-i-secint-fU"=>1, "po-i-secint-adth"=>1, "po-i-secint-cohe"=>1, "po-i-secint-menee"=>1, "po-i-secint-predic"=>1, "po-i-autint"=>1, "po-i-autint-fO"=>1, "po-i-autint-fU"=>1, "po-i-autint-adth"=>1, "po-i-autint-cohe"=>1, "po-i-autint-menee"=>1, "po-i-autint-predic"=>1, "po-t"=>1, "po-t-fO"=>1, "po-t-fU"=>1, "po-t-adth"=>1, "po-t-cla"=>1, "po-t-cohe"=>1, "po-t-antithese"=>1, "po-t-thprinc"=>1, "po-t-thprinc-fO"=>1, "po-t-thprinc-fU"=>1, "po-t-thprinc-adth"=>1, "po-t-thprinc-cla"=>1, "po-t-thprinc-cohe"=>1, "po-t-thprinc-antithese"=>1, "po-t-thsec"=>1, "po-t-thsec-fO"=>1, "po-t-thsec-fU"=>1, "po-t-thsec-adth"=>1, "po-t-thsec-cla"=>1, "po-t-thsec-cohe"=>1, "po-t-thsec-antithese"=>1, "po-r"=>1, "po-r-cla"=>1, "po-r-cla-fO"=>1, "po-r-cla-fU"=>1, "po-r-cla-adth"=>1, "po-r-cla-ortho"=>1, "po-r-cla-ortho-fO"=>1, "po-r-cla-ortho-fU"=>1, "po-r-cla-ortho-adth"=>1, "po-r-cla-style"=>1, "po-r-cla-style-fO"=>1, "po-r-cla-style-fU"=>1, "po-r-cla-style-adth"=>1, "po-r-sim"=>1, "po-r-sim-fO"=>1, "po-r-sim-fU"=>1, "po-r-sim-adth"=>1, "po-r-emo"=>1, "po-r-emo-fO"=>1, "po-r-emo-fU"=>1, "po-r-emo-adth"=>1}
+Résultat des calculs : {:note_generale=>4.0, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:25:19 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:25:27 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:2110201963030-2021, score:{"po"=>0, "po-fO"=>0, "po-fU"=>0, "po-adth"=>0, "po-ti"=>0, "po-ti-fO"=>0, "po-ti-fU"=>0, "po-ti-adth"=>0, "po-p"=>0, "po-p-fO"=>0, "po-p-fU"=>0, "po-p-adth"=>0, "po-p-cohe"=>0, "po-p-idio"=>0, "po-p-prota"=>0, "po-p-prota-fO"=>0, "po-p-prota-fU"=>0, "po-p-prota-adth"=>0, "po-p-prota-cohe"=>0, "po-p-prota-idio"=>0, "po-p-anta"=>0, "po-p-anta-fO"=>0, "po-p-anta-fU"=>0, "po-p-anta-adth"=>0, "po-p-anta-cohe"=>0, "po-p-anta-idio"=>0, "po-p-psec"=>0, "po-p-psec-fO"=>0, "po-p-psec-fU"=>0, "po-p-psec-adth"=>0, "po-p-psec-cohe"=>0, "po-p-psec-idio"=>0, "po-p-autp"=>0, "po-p-autp-fO"=>0, "po-p-autp-fU"=>0, "po-p-autp-adth"=>0, "po-p-autp-cohe"=>0, "po-p-autp-idio"=>0, "po-p-dials"=>0, "po-p-dials-fO"=>0, "po-p-dials-fU"=>0, "po-p-dials-adth"=>0, "po-p-dials-cohe"=>0, "po-p-dials-idio"=>0, "po-f"=>0, "po-f-fO"=>0, "po-f-fU"=>0, "po-f-adth"=>0, "po-f-pfa"=>0, "po-f-3acts"=>0, "po-f-foncact"=>0, "po-f-pvts"=>0, "po-i"=>0, "po-i-fO"=>0, "po-i-fU"=>0, "po-i-adth"=>0, "po-i-cohe"=>0, "po-i-menee"=>0, "po-i-predic"=>0, "po-i-mainint"=>0, "po-i-mainint-fO"=>0, "po-i-mainint-fU"=>0, "po-i-mainint-adth"=>0, "po-i-mainint-cohe"=>0, "po-i-mainint-menee"=>0, "po-i-mainint-predic"=>0, "po-i-secint"=>0, "po-i-secint-fO"=>0, "po-i-secint-fU"=>0, "po-i-secint-adth"=>0, "po-i-secint-cohe"=>0, "po-i-secint-menee"=>0, "po-i-secint-predic"=>0, "po-i-autint"=>0, "po-i-autint-fO"=>0, "po-i-autint-fU"=>0, "po-i-autint-adth"=>0, "po-i-autint-cohe"=>0, "po-i-autint-menee"=>0, "po-i-autint-predic"=>0, "po-t"=>0, "po-t-fO"=>0, "po-t-fU"=>0, "po-t-adth"=>0, "po-t-cla"=>0, "po-t-cohe"=>0, "po-t-antithese"=>0, "po-t-thprinc"=>0, "po-t-thprinc-fO"=>0, "po-t-thprinc-fU"=>0, "po-t-thprinc-adth"=>0, "po-t-thprinc-cla"=>0, "po-t-thprinc-cohe"=>0, "po-t-thprinc-antithese"=>0, "po-t-thsec"=>0, "po-t-thsec-fO"=>0, "po-t-thsec-fU"=>0, "po-t-thsec-adth"=>0, "po-t-thsec-cla"=>0, "po-t-thsec-cohe"=>0, "po-t-thsec-antithese"=>0, "po-r"=>0, "po-r-cla"=>0, "po-r-cla-fO"=>0, "po-r-cla-fU"=>0, "po-r-cla-adth"=>0, "po-r-cla-ortho"=>0, "po-r-cla-ortho-fO"=>0, "po-r-cla-ortho-fU"=>0, "po-r-cla-ortho-adth"=>0, "po-r-cla-style"=>0, "po-r-cla-style-fO"=>0, "po-r-cla-style-fU"=>0, "po-r-cla-style-adth"=>0, "po-r-sim"=>0, "po-r-sim-fO"=>0, "po-r-sim-fU"=>0, "po-r-sim-adth"=>0, "po-r-emo"=>0, "po-r-emo-fO"=>0, "po-r-emo-fU"=>0, "po-r-emo-adth"=>0}
+Résultat des calculs : {:note_generale=>0.0, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:30:48 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:31:48 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:23102019102649-2021, score:{"po"=>5, "po-fO"=>3, "po-fU"=>3, "po-adth"=>5, "po-ti"=>5, "po-ti-fO"=>3, "po-ti-fU"=>3, "po-ti-adth"=>5, "po-p"=>5, "po-p-fO"=>3, "po-p-fU"=>3, "po-p-adth"=>5, "po-p-cohe"=>5, "po-p-idio"=>5, "po-p-prota"=>5, "po-p-prota-fO"=>3, "po-p-prota-fU"=>3, "po-p-prota-adth"=>5, "po-p-prota-cohe"=>5, "po-p-prota-idio"=>5, "po-p-anta"=>5, "po-p-anta-fO"=>3, "po-p-anta-fU"=>3, "po-p-anta-adth"=>5, "po-p-anta-cohe"=>5, "po-p-anta-idio"=>5, "po-p-psec"=>5, "po-p-psec-fO"=>3, "po-p-psec-fU"=>3, "po-p-psec-adth"=>5, "po-p-psec-cohe"=>5, "po-p-psec-idio"=>5, "po-p-autp"=>5, "po-p-autp-fO"=>3, "po-p-autp-fU"=>3, "po-p-autp-adth"=>5, "po-p-autp-cohe"=>5, "po-p-autp-idio"=>5, "po-p-dials"=>5, "po-p-dials-fO"=>3, "po-p-dials-fU"=>3, "po-p-dials-adth"=>5, "po-p-dials-cohe"=>5, "po-p-dials-idio"=>5, "po-f"=>3, "po-f-fO"=>3, "po-f-fU"=>3, "po-f-adth"=>5, "po-f-pfa"=>3, "po-f-3acts"=>5, "po-f-foncact"=>3, "po-f-pvts"=>3, "po-i"=>5, "po-i-fO"=>3, "po-i-fU"=>3, "po-i-adth"=>5, "po-i-cohe"=>5, "po-i-menee"=>3, "po-i-predic"=>3, "po-i-mainint"=>5, "po-i-mainint-fO"=>3, "po-i-mainint-fU"=>3, "po-i-mainint-adth"=>5, "po-i-mainint-cohe"=>5, "po-i-mainint-menee"=>3, "po-i-mainint-predic"=>3, "po-i-secint"=>5, "po-i-secint-fO"=>3, "po-i-secint-fU"=>3, "po-i-secint-adth"=>5, "po-i-secint-cohe"=>5, "po-i-secint-menee"=>3, "po-i-secint-predic"=>3, "po-i-autint"=>5, "po-i-autint-fO"=>3, "po-i-autint-fU"=>3, "po-i-autint-adth"=>5, "po-i-autint-cohe"=>5, "po-i-autint-menee"=>3, "po-i-autint-predic"=>3, "po-t"=>5, "po-t-fO"=>3, "po-t-fU"=>3, "po-t-adth"=>5, "po-t-cla"=>5, "po-t-cohe"=>5, "po-t-antithese"=>3, "po-t-thprinc"=>5, "po-t-thprinc-fO"=>3, "po-t-thprinc-fU"=>3, "po-t-thprinc-adth"=>5, "po-t-thprinc-cla"=>5, "po-t-thprinc-cohe"=>5, "po-t-thprinc-antithese"=>3, "po-t-thsec"=>5, "po-t-thsec-fO"=>3, "po-t-thsec-fU"=>3, "po-t-thsec-adth"=>5, "po-t-thsec-cla"=>5, "po-t-thsec-cohe"=>5, "po-t-thsec-antithese"=>3, "po-r"=>5, "po-r-cla"=>5, "po-r-cla-fO"=>3, "po-r-cla-fU"=>3, "po-r-cla-adth"=>5, "po-r-cla-ortho"=>5, "po-r-cla-ortho-fO"=>3, "po-r-cla-ortho-fU"=>3, "po-r-cla-ortho-adth"=>5, "po-r-cla-style"=>5, "po-r-cla-style-fO"=>3, "po-r-cla-style-fU"=>3, "po-r-cla-style-adth"=>5, "po-r-sim"=>3, "po-r-sim-fO"=>3, "po-r-sim-fU"=>3, "po-r-sim-adth"=>5, "po-r-emo"=>3, "po-r-emo-fO"=>3, "po-r-emo-fU"=>3, "po-r-emo-adth"=>5}
+Résultat des calculs : {:note_generale=>16.2, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:33:18 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:33:26 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:19072016091010-2021, score:{"po"=>5, "po-fO"=>1, "po-fU"=>1, "po-adth"=>5, "po-ti"=>5, "po-ti-fO"=>1, "po-ti-fU"=>1, "po-ti-adth"=>5, "po-p"=>5, "po-p-fO"=>1, "po-p-fU"=>1, "po-p-adth"=>5, "po-p-cohe"=>5, "po-p-idio"=>5, "po-p-prota"=>5, "po-p-prota-fO"=>1, "po-p-prota-fU"=>1, "po-p-prota-adth"=>5, "po-p-prota-cohe"=>5, "po-p-prota-idio"=>5, "po-p-anta"=>5, "po-p-anta-fO"=>1, "po-p-anta-fU"=>1, "po-p-anta-adth"=>5, "po-p-anta-cohe"=>5, "po-p-anta-idio"=>5, "po-p-psec"=>5, "po-p-psec-fO"=>1, "po-p-psec-fU"=>1, "po-p-psec-adth"=>5, "po-p-psec-cohe"=>5, "po-p-psec-idio"=>5, "po-p-autp"=>5, "po-p-autp-fO"=>1, "po-p-autp-fU"=>1, "po-p-autp-adth"=>5, "po-p-autp-cohe"=>5, "po-p-autp-idio"=>5, "po-p-dials"=>5, "po-p-dials-fO"=>1, "po-p-dials-fU"=>1, "po-p-dials-adth"=>5, "po-p-dials-cohe"=>5, "po-p-dials-idio"=>5, "po-f"=>1, "po-f-fO"=>1, "po-f-fU"=>1, "po-f-adth"=>5, "po-f-pfa"=>1, "po-f-3acts"=>5, "po-f-foncact"=>1, "po-f-pvts"=>1, "po-i"=>5, "po-i-fO"=>1, "po-i-fU"=>1, "po-i-adth"=>5, "po-i-cohe"=>5, "po-i-menee"=>1, "po-i-predic"=>1, "po-i-mainint"=>5, "po-i-mainint-fO"=>1, "po-i-mainint-fU"=>1, "po-i-mainint-adth"=>5, "po-i-mainint-cohe"=>5, "po-i-mainint-menee"=>1, "po-i-mainint-predic"=>1, "po-i-secint"=>5, "po-i-secint-fO"=>1, "po-i-secint-fU"=>1, "po-i-secint-adth"=>5, "po-i-secint-cohe"=>5, "po-i-secint-menee"=>1, "po-i-secint-predic"=>1, "po-i-autint"=>5, "po-i-autint-fO"=>1, "po-i-autint-fU"=>1, "po-i-autint-adth"=>5, "po-i-autint-cohe"=>5, "po-i-autint-menee"=>1, "po-i-autint-predic"=>1, "po-t"=>5, "po-t-fO"=>1, "po-t-fU"=>1, "po-t-adth"=>5, "po-t-cla"=>5, "po-t-cohe"=>5, "po-t-antithese"=>1, "po-t-thprinc"=>5, "po-t-thprinc-fO"=>1, "po-t-thprinc-fU"=>1, "po-t-thprinc-adth"=>5, "po-t-thprinc-cla"=>5, "po-t-thprinc-cohe"=>5, "po-t-thprinc-antithese"=>1, "po-t-thsec"=>5, "po-t-thsec-fO"=>1, "po-t-thsec-fU"=>1, "po-t-thsec-adth"=>5, "po-t-thsec-cla"=>5, "po-t-thsec-cohe"=>5, "po-t-thsec-antithese"=>1, "po-r"=>5, "po-r-cla"=>5, "po-r-cla-fO"=>1, "po-r-cla-fU"=>1, "po-r-cla-adth"=>5, "po-r-cla-ortho"=>5, "po-r-cla-ortho-fO"=>1, "po-r-cla-ortho-fU"=>1, "po-r-cla-ortho-adth"=>5, "po-r-cla-style"=>5, "po-r-cla-style-fO"=>1, "po-r-cla-style-fU"=>1, "po-r-cla-style-adth"=>5, "po-r-sim"=>1, "po-r-sim-fO"=>1, "po-r-sim-fU"=>1, "po-r-sim-adth"=>5, "po-r-emo"=>1, "po-r-emo-fO"=>1, "po-r-emo-fU"=>1, "po-r-emo-adth"=>5}
+Résultat des calculs : {:note_generale=>12.4, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:34:03 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:34:15 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:18072018090000-2021, score:{"po"=>5, "po-fO"=>2, "po-fU"=>2, "po-adth"=>5, "po-ti"=>5, "po-ti-fO"=>2, "po-ti-fU"=>2, "po-ti-adth"=>5, "po-p"=>5, "po-p-fO"=>2, "po-p-fU"=>2, "po-p-adth"=>5, "po-p-cohe"=>5, "po-p-idio"=>5, "po-p-prota"=>5, "po-p-prota-fO"=>2, "po-p-prota-fU"=>2, "po-p-prota-adth"=>5, "po-p-prota-cohe"=>5, "po-p-prota-idio"=>5, "po-p-anta"=>5, "po-p-anta-fO"=>2, "po-p-anta-fU"=>2, "po-p-anta-adth"=>5, "po-p-anta-cohe"=>5, "po-p-anta-idio"=>5, "po-p-psec"=>5, "po-p-psec-fO"=>2, "po-p-psec-fU"=>2, "po-p-psec-adth"=>5, "po-p-psec-cohe"=>5, "po-p-psec-idio"=>5, "po-p-autp"=>5, "po-p-autp-fO"=>2, "po-p-autp-fU"=>2, "po-p-autp-adth"=>5, "po-p-autp-cohe"=>5, "po-p-autp-idio"=>5, "po-p-dials"=>5, "po-p-dials-fO"=>2, "po-p-dials-fU"=>2, "po-p-dials-adth"=>5, "po-p-dials-cohe"=>5, "po-p-dials-idio"=>5, "po-f"=>2, "po-f-fO"=>2, "po-f-fU"=>2, "po-f-adth"=>5, "po-f-pfa"=>2, "po-f-3acts"=>5, "po-f-foncact"=>2, "po-f-pvts"=>2, "po-i"=>5, "po-i-fO"=>2, "po-i-fU"=>2, "po-i-adth"=>5, "po-i-cohe"=>5, "po-i-menee"=>2, "po-i-predic"=>2, "po-i-mainint"=>5, "po-i-mainint-fO"=>2, "po-i-mainint-fU"=>2, "po-i-mainint-adth"=>5, "po-i-mainint-cohe"=>5, "po-i-mainint-menee"=>2, "po-i-mainint-predic"=>2, "po-i-secint"=>5, "po-i-secint-fO"=>2, "po-i-secint-fU"=>2, "po-i-secint-adth"=>5, "po-i-secint-cohe"=>5, "po-i-secint-menee"=>2, "po-i-secint-predic"=>2, "po-i-autint"=>5, "po-i-autint-fO"=>2, "po-i-autint-fU"=>2, "po-i-autint-adth"=>5, "po-i-autint-cohe"=>5, "po-i-autint-menee"=>2, "po-i-autint-predic"=>2, "po-t"=>5, "po-t-fO"=>2, "po-t-fU"=>2, "po-t-adth"=>5, "po-t-cla"=>5, "po-t-cohe"=>5, "po-t-antithese"=>2, "po-t-thprinc"=>5, "po-t-thprinc-fO"=>2, "po-t-thprinc-fU"=>2, "po-t-thprinc-adth"=>5, "po-t-thprinc-cla"=>5, "po-t-thprinc-cohe"=>5, "po-t-thprinc-antithese"=>2, "po-t-thsec"=>5, "po-t-thsec-fO"=>2, "po-t-thsec-fU"=>2, "po-t-thsec-adth"=>5, "po-t-thsec-cla"=>5, "po-t-thsec-cohe"=>5, "po-t-thsec-antithese"=>2, "po-r"=>5, "po-r-cla"=>5, "po-r-cla-fO"=>2, "po-r-cla-fU"=>2, "po-r-cla-adth"=>5, "po-r-cla-ortho"=>5, "po-r-cla-ortho-fO"=>2, "po-r-cla-ortho-fU"=>2, "po-r-cla-ortho-adth"=>5, "po-r-cla-style"=>5, "po-r-cla-style-fO"=>2, "po-r-cla-style-fU"=>2, "po-r-cla-style-adth"=>5, "po-r-sim"=>2, "po-r-sim-fO"=>2, "po-r-sim-fU"=>2, "po-r-sim-adth"=>5, "po-r-emo"=>2, "po-r-emo-fO"=>2, "po-r-emo-fU"=>2, "po-r-emo-adth"=>5}
+Résultat des calculs : {:note_generale=>14.3, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:34:54 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-04 11:35:05 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:21122020192311-2021, score:{"po"=>4, "po-fO"=>2, "po-fU"=>2, "po-adth"=>4, "po-ti"=>4, "po-ti-fO"=>2, "po-ti-fU"=>2, "po-ti-adth"=>4, "po-p"=>4, "po-p-fO"=>2, "po-p-fU"=>2, "po-p-adth"=>4, "po-p-cohe"=>4, "po-p-idio"=>4, "po-p-prota"=>4, "po-p-prota-fO"=>2, "po-p-prota-fU"=>2, "po-p-prota-adth"=>4, "po-p-prota-cohe"=>4, "po-p-prota-idio"=>4, "po-p-anta"=>4, "po-p-anta-fO"=>2, "po-p-anta-fU"=>2, "po-p-anta-adth"=>4, "po-p-anta-cohe"=>4, "po-p-anta-idio"=>4, "po-p-psec"=>4, "po-p-psec-fO"=>2, "po-p-psec-fU"=>2, "po-p-psec-adth"=>4, "po-p-psec-cohe"=>4, "po-p-psec-idio"=>4, "po-p-autp"=>4, "po-p-autp-fO"=>2, "po-p-autp-fU"=>2, "po-p-autp-adth"=>4, "po-p-autp-cohe"=>4, "po-p-autp-idio"=>4, "po-p-dials"=>4, "po-p-dials-fO"=>2, "po-p-dials-fU"=>2, "po-p-dials-adth"=>4, "po-p-dials-cohe"=>4, "po-p-dials-idio"=>4, "po-f"=>2, "po-f-fO"=>2, "po-f-fU"=>2, "po-f-adth"=>4, "po-f-pfa"=>2, "po-f-3acts"=>4, "po-f-foncact"=>2, "po-f-pvts"=>2, "po-i"=>4, "po-i-fO"=>2, "po-i-fU"=>2, "po-i-adth"=>4, "po-i-cohe"=>4, "po-i-menee"=>2, "po-i-predic"=>2, "po-i-mainint"=>4, "po-i-mainint-fO"=>2, "po-i-mainint-fU"=>2, "po-i-mainint-adth"=>4, "po-i-mainint-cohe"=>4, "po-i-mainint-menee"=>2, "po-i-mainint-predic"=>2, "po-i-secint"=>4, "po-i-secint-fO"=>2, "po-i-secint-fU"=>2, "po-i-secint-adth"=>4, "po-i-secint-cohe"=>4, "po-i-secint-menee"=>2, "po-i-secint-predic"=>2, "po-i-autint"=>4, "po-i-autint-fO"=>2, "po-i-autint-fU"=>2, "po-i-autint-adth"=>4, "po-i-autint-cohe"=>4, "po-i-autint-menee"=>2, "po-i-autint-predic"=>2, "po-t"=>4, "po-t-fO"=>2, "po-t-fU"=>2, "po-t-adth"=>4, "po-t-cla"=>4, "po-t-cohe"=>4, "po-t-antithese"=>2, "po-t-thprinc"=>4, "po-t-thprinc-fO"=>2, "po-t-thprinc-fU"=>2, "po-t-thprinc-adth"=>4, "po-t-thprinc-cla"=>4, "po-t-thprinc-cohe"=>4, "po-t-thprinc-antithese"=>2, "po-t-thsec"=>4, "po-t-thsec-fO"=>2, "po-t-thsec-fU"=>2, "po-t-thsec-adth"=>4, "po-t-thsec-cla"=>4, "po-t-thsec-cohe"=>4, "po-t-thsec-antithese"=>2, "po-r"=>4, "po-r-cla"=>4, "po-r-cla-fO"=>2, "po-r-cla-fU"=>2, "po-r-cla-adth"=>4, "po-r-cla-ortho"=>4, "po-r-cla-ortho-fO"=>2, "po-r-cla-ortho-fU"=>2, "po-r-cla-ortho-adth"=>4, "po-r-cla-style"=>4, "po-r-cla-style-fO"=>2, "po-r-cla-style-fU"=>2, "po-r-cla-style-adth"=>4, "po-r-sim"=>2, "po-r-sim-fO"=>2, "po-r-sim-fU"=>2, "po-r-sim-adth"=>4, "po-r-emo"=>2, "po-r-emo-fO"=>2, "po-r-emo-fU"=>2, "po-r-emo-adth"=>4}
+Résultat des calculs : {:note_generale=>12.2, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}
+
+
+--- [2020-11-04 11:35:26 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator: 1, synopsis_id:21122020192311-2021, score:{"po"=>4, "po-fO"=>1, "po-fU"=>1, "po-adth"=>4, "po-ti"=>4, "po-ti-fO"=>1, "po-ti-fU"=>1, "po-ti-adth"=>4, "po-p"=>4, "po-p-fO"=>1, "po-p-fU"=>1, "po-p-adth"=>4, "po-p-cohe"=>4, "po-p-idio"=>4, "po-p-prota"=>4, "po-p-prota-fO"=>1, "po-p-prota-fU"=>1, "po-p-prota-adth"=>4, "po-p-prota-cohe"=>4, "po-p-prota-idio"=>4, "po-p-anta"=>4, "po-p-anta-fO"=>1, "po-p-anta-fU"=>1, "po-p-anta-adth"=>4, "po-p-anta-cohe"=>4, "po-p-anta-idio"=>4, "po-p-psec"=>4, "po-p-psec-fO"=>1, "po-p-psec-fU"=>1, "po-p-psec-adth"=>4, "po-p-psec-cohe"=>4, "po-p-psec-idio"=>4, "po-p-autp"=>4, "po-p-autp-fO"=>1, "po-p-autp-fU"=>1, "po-p-autp-adth"=>4, "po-p-autp-cohe"=>4, "po-p-autp-idio"=>4, "po-p-dials"=>4, "po-p-dials-fO"=>1, "po-p-dials-fU"=>1, "po-p-dials-adth"=>4, "po-p-dials-cohe"=>4, "po-p-dials-idio"=>4, "po-f"=>1, "po-f-fO"=>1, "po-f-fU"=>1, "po-f-adth"=>4, "po-f-pfa"=>1, "po-f-3acts"=>4, "po-f-foncact"=>1, "po-f-pvts"=>1, "po-i"=>4, "po-i-fO"=>1, "po-i-fU"=>1, "po-i-adth"=>4, "po-i-cohe"=>4, "po-i-menee"=>1, "po-i-predic"=>1, "po-i-mainint"=>4, "po-i-mainint-fO"=>1, "po-i-mainint-fU"=>1, "po-i-mainint-adth"=>4, "po-i-mainint-cohe"=>4, "po-i-mainint-menee"=>1, "po-i-mainint-predic"=>1, "po-i-secint"=>4, "po-i-secint-fO"=>1, "po-i-secint-fU"=>1, "po-i-secint-adth"=>4, "po-i-secint-cohe"=>4, "po-i-secint-menee"=>1, "po-i-secint-predic"=>1, "po-i-autint"=>4, "po-i-autint-fO"=>1, "po-i-autint-fU"=>1, "po-i-autint-adth"=>4, "po-i-autint-cohe"=>4, "po-i-autint-menee"=>1, "po-i-autint-predic"=>1, "po-t"=>4, "po-t-fO"=>1, "po-t-fU"=>1, "po-t-adth"=>4, "po-t-cla"=>4, "po-t-cohe"=>4, "po-t-antithese"=>1, "po-t-thprinc"=>4, "po-t-thprinc-fO"=>1, "po-t-thprinc-fU"=>1, "po-t-thprinc-adth"=>4, "po-t-thprinc-cla"=>4, "po-t-thprinc-cohe"=>4, "po-t-thprinc-antithese"=>1, "po-t-thsec"=>4, "po-t-thsec-fO"=>1, "po-t-thsec-fU"=>1, "po-t-thsec-adth"=>4, "po-t-thsec-cla"=>4, "po-t-thsec-cohe"=>4, "po-t-thsec-antithese"=>1, "po-r"=>4, "po-r-cla"=>4, "po-r-cla-fO"=>1, "po-r-cla-fU"=>1, "po-r-cla-adth"=>4, "po-r-cla-ortho"=>4, "po-r-cla-ortho-fO"=>1, "po-r-cla-ortho-fU"=>1, "po-r-cla-ortho-adth"=>4, "po-r-cla-style"=>4, "po-r-cla-style-fO"=>1, "po-r-cla-style-fU"=>1, "po-r-cla-style-adth"=>4, "po-r-sim"=>1, "po-r-sim-fO"=>1, "po-r-sim-fU"=>1, "po-r-sim-adth"=>4, "po-r-emo"=>1, "po-r-emo-fO"=>1, "po-r-emo-fU"=>1, "po-r-emo-adth"=>4}
+Résultat des calculs : {:note_generale=>10.3, :pourcentage_reponses=>100.0, :nombre_questions=>122, :nombre_reponses=>122, :nombre_missings=>0}

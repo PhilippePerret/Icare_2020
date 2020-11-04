@@ -7,11 +7,16 @@
 require 'fileutils'
 require_relative '../../lib/required' # pour quand appelé depuis IcareCLI
 
+# Les fichiers qu'il faut "surveiller"
+WORKING_FILES = []
 # Tous les dossiers à conserver dans un gel
 WORKING_FOLDERS = []
 ['downloads','mails','signups'].each do |subfolder|
   WORKING_FOLDERS << File.expand_path(File.join('.','tmp', subfolder)).freeze
 end
+# On ajoute le dossier des données de CONCOURS
+WORKING_FOLDERS << File.expand_path(File.join('.','_lib','data','concours'))
+WORKING_FILES   << File.expand_path(File.join('.','_lib','data','secret','concours.rb'))
 
 FOLDER_GELS = File.expand_path(File.join('.','spec','support','Gel','gels'))
 
@@ -100,6 +105,12 @@ def gel(description = nil)
     # puts "Je place le dossier #{dossier.inspect} dans le dossier #{folder.inspect}"
     FileUtils.cp_r(dossier, folder)
   end
+  # Faire une duplication des fichiers
+  WORKING_FILES.each do |src|
+    next if not File.exists?(src)
+    dst = File.join(folder, File.basename(src)) # peut-être dangereux…
+    FileUtils.copy(src, dst)
+  end
   # Si la description est données, on fait un fichier readme.md
   unless description.nil?
     File.open(read_me_file,'wb'){|f|f.write("# Description du gel#{RC2}#{description}")}
@@ -130,6 +141,14 @@ def degel
     dst_folder = File.dirname(dossier)
     # puts "Je REPLACE le dossier #{src_folder.inspect} dans le dossier #{dst_folder.inspect}"
     FileUtils.cp_r(src_folder, dst_folder)
+  end
+
+  # Remettre les fichiers isolés
+  WORKING_FILES.each do |dst|
+    src = File.join(folder, File.basename(dst)) # peut-être dangereux…
+    next if not File.exists?(src)
+    File.delete(dst) if File.exists?(dst)
+    FileUtils.copy(src, dst)
   end
   return true
 end #/ degel

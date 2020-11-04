@@ -102,23 +102,25 @@
   # Nouvelle, fichier conforme, selectionnée, fiche lecture, infos
   - :patronyme: Marcelle NewFichConfSelFLI
     :sexe: F
-    :created_ds: "21/01/2020/19/23/12"
+    :created_ds: "21/01/2020/19/10/12"
     :participations:
       :current:
         :titre: "Marcelle Courante"
         :preselected: true
+        :notes: [160, 162, 143]
 
 
   # Ancienne, fichier non conforme, non sélectionnée, no fiche de lecture, no infos
   - :patronyme: Christine NewFichNonConf
     :sexe: F
-    :created_ds: "21/07/2016/09/10/10"
+    :created_ds: "19/07/2016/09/10/10"
     :options:
       :informations: false
       :fiche_lecture: false
     :participations:
       :current:
         :titre: "La Courante"
+        :notes: ['000', '040', '080']
         :fichier:
           :conforme: false
       2017:
@@ -128,19 +130,20 @@
   # Ancien, fichier conforme, non sélectionnée, fiche de lecture, no infos
   - :patronyme: Christophe NewFichConfFL
     :sexe: H
-    :created_ds: "21/07/2018/09/00/00"
+    :created_ds: "18/07/2018/09/00/00"
     :options:
       :informations: false
     :participations:
       :current:
         :titre: "La Courante"
+        :notes: ['103', '040', '080']
       2019:
         :titre: "Le saut de 2019"
 
   # Nouvelle, fichier non conforme, non fiche lecture, infos
   - :patronyme: Navila NewFichConfSelFLI
     :sexe: F
-    :created_ds: "21/12/2020/19/23/12"
+    :created_ds: "21/12/2020/19/23/11"
     :options:
       :fiche_lecture: false
     :participations:
@@ -152,21 +155,23 @@
   # Nouveau, fichier conforme, selectionné, fiche lecture, infos
   - :patronyme: Albert NewFichConfSelFLI
     :sexe: H
-    :created_ds: "21/07/2020/19/23/12"
+    :created_ds: "17/07/2020/19/20/12"
     :participations:
       :current:
         :titre: "Cours, cours, cours"
+        :notes: ['200', '124', '103']
         :preselected: true
 
   # Ancienne, fichier conforme, primée (2), non fiche de lecture, infos
   - :patronyme: Nicole AncFichConfPrixDeuxFLI
     :sexe: F
-    :created_ds: "21/07/2020/9/12/23"
+    :created_ds: "16/07/2020/3/23/23"
     :options:
       :fiche_lecture: false
     :participations:
       :current:
         :titre: "La Courante Gagnante"
+        :notes: ['200', '162', '162']
         :prix: 2
       2019:
         :titre: "La coureur de 2019"
@@ -176,36 +181,39 @@
   # Ancienne, fichier conforme, sélectionnée, fiche de lecture, no infos
   - :patronyme: Gervaise NewFichConfSelFL
     :sexe: F
-    :created_ds: "21/07/2020/9/12/23"
+    :created_ds: "12/07/2020/4/10/22"
     :options:
       :informations: false
     :participations:
       :current:
         :titre: "Un Courant Gagnant"
+        :notes: ['143', '124', '103']
         :preselected: true
 
   # Nouvelle, fichier conforme, primée (1ère), fiche de lecture, infos
   - :patronyme: Karole NewFichConfSelPrixUnFLI
     :sexe: F
-    :created_ds: "21/07/2020/9/12/23"
+    :created_ds: "11/07/2020/5/11/00"
     :participations:
       :current:
         :titre: "Mon Projet Gagnant Courant"
+        :notes: ['200', '200', '162']
         :prix: 1
 
   # Nouveau, fichier conforme, sélectionné, fiche de lecture, infos
   - :patronyme: Kevin NewFichConfSelFLI
     :sexe: H
-    :created_ds: "20/07/2020/9/12/23"
+    :created_ds: "20/07/2020/6/10/20"
     :participations:
       :current:
         :titre: "Mon projet courant"
+        :notes: ['143', '124', '120']
         :preselected: true
 
   # Courtant, avec fichier conforme, sélectionné, pas de fiche lecture, infos
   - :patronyme: Ernestine CurFichConfSelI
     :sexe: F
-    :created_ds: "20/10/2016/9/12/23"
+    :created_ds: "20/10/2016/7/09/06"
     :options:
       :fiche_lecture: false
     :participations:
@@ -213,6 +221,7 @@
         :titre: "Le Monde courant"
         :auteurs: "Ernestine, Barrataud et Couperin"
         :keywords: monde, solidité, amitié
+        :notes: ['162', '124', '120']
         :preselected: true
       2017:
         :titre: "Le monde en 2017"
@@ -227,6 +236,7 @@
     :participations:
       :current:
         :titre: "Un regard sur l'année courante primé 3"
+        :notes: ['124', '162', '162']
         :prix: 3
   # Courant, avec fichier conforme, non sélectionné, fiche lecture, infos
   - :patronyme: Alphonse CurFichConfFLI
@@ -235,6 +245,7 @@
     :participations:
       :current:
         titre: "Mon bon fichier"
+        :notes: ['040', '080', '103']
       2020:
         :titre: "2020 marches"
       2019:
@@ -248,6 +259,7 @@
     :participations:
       :current:
         :titre: "Pas courant !"
+        :notes: ['124', '120', '162']
         :preselected: true
       2020:
         :titre: "20 et 20 pour T et T"
@@ -266,6 +278,8 @@
         :titre: "Mauvais fichier 2020"
         :fichier:
           :conforme: false
+
+  # Nouvelle, fichier conforme, sélectionnée, sans fiche lecture, sans infos
   - :patronyme: Mathilde NewFichConfSel
     :sexe: F
     :options:
@@ -276,6 +290,7 @@
     :participations:
       :current:
         :titre: "Le Don courant"
+        :notes: ['124', '143', '162']
         :preselected: true # false par défaut
         :keywords: médecine, déclin, étranger
 
@@ -292,6 +307,7 @@
     :participations:
       :current:
         :titre: "Le Sang du 2021"
+        :notes: ['080', '080', '120']
         :keywords: sang, survie, nature
       2020:
         :titre: "La chambre 2020"
