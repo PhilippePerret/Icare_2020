@@ -5,7 +5,7 @@
   Gestion des gels
 =end
 require 'fileutils'
-require_relative '../../lib/required' # pour quand appelé depuis IcareCLI
+# require_relative '../../lib/required' # pour quand appelé depuis IcareCLI
 
 # Les fichiers qu'il faut "surveiller"
 WORKING_FILES = []

@@ -5,6 +5,7 @@
   Pour les user, pour les tests
 =end
 require 'capybara/rspec'
+require_relative './TUser_tdd'
 
 class TUser
 include Capybara::DSL

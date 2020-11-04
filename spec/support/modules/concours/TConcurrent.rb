@@ -77,17 +77,20 @@ class << self
 # Retourne une instance TConcurrent choisie au hasard
 #
 # IN    +options+ Table d'options:
-#                 :femme    Si true on doit retourner une femme
-#                 :without_fichier
-#                 :without_synopsis   Si true, on doit retourner un
-#                       concurrent sans synopsis.
+#                 :count
+#                     Le nombre de concurrents attendus
+#                 :not_mail
+#                     LISTE des mails qu'il ne faut pas prendre (i.e. qui sont
+#                     déjà utilisés par une autre recherche par exemple)
+#                 :femme
+#                     Si true on doit retourner une femme
 #                 :avec_fichier
-#                 :with_synopsis  Si true, un concurrent avec déjà un fichier
-#                       pour la session courante.
+#                     Si true, un concurrent avec déjà un fichier pour la
+#                     session courante.
 #                 :avec_fichier_conforme
 #                     Si true, un concurrent avec un fichier conforme.
-#                 :non_inscrit    Si true, il faut renvoyer un ancien concurrent
-#                 :current        Inverse de :non_inscrit
+#                 :current
+#                     Un concurrent courant
 # OUT   Un concurrent pris au hasard, qui peut remplir certaines
 #       conditions optionnellement définies par +options+.
 #       Mais c'est forcément un candidat courant
@@ -122,76 +125,53 @@ end #/ jury
 
   def proceed_get_random(options = nil)
     options ||= {}
-    options.merge!(avec_fichier: options.delete(:with_fichier)) if options.key?(:with_fichier)
-    options.merge!(avec_fichier: options.delete(:with_synopsis)) if options.key?(:with_synopsis)
-    options.merge!(sans_fichier: true) if options[:avec_fichier] === false
     options.merge!(avec_fichier: true) if options.key?(:avec_fichier_conforme)
-    options[:current] = !options[:non_inscrit] if options.key?(:non_inscrit)
-    candidat = nil
+    options.merge!(count: 1) if not options.key?(:count)
+    options.merge!(current: true) if options.key?(:avec_fichier)
     options.merge!(not_mail: []) unless options.key?(:not_mail)
-    begin
-      candidat =  if options[:avec_fichier]
-                    # tiendra compte de options[:femme] et :avec_fichier_conforme
-                    get_concurrent_avec_fichier(options)
-                  elsif options[:sans_fichier]
-                    get_concurrent_sans_fichier(options)
-                  elsif options[:femme]
-                    get_une_femme
-                  elsif options[:current]
-                    all_current[rand(all_current.count)]
-                  else
-                    all[rand(all.count)]
-                  end
-      candidat = nil if options[:not_mail].include?(candidat.mail)
-    end while candidat.nil?
 
-    # puts "Candidat: #{candidat.inspect}"
-    # Si on veut un ancien concurrent
-    if options[:current] === false
-      request = "DELETE FROM concurrents_per_concours WHERE annee = ? AND concurrent_id = ?"
-      db_exec(request, [ANNEE_CONCOURS_COURANTE, candidat.id])
+    where = []
+    case options[:avec_fichier]
+    when TrueClass  then where << "SUBSTRING(cpc.specs,1,1) = 1"
+    when FalseClass then where << "SUBSTRING(cpc.specs,1,1) = 0"
     end
-    # puts "candidat : #{candidat.inspect}"
-    candidat.reset
-    return candidat
+    case options[:avec_fichier_conforme]
+    when TrueClass  then where << "SUBSTRING(cpc.specs,2,1) = 1"
+    when FalseClass then where << "SUBSTRING(cpc.specs,2,1) = 0 OR SUBSTRING(cpc.specs,2,1) = 2"
+    end
+    case options[:femme]
+    when TrueClass  then where << "cc.sexe = 'F'"
+    when FalseClass then where << "cc.sexe = 'H'"
+    end
+    case options[:current]
+    when TrueClass  then where << "cpc.annee = #{ANNEE_CONCOURS_COURANTE}"
+    when FalseClass then raise("Ce cas n'est pas encore traité (plus complexe puisqu'il faut trouver l'user qui n'a AUCUN enregistrement pour le concours courant)")
+    end
+
+
+    concurrents = [] # les candidats retenus
+    # Liste d'instances {TConcurrent}
+    request = REQUEST_ALL_CONCURRENTS_WHERE % {where: where.join(' AND ')}
+    # puts "#{request}"
+    candidats = db_exec(request).collect{|dc|new(dc)}
+    candidats.shuffle
+    # puts "candidats: #{candidats.inspect}"
+    candidats.each do |candidat|
+      next if options[:not_mail].include?(candidat.mail)
+      # puts "Je prends #{candidat.inspect}"
+      concurrents << candidat
+      options[:not_mail] << candidat.mail
+      break if concurrents.count == options[:count]
+    end
+
+    concurrents.each do |conc| conc.reset end
+
+    if options[:count] == 1
+      concurrents.first
+    else
+      concurrents
+    end
   end #/ get_a_concurrent
-
-  def get_une_femme
-    all.shuffle.each do |concurrent|
-      return concurrent if concurrent.femme?
-    end
-  end #/ get_femme
-
-  # On s'assure d'avoir un concurrent sans fichier
-  def get_concurrent_sans_fichier(options)
-    all_current.shuffle.each do |conc|
-      cond = conc.specs[0] == "0"
-      next if not cond
-      # On s'assure que le fichier n'existe pas
-      conc.destroy_fichier if conc.dossier_transmis?
-      cond = cond && conc.femme? if options[:femme]
-      return conc if cond
-    end
-    return nil
-  end #/ get_concurrent_sans_fichier
-  def get_concurrent_avec_fichier(options)
-    all_current.shuffle.each do |conc|
-      cond = conc.specs[0] == "1"
-      next if not cond
-      # On s'assure que le fichier existe
-      conc.make_fichier if not conc.dossier_transmis?
-      cond = cond && conc.specs[1] == "1" if options[:avec_fichier_conforme]
-      cond = cond && conc.femme? if options[:femme]
-      return conc if cond
-    end
-    conc = all_current.shuffle.first
-    sps = conc.specs.split('')
-    sps[0] = "1"
-    sps[1] = "1" if options[:avec_fichier_conforme]
-    conc_set_specs(sps.join(''))
-    conc.make_fichier if not conc.dossier_transmis?
-    return conc
-  end #/ get_concurrent_avec_fichier
 
   def all
     @allconcurrents ||= begin
@@ -359,7 +339,8 @@ end
 
 REQUEST_CONCURRENTS_COURANTS = <<-SQL
 SELECT
-  cc.*, cpc.titre, cpc.auteurs, cpc.keywords, cpc.specs, cpc.prix
+  cc.*,
+  cpc.titre, cpc.auteurs, cpc.keywords, cpc.specs, cpc.prix, cpc.pre_note, cpc.fin_note
   FROM concours_concurrents cc
   INNER JOIN concurrents_per_concours cpc ON cc.concurrent_id = cpc.concurrent_id
   WHERE cpc.annee = ?
@@ -375,5 +356,14 @@ SQL
 
 REQUEST_CONCURRENT_MIN_DATA = <<-SQL
 SELECT * FROM concours_concurrents WHERE concurrent_id = ?
+SQL
+
+REQUEST_ALL_CONCURRENTS_WHERE = <<-SQL
+SELECT
+  cc.*,
+  cpc.titre, cpc.auteurs, cpc.keywords, cpc.specs, cpc.prix, cpc.pre_note, cpc.fin_note
+  FROM concours_concurrents cc
+  INNER JOIN concurrents_per_concours cpc ON cc.concurrent_id = cpc.concurrent_id
+  WHERE %{where}
 SQL
 end #/TConcurrent

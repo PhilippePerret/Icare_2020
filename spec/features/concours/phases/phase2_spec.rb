@@ -7,41 +7,41 @@ feature "Phase 2 du concours" do
 
   # Retourne le nombre de fichiers candidature conformes
   def nombre_fichiers_candidature
-    TConcurrent.all_current.select{|c|c.specs[1]=="1"}.count
+    TConcurrent.all_current.select do |c| c.specs[1]=="1" end.count
   end #/ nombre_fichiers_candidature
+
   before(:all) do
     require_support('concours')
-    degel('concours')
+    degel('concours-phase-2')
   end
   before(:each) do
-    # Il faut avoir un concours courant en phase 0
+    # Il faut avoir un concours courant en phase 0 (pour le premier c'est
+    # inutile, mais c'est pour ceux ensuite)
     TConcours.current.set_phase(1)
     TConcours.current.reset
-    # S'assurer que 4 concurrents courants aient envoyé leur synopsis
-    expect(TConcurrent.all_current.count).to be > 3,
-      "Il faudrait au moins 4 concurrents courants !"
+    expect(TConcours.current.phase).to eq(1)
 
     # On fait deux concurrents dont un avec un fichier conforme et l'autre
     # sans fichier
-    @conc_avec_syno = TConcurrent.get_random(avec_fichier_conforme: true)
-    @conc_sans_syno = TConcurrent.get_random(avec_fichier: false)
+    @conc_avec_file = TConcurrent.get_random(avec_fichier_conforme: true)
+    # puts "@conc_avec_file: #{@conc_avec_file.inspect}"
+    expect(@conc_avec_file).not_to eq(nil)
+    @conc_sans_file = TConcurrent.get_random(avec_fichier_conforme: false)
+    # puts "@conc_sans_file: #{@conc_sans_file.inspect}"
+    expect(@conc_sans_file).not_to eq(nil)
 
     # On compte le nombre de synopsis pour cette session
     @nombre_synopsis = nombre_fichiers_candidature.freeze
-    if @nombre_synopsis < 2
-      TConcurrent.all_current[0..2].each do |conc|
-        conc.make_fichier_conforme
-      end
-      @nombre_synopsis = nombre_fichiers_candidature.freeze
-    end
+    # puts "@nombre_synopsis: #{@nombre_synopsis.inspect}"
     expect(@nombre_synopsis).to be > 1
+
   end
 
-  let(:conc_sans_syno) { @conc_sans_syno }
-  let(:conc_avec_syno) { @conc_avec_syno }
+  let(:conc_sans_file) { @conc_sans_file }
+  let(:conc_avec_file) { @conc_avec_file }
+
 
   context 'Un administrateur' do
-
     scenario 'peut lancer la phase 2 du concours en se rendant à l’administration' do
 
       # *** Vérifications préliminaires
@@ -92,8 +92,8 @@ feature "Phase 2 du concours" do
       TConcurrent.all_current.each do |conc|
         # Faire une différence entre un concurrent ayant envoyé un fichier
         # de candidature et un autre
-        msg = if conc.dossier_transmis?
-          "Vous avez transmis votre fichier de candidature dans les temps"
+        msg = if conc.fichier_conforme?
+          "Vous avez transmis un fichier de candidature conforme"
         else
           "Vous n'avez pas transmis de fichier de candidature"
         end
@@ -118,12 +118,12 @@ feature "Phase 2 du concours" do
 
       # *** On poursuit la vérification avec un concurrent qui visite
       # *** l'accueil
-      # puts "conc_avec_syno specs : #{conc_avec_syno.specs}"
+      # puts "conc_avec_file specs : #{conc_avec_file.specs}"
       goto("concours/accueil")
       click_on("Identifiez-vous")
       within("form#concours-login-form") do
-        fill_in("p_mail", with: conc_avec_syno.mail)
-        fill_in("p_concurrent_id", with: conc_avec_syno.id)
+        fill_in("p_mail", with: conc_avec_file.mail)
+        fill_in("p_concurrent_id", with: conc_avec_file.id)
         click_on("S’identifier")
       end
 
@@ -135,21 +135,21 @@ feature "Phase 2 du concours" do
       # La page doit présenter le bon message personnel
       expect(page).to have_content("Votre synopsis est conforme, il est en lice pour la session #{ANNEE_CONCOURS_COURANTE}")
 
-      conc_avec_syno.se_deconnecte
+      conc_avec_file.se_deconnecte
 
 
-      # puts "conc_sans_syno specs : #{conc_sans_syno.specs}"
+      # puts "conc_sans_file specs : #{conc_sans_file.specs}"
       goto("concours/accueil")
       click_on("Identifiez-vous")
       within("form#concours-login-form") do
-        fill_in("p_mail", with: conc_sans_syno.mail)
-        fill_in("p_concurrent_id", with: conc_sans_syno.id)
+        fill_in("p_mail", with: conc_sans_file.mail)
+        fill_in("p_concurrent_id", with: conc_sans_file.id)
         click_on("S’identifier")
       end
       # La page doit présenter
       expect(page).to have_content("Vous n'êtes pas en lice pour la session #{ANNEE_CONCOURS_COURANTE}")
 
-      conc_sans_syno.se_deconnecte
+      conc_sans_file.se_deconnecte
 
       # Des mails ont été envoyés à chaque concurrrent pour annoncer
       # la fin de l'échéance
@@ -157,8 +157,8 @@ feature "Phase 2 du concours" do
         expect(conc).to have_mail(subject: "[CONCOURS] Fin de l’échéance des dépôts", after: start_time)
       end
       # On vérifie particulièrement les deux mails des concurrents connus
-      expect(conc_avec_syno).to have_mail(after:start_time, message: "Vous avez transmis un fichier de candidature conforme dans les temps")
-      expect(conc_sans_syno).to have_mail(after:start_time, message:"Vous n'avez pas transmis de fichier de candidature conforme")
+      expect(conc_avec_file).to have_mail(after:start_time, message: "Vous avez transmis un fichier de candidature conforme dans les temps")
+      expect(conc_sans_file).to have_mail(after:start_time, message:"Vous n'avez pas transmis de fichier de candidature conforme")
 
       # Des mails ont été envoyés aux jurés
       TConcurrent.jury.each do |dj|

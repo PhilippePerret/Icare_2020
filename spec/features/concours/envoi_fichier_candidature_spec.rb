@@ -66,7 +66,7 @@ feature "Dépôt du fichier de candidature" do
 
     context 'Un concurrent ayant déjà déposé son fichier' do
       before(:all) do
-        @concurrent = TConcurrent.get_random(with_synopsis: true)
+        @concurrent = TConcurrent.get_random(avec_fichier: true)
       end
       scenario 'trouve un message lui confirmant son dépôt' do
         concurrent.identify

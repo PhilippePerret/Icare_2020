@@ -8,6 +8,9 @@ class << self
   attr_accessor :error
   attr_accessor :raison_exclusion
 
+  # Pour savoir qu'elle est chargée complètement
+  def loaded; true end
+
   # Retourne les mails transmis à +mail_destinataire+ qui contiennent
   # le message +searched+
   def find_all(mail_destinataire, searched, options = nil)

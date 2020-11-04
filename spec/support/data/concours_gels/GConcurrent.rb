@@ -141,14 +141,7 @@ class Participation
     @data_ini.each{|k,v|instance_variable_set("@#{k}", v)}
     @is_current = @annee == :current
     @annee = ANNEE_CONCOURS_COURANTE if @annee == :current
-    if PHASE_GEL < 5
-      @prix = nil
-    end
-    if PHASE_GEL < 3
-      @preselected = nil
-    else
-      @preselected = true if not(@prix.to_i == 0)
-    end
+    @preselected = true if @prix.to_i > 0
 
     if PHASE_GEL > 0
       @fichier = {} if @fichier.nil?
@@ -158,8 +151,6 @@ class Participation
 
     if current?
       GConcurrent.incremente_nombre_courants
-      GConcurrent.incremente_selecteds if @preselected
-      GConcurrent.incremente_primeds if @prix.to_i > 0
     end
 
   end #/ initialize
@@ -174,7 +165,7 @@ class Participation
   def build
     compose_specs
     make_folder_evaluations if not(current? && PHASE_GEL == 0)
-    make_evaluations_and_calc_notes if PHASE_GEL > 2
+    make_evaluations_and_calc_notes if PHASE_GEL > 1
     save_data_in_db
   end #/ build
   # ---------------------------------------------------------------------
@@ -218,7 +209,7 @@ class Participation
   def compose_specs
     sp = Array.new(8,"0")
     # Envoi fichier
-    if PHASE_GEL > 1
+    if PHASE_GEL > 0
       # puts "fichier: #{fichier.inspect}"
       unless fichier[:name].nil?
         sp[0] = "1"
@@ -231,12 +222,14 @@ class Participation
               when false    then "2"
               end
       GConcurrent.incremente_fichiers_cur_conformes if current? && sp[1] == "1"
-      if PHASE_GEL > 2
+      if PHASE_GEL >= 2
         # Présélection
         sp[2] = "1" if preselected === true
-        if PHASE_GEL > 3
+        GConcurrent.incremente_selecteds if current? && sp[2] == "1"
+        if PHASE_GEL >= 3
           # Lauréat
           sp[3] = prix unless prix.nil?
+          GConcurrent.incremente_primeds if current? && sp[3].to_i > 0
         end
       end
     end

@@ -6,11 +6,14 @@
 feature "Phase 1 du concours" do
   before(:all) do
     require_support('concours')
+    degel('concours-phase-0')
   end
   before(:each) do
-    # Il faut avoir un concours courant en phase 0
+    # Il faut avoir un concours courant en phase 0 (pour le premier c'est
+    # inutile, mais c'est pour ceux ensuite)
     TConcours.current.set_phase(0)
     TConcours.current.reset
+    expect(TConcours.current.phase).to eq(0)
   end
   context 'Un administrateur' do
 

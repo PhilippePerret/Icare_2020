@@ -22,9 +22,8 @@ Capybara.save_path = './spec/tmp/screenshots'
 Capybara.match = :first
 
 # Les requisitions pour les tests
-require './spec/support/lib/required'
-# Les constantes d'erreurs générales sur l'atelier
-require './_lib/required/__first/constants/errs_n_mess'
+# require './spec/support/_required'
+require_relative './support/_required'
 
 class Capybara::Session
   include SpecModuleNavigation
@@ -53,8 +52,12 @@ RSpec.configure do |config|
 
   # Pour requérir tout un dossier se trouvant dans ./spec/support/modules
   def require_support(folder_name)
-    Dir["./spec/support/modules/#{folder_name}/**/*.rb"].each{|m|require m}
+    require_folder("./spec/support/modules/#{folder_name}")
   end #/ require_support
+
+  def require_folder(dossier)
+    Dir["#{dossier}/**/*.rb"].each{|m| require m}
+  end #/ require_folder
 
   config.include Capybara::DSL, :type => :feature
 
@@ -129,8 +132,35 @@ RSpec.configure do |config|
     File.unlink('./TESTS_ON') if File.exists?('./TESTS_ON')
   end
 
-  config.before :each do
+  class BeforeStates
+  class << self
+    attr_accessor :requires_state
+    def checked_folders; @checked_folders ||= {} end
+  end
+  end
+
+  config.before :all do |t|
+    BeforeStates.requires_state = false
+  end
+
+  config.before :each do |t|
     extend SpecModuleNavigation
+    if BeforeStates.requires_state == false
+      BeforeStates.requires_state = true
+      dpath = t.metadata[:example_group][:file_path].split('/')
+      dpath.shift
+      current_path = ['.']
+      while dossier = dpath.shift
+        current_path << dossier
+        require_file = File.join(*current_path, '_required.rb')
+        next if BeforeStates.checked_folders.key?(require_file)
+        BeforeStates.checked_folders.merge!(require_file => true)
+        if File.exists?(require_file)
+          # puts "  (Je dois charger #{require_file})"
+          require require_file
+        end
+      end
+    end
   end
 
   def verbose?
@@ -163,7 +193,7 @@ RSpec.configure do |config|
   end #/ degel
 
   def require_gel
-    Dir['./spec/support/Gel/**/*.rb'].each{|m|require m}
+    Dir['./spec/support/Gel/lib/**/*.rb'].each{|m|require m}
   end #/ require_gel
 
 
