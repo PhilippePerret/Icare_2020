@@ -210,6 +210,16 @@ def formated_keywords
   @formated_keywords ||= (data[:keywords]||'').split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
 end #/ keywords
 
+def formated_auteurs
+  @formated_auteurs ||= begin
+    if auteurs.nil?
+      concurrent.pseudo
+    else
+      auteurs
+    end
+  end
+end #/ formated_auteurs
+
 # Son instance de formulaire d'évaluation, pour un évaluateur donné
 def evaluation(evaluateur)
   @evaluations ||= {}

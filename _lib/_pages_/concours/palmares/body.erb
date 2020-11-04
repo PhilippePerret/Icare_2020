@@ -4,7 +4,7 @@
 <% if concours.phase > 3 %>
   <h3>Lauréats du Concours de Synopsis <%= concours.annee %></h3>
   <%
-    data_prix ={1 => "PREMIER", 2 => "DEUXIÈME", 3 => "TROISIÈME"}
+    data_prix = {1 => "PREMIER", 2 => "DEUXIÈME", 3 => "TROISIÈME"}
   %>
   <% data_prix.each do |idprix, prix_name| %>
     <% syno = concours.send("synopsis_prix#{idprix}".to_sym) %>
@@ -29,7 +29,7 @@
 <% elsif concours.phase > 2 %>
   <h3>Synopsis présélectionnés</h3>
   <ol>
-    <% Synopsis.selecteds.each do |syno| %>
+    <% Synopsis.preselecteds.each do |syno| %>
       <li><%= "“#{syno.titre}” de #{syno.formated_auteurs}" %></li>
     <% end %>
   </ol>

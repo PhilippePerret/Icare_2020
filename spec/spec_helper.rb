@@ -105,7 +105,8 @@ RSpec.configure do |config|
     # À EXÉCUTER AVANT LES TESTS
     ENV['SPEC_FORMATTER'] = case config.formatters.first.class.name
     when /DocumentationFormatter$/ then
-      VERBOSE = true
+      # VERBOSE = true
+      VERBOSE = false
       "Documentation"
     when /ProgressFormatter$/ then
       VERBOSE = false

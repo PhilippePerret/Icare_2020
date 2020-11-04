@@ -16,42 +16,33 @@ feature "Phase 3 du concours" do
   def nombre_fichiers_candidature
     TConcurrent.all_current.select{|c|c.specs[1]=="1"}.count
   end #/ nombre_fichiers_candidature
+
   before(:all) do
     require_support('concours')
-    degel('concours')
+    degel('concours-phase-3')
+    # On fait deux concurrents dont un avec un fichier conforme et l'autre
+    # sans fichier
+    @conc_preselected      = TConcurrent.get_random(preselected: true)
+    puts "\n\n@conc_preselected: #{@conc_preselected.inspect}" if VERBOSE
+    expect(@conc_preselected).not_to eq(nil)
+    @conc_non_selected  = TConcurrent.get_random(preselected: false)
+    puts "\n\n@conc_non_selected: #{@conc_non_selected.inspect}" if VERBOSE
+    expect(@conc_non_selected).not_to eq(nil)
+    @conc_sans_fichier  = TConcurrent.get_random(avec_fichier_conforme: false)
+    puts "\n\n@conc_sans_fichier: #{@conc_sans_fichier.inspect}" if VERBOSE
+    expect(@conc_sans_fichier).not_to eq(nil)
+    # On compte le nombre de synopsis pour cette session
+    @nombre_synopsis = nombre_fichiers_candidature.freeze
   end
+
   before(:each) do
     # Il faut avoir un concours courant en phase 2
     TConcours.current.set_phase(2)
     TConcours.current.reset
-    # S'assurer que 4 concurrents courants aient envoyé leur synopsis
-    expect(TConcurrent.all_current.count).to be > 3,
-      "Il faudrait au moins 4 concurrents courants !"
-
-    # On fait deux concurrents dont un avec un fichier conforme et l'autre
-    # sans fichier
-    @conc_selected      = TConcurrent.get_random(avec_fichier_conforme: true)
-    @conc_selected.set_preselected
-    puts "\n\n@conc_selected: #{@conc_selected.inspect}" if VERBOSE
-    @conc_non_selected  = TConcurrent.get_random(avec_fichier_conforme: true, not_mail:[@conc_selected.mail])
-    @conc_non_selected.set_not_preselected
-    puts "\n\n@conc_non_selected: #{@conc_non_selected.inspect}" if VERBOSE
-    @conc_sans_fichier  = TConcurrent.get_random(avec_fichier: false, not_mail:[@conc_selected.mail, @conc_non_selected.mail])
-    puts "\n\n@conc_sans_fichier: #{@conc_sans_fichier.inspect}" if VERBOSE
-
-    # On compte le nombre de synopsis pour cette session
-    @nombre_synopsis = nombre_fichiers_candidature.freeze
-    if @nombre_synopsis < 2
-      TConcurrent.all_current[0..2].each do |conc|
-        conc.make_fichier_conforme
-      end
-      @nombre_synopsis = nombre_fichiers_candidature.freeze
-    end
-    expect(@nombre_synopsis).to be > 1
   end
 
   let(:conc_non_selected) { @conc_non_selected }
-  let(:conc_selected) { @conc_selected }
+  let(:conc_preselected) { @conc_preselected }
   let(:conc_sans_fichier) { @conc_sans_fichier }
 
   context 'Un administrateur' do
@@ -113,10 +104,9 @@ feature "Phase 3 du concours" do
       # *** Test de la page de résultats ***
       # TODO La remettre plus bas quand elle sera testée
       goto("concours/palmares")
+      sleep 5
       expect(page).to have_titre("Résultats du concours de synopsis")
       expect(page).to have_css('h3', text: "Synopsis présélectionnés")
-
-
 
       # La page d'accueil du concours présente le concours
       goto("concours/accueil")
@@ -173,14 +163,14 @@ feature "Phase 3 du concours" do
 
       # *** On poursuit la vérification avec un concurrent qui visite
       # *** l'accueil
-      # puts "conc_selected specs : #{conc_selected.specs}"
+      # puts "conc_preselected specs : #{conc_preselected.specs}"
       goto("concours/accueil")
       expect(page).to have_content("Les 10 synopsis sélectionnés sont en pleiniaire")
 
       click_on("Identifiez-vous")
       within("form#concours-login-form") do
-        fill_in("p_mail", with: conc_selected.mail)
-        fill_in("p_concurrent_id", with: conc_selected.id)
+        fill_in("p_mail", with: conc_preselected.mail)
+        fill_in("p_concurrent_id", with: conc_preselected.id)
         click_on("S’identifier")
       end
 
@@ -193,7 +183,7 @@ feature "Phase 3 du concours" do
       # La page doit présenter le bon message personnel
       expect(page).to have_content("Votre synopsis est en lice pour la sélection finale de la session #{ANNEE_CONCOURS_COURANTE}")
 
-      conc_selected.se_deconnecte
+      conc_preselected.se_deconnecte
 
 
       # puts "conc_non_selected specs : #{conc_non_selected.specs}"

@@ -91,6 +91,11 @@ class << self
 #                     Si true, un concurrent avec un fichier conforme.
 #                 :current
 #                     Un concurrent courant
+#                 :preselected
+#                     Si true, un présélectionné
+#                     Si false, un non présélectionné
+#                     Si nil, don't mind
+#
 # OUT   Un concurrent pris au hasard, qui peut remplir certaines
 #       conditions optionnellement définies par +options+.
 #       Mais c'est forcément un candidat courant
@@ -125,6 +130,10 @@ end #/ jury
 
   def proceed_get_random(options = nil)
     options ||= {}
+    options.merge({
+      current:  true,
+      avec_fichier_conforme: true
+    }) if options[:preselected]
     options.merge!(avec_fichier: true) if options.key?(:avec_fichier_conforme)
     options.merge!(count: 1) if not options.key?(:count)
     options.merge!(current: true) if options.key?(:avec_fichier)
@@ -146,6 +155,10 @@ end #/ jury
     case options[:current]
     when TrueClass  then where << "cpc.annee = #{ANNEE_CONCOURS_COURANTE}"
     when FalseClass then raise("Ce cas n'est pas encore traité (plus complexe puisqu'il faut trouver l'user qui n'a AUCUN enregistrement pour le concours courant)")
+    end
+    case options[:preselected]
+    when TrueClass  then where << "SUBSTRING(cpc.specs,3,1) = 1"
+    when FalseClass then where << "SUBSTRING(cpc.specs,3,1) = 0"
     end
 
 

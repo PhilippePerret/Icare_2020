@@ -14,7 +14,8 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
-
+    @concours = Concours.current
+    require_xmodule('synopsis/Synopsis')
   end # /exec
 
   # Fabrication du body
