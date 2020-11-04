@@ -35,7 +35,7 @@ def mise_en_forme_news(news)
 end #/ mise_en_forme_news
 
 def date_news_style
-  @date_news_style ||= "font-weight:bold;font-size:0.85em;text-align:center;margin-top:1em;margin-bottom:0.5em;"
+  @date_news_style ||= "font-weight:bold;font-size:0.85em;text-align:center;margin-top:2em;margin-bottom:1.5em;"
 end #/ date_news_style
 
 end #/Cronjob
