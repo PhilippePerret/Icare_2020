@@ -204,14 +204,14 @@ feature "Phase 2 du concours" do
 
 
   context 'Un administrateur' do
-    scenario 'peut rejoindre la section des évaluations', only:true do
+    scenario 'peut rejoindre la section des évaluations' do
       phil.rejoint_le_site
       goto("concours/evaluation")
       expect(page).not_to be_identification
       expect(page).to be_page_evaluation
       phil.se_deconnecte
     end
-    scenario 'trouve toutes les fiches à évaluer (phase 2)', only:true do
+    scenario 'trouve toutes les fiches à évaluer (phase 2)' do
       phil.rejoint_le_site
       goto("concours/evaluation")
       expect(page).to be_page_evaluation

@@ -60,7 +60,9 @@ SQL
     sans_fichiers = []
     all_courant.each do |syno|
       if syno.fichier?
-        if options[:avec_fichier_conforme]
+        if options[:preselecteds]
+          avec_fichiers << syno if syno.preselected?
+        elsif options[:avec_fichier_conforme]
           avec_fichiers << syno if syno.conforme?
         else
           avec_fichiers << syno
@@ -108,6 +110,12 @@ def initialize concurrent_id, annee, dat = nil
   @data = dat || get_data
   @evaluator_id = @data[:evaluator_id]
 end #/ initialize
+
+
+# OUT   True si le synopsis fait partie des présélectionnés
+def preselected?
+  concurrent.spec(2) == 1
+end
 
 # OUT   True si la conformité du synopsis a été marquée
 def conforme?

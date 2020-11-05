@@ -49,7 +49,7 @@ feature "Phase 3 du concours" do
 
   context 'Un administrateur' do
 
-    scenario 'peut lancer la phase 3 du concours en se rendant à l’administration', only:true do
+    scenario 'peut lancer la phase 3 du concours en se rendant à l’administration' do
 
       # Pour simplifier et pouvoir sauter d'une phase à l'autre
       numero_phase = 3
@@ -266,6 +266,44 @@ feature "Phase 3 du concours" do
       TConcours.current.reset
       expect(TConcours.current.phase).not_to eq 3
       expect(TConcours.current.phase).to eq 2
+    end
+
+    scenario 'ne peut pas rejoindre la page d’évaluation des synopsis' do
+      goto("concours/evaluation")
+      expect(page).not_to be_page_evaluation
+      expect(page).to have_titre "Identification"
+    end
+  end #/ contexte : un non administrateur
+
+
+  context 'Un administrateur' do
+    before(:each) do
+      TConcours.current.set_phase(3)
+      TConcours.current.reset
+    end
+    scenario 'peut rejoindre la page d’évaluation' do
+      phil.rejoint_le_site
+      goto("concours/evaluation")
+      expect(page).to be_page_evaluation
+    end
+    scenario 'trouve les bonnes fiches à évaluer (les 10 préssélections)', only:true do
+      phil.rejoint_le_site
+      # On s'assure que c'est la bonne phase
+      goto("concours/admin")
+      expect(page).to have_select("current_phase", selected:"Sélection finale en cours")
+      goto("concours/evaluation")
+      expect(page).to be_page_evaluation
+      expect(page).to have_css("div#synopsis-container")
+      sleep 30
+      TConcurrent.all_current.each do |conc|
+        if conc.preselected?
+          expect(page).to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
+            "Le concurrent #{conc.ref} devrait avoir sa fiche affichée (est présélectionné)"
+        else
+          expect(page).not_to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
+            "Le concurrent #{conc.ref} NE devrait PAS avoir sa fiche affichée (ne fait pas partie des présélectionné)"
+        end
+      end
     end
   end
 end

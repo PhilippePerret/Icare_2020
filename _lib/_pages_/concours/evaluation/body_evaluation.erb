@@ -11,9 +11,19 @@ const EVALUATOR_ID = <%= user.id %>;
   # le pourcentage de travail
   checklist
 %>
+<%
+  options_sorting = case Concours.current.phase
+  when 1 then {}
+  when 2 then {avec_fichier_conforme: true}
+  when 3 then {preselecteds: true}
+  else
+    # À la demande ?
+    {}
+  end
+ %>
 <%= sorting_tools(param(:ks), param(:ss)) %>
 <div id="synopsis-container" class="nolimit">
-  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss), {avec_fichier_conforme: true}) %>
+  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss), options_sorting) %>
   <% if fiches_synopsis.count > 0 %>
     <% fiches_synopsis.each do |synopsis| %>
       <%= synopsis.out(user.id) %>
