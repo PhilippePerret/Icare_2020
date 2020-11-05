@@ -44,7 +44,7 @@ class Concurrent
 # ---------------------------------------------------------------------
 class << self
   def get(concurrent_id)
-    log("Concurrent::get(#{concurrent_id}::#{concurrent_id.class})")
+    # log("Concurrent::get(#{concurrent_id}::#{concurrent_id.class})")
     table_concurrents[concurrent_id]
   end #/ get
 
@@ -96,7 +96,7 @@ class << self
         conc.data = dc
         h.merge!( dc[:concurrent_id] => conc)
       end ;
-      log("table_concurrents: #{h.inspect}")
+      # log("table_concurrents: #{h.inspect}")
       h
     end
   end #/ table_concurrents
