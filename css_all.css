@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-11-05 06:06:01 +0100
+ *    Date dernière modification : 2020-11-05 09:47:51 +0100
  *
  --------------------------------------------------------------------- */
 :root {
@@ -1457,6 +1457,13 @@ form span.file-name {
 @media only screen and (max-width: 767px) {
 
   /* *** SMARTPHONE *** */
+
+  .clear-on-mobile {clear:both;}
+  .center-on-mobile {
+    float:none; text-align:center;
+    margin-top:2em;
+    margin-bottom:2em;
+  }
 
   section#body {
     padding:24px;
