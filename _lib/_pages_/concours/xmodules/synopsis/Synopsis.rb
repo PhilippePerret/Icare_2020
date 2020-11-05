@@ -118,11 +118,30 @@ def template_fiche_synopsis
   end
 end #/ template_fiche_synopsis
 
+def template_fiche_classement
+  @template_fiche_classement ||= begin
+    deserb('templates/fiche_classement', self)
+  end
+end #/ template_fiche_classement
+
 def bind; binding() end
 
-def out(evaluator_id)
-  @evaluator_id ||= evaluator_id
-  template_fiche_synopsis
+# OUT   Le synopsis sous forme de ficher, soit celle d'un évaluateur
+#       en particulier (si +evaluator_id+ est défini) soit, la fiche
+#       générale, toutes notes confondues
+# IN    Optionnellement, ID de l'évaluateur ou table des options
+#       Note : il peut être fourni à l'instanciation (cf. initialize)
+def out(options = nil)
+  options = {evaluator_id: options} if options.is_a?(Integer)
+  options ||= options
+  options.merge!(format: :fiche_synopsis) unless options.key?(:format)
+  @evaluator_id ||= options[:evaluator_id]
+  case options[:format]
+  when :fiche_synopsis
+    template_fiche_synopsis
+  when :fiche_classement
+    template_fiche_classement
+  end
 end #/ out
 
 def css_classes
@@ -152,6 +171,8 @@ end #/ save
 def titre;    @titre    ||= data[:titre]    end
 def auteurs;  @auteurs  ||= data[:auteurs]  end
 def keywords; @keywords ||= data[:keywords] end
+def pre_note; @pre_note ||= data[:pre_note] end
+def fin_note; @fin_note ||= data[:fin_note] end
 
 def real_auteurs
   auteurs || concurrent.patronyme
@@ -166,6 +187,9 @@ def fiche_lecture
   @fiche_lecture ||= FicheLecture.new(self)
 end #/ fiche_lecture
 
+# OUT   La note générale pour un évaluateur donné
+#       (sinon, pour la note moyenne, cf. formated_pre_note ou
+#        formated_fin_note)
 def formated_note_generale
   note_generale || "---"
 end
@@ -219,6 +243,14 @@ def formated_auteurs
     end
   end
 end #/ formated_auteurs
+
+def formated_pre_note
+  if pre_note.nil?
+    calcule_note_preselection
+  end
+  color = pre_note > 100 ? 'green' : 'red'
+  Tag.span(text:"#{pre_note}/200", class:color)
+end #/ formated_note
 
 # Son instance de formulaire d'évaluation, pour un évaluateur donné
 def evaluation(evaluateur)

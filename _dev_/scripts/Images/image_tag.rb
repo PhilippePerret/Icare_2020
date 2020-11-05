@@ -6,10 +6,11 @@
 
 =end
 
-IMAGE_FOR_TAG = "Emojis/animaux/papillon-shadowed.png"
+img_relpath = ARGV[0] || "Emojis/animaux/papillon-shadowed.png"
 
 
 require_relative 'xlib/required'
 
-img = Image.new(File.join(FOLDER_IMAGES, IMAGE_FOR_TAG))
+img_relpath = img_relpath.sub(/^(\.\/)?(img\/)?/,'')
+img = Image.new(File.join(FOLDER_IMAGES, img_relpath))
 puts img.tag

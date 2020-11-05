@@ -104,7 +104,7 @@ feature "Phase 3 du concours" do
       # *** Test de la page de résultats ***
       # TODO La remettre plus bas quand elle sera testée
       goto("concours/palmares")
-      sleep 5
+      screenshot("palmares-phase-3")
       expect(page).to have_titre("Résultats du concours de synopsis")
       expect(page).to have_css('h3', text: "Synopsis présélectionnés")
 
@@ -165,7 +165,9 @@ feature "Phase 3 du concours" do
       # *** l'accueil
       # puts "conc_preselected specs : #{conc_preselected.specs}"
       goto("concours/accueil")
+      screenshot("concours-accueil-phase-3")
       expect(page).to have_content("Les 10 synopsis sélectionnés sont en pleiniaire")
+      expect(page).to have_link("Voir le palmarès actuel", href: "concours/palmares")
 
       click_on("Identifiez-vous")
       within("form#concours-login-form") do

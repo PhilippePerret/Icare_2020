@@ -30,7 +30,13 @@
   <h3>Synopsis présélectionnés</h3>
   <ol>
     <% Synopsis.preselecteds.each do |syno| %>
-      <li><%= "“#{syno.titre}” de #{syno.formated_auteurs}" %></li>
+      <li><%= syno.out(format: :fiche_classement) %></li>
+    <% end %>
+  </ol>
+  <h2>Synopsis non présélectionnés</h2>
+  <ol start="11">
+    <% Synopsis.not_preselecteds.each do |syno| %>
+      <li><%= syno.out(format: :fiche_classement) %></li>
     <% end %>
   </ol>
 <% end %>

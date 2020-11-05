@@ -52,7 +52,7 @@ class HTML
           segs << "#{ESPACE_LINK.with('envoyer votre synopsis')}."
           segs.join(" ")
         when 2 then "<strong>Les #{nombre_synopsis} synopsis sont en cours de préselection</strong>.<br/><br/>Rendez-vous aux alentours du #{date_premiere_selection} pour les résultats de la première sélection !"
-        when 3 then "<strong>Les 10 synopsis sélectionnés sont en pleiniaire</strong>.<br/>(#{PALMARES_LINK.with('voir les synopsis retenus')})<br/><br/>Rendez-vous aux alentours du #{date_selection_finale} pour le palmarès final."
+        when 3 then "<img class=\"emoji fleft\" src=\"./img/Emojis/objets/coupe/coupe-big.png\" /><strong>Les 10 synopsis sélectionnés<br/>sont en pleiniaire</strong>.<br/><br/>#{PALMARES_LINK.with('☞ Voir le palmarès actuel ☜')}<br/><br/>Rendez-vous aux alentours<br/>du #{date_selection_finale}<br/>pour le palmarès final."
         when 5 then "<strong>Les synopsis lauréats ont été choisis !</strong><br/><br/>Voir le #{PALMARES_LINK}."
         else "<strong>Le concours est achevé</strong> mais vous pouvez #{CONCOURS_SIGNUP.with('vous inscrire pour la prochaine session')}.<br/><br/>Rendez-vous pour la prochaine session !"
         end

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-FOLDER_IMAGES = File.join('./img')
+FOLDER_IMAGES = File.expand_path(File.join('./img'))
 
 DATA_SIZES = {
   huge:         {name: 'huge',        width: 4000,  height: 2000},

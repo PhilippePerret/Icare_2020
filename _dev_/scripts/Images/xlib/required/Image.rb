@@ -1,5 +1,8 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require 'tty-prompt'
+Q = TTY::Prompt.new
+
 require_relative 'constants'
 class Image
 class << self
@@ -57,14 +60,34 @@ end #/ sizes_required
 #
 # ---------------------------------------------------------------------
 
+CHOIX_BALISES = [
+  {name: "Renoncer", value: nil},
+  {name: "Balise de tout le set", value: 'set'},
+  {name: "Taille originale (480 x 480)", value: 'original'},
+  {name: "Taille big (250 x 250)", value: 'big'},
+  {name: "Taille regular (100 x 100)", value: 'regular'},
+  {name: "Taille small (32 x 32)", value: 'small'},
+  {name: "Taille very-small (20 x 20)", value: 'very-small'},
+]
 # Retourne la tag complexe pour l'image
 def tag
-  src_set = sizes_required.collect do |size_id|
-    data_size = DATA_SIZES[size_id]
-    "#{path_size(data_size[:name])} #{data_size[:width]}w"
-  end.join(', ')
-  t = "<img src=\"#{path}\" srcset=\"#{src_set}\" />"
-  puts t
+  choix = Q.select("Quelle balise veux-tu ?") do |q|
+    q.choices CHOIX_BALISES
+    q.per_page CHOIX_BALISES.count
+  end
+  case choix
+  when NilClass then return
+  when 'original'
+    "<img class=\"emoji\" src=\"#{relative_path}\" />"
+  when 'set'
+    src_set = sizes_required.collect do |size_id|
+      data_size = DATA_SIZES[size_id]
+      "#{path_size(data_size[:name])} #{data_size[:width]}w"
+    end.join(', ')
+    "<img class=\"emoji\" src=\"#{relative_path}\" srcset=\"#{src_set}\" />"
+  else
+    "<img class=\"emoji\" src=\"#{path_size(choix)}\" />"
+  end
 end #/ tag
 # ---------------------------------------------------------------------
 #
@@ -127,8 +150,12 @@ end #/ get_initial_size
 #   Données de path
 #
 # ---------------------------------------------------------------------
+def relative_path
+  @relative_path ||= path.sub(/^#{FOLDER_IMAGES}/,'./img')
+end #/ relative_path
+
 def path_size(size_name)
-  File.join(folder, "#{affixe}-#{size_name}.png")
+  File.join(relative_folder, "#{affixe}-#{size_name}.png")
 end #/ path_size
 # def path_size(size_name)
 #   File.join(folder, "#{affixe}-#{size_name}.jp2")
@@ -139,6 +166,9 @@ end #/ jpg2000_path
 def affixe
   @affixe ||= File.basename(path, File.extname(path))
 end #/ affixe
+def relative_folder
+  @relative_folder ||= folder.sub(/^#{FOLDER_IMAGES}/,'./img')
+end #/ relative_folder
 def folder
   @folder ||= begin
     File.join(init_folder, affixe).tap{|p|`mkdir -p "#{p}"`}

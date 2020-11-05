@@ -3,6 +3,7 @@
 require './_lib/required/__first/constants/paths'
 
 def require_folder foldername
+  log("-> require_folder(#{foldername})")
   Dir["#{foldername}/**/*.rb"].each{|m|require m}
   require_css_in(foldername)
   require_js_in(foldername)
@@ -33,6 +34,7 @@ alias :require_modules_js :require_module_js
 # Méthode qui permet de requérir les fichiers css dans le dossier
 # folderpath
 def require_css_in folderpath
+  log("-> require_css_in(#{folderpath})")
   Dir["#{folderpath}/**/*.css"].each do |csspath|
     html.add_css(csspath)
   end

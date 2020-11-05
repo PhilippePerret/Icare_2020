@@ -982,7 +982,7 @@ Balise à utiliser :
 <img src="path/to/originale" srcset="originale-<size-name>.jp2 <size>w"
 ~~~
 
-Voir le dossier `_div_/Image/` qui contient des scripts et de l'aide pour les images (en attendant de les basculer en CLI).
+Voir le dossier `_dev_/scripts/Image/` qui contient des scripts et de l'aide pour les images (en attendant de les basculer en CLI).
 
 
 

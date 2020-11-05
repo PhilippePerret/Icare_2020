@@ -3,7 +3,8 @@
 class HTML
   def require_xmodule(name)
     p = File.join(XMODULES_FOLDER,name)
-    if File.exists?(p) && File.directory?(p)
+    File.exists?(p) || File.exists?("#{p}.rb") || raise("File inconnu : #{p}")
+    if File.directory?(p)
       require_folder(p)
     else
       require p
