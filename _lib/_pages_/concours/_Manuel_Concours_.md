@@ -96,6 +96,19 @@ La propriété `specs` de la donnée du concurrent dans la table `concurrents_pe
 
 **`note2`** est la note obtenue lors de la sélection finale par les projets présélectionnés (note : la première doit être obligatoirement supérieure aux notes des autres projets non présélectionnés mais cette note-ci peut être inférieure, puisque le jury peut se montrer plus dur.)
 
+---
+
+
+
+## Évaluations
+
+
+
+Les évaluations fonctionnent en deux temps :
+
+* **phase 2**. C’est la phase où sont produites les premières fiches d’évaluation qui vont permettre de choisir les 10 synopsis pour la finale. Leur nom est `evaluation-<id evaluateur>.json`.
+* **phase 3**. C’est la phase où sont produites les secondes fiches d’évaluation qui vont permettre de déterminer les trois lauréats du concours. Leur nom est `evaluation-prix-<id evaluateur>.json`. Quand un évaluateur appartient aux deux jurys, il repart de sa fiche d’évaluation qui est automatiquement dupliquée.
+
 
 
 ---

@@ -13,7 +13,7 @@ const EVALUATOR_ID = <%= user.id %>;
 %>
 <%= sorting_tools(param(:ks), param(:ss)) %>
 <div id="synopsis-container" class="nolimit">
-  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss)) %>
+  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss), {avec_fichier_conforme: true}) %>
   <% if fiches_synopsis.count > 0 %>
     <% fiches_synopsis.each do |synopsis| %>
       <%= synopsis.out(user.id) %>

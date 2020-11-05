@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 %>
 <% if concours.phase > 3 %>
-  <h3>Lauréats du Concours de Synopsis <%= concours.annee %></h3>
+  <h2>Lauréats du Concours de Synopsis <%= concours.annee %></h2>
   <%
     data_prix = {1 => "PREMIER", 2 => "DEUXIÈME", 3 => "TROISIÈME"}
   %>
@@ -27,16 +27,17 @@
 <% elsif concours.phase2? %>
   <p>Les présélections sont en cours, les résultats seront affichés très prochainement.</p>
 <% elsif concours.phase > 2 %>
-  <h3>Synopsis présélectionnés</h3>
-  <ol class="palmares">
+  <h2>Synopsis présélectionnés</h2>
+  <ul class="no_liststyle">
     <% Synopsis.preselecteds.each do |syno| %>
       <li><%= syno.out(format: :fiche_classement, current_cid: concurrent&.id) %></li>
     <% end %>
-  </ol>
+  </ul>
   <h2>Synopsis non présélectionnés</h2>
   <ol class="palmares" start="11">
+    <% position = 10 %>
     <% Synopsis.not_preselecteds.each do |syno| %>
-      <li><%= syno.out(format: :fiche_classement, current_cid: concurrent&.id) %></li>
+      <li><%= syno.out(position: (position+=1), format: :fiche_classement, current_cid: concurrent&.id) %></li>
     <% end %>
   </ol>
 <% end %>

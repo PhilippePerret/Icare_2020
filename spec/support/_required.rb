@@ -15,6 +15,8 @@ require_relative './handies/handies'
 require_relative './handies/db'
 require_relative './handies/user'
 
+require_folder('./spec/support/lib/extensions')
+
 module MethodMissionModule
   def method_missing(method_name, *args, &block)
     unless self.respond_to?(:loaded)

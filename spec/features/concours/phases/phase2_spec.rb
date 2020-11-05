@@ -192,5 +192,39 @@ feature "Phase 2 du concours" do
       expect(TConcours.current.phase).not_to eq 2
       expect(TConcours.current.phase).to eq 1
     end
+
+    scenario 'ne peut pas évaluer les fichiers' do
+      goto("concours/evaluation")
+      expect(page).not_to be_page_evaluation
+      expect(page).to have_titre("Identification")
+    end
+  end # / contexte un non administrateur
+
+
+
+
+  context 'Un administrateur' do
+    scenario 'peut rejoindre la section des évaluations', only:true do
+      phil.rejoint_le_site
+      goto("concours/evaluation")
+      expect(page).not_to be_identification
+      expect(page).to be_page_evaluation
+      phil.se_deconnecte
+    end
+    scenario 'trouve toutes les fiches à évaluer (phase 2)', only:true do
+      phil.rejoint_le_site
+      goto("concours/evaluation")
+      expect(page).to be_page_evaluation
+      TConcurrent.all_current.each do |conc|
+        if conc.fichier_conforme?
+          expect(page).to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
+            "Le concurrent #{conc.ref} devrait avoir une fiche d'évaluation pour son synopsis"
+        else
+          expect(page).not_to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
+            "Le concurrent #{conc.pseudo} ne devrait pas avoir de fiche (fichier absent ou non conforme)"
+        end
+      end
+      phil.se_deconnecte
+    end
   end
 end

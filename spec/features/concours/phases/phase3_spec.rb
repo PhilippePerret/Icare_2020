@@ -6,6 +6,8 @@
 
 feature "Phase 3 du concours" do
 
+  BTN_VOIR_PALMARES = "Voir le palmarès actuel"
+
   before(:all) do
     require './_lib/_pages_/concours/admin/lib/PHASES_DATA'
     expect(defined?(Concours::PHASES_DATA)).not_to be_nil
@@ -52,7 +54,7 @@ feature "Phase 3 du concours" do
       # Pour simplifier et pouvoir sauter d'une phase à l'autre
       numero_phase = 3
       ancien_titre_accueil  = "Les #{@nombre_synopsis} synopsis sont en cours de préselection"
-      nouveau_titre_accueil = "Les 10 synopsis sélectionnés sont en pleiniaire"
+      nouveau_titre_accueil = "Les 10 synopsis sélectionnés\nsont en finale"
       item_menu_old_phase = PHASES_DATA[numero_phase - 1][:name_current]
       item_menu_new_phase = PHASES_DATA[numero_phase][:name] # p.e. "Annoncer fin de pré-sélection"
       # titre_nouvelle_phase = "Seconde sélection en cours" # correspond à
@@ -101,12 +103,24 @@ feature "Phase 3 du concours" do
       TConcours.current.reset
       expect(TConcours.current.phase).to eq numero_phase
 
+
       # *** Test de la page de résultats ***
       # TODO La remettre plus bas quand elle sera testée
       goto("concours/palmares")
       screenshot("palmares-phase-3")
-      expect(page).to have_titre("Résultats du concours de synopsis")
-      expect(page).to have_css('h3', text: "Synopsis présélectionnés")
+      expect(page).to be_palmares
+      expect(page).to have_css('h2', text: "Synopsis présélectionnés")
+      expect(page).to have_css('h2', text: "Synopsis non présélectionnés")
+      # Tous les concurrents avec un fichier doivent voir leur fiche
+      TConcurrent.all_current.each do |conc|
+        if conc.fichier_conforme?
+          expect(page).to have_css("div.fiche-lecture", id:"fiche-lecture-#{conc.id}"),
+            "Le concurrent #{conc.pseudo} (#{conc.id}) devrait avoir sa fiche dans le palmarès…"
+        else
+          expect(page).not_to have_css("div.fiche-lecture", id:"fiche-lecture-#{conc.id}"),
+            "Le concurrent #{conc.pseudo} (#{conc.id}) ne devrait pas avoir sa fiche dans le palmarès…"
+        end
+      end
 
       # La page d'accueil du concours présente le concours
       goto("concours/accueil")
@@ -114,20 +128,17 @@ feature "Phase 3 du concours" do
       expect(page).to have_content(nouveau_titre_accueil)
       # Les concurrents courants ont reçu un mail d'annonce.
       TConcurrent.all_current.each do |conc|
-        puts "\n\nCONCURRENT ÉTUDIÉ : #{conc.inspect}"
-        puts "conc.fichier_conforme?: #{conc.fichier_conforme?.inspect}"
-        puts "conc.preselected?: #{conc.preselected?.inspect}"
+        # puts "\n\nCONCURRENT ÉTUDIÉ : #{conc.inspect}"
+        # puts "conc.fichier_conforme?: #{conc.fichier_conforme?.inspect}"
+        # puts "conc.preselected?: #{conc.preselected?.inspect}"
         # Faire une différence entre les concurrents présélectionnés et
         # les autres
         # de candidature et un autre
         msg = if not(conc.fichier_conforme?)
-                puts "pas de fichier"
                 "été envoyé à temps ou jugé conforme"
               elsif conc.preselected?
-                puts "sélectionné"
                 "présélectionné pour la Finale du Concours de Synopsis"
               else
-                puts "non sélectionné"
                 "ne fait malheureusement pas partie de la présélection"
               end
         # Le bon mail doit avoir été reçu
@@ -166,8 +177,8 @@ feature "Phase 3 du concours" do
       # puts "conc_preselected specs : #{conc_preselected.specs}"
       goto("concours/accueil")
       screenshot("concours-accueil-phase-3")
-      expect(page).to have_content("Les 10 synopsis sélectionnés sont en pleiniaire")
-      expect(page).to have_link("Voir le palmarès actuel", href: "concours/palmares")
+      expect(page).to have_content(nouveau_titre_accueil)
+      expect(page).to have_link(BTN_VOIR_PALMARES, href: "concours/palmares")
 
       click_on("Identifiez-vous")
       within("form#concours-login-form") do
@@ -196,9 +207,19 @@ feature "Phase 3 du concours" do
         fill_in("p_concurrent_id", with: conc_non_selected.id)
         click_on("S’identifier")
       end
+      screenshot("non-selected-apres-login")
       # La page doit présenter
+      # puts "conc_non_selected.specs: #{conc_non_selected.specs.inspect}"
       expect(page).to have_content("Votre projet n'a pas été sélectionné. Vous n'êtes pas en lice pour la sélection finale de la session #{ANNEE_CONCOURS_COURANTE}")
 
+      pitch("Le concurrent non présélectionné se rend sur la page des palmarès et trouve son synopsis en exergue.")
+      conc_non_selected.click_on(BTN_VOIR_PALMARES)
+      screenshot("non-selected-sur-palmares")
+      expect(page).to be_palmares
+      expect(page).to have_css("h2", text:"Synopsis présélectionnés")
+      expect(page).to have_css("h2", text:"Synopsis non présélectionnés")
+      expect(page).to have_css("div.fiche-lecture.current", id:"fiche-lecture-#{conc_non_selected.id}")
+      expect(page).to have_css("div#fiche-lecture-#{conc_non_selected.id} div.position", text: '12')
       conc_non_selected.se_deconnecte
 
 
@@ -211,9 +232,15 @@ feature "Phase 3 du concours" do
       end
       # La page doit présenter
       expect(page).to have_content("Sans fichier envoyé ou conforme, vous ne pouvez pas être en lice pour la sélection finale de la session #{ANNEE_CONCOURS_COURANTE}")
-
-
+      # Le palmarès ne doit pas présenter son synopsis
+      goto("concours/palmares")
+      expect(page).to be_palmares
+      expect(page).not_to have_css("div.fiche-lecture", id:"fiche-lecture-#{conc_sans_fichier.id}")
     end
+
+
+
+
 
     scenario 'peut lancer la phase 3 du concours par route directe' do
       TConcours.current.reset

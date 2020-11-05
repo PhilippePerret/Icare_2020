@@ -48,15 +48,23 @@ SQL
 
   # IN    La clé de classement ('note' ou 'progress')
   #       Le sens de classement ('desc' ou 'asc')
+  #       +options+ Table d'options
+  #         :preselecteds   Si true, seulement les présélectionnés
+  #         :avec_fichier   Si true, seulement les synopsis avec fichier conforme
   # OUT   La liste des instances {Synopsis}
   # Note  Les synopsis sans fichiers sont toujours mis à la fin
-  def sorted_by(key = 'note', sens = 'desc')
+  def sorted_by(key = 'note', sens = 'desc', options = nil)
+    options ||= {}
     # 1) On ne prend que les synopsis avec fichier
     avec_fichiers = []
     sans_fichiers = []
     all_courant.each do |syno|
       if syno.fichier?
-        avec_fichiers << syno
+        if options[:avec_fichier_conforme]
+          avec_fichiers << syno if syno.conforme?
+        else
+          avec_fichiers << syno
+        end
       else
         sans_fichiers << syno
       end
@@ -70,7 +78,13 @@ SQL
       avec_fichiers.sort_by! { |syno| syno.nombre_reponses }
     end
     avec_fichiers = avec_fichiers.reverse if sens == 'desc'
-    avec_fichiers + sans_fichiers
+    if options[:avec_fichier] || options[:avec_fichier_conforme]
+      avec_fichiers
+    elsif options[:avec_fichier] === false || options[:sans_fichier]
+      sans_fichiers
+    else
+      avec_fichiers + sans_fichiers
+    end
   end #/ sorted_by
 end # /<< self
 # ---------------------------------------------------------------------
@@ -96,9 +110,9 @@ def initialize concurrent_id, annee, dat = nil
 end #/ initialize
 
 # OUT   True si la conformité du synopsis a été marquée
-def confirmed?
+def conforme?
   concurrent.spec(1) == 1
-end #/ confirmed?
+end
 
 def sent?
   concurrent.spec(0) == 1
@@ -136,11 +150,16 @@ def out(options = nil)
   options ||= options
   options.merge!(format: :fiche_synopsis) unless options.key?(:format)
   @evaluator_id ||= options[:evaluator_id]
+  data_template = {
+    id: concurrent.id,
+    exergue: (concurrent.id == options[:current_cid] ? ' current' : ''),
+    position: options[:position]
+  }
   case options[:format]
   when :fiche_synopsis
     template_fiche_synopsis
   when :fiche_classement
-    template_fiche_classement % {exergue: concurrent.id == options[:current_cid] ? ' current' : ''}
+    template_fiche_classement % data_template
   end
 end #/ out
 

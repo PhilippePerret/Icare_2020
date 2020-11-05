@@ -133,11 +133,23 @@ div.fiche-lecture div.detail div.explication-note {
   margin-left:2em;
 }
 
+ul.no_liststyle {
+  list-style-type:none;
+}
 ol.palmares {
-  counter-reset:repas;
 }
 ol.palmares li {
   list-style-type:none;
+  position:relative;
+  margin-left:0;
 }
-ol.palmares li:before {
+ul li div.position{display:none}
+ol.palmares li div.position {
+  position:absolute;
+  text-align:right;
+  left:-1.4em;
+  top:1em;
+  font-size:20pt;
+  font-family:Georgia, serif;
+  color:#999999;
 }

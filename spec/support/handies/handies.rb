@@ -3,6 +3,10 @@
   Méthodes pratiques pour les tests
 =end
 
+def require_folder(relpath)
+  Dir["#{relpath}/**/*.rb"].each { |m| require m }
+end #/ require_folder
+
 # Pour vider et reconstruire les dossiers temporaires principaux
 def vide_all_dossiers
   vide_dossier_signups

@@ -72,6 +72,7 @@
         <span class="italic">Nombre de synopsis en lice : <span id="nombre-concurrents"><%= concours.nombre_synopsis_conformes %></span></span>
       <% elsif concours.phase3? %>
         <span class="italic">Les 10 synopsis présélectionnés sont en phase finale.</span>
+        <div class="center"><%= PALMARES_LINK.with(text: '☞ Voir le palmarès actuel ☜') %></div>
       <% end %>
     </div>
   <%

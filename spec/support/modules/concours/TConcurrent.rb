@@ -13,6 +13,9 @@ class TConcurrent
 #
 # ---------------------------------------------------------------------
 
+def ref
+  @ref ||= "#{pseudo} (#{id})"
+end #/ ref
 # Pour savoir si le concurrent a reçu un mail
 def has_mail?(data)
   expect(TMails).to have_mail(data.merge(destinataire: mail))
@@ -93,7 +96,7 @@ class << self
 #                     Un concurrent courant
 #                 :preselected
 #                     Si true, un présélectionné
-#                     Si false, un non présélectionné
+#                     Si false, un non présélectionné (avec fichier conforme)
 #                     Si nil, don't mind
 #
 # OUT   Un concurrent pris au hasard, qui peut remplir certaines
@@ -130,14 +133,21 @@ end #/ jury
 
   def proceed_get_random(options = nil)
     options ||= {}
-    options.merge({
+    options.merge!({
       current:  true,
       avec_fichier_conforme: true
-    }) if options[:preselected]
+    }) if options.key?(:preselected)
+    # Noter ci-dessus : quand un concurrent est présélectionné ou non présélectionné,
+    # il a forcément un fichier conforme et il est forcément du concours courant
+    # preselected: false signifie "qui a participé au concours avec un bon
+    # fichier mais n'a pas été présélectionné".
+
     options.merge!(avec_fichier: true) if options.key?(:avec_fichier_conforme)
     options.merge!(count: 1) if not options.key?(:count)
     options.merge!(current: true) if options.key?(:avec_fichier)
     options.merge!(not_mail: []) unless options.key?(:not_mail)
+
+    # puts "\n\noptions avant définition de where : #{options.inspect}"
 
     where = []
     case options[:avec_fichier]

@@ -17,11 +17,11 @@ Ch<%=fem(:ere)%> <%= patronyme.titleize %>,
 
 <p style="font-weight:bold;margin-top:50px;">ÉTAT DE VOTRE CANDIDATURE</p>
 
-<% if synopsis.sent? && synopsis.confirmed? %>
+<% if synopsis.sent? && synopsis.conforme? %>
 
   <p>Votre fichier de candidature a été reçu et validé, il ne vous reste donc plus qu'à patienter jusqu'aux premiers résultats. Nous espérons que cette attente n'est pas trop stressante pour vous ;-).</p>
 
-<% elsif synopsis.sent? && not(synopsis.confirmed?) %>
+<% elsif synopsis.sent? && not(synopsis.conforme?) %>
 
   <p>Nous avons bien reçu votre fichier de candidature, mais il nous faut valider sa conformité, ce que nous ne manquerons pas de faire très prochainement.</p>
 
