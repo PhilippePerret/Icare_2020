@@ -114,7 +114,7 @@ end #/ cfile
 
 def template_fiche_synopsis
   @template_fiche_synopsis ||= begin
-    deserb('./_lib/_pages_/concours/evaluation/partials/fiche_synopsis_template.erb', self)
+    deserb('templates/fiche_synopsis_template', self)
   end
 end #/ template_fiche_synopsis
 
