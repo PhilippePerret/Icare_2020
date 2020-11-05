@@ -40,7 +40,7 @@ class << self
     if not params.key?(:titre)
       params.merge!(titre: params[:route])
     end
-    (TAG_LIEN % params)
+    (TAG_LIEN % params).gsub(/ (class|style|title|target)=""/,'')
   end #/ lien
   alias :link :lien
 
@@ -54,7 +54,7 @@ class << self
   def div params
     params = {text: params} if params.is_a?(String)
     params = normalize_params(params, [:id, :text, :class, :style])
-    (TAG_DIV % params)
+    (TAG_DIV % params).gsub(/ (id|class|style|title|target)=""/,'')
   end #/ div
 
   def info_bulle(message, options = nil)
@@ -73,7 +73,7 @@ class << self
   def li params
     params = {text: params} if params.is_a?(String)
     params = normalize_params(params, [:id, :text, :class, :style])
-    (TAG_LI % params)
+    (TAG_LI % params).gsub(/ (id|class|style|title|target)=""/,'')
   end #/ li
 
   # Un champ HIDDEN
@@ -85,7 +85,7 @@ class << self
   # Un SPAN
   def span params
     params = normalize_params(params, [:text, :class, :style, :title])
-    (TAG_SPAN % params)
+    (TAG_SPAN % params).gsub(/ (id|class|style|title|target)=""/,'')
   end #/ span
 
   def submit_button params, options = nil

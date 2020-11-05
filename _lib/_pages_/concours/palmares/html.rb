@@ -14,6 +14,7 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
+    try_reconnect_concurrent(required = false)
     @concours = Concours.current
     require_xmodule('synopsis')
   end # /exec

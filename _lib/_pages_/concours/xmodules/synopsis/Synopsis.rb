@@ -140,7 +140,7 @@ def out(options = nil)
   when :fiche_synopsis
     template_fiche_synopsis
   when :fiche_classement
-    template_fiche_classement
+    template_fiche_classement % {exergue: concurrent.id == options[:current_cid] ? ' current' : ''}
   end
 end #/ out
 

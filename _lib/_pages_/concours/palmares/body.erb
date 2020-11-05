@@ -28,15 +28,15 @@
   <p>Les présélections sont en cours, les résultats seront affichés très prochainement.</p>
 <% elsif concours.phase > 2 %>
   <h3>Synopsis présélectionnés</h3>
-  <ol>
+  <ol class="palmares">
     <% Synopsis.preselecteds.each do |syno| %>
-      <li><%= syno.out(format: :fiche_classement) %></li>
+      <li><%= syno.out(format: :fiche_classement, current_cid: concurrent&.id) %></li>
     <% end %>
   </ol>
   <h2>Synopsis non présélectionnés</h2>
-  <ol start="11">
+  <ol class="palmares" start="11">
     <% Synopsis.not_preselecteds.each do |syno| %>
-      <li><%= syno.out(format: :fiche_classement) %></li>
+      <li><%= syno.out(format: :fiche_classement, current_cid: concurrent&.id) %></li>
     <% end %>
   </ol>
 <% end %>

@@ -14,6 +14,12 @@ div.fiche-lecture.exergue {
   transition:0.5;
   opacity:1;
 }
+
+/* Pour mettre en exergue le synopsis de l'auteur qui visite (if any) */
+div.fiche-lecture.current {
+  background-color:#CCFFCC;
+}
+
 div.fiche-lecture div.header {
   padding-top:1em;
   padding-bottom:1em;
@@ -50,6 +56,11 @@ div.fiche-lecture div.infos-projet div.projet-titre {
   grid-row:1;
   text-align:center;
 }
+div.fiche-lecture div.infos-projet div.projet-titre div.titre {
+  color: #111111;
+  font-variant:all-small-caps;
+}
+
 div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.titre {
   font-size:1.5rem;
   font-weight:bold;
@@ -57,10 +68,10 @@ div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.titre {
 div.fiche-lecture.exergue div.infos-projet div.projet-titre div.titre {
   font-size:2.5rem;
 }
-div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.auteur {
-  font-size:0.6rem;
+div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.auteurs {
+  font-size:1rem;
 }
-div.fiche-lecture.exergue div.infos-projet div.projet-titre div.auteur {
+div.fiche-lecture.exergue div.infos-projet div.projet-titre div.auteurs {
   font-size:1rem;
 }
 div.fiche-lecture div.infos-projet div.note-totale {
@@ -120,4 +131,13 @@ div.fiche-lecture div.detail div.explication {
 div.fiche-lecture div.detail div.explication-note {
   font-size: 0.9em;
   margin-left:2em;
+}
+
+ol.palmares {
+  counter-reset:repas;
+}
+ol.palmares li {
+  list-style-type:none;
+}
+ol.palmares li:before {
 }
