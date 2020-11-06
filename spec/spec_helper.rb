@@ -133,35 +133,42 @@ RSpec.configure do |config|
     File.unlink('./TESTS_ON') if File.exists?('./TESTS_ON')
   end
 
-  class BeforeStates
-  class << self
-    attr_accessor :requires_state
-    def checked_folders; @checked_folders ||= {} end
-  end
-  end
-
-  config.before :all do |t|
-    BeforeStates.requires_state = false
-  end
+  # class BeforeStates
+  # class << self
+  #   attr_accessor :requires_state
+  #   def checked_folders; @checked_folders ||= {} end
+  # end
+  # end
+  #
+  # config.before :all do |t|
+  #   BeforeStates.requires_state = false
+  # end
+  #
+  # config.before :all do |t|
+  #   puts "Variable : #{t.current_path}"
+  #   puts "t = #{t.methods.select{|m| m.to_s.include?('path')}}"
+  # end
 
   config.before :each do |t|
+    # puts "-> config.before(:each) BeforeStates.requires_state = #{BeforeStates.requires_state.inspect}"
     extend SpecModuleNavigation
-    if BeforeStates.requires_state == false
-      BeforeStates.requires_state = true
-      dpath = t.metadata[:example_group][:file_path].split('/')
-      dpath.shift
-      current_path = ['.']
-      while dossier = dpath.shift
-        current_path << dossier
-        require_file = File.join(*current_path, '_required.rb')
-        next if BeforeStates.checked_folders.key?(require_file)
-        BeforeStates.checked_folders.merge!(require_file => true)
-        if File.exists?(require_file)
-          # puts "  (Je dois charger #{require_file})"
-          require require_file
-        end
-      end
-    end
+    # if BeforeStates.requires_state == false
+    #   BeforeStates.requires_state = true
+    #   dpath = t.metadata[:example_group][:file_path].split('/')
+    #   dpath.shift
+    #   current_path = ['.']
+    #   while dossier = dpath.shift
+    #     current_path << dossier
+    #     require_file = File.join(*current_path, '_required.rb')
+    #     puts "Tests de require_file : #{require_file.inspect}"
+    #     next if BeforeStates.checked_folders.key?(require_file)
+    #     BeforeStates.checked_folders.merge!(require_file => true)
+    #     if File.exists?(require_file)
+    #       # puts "  (Je dois charger #{require_file})"
+    #       require require_file
+    #     end
+    #   end
+    # end
   end
 
   def verbose?

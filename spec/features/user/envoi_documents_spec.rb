@@ -1,5 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_relative './_required'
+
 feature "Envoi des documents de travail" do
   before(:all) do
     require "#{FOLD_REL_PAGES}/bureau/travail/constants"

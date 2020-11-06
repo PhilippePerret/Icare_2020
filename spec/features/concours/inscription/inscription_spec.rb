@@ -3,6 +3,8 @@
 =begin
   Module de test de la section concours, partie inscription
 =end
+require_relative './_required'
+
 feature "Section d'inscription de la partie concours" do
   before(:all) do
     degel("concours-phase-1")

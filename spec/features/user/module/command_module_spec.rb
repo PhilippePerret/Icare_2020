@@ -3,6 +3,8 @@
 =begin
   Module de test de la commande d'un module
 =end
+require_relative './_required'
+
 feature "Commande d'un module" do
   before(:all) do
     require "#{FOLD_REL_PAGES}/modules/xrequired/constants"

@@ -5,6 +5,8 @@
   Quand l'administrateur est connecté, le formulaire de contact fonctionne
   comme un mailing list.
 =end
+require_relative './_required'
+
 def mailing_json_path
   @mailing_json_path ||= File.join(MAILS_FOLDER,'mailing.json')
 end #/ mailing_json_path

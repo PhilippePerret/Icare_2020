@@ -2,6 +2,8 @@
 =begin
   Module de test du changement de l'échéance de travail
 =end
+require_relative './_required'
+
 feature "Changement de l'échéance de travail" do
   before(:all) do
     require './_lib/_pages_/bureau/travail/constants.rb'

@@ -3,6 +3,7 @@
   Module de test du paiement
 =end
 # Pour les constantes
+require_relative './_required'
 
 feature "Paiement d'un module d'apprentissage avec les différents modes de paiement" do
   before(:all) do

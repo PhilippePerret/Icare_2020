@@ -36,6 +36,7 @@
     déjà inscrit à un concours précédent (mais pas le courant)
     déjà inscrit au concours courant
 =end
+require_relative './_required'
 
 def inscrire_marion_au_concours
   within("form#concours-signup-form") do

@@ -9,6 +9,7 @@
   - supprimer un témoignage (administrateur)
   - modifier un témoignage (administrateur seulement)
 =end
+require_relative './_required'
 
 feature 'Le Témoignages' do
   def prepare_dernier_etape_pour_marion

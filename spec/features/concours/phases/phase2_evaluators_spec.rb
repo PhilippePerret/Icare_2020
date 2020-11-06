@@ -3,3 +3,4 @@
 =begin
   Tests des évaluateurs en phase 2
 =end
+require_relative './_required'

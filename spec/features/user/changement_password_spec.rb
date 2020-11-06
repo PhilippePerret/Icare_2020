@@ -3,11 +3,10 @@
 =begin
   Méthode pour tester le changement de mot de passe
 =end
+require_relative './_required'
+
 feature "Changement du mot de passe" do
   before(:all) do
-    require "#{FOLD_REL_PAGES}/user/profil/constants"
-    require "#{FOLD_REL_PAGES}/user/change_password/constants"
-    require './_lib/modules/user/utils/constants'
     degel('define_sharing')
   end
 

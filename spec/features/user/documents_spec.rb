@@ -2,6 +2,8 @@
 =begin
   Tests sur la section Documents de l'icarien
 =end
+require_relative './_required'
+
 feature "Section document" do
   before(:all) do
     require './_lib/required/__first/constants/emojis'

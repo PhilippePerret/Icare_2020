@@ -7,6 +7,7 @@
   atteignable que par ceux qui peuvent en fonction des différents réglages.
 
 =end
+require_relative './_required'
 require "#{FOLD_REL_PAGES}/overview/icariens/lib/constants"
 
 class TUser

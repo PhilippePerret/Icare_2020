@@ -3,6 +3,8 @@
 =begin
   Test du changement de préférences
 =end
+require_relative './_required'
+
 feature "Changement des préférences pour le concours" do
 
   MESSAGE_RECOIT_FICHE_LECTURE = "Vous recevrez la fiche de lecture sur votre projet."

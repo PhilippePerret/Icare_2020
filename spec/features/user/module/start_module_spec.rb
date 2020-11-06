@@ -3,6 +3,7 @@
 =begin
   Test de démarrage de module d'apprentissage
 =end
+require_relative './_required'
 
 feature "Test du démarrage de module" do
   before(:all) do

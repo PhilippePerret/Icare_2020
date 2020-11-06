@@ -2,6 +2,8 @@
 =begin
   Validation par l'administration d'une inscription
 =end
+require_relative './_required'
+
 feature "Validation d'une inscription" do
   before(:all) do
     require './_lib/_watchers_processus_/_constants_' # => DATA_MATCHERS

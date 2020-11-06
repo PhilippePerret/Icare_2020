@@ -3,6 +3,8 @@
 =begin
   Test de l'ajout d'une actualité
 =end
+require_relative './_required'
+
 feature "Operation Ajout d'une actualité" do
   before(:all) do
     require "#{FOLD_REL_PAGES}/admin/tools/constants"

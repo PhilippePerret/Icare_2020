@@ -2,6 +2,8 @@
 =begin
   Test de la création d'une étape de module
 =end
+require_relative './_required'
+
 UI_TEXTS.merge!({
   titre_page_edit_etape: 'Étapes des modules'.freeze,
   titre_edition_etape: 'Édition d’étape'.freeze,

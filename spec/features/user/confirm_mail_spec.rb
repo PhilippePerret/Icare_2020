@@ -8,12 +8,11 @@
   - un inscrit peut valider son mail par le mail qui lui a été envoyé
   - un inscrit peut renvoyer un mail pour valider son mail
 =end
+require_relative './_required'
 
 feature 'Validation du mail' do
   before(:each) do
     degel('inscription_marion')
-    require './_lib/required/_classes/_User/constants'
-    require './_lib/_watchers_processus_/User/valid_mail/constants'
   end
 
   context 'Un candidat' do

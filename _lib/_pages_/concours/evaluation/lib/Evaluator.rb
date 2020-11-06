@@ -54,4 +54,14 @@ class << self
     end
   end #/ try_reconnect_evaluator
 end # /<< self
+# ---------------------------------------------------------------------
+#
+#   INSTANCE
+#
+# ---------------------------------------------------------------------
+attr_reader :data_ini, :pseudo, :mail, :id
+def initialize(data_ini)
+  @data_ini = data_ini
+  @data_ini.each{|k,v|instance_variable_set("@#{k}",v)}
+end #/ initialize
 end #/Evaluator

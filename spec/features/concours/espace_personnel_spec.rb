@@ -1,5 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_relative './_required'
+
 feature "L'espace concours du participant" do
   before(:all) do
     require_support('concours-phase-2')

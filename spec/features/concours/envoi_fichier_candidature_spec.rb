@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_relative './_required'
 
 class TConcurrent
   # IN    +data+ table des données, doit contenir :

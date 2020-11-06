@@ -3,8 +3,7 @@
 =begin
   Matchers pour le frigo
 =end
-require './_lib/modules/frigo/constants.rb'
-require "#{FOLD_REL_PAGES}/bureau/frigo/lib/constants.rb"
+require_relative './_required'
 
 RSpec::Matchers.define :have_new_messages_count do |nombre|
   match do |page|

@@ -3,9 +3,7 @@
 =begin
   Test complet du frigo
 =end
-require_relative 'TFrigo_classes'
-require_relative 'frigo_matchers'
-require_relative 'TUser_discussions'
+require_relative './_required'
 
 # ---------------------------------------------------------------------
 #

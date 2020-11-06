@@ -3,6 +3,8 @@
 =begin
   Module pour tester la liste des icariens
 =end
+require_relative './_required'
+
 def absmodule_names
   @abs
 end #/ absmodule_names

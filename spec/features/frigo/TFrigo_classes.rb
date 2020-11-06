@@ -3,7 +3,6 @@
 =begin
   Classes pour les tests
 =end
-
 class TFrigo
 class << self
   include Capybara::DSL

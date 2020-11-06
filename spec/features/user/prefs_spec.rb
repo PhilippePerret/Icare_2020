@@ -2,6 +2,8 @@
 =begin
   Test des préférences
 =end
+require_relative './_required'
+
 feature "Préférences" do
   before(:all) do
     degel('validation_inscription')

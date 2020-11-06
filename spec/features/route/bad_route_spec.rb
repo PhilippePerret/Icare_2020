@@ -2,6 +2,8 @@
 =begin
   Test pour voir si, quand on tape une mauvaise route, on arrive sur la bonne page
 =end
+require_relative './_required'
+
 feature "Mauvaise route" do
   scenario "Utiliser une mauvaise route conduit à la bonne page" do
     goto("mauvais/bureau")

@@ -1,4 +1,6 @@
 # encoding: UTF-8
+# frozen_string_literal: true
+require_relative './_required'
 
 # Méthode qui s'assure que le candidat créé avec les données +data+
 # a bien été enregistré

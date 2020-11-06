@@ -5,6 +5,8 @@
   ----------------
   Test de la présence de toutes les pages
 =end
+require_relative './_required'
+
 RSpec.shared_examples 'rejoint_le_concours' do |from_url|
   scenario "est accessible depuis la partie" do
     goto(from_url)

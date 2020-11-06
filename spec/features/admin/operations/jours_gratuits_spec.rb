@@ -3,6 +3,8 @@
 =begin
   Module pour checker la possibilité d'ajouter des jours gratuits à un icarien
 =end
+require_relative './_required'
+
 # include Capybara::DSL
 
 feature 'Opération Ajout de jours gratuits' do

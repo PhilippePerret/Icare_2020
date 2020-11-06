@@ -3,6 +3,8 @@
 =begin
   Test du mot de passe oublié
 =end
+require_relative './_required'
+
 feature "Mot de passe oublié" do
   before(:all) do
     require "#{FOLD_REL_PAGES}/user/forgot_password/constants"

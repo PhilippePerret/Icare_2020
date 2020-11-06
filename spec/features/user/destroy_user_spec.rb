@@ -2,7 +2,7 @@
 =begin
   Test de la destruction d'un user
 =end
-
+require_relative './_required'
 
 feature "Destruction d'un icarien" do
   before(:all) do

@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_relative './_required'
 
 feature "Travail d'un icarien" do
   before(:all) do

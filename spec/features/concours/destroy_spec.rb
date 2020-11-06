@@ -1,5 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require_relative './_required'
+
 feature "Destruction d'un participant au concours" do
   before(:all) do
     @concurrent = TConcurrent.get_random
