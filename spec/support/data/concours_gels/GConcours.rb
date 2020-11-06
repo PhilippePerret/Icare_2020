@@ -12,6 +12,7 @@ class GConcours
 #
 # ---------------------------------------------------------------------
 class << self
+  attr_accessor :current
   # Réinitialisation de vraiment tout
   # On détruit les dossiers, les fichiers, on vide les bases de données
   def reset_all

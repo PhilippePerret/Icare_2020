@@ -28,7 +28,7 @@
     :created_ds: "29/09/YYYY"
     :evaluators:
       :jury1: [1, 2, 3, 4]
-      :jury2: [1, 5, 6]
+      :jury2: [1, 5, 6] # ne pas changer où changer aussi les notes
   - :annee: 2020
     :theme: La Rencontre
     :theme_d: L'histoire d'une rencontre quelle qu'elle soit.
@@ -108,7 +108,7 @@
         :titre: "Marcelle Courante"
         :preselected: true
         :notes: [160, 162, 143]
-
+        :notes_prix: [080,103,120]
 
   # Ancienne, fichier non conforme, non sélectionnée, no fiche de lecture, no infos
   - :patronyme: Christine NewFichNonConf
@@ -173,6 +173,7 @@
         :titre: "La Courante Gagnante"
         :notes: ['200', '162', '162']
         :prix: 2
+        :notes_prix: [200,162,162]
       2019:
         :titre: "La coureur de 2019"
         :auteurs: Nicole et Thierry
@@ -199,6 +200,7 @@
         :titre: "Mon Projet Gagnant Courant"
         :notes: ['200', '200', '162']
         :prix: 1
+        :notes_prix: ['200','200','160']
 
   # Nouveau, fichier conforme, sélectionné, fiche de lecture, infos
   - :patronyme: Kevin NewFichConfSelFLI
@@ -209,6 +211,7 @@
         :titre: "Mon projet courant"
         :notes: ['143', '124', '120']
         :preselected: true
+        :notes_prix: ['143','160','160']
 
   # Courtant, avec fichier conforme, sélectionné, pas de fiche lecture, infos
   - :patronyme: Ernestine CurFichConfSelI
@@ -223,6 +226,7 @@
         :keywords: monde, solidité, amitié
         :notes: ['162', '124', '120']
         :preselected: true
+        :notes_prix: ['162','124','143']
       2017:
         :titre: "Le monde en 2017"
         :preselected: true
@@ -238,6 +242,7 @@
         :titre: "Un regard sur l'année courante primé 3"
         :notes: ['124', '162', '162']
         :prix: 3
+        :notes_prix: ['162','143','143']
   # Courant, avec fichier conforme, non sélectionné, fiche lecture, infos
   - :patronyme: Alphonse CurFichConfFLI
     :sexe: H
@@ -261,6 +266,7 @@
         :titre: "Pas courant !"
         :notes: ['124', '120', '162']
         :preselected: true
+        :notes_prix: ['120','124','143']
       2020:
         :titre: "20 et 20 pour T et T"
         :preselected: true
@@ -290,9 +296,10 @@
     :participations:
       :current:
         :titre: "Le Don courant"
+        :keywords: médecine, déclin, étranger
         :notes: ['124', '143', '162']
         :preselected: true # false par défaut
-        :keywords: médecine, déclin, étranger
+        :notes_prix: ['120','103','103']
 
   # Un concurrent courant, ayant participé à d'autres concours,
   # en envoyant toujours son fichier, conforme. Il a obtenu le 3e prix

@@ -68,8 +68,13 @@ end
   # *** Fabrication des concours ***
   CONCOURS_GEL_DATA[:concours].each do |data_concours|
     # puts "+ data_concours: #{data_concours}"
-    GConcours.new(data_concours).build
+    gconcours = GConcours.new(data_concours)
+    gconcours.build
+    if gconcours.annee == ANNEE_CONCOURS_COURANTE
+      GConcours.current = gconcours
+    end
   end
+
   # *** Fabrication des concurrents ***
   CONCOURS_GEL_DATA[:concurrents].each do |data_concurrent|
     GConcurrent.new(data_concurrent).build

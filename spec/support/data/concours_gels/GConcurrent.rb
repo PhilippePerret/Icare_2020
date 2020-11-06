@@ -132,7 +132,7 @@ end
 # ---------------------------------------------------------------------
 class Participation
   attr_reader :concurrent, :data_ini
-  attr_reader :annee, :fichier, :titre, :notes
+  attr_reader :annee, :fichier, :titre, :notes, :notes_prix
   attr_reader :preselected, :prix, :pre_note, :fin_note
   attr_accessor :specs # composé ici
   def initialize(concurrent, data_ini)
@@ -165,7 +165,8 @@ class Participation
   def build
     compose_specs
     make_folder_evaluations if not(current? && PHASE_GEL == 0)
-    make_evaluations_and_calc_notes if PHASE_GEL > 1
+    make_evaluations_and_calc_notes if PHASE_GEL >= 2
+    make_evaluations_and_calc_notes(true) if PHASE_GEL >= 3
     save_data_in_db
   end #/ build
   # ---------------------------------------------------------------------
@@ -243,7 +244,35 @@ class Participation
   # note de présélection et fin_note pour la note finale si présélectionné)
   # Note : pour le moment, dans les notes, pour les lauréats, on prend pour la
   # note finale la même que la note de présélection
-  def make_evaluations_and_calc_notes
+  def make_evaluations_and_calc_notes(pour_prix = false)
+    if pour_prix
+      make_evaluations_and_calc_notes_pour_prix
+    else
+      make_evaluations_and_calc_notes_pour_preselection
+    end
+  end
+
+  # Fabrication des fichiers d'évaluation pour le prix
+  # Il faut tenir compte :
+  #   - de l'évaluateur
+  #   - de la note attribuée
+  #
+  def make_evaluations_and_calc_notes_pour_prix
+    return if not(current?) || notes_prix.nil?
+    note = 0
+    GConcours.current.evaluators[:jury2].each_with_index do |n, idx|
+      note_jure = notes_prix[idx]
+      note += note_jure.to_i
+      filename = "evaluation-prix-#{n}.json"
+      dst = File.join(folder_evaluations_path, filename)
+      src = File.join(__dir__,'modeles','evaluations',"note#{note_jure}.json")
+      FileUtils.copy(src,dst)
+    end
+    note = (note.to_f / notes_prix.count).to_i
+    @fin_note = note
+  end #/ make_evaluations_and_calc_notes_pour_prix
+
+  def make_evaluations_and_calc_notes_pour_preselection
     return if not(current?) || notes.nil?
     note = 0
     notes.each_with_index do |n, idx|
