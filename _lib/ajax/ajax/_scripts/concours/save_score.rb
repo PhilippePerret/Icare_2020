@@ -5,15 +5,18 @@ require 'json'
 Dir.chdir(APP_FOLDER) do
   require './_lib/_pages_/concours/xrequired/constants'
   require './_lib/_pages_/concours/xmodules/evaluation/module_calculs'
+  require './_lib/_pages_/concours/xmodules/synopsis/Synopsis'
 end
 
 begin
   evaluator   = Ajax.param(:evaluator)
   synopsis_id = Ajax.param(:synopsis_id)
   score       = Ajax.param(:score)
-  concurrent_id, annee = synopsis_id.split('-')
-  scores_folder_path = File.join(CONCOURS_DATA_FOLDER,concurrent_id,synopsis_id)
-  score_path = File.join(scores_folder_path, "evaluation-#{evaluator}.json")
+  # On récupère la phase du concours d'année +annee+ (le plus souvent l'année
+  # du concours courant)
+  phase = db_select("SELECT phase FROM concours WHERE annee = ?", [annee]).first[:phase]
+  synopsis = Synopsis.new(concurrent_id, annee)
+  score_path = synopsis.file_evaluation_per_phase_and_evaluator(phase, evaluator)
   `mkdir -p "#{scores_folder_path}"`
   File.open(score_path,'wb'){|f| f.write score.to_json }
 

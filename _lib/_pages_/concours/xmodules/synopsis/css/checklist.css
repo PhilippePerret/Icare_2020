@@ -6,7 +6,7 @@ div#checklist {
   padding:1em;
   border:1px solid;
   box-shadow: 8px 8px 21px 7px #DDD;
-  z-index:2;
+  z-index:102;
   /* TODO : régler dimensions (titre et bouton) et faire réglage automatique */
 }
 div#checklist div.div-titre {

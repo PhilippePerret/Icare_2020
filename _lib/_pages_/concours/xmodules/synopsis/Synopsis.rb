@@ -111,6 +111,20 @@ def initialize concurrent_id, annee, dat = nil
   @evaluator_id = @data[:evaluator_id]
 end #/ initialize
 
+# OUT   Le path du fichier d'évaluation en fonction de la phase +phase+
+#       du concours et l'évaluateur d'identifiant +ev_id+ (ou l'évaluateur
+#       courant)
+def file_evaluation_per_phase_and_evaluator(phase = nil, evaluator_id = nil)
+  evaluator_id ||= @evaluator_id
+  phase ||= Concours.current.phase
+  filename =  if phase = 3 && preselected?
+                "evaluation-prix-#{evaluator_id}.json"
+              else
+                 "evaluation-pres-#{evaluator_id}.json"
+              end
+  # Le path
+  File.join(folder,filename)
+end #/
 
 # OUT   True si le synopsis fait partie des présélectionnés
 def preselected?
@@ -304,7 +318,7 @@ end #/ fichier?
 # IN    ID de l'évaluateur (pour la session 2020, ça correspond à l'ID User)
 # OUT   Chemin d'accès au fichier d'évaluation (score) pour l'évaluator evaluator_id
 def score_path(evaluator_id)
-  File.join(folder, "evaluation-#{evaluator_id}.json")
+  file_evaluation_per_phase_and_evaluator(nil, evaluator_id)
 end #/ score_path
 # Chemin d'accès au dossier du synopsis, où sont rangées tous les fichiers,
 # et notamment les fichiers d'évaluation

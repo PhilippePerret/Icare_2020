@@ -66,6 +66,21 @@ end #/ data
 # Chemin d'accès au fichier d'évaluation (pour le synopsis donné et l'évaluateur
 # donné)
 def path
-  @path ||= File.join(synopsis.folder, "evaluation-#{evaluateur.id}.json")
+  @path ||= begin
+    fname = if synopsis.preselected? && Concours.current.phase3?
+              filename_evaluation_prix
+            else
+              filename_evaluation_preselection
+            end
+    #
+    File.join(synopsis.folder, fname)
+  end
 end #/ path
+
+def filename_evaluation_prix
+  synopsis.file_evaluation_per_phase_and_evaluator(3)
+end
+def filename_evaluation_preselection
+  synopsis.file_evaluation_per_phase_and_evaluator(1)
+end
 end #/EvaluationForm

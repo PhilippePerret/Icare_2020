@@ -248,7 +248,7 @@ class Participation
     note = 0
     notes.each_with_index do |n, idx|
       note += n.to_i
-      filename = "evaluation-#{idx + 1}.json"
+      filename = "evaluation-pres-#{idx + 1}.json"
       dst = File.join(folder_evaluations_path, filename)
       src = File.join(__dir__,'modeles','evaluations',"note#{n}.json")
       FileUtils.copy(src,dst)

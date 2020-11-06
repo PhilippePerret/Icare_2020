@@ -182,10 +182,11 @@ end #/ facteurU
 #       - notes
 #       - note_generale
 #
-def rassemble_resultats
+def rassemble_resultats(pour_prix = false)
   @ENotes = {}
   @all_enotes = []
-  Dir["#{synopsis.folder}/evaluation-*.json"].each do |fpath|
+  key_eval = pour_prix ? 'prix' : 'pres'
+  Dir["#{synopsis.folder}/evaluation-#{key_eval}-*.json"].each do |fpath|
     evaluation_id = File.basename(fpath,File.extname(fpath)).split("-")
     concurrent_id, evaluator_id = evaluation_id
     JSON.parse(File.read(fpath)).each do |k, note|

@@ -1,18 +1,25 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+=begin
+  Script Ajax pour récupérer le score d'une fichier (en fonction de la phase)
+=end
 require 'json'
 
 Dir.chdir(APP_FOLDER) do
   require './_lib/_pages_/concours/xrequired/constants'
   require './_lib/_pages_/concours/xmodules/evaluation/module_calculs'
+  require './_lib/_pages_/concours/xmodules/synopsis/Synopsis'
 end
 
 begin
   evaluator   = Ajax.param(:evaluator)
   synopsis_id = Ajax.param(:synopsis_id)
   concurrent_id, annee = synopsis_id.split('-')
-  scores_folder_path = File.join(CONCOURS_DATA_FOLDER,concurrent_id,synopsis_id)
-  score_path = File.join(scores_folder_path, "evaluation-#{evaluator}.json")
+  # On récupère la phase du concours d'année +annee+ (le plus souvent l'année
+  # du concours courant)
+  phase = db_select("SELECT phase FROM concours WHERE annee = ?", [annee]).first[:phase]
+  synopsis = Synopsis.new(concurrent_id, annee)
+  score_path = synopsis.file_evaluation_per_phase_and_evaluator(phase, evaluator)
   score = {}
   if File.exists?(scores_folder_path)
     if File.exists?(score_path)
