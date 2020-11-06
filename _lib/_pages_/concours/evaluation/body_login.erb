@@ -1,0 +1,29 @@
+<%
+# frozen_string_literal: true
+form = Form.new(id:"concours-membre-login", route:"#{route.to_s}")
+form.rows = {
+  "<op/>" => {type:"hidden", name:"op", value:"login"},
+  "<view/>" => {type:"hidden", name:"view", value: "body_login"},
+  "Votre mail" => {type:"text", name: "member_mail"},
+  "Votre mot de passe" => {type:"text", name:"member_password"}
+}
+form.submit_button = "M’identifier"
+%>
+<% if session['concours_login_tentatives'].to_i <= 5 %>
+  <p>Si vous êtes membre du jury du concours de synopsis de l'atelier Icare, vous pouvez vous identifier ici.</p>
+  <%= form.out %>
+<% end %>
+
+<%
+# En offline, j'indique les évaluateurs pour me connecter sous un de
+# leur nom
+
+if OFFLINE
+  require "#{DATA_FOLDER}/secret/concours"
+%>
+<pre class="small">
+  <% CONCOURS_DATA[:evaluators].each do |de| %>
+    <%= de[:mail].ljust(40) %> <%= de[:password] %>
+  <% end %>
+</pre>
+<% end %>

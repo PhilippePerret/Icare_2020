@@ -112,12 +112,12 @@ def liste_current_evaluators
     jury |= 1 if evaluators[:jury1].include?(m[:id])
     jury |= 2 if evaluators[:jury2].include?(m[:id])
     next if jury == 0
-    pwd = if m[:password].nil?
-      case m[:id]
-      when 1 then PHIL[:password]
-      when 2 then MARION[:password]
-      end
-    end
+    pwd = case m[:id]
+          when 1 then PHIL[:password]
+          when 2 then MARION[:password]
+          else m[:password]
+          end
+    # La donnée
     {pseudo: m[:pseudo], id: m[:id], jury:jury, mail:m[:mail], password:pwd, sexe:m[:sexe]}
   end.compact
 end #/ liste_current_evaluators

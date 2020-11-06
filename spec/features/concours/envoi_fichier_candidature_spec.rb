@@ -24,9 +24,7 @@ feature "Dépôt du fichier de candidature" do
 
 
   before(:all) do
-    require './_lib/_pages_/concours/xrequired/constants'
-    require_support('concours')
-    degel('concours')
+    degel('concours-phase-1')
     TMails.remove_all
     require './_lib/data/secret/phil'
     phil.instance_variable_set("@mail", 'concours@atelier-icare.net')
@@ -51,7 +49,7 @@ feature "Dépôt du fichier de candidature" do
 
     context 'Un ancien concurrent non inscrit' do
       before(:all) do
-        @concurrent = TConcurrent.get_random(non_inscrit: true)
+        @concurrent = TConcurrent.get_random(current: false)
       end
       scenario 'trouve un message l’invitant à s’inscrire' do
         concurrent.identify
@@ -82,7 +80,7 @@ feature "Dépôt du fichier de candidature" do
       scenario 'peut déposer son fichier de candidature' do
         # *** Préparation ***
         start_time = Time.now.to_i
-        concurrent = TConcurrent.get_random(without_synopsis: true)
+        concurrent = TConcurrent.get_random(avec_fichier: false)
         concurrent.reset
         expect(concurrent.specs[0]).not_to eq "1"
         # *** Test ***
@@ -112,10 +110,10 @@ feature "Dépôt du fichier de candidature" do
 
   context 'Quand le concours est en phase 2 (préselections en cours)' do
     before(:all) do
-      TConcours.set_phase(2, ANNEE_CONCOURS_COURANTE)
+      degel('concours-phase-2')
     end
     scenario 'Un concurrent ne peut plus déposer de fichier de candidature'do
-      concurrent = TConcurrent.get_random(without_synopsis: true)
+      concurrent = TConcurrent.get_random(avec_fichier: false)
       concurrent.identify
       goto("concours/espace_concurrent")
       expect(page).to have_titre("Espace personnel")
@@ -126,10 +124,10 @@ feature "Dépôt du fichier de candidature" do
 
   context 'Quand le concours est en phase 0 (non lancé)'  do
     before(:all) do
-      TConcours.set_phase(0, ANNEE_CONCOURS_COURANTE)
+      degel('concours-phase-0')
     end
     scenario 'Un concurrent peut rejoindre l’espace personnel, mais pas déposer de fichier de candidature' do
-      concurrent = TConcurrent.get_random(without_synopsis: true)
+      concurrent = TConcurrent.get_random
       concurrent.identify
       goto("concours/espace_concurrent")
       expect(page).to have_titre("Espace personnel")

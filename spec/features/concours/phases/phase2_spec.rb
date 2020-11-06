@@ -11,7 +11,6 @@ feature "Phase 2 du concours" do
   end #/ nombre_fichiers_candidature
 
   before(:all) do
-    require_support('concours')
     degel('concours-phase-2')
   end
   before(:each) do

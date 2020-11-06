@@ -37,13 +37,6 @@
     déjà inscrit au concours courant
 =end
 
-def prepare_tests_concours
-  # TODO Faire un gel de cette initialisation du concours
-  degel("benoit_frigote_phil_marion_et_elie")
-  TConcours.reset
-  TConcours.peuple
-end #/ prepare_tests_concours
-
 def inscrire_marion_au_concours
   within("form#concours-signup-form") do
     fill_in("p_patronyme", with: marion.pseudo)
@@ -72,10 +65,8 @@ end #/ inscrire_au_concours_with_data
 
 feature "Inscription au concours courant suivant le type de visiteur" do
   before(:all) do
+    degel("concours-phase-1")
     require './_lib/_pages_/concours/inscription/constants' # propres à l'inscription
-    require './_lib/_pages_/concours/xrequired/constants'
-    require_support('concours')
-    prepare_tests_concours
   end
 
   context '1) un visiteur quelconque ni icarien ni concurrent' do

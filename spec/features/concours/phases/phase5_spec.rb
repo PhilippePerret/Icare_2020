@@ -8,19 +8,15 @@ feature "Phase 4 du concours" do
 
   BTN_VOIR_PALMARES = "Voir le palmarès actuel"
 
-  before(:all) do
-    require './_lib/_pages_/concours/admin/lib/PHASES_DATA'
-    expect(defined?(Concours::PHASES_DATA)).not_to be_nil
-    PHASES_DATA = Concours::PHASES_DATA
-  end
-
   # Retourne le nombre de fichiers candidature conformes
   def nombre_fichiers_candidature
     TConcurrent.all_current.select{|c|c.specs[1]=="1"}.count
   end #/ nombre_fichiers_candidature
 
   before(:all) do
-    require_support('concours')
+    require './_lib/_pages_/concours/admin/lib/PHASES_DATA'
+    expect(defined?(Concours::PHASES_DATA)).not_to be_nil
+    PHASES_DATA = Concours::PHASES_DATA
     degel('concours-phase-4')
     # On fait deux concurrents dont un avec un fichier conforme et l'autre
     # sans fichier

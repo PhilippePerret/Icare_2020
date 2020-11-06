@@ -5,8 +5,7 @@
 =end
 feature "Accueil du concours de synopsis" do
   before(:all) do
-    require_support('concours')
-    degel('concours')
+    degel('concours-phase-1')
   end
   scenario "Un visiteur quelconque tombe sur une page valide" do
     pitch("Un visiteur quelconque trouve une page de concours valide.")

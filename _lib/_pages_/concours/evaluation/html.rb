@@ -4,8 +4,13 @@ require_module('form')
 require_js_module(['flash','jquery'])
 class HTML
   attr_reader :synopsis
+  # Instance {Evaluator} de l'évaluateur
+  attr_accessor :evaluator
+
   def titre
     case param(:view)
+    when "body_login"
+      "Identification (membre du jury)"
     when "body_fiches_lecture"
       "Fiches de lecture"
     when "body_form_synopsis"
@@ -16,44 +21,51 @@ class HTML
   end #/titre
 
   def usefull_links
-    ADMIN_USEFULL_LINKS
+    if Evaluator.current?
+      ADMIN_USEFULL_LINKS
+    end
   end #/ usefull_links
 
   # Code à exécuter avant la construction de la page
   def exec
-    admin_required # TODO evaluators_required
-    add_js('./js/modules/ajax')
-    require_xmodule('synopsis')
-    require_xmodule('admin/constants')
+    if param(:view) == 'body_login'
+      if param(:op) == 'login'
+        Evaluator.authentify_evaluator
+      end
+    elsif Evaluator.try_reconnect_evaluator
+      add_js('./js/modules/ajax')
+      require_xmodule('synopsis')
+      require_xmodule('admin/constants')
 
-    # Pour tous les cas où synoid est défini => un synopsis est choisi pour
-    # une opération quelconque.
-    if param(:synoid)
-      args = param(:synoid).split('-')
-      args << db_exec(Synopsis::REQUEST_SYNOPSIS, args).first
-      @synopsis = Synopsis.new(*args)
-    end
+      # Pour tous les cas où synoid est défini => un synopsis est choisi pour
+      # une opération quelconque.
+      if param(:synoid)
+        args = param(:synoid).split('-')
+        args << db_exec(Synopsis::REQUEST_SYNOPSIS, args).first
+        @synopsis = Synopsis.new(*args)
+      end
 
-    case param(:view)
-    when "body_form_synopsis"
-      if param(:op) == 'save_synopsis' && user.admin?
-        if param(:form_id) && Form.new.conform?
-          synopsis.save(titre: param(:syno_titre), auteurs:param(:syno_auteurs), keywords:param(:syno_keywords))
-          message("Données enregistrées avec succès.")
+      case param(:view)
+      when "body_form_synopsis"
+        if param(:op) == 'save_synopsis' && user.admin?
+          if param(:form_id) && Form.new.conform?
+            synopsis.save(titre: param(:syno_titre), auteurs:param(:syno_auteurs), keywords:param(:syno_keywords))
+            message("Données enregistrées avec succès.")
+          end
         end
+      else
+        if param(:op) == 'mark_conforme'
+          require_xmodule('admin/mark_fichier_conforme')
+          synopsis.cfile.confirme_validite
+        elsif param(:op) == 'exportfiches'
+          require_xmodule('evaluation/export_fiches')
+          message("Exportation des fiches…")
+          Synopsis.exporter_les_fiches
+        end
+        require_xmodule('evaluation/module_calculs')
+        check_up_to_date
       end
-    else
-      if param(:op) == 'mark_conforme'
-        require_xmodule('admin/mark_fichier_conforme')
-        synopsis.cfile.confirme_validite
-      elsif param(:op) == 'exportfiches'
-        require_xmodule('evaluation/export_fiches')
-        message("Exportation des fiches…")
-        Synopsis.exporter_les_fiches
-      end
-      require_xmodule('evaluation/module_calculs')
-      check_up_to_date
-    end
+    end #/si c'est bien un évaluateur
   end # /exec
 
   # Fabrication du body

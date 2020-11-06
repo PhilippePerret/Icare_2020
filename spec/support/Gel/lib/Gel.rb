@@ -120,6 +120,7 @@ end #/ gel
 # = main =
 # Procède au dégel du gel
 def degel
+  require './spec/support/handies/handies'
   remove if ENV['GEL_FORCE']
   unless exists?
     # Si le gel n'existe pas

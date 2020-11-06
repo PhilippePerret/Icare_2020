@@ -24,9 +24,9 @@ end
 
 feature "La section concours" do
   before(:all) do
-    # TODO il faut s'assurer que le concours soit bien à l'étape 1
+    degel('concours-phase-1')
   end
-  scenario 'est visible sur les trois première pages visitées' do
+  scenario 'est visible sur les trois premières pages visitées' do
     pitch("Quelle que soit la page, un panneau en bas à gauche de l'écran permet de rejoindre le concours.")
     implementer(__FILE__,__LINE__)
   end
@@ -36,6 +36,6 @@ feature "La section concours" do
 Un visiteur quelconque trouve les pages suivantes :
   * Accueil du concours avec les liens vers les différentes parties
     TEXT
-
+    pending("Implémenter")
   end
 end

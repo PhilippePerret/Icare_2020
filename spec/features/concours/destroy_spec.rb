@@ -2,9 +2,6 @@
 # frozen_string_literal: true
 feature "Destruction d'un participant au concours" do
   before(:all) do
-    require_support('concours')
-    TConcours.reset
-    TConcours.peuple
     @concurrent = TConcurrent.get_random
   end
   let(:concurrent) { @concurrent }

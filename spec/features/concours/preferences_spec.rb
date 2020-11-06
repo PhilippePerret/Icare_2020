@@ -15,9 +15,7 @@ feature "Changement des préférences pour le concours" do
   LINK_WANT_MAIL_INFOS = "Finalement, je voudrais bien recevoir ces informations (échéances, inscrits, etc.)"
 
   before(:all) do
-    require_support('concours')
-    degel('concours')
-
+    degel('concours-phase-1')
   end
 
   let(:concurrent) { @concurrent }

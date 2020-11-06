@@ -5,18 +5,7 @@
 =end
 feature "Section d'inscription de la partie concours" do
   before(:all) do
-    degel("benoit_frigote_phil_marion_et_elie")
-    require_support('concours')
-    require './_lib/_pages_/concours/inscription/constants' # propres à l'inscription
-    TConcours.reset
-    TConcours.peuple
-  end
-
-  scenario 'seulement pour lancer le gel et la préparation', gel:true do
-    expect(2 + 2).to eq(4)
-    gel('concours', <<-TEXT)
-Gel pour des données de base de concours.
-    TEXT
+    degel("concours-phase-1")
   end
 
   scenario "Une page conforme permet de s'inscrire une première fois au concours" do

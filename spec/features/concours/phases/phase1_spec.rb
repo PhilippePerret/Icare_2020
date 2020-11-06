@@ -5,7 +5,6 @@
 =end
 feature "Phase 1 du concours" do
   before(:all) do
-    require_support('concours')
     degel('concours-phase-0')
   end
   before(:each) do
