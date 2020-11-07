@@ -3,6 +3,7 @@
 require_relative './_required'
 
 class TConcurrent
+  include SpecModuleNavigation
   # IN    +data+ table des données, doit contenir :
   #         :titre, :synopsis et optionnellement :auteurs
   #         Le :synopsis est le path ABSOLU du fichier
@@ -11,13 +12,14 @@ class TConcurrent
   #       du synopsis et le soumet.
   def come_and_send_synopsis(data)
     identify
-    visit("http://localhost/AlwaysData/Icare_2020/concours/espace_concurrent")
+    goto("concours/espace_concurrent")
     within("form#concours-dossier-form") do
       fill_in("p_titre",    with: data[:titre])
       fill_in("p_auteurs",  with: data[:auteurs]) if data.key?(:auteurs)
       attach_file("p_fichier_candidature", data[:synopsis])
       click_on(UI_TEXTS[:concours_bouton_send_dossier])
     end
+    screenshot("after-send-fichier-concours")
   end #/ envoi_son_synopsis
 end #/TConcurrent
 
@@ -78,7 +80,7 @@ feature "Dépôt du fichier de candidature" do
 
 
     context 'Un concurrent inscrit sans fichier déposé' do
-      scenario 'peut déposer son fichier de candidature' do
+      scenario 'peut déposer son fichier de candidature', only:true do
         # *** Préparation ***
         start_time = Time.now.to_i
         concurrent = TConcurrent.get_random(avec_fichier: false)
@@ -97,10 +99,11 @@ feature "Dépôt du fichier de candidature" do
         # Un mail de confirmation a été envoyé au concurrent
         expect(concurrent).to have_mail(subject:"[CONCOURS] Réception de votre fichier de candidature", after: start_time)
         # Les specs de son enregistrement pour le concours ont été modifiée
-        concurrent.reset
-        expect(concurrent.specs[0..1]).to eq "10"
         # J'ai reçu un mail m'informant de l'envoi du synopsis
         expect(phil).to have_mail(subject:"[CONCOURS] Dépôt d'un fichier de candidature", after: start_time)
+
+        concurrent.reset
+        expect(concurrent.specs[0..1]).to eq "10"
         # Une actualité annonce l'envoi du synopsis
         expect(TActualites).to be_exists(after:start_time, type:"CONCOURSFILE"),
           "Une actualité devrait annoncer l'envoi du fichier"

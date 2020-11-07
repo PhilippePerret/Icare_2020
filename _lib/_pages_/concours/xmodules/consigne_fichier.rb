@@ -10,8 +10,8 @@ class HTML
     file = Concours::CFile.new(concurrent, ANNEE_CONCOURS_COURANTE)
     if file.consigne_file(param(:p_fichier_candidature))
       informe_concurrent_consignation_fichier(file)
-      informe_admin_consignation_fichier(file)
-      annonce_depot_fichier
+      annonce_depot_fichier rescue nil # sans erreur
+      informe_admin_consignation_fichier(file) # rescue nil # sans erreur
       message(MESSAGES[:merci_fichier_et_titre] % [concurrent.pseudo])
     end
   end #/ consigne_fichier_candidature
@@ -21,7 +21,7 @@ class HTML
     require_module('mail')
     MailSender.send({
       to: CONCOURS_MAIL,
-      path: File.join(XMODULES_FOLDER,'mails','phase1','inform_depot_fichier.erb'),
+      file: File.join(XMODULES_FOLDER,'mails','phase1','inform_depot_fichier.erb'),
       bind: file
     })
   rescue Exception => e
@@ -77,7 +77,8 @@ def consigne_file(ffile) # ffile pour "form-file"
   db_exec(REQUEST_SAVE_DATA_PROJETS, [titre, param(:p_auteurs), concurrent.id, annee])
   # Si tout est OK, on marque que le dossier est envoyé dans les
   # specs du concurrent.
-  concurrent.set_spec(0, 1)
+  concurrent.set_spec(0,1,{no_save:true})
+  concurrent.set_spec(1,0) # au cas où
   return true # si tout est OK
 rescue Exception => e
   log(e)

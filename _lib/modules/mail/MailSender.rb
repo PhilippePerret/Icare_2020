@@ -45,6 +45,7 @@ end #/ log
 def send(dmail)
   # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
   implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))
+  implemente_helpers_methods( dmail[:bind] ) if not(dmail[:bind].respond_to?(:le_bot))
   # Déserber le message et récupérer le sujet du mail
   mail_message = deserb(dmail[:file]||dmail[:path], dmail[:bind]) # => subject
   # Ici, il faudrait templatiser le message avec les données ([1])
@@ -230,6 +231,10 @@ private
     eval("def subject(sujet);@mail_subject = sujet end\n", bindee.bind)
     eval("def mail_subject;return nil if @mail_subject.nil?;suj=@mail_subject.dup;@mail_subject=nil;return suj;end\n", bindee.bind)
   end #/ implemente_subject_to
+
+  def implemente_helpers_methods(bindee)
+    eval("self.class.include StringHelpersMethods", bindee.bind)
+  end #/ implemente_helpers_methods
 
 
 
