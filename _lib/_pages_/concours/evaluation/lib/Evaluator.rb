@@ -36,21 +36,31 @@ class << self
   end #/ authentify_evaluator
 
   def try_reconnect_evaluator
-    return true if user.admin?
-    require File.join(DATA_FOLDER,'secret','concours') # => CONCOURS_DATA
-    if not session['concours_evaluator_id'].nil?
-      CONCOURS_DATA[:evaluators].each do |devaluator|
-        if session['concours_evaluator_mail'] == devaluator[:mail]
-          html.evaluator = Evaluator.new(devaluator)
-          self.current = html.evaluator
-          break
-        end
-      end
-      return not(html.evaluator.nil?)
+    if user.admin?
+      # <=  Le visiteur est un administrateur identifié
+      # =>  On l'authentifie automatiquement comme évaluateur
+      html.evaluator = Evaluator.new(user.data)
+      self.current = html.evaluator
+      return true
     else
-      # Il faut s'identifier
-      redirect_to("concours/evaluation?view=body_login")
-      return false
+      # <=  Le visiteur n'est pas un administrateur identifié
+      # =>  On regarde si on peut l'identifier à l'aide des informations de
+      #     la session. Sinon, on l'envoie à l'identification.
+      require File.join(DATA_FOLDER,'secret','concours') # => CONCOURS_DATA
+      if not session['concours_evaluator_id'].nil?
+        CONCOURS_DATA[:evaluators].each do |devaluator|
+          if session['concours_evaluator_mail'] == devaluator[:mail]
+            html.evaluator = Evaluator.new(devaluator)
+            self.current = html.evaluator
+            break
+          end
+        end
+        return not(html.evaluator.nil?)
+      else
+        # Il faut s'identifier
+        redirect_to("concours/evaluation?view=login")
+        return false
+      end
     end
   end #/ try_reconnect_evaluator
 end # /<< self

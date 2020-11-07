@@ -10,13 +10,25 @@ NO_SCREENSHOT = false
 
 require 'yaml'
 require 'capybara/rspec'
+require 'selenium-webdriver'
 
+# require_relative './support/modules/download/test_download'
 Capybara.run_server = false
-Capybara.default_driver = :selenium
+# Capybara.default_driver = :selenium
+Capybara.register_driver :testeur_selenimum do |app|
+  # profile = Selenium::WebDriver::Firefox::Profile.new()
+  # profile['pdfjs.disabled'] = true
+  # profile['browser.download.folderList'] = 1 # 1 => dossier par défaut
+  # profile['browser. download. useDownloadDir'] = true
+  # profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+  # Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
+  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => 'Testeur')
+end
+Capybara.default_driver = :testeur_selenimum
+Capybara.current_driver = :testeur_selenimum
 # Test sans navigateur
 # Capybara.default_driver = :selenium_headless
 # Capybara.current_driver = :selenium_headless
-
 
 Capybara.save_path = './spec/tmp/screenshots'
 Capybara.match = :first
@@ -45,6 +57,19 @@ end
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+
+  # ---------------------------------------------------------------------
+  #
+  #   Méthodes publiques
+  #
+  # ---------------------------------------------------------------------
+
+  # Pour passer en mode "sans entête" pour les tests (le placer dans
+  # le "before :all")
+  def headless
+    Capybara.default_driver = :selenium_headless
+    Capybara.current_driver = :selenium_headless
+  end #/ headless
 
   def implementer(path, line)
     puts "Implémenter le test #{path}:#{line}".jaune
@@ -152,23 +177,6 @@ RSpec.configure do |config|
   config.before :each do |t|
     # puts "-> config.before(:each) BeforeStates.requires_state = #{BeforeStates.requires_state.inspect}"
     extend SpecModuleNavigation
-    # if BeforeStates.requires_state == false
-    #   BeforeStates.requires_state = true
-    #   dpath = t.metadata[:example_group][:file_path].split('/')
-    #   dpath.shift
-    #   current_path = ['.']
-    #   while dossier = dpath.shift
-    #     current_path << dossier
-    #     require_file = File.join(*current_path, '_required.rb')
-    #     puts "Tests de require_file : #{require_file.inspect}"
-    #     next if BeforeStates.checked_folders.key?(require_file)
-    #     BeforeStates.checked_folders.merge!(require_file => true)
-    #     if File.exists?(require_file)
-    #       # puts "  (Je dois charger #{require_file})"
-    #       require require_file
-    #     end
-    #   end
-    # end
   end
 
   def verbose?

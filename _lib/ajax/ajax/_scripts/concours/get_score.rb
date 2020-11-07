@@ -9,6 +9,7 @@ Dir.chdir(APP_FOLDER) do
   require './_lib/_pages_/concours/xrequired/constants'
   require './_lib/_pages_/concours/xmodules/evaluation/module_calculs'
   require './_lib/_pages_/concours/xmodules/synopsis/Synopsis'
+  require './_lib/_pages_/concours/xrequired/Concurrent'
 end
 
 begin
@@ -17,14 +18,12 @@ begin
   concurrent_id, annee = synopsis_id.split('-')
   # On récupère la phase du concours d'année +annee+ (le plus souvent l'année
   # du concours courant)
-  phase = db_select("SELECT phase FROM concours WHERE annee = ?", [annee]).first[:phase]
+  phase = db_exec("SELECT phase FROM concours WHERE annee = ?", [annee]).first[:phase]
   synopsis = Synopsis.new(concurrent_id, annee)
   score_path = synopsis.file_evaluation_per_phase_and_evaluator(phase, evaluator)
   score = {}
-  if File.exists?(scores_folder_path)
-    if File.exists?(score_path)
-      score = JSON.parse(File.read(score_path))
-    end
+  if File.exists?(score_path)
+    score = JSON.parse(File.read(score_path))
   end
 
   Ajax << {data_score: {

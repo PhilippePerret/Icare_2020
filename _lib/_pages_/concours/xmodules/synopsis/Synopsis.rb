@@ -19,16 +19,14 @@ class Synopsis
 # ---------------------------------------------------------------------
 class << self
 
-# On prend tous les participants et ceux qui n'ont pas
-# encore envoyé de synopsis, le synopsis est marqué "ghost"
-REQUEST_ALL_CONCURRENTS = <<-SQL
-SELECT
-  cc.concurrent_id, cc.patronyme,
-  cpc.*, (SUBSTRING(cpc.specs,1,1) = "1") AS with_fichier
-  FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
-  INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
-  WHERE cpc.annee = ? -- AND SUBSTRING(cpc.specs,1,1) = "1"
-SQL
+def get(syno_id)
+  @table ||= {}
+  @table[syno_id] ||= begin
+    args = syno_id.split('-')
+    args << db_exec(REQUEST_SYNOPSIS, args).first
+    Synopsis.new(*args)
+  end
+end #/ get
 
   # Retourne la liste de tous les synopsis courants (sous forme d'instances
   # synopsis). Note : il y en a une par concurrent de la session courante,
@@ -360,5 +358,17 @@ SELECT *
   FROM #{DBTBL_CONCURS_PER_CONCOURS}
   WHERE concurrent_id = ? AND annee = ?
 SQL
+
+# On prend tous les participants et ceux qui n'ont pas
+# encore envoyé de synopsis, le synopsis est marqué "ghost"
+REQUEST_ALL_CONCURRENTS = <<-SQL
+SELECT
+  cc.concurrent_id, cc.patronyme,
+  cpc.*, (SUBSTRING(cpc.specs,1,1) = "1") AS with_fichier
+  FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
+  INNER JOIN #{DBTBL_CONCURRENTS} cc ON cc.concurrent_id = cpc.concurrent_id
+  WHERE cpc.annee = ? -- AND SUBSTRING(cpc.specs,1,1) = "1"
+SQL
+
 
 end #/Synopsis

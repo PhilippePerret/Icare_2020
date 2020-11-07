@@ -1,5 +1,5 @@
 div.prop:not(.simple) {
-  margin-top:1em;
+  /* margin-top:1em; */
 }
 div.subprop {
   font-size: 0.84em;

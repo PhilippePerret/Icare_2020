@@ -21,7 +21,7 @@ class << self
   def rebuild_checklist
     @nombre_questions = 0
     File.open(PARTIAL_CHECKLIST,'wb'){|f| f.write(deserb('checklist_template',self))}
-    message("La check-list a été reconstruite.")
+    # message("La check-list a été reconstruite.")
     File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(@nombre_questions)}
   rescue Exception => e
     raise e

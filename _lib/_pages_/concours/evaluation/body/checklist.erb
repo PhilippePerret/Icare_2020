@@ -1,0 +1,11 @@
+<%=
+# frozen_string_literal: true
+%>
+<script type="text/javascript">
+const synid = '<%= synopsis.id %>';
+const EVALUATOR_ID = <%= evaluator.id %>;
+</script>
+
+<p class="small">Vous évaluez le projet de <strong><%= concurrent.pseudo %></strong> qui porte l'identifiant <strong><%= synopsis.id %></strong><br />et le titre : <span class="synopsis-titre bold" style="font-variant:all-small-caps;font-size:1.8em;"><%= synopsis.titre %></span>.</p>
+
+<%= checklist %>

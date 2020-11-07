@@ -34,8 +34,8 @@ constructor(id) {
   this.id = id
 }
 prepare(){
-  this.obj = $(`#synopsis-${this.id}`)
-  this.observe();
+  // this.obj = $(`#synopsis-${this.id}`)
+  // this.observe();
 }
 
 onClickNote(ev){
@@ -56,7 +56,7 @@ updatePourcentReponses(value){
 
 
 get titre(){
-  return this._titre || (this._titre = this.obj.find('.titre').text())
+  return this._titre || (this._titre = $('.synopsis-titre').text())
 }
 // La checklist du synopsis
 get checklist(){

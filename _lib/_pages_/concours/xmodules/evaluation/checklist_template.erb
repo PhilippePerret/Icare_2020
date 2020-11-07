@@ -1,6 +1,5 @@
 <%# frozen_string_literal: true %>
-<div id="checklist" class="hidden">
-  <div class="div-titre"><span class="closebox"></span><span class="titre"></span><!-- Titre du Synopsis étudié --></div>
+<div id="checklist">
   <form id="checklist-form" class="nopadding noborder nomargine" action="concours/evaluation" method="POST">
     <%= build_sujet(data, [], []) %>
   </form>

@@ -3,14 +3,23 @@
 require_module('form')
 require_js_module(['flash','jquery'])
 class HTML
-  attr_reader :synopsis
-  # Instance {Evaluator} de l'évaluateur
+  # Juste pour que ce soit plus cours que ANNEE_CONCOURS_COURANTE
+  attr_reader :annee
+  # Instance {Evaluator} de l'évaluateur (if any)
   attr_accessor :evaluator
+  # Instance du concurrent courant (if any — if param(:cid))
+  attr_reader :concurrent
+  # Instance du synopsis courant (if any - if param(:syno_id))
+  attr_reader :synopsis
 
   def titre
     case param(:view)
     when "body_login"
       "Identification (membre du jury)"
+    when "body_checklist"
+      "Évaluer le projet"
+    when "body_download"
+      "Télécharger le fichier de candidature"
     when "body_fiches_lecture"
       "Fiches de lecture"
     when "body_form_synopsis"
@@ -37,12 +46,14 @@ class HTML
       require_xmodule('synopsis')
       require_xmodule('admin/constants')
 
-      # Pour tous les cas où synoid est défini => un synopsis est choisi pour
-      # une opération quelconque.
-      if param(:synoid)
-        args = param(:synoid).split('-')
-        args << db_exec(Synopsis::REQUEST_SYNOPSIS, args).first
-        @synopsis = Synopsis.new(*args)
+      @annee      = ANNEE_CONCOURS_COURANTE
+      @concurrent = Concurrent.get(param(:cid)) if param(:cid)
+      if @concurrent && not(param(:synoid))
+        param(:synoid, "#{@concurrent.id}-#{annee}")
+      end
+      @synopsis   = Synopsis.get(param(:synoid)) if param(:synoid)
+      if @synopsis and not(@oncurrent)
+        @concurrent = @synopsis.concurrent
       end
 
       case param(:view)
@@ -54,10 +65,11 @@ class HTML
           end
         end
       else
-        if param(:op) == 'mark_conforme'
+        case param(:op)
+        when 'mark_conforme'
           require_xmodule('admin/mark_fichier_conforme')
           synopsis.cfile.confirme_validite
-        elsif param(:op) == 'exportfiches'
+        when 'exportfiches'
           require_xmodule('evaluation/export_fiches')
           message("Exportation des fiches…")
           Synopsis.exporter_les_fiches
@@ -70,7 +82,7 @@ class HTML
 
   # Fabrication du body
   def build_body
-    @body = deserb(param(:view) || 'body_evaluation', self)
+    @body = deserb(param(:view) || 'body/evaluation', self)
   end # /build_body
 
   # Méthode qui s'assure que tout soit à jour (pour ne pas tout refaire

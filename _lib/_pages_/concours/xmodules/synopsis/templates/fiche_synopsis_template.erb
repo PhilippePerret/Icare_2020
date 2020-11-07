@@ -1,6 +1,12 @@
 <%
 # frozen_string_literal: true
 
+# *** Définition des boutons ***
+bouton_edit = Tag.link(text:"Éditer", class:"btn-edit small btn", route:"concours/evaluation?view=form_synopsis&synoid=#{id}")
+bouton_evaluate = Tag.link(text:"Évaluer", class:"btn-evaluate small btn", route:"concours/evaluation?view=evaluation&synoid=#{id}&cid=#{concurrent.id}")
+bouton_marquer_conforme = Tag.link(text:"Marquer conforme", class:"btn-confirm small btn", route:"concours/evaluation?synoid=#{id}&op=mark_conforme", title:"Confirmer la conformité du synopsis")
+bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small btn", route:"concours/evaluation?view=download&cid=#{concurrent.id}", title:"Cliquer sur ce bouton pour télécharger le fichier du concurrent")
+
 %>
 <div id="synopsis-<%=id%>" class="<%=css_classes%>" data-id="<%=id%>">
   <div id="synopsis-<%=id%>-titre" class="titre"><%=titre%></div>
@@ -12,14 +18,13 @@
   </div>
   <div id="synopsis-<%=id%>-keywords" class="keywords"><%=formated_keywords%></div>
   <div class="fiche-buttons" class="right">
-    <% if conforme? %>
-      <a class="btn-edit small btn" href="concours/evaluation?view=body_form_synopsis&synoid=<%=id%>">Éditer</a>
-      <button type="button" class="btn-evaluate small btn">Évaluer</button>
-    <% else %>
-      <div class="center">
-        <a class="btn-confirm small btn" href="concours/evaluation?synoid=<%=id%>&op=mark_conforme" title="Confirmer la conformité du synopsis">Marquer conforme</a>
-      </div>
-    <% end %>
+    <%# (Les boutons sont définis en haut de page) %>
+    <%= bouton_edit if user.admin? and conforme? %>
+    <%= bouton_evaluate if conforme? %>
+    <div class="center">
+      <%= bouton_marquer_conforme if not(conforme?) %>
+      <%= bouton_telecharger if not(user.admin?) and conforme? %>
+    </div>
   </div>
   <div class="synopsis-id"><%=id%></div>
 </div>

@@ -6,13 +6,19 @@ $(document).ready(()=>{
     // => On place les observeurs
     FicheLecture.prepare();
   } else {
-    // <= Affichage des fiche d'évaluation
+    // <= Affichage des fiches d'évaluation
     // => On préparer l'évaluation
     // $('#checklist').draggable();
-    $('#checklist').addClass('hidden');
+    // $('#checklist').addClass('hidden');
     // On instancie tous les synopsis sur la table et on les prépare
-    Synopsis.instanciateAll();
+    // Synopsis.instanciateAll();
     // On prépare la checklist physique
     CheckList.prepare();
+    console.log("synid = ", synid);
+    const syno = new Synopsis(synid);
+    syno.prepare();
+    syno.checklist.open();
+
+
   }
 })

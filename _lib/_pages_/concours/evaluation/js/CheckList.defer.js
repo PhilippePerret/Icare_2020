@@ -13,13 +13,10 @@ class CheckList {
 // +ev+ Evènement permettant de placer la fenêtre
 static openWith(ev, checklist){
   this.checklist = checklist ; // utile pour onSave
-  this.obj.removeClass('hidden')
-  this.obj.find('.titre').text(checklist.synopsis.titre)
   this.setValues(checklist.score)
 }
 static onSave(ev){
   this.checklist.onSave.call(this.checklist, this.getValues())
-  this.close();
 }
 // Méthode qui récupère les données de la checklist et les renvoie
 static getValues(){
@@ -42,7 +39,6 @@ static setValues(score){
   this.updateGaugeDone()
 }
 static close(){
-  this.obj.addClass('hidden')
 }
 /**
   * Prépare la check list.
@@ -58,8 +54,6 @@ static prepare(){
   this.obj.find('form div.withex div.line-note span.prop-name').bind('click', this.showExplication.bind(this))
   // Pour fermer les explications
   this.obj.find('form div.withex div.expli').bind('click', this.hideExplication.bind(this))
-  // Pour fermer sans enregistrer
-  this.obj.find('div.div-titre span.closebox').bind('click', this.close.bind(this))
 }
 
 static showExplication(ev){
@@ -154,7 +148,7 @@ onSave(results){
     console.log("Retour de la sauvegarde des résultats :", ret);
     if (ret.error) erreur(ret.error)
     else {
-      message("Nouveau score enregistré.");
+      message("Le nouveau score enregistré.");
       this.synopsis.updateNote(ret.note_generale);
       this.synopsis.updatePourcentReponses(ret.pourcentage_reponses)
     }

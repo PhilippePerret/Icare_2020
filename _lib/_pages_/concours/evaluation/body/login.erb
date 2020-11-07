@@ -3,7 +3,7 @@
 form = Form.new(id:"concours-membre-login", route:"#{route.to_s}")
 form.rows = {
   "<op/>" => {type:"hidden", name:"op", value:"login"},
-  "<view/>" => {type:"hidden", name:"view", value: "body_login"},
+  "<view/>" => {type:"hidden", name:"view", value: "login"},
   "Votre mail" => {type:"text", name: "member_mail"},
   "Votre mot de passe" => {type:"text", name:"member_password"}
 }

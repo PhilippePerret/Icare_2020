@@ -1,0 +1,12 @@
+<%
+# frozen_string_literal: true
+=begin
+  Page de téléchargement du fichier désigné par param(:cid)
+=end
+%>
+<p>Vous vous apprêtez à télécharger le fichier portant le nom <strong><%= synopsis.id %></strong>.</p>
+<p>Ce fichier appartient à <strong><%= concurrent.pseudo %></strong>.</p>
+<p>Après lecture, vous pourrez l'évaluer en utilisant sa fiche. Pour ouvrir sa fiche, il suffit de copier le numéro du fichier (ici <%= synopsis.id %>) dans le champ de saisie.</p>
+<p class="border center">
+  <%= Tag.link(text:"TÉLÉCHARGER", route:"./_lib/data/concours/#{concurrent.id}/#{synopsis.id}.pdf") %>
+</p>

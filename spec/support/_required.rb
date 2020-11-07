@@ -14,6 +14,7 @@ require_relative './spec_modules/module_navigation'
 require_relative './handies/handies'
 require_relative './handies/db'
 require_relative './handies/user'
+require_relative './lib/messagerie.rb'
 
 require_folder('./spec/support/lib/extensions')
 

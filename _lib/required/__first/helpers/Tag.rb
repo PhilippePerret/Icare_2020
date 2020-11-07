@@ -44,6 +44,12 @@ class << self
   end #/ lien
   alias :link :lien
 
+  def button(params)
+    params[:titre] = params[:text] if params.key?(:text)
+    params = normalize_params(params, [:id, :type, :route, :class, :title, :style])
+    (TAG_BUTTON % params).gsub(/ (class|style|title|type)=""/,'')
+  end #/ button
+
   def route route_id, titre = nil, params = nil
     params ||= {}
     params.merge!(text: titre)
@@ -173,6 +179,7 @@ DIV_AIR = '<div class="mt1">&nbsp;</div>'
 TAG_SPAN  = '<span class="%{class}" style="%{style}" title="%{title}">%{text}</span>'
 TAG_INFO_BULLE  = '<span class="info-bulle %{class}"><span class="info-bulle-clip">%{text}</span><span class="info-bulle-aide">%{aide}</span><span>'
 TAG_LIEN  = '<a href="%{route}" id="%{id}" class="%{class}" title="%{title}" target="%{target}" style="%{style}">%{titre}</a>'
+TAG_BUTTON = '<button type=%{type} id="%{id}" class="%{class}" title="%{title}" style="%{style}">%{titre}</button>'
 TAG_LIEN_SIMPLE  = '<a href="%{route}" class="%{class}">%{titre}</a>'
 TAG_DIV   = '<div id="%{id}" class="%{class}" style="%{style}">%{text}</div>'
 TAG_DIV_S = '<div class="%{class}">%{text}</div>'

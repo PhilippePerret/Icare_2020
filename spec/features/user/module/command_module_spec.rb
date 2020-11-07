@@ -7,7 +7,6 @@ require_relative './_required'
 
 feature "Commande d'un module" do
   before(:all) do
-    require "#{FOLD_REL_PAGES}/modules/xrequired/constants"
     TMails.remove_all
   end
   context 'un visiteur quelconque' do

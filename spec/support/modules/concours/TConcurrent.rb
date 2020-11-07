@@ -77,6 +77,33 @@ end #/ set_not_preselected
 
 class << self
 
+# OUT   Une liste Array de {concurrent}s répondant au filtre +filtre+
+#       Ce sont des instances de concurrents.
+#
+# IN    +filtre+ Table des filtres à appliquer sur la liste
+#           :avec_fichier     Le concurrent doit avoir un fichier dans la
+#                             disposition courante
+#           :avec_fichier_conforme    Idem mais le fichier doit être conforme
+#           :preselected      Le concurrent doit être présélectionné.
+#           :primed           Le concurrent doit être primé
+#
+def find(filtre)
+  where = []
+  values = []
+  where << "SUBSTRING(cpc.specs,1,1)  = 1" if filtre[:avec_fichier]
+  where << "SUBSTRING(cpc.specs,1,2) = '11'" if filtre[:avec_fichier_conforme]
+  where << "SUBSTRING(cpc.specs,1,2) = '12'" if filtre[:avec_fichier_conforme] === false
+  where << "SUBSTRING(cpc.specs,3,1) = 1" if filtre[:preselected]
+  where << "SUBSTRING(cpc.specs,4,1) IN (1,2,3)" if filtre[:primed]
+  if filtre.key?(:avec_fichier) || filtre.key?(:avec_fichier_conforme) ||
+    filtre.key?(:preselected) || filtre[:current] || filtre[:primed]
+    where << "annee = ?"
+    values << ANNEE_CONCOURS_COURANTE
+  end
+  request = REQUEST_ALL_CONCURRENTS_WHERE % {where: where.join(' AND ')}
+  db_exec(request, values).collect { |dc| new(dc) }
+end #/ find
+
 # Retourne une instance TConcurrent choisie au hasard
 #
 # IN    +options+ Table d'options:
@@ -114,17 +141,13 @@ def inscrire_icarien(u, options)
 end #/ self.inscrire_icarien
 
 # Retourne la liste des jurés
+# OBSOLÈTE (il vaut mieux utiliser la classe TEvaluator)
 def jury
-  @jury ||= begin
-    require './_lib/data/secret/concours'
-    CONCOURS_DATA[:evaluators]
-  end
+  @jury ||= TEvaluator.data
 end #/ jury
 
 # ---------------------------------------------------------------------
-#
-#   MÉTHODES FONCTIONNELLES
-#
+#   MÉTHODES DE CLASSE FONCTIONNELLES
 # ---------------------------------------------------------------------
 
   def reset

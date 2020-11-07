@@ -1,25 +1,9 @@
 div#checklist {
-  /* position:absolute; */
-  position:fixed;
-  top:0px;
-  left:calc(50% - 250px);
-  padding:1em;
+  position:relative;
+  padding:1em 2em;
   border:1px solid;
   box-shadow: 8px 8px 21px 7px #DDD;
-  z-index:102;
-  /* TODO : régler dimensions (titre et bouton) et faire réglage automatique */
-}
-div#checklist div.div-titre {
-  position:relative;
-}
-div#checklist div.div-titre span.closebox {
-  position:absolute;
-  right:0px;top:0px;
-  width:16px;height:16px;
-  border-radius:16px;
-  background-color:red;
-  color:red;
-  cursor:pointer;
+  width:calc(540px + 2em);
 }
 
 div#checklist, div#checklist form {
@@ -39,8 +23,10 @@ div#checklist .titre {
 
 div#checklist form {
   overflow: auto;
-  width:500px;
+  width:540px;
   height:600px;
+  margin:0!important;
+  padding:0;
 }
 div#checklist form div.prop,
 div#checklist form div.subprop
@@ -91,14 +77,16 @@ div#checklist form div.line-note.soft.undone {
 }
 
 div#checklist div#row-buttons {
-  height:40px;
+  height:50px;
   text-align:right;
+  margin-top:0.5em;
 }
 
 /* JAUGE D'AVANCÉE */
 div#checklist div#checklist-gauge-container {
   position:relative;
   padding:0;margin:0;
+  margin-bottom:0.5em;
   width:100%;
   height:10px;
   background-color:red;

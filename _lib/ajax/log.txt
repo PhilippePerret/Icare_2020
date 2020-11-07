@@ -2442,3 +2442,431 @@ DATABASE = icare_test
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
 = Script : concours/get_score.rb
+
+
+--- [2020-11-07 10:39:50 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+# ERREUR : undefined method `db_select' for main:Object
+Did you mean?  db_delete
+               db_exec
+               select
+# Backtrace : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/_scripts/concours/get_score.rb:20:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `treate_request'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax.rb:14:in `<main>'
+
+
+--- [2020-11-07 10:40:22 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+# ERREUR : undefined method `db_select' for main:Object
+Did you mean?  db_delete
+               db_exec
+               select
+# Backtrace : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/_scripts/concours/get_score.rb:20:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `treate_request'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax.rb:14:in `<main>'
+
+
+--- [2020-11-07 11:26:51 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+# ERREUR : undefined method `db_select' for main:Object
+Did you mean?  db_delete
+               db_exec
+               select
+# Backtrace : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/_scripts/concours/get_score.rb:20:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `treate_request'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax.rb:14:in `<main>'
+
+
+--- [2020-11-07 11:28:22 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+# ERREUR : uninitialized constant Synopsis::Concurrent
+Did you mean?  Concours
+# Backtrace : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/xmodules/synopsis/Synopsis.rb:221:in `concurrent'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/xmodules/synopsis/Synopsis.rb:129:in `preselected?'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/_pages_/concours/xmodules/synopsis/Synopsis.rb:118:in `file_evaluation_per_phase_and_evaluator'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/_scripts/concours/get_score.rb:22:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `treate_request'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax.rb:14:in `<main>'
+
+
+--- [2020-11-07 11:30:40 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+# ERREUR : undefined local variable or method `scores_folder_path' for main:Object
+Did you mean?  score_path
+# Backtrace : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/_scripts/concours/get_score.rb:25:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `treate_request'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax.rb:14:in `<main>'
+
+
+--- [2020-11-07 11:31:40 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:34:25 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:34:44 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:34:55 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:36:51 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+# ERREUR : undefined local variable or method `annee' for main:Object
+# Backtrace : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/_scripts/concours/save_score.rb:18:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `treate_request'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax.rb:14:in `<main>'
+
+
+--- [2020-11-07 11:40:51 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:47:20 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:49:10 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:50:32 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:50:42 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:54:30 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:55:58 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:57:49 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:59:16 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:59:27 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:59:38 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 11:59:56 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:00:21 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:00:30 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:00:55 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:02:10 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:02:32 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:02:42 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:03:18 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:03:40 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:04:18 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-07 12:04:40 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb

@@ -6,6 +6,24 @@
   Pour gérer les évaluateurs (membres du jury) dans les tests
 =end
 class TEvaluator
+  include Capybara::DSL
+  include SpecModuleNavigation
+
+# ---------------------------------------------------------------------
+#
+#   MÉTHODES D'INSTANCE PUBLIQUES
+#
+# ---------------------------------------------------------------------
+def rejoint_le_concours
+  goto("concours/evaluation")
+  within("form#concours-membre-login") do
+    fill_in("member_mail", with: mail)
+    fill_in("member_password", with: password)
+    click_on("M’identifier")
+  end
+  screenshot("after-login-member-#{id}")
+end
+
 class << self
   # OUT   Un évaluateur choisi au hasard ou suivant les options +options+
   # IN    +options+ Table d'options parmi :
@@ -37,4 +55,8 @@ def initialize(data_ini)
   @data_ini = data_ini
   @data_ini.each{|k,v|instance_variable_set("@#{k}",v)}
 end #/ initialize
+
+def to_s
+  @to_s ||= "Le membre du jury #{pseudo}"
+end #/ to_s
 end #/TEvaluator
