@@ -3,6 +3,8 @@
 require_module('form')
 require_js_module(['flash','jquery'])
 class HTML
+  # Pour pouvoir définir le titre dans la fiche
+  attr_accessor :titre
   # Juste pour que ce soit plus cours que ANNEE_CONCOURS_COURANTE
   attr_reader :annee
   # Instance {Evaluator} de l'évaluateur (if any)
@@ -12,23 +14,6 @@ class HTML
   # Instance du synopsis courant (if any - if param(:syno_id))
   attr_reader :synopsis
 
-  def titre
-    case param(:view)
-    when "body_login"
-      "Identification (membre du jury)"
-    when "body_checklist"
-      "Évaluer le projet"
-    when "body_download"
-      "Télécharger le fichier de candidature"
-    when "body_fiches_lecture"
-      "Fiches de lecture"
-    when "body_form_synopsis"
-      "Édition du synopsis"
-    else
-      "Évaluation des synopsis"
-    end
-  end #/titre
-
   def usefull_links
     if Evaluator.current?
       ADMIN_USEFULL_LINKS
@@ -37,7 +22,7 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
-    if param(:view) == 'body_login'
+    if param(:view) == 'login'
       if param(:op) == 'login'
         Evaluator.authentify_evaluator
       end
@@ -57,12 +42,15 @@ class HTML
       end
 
       case param(:view)
-      when "body_form_synopsis"
-        if param(:op) == 'save_synopsis' && user.admin?
+      when "synopsis_form"
+        admin_required
+        if param(:op) == 'save_synopsis'
           if param(:form_id) && Form.new.conform?
             synopsis.save(titre: param(:syno_titre), auteurs:param(:syno_auteurs), keywords:param(:syno_keywords))
             message("Données enregistrées avec succès.")
           end
+        elsif param(:op) == 'set_non_conforme'
+          synopsis.set_non_conforme(param(:motif), param(:motif_detailled))
         end
       else
         case param(:op)
@@ -82,7 +70,7 @@ class HTML
 
   # Fabrication du body
   def build_body
-    @body = deserb(param(:view) || 'body/evaluation', self)
+    @body = deserb("body/#{param(:view) || 'cartes_synopsis'}", self)
   end # /build_body
 
   # Méthode qui s'assure que tout soit à jour (pour ne pas tout refaire

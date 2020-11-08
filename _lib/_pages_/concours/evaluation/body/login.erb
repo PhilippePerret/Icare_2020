@@ -1,5 +1,7 @@
 <%
 # frozen_string_literal: true
+self.titre = "Identification (membre du jury)"
+
 form = Form.new(id:"concours-membre-login", route:"#{route.to_s}")
 form.rows = {
   "<op/>" => {type:"hidden", name:"op", value:"login"},

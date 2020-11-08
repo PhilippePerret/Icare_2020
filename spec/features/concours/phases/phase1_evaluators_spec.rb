@@ -32,7 +32,7 @@ feature "Possibilité d'un évaluateur en phase 1" do
         click_on("M’identifier")
       end
       screenshot("after-login-member")
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
       expect(page).to have_css("form#goto-evaluate-synopsis-form"),
         "La page devrait présenter un formulaire permettant de se rendre à la fiche d'évaluation du fichier."
 
@@ -75,7 +75,7 @@ feature "Possibilité d'un évaluateur en phase 1" do
 
     scenario 'peut télécharger un fichier de candidature', only:true do
       member.rejoint_le_concours
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
       concurrent = TConcurrent.find(avec_fichier_conforme: true, count:1).first
       syno_id = "#{concurrent.id}-#{annee}"
       div_syno_id = "synopsis-#{syno_id}"
@@ -97,7 +97,7 @@ feature "Possibilité d'un évaluateur en phase 1" do
 
     scenario 'peut évaluer un fichier de candidature par la fiche', only:true do
       member.rejoint_le_concours
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
       concurrent = TConcurrent.find(avec_fichier_conforme: true).shuffle.shuffle.first
       syno_id = "#{concurrent.id}-#{annee}"
       div_syno_id = "synopsis-#{syno_id}"

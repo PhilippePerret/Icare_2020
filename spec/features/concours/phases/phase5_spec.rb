@@ -80,7 +80,7 @@ feature "Phase 4 du concours" do
 
     scenario 'ne peut pas rejoindre la page d’évaluation des synopsis' do
       goto("concours/evaluation")
-      expect(page).not_to be_page_evaluation
+      expect(page).not_to be_cartes_synopsis
       expect(page).to have_titre "Identification"
     end
   end #/ contexte : un non administrateur
@@ -90,7 +90,7 @@ feature "Phase 4 du concours" do
     scenario 'peut rejoindre la page d’évaluation' do
       phil.rejoint_le_site
       goto("concours/evaluation")
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
     end
   end
 end

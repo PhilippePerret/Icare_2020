@@ -1,0 +1,58 @@
+<%
+# frozen_string_literal: true
+# Pour éditer le synopsis
+
+self.titre = "Édition du synopsis"
+
+prix_values = [
+  [0, "Aucun prix"],
+  [1, "🏆 Premier Prix"],
+  [2, "🏆 Deuxième Prix"],
+  [3, "🏆 Troisième Prix"]
+]
+
+form = Form.new(id: "synopsis-form", route:route.to_s)
+form.rows = {
+  "<operation/>"=> {name:"op", type:"hidden", value:"save_synopsis"},
+  "<body/>"     => {name:"view", type:"hidden", value:"synopsis_form"},
+  "<syno-id/>"  => {name:"synoid", type:"hidden", value:param(:synoid)},
+  "Titre"       => {name:"syno_titre",    type:"text", value: synopsis.titre},
+  "Auteur(s)"   => {name:"syno_auteurs",  type:"text", value: synopsis.real_auteurs},
+  "Mots clés"   => {name:"syno_keywords", type:"text", value: synopsis.keywords}
+}
+if user.admin?
+  form.rows.merge!("Prix" => {name:"syno_prix", type:"select", values:prix_values})
+end
+form.submit_button = "Enregistrer"
+%>
+<div class="titre">
+  <span class="libelle">Édition de :</span>
+  <span class="value"><%= synopsis.titre %></span>
+</div>
+<%= form.out %>
+
+<% if param(:op) == 'non_conformite' %>
+  <%
+  # ---------------------------------------------------------------------
+  #
+  #   Gestion de la non conformité du fichier
+  #
+  # On affiche la suite lorsque le fichier n'est pas conforme et qu'il
+  # faut le refuser.
+  #
+  # ---------------------------------------------------------------------
+  values_non_conformite = MOTIF_NON_CONFORMITE.collect{|k,d| [d[:motif],k]}
+
+  form_nonconf = Form.new(id:"non-conformite-form", route:route.to_s)
+  form_nonconf.rows = {
+    '<op/>' => {name:'op', value: "set_non_conforme", type:"hidden"},
+    '<view/>' => {name:'view', value:"synopsis_form", type:"hidden"},
+    '<synoid/>' => {name:'synoid', value:param(:synoid), type:'hidden'},
+    'Motif du refus' => {name:'motif', type:'checkboxes', values:values_non_conformite},
+    'Autre raison ou précision' => {name:'motif_detailled', type:'textarea', explication:'(des &lt;LI><i>raison 1</i>&lt;/LI>&lt;LI><i>raison 2</i>&lt;/LI>...)'}
+  }
+  form_nonconf.submit_button = UI_TEXTS[:button_marquer_non_conforme]
+  %>
+    <h3>Signalement de non conformité</h3>
+    <%= form_nonconf.out %>
+<% end %>

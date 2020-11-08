@@ -1,0 +1,14 @@
+<%
+# frozen_string_literal: true
+subject("[CONCOURS] Votre fichier n'est pas conforme")
+%>
+<p>Bonjour %{pseudo},</p>
+<p>J'ai le regret de vous annoncer que votre fichier n'a pas pu être pris en compte pour le <%= CONCOURS_LINK.with(full:true) %> car il a été jugé non conforme, pour les raisons suivantes :</p>
+<ul>
+  %{raisons}
+</ul>
+<p>Heureusement, nous restons souples et vous laissons l'opportunité de corriger ce ou ces problèmes pour soumettre à nouveau votre document, sur votre <%= ESPACE_LINK.with(full:true) %>.</p>
+<p>Vous trouverez d'ailleurs sur cet <%= ESPACE_LINK.with(full:true) %> des modèles téléchargeables qui vous permettront de produire un fichier tout à fait conforme à nos attentes.</p>
+<p>Dans l'attente de votre nouveau document, nous restons à votre disposition pour toute question ou tout renseignement utile.</p>
+<p>Bien à vous,</p>
+<p>L'administration du concours</p>

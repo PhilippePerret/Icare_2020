@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require './_lib/required/__first/feminines'
 class TConcurrent
   # extend RSpec::Matchers
 
@@ -7,6 +8,7 @@ class TConcurrent
 
   include Capybara::DSL
 
+  include FemininesMethods
 # ---------------------------------------------------------------------
 #
 #   MÉTHODES D'INSTANCE PUBLIQUES DE TEST
@@ -16,6 +18,14 @@ class TConcurrent
 def ref
   @ref ||= "#{pseudo} (#{id})"
 end #/ ref
+
+def synopsis
+  @synopsis ||= begin
+    require './_lib/_pages_/concours/xmodules/synopsis/Synopsis'
+    Synopsis.new(id, ANNEE_CONCOURS_COURANTE)
+  end
+end #/ synopsis
+
 # Pour savoir si le concurrent a reçu un mail
 def has_mail?(data)
   expect(TMails).to have_mail(data.merge(destinataire: mail))
@@ -200,6 +210,19 @@ end #/ jury
     request = REQUEST_ALL_CONCURRENTS_WHERE % {where: where.join(' AND ')}
     # puts "#{request}"
     candidats = db_exec(request).collect{|dc|new(dc)}
+    if candidats.empty?
+      if options[:avec_fichier] === false
+        candidat = all_current.shuffle.shuffle.first
+        candidat.set_spec(0,0, false)
+        candidat.set_spec(1,0, true)
+        File.delete(candidat.fichier_path(ANNEE_CONCOURS_COURANTE))
+        candidat.reset
+        candidats << candidat
+      end
+      if candidats.empty?
+        raise "Impossible de trouver un tconcurrent avec #{options.inspect}"
+      end
+    end
     candidats.shuffle
     # puts "candidats: #{candidats.inspect}"
     candidats.each do |candidat|
@@ -278,7 +301,7 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
-attr_reader :patronyme, :mail, :concurrent_id, :options, :created_at, :updated_at
+attr_reader :patronyme, :mail, :sexe, :concurrent_id, :options, :created_at, :updated_at
 attr_reader :specs, :titre, :auteurs, :keywords, :prix
 def initialize(data)
   # puts "Data : #{data.inspect}"
@@ -318,6 +341,7 @@ def reset
   @fichier_is_conforme = nil
   @dossier_is_transmis = nil
   @is_preselected = nil
+  @folder = nil
 end #/ reset
 
 # Fabrique un fichier de candidature pour le concurrent pour l'année +annee+
@@ -377,10 +401,10 @@ def femme?
 end #/ femme?
 
 
-def set_spec(bit,value)
+def set_spec(bit,value, save = true)
   sp = specs.dup.split('')
   sp[bit] = value.to_s
-  set_specs(sp.join(''))
+  set_specs(sp.join('')) if not(save)
 end
 
 REQUEST_CONCURRENTS_COURANTS = <<-SQL

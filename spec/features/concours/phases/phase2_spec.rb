@@ -195,7 +195,7 @@ feature "Phase 2 du concours" do
 
     scenario 'ne peut pas évaluer les fichiers' do
       goto("concours/evaluation")
-      expect(page).not_to be_page_evaluation
+      expect(page).not_to be_cartes_synopsis
       expect(page).to have_titre("Identification")
     end
   end # / contexte un non administrateur
@@ -208,13 +208,13 @@ feature "Phase 2 du concours" do
       phil.rejoint_le_site
       goto("concours/evaluation")
       expect(page).not_to be_identification
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
       phil.se_deconnecte
     end
     scenario 'trouve toutes les fiches à évaluer (phase 2)' do
       phil.rejoint_le_site
       goto("concours/evaluation")
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
       TConcurrent.all_current.each do |conc|
         if conc.fichier_conforme?
           expect(page).to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),

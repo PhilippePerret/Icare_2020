@@ -2,9 +2,10 @@
 # frozen_string_literal: true
 
 # *** Définition des boutons ***
-bouton_edit = Tag.link(text:"Éditer", class:"btn-edit small btn", route:"concours/evaluation?view=form_synopsis&synoid=#{id}")
+bouton_edit = Tag.link(text:"Éditer", class:"btn-edit small btn", route:"concours/evaluation?view=synopsis_form&synoid=#{id}")
 bouton_evaluate = Tag.link(text:"Évaluer", class:"btn-evaluate small btn", route:"concours/evaluation?view=evaluation&synoid=#{id}&cid=#{concurrent.id}")
 bouton_marquer_conforme = Tag.link(text:"Marquer conforme", class:"btn-confirm small btn", route:"concours/evaluation?synoid=#{id}&op=mark_conforme", title:"Confirmer la conformité du synopsis")
+bouton_marquer_non_conforme = Tag.link(text:UI_TEXTS[:button_marquer_non_conforme], class:"btn-not-confirm small btn", route:"concours/evaluation?view=synopsis_form&synoid=#{id}&op=non_conformite", title:"Quand le synopsis est non conforme et que ça doit être signalé au concurrent.")
 bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small btn", route:"concours/evaluation?view=download&cid=#{concurrent.id}", title:"Cliquer sur ce bouton pour télécharger le fichier du concurrent")
 
 %>
@@ -22,8 +23,12 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
     <%= bouton_edit if user.admin? and conforme? %>
     <%= bouton_evaluate if conforme? %>
     <div class="center">
-      <%= bouton_marquer_conforme if not(conforme?) %>
-      <%= bouton_telecharger if not(user.admin?) and conforme? %>
+      <% if user.admin? %>
+        <%= bouton_marquer_conforme if not(conforme?) %>
+        <%= bouton_marquer_non_conforme if not(conforme?) %>
+      <% else %>
+        <%= bouton_telecharger if conforme? %>
+      <% end %>
     </div>
   </div>
   <div class="synopsis-id"><%=id%></div>

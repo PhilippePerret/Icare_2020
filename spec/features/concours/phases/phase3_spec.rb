@@ -269,7 +269,7 @@ feature "Phase 3 du concours" do
 
     scenario 'ne peut pas rejoindre la page d’évaluation des synopsis' do
       goto("concours/evaluation")
-      expect(page).not_to be_page_evaluation
+      expect(page).not_to be_cartes_synopsis
       expect(page).to have_titre "Identification"
     end
   end #/ contexte : un non administrateur
@@ -283,7 +283,7 @@ feature "Phase 3 du concours" do
     scenario 'peut rejoindre la page d’évaluation' do
       phil.rejoint_le_site
       goto("concours/evaluation")
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
     end
     scenario 'trouve les bonnes fiches à évaluer (les 10 préssélections)', only:true do
       phil.rejoint_le_site
@@ -291,7 +291,7 @@ feature "Phase 3 du concours" do
       goto("concours/admin")
       expect(page).to have_select("current_phase", selected:"Sélection finale en cours")
       goto("concours/evaluation")
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
       expect(page).to have_css("div#synopsis-container")
       sleep 30
       TConcurrent.all_current.each do |conc|

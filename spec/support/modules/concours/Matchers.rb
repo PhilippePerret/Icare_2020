@@ -16,15 +16,45 @@ RSpec::Matchers.define :be_identification do
   end
 end
 
-RSpec::Matchers.define :be_page_evaluation do
+RSpec::Matchers.define :be_cartes_synopsis do
   match do |page|
-    page.has_css?("h2.page-title", text: "Évaluation des synopsis")
+    page.has_css?("h2.page-title", text: "Cartes des synopsis")
   end
   description do
-    "C'est bien la page d'évaluation des synopsis"
+    "C'est bien la page des cartes des synopsis"
   end
   failure_message do
-    "Ce n'est pas la page d'évaluation des synopsis."
+    "Ce n'est pas la page des cartes des synopsis."
+  end
+end
+
+RSpec::Matchers.define :be_formulaire_synopsis do |options=nil|
+  match do |page|
+    raisons = []
+    ok = page.has_css?("h2.page-title", text: "Édition du synopsis")
+    if ok
+      raisons << "C'est la page de l'édition du synopsis mais"
+    else
+      raisons << "Ce n'est pas la page d'édition du synopsis"
+    end
+    if ok && options && options[:conformite]
+      ok = ok && page.has_css?('h3', text: "Signalement de non conformité")
+      if not ok
+        raisons << "la section de signalement de non conformité est introuvable…"
+      end
+      ok = ok && page.has_css?('form#non-conformite-form')
+      if not ok
+        raisons << "le formulaire pour signaler la non conformité est introuvable…"
+      end
+    end
+    @raisons = raisons.join(' ')
+    return ok
+  end
+  description do
+    "C'est bien la page de l'édition du synopsis"
+  end
+  failure_message do
+    @raisons
   end
 end
 
