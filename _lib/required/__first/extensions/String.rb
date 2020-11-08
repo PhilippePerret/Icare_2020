@@ -23,6 +23,10 @@ class String
     str
   end #/ titleize
 
+  def patronimize
+    self.split(' ').collect { |m| m.titleize }.join(' ')
+  end #/ patronimize
+
   def camelize
     self.split('_').collect{|m| m.titleize}.join('')
   end #/ camelize

@@ -4,11 +4,14 @@ require './_lib/required/__first/feminines'
 class TConcurrent
   # extend RSpec::Matchers
 
-  include RSpec::Matchers
+include RSpec::Matchers
 
-  include Capybara::DSL
+include Capybara::DSL
 
-  include FemininesMethods
+include FemininesMethods
+
+include SpecModuleNavigation
+
 # ---------------------------------------------------------------------
 #
 #   MÉTHODES D'INSTANCE PUBLIQUES DE TEST
@@ -34,7 +37,7 @@ end #/ has_mail?
 # Méthode de feature pour identifier le concurrent
 # Il rejoint le formulaire d'identification, le remplit et le soumet
 def identify
-  visit("http://localhost/AlwaysData/Icare_2020/concours/identification")
+  goto("concours/identification")
   expect(page).to have_css("form#concours-login-form")
   within("form#concours-login-form") do
     fill_in("p_mail", with: mail)
@@ -42,6 +45,7 @@ def identify
     click_on(UI_TEXTS[:concours_bouton_sidentifier])
   end
 end #/ identify
+alias :rejoint_le_concours :identify
 
 def logout
   click_on("Se déconnecter")
@@ -94,13 +98,22 @@ class << self
 #           :avec_fichier     Le concurrent doit avoir un fichier dans la
 #                             disposition courante
 #           :avec_fichier_conforme    Idem mais le fichier doit être conforme
+#           :conformite_definie   Si false, la conformité n'est pas définie
 #           :preselected      Le concurrent doit être présélectionné.
 #           :primed           Le concurrent doit être primé
 #
 def find(filtre)
   where = []
   values = []
-  where << "SUBSTRING(cpc.specs,1,1)  = 1" if filtre[:avec_fichier]
+  confo_undefined = filtre[:conformite_definie] === false
+
+  if filtre[:avec_fichier]
+    if confo_undefined
+      where << "SUBSTRING(cpc.specs,1,2)  = 10"
+    else
+      where << "SUBSTRING(cpc.specs,1,1)  = 1"
+    end
+  end
   where << "SUBSTRING(cpc.specs,1,2) = '11'" if filtre[:avec_fichier_conforme]
   where << "SUBSTRING(cpc.specs,1,2) = '12'" if filtre[:avec_fichier_conforme] === false
   where << "SUBSTRING(cpc.specs,3,1) = 1" if filtre[:preselected]
@@ -127,6 +140,8 @@ end #/ find
 #                 :avec_fichier
 #                     Si true, un concurrent avec déjà un fichier pour la
 #                     session courante.
+#                 :conformite_definie   Si false, un concurrent ayant un
+#                     fichier avec la conformité non définie
 #                 :avec_fichier_conforme
 #                     Si true, un concurrent avec un fichier conforme.
 #                 :current
@@ -174,7 +189,6 @@ end #/ jury
     # il a forcément un fichier conforme et il est forcément du concours courant
     # preselected: false signifie "qui a participé au concours avec un bon
     # fichier mais n'a pas été présélectionné".
-
     options.merge!(avec_fichier: true) if options.key?(:avec_fichier_conforme)
     options.merge!(count: 1) if not options.key?(:count)
     options.merge!(current: true) if options.key?(:avec_fichier)
@@ -190,6 +204,10 @@ end #/ jury
     case options[:avec_fichier_conforme]
     when TrueClass  then where << "SUBSTRING(cpc.specs,2,1) = 1"
     when FalseClass then where << "SUBSTRING(cpc.specs,2,1) = 0 OR SUBSTRING(cpc.specs,2,1) = 2"
+    end
+    case options[:conformite_definie]
+    when TrueClass  then where << "SUBSTRING(cpc.specs,2,1) = 1"
+    when FalseClass then where << "SUBSTRING(cpc.specs,2,1) = 0"
     end
     case options[:femme]
     when TrueClass  then where << "cc.sexe = 'F'"
@@ -211,14 +229,17 @@ end #/ jury
     # puts "#{request}"
     candidats = db_exec(request).collect{|dc|new(dc)}
     if candidats.empty?
+      candidat = all_current.shuffle.shuffle.first
       if options[:avec_fichier] === false
-        candidat = all_current.shuffle.shuffle.first
         candidat.set_spec(0,0, false)
         candidat.set_spec(1,0, true)
         File.delete(candidat.fichier_path(ANNEE_CONCOURS_COURANTE))
-        candidat.reset
-        candidats << candidat
       end
+      if options[:conformite_definie] === false
+        candidat.set_spec(1,0)
+      end
+      candidat.reset
+      candidats << candidat
       if candidats.empty?
         raise "Impossible de trouver un tconcurrent avec #{options.inspect}"
       end
@@ -342,6 +363,7 @@ def reset
   @dossier_is_transmis = nil
   @is_preselected = nil
   @folder = nil
+  @synopsis = nil
 end #/ reset
 
 # Fabrique un fichier de candidature pour le concurrent pour l'année +annee+
@@ -404,7 +426,7 @@ end #/ femme?
 def set_spec(bit,value, save = true)
   sp = specs.dup.split('')
   sp[bit] = value.to_s
-  set_specs(sp.join('')) if not(save)
+  set_specs(sp.join(''))
 end
 
 REQUEST_CONCURRENTS_COURANTS = <<-SQL

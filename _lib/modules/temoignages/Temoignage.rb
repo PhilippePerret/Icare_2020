@@ -65,7 +65,7 @@ def out
   </div>
   #{Tag.div(text: content.strip.gsub(/\n/,'<br>'), class:'content')}
   <div class="right clear">
-    <span style="margin-left:4em;font-size:1.11em;" class="fleft">#{user_pseudo.titleize}</span>
+    <span style="margin-left:4em;font-size:1.11em;" class="fleft">#{user_pseudo.patronimize}</span>
     <span>#{lien_plebiscite}</span>
   </div>
 </div>

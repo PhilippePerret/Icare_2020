@@ -300,6 +300,16 @@ def fichier_conforme?
   end) == :true
 end #/ fichier_conforme?
 
+# OUT   True si le fichier a été transmis et qu'il n'est pas conforme
+# Note  Noter que cette méthode n'est pas la méthode inverse de la méthode
+#       précédente. not(fichier_conforme?) retourne FALSE si le fichier n'a
+#       pas été transmis, comme si un fichier avait été transmis. Cette méthode
+#       retourne FALSE si le fichier n'a pas encore été transmis
+def fichier_non_conforme?
+  dossier_transmis? && spec(1) == 2
+end #/ not_fichier_conforme
+
+
 # OUT   True si le concurrent, pour le concours courant, a été présélectionné
 def preselected?
   (@is_preselected ||= begin

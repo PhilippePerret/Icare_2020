@@ -28,7 +28,7 @@ class HTML
     if param(:form_id)
       return if not Form.new.conform?
       case param(:form_id)
-      when 'concours-dossier-form' # Soumission du fichier de candidature
+      when 'concours-fichier-form' # Soumission du fichier de candidature
         require_xmodule('consigne_fichier')
         consigne_fichier_candidature
       when 'destroy-form'

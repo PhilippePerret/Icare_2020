@@ -87,6 +87,11 @@ end #/ get
     end
   end #/ sorted_by
 end # /<< self
+
+
+
+
+
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
@@ -208,6 +213,7 @@ def save(data)
 end #/ save
 
 def titre;    @titre    ||= data[:titre]    end
+def specs;    @specs    ||= data[:specs]    end
 def auteurs;  @auteurs  ||= data[:auteurs]  end
 def keywords; @keywords ||= data[:keywords] end
 def pre_note; @pre_note ||= data[:pre_note] end
@@ -343,6 +349,7 @@ private
   def get_data
     cpc_data = db_exec(REQUEST_SYNOPSIS, [concurrent_id, annee]).first
     @synopsis_exists = !cpc_data.nil?
+    # puts "cpc_data = #{cpc_data.inspect}"
     cpc_data || {}
   end #/ get_data
 

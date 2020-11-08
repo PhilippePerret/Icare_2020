@@ -49,7 +49,7 @@ form.submit_button = "Enregistrer"
     '<view/>' => {name:'view', value:"synopsis_form", type:"hidden"},
     '<synoid/>' => {name:'synoid', value:param(:synoid), type:'hidden'},
     'Motif du refus' => {name:'motif', type:'checkboxes', values:values_non_conformite},
-    'Autre raison ou précision' => {name:'motif_detailled', type:'textarea', explication:'(des &lt;LI><i>raison 1</i>&lt;/LI>&lt;LI><i>raison 2</i>&lt;/LI>...)'}
+    'Autre raison ou précision' => {name:'motif_detailled', type:'textarea', explication:'(chaque raison l’une en dessous de l’autre, commençant par une minuscule, sans LI et sans ponctuation finale (mais au format HTML))'}
   }
   form_nonconf.submit_button = UI_TEXTS[:button_marquer_non_conforme]
   %>

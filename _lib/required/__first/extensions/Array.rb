@@ -12,4 +12,13 @@ class Array
     lst = ary.pop
     ary.join(VG) + ET + lst
   end #/ pretty_join
+
+  def nil_if_empty
+    if self.empty?
+      nil
+    else
+      self
+    end
+  end #/ nil_if_empty
+
 end #/Array

@@ -151,7 +151,7 @@ def name(dtype = nil)
     QDD_FILE_NAME % {
       module: absmodule.module_id.camelize,
       etape:  absetape.numero,
-      pseudo: pseudo_auteur.dup.titleize,
+      pseudo: pseudo_auteur.dup.patronimize,
       doc_id: id,
       dtype: '%s'
     }

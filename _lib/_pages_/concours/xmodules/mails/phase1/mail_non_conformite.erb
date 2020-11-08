@@ -1,14 +1,16 @@
 <%
 # frozen_string_literal: true
-subject("[CONCOURS] Votre fichier n'est pas conforme")
+subject("[CONCOURS] Votre fichier n'est pas conforme ")
 %>
-<p>Bonjour %{pseudo},</p>
-<p>J'ai le regret de vous annoncer que votre fichier n'a pas pu être pris en compte pour le <%= CONCOURS_LINK.with(full:true) %> car il a été jugé non conforme, pour les raisons suivantes :</p>
+<p>Bonjour <%= concurrent.pseudo.patronimize %>,</p>
+<p>Merci à vous pour votre fichier de candidature destiné au <%= CONCOURS_LINK.with(full:true, distant:true) %>.</p>
+<p>Ce fichier n'est malheureusement pas conforme à l'article 18 du <%= REGLEMENT_LINK.with(full:true, distant:true, text: "règlement du concours") %>, pour les raisons suivantes :</p>
 <ul>
-  %{raisons}
+<%= motifs %>
 </ul>
-<p>Heureusement, nous restons souples et vous laissons l'opportunité de corriger ce ou ces problèmes pour soumettre à nouveau votre document, sur votre <%= ESPACE_LINK.with(full:true) %>.</p>
-<p>Vous trouverez d'ailleurs sur cet <%= ESPACE_LINK.with(full:true) %> des modèles téléchargeables qui vous permettront de produire un fichier tout à fait conforme à nos attentes.</p>
-<p>Dans l'attente de votre nouveau document, nous restons à votre disposition pour toute question ou tout renseignement utile.</p>
-<p>Bien à vous,</p>
-<p>L'administration du concours</p>
+<p style="font-size:0.85em">Noter que ces exigences ne sont pas là pour vous “brimer” mais visent 1) à donner à votre projet toutes les chances d'être bien lu et 2) à le traiter en accord avec la législation.</p>
+<p>Rassurez-vous ! Conformément à l'article 19 du règlement du concours, vous avez la possibilité de corriger ce<%= s_problemes %> problème<%= s_problemes %> et de soumettre à nouveau votre document depuis votre <%= ESPACE_LINK.with(full:true, distant:true) %>, comme vous l'avez fait pour ce fichier non conforme.</p>
+<p>Vous trouverez d'ailleurs sur cet espace personnel des modèles téléchargeables qui vous permettront de produire un fichier en tous points conforme. N'hésitez pas à les utiliser, ils sont là pour vous aider !</p>
+<p>Dans l'attente de votre nouveau document, nous restons bien entendu à votre disposition pour toute question ou tout renseignement utile.</p>
+<p>Bien à vous, bon courage,</p>
+<p>L'Administration du concours</p>

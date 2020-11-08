@@ -4,7 +4,7 @@
 <div class="right">
   <%= Tag.link(text:"Se déconnecter", route:"#{route}?op=logout") %>
 </div>
-<p><strong><%= concurrent.pseudo.titleize %></strong>, bienvenue dans votre espace du <strong>Concours de Synopsis de l’atelier Icare</strong>. Retrouvez dans cette partie les informations sur vos participations ainsi que des informations sur le concours actuel.<%=
+<p><strong><%= concurrent.pseudo.patronimize %></strong>, bienvenue dans votre espace du <strong>Concours de Synopsis de l’atelier Icare</strong>. Retrouvez dans cette partie les informations sur vos participations ainsi que des informations sur le concours actuel.<%=
   if concurrent.current?
     if concurrent.dossier_transmis? || not(concours.phase2?)
       ""

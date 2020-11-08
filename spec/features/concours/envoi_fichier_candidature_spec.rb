@@ -13,7 +13,7 @@ class TConcurrent
   def come_and_send_synopsis(data)
     identify
     goto("concours/espace_concurrent")
-    within("form#concours-dossier-form") do
+    within("form#concours-fichier-form") do
       fill_in("p_titre",    with: data[:titre])
       fill_in("p_auteurs",  with: data[:auteurs]) if data.key?(:auteurs)
       attach_file("p_fichier_candidature", data[:synopsis])
@@ -60,7 +60,7 @@ feature "Dépôt du fichier de candidature" do
         goto("concours/espace_concurrent")
         screenshot("ancien-concurent-espace-personnel")
         expect(page).to have_css("fieldset#concours-fichier-candidature")
-        expect(page).not_to have_css("form#concours-dossier-form")
+        expect(page).not_to have_css("form#concours-fichier-form")
         expect(page).to have_content("Vous devez vous inscrire à la session #{ANNEE_CONCOURS_COURANTE}")
       end
     end
@@ -73,7 +73,7 @@ feature "Dépôt du fichier de candidature" do
         concurrent.identify
         screenshot("concurrent-with-synopsis")
         expect(page).to have_titre("Espace personnel")
-        expect(page).not_to have_css("form#concours-dossier-form")
+        expect(page).not_to have_css("form#concours-fichier-form")
         expect(page).to have_content("Votre fichier de candidature a bien été transmis.")
       end
     end
@@ -122,7 +122,7 @@ feature "Dépôt du fichier de candidature" do
       goto("concours/espace_concurrent")
       expect(page).to have_titre("Espace personnel")
       expect(page).to have_no_erreur
-      expect(page).not_to have_css("form#concours-dossier-form")
+      expect(page).not_to have_css("form#concours-fichier-form")
     end
   end
 
@@ -135,7 +135,7 @@ feature "Dépôt du fichier de candidature" do
       concurrent.identify
       goto("concours/espace_concurrent")
       expect(page).to have_titre("Espace personnel")
-      expect(page).not_to have_css("form#concours-dossier-form")
+      expect(page).not_to have_css("form#concours-fichier-form")
     end
   end
 

@@ -192,8 +192,28 @@ RSpec.configure do |config|
       sleep 0.3
       return
     end
-    puts msg.gsub(/^[\t ]+/,'').bleu
+    puts "\t#{decoupe_string(msg.gsub(/^[\t ]+/,''), 70).join("\n\t")}".bleu
   end #/ pitch
+
+  def decoupe_string(str, maxlong)
+    segs = []
+    mots = []
+    mots_len = 0
+    str.split(' ').each do |w|
+
+      wlong = w.length + 1
+
+      if mots_len + wlong > maxlong
+        segs << mots.join(' ')
+        mots     = []
+        mots_len = 0
+      end
+      mots << w
+      mots_len += wlong
+    end
+    segs << mots.join(' ') unless mots.empty?
+    return segs
+  end #/ decoupe_string
 
 
   # Pour requérir un module dans le dossier './spec/support/data'

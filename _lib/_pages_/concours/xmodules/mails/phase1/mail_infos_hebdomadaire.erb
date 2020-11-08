@@ -8,7 +8,7 @@ ANNEE = CONCOURS.annee unless defined?(ANNEE)
 subject("[CONCOURS #{ANNEE}] Mail hebdomadaire d'information")
 %>
 <p>
-Ch<%=fem(:ere)%> <%= patronyme.titleize %>,
+Ch<%=fem(:ere)%> <%= patronyme.patronimize %>,
 </p>
 <p>Veuillez trouver ci-dessous les informations sur le Concours de Synopsis <%= ANNEE %> de l'atelier Icare.</p>
 <%

@@ -8,12 +8,13 @@ class HTML
       # =>  Affichage du formulaire si le concurrent n'a pas encore transmis
       #     son fichier, sinon une message lui indiquant
       if concurrent.current?
-        if concurrent.dossier_transmis?
-          Tag.div(text:"Votre fichier de candidature a bien été transmis.")
-        else
-          # <= Un concurrent qui n'a pas encore transmis son fichier
+        if not(concurrent.dossier_transmis?) || concurrent.fichier_non_conforme?
+          # <=  Un concurrent qui n'a pas encore transmis son fichier ou un
+          #     fichier non conforme
           # =>  On lui propose le formulaire.
           formulaire_depot_fichier_candidature
+        else
+          Tag.div(text:"Votre fichier de candidature a bien été transmis.")
         end
       else
         # <= Pas un concurrent de cette session
@@ -27,7 +28,8 @@ class HTML
   end #/ section_fichier_candidature
 
   def formulaire_depot_fichier_candidature
-    form = Form.new(id: "concours-dossier-form", route:route.to_s, class:"nomargin noborder nobackground", file: true, value_size: "600px")
+    ajout_non_conforme = concurrent.fichier_non_conforme? ? "<p>Vous pouvez transmettre un nouveau fichier conforme.</p>" : ""
+    form = Form.new(id: "concours-fichier-form", route:route.to_s, class:"nomargin noborder nobackground", file: true, value_size: "600px")
     form.rows = {
       "Titre du projet" => {type:"text", name:"p_titre"},
       "Auteur·e·(s)"    => {type:"text", name:"p_auteurs", placeholder:"Patronymes séparés par des virgules"},
@@ -35,6 +37,6 @@ class HTML
       "<lien dossier/>" => {type:"raw", content:"<div class=\"italic small\">Voir le détail du #{Tag.lien(route:"concours/dossier", text:"contenu du dossier")}.</div>"},
     }
     form.submit_button = UI_TEXTS[:concours_bouton_send_dossier]
-    form.out
+    ajout_non_conforme + form.out
   end #/ formulaire_depot_fichier_candidature
 end #/HTML

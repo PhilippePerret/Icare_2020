@@ -75,9 +75,9 @@ feature "Section d'inscription de la partie concours" do
     expect(page).to have_css("section#concours-destruction"),
       "la page devrait contenir une partie pour détruire son inscription"
     # - le formulaire pour transmettre le fichiere
-    expect(page).to have_css("form#concours-dossier-form"),
+    expect(page).to have_css("form#concours-fichier-form"),
       "La page devrait présenter le formulaire d'envoi du dossier"
-    within("form#concours-dossier-form") do
+    within("form#concours-fichier-form") do
       expect(page).to have_button(UI_TEXTS[:concours_bouton_send_dossier])
     end
 
