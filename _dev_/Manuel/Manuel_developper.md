@@ -1468,7 +1468,7 @@ Les outils discrets sont des boutons qui ont une faible opacité et qui s’affi
 
 
 
-## Formulaires
+## Les Formulaires
 
 
 
@@ -1574,7 +1574,8 @@ textarea			Pour un champ textarea
 password			Pour un mot de passe
 select				Pour un menu select. Les valeurs doivent être fournies par
 							:values
-checkbox			Une case à cocher
+checkbox			Une case à cocher (:values contient le texte affiché)
+checkboxes		Une liste de cases à cocher du même type
 file					Pour choisir un fichier
 date					Pour obtenir trois menus qui permettent de définir une date
 raw						Pour un code qui sera inséré tel quel (par exemple une
@@ -1685,9 +1686,10 @@ On peut traiter le formulaire dans la méthode `exec` appelée en début de trai
 class HTML
   def	exec
     if param(:form_id) == 'mon_formulaire' # pour s'assurer que c'est bien lui
-      form = Form.new
-      if form.conform?
+      if Form.new.conform?
         ... on peut le traiter ici ...
+        # Note : on a pas vraiment besoin du formulaire en lui-même
+        # puisque toutes les valeurs sont dans `param(:...)`
       end
     end
   end #/exec
@@ -1697,7 +1699,40 @@ end #/HTML
 
 
 
-#### Définition d'un menu
+
+
+#### Champ pour une liste de checkbox
+
+Le `type: 'checkboxes'` permet de créer une liste de checkboxes de façon simple :
+
+~~~ruby
+les_valeurs = [
+	["Trop grand", 'big'],
+	["Trop petit", "small"],
+	["Trop lourd", "heavy"],
+	["Trop léger", "light"]
+]
+'Motif du refus' => {type:'checkboxes', name:'motif_refus', values: les_valeurs}
+~~~
+
+Le code ci-dessus produira le champ :
+
+![](checkboxes.png)
+
+**Récupération de la valeur**
+
+La valeur se trouvera dans `param(:motif_refus)`. Si une seule case est cochée, la valeur sera le `String` correspondant, c'est-à-dire par exemple `"big"` si c'est la première case qui est cochée. En revanche, `param(:motif_refus)` sera un `Array` des valeurs cochées si plusieurs choix sont cochés. Par exemple `["big", "small", "light"]` si les deux premières cases et la dernière sont cochées. On peut donc utiliser le code suivant pour avoir toujours une liste de valeurs :
+
+~~~ruby
+valeurs = param(:motif_refus)
+valeurs = [valeurs] if valeurs.is_a?(String)
+~~~
+
+
+
+
+
+#### Champ pour un menu select
 
 ~~~ruby
 form.rows = {

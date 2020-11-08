@@ -30,7 +30,7 @@ EXPLICATION_TAG = '<div class="explication" style="%{style}">%{text}</div>'
 
 ERRORABLE_FIELD = '<div class="errorfield hidden" id="%{id}"></div>'
 
-CHECKBOX_TAG = '<input type="checkbox" id="%{id}" name="%{name}"%{checked}><label for="%{id}">%{values}</label>'
+CHECKBOX_TAG = '<input type="checkbox" id="%{id}" name="%{name}"%{checked} value="%{value}"><label for="%{id}">%{values}</label>'
 
 # FILE_TAG = '<input type="file" name="%{name}" id="%{id}" />'
 

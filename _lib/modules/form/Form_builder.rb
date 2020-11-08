@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Utilitaire pour construire les formulaires
 =end
@@ -80,12 +81,6 @@ class Form
       end
     end
   end #/ form_style
-
-  # La dimension du formulaire
-  # OBSOLÈTE : il faut absolument passer par les css pour les responsive
-  # design
-  # def form_size
-  # end #/ form_size
 
   # Pour voir s'il faut ajouter du style au .libelle
   def libelle_style; @libelle_style end #/ libelle_style
@@ -178,7 +173,7 @@ class Form
     c.join(SPACE)
   end #/ row_class
 
-  SPAN_LIBELLE = '<span class="libelle"%{style}>%{label}</span>'.freeze
+  SPAN_LIBELLE = '<span class="libelle"%{style}>%{label}</span>'
   # Retourne le span pour la libelle
   # Sauf si c'est un formulaire sans libellé (nolibelle) raison pour laquelle
   # cette construction a été séparée
@@ -203,6 +198,7 @@ class Form
     sty.empty? ? EMPTY_STRING : " style=\"#{sty.join('')}\""
   end #/ row_style
 
+  # Méthode principale qui retourne le champ de saisie
   def value_field_for dfield
     dfield = default_values_for(dfield)
     dfield || raise(ERRORS[:data_field_required])
@@ -212,7 +208,9 @@ class Form
                 prefix_id:dfield[:name],
                 default:dfield[:value]||dfield[:default],
                 from: dfield[:from], to: dfield[:to]
-              }).freeze
+              })
+            when :checkboxes
+              traite_checkboxes(dfield)
             else
               TAGS_TYPES[dfield[:type].to_sym]
             end
@@ -220,6 +218,22 @@ class Form
     field || raise(ERRORS[:unknown_tag_type] % dfield[:type])
     field % dfield
   end
+
+  # OUT   Le field (template %{...}) pour une liste de checkboxes
+  # IN    Les données du champ avec notamment :name qui va permettre de
+  #       définir les NAME de chaque checkbox et :values qui définit les
+  #       titre et les sous-name propres de chaque checkbox
+  def traite_checkboxes(dfield)
+    dfield[:values].collect do |tit,val|
+      cbname  = '%{name}'
+      cbid = "%{name}_#{val}"
+      cbchk   = param(dfield[:name]) && param(dfield[:name])[val.to_sym] ? ' CHECKED' : '';
+      Tag.div(text: CHECKBOX_TAG % {id:cbid, value:val, name:cbname, checked: cbchk, values:tit})
+      # cbname  = cbid = "%{name}_#{val}"
+      # cbchk   = param(dfield[:name]) && param(dfield[:name])[val.to_sym] ? ' CHECKED' : '';
+      # Tag.div(text: CHECKBOX_TAG % {id:cbid, name:cbname, checked: cbchk, values:tit})
+    end.join
+  end #/ traite_checkboxes
 
   # Appliquer les valeurs par défaut manquantes et les retourne
   def default_values_for(dfield)
@@ -242,11 +256,14 @@ class Form
     dfield[:style] = dfield[:style].join('')
 
     case dfield[:type].to_s
-    when 'raw'.freeze
+    when 'raw'
       dfield.merge!(content: dfield[:content]||dfield[:value]||dfield[:name])
-    when 'checkbox'.freeze
+    when 'checkbox'
       dfield.merge!(checked: param(dfield[:name].to_sym) ? ' CHECKED' : '')
-    when 'textarea'.freeze
+      dfield.merge!(value:'on') if not(dfield.key?(:value))
+    # when 'checkboxes'
+    #
+    when 'textarea'
       dfield.key?(:height) || dfield.merge!(height: 60)
       dfield.key?(:placeholder) || dfield.merge!(placeholder:'')
     when TEXT
@@ -266,10 +283,10 @@ class Form
           end.join)
         end
       end
-      dfield.merge!(prefix: ''.freeze) unless dfield.key?(:prefix)
-    when 'file'.freeze
-      dfield[:button_name] ||= 'Choisir le fichier…'.freeze
-    when 'explication'.freeze
+      dfield.merge!(prefix: '') unless dfield.key?(:prefix)
+    when 'file'
+      dfield[:button_name] ||= 'Choisir le fichier…'
+    when 'explication'
       dfield[:text] ||= dfield[:value] || dfield[:name] || dfield[:content]
     end
     return dfield
