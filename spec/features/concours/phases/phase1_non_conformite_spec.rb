@@ -85,6 +85,8 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
       bouts << "#{second_motif_ajouted}." # noter le point
       expect(concurrent).to have_mail(after: start_time, from:CONCOURS_MAIL, subject:"Votre fichier n'est pas conforme", message: bouts)
 
+      pending "En rejoignant la liste des synopsis, on note que la fiche est mise en exergue"
+      
       phil.se_deconnecte
 
       pitch("Quand la concurrente revient sur l'espace personnel, elle trouve à nouveau le champ de saisie pour transmettre son fichier corrigé, avec le bon message.")

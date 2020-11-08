@@ -12,12 +12,13 @@ const EVALUATOR_ID = <%= evaluator.id %>;
 
 <%
 # Le formulaire pour entrer un numéro de fichier, afin de pouvoir l'évaluer
-formsynoeval = Form.new(id:"goto-evaluate-synopsis-form", route:"concours/evaluation", class:"inline")
+formsynoeval = Form.new(id:"goto-evaluate-synopsis-form", route:"concours/evaluation", class:"inline nolibelle mb2")
 formsynoeval.rows = {
   "<view/>" => {type:"hidden", name:"view", value:"checklist"},
-  "Fichier (i.e. ID Synopsis)" => {name:"synoid", type:"text"}
+  "Fichier (i.e. ID Synopsis)" => {name:"synoid", type:"text", style:"width:300px;", placeholder:"ID du synopsis à évaluer"}
 }
 formsynoeval.submit_button = "Évaluer"
+formsynoeval.submit_button_class = "inline small"
 %>
 <%= formsynoeval.out %>
 

@@ -40,7 +40,7 @@ class << self
     if not params.key?(:titre)
       params.merge!(titre: params[:route])
     end
-    (TAG_LIEN % params).gsub(/ (class|style|title|target)=""/,'')
+    (TAG_LIEN % params).gsub(/ (id|class|style|title|target)=""/,'')
   end #/ lien
   alias :link :lien
 
@@ -156,6 +156,7 @@ class << self
       required.each do |prop|
         params.merge!(prop => "") unless params.key?(prop)
       end
+      params.delete(:full) if params[:distant] && params.key?(:full)
       if params.key?(:route) && params[:distant]
         params[:route] = "#{App::FULL_URL_ONLINE}/#{params[:route]}"
       elsif params.key?(:route) && params[:full]

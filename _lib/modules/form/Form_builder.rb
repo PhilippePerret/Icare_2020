@@ -37,6 +37,12 @@ class Form
     @is_sans_libelle
   end #/ no_libelle?
 
+  # OUT   TRUE si le formulaire est "inline"
+  def inline?
+    return false if data[:class].nil?
+    data[:class].include?('inline')
+  end #/ inline?
+
   # Sortie du formulaire
   # --------------------
   # On en profite aussi pour enregistrer son token
@@ -90,6 +96,7 @@ class Form
     @css ||= begin
       c = []
       c << data[:class] if data.key?(:class)
+      c << 'nogrid' if inline?
       c.join(' ')
     end
   end #/ css
@@ -170,6 +177,7 @@ class Form
     c = []
     c << 'row' unless dfield[:norow]
     c << dfield[:class] if dfield[:class]
+    c << 'nogrid' if inline?
     c.join(SPACE)
   end #/ row_class
 

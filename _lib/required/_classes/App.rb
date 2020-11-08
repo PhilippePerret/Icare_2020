@@ -3,6 +3,7 @@
 class App
 
 ONLINE = ENV['HTTP_HOST'] != "localhost" unless defined?(ONLINE)
+OFFLINE = !ONLINE unless defined?(OFFLINE)
 URL_ONLINE  = 'www.atelier-icare.net'
 URL_OFFLINE = 'localhost/AlwaysData/Icare_2020'
 FULL_URL_ONLINE   = "https://#{URL_ONLINE}"
@@ -91,6 +92,6 @@ class << self
   def version_path
     @version_path ||= File.join(APP_FOLDER,'VERSION')
   end #/ version_path
-  
+
 end #/ << self
 end #/App

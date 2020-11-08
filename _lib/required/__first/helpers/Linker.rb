@@ -60,7 +60,7 @@ class Linker
     reset
     wdata = {text: wdata} if wdata.is_a?(String)
     @data = data.merge(wdata)
-    has_absolute_path if data.delete(:absolute)
+    has_absolute_path if data.delete(:absolute) || data.delete(:full)
     has_distant_path if data.delete(:online) || data.delete(:distant)
     @qs = data[:query_string]
     data.merge!(text: default_text) unless data.key?(:text)
@@ -74,6 +74,7 @@ private
     d = data.dup
     d.merge!(class: nil)  unless d.key?(:class)
     d.merge!(target: nil) unless d.key?(:target)
+    d.delete(:full) if d.key?(:distant) || d.key?(:absolute)
     return d
   end #/ filldata
 
