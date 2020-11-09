@@ -11,7 +11,7 @@
         :text: Concours de synopsis de l’atelier Icare
       - :tag: a.btn-faq
         :text: Foire Aux Questions
-      - :tag: a[href="public/Concours_ICARE_2021.pdf"]
+      - :tag: a[href="public/concours/Concours_ICARE_2021.pdf"]
         :text: Règlement du concours
       - :tag: a[href="concours/dossier"]
         :text: format du fichier de candidature
