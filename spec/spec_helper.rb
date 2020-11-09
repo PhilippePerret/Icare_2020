@@ -66,9 +66,14 @@ RSpec.configure do |config|
 
   # Pour passer en mode "sans entête" pour les tests (le placer dans
   # le "before :all")
-  def headless
-    Capybara.default_driver = :selenium_headless
-    Capybara.current_driver = :selenium_headless
+  def headless(oui = true)
+    if oui
+      Capybara.default_driver = :selenium_headless
+      Capybara.current_driver = :selenium_headless
+    else
+      Capybara.default_driver = :selenium
+      Capybara.current_driver = :selenium
+    end
   end #/ headless
 
   def implementer(path, line)
@@ -192,7 +197,7 @@ RSpec.configure do |config|
       sleep 0.3
       return
     end
-    puts "\t#{decoupe_string(msg.gsub(/^[\t ]+/,''), 70).join("\n\t")}".orange
+    puts "\t#{decoupe_string(msg.gsub(/^[\t ]+/,''), 70).join("\n\t")}".jaune
   end #/ pitch
 
   def decoupe_string(str, maxlong)

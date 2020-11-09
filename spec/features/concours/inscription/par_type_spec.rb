@@ -66,12 +66,15 @@ end #/ inscrire_au_concours_with_data
 
 feature "Inscription au concours courant suivant le type de visiteur" do
   before(:all) do
+    headless
     degel("concours-phase-1")
     require './_lib/_pages_/concours/inscription/constants' # propres à l'inscription
   end
 
   context '1) un visiteur quelconque ni icarien ni concurrent' do
     scenario 'peut s’inscrire de façon normale' do
+      # headless(false)
+      pitch("Un visiteur quelconque, ni icarien ni ancien concurrent du concours, peut s'inscrire en passant par le formulaire.")
       # On s'assure que ce concurrent n'existe pas encore
       concurrent = Candidat.new("Jules Romain", "jules.romain@chez.lui", "H")
       concurrent.destroy if concurrent.exists?
@@ -83,6 +86,7 @@ feature "Inscription au concours courant suivant le type de visiteur" do
         pseudo:concurrent.patronyme,
         mail:concurrent.mail,
         genre:concurrent.genre,
+        reglement:true,
       })
       screenshot("visiteur-lambda-signup-concours")
       expect(page).to have_no_erreur
@@ -128,7 +132,7 @@ feature "Inscription au concours courant suivant le type de visiteur" do
       goto("concours")
       click_on("Inscription au concours")
       inscrire_marion_au_concours
-      expect(page).not_to have_titre "Espace personnage"
+      expect(page).not_to be_espace_personnel
       expect(page).to have_titre "Identification"
       expect(page).to have_message("Vous êtes icarienne, identifiez-vous")
     end
@@ -177,7 +181,8 @@ feature "Inscription au concours courant suivant le type de visiteur" do
       marionc.destroy if marionc.exists?
       TConcurrent.inscrire_icarien(marion, session_courante: false)
     end
-    scenario 'trouve un bouton pour s’inscrire à la session courante' do
+    scenario 'trouve un bouton qui lui permet de s’inscrire à la session courante' do
+      start_time = Time.now.to_i - 1
       marion.rejoint_son_bureau
       goto("concours")
       screenshot("home-concours-icarien-concurrent-not-current-session")
@@ -193,10 +198,11 @@ feature "Inscription au concours courant suivant le type de visiteur" do
       expect(page).to have_link(btn_name)
       marion.click_on(btn_name)
       screenshot("marion-signup-cur-session-concours")
-      expect(page).to have_titre "Espace personnel"
+      expect(page).to be_espace_personnel
       expect(page).to have_message(MESSAGES[:concours_confirm_inscription_session_courante] % {e:"e"})
       marionc = Candidat.new(marion.pseudo, marion.mail,'F')
       expect(marionc).to be_concurrent_session_courante
+      expect(TActualites).to have_actualite(after: start_time, user_id:marion.id, type:"CONCOURS", message:"<strong>#{marion.pseudo}</strong> s'inscrit au concours de synopsis.")
     end
   end #/ context 6)
 
@@ -243,7 +249,8 @@ feature "Inscription au concours courant suivant le type de visiteur" do
       @candidat = cand
     end
     let(:candidat) { @candidat }
-    scenario 'se voit proposé de s’identifier avec un bon message puis de s’inscrire à la session courante' do
+    scenario 'se voit proposé de s’identifier avec un bon message puis de s’inscrire à la session courante', only:true do
+      # headless(false)
       goto("concours")
       click_on("Inscription au concours")
       inscrire_au_concours_with_data({

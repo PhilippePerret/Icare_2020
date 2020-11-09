@@ -12,6 +12,7 @@ class HTML
       specs:  "00000000"
     }
     db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data)
+    add_actualite_inscription_concours_for(concurrent.patronyme)
     message("#{concurrent.pseudo}, vous êtes inscrit#{concurrent.fem(:e)} à la session #{Concours.current.annee} du concours ! Bon courage et inspiration à vous !")
   end #/ traite_inscription_ancien
 
@@ -28,6 +29,7 @@ class HTML
     dc = db_get(DBTBL_CONCURRENTS, {mail: user.mail})
     dc || raise("Vous n'êtes pas un ancien concurrent… Je dois renoncer.")
     make_inscription_session_courante_for(dc[:concurrent_id])
+    add_actualite_inscription_concours_for(user.pseudo, user.id)
     message(MESSAGES[:concours_confirm_inscription_session_courante] % {e: user.fem(:e)})
   end #/ traite_inscription_icarien_session_courante
 
@@ -62,7 +64,11 @@ class HTML
       file: File.join(XMODULES_FOLDER,'mails','inscription','confirm-icarien-signup'),
       bind: self # html
     })
+
+    add_actualite_inscription_concours_for(user.pseudo, user.id)
+
     message(MESSAGES[:concours_signup_ok] % [user.pseudo])
+
     redirect_to('concours/espace_concurrent')
   end #/ traite_inscription_icarien
 
@@ -182,7 +188,7 @@ class HTML
     })
 
     # Ajouter une actualité pour l'inscription
-    Actualite.add('CONCOURS', nil, "<strong>#{data_concurrent[:patronyme]}</strong> s'inscrit au concours de synopsis.")
+    add_actualite_inscription_concours_for(data_concurrent[:patronyme])
 
     return true
 
@@ -192,6 +198,10 @@ class HTML
     return false
   end #/ traite_inscription
 
+  def add_actualite_inscription_concours_for(pseudo, id = nil)
+    log("AJOUT ACTUALITÉ CONCOURS avec #{pseudo.inspect} / #{id.inspect}")
+    Actualite.add('CONCOURS', id, "<strong>#{pseudo}</strong> s'inscrit au concours de synopsis.")
+  end
 
   def data_are_valid
     # On commence par s'assurer que le visiteur qui s'inscrit n'est pas un
@@ -224,7 +234,7 @@ class HTML
       mailconf  = param(:p_mail_confirmation).nil_if_empty
       mailconf == mail || raise("La confirmation du mail ne correspond pas.")
       reglement = param(:p_reglement).nil_if_empty
-      reglement == "on" || raise("Le réglement doit être approuvé.")
+      reglement == "on" || raise("Le règlement doit être approuvé.")
     end
     return dcandidat
   end #/ data_are_valid

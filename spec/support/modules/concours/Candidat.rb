@@ -9,6 +9,8 @@
 require 'fileutils'
 Candidat = Struct.new(:patronyme, :mail, :sexe) do
 
+  alias :pseudo :patronyme
+  
   # OUT   true si le concurrent est une femme
   def femme?; sexe == "F" end #/ femme?
 
