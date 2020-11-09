@@ -134,6 +134,12 @@ def preselected?
   concurrent.spec(2) == 1
 end
 
+# OUT   True si la conformité a été définie (i.e. le bit 2 est différent
+#       de 0 — mais il peut être égal à 1:conforme ou 2:non conforme)
+def conformity_defined?
+  concurrent.spec(1) != 0
+end #/ conformity_defined?
+
 # OUT   True si la conformité du synopsis a été marquée
 def conforme?
   concurrent.spec(1) == 1
@@ -192,6 +198,7 @@ def css_classes
   @css ||= begin
     c = ["synopsis"]
     c << "ghost" if not(fichier?)
+    c << "not-conforme" if conformity_defined? && not(conforme?)
     c.join(' ')
   end
 end #/ css

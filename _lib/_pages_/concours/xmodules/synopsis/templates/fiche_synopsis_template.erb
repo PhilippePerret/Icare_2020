@@ -23,10 +23,10 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
     <%= bouton_edit if user.admin? and conforme? %>
     <%= bouton_evaluate if conforme? %>
     <div class="center">
-      <% if user.admin? %>
+      <% if user.admin? && not(conformity_defined?) %>
         <%= bouton_marquer_conforme if not(conforme?) %>
         <%= bouton_marquer_non_conforme if not(conforme?) %>
-      <% else %>
+      <% elsif conforme? && not(user.admin?) %>
         <%= bouton_telecharger if conforme? %>
       <% end %>
     </div>

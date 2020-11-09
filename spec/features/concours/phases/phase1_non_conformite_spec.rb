@@ -21,7 +21,7 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
   let(:fiche_concurrent_selector) { @fiche_concurrent_selector ||=  "div#synopsis-#{synopsis.id}"}
 
   context 'Un administrateur' do
-    scenario 'peut refuser un fichier pour non conformité', only:true do
+    scenario 'peut refuser un fichier pour non conformité' do
 
       pitch("Quand une concurrente avec un fichier non encore vérifié rejoint l'espace personnel, elle ne trouve plus le champ de saisie pour transmettre son fichier.")
       concurrent.rejoint_le_concours
@@ -68,9 +68,8 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
 
       # Le synopsis a été marqué non conforme
       concurrent.reset
-      synopsis.reset
-      expect(synopsis.specs[0]).to eq('1')
-      expect(synopsis.specs[1]).to eq('2'),
+      expect(concurrent.specs[0]).to eq('1')
+      expect(concurrent.specs[1]).to eq('2'),
         "Le deuxième bit des specs du synopsis devrait être à 2 (non conforme) il est à #{synopsis.specs[1].inspect}"
 
 
@@ -85,16 +84,39 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
       bouts << "#{second_motif_ajouted}." # noter le point
       expect(concurrent).to have_mail(after: start_time, from:CONCOURS_MAIL, subject:"Votre fichier n'est pas conforme", message: bouts)
 
-      pending "En rejoignant la liste des synopsis, on note que la fiche est mise en exergue"
-      
+      goto("concours/evaluation")
+      expect(page).to have_css("div#synopsis-#{synopsis.id}.not-conforme"),
+        "La page devrait contenir la fiche du synopsis entourée de rouge (class not-conforme)"
+      within(fiche_concurrent_selector) do
+        expect(page).not_to have_link("Marquer conforme")
+        expect(page).not_to have_link(BUTTON_NON_CONFORME)
+      end
+
       phil.se_deconnecte
 
-      pitch("Quand la concurrente revient sur l'espace personnel, elle trouve à nouveau le champ de saisie pour transmettre son fichier corrigé, avec le bon message.")
+      pitch("Quand la concurrente revient sur l'espace personnel, elle trouve à nouveau le champ de saisie pour transmettre son fichier corrigé, avec le bon message. Elle peut transmettre son nouveau fichier, ce qui en change le statut.")
       concurrent.rejoint_le_concours
       goto("concours/espace_concurrent")
       expect(page).to have_css("form#concours-fichier-form")
       screenshot("concurrent-non-conforme-revient-espace-personnel")
       expect(page).to have_content("Vous pouvez transmettre un nouveau fichier conforme.")
+
+      # La concurrent soumet son nouveau fichier
+      syno_path = File.expand_path(File.join('.','spec','support','asset','documents','synopsis_concours.pdf'))
+      within("form#concours-fichier-form") do
+        fill_in("p_titre",    with: "Mon nouveau fichier conforme")
+        fill_in("p_auteurs",  with: "")
+        attach_file("p_fichier_candidature", syno_path)
+        click_on(UI_TEXTS[:concours_bouton_send_dossier])
+      end
+      screenshot("after-send-fichier-conforme")
+
+      concurrent.reset
+      # puts db_exec("SELECT specs FROM concurrents_per_concours WHERE concurrent_id = ? AND annee = ?", [concurrent.id, annee]).inspect
+      expect(concurrent.specs[0]).to eq('1'),
+        "Le premier bit des specs devrait être 1 (il vaut #{concurrent.specs[0]})"
+      expect(concurrent.specs[1]).to eq('0'),
+        "Le deuxième bit des specs aurait dû être remis à 0 (il vaut #{concurrent.specs[1]})"
 
     end
   end
@@ -108,10 +130,11 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
         expect(page).not_to have_link(BUTTON_NON_CONFORME)
       end
     end
-    scenario 'ne peut pas refuser un fichier même par route directe' do
+    scenario 'ne peut pas refuser un fichier même par route directe', only:true do
       member.rejoint_le_concours
       goto("concours/evaluation?view=synopsis_form&op=set_non_conforme&synoid=#{synopsis.id}&motif=support")
-      expect(synopsis.specs[1]).not_to eq(2)
+      expect(concurrent.specs[1]).not_to eq("2")
+      expect(concurrent.specs[1]).to eq("0")
     end
   end
 end

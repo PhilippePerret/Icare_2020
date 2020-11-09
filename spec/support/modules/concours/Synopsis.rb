@@ -5,10 +5,9 @@
 =end
 class Synopsis
   def reset
-    current_data = get_data.freeze
-    data.each { |prop, val| instance_variable_set("@#{prop}", nil) }
-    @data = current_data.dup
-    [:evaluations, :formated_auteurs, :formated_keywords, :data_score, :fiche_lecture, :concurrent, :css, :template_fiche_classement, :template_fiche_synopsis, :cfile
-    ].each { |prop| instance_variable_set("@#{prop}", nil) }
+    raise "Ne pas utiliser Synopsis#reset. Toujours utiliser Concurrent#reset"
   end #/ reset
+  def specs
+    raise "Ne pas utiliser Synopsis#specs. Toujours utiliser Concurrent#specs"
+  end #/ specs
 end #/Synopsis

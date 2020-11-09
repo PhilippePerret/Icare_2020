@@ -25,6 +25,7 @@ end #/ ref
 def synopsis
   @synopsis ||= begin
     require './_lib/_pages_/concours/xmodules/synopsis/Synopsis'
+    load File.join(__dir__,'Synopsis.rb') # pour surclasser les méthodes
     Synopsis.new(id, ANNEE_CONCOURS_COURANTE)
   end
 end #/ synopsis

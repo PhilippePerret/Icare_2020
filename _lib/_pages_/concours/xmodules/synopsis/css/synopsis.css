@@ -15,6 +15,9 @@ div.synopsis {
   font-size: 12pt;
   margin-bottom: 12px;
 }
+div.synopsis.not-conforme {
+  border-color:red;
+}
 
 div.synopsis.ghost {
   opacity:0.5;

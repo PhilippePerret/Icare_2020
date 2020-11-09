@@ -192,7 +192,7 @@ RSpec.configure do |config|
       sleep 0.3
       return
     end
-    puts "\t#{decoupe_string(msg.gsub(/^[\t ]+/,''), 70).join("\n\t")}".bleu
+    puts "\t#{decoupe_string(msg.gsub(/^[\t ]+/,''), 70).join("\n\t")}".orange
   end #/ pitch
 
   def decoupe_string(str, maxlong)

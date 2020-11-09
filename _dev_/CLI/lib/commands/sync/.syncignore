@@ -1,6 +1,6 @@
 
 # Ignorer les fichiers PDF
-*.pdf
+_lib/data/qdd/**/*.pdf
 
 # Ignorer le fichier développement
 _dev_/
