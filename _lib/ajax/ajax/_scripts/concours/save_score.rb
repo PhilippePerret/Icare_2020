@@ -13,12 +13,16 @@ begin
   evaluator   = Ajax.param(:evaluator)
   synopsis_id = Ajax.param(:synopsis_id)
   score       = Ajax.param(:score)
+  # --------------------------------------------
+  concurrent_id, annee = synopsis_id.split('-')
+
   # On récupère la phase du concours d'année +annee+ (le plus souvent l'année
   # du concours courant)
   phase = db_exec("SELECT phase FROM concours WHERE annee = ?", [annee]).first[:phase]
   synopsis = Synopsis.new(concurrent_id, annee)
   score_path = synopsis.file_evaluation_per_phase_and_evaluator(phase, evaluator)
-  `mkdir -p "#{scores_folder_path}"`
+  # `mkdir -p "#{File.dirname(score_path)}"`
+  FileUtils.mkdir_p(File.dirname(score_path))
   File.open(score_path,'wb'){|f| f.write score.to_json }
 
   log("evaluator: #{evaluator}, synopsis_id:#{synopsis_id}, score:#{score}")
