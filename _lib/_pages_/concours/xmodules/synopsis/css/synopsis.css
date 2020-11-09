@@ -10,7 +10,7 @@ div.synopsis {
   border-radius:0.5em;
   padding:1em;
   width: 150px;
-  height: 280px;
+  height: 320px;
   background-color: white;
   font-size: 12pt;
   margin-bottom: 12px;
@@ -102,4 +102,10 @@ div.synopsis span.kword {
 div.synopsis div.synopsis-id {
   margin-top:8px;
   font-size:0.9em;
+}
+
+div.synopsis div.fiche-buttons {
+  height:40px;
+  padding:8px;
+  background:beige;
 }
