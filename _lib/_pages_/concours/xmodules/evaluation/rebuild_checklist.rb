@@ -7,6 +7,9 @@
 =end
 require 'yaml'
 
+# Notamment pour les titres "Excellent", "Bon", etc.
+require './_lib/_pages_/concours/evaluation/lib/constants'
+
 # Pour consigner les "ID full" afin d'éviter les doublons
 ALL_IDS = {}
 
@@ -20,7 +23,10 @@ class << self
   # Reconstruction de la check-list qui permet d'affecter les notes
   def rebuild_checklist
     @nombre_questions = 0
-    File.open(PARTIAL_CHECKLIST,'wb'){|f| f.write(deserb('checklist_template',self))}
+    File.open(PARTIAL_CHECKLIST,'wb') do |f|
+      f.puts "<%\n# Ce partiel est généré de façon automatique. NE PAS LE TOUCHER\n%>"
+      f.puts deserb('checklist_template',self)
+    end
     # message("La check-list a été reconstruite.")
     File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(@nombre_questions)}
   rescue Exception => e
@@ -110,13 +116,13 @@ HTML
 
 TEMPLATE_MENU_APPRE = <<-HTML
 <select name="%{fullid}">
-  <option value="-">  -  </option>
-  <option value="5">Excellent</option>
-  <option value="4">Bon</option>
-  <option value="3">Moyen</option>
-  <option value="2">Faible</option>
-  <option value="1">Bas</option>
-  <option value="0">Nul</option>
+  <option value="-">#{CONCOURS_EVALUATION_VAL2TIT['-']}</option>
+  <option value="5">#{CONCOURS_EVALUATION_VAL2TIT[5]}</option>
+  <option value="4">#{CONCOURS_EVALUATION_VAL2TIT[4]}</option>
+  <option value="3">#{CONCOURS_EVALUATION_VAL2TIT[3]}</option>
+  <option value="2">#{CONCOURS_EVALUATION_VAL2TIT[2]}</option>
+  <option value="1">#{CONCOURS_EVALUATION_VAL2TIT[1]}</option>
+  <option value="0">#{CONCOURS_EVALUATION_VAL2TIT[0]}</option>
 </select>
 HTML
 

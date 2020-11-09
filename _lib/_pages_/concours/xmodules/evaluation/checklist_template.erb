@@ -1,6 +1,7 @@
 <%# frozen_string_literal: true %>
 <div id="checklist">
   <form id="checklist-form" class="nopadding noborder nomargine" action="concours/evaluation" method="POST">
+    <input type="hidden" name="synoid" id="synoid" value="<%%=param(:synoid)%>" />
     <%= build_sujet(data, [], []) %>
   </form>
   <div id="row-buttons">

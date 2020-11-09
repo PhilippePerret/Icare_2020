@@ -24,13 +24,46 @@ def rejoint_le_concours
   screenshot("after-login-member-#{id}")
 end
 
+def fiche_evaluation(conc)
+  JSON.parse(File.read(path_fiche_evaluation(conc)))
+end #/ fiche_evaluation
+
+def path_fiche_evaluation(conc)
+  File.join(conc.folder,conc.synopsis.id,"evaluation-pres-#{id}.json")
+end #/ path_fiche_evaluation
+
 class << self
   # OUT   Un évaluateur choisi au hasard ou suivant les options +options+
   # IN    +options+ Table d'options parmi :
   #         :femme      Si true, une jurée
+  #         :fiche_evaluation   NIL ou un {Concurrent}. Si défini, on doit
+  #             s'assurer que l'évaluateur possède bien une fiche d'évaluation
+  #             pour le concurrent désigné pour la présélection. Dans le cas
+  #             contraire on la fabrique en copiant la première qu'on trouve.
+  #         :fiche_evaluation_prix
+  #             Idem que ci-dessus mais pour la fiche d'évaluation pour le prix.
   #
   def get_random(options = nil)
-    new(evaluators.shuffle.shuffle.shuffle.first)
+    e = new(evaluators.shuffle.shuffle.shuffle.first)
+    if options[:fiche_evaluation]
+      conc = options[:fiche_evaluation]
+      eval_file = e.path_fiche_evaluation(conc)
+      if not File.exists?(eval_file)
+        dossier = File.dirname(eval_file)
+        une_fiche = Dir["#{dossier}/evaluation-pres-*.json"].first
+        FileUtils.copy(une_fiche, eval_file)
+      end
+    end
+    if options[:fiche_evaluation_prix]
+      conc = options[:fiche_evaluation_prix]
+      eval_file = e.path_fiche_evaluation_prix(conc)
+      if not File.exists?(eval_file)
+        dossier = File.dirname(eval_file)
+        une_fiche = Dir["#{dossier}/evaluation-prix-*.json"].first
+        FileUtils.copy(une_fiche,eval_file)
+      end
+    end
+    return e
   end
 
 

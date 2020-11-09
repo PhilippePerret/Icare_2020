@@ -9,7 +9,7 @@ require_relative './_required'
   évaluer un synopsis qui aurait déjà été déposé.
 
 =end
-feature "Possibilité d'un évaluateur en phase 1" do
+feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
   before(:all) do
     # headless()
     degel('concours-phase-1')
@@ -73,7 +73,7 @@ feature "Possibilité d'un évaluateur en phase 1" do
       end
     end
 
-    scenario 'peut télécharger un fichier de candidature', only:true do
+    scenario 'peut télécharger un fichier de candidature' do
       member.rejoint_le_concours
       expect(page).to be_cartes_synopsis
       concurrent = TConcurrent.find(avec_fichier_conforme: true, count:1).first
@@ -104,12 +104,17 @@ feature "Possibilité d'un évaluateur en phase 1" do
       within("div##{div_syno_id}") do
         click_on("Évaluer")
       end
-      expect(page).to have_titre "Évaluer le projet"
-      pending("On vérifie que la page soit conforme")
+      expect(page).to have_titre "Évaluation"
+      expect(page).to have_css("div#checklist")
+      expect(page).to have_css("div#checklist form#ckecklist-form")
+      expect(page).to have_css("form#ckecklist-form div#row-buttons")
+      within("form#ckecklist-form") do
+        expect(page).to have_button "Enregistrer"
+      end
 
     end
 
-    scenario 'peut évaluer un fichier de candidature par le mini-champ', only:true do
+    scenario 'peut évaluer un fichier de candidature par le mini-champ' do
       within("form#goto-evaluate-synopsis-form") do
 
       end

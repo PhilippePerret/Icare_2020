@@ -15,17 +15,20 @@ require 'selenium-webdriver'
 # require_relative './support/modules/download/test_download'
 Capybara.run_server = false
 # Capybara.default_driver = :selenium
-Capybara.register_driver :testeur_selenimum do |app|
-  # profile = Selenium::WebDriver::Firefox::Profile.new()
-  # profile['pdfjs.disabled'] = true
-  # profile['browser.download.folderList'] = 1 # 1 => dossier par défaut
-  # profile['browser. download. useDownloadDir'] = true
-  # profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
-  # Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
-  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => 'Testeur')
+Capybara.register_driver :testeur_selenium do |app|
+  # LA BONNE (AVEC DEPRECATED, mais elle marche)
+  # Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => 'Testeur')
+  # LA BONNE SANS DÉPRÉCATION :
+  options = Selenium::WebDriver::Firefox::Options.new(profile: 'Testeur')
+  Capybara::Selenium::Driver.new(app, options: options)
+
+  # LES MAUVAISES
+  # Selenium::WebDriver.for :firefox, profile: 'Testeur'
+
+  # driver = Selenium::WebDriver.for :firefox, options: options
 end
-Capybara.default_driver = :testeur_selenimum
-Capybara.current_driver = :testeur_selenimum
+Capybara.default_driver = :testeur_selenium
+Capybara.current_driver = :testeur_selenium
 # Test sans navigateur
 # Capybara.default_driver = :selenium_headless
 # Capybara.current_driver = :selenium_headless
@@ -75,6 +78,16 @@ RSpec.configure do |config|
       Capybara.current_driver = :selenium
     end
   end #/ headless
+
+  def use_profile_downloader(oui = true)
+    if oui
+      Capybara.default_driver = :testeur_selenium
+      Capybara.current_driver = :testeur_selenium
+    else
+      Capybara.default_driver = :selenium
+      Capybara.current_driver = :selenium
+    end
+  end #/ use_profile_downloader
 
   def implementer(path, line)
     puts "Implémenter le test #{path}:#{line}".jaune
