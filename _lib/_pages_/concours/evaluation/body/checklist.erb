@@ -1,4 +1,4 @@
-<%=
+<%
 # frozen_string_literal: true
 self.titre = "Évaluation de #{synopsis.id}"
 %>
@@ -7,6 +7,6 @@ const synid = '<%= synopsis.id %>';
 const EVALUATOR_ID = <%= evaluator.id %>;
 </script>
 
-<p class="small">Vous évaluez le projet de <strong><%= concurrent.pseudo %></strong> qui porte l'identifiant <strong><%= synopsis.id %></strong><br />et le titre : <span class="synopsis-titre bold" style="font-variant:all-small-caps;font-size:1.8em;"><%= synopsis.titre %></span>.</p>
+<p class="small">Vous évaluez le projet de <strong><%= concurrent.pseudo %></strong> qui porte l'identifiant <strong><%= synopsis.id %></strong> (c'est le nom du fichier) et le titre : <span class="synopsis-titre bold" style="font-variant:all-small-caps;font-size:1.8em;"><%= synopsis.titre %></span>.</p>
 
 <%= checklist %>

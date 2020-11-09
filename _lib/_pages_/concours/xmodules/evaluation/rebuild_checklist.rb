@@ -147,7 +147,7 @@ TEMPLATE_LINE_PROP = <<-HTML
 HTML
 TEMPLATE_LINE_PROP_WITHEX = <<-HTML
 <div id="div-%{fullid}" class="%{class} withex">
-  <div class="expli hidden">%{ex}</div>
+  <div class="expli hidden">%{ex}<div style="font-size:0.85em;text-align:right;">(cliquez sur ce texte pour le faire disparaitre)</div></div>
   #{TEMPLATE_TITRE_SELECT}
 </div>
 HTML
@@ -163,7 +163,7 @@ HTML
 
 TEMPLATE_LINE_MAINPROP_WITHEX = <<-HTML
 <div id="div-%{fullid}" class="%{class} withex">
-  <div class="expli hidden">%{explication}</div>
+  <div class="expli hidden">%{explication}<div style="font-size:0.85em;text-align:right;">(cliquez sur ce texte pour le faire disparaitre)</div></div>
   #{TEMPLATE_TITRE_SELECT}
   <div class="common-properties">__COMMON_PROPERTIES__</div>
   <div class="items">__ITEMS__</div>
