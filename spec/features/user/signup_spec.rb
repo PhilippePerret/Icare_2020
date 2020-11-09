@@ -70,6 +70,8 @@ feature 'Inscription à l’atelier Icare' do
   # Test d'inscriptions invalides à cause de mauvaises données
   scenario 'des données invalides ne permettent pas de s’inscrire' do
 
+    pitch("Des données invalides ne permettent pas de s'inscrire à l'atelier.")
+    
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire

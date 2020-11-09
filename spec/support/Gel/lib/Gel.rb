@@ -139,6 +139,7 @@ def degel
     next unless File.exists?(dossier)
     dossier_name = File.basename(dossier)
     src_folder = File.join(folder, dossier_name)
+    next if not(File.exists? src_folder)
     dst_folder = File.dirname(dossier)
     # puts "Je REPLACE le dossier #{src_folder.inspect} dans le dossier #{dst_folder.inspect}"
     FileUtils.cp_r(src_folder, dst_folder)
@@ -147,7 +148,7 @@ def degel
   # Remettre les fichiers isolés
   WORKING_FILES.each do |dst|
     src = File.join(folder, File.basename(dst)) # peut-être dangereux…
-    next if not File.exists?(src)
+    next if not(File.exists? src)
     File.delete(dst) if File.exists?(dst)
     FileUtils.copy(src, dst)
   end
