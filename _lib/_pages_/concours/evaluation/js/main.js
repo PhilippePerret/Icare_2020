@@ -5,7 +5,7 @@ $(document).ready(()=>{
     // <= Affichage de la liste des fiches de lecture
     // => On place les observeurs
     FicheLecture.prepare();
-  } else {
+  } else if ($('div#checklist').length) {
     CheckList.prepare();
     const syno = new Synopsis(synid);
     syno.prepare();

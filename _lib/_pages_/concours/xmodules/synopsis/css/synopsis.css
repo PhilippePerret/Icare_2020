@@ -39,9 +39,13 @@ div.synopsis div.auteur
 div.synopsis div.titre {
   font-variant:small-caps;
   font-weight:bold;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 div.synopsis div.auteur {
   text-align:right;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 div.synopsis div.note-generale,
 div.synopsis span.pct-reponses {

@@ -48,12 +48,12 @@ def expect_a_valid_candidat_with(datainit)
   ticket ||= raise("Impossible de trouver un seul ticket pour user ##{user_id}")
 
   # Un mail permettant de valider le mail
-  expect(TMails.exists?(data[:mail], "?tik=#{ticket[:id]}".freeze)).to be(true),
-    "Le message pour valider l'adresse mail n'a pas été transmis.".freeze
+  expect(TMails).to have_mail(to:data[:mail], subject:'Validation du mail', message:"?tik=#{ticket[:id]}")
+    "Un mail pour valider l'adresse mail aurait dû être transmis."
 
   # Un mail pour confirmer l'inscription
-  expect(TMails.exists?(data[:mail], "Votre candidature à l’atelier Icare a bien été enregistrée".freeze)).to be(true),
-    "Le message de confirmation de l'enregistrement de la candidature n'a pas été transmis.".freeze
+  expect(TMails).to have_mail(to:data[:mail], subject:'Confirmation de votre candidature', message:"Votre candidature à l’atelier Icare a bien été enregistrée"),
+    "Le message de confirmation de l'enregistrement de la candidature n'a pas été transmis."
 
   # Une actualité a dû être produite
   expect(TActualites.exists?(user_id:user_id, type:'SIGNUP', only_one: true)).to be(true),
@@ -65,13 +65,14 @@ feature 'Inscription à l’atelier Icare' do
   before :all do
     require "#{FOLD_REL_PAGES}/user/signup/constants_messages"
     degel('inscription_marion')
+    headless
   end
 
   # Test d'inscriptions invalides à cause de mauvaises données
   scenario 'des données invalides ne permettent pas de s’inscrire' do
 
-    pitch("Des données invalides ne permettent pas de s'inscrire à l'atelier.")
-    
+    pitch("Des données invalides ne permettent jamais de s'inscrire à l'atelier.")
+
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
@@ -97,10 +98,12 @@ feature 'Inscription à l’atelier Icare' do
   end
 
 
-  scenario 'des données valides permettent de créer un candidat', only: true do
+  scenario 'des données valides permettent de créer un candidat', only:true do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
+
+    pitch("Des données valides permettent à un postulant, Benoit, de s'inscrire à l'atelier Icare.")
 
     def clic_signup_button
       if not page.has_css?('#btn-signup', visible: true)
@@ -126,10 +129,12 @@ feature 'Inscription à l’atelier Icare' do
 
   end #/test d'un bon candidat
 
-  scenario 'des données valides permettent de créer une candidate' do
+  scenario 'des données valides permettent de créer une candidate', only:true do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
+
+    pitch("Des données valides permettent à MarionM de s'inscrire à l'atelier.")
 
     def clic_signup_button
       find('#btn-signup').click
