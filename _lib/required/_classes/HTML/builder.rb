@@ -78,13 +78,15 @@ class HTML
   # Fabrication du titre de la page
   def build_titre
     return EMPTY_STRING if route.home?
-    t = respond_to?(:titre) ? titre : "Titre page manquant"
+    tit = nil
+    tit = titre if respond_to?(:titre)
+    tit ||= "Titre page manquant"
     ulinks = EMPTY_STRING
     if respond_to?(:usefull_links) && not(usefull_links.nil? || usefull_links.empty?)
       ulinks = DIV_USEFULL_LINKS % {menus: usefull_links.join }
     end
-    @raw_titre ||= t.dup&.safetize
-    @titre = "<h2 class=\"page-title\">#{ulinks}#{t}</h2>"
+    @raw_titre ||= tit.dup&.safetize
+    @titre = "<h2 class=\"page-title\">#{ulinks}#{tit}</h2>"
   end
 
   def build_header
