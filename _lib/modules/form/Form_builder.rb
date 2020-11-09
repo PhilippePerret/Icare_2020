@@ -268,9 +268,7 @@ class Form
       dfield.merge!(content: dfield[:content]||dfield[:value]||dfield[:name])
     when 'checkbox'
       dfield.merge!(checked: param(dfield[:name].to_sym) ? ' CHECKED' : '')
-      dfield.merge!(value:'on') if not(dfield.key?(:value))
-    # when 'checkboxes'
-    #
+      dfield.merge!(value:'on') if not(dfield.key?(:value)) || dfield[:value].nil_if_empty.nil?
     when 'textarea'
       dfield.key?(:height) || dfield.merge!(height: 60)
       dfield.key?(:placeholder) || dfield.merge!(placeholder:'')
