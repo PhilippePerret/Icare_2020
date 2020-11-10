@@ -1,0 +1,21 @@
+:context:
+  :description: Un score sans aucune réponse donnée
+  :deepness: Sans profondeur
+  :nombre_questions: Le même que le nombre absolu
+
+:cases:
+  -
+    :fails: pour un score vide
+    :nombre_questions: 4
+    :score:
+      un: "-"
+      de: "-"
+      tr: "-"
+      qu: "-"
+    :attente:
+      :note: "---"
+      :note_abs: 0.0
+      :pourcentage: 0.0
+      :nb_questions: 4
+      :nb_reponses: 0
+      :nb_missings: 4

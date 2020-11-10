@@ -48,10 +48,10 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
       end
     end
 
-    pending 'peut modifier son évaluation', only:true do
+    scenario 'peut modifier son évaluation', only:true do
 
       pitch("Un membre du jury peut rejoindre le concours, passer à l'évaluation d'une fiche en modifiant son évaluation précédente.")
-      headless
+      headless(false)
       member.rejoint_le_concours
       expect(page).to be_cartes_synopsis
       syno_id = "#{concurrent.id}-#{annee}"
@@ -64,16 +64,63 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
       # fiche_evaluation contient sa fiche actuelle, qui existe toujours
       within("form#checklist-form") do
         # Modifier des valeurs
-        # TODO
+        # --------------------
+        # Pour se faire, on va augmenter toutes les valeurs de 2, et lorsqu'elle
+        # dépasseront 5 on les passera en dessous
+        # ATTENTION : il faut d'abord attendre que les valeurs aient été
+        # affectée. En 3 secondes, ça devrait être suffisant
+        sleep 3
+        fiche_evaluation.each do |key, value|
+          new_value = value + 2
+          new_value = new_value - 5 if new_value > 5
+          # find("select[name=\"#{key}\"]").click
+          select(CONCOURS_EVALUATION_VAL2TIT[new_value], from: key) rescue nil
+        end
+      end
+      within("div#row-buttons") do
         click_on("Enregistrer")
       end
+      sleep 5 # le temps d'enregistrer
+
+      old_fiche_evaluation = fiche_evaluation.dup
+      new_fiche_evaluation = YAML.load_file(member.path_fiche_evaluation(concurrent))
+      # puts "old_fiche_evaluation: #{old_fiche_evaluation}"
+      # puts "new_fiche_evaluation: #{new_fiche_evaluation}"
+
 
       # L'évaluation doit avoir été modifiée
+      # Comme certaines questions ont pu être passées pour erreur, on compte
+      # grossièrement. Il faut qu'au moins 3 quarts des corrections soient
+      # bonnes
+      bonnes = 0
+      old_fiche_evaluation.each do |key, old_value|
+        new_expected = old_value + 2
+        new_expected = new_expected - 5 if new_expected > 5
+        bonnes += 1 if new_expected == new_fiche_evaluation[key]
+      end
+      troisquart = ((old_fiche_evaluation.count.to_f / 4) * 3).to_i
+      expect(bonnes).to be > troisquart,
+        "Au moins trois quart des nouvelles réponses devraient correspondre… (seulement #{bonnes} sur #{troisquart} correspondent)."
+
+      pitch("La nouvelle note est remontée par le programme et affichée dans le message de confirmation.")
+      expect(page).to have_message("Nouveau score enregistré. La nouvelle note est 12.3 (14.5 pour l'ensemble des évaluations)")
+      # On mémorise cette note affichée pour la retrouver dans la liste des
+      note_evaluator = page.find("#message-note_evaluator").text
+      note_generale  = page.find("#message-note_generale").text
+      expect(page).to have_css("span#note_evaluator", text: note_evaluator)
+      expect(page).to have_css("span#note_generale",  text: note_generale)
+
+      pitch("Le membre du jury, grâce à un lien évident, retourne à la liste des synopsis pour voir la nouvelle note affichée")
+      expect(page).to have_link("Fiches des synopsis")
+      member.click_on("Fiches des synopsis")
+      expect(page).to be_page_evaluation
+
+      # La note doit avoir été recalculée et rectifiée
       # TODO
-      # La note doit avoir été recalculée
-      # TODO
+
       # La note générale du synopsis doit avoir changé
       # TODO
+
       # Je dois être averti de cette modification (les autres membres aussi ?
       # ou faire plutôt une information quotidienne ?)
       # TODO

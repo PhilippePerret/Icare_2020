@@ -1,0 +1,116 @@
+:context:
+  :description: Avec des questions en profondeur
+  :deepness: un seul niveau
+  :nombre_questions: Le même que le nombre absolu
+
+:cases:
+  -
+    :fails: pour un score vide
+    :nombre_questions: 10
+    :score:
+      un: "-"
+      un-un: "-"
+      de: "-"
+      de-un: "-"
+      de-de: "-"
+      de-tr: "-"
+      tr: "-"
+      tr-un: "-"
+      qu: "-"
+      qu-un: "-"
+    :attente:
+      :note: "---"
+      :note_abs: 0.0
+      :pourcentage: 0.0
+      :nb_questions: 10
+      :nb_reponses: 0
+      :nb_missings: 10
+
+  -
+    :fails: avec toutes les réponses données et la note maximum
+    :nombre_questions: 10
+    :score:
+      un: 5
+      un-un: 5
+      de: 5
+      de-un: 5
+      de-de: 5
+      de-tr: 5
+      tr: 5
+      tr-un: 5
+      qu: 5
+      qu-un: 5
+    :attente:
+      :note: 20.0
+      :note_abs: 20.0
+      :pourcentage: 100.0
+      :nb_questions: 10
+      :nb_reponses: 10
+      :nb_missings: 0
+  -
+    :fails: avec toutes les réponses données et la note minimale
+    :nombre_questions: 10
+    :score:
+      un: 1
+      un-un: 1
+      de: 1
+      de-un: 1
+      de-de: 1
+      de-tr: 1
+      tr: 1
+      tr-un: 1
+      qu: 1
+      qu-un: 1
+    :coef200: ((4 * 5 * 1) + (6 * 5 * 0.9))
+    :attente:
+      :note: (4 * 1) + (6 * 0.9)
+      :note_abs: (4 * 1) + (6 * 0.9)
+      :pourcentage: 100.0
+      :nb_questions: 10
+      :nb_reponses: 10
+      :nb_missings: 0
+
+  -
+    :fails: avec toutes les réponses données et la note moyenne
+    :nombre_questions: 10
+    :score:
+      un: 3
+      un-un: 3
+      de: 3
+      de-un: 3
+      de-de: 3
+      de-tr: 3
+      tr: 3
+      tr-un: 3
+      qu: 3
+      qu-un: 3
+    :attente:
+      :note: 12.0
+      :note_abs: 12.0
+      :pourcentage: 100.0
+      :nb_questions: 10
+      :nb_reponses: 10
+      :nb_missings: 0
+
+  -
+    :fails: avec seulement les réponses profondes en note maximale
+    :nombre_questions: 10
+    :score:
+      un: "-"
+      un-un: 5
+      de: "-"
+      de-un: 5
+      de-de: 5
+      de-tr: 5
+      tr: "-"
+      tr-un: 5
+      qu: "-"
+      qu-un: 5
+    :coef200: (4 * 5 * 1) + (6 * 5 * 0.9)
+    :attente:
+      :note: 20.0 # puisque toutes les réponses données ont la note maximale
+      :note_abs: (6 * 5 * 0.9)
+      :pourcentage: 60.0
+      :nb_questions: 10
+      :nb_reponses: 6
+      :nb_missings: 4

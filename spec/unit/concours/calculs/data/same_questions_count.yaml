@@ -1,0 +1,85 @@
+:context:
+  :description: Avec un nombre de questions absolues correspondant au nombre de questions dans le fichier d'évaluation.
+  :deepness: Sans profondeur
+  :nombre_questions: Le même que le nombre absolu
+
+:cases:
+  -
+    :fails: pour toutes les valeurs au maximum
+    :nombre_questions: 4
+    :score:
+      un: 5
+      de: 5
+      tr: 5
+      qu: 5
+    :attente:
+      :note: 20.0
+      :note_abs: 20.0
+      :pourcentage: 100.0
+      :nb_questions: 4
+      :nb_reponses: 4
+      :nb_missings: 0
+
+  -
+    :fails: pour toutes les valeurs au minimum
+    :nombre_questions: 4
+    :score:
+      un: 0
+      de: 0
+      tr: 0
+      qu: 0
+    :attente:
+      :note: 0.0
+      :note_abs: 0.0
+      :pourcentage: 100.0
+      :nb_questions: 4
+      :nb_reponses: 4
+      :nb_missings: 0
+
+  -
+    :fails: pour toutes les valeurs moyennes
+    :nombre_questions: 4
+    :score:
+      un: 3
+      de: 3
+      tr: 3
+      qu: 3
+    :attente:
+      :note: 12.0
+      :note_abs: 12.0
+      :pourcentage: 100.0
+      :nb_questions: 4
+      :nb_reponses: 4
+      :nb_missings: 0
+
+  -
+    :fails: pour la moitié des valeurs fournies
+    :nombre_questions: 4
+    :score:
+      tr: '-'
+      un: 5
+      de: 5
+      qu: '-'
+    :attente:
+      :note: 20.0
+      :note_abs: 10.0
+      :pourcentage: 50.0
+      :nb_questions: 4
+      :nb_reponses: 2
+      :nb_missings: 2
+
+  -
+    :fails: pour trois quarts des valeurs fournies
+    :nombre_questions: 4
+    :score:
+      un: 1
+      de: 1
+      tr: '-'
+      qu: 1
+    :attente:
+      :note: 4.0
+      :note_abs: 3.0
+      :pourcentage: 75.0
+      :nb_questions: 4
+      :nb_reponses: 3
+      :nb_missings: 1

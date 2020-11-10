@@ -1,9 +1,10 @@
 <%
 # frozen_string_literal: true
 
+href_evaluation = "concours/evaluation?view=checklist&synoid=#{id}&cid=#{concurrent.id}"
 # *** Définition des boutons ***
 bouton_edit = Tag.link(text:"Éditer", class:"btn-edit small btn", route:"concours/evaluation?view=synopsis_form&synoid=#{id}")
-bouton_evaluate = Tag.link(text:"Évaluer", class:"btn-evaluate small btn", route:"concours/evaluation?view=checklist&synoid=#{id}&cid=#{concurrent.id}")
+bouton_evaluate = Tag.link(text:"Évaluer", class:"btn-evaluate small btn", route:href_evaluation)
 bouton_marquer_conforme = Tag.link(text:"Marquer conforme", class:"btn-confirm small btn", route:"concours/evaluation?synoid=#{id}&op=mark_conforme", title:"Confirmer la conformité du synopsis")
 bouton_marquer_non_conforme = Tag.link(text:UI_TEXTS[:button_marquer_non_conforme], class:"btn-not-confirm small btn", route:"concours/evaluation?view=synopsis_form&synoid=#{id}&op=non_conformite", title:"Quand le synopsis est non conforme et que ça doit être signalé au concurrent.")
 bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small btn", route:"concours/evaluation?view=download&cid=#{concurrent.id}", title:"Cliquer sur ce bouton pour télécharger le fichier du concurrent")
@@ -12,7 +13,7 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
 <div id="synopsis-<%=id%>" class="<%=css_classes%>" data-id="<%=id%>">
   <div id="synopsis-<%=id%>-titre" class="titre"><%=titre%></div>
   <div class="auteur">de <span id="synopsis-<%=id%>-pseudo" class=""><%=concurrent.patronyme%></span></div>
-  <div id="synopsis-<%=id%>-note-generale" class="note-generale"><%=formated_note_generale%></div>
+  <a id="synopsis-<%=id%>-note-generale" class="note-generale" href="<%= href_evaluation %>"><%=formated_note_generale%></a>
   <div id="synopsis-<%=id%>-pct-reponses" class="div-pct-reponses"><span class="pct-reponses"><%=pourcentage_reponses%></span> %</div>
   <div id="synopsis-<%=id%>-jauge-pct-reponses" class="jauge-pct-reponses">
     <span class="jauge-pct-reponses-done" style="width:<%=pourcentage_reponses%>%;"></span>

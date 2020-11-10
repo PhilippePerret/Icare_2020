@@ -19,13 +19,18 @@ div.synopsis.not-conforme {
   border-color:red;
 }
 
+div.synopsis a.note-generale {
+  display:block;
+  color:inherit;
+}
+
 div.synopsis.ghost {
   opacity:0.5;
 }
 /* Tous les éléments masqués lorsque le synopsis n'est pas fourni */
 div.synopsis.ghost div.jauge-pct-reponses,
 div.synopsis.ghost div.fiche-buttons,
-div.synopsis.ghost div.note-generale,
+div.synopsis.ghost .note-generale,
 div.synopsis.ghost div.div-pct-reponses
 {
   visibility:hidden;
@@ -47,15 +52,15 @@ div.synopsis div.auteur {
   overflow:hidden;
   text-overflow:ellipsis;
 }
-div.synopsis div.note-generale,
+div.synopsis .note-generale,
 div.synopsis span.pct-reponses {
   font-family:"Arial Narrow", Arial, Geneva, Helvetica;
 }
-div.synopsis div.note-generale {
+div.synopsis .note-generale {
   text-align:center;
   font-size: 32pt;
-  margin-top: 8px;
-  margin-bottom:20px;
+  margin-top: 20px;
+  height:70px;
   cursor:pointer;
 }
 div.synopsis div.div-pct-reponses {
