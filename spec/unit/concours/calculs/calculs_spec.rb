@@ -28,7 +28,7 @@ shared_examples_for "un bon résultat" do |yfile|
         # end
 
         RESKEYS.each do |k|
-          val, init_val = traite_val_note(attente[k], data[:coef200])
+          val, init_val = traite_val_note(attente[k], (data[:coef200] if k.to_s.start_with?('note')))
           expect(result.send(k)).to eq(val),
             "devrait produire une STRUCTure de valeurs correctes #{fails}.\nClé défectueuse et valeurs\n\t\t#{k.inspect}\n\t\tAttendu: #{val.inspect}#{init_val}\n\t\tObtenu: #{result.send(k).inspect}\n#{reftest}\nFailure: #{data[:fails]}"
         end
@@ -42,7 +42,7 @@ shared_examples_for "un bon résultat" do |yfile|
         ConcoursCalcul.nombre_absolu_questions = data[:nombre_questions]
         reshash = ConcoursCalcul.note_generale_et_pourcentage_from(score, false)
         KD2KH.each do |ka, kh|
-          val, init_val = traite_val_note(attente[ka], data[:coef200])
+          val, init_val = traite_val_note(attente[ka], (data[:coef200] if ka.to_s.start_with?('note')))
           expect(reshash[kh]).to eq(val),
             "devrait produire un Hash de valeurs correctes #{fails}.\nClé défectueuse et valeurs\n\t\t#{kh.inspect}\n\t\tAttendu: #{val.inspect}#{init_val}\n\t\tObtenu: #{reshash[kh].inspect}\n#{reftest}\nFailure: #{data[:fails]}"
         end
@@ -111,14 +111,11 @@ describe 'Le module de calcul du concours de synopsis (class ConcoursCalcul)' do
   end
 
   context 'avec des questions en profondeur' do
-    it_behaves_like "un bon résultat", 'with_deepness'
+    it_behaves_like "un bon résultat", 'with_deepness_1'
   end
-  # it 'retourne les bonnes valeurs avec des questions en profondeurs' do
-  #
-  # end
-  #
-  # it 'retourne les bonnes valeurs avec questions non répondues' do
-  #
-  # end
+
+  context 'avec des questions d’un profondeur de 2' do
+    it_behaves_like "un bon résultat", 'with_deepness_2'
+  end
 
 end

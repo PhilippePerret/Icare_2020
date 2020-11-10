@@ -64,7 +64,7 @@
     :coef200: ((4 * 5 * 1) + (6 * 5 * 0.9))
     :attente:
       :note: (4 * 1) + (6 * 0.9)
-      :note_abs: (4 * 1) + (6 * 0.9)
+      :note_abs: (4 * 1 * 1) + (6 * 1 * 0.9)
       :pourcentage: 100.0
       :nb_questions: 10
       :nb_reponses: 10
