@@ -80,7 +80,11 @@ class HTML
     return EMPTY_STRING if route.home?
     tit = nil
     tit = titre if respond_to?(:titre)
-    tit ||= "Titre page manquant"
+    tit || begin
+      # @raw_titre = "" # NON, PEUT ÊTRE DÉFINI
+      @titre = ""
+      return
+    end
     ulinks = EMPTY_STRING
     if respond_to?(:usefull_links) && not(usefull_links.nil? || usefull_links.empty?)
       ulinks = DIV_USEFULL_LINKS % {menus: usefull_links.join }
