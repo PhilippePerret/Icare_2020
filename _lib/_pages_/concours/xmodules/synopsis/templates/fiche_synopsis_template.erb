@@ -13,24 +13,25 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
 <div id="synopsis-<%=id%>" class="<%=css_classes%>" data-id="<%=id%>">
   <div id="synopsis-<%=id%>-titre" class="titre"><%=titre%></div>
   <div class="auteur">de <span id="synopsis-<%=id%>-pseudo" class=""><%=concurrent.patronyme%></span></div>
-  <a id="synopsis-<%=id%>-note-generale" class="note-generale" href="<%= href_evaluation %>"><%=formated_note_generale%></a>
+  <a id="synopsis-<%=id%>-note-generale" class="note-generale" href="<%= href_evaluation %>">
+    <span class="note-evaluator"><%=formated_note_generale%></span>
+    <span class="note-globale<%= ' hidden' if not(user.admin?) %>" title="Note globale, sur 200, tenant compte des notes des autres membres du jury"><%=formated_note_globale%></span>
+  </a>
   <div id="synopsis-<%=id%>-pct-reponses" class="div-pct-reponses"><span class="pct-reponses"><%=pourcentage_reponses%></span> %</div>
   <div id="synopsis-<%=id%>-jauge-pct-reponses" class="jauge-pct-reponses">
     <span class="jauge-pct-reponses-done" style="width:<%=pourcentage_reponses%>%;"></span>
   </div>
   <div id="synopsis-<%=id%>-keywords" class="keywords"><%=formated_keywords%></div>
-  <div class="fiche-buttons" class="right">
-    <%# (Les boutons sont définis en haut de page) %>
-    <%= bouton_edit if user.admin? and conforme? %>
-    <%= bouton_evaluate if conforme? %>
-    <div class="center">
-      <% if user.admin? && not(conformity_defined?) %>
-        <%= bouton_marquer_conforme if not(conforme?) %>
-        <%= bouton_marquer_non_conforme if not(conforme?) %>
-      <% elsif conforme? && not(user.admin?) %>
-        <%= bouton_telecharger if conforme? %>
-      <% end %>
-    </div>
-  </div>
+  <%# (Les boutons sont définis en haut de page) %>
+  <div class="fiche-buttons center"><%=
+    bouton_edit if user.admin? and conforme? %><%=
+    bouton_evaluate if conforme? %><%
+    if user.admin? && not(conformity_defined?) %><%=
+      bouton_marquer_conforme if not(conforme?) %><%=
+      bouton_marquer_non_conforme if not(conforme?) %><%
+    elsif conforme? && not(user.id == phil.id) %><%=
+      bouton_telecharger if conforme? %><%
+    end
+  %></div>
   <div class="synopsis-id"><%=id%></div>
 </div>

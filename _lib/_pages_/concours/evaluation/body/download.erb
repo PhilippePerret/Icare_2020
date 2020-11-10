@@ -5,9 +5,10 @@ self.titre = "Télécharger le fichier de candidature"
   Page de téléchargement du fichier désigné par param(:cid)
 =end
 %>
-<p>Vous vous apprêtez à télécharger le fichier portant le nom <strong><%= synopsis.id %></strong>.</p>
-<p>Ce fichier appartient à <strong><%= concurrent.pseudo %></strong>.</p>
-<p>Après lecture, vous pourrez l'évaluer en utilisant sa fiche. Pour ouvrir sa fiche, il suffit de copier le numéro du fichier (ici <%= synopsis.id %>) dans le champ de saisie.</p>
+<p>Vous vous apprêtez à télécharger le fichier de nom <strong><%= synopsis.id %></strong> du projet “<strong><%= synopsis.titre %></strong>” appartenant à <strong><%= concurrent.pseudo %></strong>. Ce nom de fichier (<span class="small"><%= synopsis.id %></span>) est l'IDENTIFIANT UNIQUE du synopsis.</p>
+<p>Après lecture, vous pourrez l'évaluer en utilisant la “checklist” d'évaluation. Pour ouvrir cette “checklist”, il vous suffit de cliquer sur le bouton <span class="btn small">Évaluer</span> qui se trouve sur la fiche du synopsis (où se trouvait le bouton “Télécharger” que vous avez cliqué pour arriver ici.</p>
+<p>Vous pouvez également copier-coller ce nom de fichier (<%= synopsis.id %>) dans le champ de saisie en haut de la page précédente. C'est peut-être le meilleur moyen de ne pas se tromper.</p>
+<p class="red">Dans le doute, vérifiez toujours que vous évaluez le bon synopsis.</p>
 <p class="border center">
   <%= Tag.link(text:"TÉLÉCHARGER", route:"./_lib/data/concours/#{concurrent.id}/#{synopsis.id}.pdf") %>
 </p>

@@ -246,10 +246,18 @@ def formated_note_generale
   note_generale || "---"
 end
 
+def formated_note_globale
+  note_globale || "---"
+end #/ formated_note_globale
+
 def note_generale
   data_score || get_data_score
   data_score[:note_generale]
 end #/ note_generale
+
+def note_globale
+  ConcoursCalcul.note_globale_synopsis(self.id)
+end #/ note_globale
 
 # OUT   {Float} Pourcentage de réponses données
 def pourcentage_reponses
@@ -264,7 +272,7 @@ def nombre_reponses
 end #/ nombre_reponses
 
 def get_data_score
-  log("-> get_data_score")
+  # log("-> get_data_score")
   dscore = {}
   # log("folder : #{folder} existe ? #{File.exists?(folder).inspect}")
   if File.exists?(folder)
@@ -276,9 +284,9 @@ def get_data_score
   end
   @data_score = ConcoursCalcul.note_generale_et_pourcentage_from(dscore)
   if not dscore.empty?
-    log("@data_score obtenu pour #{id} : #{@data_score.inspect}")
+    # log("@data_score obtenu pour #{id} : #{@data_score.inspect}")
   else
-    log("@data_score est vide")
+    # log("@data_score est vide")
   end
 end #/ data_score
 

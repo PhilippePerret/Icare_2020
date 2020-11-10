@@ -47,6 +47,42 @@ DEEPNESS_COEF = {}
 end
 
 class << self
+
+  # Méthode qui produit la note final d'un synopsis à partir de toutes ses
+  # évaluation.
+  #
+  # IN    {String} Identifiant du synopsis
+  #       {Bool}    True si c'est pour la note du prix
+  #
+  # OUT   {Integer} Note global sur 200 du synopsis pour les présélections ou
+  #           le prix.
+  #
+  def note_globale_synopsis(synopsis_id, pour_prix = false)
+    log("-> note_globale_synopsis(synopsis_id=#{synopsis_id.inspect})")
+    concurrent_id, annee = synopsis_id.split('-')
+    dossier_evaluations = File.join("./_lib/data/concours/#{concurrent_id}/#{synopsis_id}")
+    evaluations = Dir["#{dossier_evaluations}/evaluation-#{pour_prix ? 'prix' : 'pres'}-*.json"]
+    n = 0.0
+    # nombre_evaluations = evaluations.count
+    nombre_evaluations = 0
+    evaluations.each do |file_eval|
+      score = YAML.load_file(file_eval)
+      ns = note_generale_et_pourcentage_from(score, true).note
+      log("ns = #{ns.inspect}")
+      if ns != '---'
+        n += ns
+        nombre_evaluations += 1
+      end
+      log("n = #{n}")
+    end
+    if n > 0
+      n = ((n / nombre_evaluations).round(1) * 10).to_i
+    else
+      n = nil
+    end
+    return n
+  end #/ note_globale_synopsis
+
   # Méthode qui reçoit en entrée un score (tel qu'enregistré dans un fichier
   # unique ou envoyé par Aajx) et qui retourne une table de résultat (cf.
   # ci-dessous).
