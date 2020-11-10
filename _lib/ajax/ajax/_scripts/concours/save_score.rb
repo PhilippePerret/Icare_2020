@@ -31,6 +31,20 @@ begin
   log("Résultat des calculs : #{resultats.inspect}")
   # Ajax << {note_generale:resultats[:note_generale], pourcentage_reponses: resultats[:pourcentage_reponses]}
   Ajax << resultats
+
+  # On doit réinitialiser pre_note ou fin_note en fonction de la phase pour
+  # recalculer les changements
+  prop_note = if phase == 1 || phase == 2
+                'pre_note'
+              elsif phase == 3
+                'fin_note'
+              else
+                nil
+              end
+  # On update
+  request = "UPDATE concurrents_per_concours SET #{prop_note} = ? WHERE concurrent_id = ? AND annee = ?"
+  db_exec(request, [nil, concurrent_id, annee])
+
 rescue Exception => e
   log("# ERREUR : #{e.message}")
   log("# Backtrace : #{e.backtrace.join("\n")}")
