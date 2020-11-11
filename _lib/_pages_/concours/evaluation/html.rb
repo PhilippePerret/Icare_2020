@@ -30,7 +30,6 @@ class HTML
       add_js('./js/modules/ajax')
       require_xmodule('synopsis')
       require_xmodule('admin/constants')
-
       @annee      = ANNEE_CONCOURS_COURANTE
       @concurrent = Concurrent.get(param(:cid)) if param(:cid)
       if @concurrent && not(param(:synoid))

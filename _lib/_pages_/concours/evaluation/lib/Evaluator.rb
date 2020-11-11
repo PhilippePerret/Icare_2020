@@ -74,4 +74,10 @@ def initialize(data_ini)
   @data_ini = data_ini
   @data_ini.each{|k,v|instance_variable_set("@#{k}",v)}
 end #/ initialize
+def jury1?
+  data_ini[:jury] & 1 > 0
+end #/ jury1?
+def jury2?
+  data_ini[:jury] & 2 > 0
+end #/ jury2?
 end #/Evaluator
