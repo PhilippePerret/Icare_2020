@@ -24,6 +24,12 @@ def rejoint_le_concours
   screenshot("after-login-member-#{id}")
 end
 
+# Procédure de déconnexion de l'évaluator courant
+def se_deconnecte
+  find("div.usefull-links").hover
+  click_on("Se déconnecter")
+end #/ se_deconnecte
+
 def fiche_evaluation(conc)
   JSON.parse(File.read(path_fiche_evaluation(conc)))
 end #/ fiche_evaluation
@@ -36,6 +42,7 @@ class << self
   # OUT   Un évaluateur choisi au hasard ou suivant les options +options+
   # IN    +options+ Table d'options parmi :
   #         :femme      Si true, une jurée
+  #         :jury   1, 2 ou 3 suivant le jury auquel il doit appartenir
   #         :fiche_evaluation   NIL ou un {Concurrent}. Si défini, on doit
   #             s'assurer que l'évaluateur possède bien une fiche d'évaluation
   #             pour le concurrent désigné pour la présélection. Dans le cas
@@ -44,7 +51,14 @@ class << self
   #             Idem que ci-dessus mais pour la fiche d'évaluation pour le prix.
   #
   def get_random(options = nil)
-    e = new(evaluators.shuffle.shuffle.shuffle.first)
+    options ||= {}
+    candidats = if options.key?(:jury)
+                  evaluators.select{|de| de[:jury] == options[:jury]}
+                else
+                  evaluators.shuffle.shuffle
+                end
+    # On prend le premier candidat après avoir mélangé la liste
+    e = new(candidats.shuffle.first)
     if options[:fiche_evaluation]
       conc = options[:fiche_evaluation]
       eval_file = e.path_fiche_evaluation(conc)

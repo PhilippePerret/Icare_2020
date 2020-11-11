@@ -63,6 +63,17 @@ class << self
       end
     end
   end #/ try_reconnect_evaluator
+
+  # Pour déconnecter l'évaluateur courant
+  def deconnect_evaluator
+    current || try_reconnect_evaluator
+    pseudo = (current&.pseudo || 'cher membre').freeze
+    session.delete('concours_evaluator_id')
+    session.delete('concours_evaluator_mail')
+    message("À très bientôt, #{pseudo} !")
+    redirect_to("concours/accueil")
+  end #/ deconnect_evaluator
+
 end # /<< self
 # ---------------------------------------------------------------------
 #

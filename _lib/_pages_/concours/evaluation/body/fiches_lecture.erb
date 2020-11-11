@@ -4,6 +4,12 @@ self.titre = "Fiches de lecture"
 # Boucle sur la liste des synopsis classés par note
 %>
 
+<%
+if Concours.current.phase == 0
+  redirect_to("concours/evaluation")
+end
+%>
+
 <div class="left">
   <%= sorting_tools(param(:ks), param(:ss)) %>
 </div>

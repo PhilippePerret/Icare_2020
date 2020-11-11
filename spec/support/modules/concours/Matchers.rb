@@ -3,6 +3,30 @@
 =begin
   Matchers pour le concours
 =end
+RSpec::Matchers.define :be_accueil_concours do
+  match do |page|
+    page.has_css?("h2.page-title", text: "Concours de Synopsis de l'atelier Icare")
+  end
+  description do
+    "C'est bien la page d'accueil du concours"
+  end
+  failure_message do
+    "Ce n'est pas la page d'accueil du concours, ou alors elle n'est pas conforme."
+  end
+end
+
+RSpec::Matchers.define :be_accueil_jury do
+  match do |page|
+    page.has_css?("h2.page-title", text: "Accueil des membres du jury du concours")
+  end
+  description do
+    "C'est bien la page d'accueil du concours"
+  end
+  failure_message do
+    "Ce n'est pas la page d'accueil du concours, ou alors elle n'est pas conforme."
+  end
+end
+
 RSpec::Matchers.define :be_identification do
   match do |page|
     page.has_css?("h2.page-title", text: "Identification") &&
@@ -16,6 +40,19 @@ RSpec::Matchers.define :be_identification do
   end
 end
 
+RSpec::Matchers.define :be_identification_evaluator do
+  match do |page|
+    page.has_css?("h2.page-title", text: "Identification") &&
+    page.has_css?("form#concours-membre-login")
+  end
+  description do
+    "C'est bien la page d'identification des membres du jury du concours"
+  end
+  failure_message do
+    "Ce n'est pas la page d'identification des membres du jury du concours, ou alors elle n'est pas conforme."
+  end
+end
+
 RSpec::Matchers.define :be_cartes_synopsis do
   match do |page|
     page.has_css?("h2.page-title", text: "Cartes des synopsis")
@@ -25,6 +62,18 @@ RSpec::Matchers.define :be_cartes_synopsis do
   end
   failure_message do
     "Ce n'est pas la page des cartes des synopsis."
+  end
+end
+
+RSpec::Matchers.define :be_fiches_lecture do
+  match do |page|
+    page.has_css?("h2.page-title", text: "Fiches de lecture")
+  end
+  description do
+    "C'est bien la page des fiches de lecture"
+  end
+  failure_message do
+    "Ce n'est pas la page des fiches de lecture."
   end
 end
 

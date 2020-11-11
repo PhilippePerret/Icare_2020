@@ -18,3 +18,9 @@ if user.admin?
     Tag.link(text:"Exporter les fiches", route:"concours/evaluation?view=fiches_lecture&op=exportfiches")
   ]
 end
+
+if html.evaluator
+  ADMIN_USEFULL_LINKS += [
+    Tag.link(text:"Se déconnecter", route:"concours/evaluation?op=logout")
+  ]
+end

@@ -26,6 +26,8 @@ class HTML
       if param(:op) == 'login'
         Evaluator.authentify_evaluator
       end
+    elsif param(:op) == 'logout'
+      Evaluator.deconnect_evaluator
     elsif Evaluator.try_reconnect_evaluator
       add_js('./js/modules/ajax')
       require_xmodule('synopsis')
