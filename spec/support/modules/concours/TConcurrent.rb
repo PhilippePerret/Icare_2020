@@ -344,6 +344,10 @@ alias :id :concurrent_id
 # Noter que cette déconnexion n'a rien à voir avec la connexion de l'atelier
 def se_deconnecte
   visit("#{App::URL}/concours/espace_concurrent")
+  # On doit faire disparaitre le message s'il y en a un
+  if page.has_css?("section#messages")
+    page.find("section#messages").click
+  end
   click_link("Se déconnecter")
 end #/ se_deconnecte
 

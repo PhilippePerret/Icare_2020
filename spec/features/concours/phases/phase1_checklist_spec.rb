@@ -106,9 +106,9 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
       expect(page).to have_message("Nouveau score enregistré. La nouvelle note est 12.3 (14.5 pour l'ensemble des évaluations)")
       # On mémorise cette note affichée pour la retrouver dans la liste des
       note_evaluator = page.find("#message-note_evaluator").text
-      note_generale  = page.find("#message-note_generale").text
+      note  = page.find("#message-note").text
       expect(page).to have_css("span#note_evaluator", text: note_evaluator)
-      expect(page).to have_css("span#note_generale",  text: note_generale)
+      expect(page).to have_css("span#note",  text: note)
 
       pitch("Le membre du jury, grâce à un lien évident, retourne à la liste des synopsis pour voir la nouvelle note affichée")
       expect(page).to have_link("Fiches des synopsis")

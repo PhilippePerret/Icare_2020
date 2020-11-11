@@ -5,7 +5,7 @@
   concours de synopsis (qui se doit d'être absolument intraitable)
 =end
 RESKEYS = [:note, :note_abs, :pourcentage, :nb_questions, :nb_reponses, :nb_missings]
-KD2KH = {note: :note_generale, note_abs: :note_absolue, pourcentage: :pourcentage_reponses,
+KD2KH = {note: :note, note_abs: :note_absolue, pourcentage: :pourcentage_reponses,
 nb_questions: :nombre_questions, nb_reponses: :nombre_reponses, nb_missings: :nombre_missings}
 
 shared_examples_for "un bon résultat" do |yfile|
@@ -19,7 +19,7 @@ shared_examples_for "un bon résultat" do |yfile|
         attente = data[:attente]
         fails   = data[:fails]
         ConcoursCalcul.nombre_absolu_questions = data[:nombre_questions]
-        result  = ConcoursCalcul.note_generale_et_pourcentage_from(score, true)
+        result  = ConcoursCalcul.note_et_pourcentage_from(score, true)
 
         # if attente.key?(:note_max)
         #   notemax, imax = traite_val_note(attente[:note_max])
@@ -40,7 +40,7 @@ shared_examples_for "un bon résultat" do |yfile|
         attente = data[:attente]
         fails   = data[:fails]
         ConcoursCalcul.nombre_absolu_questions = data[:nombre_questions]
-        reshash = ConcoursCalcul.note_generale_et_pourcentage_from(score, false)
+        reshash = ConcoursCalcul.note_et_pourcentage_from(score, false)
         KD2KH.each do |ka, kh|
           val, init_val = traite_val_note(attente[ka], (data[:coef200] if ka.to_s.start_with?('note')))
           expect(reshash[kh]).to eq(val),
@@ -77,7 +77,7 @@ describe 'Le module de calcul du concours de synopsis (class ConcoursCalcul)' do
 
   context 'avec as_struct à true' do
     it 'retourne une structure avec les bonnes méthodes-propriétés' do
-      res = ConcoursCalcul.note_generale_et_pourcentage_from({}, as_struct = true)
+      res = ConcoursCalcul.note_et_pourcentage_from({}, as_struct = true)
       expect(res).to be_a(ResScore)
       expect(res).to respond_to(:note)
       expect(res).to respond_to(:note_abs)
@@ -89,9 +89,9 @@ describe 'Le module de calcul du concours de synopsis (class ConcoursCalcul)' do
   end #/context score vide
   context 'avec as_struct à false' do
     it 'retourne une table Hash avec les bonnes clés' do
-      res = ConcoursCalcul.note_generale_et_pourcentage_from({}, as_struct = false)
+      res = ConcoursCalcul.note_et_pourcentage_from({}, as_struct = false)
       expect(res).to be_a(Hash)
-      expect(res).to have_key(:note_generale)
+      expect(res).to have_key(:note)
       expect(res).to have_key(:note_absolue)
       expect(res).to have_key(:pourcentage_reponses)
       expect(res).to have_key(:nombre_questions)

@@ -27,9 +27,9 @@ begin
 
   log("evaluator: #{evaluator}, synopsis_id:#{synopsis_id}, score:#{score}")
 
-  resultats = ConcoursCalcul.note_generale_et_pourcentage_from(score)
+  resultats = ConcoursCalcul.note_et_pourcentage_from(score)
   log("Résultat des calculs : #{resultats.inspect}")
-  # Ajax << {note_generale:resultats[:note_generale], pourcentage_reponses: resultats[:pourcentage_reponses]}
+  # Ajax << {note:resultats[:note], pourcentage_reponses: resultats[:pourcentage_reponses]}
   Ajax << resultats
 
   # On doit réinitialiser pre_note ou fin_note en fonction de la phase pour

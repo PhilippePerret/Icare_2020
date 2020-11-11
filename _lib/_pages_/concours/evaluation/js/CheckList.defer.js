@@ -149,7 +149,7 @@ onSave(results){
     if (ret.error) erreur(ret.error)
     else {
       message("Le nouveau score enregistré.");
-      this.synopsis.updateNote(ret.note_generale);
+      this.synopsis.updateNote(ret.note);
       this.synopsis.updatePourcentReponses(ret.pourcentage_reponses)
     }
   });

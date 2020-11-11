@@ -26,6 +26,10 @@ end
 
 # Procédure de déconnexion de l'évaluator courant
 def se_deconnecte
+  # On doit faire disparaitre le message s'il y en a un
+  if page.has_css?("section#messages")
+    page.find("section#messages").click
+  end
   find("div.usefull-links").hover
   click_on("Se déconnecter")
 end #/ se_deconnecte

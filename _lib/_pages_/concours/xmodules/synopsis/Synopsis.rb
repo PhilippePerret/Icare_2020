@@ -72,8 +72,8 @@ end #/ get
     # 2) On peut classer les synopsis avec fichier
     if key == 'note'
       # avec_fichiers = avec_fichiers.sort_by{ |syno| syno.fiche_lecture.total.note }.reverse
-      avec_fichiers = avec_fichiers.sort_by{ |syno| syno.note_generale.to_f }
-      avec_fichiers.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total.undefined? }
+      avec_fichiers = avec_fichiers.sort_by{ |syno| syno.note.to_f }
+      avec_fichiers.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total(options).undefined? }
     else # ket = :progress
       avec_fichiers.sort_by! { |syno| syno.nombre_reponses }
     end
@@ -242,18 +242,18 @@ end #/ fiche_lecture
 # OUT   La note générale pour un évaluateur donné
 #       (sinon, pour la note moyenne, cf. formated_pre_note ou
 #        formated_fin_note)
-def formated_note_generale
-  note_generale || "---"
+def formated_note
+  note || "---"
 end
 
 def formated_note_globale
   note_globale || "---"
 end #/ formated_note_globale
 
-def note_generale
+def note
   data_score || get_data_score
-  data_score[:note_generale]
-end #/ note_generale
+  data_score[:note]
+end #/ note
 
 def note_globale
   ConcoursCalcul.note_globale_synopsis(self.id)
@@ -282,7 +282,7 @@ def get_data_score
       dscore = JSON.parse(File.read(score_evaluator_path))
     end
   end
-  @data_score = ConcoursCalcul.note_generale_et_pourcentage_from(dscore)
+  @data_score = ConcoursCalcul.note_et_pourcentage_from(dscore)
   if not dscore.empty?
     # log("@data_score obtenu pour #{id} : #{@data_score.inspect}")
   else

@@ -9,6 +9,8 @@
     - calcule les notes finales
     - calcule LA note générale du synopsis
     - produit la note en langage humain d'après les résultats
+    Note : elle peut produire une fiche de lecture par évaluateur (POUR l'évaluateur,
+    afin qu'il puisse voir si ça correspond à son ressenti général)
 
   CONTENU
   -------
@@ -40,9 +42,7 @@ DATA_CATEGORIES = {
 
 DATA_MAIN_PROPERTIES = YAML.load_file(DATA_MAIN_PROPERTIES_FILE)
 
-class << self
 
-end # /<< self
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
@@ -70,8 +70,18 @@ def pdf_filename
 end #/ pdf_filename
 
 # Sortie de la fiche de lecture du synopsis
+#
+# IN    +options+ Table d'options, cnotient :
+#           :format     Le format de sortie (seulement :concurrent pour le
+#                       moment, mais ça s'adresse à tout le monde, en fait)
+#           :evaluator  Si NIL, c'est la note totale qui est considérée.
+#                       Si défini, c'est l'identifiant de l'évaluateur et il
+#                       faut afficher la fiche en fonction de ses notes seulement.
+#                       Note : tout se joue simplement au niveau du rassemblement
+#                       des résultats : si :evaluator est défini, on prend SA
+#                       fiche seulement, sinon on prend TOUTES les fiches.
 def out(options = nil)
-  rassemble_resultats
+  rassemble_resultats(options)
   dispatche_per_element
   case options[:format]
   when :concurrent
@@ -110,17 +120,15 @@ def formated_auteurs
   synopsis.real_auteurs
 end #/ auteurs
 
-def all_enotes
-  @all_enotes || begin
-    rassemble_resultats
-    dispatche_per_element
-  end
-  @all_enotes
+def all_enotes(options)
+  rassemble_resultats(options)
+  dispatche_per_element
+  return @all_enotes
 end #/ all_enotes
 
 # Pour la gestion du total
-def total
-  @total ||= ENotesFL.new(:total, all_enotes)
+def total(options)
+  @total ||= ENotesFL.new(:total, all_enotes(options))
 end #/ total
 
 # Position du synopsis par rapport aux autres synopsis
@@ -170,23 +178,30 @@ end #/ facteurU
 # Cette table de résultats contiendra :
 #   - date:         La date d'établissement de cette table
 #   - evaluators:   Les ID des évaluateurs trouvés par rapport aux fichiers
-#   - note_generale   La note générale
+#   - note   La note générale
 #   - coherence:
 #       - nombre_questions:   Nombre totale de questions
 #       - nombre_done:        Nombre de questions répondu
 #       - notes
-#       - note_generale
+#       - note
 #   - adequation_theme
 #       - nombre_questions
 #       - nombre_done
 #       - notes
-#       - note_generale
+#       - note
 #
-def rassemble_resultats(pour_prix = false)
+def rassemble_resultats(options = nil)
+  options ||= {}
   @ENotes = {}
   @all_enotes = []
-  key_eval = pour_prix ? 'prix' : 'pres'
-  Dir["#{synopsis.folder}/evaluation-#{key_eval}-*.json"].each do |fpath|
+  key_eval = options[:prix] ? 'prix' : 'pres'
+  evaluations = if options[:evaluator]
+    [File.join(synopsis.folder,"evaluation-#{key_eval}-#{options[:evaluator]}.json")]
+  else
+    Dir["#{synopsis.folder}/evaluation-#{key_eval}-*.json"]
+  end
+  evaluations.each do |fpath|
+    next if not File.exists?(fpath)
     evaluation_id = File.basename(fpath,File.extname(fpath)).split("-")
     concurrent_id, evaluator_id = evaluation_id
     JSON.parse(File.read(fpath)).each do |k, note|

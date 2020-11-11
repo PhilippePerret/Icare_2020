@@ -22,6 +22,7 @@
     - triées par pourcentage d'évaluation
 =end
 require_relative './_required'
+require_relative './fiches_lectures_per_phase/shared_examples'
 
 def member_jury1
   @member_jury1 ||= TEvaluator.get_random(jury: 1)
@@ -31,38 +32,6 @@ def member_jury2
 end
 def member_jury3
   @member_jury3 ||= TEvaluator.get_random(jury: 3)
-end
-
-RSpec.shared_examples "un visiteur renvoyé à l’identification" do
-  it 'est renvoyé à l’identification' do
-    goto("concours/evaluation?view=fiches_lecture")
-    expect(page).not_to be_fiches_lecture
-    expect(page).to be_identification_evaluator
-  end
-end
-RSpec.shared_examples "un visiteur renvoyé à l'accueil du jury" do |visitor|
-  it 'est renvoyé à l’accueil du concours' do
-    visitor.rejoint_le_concours if visitor.is_a?(TEvaluator)
-    goto("concours/evaluation?view=fiches_lecture")
-    expect(page).not_to be_fiches_lecture
-    expect(page).to be_accueil_jury
-    visitor.se_deconnecte if visitor.is_a?(TEvaluator)
-    screenshot("deconnexion-membre-jury")
-  end
-end
-
-RSpec.shared_examples "un membre autorisé à voir les fiches de lecture" do |visitor|
-  it 'peut voir les fiches de lecture avec ses notes personnelles' do
-    visitor.rejoint_le_concours if visitor.is_a?(TEvaluator)
-    goto("concours/evaluation?view=fiches_lecture")
-    expect(page).to be_fiches_lecture
-    pending("Vérifier que les notes soient bien les notes de l'évaluator")
-    # TODO
-    pending("Vérifier que l'ordre de classement soit bien celui qui dépend des notes du membre courant")
-    # TODO
-    visitor.se_deconnecte if visitor.is_a?(TEvaluator)
-    screenshot("deconnexion-membre-jury")
-  end
 end
 
 feature "La liste des fiches de lecture" do
@@ -79,15 +48,15 @@ feature "La liste des fiches de lecture" do
       it_behaves_like "un visiteur renvoyé à l’identification"
     end
     context 'un membre du jury 1' do
-      it_behaves_like "un visiteur renvoyé à l'accueil du jury", member_jury1
+      it_behaves_like "un juré renvoyé à l'accueil du jury", member_jury1
     end
     context 'un membre du jury 2' do
-      it_behaves_like "un visiteur renvoyé à l'accueil du jury", member_jury2
+      it_behaves_like "un juré renvoyé à l'accueil du jury", member_jury2
     end
-    context 'un administrateur', only:true do
+    context 'un administrateur' do
       before(:all)  { phil.rejoint_le_site }
       after(:all)   { Capybara.reset_sessions! }
-      it_behaves_like "un visiteur renvoyé à l'accueil du jury", phil
+      it_behaves_like "un juré renvoyé à l'accueil du jury", phil
     end
   end
 
@@ -99,16 +68,16 @@ feature "La liste des fiches de lecture" do
     context 'un visiteur quelconque' do
       it_behaves_like "un visiteur renvoyé à l’identification"
     end
-    context 'un membre du jury 1' do
-      it_behaves_like "un visiteur autorisé à voir les fiches de lecture", member_jury1
+    context 'un membre du jury 1', only:true do
+      it_behaves_like "un juré autorisé à voir les fiches de lecture", member_jury1
     end
     context 'un membre du jury 2' do
-      it_behaves_like "un visiteur renvoyé à l'accueil du jury", member_jury2
+      it_behaves_like "un juré renvoyé à la liste des synopsis", member_jury2
     end
-    context 'un administrateur', only:true do
+    context 'un administrateur' do
       before(:all)  { phil.rejoint_le_site }
       after(:all)   { Capybara.reset_sessions! }
-      it_behaves_like "un visiteur renvoyé à l'accueil du jury", phil
+      it_behaves_like "un juré autorisé à voir les fiches de lecture", phil
     end
   end # contexte : en phase 1
 

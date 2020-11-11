@@ -2,22 +2,42 @@
 # frozen_string_literal: true
 self.titre = "Fiches de lecture"
 # Boucle sur la liste des synopsis classés par note
+
+phase = Concours.current.phase
+
 %>
 
 <%
-if Concours.current.phase == 0
+if phase == 0
+  redirect_to("concours/evaluation")
+elsif user.admin?
+  # Un administrateur peut toujours passer. Son classement indique sa
+  # note personnelle et la note général du synopsis en fonction de la
+  # phase.
+elsif phase == 1 && not(evaluator.jury1?)
+  message("La liste des fiches de lecture n'est pas encore consultable.")
   redirect_to("concours/evaluation")
 end
+
+
+param(:ks) || param(:ks, 'note')
+param(:ss) || param(:ss, 'desc')
+
+# Options pour le total (pour savoir s'il faut prendre les notes pour le
+# palmarès final et/ou seulement les notes de l'évaluator courant)
+options = {
+  prix: (phase >= 3), evaluator: evaluator&.id, admin: user.admin?
+}
 %>
 
 <div class="left">
   <%= sorting_tools(param(:ks), param(:ss)) %>
 </div>
 <div id="fiches-lecture">
-  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss)) %>
+  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss), options) %>
   <% if fiches_synopsis.count > 0 %>
     <% fiches_synopsis.each do |synopsis| %>
-      <%= synopsis.fiche_lecture.out(format: :concurrent) %>
+      <%= synopsis.fiche_lecture.out(options.merge(format: :concurrent)) %>
     <% end %>
   <% else %>
     <p>Il n'y a pas encore d’inscrit au concours <%= Concours.current.annee %>.</p>

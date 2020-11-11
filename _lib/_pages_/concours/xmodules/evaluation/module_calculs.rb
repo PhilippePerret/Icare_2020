@@ -31,9 +31,9 @@
 =end
 require './_lib/_pages_/concours/xrequired/constants_mini'
 
-ResScore = Struct.new(:note, :note_abs, :pourcentage, :nb_questions, :nb_reponses, :nb_missings)
+ResScore = Struct.new(:owners, :note, :note_abs, :pourcentage, :nb_questions, :nb_reponses, :nb_missings)
 
-class ConcoursCalcul
+class ConcoursScore
 
 # Coefficiant de profondeur.
 # Plus une question est "profonde" (i.e. imbriquée dans une autre) moins elle
@@ -67,7 +67,7 @@ class << self
     nombre_evaluations = 0
     evaluations.each do |file_eval|
       score = YAML.load_file(file_eval)
-      ns = note_generale_et_pourcentage_from(score, true).note
+      ns = note_et_pourcentage_from(score, true).note
       log("ns = #{ns.inspect}")
       if ns != '---'
         n += ns
@@ -82,149 +82,6 @@ class << self
     end
     return n
   end #/ note_globale_synopsis
-
-  # Méthode qui reçoit en entrée un score (tel qu'enregistré dans un fichier
-  # unique ou envoyé par Aajx) et qui retourne une table de résultat (cf.
-  # ci-dessous).
-  #
-  # IN    +score+ Table des scores, avec en clé la clé de la question (p.e. "po"
-  #           ou "po-li") et en valeur la note attribuée, de 0 à 5 ou '-' quand
-  #           elle n'est pas renseignée. Ces notes sont pondérées en fonction
-  #           de leur profondeur. Plus elles sont profondes et moins elles ont
-  #           de valeurs.
-  # IN    +as_struct+   Si true, la méthode retourne plutôt une Structure
-  #           qui répondra aux méthodes :note, :pourcentage, et les autres
-  #           propriétés comme pour le Hash ci-dessous
-  # OUT   {Hash} contenant :
-  #           :note_generale      Le note sur 20.0 (donc 1 décimale)
-  #           :note_absolue       Contrairement à :note_generale qui ne compte
-  #                               que les réponses qui ont été données, la note
-  #                               absolue tient compte des réponses non données
-  #           :nombre_questions   Le nombre total de questions
-  #           :nombre_reponses    Le nombre de réponses données
-  #           :nombre_missings    Le nombre de questions non répondues
-  #           :pourcentages_reponses    Le % de réponses correspondant. Par ex.,
-  #               si l'évaluateur répond à un tiers des questions seulement, ce
-  #               nombre vaut 33.3. C'est le nombre qui sert pour la jauge.
-  #       OU
-  #       {Struct} :note, :note_abs, :pourcentage, :nombre_questions, nombre_reponses,
-  #           :nombre_missings
-  #
-  def note_generale_et_pourcentage_from(score, as_struct = false)
-    n     = 0.0 # pour la note générale
-    na    = 0.0 # pour la note général absolues (où les "-" valent 0)
-    nmax  = 0.0 # pour la note maximale possible
-    namax = 0.0 # pour la note maximale avec les "-" qui sont comptabilisées
-    naq = nombre_absolu_questions.to_f
-    nqs = 0.0 # nombre de questions dans le score (répondues ou non)
-    nr  = 0.0 # pour Nombre Réponses, le nombre de réponses données
-
-    if score.empty?
-      n   = '---'
-      na  = 0.0
-      pct = 0.0
-    else
-      score.each do |k, v|
-        nqs += 1.0
-        # Le coefficiant à appliquer à la note de la réponse, en fonction
-        # de sa profondeur
-        coef = DEEPNESS_COEF[k.split('-').count]
-        unless v == "-"
-          # <= Une note a été donnée
-          v = v.to_f
-          # On incrémente le nombre de réponses données
-          nr += 1.0
-          # On ajoute cette valeur de réponse à la note finale
-          n     += v   * coef
-          nmax  += 5.0 * coef
-        else
-          v = 0.0
-        end
-        # On comptabilise toujours pour la note absolue
-        na    += v   * coef
-        namax += 5.0 * coef
-      end
-      # --- On a fini de calculer la note totale et la note maximal ---
-
-      # Si le nombre de réponses dans le score (même celles à "-") est différent
-      # du nombre absolu (quand, par exemple, des questions ont été créées après
-      # l'établissement de cette évaluation)
-      # Alors il faut ajouter à la note max possible
-      if naq > nqs
-        (naq - nqs).to_i.times do
-          namax += 5.0
-        end
-      end
-
-      # --- Coefficiant 200 ---
-      coef200   = 20.0 / nmax
-      coefa200  = 20.0 / namax
-
-
-      if nr > 0
-        n   = (n  * coef200 ).round(1)
-        na  = (na * coefa200).round(1)
-        pct = (100.0 / (naq / nr)).round(1)
-      else
-        n   = '---'
-        na  = 0.0
-        pct = 0.0
-      end
-    end
-    nu  = naq - nr
-    # Le nombre de réponses en integer
-    nr  = nr.to_i
-    nu  = nu.to_i
-    nqs = nqs.to_i
-    # Le résultat retourné, soit une structure, soit une table Hash
-    if as_struct
-      return ResScore.new(n, na, pct, nqs, nr, nu)
-    else
-      return {note_generale:n, note_absolue:na, pourcentage_reponses:pct, nombre_questions:nqs, nombre_reponses:nr, nombre_missings:nu}
-    end
-  end #/ note_generale_et_pourcentage_from
-  # def note_generale_et_pourcentage_from(score, as_struct = false)
-  #   n   = 0.0 # pour la note générale
-  #   nq  = nombre_absolu_questions
-  #   nqs = 0 # nombre de questions dans le score (répondues ou non)
-  #   if score.empty?
-  #     n   = '---'
-  #     na  = 0
-  #     pct = 0
-  #     nr  = 0
-  #   else
-  #     nombre_reponses   = 0
-  #     nbabs_reponses    = 0 # le nombre réel de réponses auquel on applique le coefficiant
-  #     score.each do |k, v|
-  #       nqs += 1
-  #       unless v == "-"
-  #         nombre_reponses += 1
-  #         coef = DEEPNESS_COEF[k.split('-').count]
-  #         n += v.to_f * coef
-  #         # Combien vaut cette réponse en nombre absolu de réponse ?
-  #         # Cela dépend du coeffiant
-  #         nbabs_reponses += 1.0 * coef
-  #       end
-  #     end
-  #     nr  = nombre_reponses
-  #     if nr > 0
-  #       n   = (4.0 * ( n.to_f / nbabs_reponses )).round(1)
-  #       pct = (100.0 / (nq.to_f / nr)).round(1)
-  #       na  = (n.to_f * pct / 100).round(1) # Calcul de la note absolue.
-  #     else
-  #       n   = '---'
-  #       pct = 0.0
-  #       na  = 0.0
-  #     end
-  #   end
-  #   nu  = nq - nr
-  #   if as_struct
-  #     return ResScore.new(n, na, pct, nqs, nr, nu)
-  #   else
-  #     return {note_generale:n, note_absolue:na, pourcentage_reponses:pct, nombre_questions:nqs, nombre_reponses:nr, nombre_missings:nu}
-  #   end
-  # end #/ note_generale_et_pourcentage_from
-
 
   def nombre_absolu_questions
     @nombre_absolu_questions ||= begin
@@ -241,5 +98,230 @@ class << self
     @nombre_absolu_questions = val
   end #/ nombre_absolu_questions=
 
-end # /<< self
+end # << self
+
+attr_reader :score_path
+attr_reader :note, :note_abs, :pourcentage, :owners
+attr_reader :nombre_questions, :nombre_reponses, :nombre_missings
+
+# *** Initialisation ***
+# On initialise un nouveau ConcoursScore avec le chemin d'accès à son
+# fichier (appelé "fichier d'évaluation" ou "fichier score")
+def initialize(score_path = nil)
+  unless score_path.nil?
+    @score_path ||= score_path
+    parse
+  end
+end #/ initialize
+
+# ---------------------------------------------------------------------
+#
+#   Propriétés du score
+#
+# ---------------------------------------------------------------------
+def preselections?
+  type == 'pres'
+end #/ preselections?
+def palmares?
+  type = 'prix'
+end #/ palmares?
+def score_name
+  @score_name ||= File.basename(score_path)
+end #/ score_name
+def type
+  @type ||= score_name.split('-')[1]
+end #/ type
+
+# Donnée (Hash) du score
+def score
+  @score ||= begin
+    if File.exists?(score_path)
+      JSON.parse(File.read(score_path))
+    else
+      {}
+    end
+  end
+end #/ score
+
+# = main =
+#
+# Méthode qui parse le score s'il existe.
+#
+# IN    void ou la table d'un score (surtout pour les tests)
+# OUT   void
+# DO    Définit les propriétés de l'instance
+#           :note      Le note sur 20.0 (donc 1 décimale)
+#           :note_absolue       Contrairement à :note qui ne compte
+#                               que les réponses qui ont été données, la note
+#                               absolue tient compte des réponses non données
+#           :owners  Les appartenances, en fonction de la clé de chaque
+#               question. Cette table contient en clé l'élément de clé (par
+#               exemple les clés "p", "cohe" et "adth" si la question porte
+#               l'identifiant "p-cohe-adth") et en valeur :
+#               total: le nombre de points pour cette clé, :totmax, la valeur
+#               maximale qu'on pouvait obtenir, nombre: le nombre de notes
+#               notes: les notes obtenues (juste pour historique)
+#           :nombre_questions   Le nombre total de questions
+#           :nombre_reponses    Le nombre de réponses données
+#           :nombre_missings    Le nombre de questions non répondues
+#           :pourcentages_reponses    Le % de réponses correspondant. Par ex.,
+#               si l'évaluateur répond à un tiers des questions seulement, ce
+#               nombre vaut 33.3. C'est le nombre qui sert pour la jauge.
+#
+def parse(sco = nil)
+  @score = sco unless sco.nil?
+  n     = 0.0 # pour la note générale
+  na    = 0.0 # pour la note général absolues (où les "-" valent 0)
+  nmax  = 0.0 # pour la note maximale possible
+  namax = 0.0 # pour la note maximale avec les "-" qui sont comptabilisées
+  naq   = self.class.nombre_absolu_questions.to_f
+  nqs   = 0.0 # nombre de questions dans le score (répondues ou non)
+  nr    = 0.0 # pour Nombre Réponses, le nombre de réponses données
+
+  # Pour le dispatch des questions par "catégorie" (projet, personnage,
+  # thème, etc.)
+  owners = {} # maintenant, tout sera mis dans cette table
+
+  if score.empty?
+    n   = '---'
+    na  = 0.0
+    pct = 0.0
+  else
+    score.each do |k, v|
+      nqs += 1.0
+      # Les éléments de la clé, qui détermine les appartenances de la
+      # question. Par exemple, si la clé contient "p-cohe-adth", la note
+      # appartient aux personnage ("p"), à la cohérence ("cohe") et à
+      # l'adéquation avec le thème ("adth"). On ajoutera la valeur de la note
+      # à chaque élément.
+      dk = k.split('-')
+      # Le coefficiant à appliquer à la note de la réponse, en fonction
+      # de sa profondeur
+      coef = DEEPNESS_COEF[dk.count]
+      maxcoef = 5.0 * coef
+      unless v == "-"
+        # <= Une note a été donnée
+        v = v.to_f
+        vcoef   = v * coef
+        # On incrémente le nombre de réponses données
+        nr += 1.0
+        # On ajoute cette valeur de réponse à la note finale
+        n    += vcoef
+        nmax += maxcoef
+      else
+        vcoef = 0.0
+      end
+      # On comptabilise toujours pour la note absolue
+      na    += vcoef
+      namax += maxcoef
+
+      # On règle toutes les appartenances grâce aux clés
+      dk.each do |sk|
+        if not owners.key?(sk)
+          owners.merge!(sk =>{total:0, totmax:0, nombre:0, notes:[]})
+        end
+        owners[sk][:total]  += vcoef
+        owners[sk][:totmax] += maxcoef
+        owners[sk][:nombre] += 1
+        owners[sk][:notes]  << vcoef.round(1)
+      end
+
+    end #/ fin de si cette note est définie
+    # --- On a fini de calculer la note totale et la note maximale ---
+    # --- ainsi que les notes pour chaque "catégorie"
+
+    # Pour finaliser owners, on boucle et on arrondit les valeurs
+    owners.each do |k, v|
+      v[:total] = v[:total].round(1)
+      v[:totmax] = v[:totmax].round(1)
+    end
+
+    # Si le nombre de réponses dans le score (même celles à "-") est différent
+    # du nombre absolu (quand, par exemple, des questions ont été créées après
+    # l'établissement de cette évaluation)
+    # Alors il faut ajouter à la note max possible
+    if naq > nqs
+      (naq - nqs).to_i.times do
+        namax += 5.0
+      end
+    end
+
+    # --- Coefficiant 200 ---
+    coef200   = 20.0 / nmax
+    coefa200  = 20.0 / namax
+
+
+    if nr > 0
+      n   = (n  * coef200 ).round(1)
+      na  = (na * coefa200).round(1)
+      pct = (100.0 / (naq / nr)).round(1)
+    else
+      n   = '---'
+      na  = 0.0
+      pct = 0.0
+    end
+  end
+  nu  = naq - nr
+  # Le nombre de réponses en integer
+  nr  = nr.to_i
+  nu  = nu.to_i
+  nqs = nqs.to_i
+  # On dispatche les valeurs
+  @owners = owners
+  @note = n
+  @note_abs = na
+  @pourcentage = pct
+  @nombre_questions = nqs
+  @nombre_reponses = nr
+  @nombre_missings = nu
+  # Pour l'avoir aussi sous forme de table
+  @table = {owners: owners, note:n, note_absolue:na, pourcentage_reponses:pct, nombre_questions:nqs, nombre_reponses:nr, nombre_missings:nu}
+end #/ parse
+# Pour la régression
+alias :note_et_pourcentage_from :parse
+
+# def note_et_pourcentage_from(score, as_struct = false)
+#   n   = 0.0 # pour la note générale
+#   nq  = nombre_absolu_questions
+#   nqs = 0 # nombre de questions dans le score (répondues ou non)
+#   if score.empty?
+#     n   = '---'
+#     na  = 0
+#     pct = 0
+#     nr  = 0
+#   else
+#     nombre_reponses   = 0
+#     nbabs_reponses    = 0 # le nombre réel de réponses auquel on applique le coefficiant
+#     score.each do |k, v|
+#       nqs += 1
+#       unless v == "-"
+#         nombre_reponses += 1
+#         coef = DEEPNESS_COEF[k.split('-').count]
+#         n += v.to_f * coef
+#         # Combien vaut cette réponse en nombre absolu de réponse ?
+#         # Cela dépend du coeffiant
+#         nbabs_reponses += 1.0 * coef
+#       end
+#     end
+#     nr  = nombre_reponses
+#     if nr > 0
+#       n   = (4.0 * ( n.to_f / nbabs_reponses )).round(1)
+#       pct = (100.0 / (nq.to_f / nr)).round(1)
+#       na  = (n.to_f * pct / 100).round(1) # Calcul de la note absolue.
+#     else
+#       n   = '---'
+#       pct = 0.0
+#       na  = 0.0
+#     end
+#   end
+#   nu  = nq - nr
+#   if as_struct
+#     return ResScore.new(n, na, pct, nqs, nr, nu)
+#   else
+#     return {note:n, note_absolue:na, pourcentage_reponses:pct, nombre_questions:nqs, nombre_reponses:nr, nombre_missings:nu}
+#   end
+# end #/ note_et_pourcentage_from
+
+
+
 end #/ConcoursCalcul
