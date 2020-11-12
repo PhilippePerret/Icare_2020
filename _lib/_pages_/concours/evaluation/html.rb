@@ -7,8 +7,6 @@ class HTML
   attr_accessor :titre
   # Juste pour que ce soit plus cours que ANNEE_CONCOURS_COURANTE
   attr_reader :annee
-  # Instance {Evaluator} de l'évaluateur (if any)
-  attr_accessor :evaluator
   # Instance du concurrent courant (if any — if param(:cid))
   attr_reader :concurrent
   # Instance du synopsis courant (if any - if param(:syno_id))
@@ -63,7 +61,7 @@ class HTML
           message("Exportation des fiches…")
           Synopsis.exporter_les_fiches
         end
-        require_xmodule('evaluation/module_calculs')
+        require_xmodule('evaluation/Evaluation')
         check_up_to_date
       end
     end #/si c'est bien un évaluateur

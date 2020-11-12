@@ -1,6 +1,8 @@
 <%
 # frozen_string_literal: true
 
+my_evaluation = evaluation_for(user.admin? ? user.id : evaluator_id)
+
 href_evaluation = "concours/evaluation?view=checklist&synoid=#{id}&cid=#{concurrent.id}"
 # *** Définition des boutons ***
 bouton_edit = Tag.link(text:"Éditer", class:"btn-edit small btn", route:"concours/evaluation?view=synopsis_form&synoid=#{id}")
@@ -28,23 +30,32 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
   <div id="synopsis-<%=id%>-titre" class="titre"><%=titre%></div>
   <div class="auteur">de <span id="synopsis-<%=id%>-pseudo" class=""><%=concurrent.patronyme%></span></div>
   <a id="synopsis-<%=id%>-note-generale" class="note-generale" href="<%= href_evaluation %>">
-    <span class="note-evaluator"><%=formated_note%></span>
-    <span class="note-globale<%= ' hidden' if not(user.admin?) %>" title="Note globale, sur 200, tenant compte des notes des autres membres du jury"><%=formated_note_globale%></span>
+    <span class="note-evaluator"><%=formate_note(my_evaluation.note)%></span>
+    <% if user.admin? %>
+      <span class="note-globale" title="Note globale tenant compte des notes des autres membres du jury"><%=formate_note(evaluation_for_all.note)%></span>
+    <% end %>
   </a>
-  <div id="synopsis-<%=id%>-pct-reponses" class="div-pct-reponses"><span class="pct-reponses"><%=pourcentage_reponses%></span> %</div>
+
+  <div id="synopsis-<%=id%>-pct-reponses" class="div-pct-reponses">
+    <span class="pct-reponses"><%=my_evaluation.pourcentage%></span><span> %</span>
+    <% if user.admin? %>
+      <span class="pct-reponses-all"><%=evaluation_for_all.pourcentage%></span><span> %</span>
+    <% end %>
+  </div>
+
   <div id="synopsis-<%=id%>-jauge-pct-reponses" class="jauge-pct-reponses">
-    <span class="jauge-pct-reponses-done" style="width:<%=pourcentage_reponses%>%;"></span>
+    <span class="jauge-pct-reponses-done" style="width:<%=my_evaluation.pourcentage%>%;"></span>
   </div>
   <div id="synopsis-<%=id%>-keywords" class="keywords"><%=formated_keywords%></div>
   <%# (Les boutons sont définis en haut de page) %>
   <div class="fiche-buttons center"><%=
-    bouton_edit if user.admin? and conforme? %><%=
-    bouton_evaluate if conforme? %><%
-    if user.admin? && not(conformity_defined?) %><%=
-      bouton_marquer_conforme if not(conforme?) %><%=
-      bouton_marquer_non_conforme if not(conforme?) %><%
-    elsif conforme? && not(user.id == phil.id) %><%=
-      bouton_telecharger if conforme? %><%
+    bouton_edit if user.admin? and cfile.conforme? %><%=
+    bouton_evaluate if cfile.conforme? %><%
+    if user.admin? && not(cfile.conformity_defined?) %><%=
+      bouton_marquer_conforme if not(cfile.conforme?) %><%=
+      bouton_marquer_non_conforme if not(cfile.conforme?) %><%
+    elsif cfile.conforme? && not(user.id == phil.id) %><%=
+      bouton_telecharger if cfile.conforme? %><%
     end
   %></div>
   <div class="synopsis-id"><%=id%></div>

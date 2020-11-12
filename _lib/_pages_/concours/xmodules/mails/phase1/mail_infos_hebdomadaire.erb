@@ -17,15 +17,15 @@ Ch<%=fem(:ere)%> <%= patronyme.patronimize %>,
 
 <p style="font-weight:bold;margin-top:50px;">ÉTAT DE VOTRE CANDIDATURE</p>
 
-<% if synopsis.sent? && synopsis.conforme? %>
+<% if synopsis.cfile.sent? && synopsis.cfile.conforme? %>
 
   <p>Votre fichier de candidature a été reçu et validé, il ne vous reste donc plus qu'à patienter jusqu'aux premiers résultats. Nous espérons que cette attente n'est pas trop stressante pour vous ;-).</p>
 
-<% elsif synopsis.sent? && not(synopsis.conforme?) %>
+<% elsif synopsis.cfile.sent? && not(synopsis.cfile.conforme?) %>
 
   <p>Nous avons bien reçu votre fichier de candidature, mais il nous faut valider sa conformité, ce que nous ne manquerons pas de faire très prochainement.</p>
 
-<% elsif synopsis.sent? && synopsis.to_modify? %>
+<% elsif synopsis.cfile.sent? && synopsis.cfile.to_modify? %>
 
   <p><span>Nous vous rappelons que nous attendons votre fichier de candidature corrigé.</span><% if CONCOURS.nombre_jours_echeance < 15
   %><span> Ne trainez pas trop, car l'échéance approche ;-).</span>
@@ -41,7 +41,7 @@ Ch<%=fem(:ere)%> <%= patronyme.patronimize %>,
 <% end %>
 
 <p style="font-size:1.1em;"><%
-  if synopsis.sent? %>
+  if synopsis.cfile.sent? %>
     <span>Votre projet “<span style="font-weight:bold;"><%=synopsis.titre%></span>” est</span>
   <% else %>
     <span>Vous êtes</span>

@@ -40,7 +40,7 @@ class << self
     log(e.backtrace.join("\n"))
     log(e)
     if defined?(Tag)
-      return Tag.div(text: "#{e.message} (#{File.basename(path)})", class:'warning')
+      return Tag.div(text: "#{e.message.gsub(/</,'&lt;')} (#{File.basename(path)})", class:'warning')
     else
       # Le cronjob, par exemple
       puts ERRORS[:erb_error_with] % path

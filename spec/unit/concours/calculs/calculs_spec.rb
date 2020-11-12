@@ -71,7 +71,7 @@ end
 
 describe 'Le module de calcul du concours de synopsis (class ConcoursCalcul)' do
   before(:all) do
-    require './_lib/_pages_/concours/xmodules/evaluation/module_calculs'
+    require './_lib/_pages_/concours/xmodules/evaluation/Evaluation'
     NOMBRE_QUESTIONS = File.read(NOMBRE_QUESTIONS_PATH).to_i
   end
 

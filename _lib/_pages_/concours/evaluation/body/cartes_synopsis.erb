@@ -1,6 +1,7 @@
 <%
 # frozen_string_literal: true
 phase = Concours.current.phase
+annee = Concours.current.annee
 CONCOURS_ON = [1,2,3,5,8].include?(phase)
 
 if CONCOURS_ON
@@ -47,11 +48,13 @@ formsynoeval.rows = {
 formsynoeval.submit_button = "Évaluer"
 formsynoeval.submit_button_class = "inline small"
 %>
-<%= formsynoeval.out %>
+<div class="right nolimit">
+  <%= formsynoeval.out %>
+</div>
 
 
 <%
-  options_sorting = case Concours.current.phase
+  options_sorting = case phase
                     when 1 then {}
                     when 2 then {avec_fichier_conforme: true}
                     when 3 then {preselecteds: true}
@@ -68,7 +71,7 @@ formsynoeval.submit_button_class = "inline small"
       <%= syno.out(evaluator.id) %>
     <% end %>
   <% else %>
-    <p>Il n'y a pas encore d’inscrit au concours <%= Concours.current.annee %>.</p>
+    <p>Il n'y a pas encore d’inscrit au concours <%= annee %>.</p>
   <% end %>
 </div>
 

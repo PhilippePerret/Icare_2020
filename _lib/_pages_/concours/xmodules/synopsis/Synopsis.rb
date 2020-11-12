@@ -8,7 +8,6 @@
   pas été envoyé. Mais dans ce cas, l'évaluation n'est pas encore possible.
 =end
 require_relative './constants'
-require_relative './ENotesFL'
 require_relative './FicheLecture'
 
 class Synopsis
@@ -61,7 +60,7 @@ end #/ get
         if options[:preselecteds]
           avec_fichiers << syno if syno.preselected?
         elsif options[:avec_fichier_conforme]
-          avec_fichiers << syno if syno.conforme?
+          avec_fichiers << syno if syno.cfile.conforme?
         else
           avec_fichiers << syno
         end
@@ -75,7 +74,7 @@ end #/ get
       avec_fichiers = avec_fichiers.sort_by{ |syno| syno.note.to_f }
       avec_fichiers.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total(options).undefined? }
     else # ket = :progress
-      avec_fichiers.sort_by! { |syno| syno.nombre_reponses }
+      avec_fichiers.sort_by! { |syno| syno.evaluation_for(html.evaluator.id).nombre_reponses||0 }
     end
     avec_fichiers = avec_fichiers.reverse if sens == 'desc'
     if options[:avec_fichier] || options[:avec_fichier_conforme]
@@ -105,6 +104,7 @@ attr_reader :data_score
 attr_accessor :evaluator_id
 # Position de classement par rapport à la note
 attr_accessor :position
+
 # Instanciation
 def initialize concurrent_id, annee, dat = nil
   @concurrent_id = concurrent_id
@@ -114,44 +114,75 @@ def initialize concurrent_id, annee, dat = nil
   @evaluator_id = @data[:evaluator_id]
 end #/ initialize
 
+# Évaluation en temps courant, en fonction du visiteur (admin, evaluator ou
+# concurrent) et la phase du concours. Sachant que :
+#   PHASE 0
+#     - Personne ne peut rien voir.
+#   PHASE 1
+#     - L'administrateur peut voir sa note, la note générale et la note de
+#       chaque membre du jury (peut-être en rangée)
+#     - un évaluateur du jury 1 peut voir sa fiche (et la modifier)
+#     - un évaluateur du jury 2 ne peut rien voir
+#     - un concurrent ne peut rien voir
+#   PHASE 2 (présélection)
+#     - Un administrateur peut voir sa note et la note générale
+#     - Un concurrent ne peut rien voir
+#     - Un évaluateur du jury 1 peut voir sa fiche (et la modifier)
+#     - Un évaluateur du jury 2 ne peut rien voir
+#   PHASE 3 (synopsis présélectionnés)
+#     - Un administrateur peut tout voir, dans le détail
+#     - Un évaluateur de jury 1 peut voir sa note et la note générale
+#     - Un évaluateur de jury 2 peut voir sa note (et la modifier)
+#     - Un concurrent peut voir sa note de présélections
+#   PHASE 5 (palmarès établi)
+#     - Un administrateur peut tout voir, dans le détail
+#     - Un évaluateur de jury 1 peut voir sa note et la note générale
+#     - Un évaluateur de jury 2 peut voir sa note et la note générale
+#       (il ne peut plus modifier sa note)
+#     - Un concurrent peut voir sa note et son prix (if any)
+#   Idem pour les phases suivantes
+# def evaluate
+#
+# end #/ evaluate
+
+def evaluation_for(jure_id)
+  @evaluations ||= {}
+  @evaluations[jure_id] ||= Evaluation.new(checklist_for(jure_id))
+end
+
+def evaluation_for_all
+  @evaluate_all ||= Evaluation.new(checklist_paths)
+end #/ evaluate_all
+
 # OUT   Le path du fichier d'évaluation en fonction de la phase +phase+
 #       du concours et l'évaluateur d'identifiant +ev_id+ (ou l'évaluateur
 #       courant)
-def file_evaluation_per_phase_and_evaluator(phase = nil, evaluator_id = nil)
-  evaluator_id ||= @evaluator_id
+def checklist_for(jure_id = nil, phase = nil)
+  checklist_paths(phase, jure_id ||= @evaluator_id)
+end
+
+# OUT   {Array} Liste des fichiers d'évaluation (en fonction de la phase
+#       courante ou stipulée)
+#
+# IN    {Integer} Phase du concours pour laquelle il faut voir la liste. Si
+#       la phase est inférieure à 5, ce sont les fiches d'évaluation des
+#       présélections, sinon, ce sont les fiches d'évaluation du palmarès (ça
+#       ne change que pour les sélectionnés)
+def checklist_paths(phase = nil, evaluator_id = nil)
   phase ||= Concours.current.phase
-  filename =  if phase = 3 && preselected?
-                "evaluation-prix-#{evaluator_id}.json"
-              else
-                 "evaluation-pres-#{evaluator_id}.json"
-              end
-  # Le path
-  File.join(folder,filename)
-end #/
+  key_phase = phase >= 3 && preselected? ? 'prix' : 'pres'
+  ary = Dir["#{folder}/evaluation-#{key_phase}-#{evaluator_id.nil? ? '*' : evaluator_id}.json"]
+  if evaluator_id.nil?
+    ary
+  else
+    ary.first
+  end
+end #/ all_checklist_paths
 
 # OUT   True si le synopsis fait partie des présélectionnés
 def preselected?
   concurrent.spec(2) == 1
 end
-
-# OUT   True si la conformité a été définie (i.e. le bit 2 est différent
-#       de 0 — mais il peut être égal à 1:conforme ou 2:non conforme)
-def conformity_defined?
-  concurrent.spec(1) != 0
-end #/ conformity_defined?
-
-# OUT   True si la conformité du synopsis a été marquée
-def conforme?
-  concurrent.spec(1) == 1
-end
-
-def sent?
-  concurrent.spec(0) == 1
-end #/ sent?
-
-def to_modify?
-  concurrent.spec(1) == 2
-end #/ to_modify?
 
 def cfile
   @cfile ||= Concours::CFile.new(concurrent, annee, self)
@@ -198,7 +229,7 @@ def css_classes
   @css ||= begin
     c = ["synopsis"]
     c << "ghost" if not(fichier?)
-    c << "not-conforme" if conformity_defined? && not(conforme?)
+    c << "not-conforme" if cfile.conformity_defined? && not(cfile.conforme?)
     c.join(' ')
   end
 end #/ css
@@ -218,6 +249,20 @@ def save(data)
   # Pour actualiser
   data.each {|k,v| instance_variable_set("@#{k}", v)}
 end #/ save
+
+# IN    {Float} Une valeur réelle, normalement flottante
+# OUT   {String} Le nombre pour affichage. Principale, sans ".0" à la fin
+#       s'il y en a un
+def formate_note(v)
+  if v.nil?
+    '---'
+  elsif v.to_i == v
+    v.to_i
+  else
+    v
+  end.to_s
+end #/ formate_float
+
 
 def titre;    @titre    ||= data[:titre]    end
 def specs;    @specs    ||= data[:specs]    end
@@ -250,50 +295,6 @@ def formated_note_globale
   note_globale || "---"
 end #/ formated_note_globale
 
-def note
-  data_score || get_data_score
-  data_score[:note]
-end #/ note
-
-def note_globale
-  ConcoursCalcul.note_globale_synopsis(self.id)
-end #/ note_globale
-
-# OUT   {Float} Pourcentage de réponses données
-def pourcentage_reponses
-  data_score || get_data_score
-  data_score[:pourcentage_reponses] || 0.0
-end #/ pourcentage_reponses
-alias :progress :pourcentage_reponses
-
-def nombre_reponses
-  data_score || get_data_score
-  data_score[:nombre_reponses] || 0
-end #/ nombre_reponses
-
-def get_data_score
-  # log("-> get_data_score")
-  dscore = {}
-  # log("folder : #{folder} existe ? #{File.exists?(folder).inspect}")
-  if File.exists?(folder)
-    score_evaluator_path = score_path(evaluator_id)
-    # log("Score path : #{score_evaluator_path} existe ? #{File.exists?(score_evaluator_path).inspect}")
-    if File.exists?(score_evaluator_path)
-      dscore = JSON.parse(File.read(score_evaluator_path))
-    end
-  end
-  @data_score = ConcoursCalcul.note_et_pourcentage_from(dscore)
-  if not dscore.empty?
-    # log("@data_score obtenu pour #{id} : #{@data_score.inspect}")
-  else
-    # log("@data_score est vide")
-  end
-end #/ data_score
-
-def formated_keywords
-  @formated_keywords ||= (data[:keywords]||'').split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
-end #/ keywords
-
 def formated_auteurs
   @formated_auteurs ||= begin
     if auteurs.nil?
@@ -304,6 +305,11 @@ def formated_auteurs
   end
 end #/ formated_auteurs
 
+
+def formated_keywords
+  @formated_keywords ||= (data[:keywords]||'').split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
+end #/ keywords
+
 def formated_pre_note
   if pre_note.nil?
     calcule_note_preselection
@@ -313,7 +319,7 @@ def formated_pre_note
 end #/ formated_note
 
 # Son instance de formulaire d'évaluation, pour un évaluateur donné
-def evaluation(evaluateur)
+def evaluation_form(evaluateur)
   @evaluations ||= {}
   @evaluations[evaluateur.id] || begin
     @evaluations.merge!(evaluateur.id => EvaluationForm.new(self, evaluateur))

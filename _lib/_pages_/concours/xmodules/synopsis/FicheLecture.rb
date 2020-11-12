@@ -3,22 +3,21 @@
 =begin
   Classe FicheLecture
   -------------------
-  Pour la gestion de la fiche de lecture qui sera produite
+  Pour la gestion de la fiche de lecture qui sera produite. Attention, cette
+  class doit vraiment se consacrer à ça et ne plus s'occuper, par exemple, des
+  notes (qui appartiennent au synopsis).
+  Tout ce qui est fait ici doit donc concerner spécifiquement la fiche de
+  lecture. C'est ici par exemple qu'on détermine les textes explicatifs à
+  afficher dans la fiche de lecture, en fonction des notes du Synopsis
 
-  C'est cette fiche de lecture qui:
-    - calcule les notes finales
-    - calcule LA note générale du synopsis
-    - produit la note en langage humain d'après les résultats
-    Note : elle peut produire une fiche de lecture par évaluateur (POUR l'évaluateur,
-    afin qu'il puisse voir si ça correspond à son ressenti général)
-
-  CONTENU
-  -------
+  CONTENU D'UNE FICHE DE LECTURE
+  ------------------------------
     * Note générale
     * Position par rapport aux autres synopsis
-    * Notes par grandes parties (Personnages, Forme/Intrigues, Thèmes, Rédaction)
+    * Notes par grandes catégories (Personnages, Forme/Intrigues, Thèmes,
+      Rédaction)
     * Note de cohérence
-      Rassembler les valeurs de toutes les "cohérences" pour faire un sujet
+      Rassemble les valeurs de toutes les "cohérences" pour faire un sujet
       général
     * Note d'adéquation au thème
       Rassembler toutes les valeurs d'adéquation avec le thème pour faire
@@ -28,17 +27,8 @@
 =end
 require 'yaml'
 require_relative './constants'
-require_relative './ENotesFL'
 
 class FicheLecture
-
-DATA_CATEGORIES = {
-  p: {name: "Personnages"},
-  f: {name: "Forme"},
-  i: {name: "Intrigues"},
-  t: {name: "Thèmes"},
-  r: {name: "Rédaction"},
-}
 
 DATA_MAIN_PROPERTIES = YAML.load_file(DATA_MAIN_PROPERTIES_FILE)
 
@@ -49,7 +39,6 @@ DATA_MAIN_PROPERTIES = YAML.load_file(DATA_MAIN_PROPERTIES_FILE)
 #
 # ---------------------------------------------------------------------
 attr_reader :synopsis
-attr_accessor :ENotes
 def initialize(synopsis)
   @synopsis = synopsis
 end #/ initialize
@@ -120,20 +109,42 @@ def formated_auteurs
   synopsis.real_auteurs
 end #/ auteurs
 
-def all_enotes(options)
-  rassemble_resultats(options)
-  dispatche_per_element
-  return @all_enotes
-end #/ all_enotes
+def formated_note
+  @formated_note ||= formate_float(synopsis.evaluation.note)
+end
 
-# Pour la gestion du total
-def total(options)
-  @total ||= ENotesFL.new(:total, all_enotes(options))
-end #/ total
+def formated_pourcentage
+  @f_pourcentage ||= "#{synopsis.evaluation.pourcentage} %"
+end #/ formated_pourcentage
 
-# Position du synopsis par rapport aux autres synopsis
-def position
-  @position ||= begin
+# IN    {Symbol} Une catégorie (p.e. :coherence, :personnages, :intrigues)
+# OUT   {String} La note à afficher
+def fnote_categorie(cate)
+  formate_float(synopsis.evaluation.note_categorie(cate))
+end #/ note_categorie
+
+def explication_categorie(cate)
+  FicheLecture::DATA_MAIN_PROPERTIES[cate][:explication]
+end
+
+def explication_categorie_per_note(cate)
+  n = synopsis.evaluation.note_categorie(cate)
+  return if n.nil?
+  FicheLecture::DATA_MAIN_PROPERTIES[cate][key_per_note(n)]
+end
+
+def key_per_note(n)
+  case n.to_i
+  when (20...15)  then :plus15  # 20a16
+  when (15..10)   then :moins15
+  when (9..5)     then :moins10
+  else                 :moins5
+  end
+end #/ key_per_note
+
+# Position formatée du synopsis par rapport aux autres synopsis
+def formated_position
+  @formated_position ||= begin
     p = synopsis.position
     pstr = ""
     if not p.nil?
@@ -144,181 +155,5 @@ def position
   end
 end #/ position
 
-def projet
-  @projet ||= ENotesFL.new(:projet, @notes_categories[:projet])
-end #/ projet
-
-def personnages
-  @personnages ||= ENotesFL.new(:personnages, @notes_categories[:p])
-end #/ personnages
-
-def intrigues
-  @intrigues ||= ENotesFL.new(:intrigues, @notes_categories[:i])
-end #/ intrigues
-
-def themes
-  @themes ||= ENotesFL.new(:themes, @notes_categories[:t])
-end #/ themes
-
-def forme
-  @forme ||= ENotesFL.new(:forme, @notes_categories[:f])
-end #/ forme_note
-
-def facteurO
-  @facteurO ||= ENotesFL.new(:fO, @notes_main_properties[:fO])
-end #/ facteurO
-
-def facteurU
-  @facteurU ||= ENotesFL.new(:fU, @notes_main_properties[:fU])
-end #/ facteurU
-
-
-# Méthode qui prend tous les fichiers d'évaluation du synopsis et produit
-# la table de résultats qui va permettre d'établir la fiche de lecture
-# Cette table de résultats contiendra :
-#   - date:         La date d'établissement de cette table
-#   - evaluators:   Les ID des évaluateurs trouvés par rapport aux fichiers
-#   - note   La note générale
-#   - coherence:
-#       - nombre_questions:   Nombre totale de questions
-#       - nombre_done:        Nombre de questions répondu
-#       - notes
-#       - note
-#   - adequation_theme
-#       - nombre_questions
-#       - nombre_done
-#       - notes
-#       - note
-#
-def rassemble_resultats(options = nil)
-  options ||= {}
-  @ENotes = {}
-  @all_enotes = []
-  key_eval = options[:prix] ? 'prix' : 'pres'
-  evaluations = if options[:evaluator]
-    [File.join(synopsis.folder,"evaluation-#{key_eval}-#{options[:evaluator]}.json")]
-  else
-    Dir["#{synopsis.folder}/evaluation-#{key_eval}-*.json"]
-  end
-  evaluations.each do |fpath|
-    next if not File.exists?(fpath)
-    evaluation_id = File.basename(fpath,File.extname(fpath)).split("-")
-    concurrent_id, evaluator_id = evaluation_id
-    JSON.parse(File.read(fpath)).each do |k, note|
-      if not @ENotes.key?(k)
-        enote = ENote.new(k)
-        @ENotes.merge!(k => enote)
-        @all_enotes << enote
-      end
-      # On ajoute cette valeur (même si c'est "-")
-      @ENotes[k].add_value(note)
-    end
-  end #/fin boucle sur tous les fichiers d'évaluation du synopsis
-  # log("ENotes : #{@ENotes}")
-  # log("@all_enotes: #{@all_enotes.inspect}")
-end #/ rassemble_resultats
-
-# Après avoir ramassé toutes les notes dans <FicheLecture>@ENotes, on peut
-# rassemble par élément
-def dispatche_per_element
-  cohe = []
-  adth = []
-  facO = []
-  facU = []
-  cates = {p: [], f:[], i: [], t: [], r: [], projet: []}
-  @ENotes.each do |k, enote|
-    cohe << enote if enote.coherence?
-    adth << enote if enote.adequation_theme?
-    # log("(k = #{k}) enote.facteurO? est #{enote.facteurO?.inspect}")
-    facO << enote if enote.facteurO?
-    facU << enote if enote.facteurU?
-    # Catégories
-    cates[enote.main_categorie] << enote
-  end
-
-  # Les noms ci-dessous doivent correspondre aux :id dans data_main_properties.yaml
-  @notes_main_properties = {cohe:nil, adth:nil, fO:nil, fU:nil}
-  @notes_main_properties[:cohe] = cohe
-  @notes_main_properties[:adth] = adth
-  @notes_main_properties[:fO]   = facO
-  @notes_main_properties[:fU]   = facU
-
-  @notes_categories = cates
-end #/ rassemble_per_element
-
 
 end #/FicheLecture
-
-class ENote
-  attr_reader :fullid, :values
-  attr_reader :ids, :main_categorie
-  def initialize(fullid)
-    @fullid = fullid
-    decompose_fullid
-    @values = []
-  end #/ initialize
-
-  # Pour ajouter une valeur
-  def add_value(val)
-    return if val == "-"
-    @values << val
-  end #/ add_value
-
-  # ---------------------------------------------------------------------
-  #
-  #   Properties
-  #
-  # ---------------------------------------------------------------------
-
-  # Cette question, suivant sa profondeur, vaut TANT de question (une demi
-  # question, un tiers de question, etc.)
-  def part_question
-    @part_question ||= deepness_coefficiant
-  end #/ part_question
-
-  # Coefficiant de profondeur (il faut multiplier la valeur par ce coefficiant)
-  def deepness_coefficiant
-    @deepness_coefficiant ||= begin
-      dness = deepness > 0 ? deepness : 1
-      1.0 - ( (dness - 1).to_f / 10 )
-    end
-  end #/ deepness_coefficiant
-
-  def deepness
-    @deepness ||= fullid.split('-').count - 1
-  end #/ deepness
-
-  # Retourne TRUE si la note concerne le facteur O
-  def facteurO? ; ids[:fO] end
-  def facteurU? ; ids[:fU] end
-  def coherence? ; ids[:cohe] end
-  def adequation_theme? ; ids[:adth] end
-
-  # Retourne true si la note est définie
-  def defined?
-    (@is_defined ||= begin
-      value != "-" ? :true : :false
-    end) == :true
-  end #/ defined?
-
-
-private
-
-  # Décompose le fullid de la question
-  # Produit une table :ids qui contient en clé les identifiants individuels
-  # des questions (par exemple :fO ou :cohe) et en valeur TRUE (juste pour
-  # savoir si la catégorie existe)
-  # Produit :main_categorie, la lettre qui correspond à la catégorie principale
-  #
-  def decompose_fullid
-    @ids = {}
-    fullid_splited = fullid.split('-')
-    if FicheLecture::DATA_CATEGORIES.key?(fullid_splited[1]&.to_sym)
-      @main_categorie = fullid_splited[1].to_sym # :p, :i etc.
-    else
-      @main_categorie = :projet
-    end
-    fullid_splited.each{|i| @ids.merge!(i.to_sym => true)}
-    # log("@ids = #{@ids.inspect}")
-  end #/ decompose_fullid
-end #/ENote

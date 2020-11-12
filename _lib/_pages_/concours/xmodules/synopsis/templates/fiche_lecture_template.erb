@@ -64,8 +64,8 @@ loc_total =
       <div class="auteurs"><%= formated_auteurs %></div>
     </div>
     <div class="note-totale">
-      <div class="note"><%= loc_total.human_note %></div>
-      <div class="position"><%= position %></div>
+      <div class="note"><%= formated_note %></div>
+      <div class="position"><%= formated_position %></div>
     </div>
   </div>
 
@@ -76,57 +76,26 @@ loc_total =
       FICHE DE LECTURE
     </div>
 
-    <div class="divnote note-projet">
-      <span class="value note"><%= projet.human_note %></span>
-      <span class="libelle">Projet dans sa globalité</span>
-      <div class="explication"><%= projet.explication %></div>
-    </div>
-
-    <div class="divnote note-personnages">
-      <span class="libelle">Personnages</span>
-      <span class="value note"><%= personnages.human_note %></span>
-      <div class="explication"><%= personnages.explication %></div>
-      <div class="explication-note"><%= personnages.explication_per_note %></div>
-    </div>
-
-    <div class="divnote note-forme">
-      <span class="libelle">Forme/structure</span>
-      <span class="value note"><%= forme.human_note %></span>
-      <div class="explication"><%= forme.explication %></div>
-      <div class="explication-note"><%= forme.explication_per_note %></div>
-    </div>
-
-    <div class="divnote note-themes">
-      <span class="libelle">Thèmes</span>
-      <span class="value note"><%= themes.human_note %></span>
-      <div class="explication"><%= themes.explication %></div>
-      <div class="explication-note"><%= themes.explication_per_note %></div>
-    </div>
-
-    <div class="divnote note-intrigues">
-      <span class="libelle">Intrigues</span>
-      <span class="value note"><%= intrigues.human_note %></span>
-      <div class="explication"><%= intrigues.explication %></div>
-      <div class="explication-note"><%= intrigues.explication_per_note %></div>
-    </div>
-
-    <div class="divnote note-facteur-O">
-      <span class="libelle">Facteur O</span>
-      <span class="value note"><%= facteurO.human_note %></span>
-      <div class="expli">
-        <div class="explication"><%= facteurO.explication %></div>
-        <div class="explication-note"><%= facteurO.explication_per_note %></div>
+    <%
+    # TODO Reprendre cette table pour faire la table générale ?
+    {
+      projet: {name:"Projet dans sa globalité"},
+      adequation: {name: "Adéquation avec le thème"},
+      personnages: {name:'Personnages'},
+      forme: {name: "Forme/structure"},
+      themes: {name: "Thèmes"},
+      intrigues: {name: "Intrigues"},
+      facteurO: {name: "Facteur O (originalité)"},
+      facteurU: {name: "Facteur U (universalité)"}
+    }.each do |cate, dcate|
+    %>
+      <div class="divnote note-<%= cate.to_s %>">
+        <span class="libelle"><%= dcate[:name] %></span>
+        <span class="value note"><%= fnote_categorie(cate) %></span>
+        <div class="explication"><%= explication_categorie(cate) %></div>
+        <div class="explication-note"><%= explication_categorie_per_note(cate) %></div>
       </div>
-    </div>
-
-    <div class="divnote note-facteur-U">
-      <span class="libelle">Facteur U</span>
-      <span class="value note"><%= facteurU.human_note %></span>
-      <div class="expli">
-        <div class="explication"><%= facteurU.explication %></div>
-        <div class="explication-note"><%= facteurU.explication_per_note %></div>
-      </div>
-    </div>
+    <% end %>
 
   </div><!-- div.details -->
 
