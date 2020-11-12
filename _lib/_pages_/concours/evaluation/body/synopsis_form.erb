@@ -20,7 +20,7 @@ form.rows = {
   "Auteur(s)"   => {name:"syno_auteurs",  type:"text", value: synopsis.real_auteurs},
   "Mots clés"   => {name:"syno_keywords", type:"text", value: synopsis.keywords}
 }
-if user.admin?
+if evaluator.admin?
   form.rows.merge!("Prix" => {name:"syno_prix", type:"select", values:prix_values})
 end
 form.submit_button = "Enregistrer"

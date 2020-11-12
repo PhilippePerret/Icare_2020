@@ -2,9 +2,20 @@
 # frozen_string_literal: true
 self.titre = "Évaluation de #{synopsis.id}"
 
-evaluable = user.admin?
-evaluable = evaluable || (evaluator.jury1? && (concours.phase == 1 || concours.phase == 2))
-evaluable = evaluable || (evaluator.jury2? && (concours.phase == 3))
+phase = Concours.current.phase
+
+evaluable = evaluator.admin?
+evaluable = evaluable || (evaluator.jury1? && (phase == 1 || phase == 2))
+evaluable = evaluable || (evaluator.jury2? && (phase == 3))
+
+plus_ou_pas_encore =
+  if evaluator.jury1? && phase > 2
+    "plus"
+  elsif evaluator.jury2? && phase > 3
+    "plus"
+  else
+    "pas encore"
+  end
 
 %>
 <script type="text/javascript">
@@ -19,5 +30,5 @@ const EVALUATOR_ID = <%= evaluator.id %>;
   </p>
   <%= checklist %>
 <% else %>
-  <div class="big-air">Vous ne pouvez plus (ou pas encore) évaluer ce synopsis.</div>
+  <div class="big-air">Vous ne pouvez <%= plus_ou_pas_encore %> évaluer ce synopsis.</div>
 <% end %>

@@ -4107,3 +4107,21 @@ DATABASE = icare_test
 /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `require_relative'
 /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `treate_request'
 /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax.rb:14:in `<main>'
+
+
+--- [2020-11-12 10:13:31 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+# ERREUR : no implicit conversion of nil into String
+# Backtrace : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/_scripts/concours/get_score.rb:25:in `exists?'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/_scripts/concours/get_score.rb:25:in `<top (required)>'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `require_relative'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/ajax_class.rb:44:in `treate_request'
+/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax.rb:14:in `<main>'

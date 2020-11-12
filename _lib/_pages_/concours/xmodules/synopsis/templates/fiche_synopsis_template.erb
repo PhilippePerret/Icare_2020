@@ -1,7 +1,7 @@
 <%
 # frozen_string_literal: true
 
-my_evaluation = evaluation_for(user.admin? ? user.id : evaluator_id)
+my_evaluation = evaluation_for(html.evaluator.id)
 
 href_evaluation = "concours/evaluation?view=checklist&synoid=#{id}&cid=#{concurrent.id}"
 # *** Définition des boutons ***
@@ -10,7 +10,7 @@ bouton_edit = Tag.link(text:"Éditer", class:"btn-edit small btn", route:"concou
 evaluator = html.evaluator
 concours  = Concours.current
 
-cond = user.admin?
+cond = evaluator.admin?
 cond = cond || (evaluator.jury1? && (concours.phase == 1 || concours.phase == 2))
 cond = cond || (evaluator.jury2? && (concours.phase == 3))
 condition_evaluable = cond
@@ -31,14 +31,14 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
   <div class="auteur">de <span id="synopsis-<%=id%>-pseudo" class=""><%=concurrent.patronyme%></span></div>
   <a id="synopsis-<%=id%>-note-generale" class="note-generale" href="<%= href_evaluation %>">
     <span class="note-evaluator"><%=formate_note(my_evaluation.note)%></span>
-    <% if user.admin? %>
+    <% if evaluator.admin? %>
       <span class="note-globale" title="Note globale tenant compte des notes des autres membres du jury"><%=formate_note(evaluation_for_all.note)%></span>
     <% end %>
   </a>
 
   <div id="synopsis-<%=id%>-pct-reponses" class="div-pct-reponses">
     <span class="pct-reponses"><%=my_evaluation.pourcentage%></span><span> %</span>
-    <% if user.admin? %>
+    <% if evaluator.admin? %>
       <span class="pct-reponses-all"><%=evaluation_for_all.pourcentage%></span><span> %</span>
     <% end %>
   </div>
@@ -49,12 +49,12 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
   <div id="synopsis-<%=id%>-keywords" class="keywords"><%=formated_keywords%></div>
   <%# (Les boutons sont définis en haut de page) %>
   <div class="fiche-buttons center"><%=
-    bouton_edit if user.admin? and cfile.conforme? %><%=
+    bouton_edit if evaluator.admin? and cfile.conforme? %><%=
     bouton_evaluate if cfile.conforme? %><%
-    if user.admin? && not(cfile.conformity_defined?) %><%=
+    if evaluator.admin? && not(cfile.conformity_defined?) %><%=
       bouton_marquer_conforme if not(cfile.conforme?) %><%=
       bouton_marquer_non_conforme if not(cfile.conforme?) %><%
-    elsif cfile.conforme? && not(user.id == phil.id) %><%=
+    elsif cfile.conforme? && not(evaluator.id == phil.id) %><%=
       bouton_telecharger if cfile.conforme? %><%
     end
   %></div>

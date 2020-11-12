@@ -17,7 +17,7 @@ loc_total =
         # SI c'est un juré du second jury, il ne peut pas venir ici
         # SI C'est un administrateur, on affiche sa note et la note totale
         case
-        when user.admin?
+        when evaluator.admin?
           self.total
         when evaluator.jury1?
           self.total(prix: pour_prix, evaluator: evaluator.id)
@@ -32,7 +32,7 @@ loc_total =
         # SI c'est un juré du second jury, on affiche sa propre note seulement
         # SI c'est un administrateur, on affiche sa propre note et la note totale
         case
-        when user.admin?
+        when evaluator.admin?
           self.total(prix: false)
         when evaluator.jury1?
           self.total(prix: false)

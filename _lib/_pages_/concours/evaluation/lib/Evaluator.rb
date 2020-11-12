@@ -8,9 +8,9 @@
 class Evaluator
 class << self
   attr_accessor :current
-  # OUT   True s'il y a un évaluateur connecté ou un administrateur
+  # OUT   True s'il y a un évaluateur connecté (ou un administrateur)
   def current?
-    user.admin? || not(self.current.nil?)
+    not(self.current.nil?)
   end #/ current
 
   # Appelé lorsque le membre s'authentifie
@@ -41,6 +41,7 @@ class << self
       # =>  On l'authentifie automatiquement comme évaluateur
       html.evaluator = Evaluator.new(user.data)
       self.current = html.evaluator
+      self.current.is_admin
       return true
     else
       # <=  Le visiteur n'est pas un administrateur identifié
@@ -81,14 +82,21 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 attr_reader :data_ini, :pseudo, :mail, :id
+attr_accessor :is_admin
+
 def initialize(data_ini)
   @data_ini = data_ini
   @data_ini.each{|k,v|instance_variable_set("@#{k}",v)}
 end #/ initialize
+
+def admin?
+  self.is_admin === true
+end #/ admin?
 def jury1?
-  data_ini[:jury] & 1 > 0
+  admin? || data_ini[:jury] & 1 > 0
 end #/ jury1?
 def jury2?
-  data_ini[:jury] & 2 > 0
+  admin? || data_ini[:jury] & 2 > 0
 end #/ jury2?
+
 end #/Evaluator
