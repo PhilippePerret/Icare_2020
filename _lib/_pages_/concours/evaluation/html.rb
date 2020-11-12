@@ -61,7 +61,6 @@ class HTML
           message("Exportation des fiches…")
           Synopsis.exporter_les_fiches
         end
-        require_xmodule('evaluation/Evaluation')
         check_up_to_date
       end
     end #/si c'est bien un évaluateur

@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-11-05 09:47:51 +0100
+ *    Date dernière modification : 2020-11-12 16:24:44 +0100
  *
  --------------------------------------------------------------------- */
 :root {
@@ -597,6 +597,11 @@ div.warning, p.warning, span.warning {
 .blue {color:blue}
 .green {color:green}
 
+.caps {
+  font-variant:all-small-caps;
+  font-size:1.4em;
+}
+
 .tiny {
   line-height:0.9em;
 }
@@ -807,6 +812,7 @@ H2 div.usefull-links {
   background-color: white;
   /* Refermeture */
   height:30px;transition:0.5s;
+  border-radius:1em 1em 0 0;
   z-index:100;
 }
 div.usefull-links:hover {

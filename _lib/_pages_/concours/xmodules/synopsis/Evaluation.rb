@@ -280,7 +280,7 @@ def parse(score)
       na  = (na * coefa200).round(1)
       pct = (100.0 / (naq.to_f / nr)).round(1)
     else
-      n   = '---'
+      n   = 0.0
       na  = 0.0
       pct = 0.0
     end

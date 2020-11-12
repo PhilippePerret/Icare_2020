@@ -9,6 +9,7 @@
 =end
 require_relative './constants'
 require_relative './FicheLecture'
+require_relative './Evaluation'
 
 class Synopsis
 # ---------------------------------------------------------------------
@@ -147,11 +148,15 @@ end #/ initialize
 
 def evaluation_for(jure_id)
   @evaluations ||= {}
-  @evaluations[jure_id] ||= Evaluation.new(checklist_for(jure_id))
+  @evaluations[jure_id] ||= begin
+    Evaluation.new(checklist_for(jure_id))
+  end
 end
 
 def evaluation_for_all
-  @evaluate_all ||= Evaluation.new(checklist_paths)
+  @evaluate_all ||= begin
+    Evaluation.new(checklist_paths)
+  end
 end #/ evaluate_all
 
 # OUT   Le path du fichier d'évaluation en fonction de la phase +phase+
@@ -342,8 +347,9 @@ end #/ fichier?
 
 # IN    ID de l'évaluateur (pour la session 2020, ça correspond à l'ID User)
 # OUT   Chemin d'accès au fichier d'évaluation (score) pour l'évaluator evaluator_id
-def score_path(evaluator_id)
-  file_evaluation_per_phase_and_evaluator(nil, evaluator_id)
+def score_path_for(evaluator_id, phase)
+  key_phase = phase > 3 && preselected? ? 'prix' : 'pres'
+  File.join(folder,"evaluation-#{key_phase}-#{evaluator_id}.json")
 end #/ score_path
 # Chemin d'accès au dossier du synopsis, où sont rangées tous les fichiers,
 # et notamment les fichiers d'évaluation

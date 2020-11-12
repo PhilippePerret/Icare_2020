@@ -4,47 +4,27 @@
   Module qui teste la pertinence des calculs du module de calcul du
   concours de synopsis (qui se doit d'être absolument intraitable)
 =end
-RESKEYS = [:note, :note_abs, :pourcentage, :nb_questions, :nb_reponses, :nb_missings]
-KD2KH = {note: :note, note_abs: :note_absolue, pourcentage: :pourcentage_reponses,
+# RESKEYS = [:note, :note_abs, :pourcentage, :nb_questions, :nb_reponses, :nb_missings]
+KD2KH = {note: :note, note_abs: :note_abs, pourcentage: :pourcentage,
 nb_questions: :nombre_questions, nb_reponses: :nombre_reponses, nb_missings: :nombre_missings}
 
 shared_examples_for "un bon résultat" do |yfile|
 
   let(:alldata) { @alldata  ||= YAML.load_file(File.join(__dir__,'data',"#{yfile}.yaml")) }
   let(:reftest) { @reftest  ||= "File: #{yfile}\nDescription: #{alldata[:context][:description]}\nDeepness: #{alldata[:context][:deepness]}\nAbsolute question count: #{alldata[:context][:nombre_questions]}" }
-  # describe description do
-    it "produit une structure de valeurs correctes (#{yfile})" do
+    it 'produit une instance avec des valeurs correctes' do
       alldata[:cases].each do |data|
         score   = data[:score]
         attente = data[:attente]
         fails   = data[:fails]
-        ConcoursCalcul.nombre_absolu_questions = data[:nombre_questions]
-        result  = ConcoursCalcul.note_et_pourcentage_from(score, true)
-
-        # if attente.key?(:note_max)
-        #   notemax, imax = traite_val_note(attente[:note_max])
-        #   coef = 200.0 / notemax
-        #   puts "notemax: #{notemax.inspect} #{imax}\nCoefficiant: #{coef}\nNote max * coefficiant = #{notemax * coef}"
-        # end
-
-        RESKEYS.each do |k|
-          val, init_val = traite_val_note(attente[k], (data[:coef200] if k.to_s.start_with?('note')))
-          expect(result.send(k)).to eq(val),
-            "devrait produire une STRUCTure de valeurs correctes #{fails}.\nClé défectueuse et valeurs\n\t\t#{k.inspect}\n\t\tAttendu: #{val.inspect}#{init_val}\n\t\tObtenu: #{result.send(k).inspect}\n#{reftest}\nFailure: #{data[:fails]}"
-        end
-      end
-    end
-    it 'produit un Hash de valeurs correctes' do
-      alldata[:cases].each do |data|
-        score   = data[:score]
-        attente = data[:attente]
-        fails   = data[:fails]
-        ConcoursCalcul.nombre_absolu_questions = data[:nombre_questions]
-        reshash = ConcoursCalcul.note_et_pourcentage_from(score, false)
+        NOMBRE_ABSOLU_QUESTIONS = data[:nombre_questions]
+        # Evaluation.nombre_absolu_questions = data[:nombre_questions]
+        e = Evaluation.new
+        e.parse(score)
         KD2KH.each do |ka, kh|
           val, init_val = traite_val_note(attente[ka], (data[:coef200] if ka.to_s.start_with?('note')))
-          expect(reshash[kh]).to eq(val),
-            "devrait produire un Hash de valeurs correctes #{fails}.\nClé défectueuse et valeurs\n\t\t#{kh.inspect}\n\t\tAttendu: #{val.inspect}#{init_val}\n\t\tObtenu: #{reshash[kh].inspect}\n#{reftest}\nFailure: #{data[:fails]}"
+          expect(e.send(kh)).to eq(val),
+            "devrait produire un Hash de valeurs correctes #{fails}.\nClé défectueuse et valeurs\n\t\t#{kh.inspect}\n\t\tAttendu: #{val.inspect}#{init_val}\n\t\tObtenu: #{e.send(kh).inspect}\n#{reftest}\nFailure: #{data[:fails]}"
         end
       end
     end
@@ -69,38 +49,29 @@ def traite_val_note(val, coef200 = nil)
   return [val, init_val]
 end
 
-describe 'Le module de calcul du concours de synopsis (class ConcoursCalcul)' do
+describe 'Le module de calcul du concours de synopsis (class Evaluation)' do
+
   before(:all) do
-    require './_lib/_pages_/concours/xmodules/evaluation/Evaluation'
+    require './_lib/_pages_/concours/xmodules/synopsis/Evaluation'
     NOMBRE_QUESTIONS = File.read(NOMBRE_QUESTIONS_PATH).to_i
   end
 
-  context 'avec as_struct à true' do
-    it 'retourne une structure avec les bonnes méthodes-propriétés' do
-      res = ConcoursCalcul.note_et_pourcentage_from({}, as_struct = true)
-      expect(res).to be_a(ResScore)
-      expect(res).to respond_to(:note)
-      expect(res).to respond_to(:note_abs)
-      expect(res).to respond_to(:pourcentage)
-      expect(res).to respond_to(:nb_questions)
-      expect(res).to respond_to(:nb_reponses)
-      expect(res).to respond_to(:nb_missings)
-    end
-  end #/context score vide
-  context 'avec as_struct à false' do
-    it 'retourne une table Hash avec les bonnes clés' do
-      res = ConcoursCalcul.note_et_pourcentage_from({}, as_struct = false)
-      expect(res).to be_a(Hash)
-      expect(res).to have_key(:note)
-      expect(res).to have_key(:note_absolue)
-      expect(res).to have_key(:pourcentage_reponses)
-      expect(res).to have_key(:nombre_questions)
-      expect(res).to have_key(:nombre_reponses)
-      expect(res).to have_key(:nombre_missings)
-    end
+  it 'répond aux bonnes méthodes/propriétés', only:true do
+    e = Evaluation.new()
+    expect(e).to respond_to(:parse_scores)
+    expect(e).to respond_to(:parse_score)
+    expect(e).to respond_to(:parse)
+    res = e.parse({})
+    expect(res).to be_a(Evaluation)
+    expect(e).to respond_to(:note)
+    expect(e).to respond_to(:note_abs)
+    expect(e).to respond_to(:pourcentage)
+    expect(e).to respond_to(:nombre_questions)
+    expect(e).to respond_to(:nombre_reponses)
+    expect(e).to respond_to(:nombre_missings)
   end
 
-  context 'avec un score entièrement vide' do
+  context 'avec un score entièrement vide', only:true do
     it_behaves_like "un bon résultat", "no_score"
   end
   context 'avec un nombre de questions identique' do

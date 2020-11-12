@@ -7,7 +7,7 @@ require 'json'
 
 Dir.chdir(APP_FOLDER) do
   require './_lib/_pages_/concours/xrequired/constants'
-  require './_lib/_pages_/concours/xmodules/evaluation/Evaluation'
+  # require './_lib/_pages_/concours/xmodules/evaluation/Evaluation'
   require './_lib/_pages_/concours/xmodules/synopsis/Synopsis'
   require './_lib/_pages_/concours/xrequired/Concurrent'
 end
@@ -21,8 +21,9 @@ begin
   phase = db_exec("SELECT phase FROM concours WHERE annee = ?", [annee]).first[:phase]
   synopsis = Synopsis.new(concurrent_id, annee)
   score_path = synopsis.checklist_for(evaluator, phase)
+  # log("evaluator:#{evaluator.inspect}/ synopsis_id: #{synopsis_id.inspect} / concurrent_id: #{concurrent_id.inspect} / annee: #{annee.inspect}")
   score = {}
-  if File.exists?(score_path)
+  if score_path && File.exists?(score_path)
     score = JSON.parse(File.read(score_path))
   end
 

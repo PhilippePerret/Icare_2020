@@ -4,7 +4,6 @@ require 'json'
 
 Dir.chdir(APP_FOLDER) do
   require './_lib/_pages_/concours/xrequired/constants'
-  require './_lib/_pages_/concours/xmodules/evaluation/Evaluation'
   require './_lib/_pages_/concours/xrequired/Concurrent'
   require './_lib/_pages_/concours/xmodules/synopsis/Synopsis'
 end
@@ -20,17 +19,18 @@ begin
   # du concours courant)
   phase = db_exec("SELECT phase FROM concours WHERE annee = ?", [annee]).first[:phase]
   synopsis = Synopsis.new(concurrent_id, annee)
-  score_path = synopsis.checklist_for(evaluator, phase)
+  score_path = synopsis.score_path_for(evaluator, phase)
   # `mkdir -p "#{File.dirname(score_path)}"`
   FileUtils.mkdir_p(File.dirname(score_path))
   File.open(score_path,'wb'){|f| f.write score.to_json }
 
   log("evaluator: #{evaluator}, synopsis_id:#{synopsis_id}, score:#{score}")
 
-  resultats = ConcoursCalcul.note_et_pourcentage_from(score)
-  log("Résultat des calculs : #{resultats.inspect}")
+  evaluation = synopsis.evaluation_for(evaluator)
+
+  log("Résultat de l'évaluation : #{evaluation.inspect}")
   # Ajax << {note:resultats[:note], pourcentage_reponses: resultats[:pourcentage_reponses]}
-  Ajax << resultats
+  Ajax << {note: evaluation.note, pourcentage_reponses: evaluation.pourcentage}
 
   # On doit réinitialiser pre_note ou fin_note en fonction de la phase pour
   # recalculer les changements
