@@ -7,7 +7,7 @@
 <%= boutons_visiteur %>
 
 <h3>Objet du concours</h3>
-<p>Pour cette édition <span class="annee-concours"><%= ANNEE_CONCOURS_COURANTE %></span>, il s'agit d'écrire le SYNOPSIS INTÉGRAL (*) d'une histoire destinée au cinéma, au roman, à la radio ou à la BD, sur le thème de <%= Concours.current.theme.upcase %> en respectant les contraintes énoncées ci-dessous.<br><span class="small">(*) cf. la <a href="concours/faq">Foire Aux Questions</a></span></p>
+<p>Pour cette édition <span class="annee-concours"><%= ANNEE_CONCOURS_COURANTE %></span>, il s'agit d'écrire le SYNOPSIS INTÉGRAL (*) d'une histoire destinée au cinéma, au roman, à la radio ou à la BD, sur le thème “<span class="caps"><%= Concours.current.theme %></span>” en respectant les contraintes énoncées ci-dessous.<br><span class="small">(*) cf. la <a href="concours/faq">Foire Aux Questions</a></span></p>
 
 <h3>Trois Prix</h3>
 
@@ -24,7 +24,7 @@
 
 <h3>Thème</h3>
 
-<p>Le thème choisi pour la session <%= ANNEE_CONCOURS_COURANTE %> est <strong><span class="concours-theme"><%= Concours.current.theme.upcase %></span></strong>.</p>
+<p>Le thème choisi pour la session <%= ANNEE_CONCOURS_COURANTE %> est “<span class="caps bold concours-theme"><%= Concours.current.theme %></span>”.</p>
 <p><%= Concours.current.formated_theme_d %></p>
 <p class="explication"><span class="red">Attention</span> : toute histoire bien racontée débute souvent pour un évènement qu'on peut qualifier d’<em>“accident”</em>. Cela ne suffit en aucune manière à remplir les conditions du présent thème. L'<em>accident</em> en question doit jouer un rôle réel dans l'histoire présentée.</p>
 

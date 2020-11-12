@@ -48,6 +48,11 @@ div.warning, p.warning, span.warning {
 .blue {color:blue}
 .green {color:green}
 
+.caps {
+  font-variant:all-small-caps;
+  font-size:1.4em;
+}
+
 .tiny {
   line-height:0.9em;
 }
