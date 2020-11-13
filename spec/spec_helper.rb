@@ -202,7 +202,7 @@ RSpec.configure do |config|
   end #/ verbose?
 
   def pitch msg
-    unless ENV['SPEC_FORMATTER'] == 'Documentation'
+    unless not(ENV.key?('SPEC_FORMATTER')) || ENV['SPEC_FORMATTER'] == 'Documentation'
       # Si on ne doit pas visualiser les messages (-fd/--format documentation)
       # on s'en retourne. Mais on attend quand même un tout petit car souvent
       # ça laisse le temps de finir d'écrire un fichier, d'enregistrer une

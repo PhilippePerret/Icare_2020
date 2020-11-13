@@ -99,6 +99,8 @@ attr_reader :nombre_scores
 # Quelques nombres à garder, pas directement nécessaires
 attr_reader :nombre_questions, :nombre_reponses, :nombre_missings
 
+attr_accessor :coef200, :coefa200
+
 # *** Initialisation ***
 # On initialise un nouveau Evaluation avec le chemin d'accès à son
 # fichier (appelé "fichier d'évaluation" ou "fichier score") ou des fichiers
@@ -212,6 +214,8 @@ end #/ type
 #
 def parse(score)
   init_count if @sum_note.nil?
+  # Dans tous les cas il faut incrémenter le nombre de scores
+  @nombre_scores += 1
   # Si le score est vide, on peut s'arrêter
   return self if score.empty?
 
@@ -238,11 +242,15 @@ def parse(score)
     unless v == "-"
       # <= Une note a été donnée
       v = v.to_f
+      # On calcule la note en fonction de sa profondeur. Si elle est de profondeur
+      # 2 par exemple, 1 point en vaut que 0.8. Donc la note max ne vaudra
+      # que 5 * 0.8 donc 4.0 points
       vcoef   = v * coef
       # On incrémente le nombre de réponses données
       nr += 1.0
       # On ajoute cette valeur de réponse à la note finale
       n    += vcoef
+      # On ajoute aussi à la note max la valeur max en fonction de la profondeur
       nmax += maxcoef
     else
       vcoef = 0.0
@@ -286,6 +294,9 @@ def parse(score)
   # --- Coefficiant 200 ---
   coef200   = 20.0 / nmax
   coefa200  = 20.0 / namax
+  # Pour les tests
+  self.coef200 = coef200
+  self.coefa200 = coefa200
 
   if nr > 0
     n   = (n  * coef200 ).round(1)
@@ -302,7 +313,6 @@ def parse(score)
   nu  = nu.to_i
   nqs = nqs.to_i
   # On incrémente les valeurs générales
-  @nombre_scores += 1
   @sum_note += n
   @sum_note_abs += na
   @sum_pourcentage += pct

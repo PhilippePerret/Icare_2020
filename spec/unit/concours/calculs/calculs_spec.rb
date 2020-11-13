@@ -4,6 +4,8 @@
   Module qui teste la pertinence des calculs du module de calcul du
   concours de synopsis (qui se doit d'être absolument intraitable)
 =end
+require_relative './calculs_tests_methods'
+
 # RESKEYS = [:note, :note_abs, :pourcentage, :nb_questions, :nb_reponses, :nb_missings]
 KD2KH = {note: :note, note_abs: :note_abs, pourcentage: :pourcentage,
 nb_questions: :nombre_questions, nb_reponses: :nombre_reponses, nb_missings: :nombre_missings}
@@ -30,24 +32,6 @@ shared_examples_for "un bon résultat" do |yfile|
   }
 end
 
-# Dans les fichiers YAML, une note peut être fournie par une opération (qui
-# doit obligatoirement commencer par une parenthèse)
-def traite_val_note(val, coef200 = nil)
-  if coef200
-    coef200 = 200.0 / eval(coef200)
-  end
-  init_val = ""
-  if val.to_s.start_with?('(')
-    init_val = " [#{val.freeze} / coefficiant 200 : #{coef200}]"
-    val = eval(val)
-    if coef200
-      val = (val.to_f * coef200) / 10
-    end
-    val = val.round(1)
-  end
-  return [val, init_val]
-end
-
 describe 'CONCOURS. Le module de calcul (class Evaluation)' do
 
   before(:all) do
@@ -58,6 +42,9 @@ describe 'CONCOURS. Le module de calcul (class Evaluation)' do
   before(:each) do
     Evaluation.NOMBRE_ABSOLU_QUESTIONS = nil
   end
+
+  teste_concours_calculs_scores('plusieurs_scores.yaml')
+
 
   it 'répond aux bonnes méthodes/propriétés' do
     e = Evaluation.new()
@@ -74,23 +61,26 @@ describe 'CONCOURS. Le module de calcul (class Evaluation)' do
     expect(e).to respond_to(:nombre_missings)
   end
 
-  context 'avec un score entièrement vide' do
-    it_behaves_like "un bon résultat", "no_score"
-  end
-  context 'avec un nombre de questions identique' do
-    it_behaves_like "un bon résultat", "same_questions_count"
-  end
-  context 'avec un nombre de questions différent du score' do
-    it_behaves_like "un bon résultat", 'diff_questions_count'
-  end
-
-  context 'avec des questions en profondeur' do
-    it_behaves_like "un bon résultat", 'with_deepness_1'
-  end
-
-  context 'avec des questions d’un profondeur de 2' do
-    it_behaves_like "un bon résultat", 'with_deepness_2'
-  end
+  # context 'avec un score entièrement vide' do
+  #   it_behaves_like "un bon résultat", "no_score"
+  # end
+  # context 'avec un nombre de questions identique' do
+  #   it_behaves_like "un bon résultat", "same_questions_count"
+  # end
+  # context 'avec un nombre de questions différent du score' do
+  #   it_behaves_like "un bon résultat", 'diff_questions_count'
+  # end
+  #
+  # context 'avec des questions en profondeur' do
+  #   it_behaves_like "un bon résultat", 'with_deepness_1'
+  # end
+  #
+  # context 'avec des questions d’un profondeur de 2' do
+  #   it_behaves_like "un bon résultat", 'with_deepness_2'
+  # end
+  #
+  # context 'avec plusieurs scores' do
+  # end
 
   context 'plusieurs scores' do
     it 'peuvent être additionnés' do
@@ -110,27 +100,6 @@ describe 'CONCOURS. Le module de calcul (class Evaluation)' do
       expect(e.nombre_questions).to eq(2.0)
       # Catégories
       expect(e.owners['cohe'][:note]).to eq(10.0)
-    end
-
-    it 'réussi un test complet (plusieurs_scores.yaml)', only:true do
-      data = YAML.load_file(File.join(__dir__,'data','plusieurs_scores.yaml'))
-      sd = data[:cases][:complete]
-      coef200 = sd[:coef200]
-      Evaluation.NOMBRE_ABSOLU_QUESTIONS = sd[:nombre_questions]
-      e = Evaluation.new
-      (0..2).each do |iscore|
-        e.parse_and_calc(sd[:scores][iscore])
-        expectations = sd[:attentes][iscore]
-        expectations.each do |key, expected_value|
-          if key.to_s.start_with?('note')
-            expected_value, init_val = traite_val_note(expected_value, coef200)
-          else
-            expected_value = traite_val_note(expected_value).first
-          end
-          expect(e.send(key)).to eq(expected_value),
-            "Après le parse du score #{iscore + 1} La clé #{key.inspect} devrait avoir la bonne valeur…\n\tAttendu : #{expected_value} (#{init_val})\n\tObtenu : #{e.send(key)}"
-        end
-      end #/fin de boucle sur chaque score
     end
   end
 
