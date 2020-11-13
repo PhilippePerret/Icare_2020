@@ -1,0 +1,143 @@
+:context:
+  :description: Avec plusieurs scores et des questions en profondeur
+  :deepness: 2
+  :nombre_questions: Le même que le nombre absolu
+
+:cases:
+  :scores_vides:
+    :fails: pour des scores vides (non remplis)
+    :nombre_questions: 23 # le nombre ci-dessous
+    :scores:
+      - {}
+      - {}
+      -
+        un: "-"
+        un-un: "-"
+        un-un-un: "-"
+        de: "-"
+        de-un: "-"
+        de-un-un: "-"
+        de-un-de: "-"
+        de-un-tr: "-"
+        de-un-qu: "-"
+        de-un-ci: "-"
+        de-un-si: "-"
+        de-de: "-"
+        de-tr: "-"
+        de-tr-un: "-"
+        de-tr-de: "-"
+        de-tr-tr: "-"
+        de-tr-qu: "-"
+        tr: "-"
+        tr-un: "-"
+        tr-un-un: "-"
+        tr-un-de: "-"
+        qu: "-"
+        qu-un: "-"
+    :attente:
+      :note: 0.0
+      :note_abs: 0.0
+      :pourcentage: 0.0
+      :nb_questions: 23
+      :nb_reponses: 0
+      :nb_missings: 23
+
+  :complete: # un exemple avec tout
+    :fails: pour 3 scores avec différentes valeurs (complet)
+    :nombre_questions: 23 # le nombre ci-dessous
+    :scores:
+      -
+        un: "-"
+        un-un: "-"
+        un-un-un: 5
+        de: "-"
+        de-un: "-"
+        de-un-un: 5
+        de-un-de: 5
+        de-un-tr: 5
+        de-un-qu: 5
+        de-un-ci: 5
+        de-un-si: 5
+        de-de: "-"
+        de-tr: "-"
+        de-tr-un: 5
+        de-tr-de: 5
+        de-tr-tr: 5
+        de-tr-qu: 5
+        tr: "-"
+        tr-un: "-"
+        tr-un-un: 5
+        tr-un-de: 5
+        qu: "-"
+        qu-un: "-"
+      -
+        un: "-"
+        un-un: "-"
+        un-un-un: 0
+        de: "-"
+        de-un: "-"
+        de-un-un: 0
+        de-un-de: 0
+        de-un-tr: 0
+        de-un-qu: 0
+        de-un-ci: 0
+        de-un-si: 0
+        de-de: "-"
+        de-tr: "-"
+        de-tr-un: 0
+        de-tr-de: 0
+        de-tr-tr: 0
+        de-tr-qu: 0
+        tr: "-"
+        tr-un: "-"
+        tr-un-un: 0
+        tr-un-de: 0
+        qu: "-"
+        qu-un: "-"
+      -
+        un: "-"
+        un-un: "-"
+        un-un-un: 5
+        de: "-"
+        de-un: "-"
+        de-un-un: 5
+        de-un-de: 5
+        de-un-tr: 5
+        de-un-qu: 5
+        de-un-ci: 5
+        de-un-si: 5
+        de-de: "-"
+        de-tr: "-"
+        de-tr-un: 5
+        de-tr-de: 5
+        de-tr-tr: 5
+        de-tr-qu: 5
+        tr: "-"
+        tr-un: "-"
+        tr-un-un: 5
+        tr-un-de: 5
+        qu: "-"
+        qu-un: "-"
+    :coef200: ((4 * 5 * 1) + (6 * 5 * 0.9) + (13 * 5 * 0.8))
+    :attentes:
+      - # attentes au passage du premier score
+        :note: 20.0
+        :note_abs: (13 * 5 * 0.8)
+        :pourcentage: (100.0 / (23.0 / 13.0))
+        :nombre_questions: 23
+        :nombre_reponses: 13
+        :nombre_missings: 10
+      - # attentes au passage du deuxième score (valant 10)
+        :note: 10.0
+        :note_abs: (((13 * 5 * 0.8) + (13 * 0 * 0.8)) / 2)
+        :pourcentage: (100.0 / (23.0 / 13.0))
+        :nombre_questions: 23
+        :nombre_reponses: 13
+        :nombre_missings: 10
+      -
+        :note: 20.0
+        :note_abs: (13 * 5 * 0.8)
+        :pourcentage: (100.0 / (23.0 / 13.0))
+        :nombre_questions: 23
+        :nombre_reponses: 13
+        :nombre_missings: 10

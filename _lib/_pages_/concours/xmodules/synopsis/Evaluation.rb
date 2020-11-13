@@ -57,10 +57,10 @@ DEEPNESS_COEF = {}
   DEEPNESS_COEF.merge!( i => 1.0 - ( (i - 1).to_f / 10 )) # 1 => 1, 2 => 0.9, 3 => 0.8
 end
 
-# Nombre de questions aujourd'hui
-if not defined?(NOMBRE_ABSOLU_QUESTIONS) # pour les tests
-  NOMBRE_ABSOLU_QUESTIONS = File.read(NOMBRE_QUESTIONS_PATH).to_i
-end
+# # Nombre de questions aujourd'hui
+# if not defined?(NOMBRE_ABSOLU_QUESTIONS) # pour les tests
+#   NOMBRE_ABSOLU_QUESTIONS = File.read(NOMBRE_QUESTIONS_PATH).to_i
+# end
 
 
 # ---------------------------------------------------------------------
@@ -110,12 +110,24 @@ def initialize(paths = nil)
   parse_scores(paths)
 end #/ initialize
 
-
+def self.NOMBRE_ABSOLU_QUESTIONS
+  @nombre_absolu_questions ||= File.read(NOMBRE_QUESTIONS_PATH).to_i
+end #/ NOMBRE_ABSOLU_QUESTIONS
+def self.NOMBRE_ABSOLU_QUESTIONS=(val)
+  @nombre_absolu_questions = val
+end
 # ---------------------------------------------------------------------
 #
 #   Méthodes publiques de traitement
 #
 # ---------------------------------------------------------------------
+# Principalement pour les tests, prend le score +score+ et le traite
+# jusqu'à produire les valeurs de l'instance
+def parse_and_calc(score)
+  parse(score)
+  calculate_values
+end #/ parse_and_calc
+
 def parse_scores(paths)
   return if paths.nil? || paths.empty?
   paths = [paths] if paths.is_a?(String)
@@ -200,90 +212,89 @@ end #/ type
 #
 def parse(score)
   init_count if @sum_note.nil?
+  # Si le score est vide, on peut s'arrêter
+  return self if score.empty?
+
   n     = 0.0 # pour la note générale
   na    = 0.0 # pour la note général absolues (où les "-" valent 0)
   nmax  = 0.0 # pour la note maximale possible
   namax = 0.0 # pour la note maximale avec les "-" qui sont comptabilisées
-  naq   = NOMBRE_ABSOLU_QUESTIONS
+  naq   = Evaluation.NOMBRE_ABSOLU_QUESTIONS
   nqs   = 0.0 # nombre de questions dans le score (répondues ou non)
   nr    = 0.0 # pour Nombre Réponses, le nombre de réponses données
 
-  if score.empty?
-    pct = 0.0
-  else
-    score.each do |k, v|
-      nqs += 1.0
-      # Les éléments de la clé, qui détermine les appartenances de la
-      # question. Par exemple, si la clé contient "p-cohe-adth", la note
-      # appartient aux personnage ("p"), à la cohérence ("cohe") et à
-      # l'adéquation avec le thème ("adth"). On ajoutera la valeur de la note
-      # à chaque élément.
-      dk = k.split('-')
-      # Le coefficiant à appliquer à la note de la réponse, en fonction
-      # de sa profondeur
-      coef = DEEPNESS_COEF[dk.count]
-      maxcoef = 5.0 * coef
-      unless v == "-"
-        # <= Une note a été donnée
-        v = v.to_f
-        vcoef   = v * coef
-        # On incrémente le nombre de réponses données
-        nr += 1.0
-        # On ajoute cette valeur de réponse à la note finale
-        n    += vcoef
-        nmax += maxcoef
-      else
-        vcoef = 0.0
-      end
-      # On comptabilise toujours pour la note absolue
-      na    += vcoef
-      namax += maxcoef
-
-      # On règle toutes les appartenances grâce aux clés, en passant la
-      # première
-      dk[1..-1].each do |sk|
-        if not owners.key?(sk)
-          owners.merge!(sk =>{total:0, totmax:0, nombre:0, notes:[]})
-        end
-        owners[sk][:total]  += vcoef
-        owners[sk][:totmax] += maxcoef
-        owners[sk][:nombre] += 1
-        owners[sk][:notes]  << vcoef.round(1)
-      end
-
-    end #/ fin de si cette note est définie
-    # --- On a fini de calculer la note totale et la note maximale ---
-    # --- ainsi que les notes pour chaque "catégorie"
-
-    # Pour finaliser owners, on boucle et on arrondit les valeurs
-    owners.each do |k, v|
-      v[:total] = v[:total].round(1)
-      v[:totmax] = v[:totmax].round(1)
-    end
-
-    # Si le nombre de réponses dans le score (même celles à "-") est différent
-    # du nombre absolu (quand, par exemple, des questions ont été créées après
-    # l'établissement de cette évaluation)
-    # Alors il faut ajouter à la note max possible
-    if naq > nqs
-      (naq - nqs).to_i.times do
-        namax += 5.0
-      end
-    end
-
-    # --- Coefficiant 200 ---
-    coef200   = 20.0 / nmax
-    coefa200  = 20.0 / namax
-
-    if nr > 0
-      n   = (n  * coef200 ).round(1)
-      na  = (na * coefa200).round(1)
-      pct = (100.0 / (naq.to_f / nr)).round(1)
+  score.each do |k, v|
+    nqs += 1.0
+    # Les éléments de la clé, qui détermine les appartenances de la
+    # question. Par exemple, si la clé contient "p-cohe-adth", la note
+    # appartient aux personnage ("p"), à la cohérence ("cohe") et à
+    # l'adéquation avec le thème ("adth"). On ajoutera la valeur de la note
+    # à chaque élément.
+    dk = k.to_s.split('-')
+    # Le coefficiant à appliquer à la note de la réponse, en fonction
+    # de sa profondeur
+    coef = DEEPNESS_COEF[dk.count]
+    maxcoef = 5.0 * coef
+    unless v == "-"
+      # <= Une note a été donnée
+      v = v.to_f
+      vcoef   = v * coef
+      # On incrémente le nombre de réponses données
+      nr += 1.0
+      # On ajoute cette valeur de réponse à la note finale
+      n    += vcoef
+      nmax += maxcoef
     else
-      n   = 0.0
-      na  = 0.0
-      pct = 0.0
+      vcoef = 0.0
     end
+    # On comptabilise toujours pour la note absolue
+    na    += vcoef
+    namax += maxcoef
+
+    # On règle toutes les appartenances grâce aux clés
+    dk.each do |sk|
+      sk = sk.to_s
+      if not owners.key?(sk)
+        owners.merge!(sk =>{total:0, totmax:0, nombre:0, notes:[]})
+      end
+      owners[sk][:total]  += vcoef
+      owners[sk][:totmax] += maxcoef
+      owners[sk][:nombre] += 1
+      owners[sk][:notes]  << vcoef.round(1)
+    end
+
+  end #/ fin de si cette note est définie
+  # --- On a fini de calculer la note totale et la note maximale ---
+  # --- ainsi que les notes pour chaque "catégorie"
+
+  # Pour finaliser owners, on boucle et on arrondit les valeurs
+  owners.each do |k, v|
+    v[:total] = v[:total].round(1)
+    v[:totmax] = v[:totmax].round(1)
+  end
+
+  # Si le nombre de réponses dans le score (même celles à "-") est différent
+  # du nombre absolu (quand, par exemple, des questions ont été créées après
+  # l'établissement de cette évaluation)
+  # Alors il faut ajouter à la note max possible
+  if naq > nqs
+    (naq - nqs).to_i.times do
+      namax += 5.0
+    end
+  end
+
+  # --- Coefficiant 200 ---
+  coef200   = 20.0 / nmax
+  coefa200  = 20.0 / namax
+
+  if nr > 0
+    n   = (n  * coef200 ).round(1)
+    na  = (na * coefa200).round(1)
+    pct = (100.0 / (naq.to_f / nr)).round(1)
+  else
+    n   = 0.0
+    na  = 0.0
+    pct = 0.0
   end
   nu  = naq - nr
   # Le nombre de réponses en integer

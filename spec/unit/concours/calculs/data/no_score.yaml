@@ -13,7 +13,7 @@
       tr: "-"
       qu: "-"
     :attente:
-      :note: null
+      :note: 0.0
       :note_abs: 0.0
       :pourcentage: 0.0
       :nb_questions: 4
