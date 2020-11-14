@@ -68,19 +68,37 @@ def check_evaluation_in_with(e, attentes, name, coef200)
   describe name.bleu, only:true do
     attentes.each do |key, value|
       it "produit la bonne valeur pour #{key.inspect}" do
-        if value.to_s.start_with?('(')
-          c = key.to_s.start_with?('note') ? coef200 : nil
-          expected_value, ini_value = traite_val_note(value, c)
+        if key != :categories
+          # Le cas général normal, où on teste seulement une propriété comme
+          # :note, ou :nombre_missings
+          expected_value = realvalue(key, value, coef200)
+          evaluate_value = e.send(key)
+          expect(evaluate_value).to eq(expected_value),
+            "PROPERTY: #{key.inspect} EXPECTED: #{expected_value.inspect} ACTUAL: #{evaluate_value.inspect}"
         else
-          expected_value = value
+          # Le cas où on traite les catégories (appelées aussi :owners). :value
+          # est alors une table avec en clé les catégories et en valeur les
+          # valeurs que ces catégories doivent avoir dans l'instance +e+
+          value.each do |cate, vcate|
+            expected_value = realvalue(cate, vcate, coef200)
+            evaluate_value = e.send(:owners)[cate][:note]
+            expect(evaluate_value).to eq(expected_value),
+              "CATEGORIE: #{cate.inspect} EXPECTED: #{expected_value.inspect} ACTUAL: #{evaluate_value.inspect}"
+          end
         end
-        evaluation_value = e.send(key)
-        expect(evaluation_value).to eq(expected_value)
       end
     end
   end
 end #/ check_evaluation_in_with
 
+def realvalue(key, value, coef200)
+  if value.to_s.start_with?('(')
+    c = key.to_s.start_with?('note') ? coef200 : nil
+    traite_val_note(value, c)
+  else
+    value
+  end
+end #/ realvalue
 
 # Dans les fichiers YAML, une note peut être fournie par une opération (qui
 # doit obligatoirement commencer par une parenthèse)
@@ -97,5 +115,6 @@ def traite_val_note(val, coef200 = nil)
     end
     val = val.round(1)
   end
-  return [val, init_val]
+  # return [val, init_val] # avant, pour le message d'erreur
+  return val
 end

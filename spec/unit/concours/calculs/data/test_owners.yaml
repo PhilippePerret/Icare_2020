@@ -1,0 +1,14 @@
+:titre: Test des catégories
+:cases:
+  :simple:
+    :nombre_questions: 4
+    :scores:
+      - :values:
+          un: 5
+          un-de: 5
+          de: 5
+          tr: 5 # pour simplifier les calculs
+        :attentes:
+          :categories:
+            un: 20
+            de: 20

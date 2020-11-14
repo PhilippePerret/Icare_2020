@@ -87,8 +87,8 @@ attr_reader :pourcentage
 # {Hash} Table des catégories, pour connaitre la note pour chaque catégorie.
 # Par exemple, si la clé d'une question est "po-cohe-adth", cette question
 # appartiendra aux catégories "po", "cohe" et "adth". On comptabilise les points
-# pour chaque catégories, sauf la première qui est toujours le projet lui-même
-# et correspondrait à la note générale.
+# pour chaque catégories, même la première qui est toujours le projet lui-même
+# et correspond (?) à la note générale.
 attr_reader :owners
 
 # {Integer} Nombre de fiches d'évaluations fournies à l'instanciation

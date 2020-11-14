@@ -78,7 +78,6 @@ describe 'CONCOURS. Le module de calcul (class Evaluation)' do
   # Avec des questions en profondeur (profondeur de 2)
   teste_concours_calculs_scores('with_deepness_2.yaml')
 
-
   describe 'La propriété :owners' do
     it 'contient les bons résultats en profondeur' do
       score = {"po-cohe":0, "po-p-adth-cohe":5}
@@ -113,4 +112,8 @@ describe 'CONCOURS. Le module de calcul (class Evaluation)' do
       expect(own['adth'][:note]).to eq 20.0
     end
   end
+
+  # Avec des questions en profondeur (profondeur de 2)
+  teste_concours_calculs_scores('test_owners.yaml')
+
 end
