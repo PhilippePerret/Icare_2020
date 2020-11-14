@@ -1,21 +1,62 @@
-:context:
-  :description: Un score sans aucune réponse donnée
-  :deepness: Sans profondeur
-  :nombre_questions: Le même que le nombre absolu
-
+:titre: Un score sans réponse donnée
 :cases:
-  -
-    :fails: pour un score vide
+  :score_vide_quatre_questions:
+    :titre: pour un score vide
     :nombre_questions: 4
-    :score:
-      un: "-"
-      de: "-"
-      tr: "-"
-      qu: "-"
-    :attente:
-      :note: 0.0
-      :note_abs: 0.0
-      :pourcentage: 0.0
-      :nb_questions: 4
-      :nb_reponses: 0
-      :nb_missings: 4
+    :scores:
+      - :values:
+          un: "-"
+          de: "-"
+          tr: "-"
+          qu: "-"
+        :attentes:
+          :note: 0.0
+          :note_abs: 0.0
+          :pourcentage: 0.0
+          :nombre_questions: 4
+          :nombre_reponses: 0
+          :nombre_missings: 4
+  :score_vide_huit_questions:
+    :titre: un score vide avec la moitié des questions
+    :nombre_questions: 8
+    :scores:
+      - :values:
+          un: "-"
+          de: "-"
+          tr: "-"
+          qu: "-"
+        :attentes:
+          :note: 0.0
+          :note_abs: 0.0
+          :pourcentage: 0.0
+          :nombre_questions: 4
+          :nombre_reponses: 0
+          :nombre_missings: 8
+  :trois_scores_vides:
+    :titre: trois scores vides
+    :nombre_questions: 4
+    :scores:
+      - :values: {un: "-", de: "-", tr: "-", qu: "-"}
+        :attentes:
+          :note: 0.0
+          :note_abs: 0.0
+          :pourcentage: 0.0
+          :nombre_questions: 4
+          :nombre_reponses: 0
+          :nombre_missings: 4
+      - :values: {un: "-", de: "-", tr: "-", qu: "-"}
+        :attentes:
+          :note: 0.0
+          :note_abs: 0.0
+          :pourcentage: 0.0
+          :nombre_questions: 4
+          :nombre_reponses: 0
+          :nombre_missings: 4
+      - :values: {un: "-", de: "-", tr: "-", qu: "-"}
+        :attentes:
+          :note: 0.0
+          :note_abs: 0.0
+          :pourcentage: 0.0
+          :nombre_questions: 4
+          :nombre_reponses: 0
+          :nombre_missings: 4

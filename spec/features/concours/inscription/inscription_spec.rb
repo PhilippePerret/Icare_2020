@@ -7,7 +7,9 @@ require_relative './_required'
 
 feature "Section d'inscription de la partie concours" do
   before(:all) do
+    headless
     degel("concours-phase-1")
+    require './_lib/_pages_/concours/inscription/constants'
   end
 
   scenario "Une page conforme permet de s'inscrire une première fois au concours" do

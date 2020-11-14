@@ -43,9 +43,6 @@ describe 'CONCOURS. Le module de calcul (class Evaluation)' do
     Evaluation.NOMBRE_ABSOLU_QUESTIONS = nil
   end
 
-  teste_concours_calculs_scores('plusieurs_scores.yaml')
-
-
   it 'répond aux bonnes méthodes/propriétés' do
     e = Evaluation.new()
     expect(e).to respond_to(:parse_scores)
@@ -61,47 +58,26 @@ describe 'CONCOURS. Le module de calcul (class Evaluation)' do
     expect(e).to respond_to(:nombre_missings)
   end
 
-  # context 'avec un score entièrement vide' do
-  #   it_behaves_like "un bon résultat", "no_score"
-  # end
-  # context 'avec un nombre de questions identique' do
-  #   it_behaves_like "un bon résultat", "same_questions_count"
-  # end
-  # context 'avec un nombre de questions différent du score' do
-  #   it_behaves_like "un bon résultat", 'diff_questions_count'
-  # end
-  #
-  # context 'avec des questions en profondeur' do
-  #   it_behaves_like "un bon résultat", 'with_deepness_1'
-  # end
-  #
-  # context 'avec des questions d’un profondeur de 2' do
-  #   it_behaves_like "un bon résultat", 'with_deepness_2'
-  # end
-  #
-  # context 'avec plusieurs scores' do
-  # end
+  # Évaluation avec des scores vides
+  teste_concours_calculs_scores('no_score.yaml')
 
-  context 'plusieurs scores' do
-    it 'peuvent être additionnés' do
-      Evaluation.NOMBRE_ABSOLU_QUESTIONS = 2
-      scores = [
-        {"po":5, "po-cohe":5},
-        {"po":1, "po-cohe":0}
-      ]
-      e = Evaluation.new
-      scores.each do |score|
-        e.parse(score)
-      end
-      e.calculate_values
-      # Valeurs générales
-      expect(e.nombre_scores).to eq(2)
-      expect(e.nombre_reponses).to eq(2.0)
-      expect(e.nombre_questions).to eq(2.0)
-      # Catégories
-      expect(e.owners['cohe'][:note]).to eq(10.0)
-    end
-  end
+  # Tests avec des valeurs simples
+  teste_concours_calculs_scores('same_questions_count.yaml')
+
+  # Calculs complets avec plusieurs scores
+  teste_concours_calculs_scores('plusieurs_scores.yaml')
+
+  # Avec des nombres divergents entre le nombre de questions absolues
+  # et le nombre de réponses, comme si les questions avaient été modifiées
+  # après les évaluations, par exemple d'un concours à l'autre.
+  teste_concours_calculs_scores('diff_questions_count.yaml')
+
+  # Avec des questions en profondeur
+  teste_concours_calculs_scores('with_deepness_1.yaml')
+
+  # Avec des questions en profondeur (profondeur de 2)
+  teste_concours_calculs_scores('with_deepness_2.yaml')
+
 
   describe 'La propriété :owners' do
     it 'contient les bons résultats en profondeur' do

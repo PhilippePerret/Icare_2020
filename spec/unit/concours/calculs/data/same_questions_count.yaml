@@ -1,85 +1,83 @@
-:context:
-  :description: Avec un nombre de questions absolues correspondant au nombre de questions dans le fichier d'évaluation.
-  :deepness: Sans profondeur
-  :nombre_questions: Le même que le nombre absolu
-
+:titre: un seul score et questions avec différentes valeurs
 :cases:
-  -
-    :fails: pour toutes les valeurs au maximum
+  :toutes_valeurs_max:
+    :titre: valeurs au maximum
     :nombre_questions: 4
-    :score:
-      un: 5
-      de: 5
-      tr: 5
-      qu: 5
-    :attente:
-      :note: 20.0
-      :note_abs: 20.0
-      :pourcentage: 100.0
-      :nb_questions: 4
-      :nb_reponses: 4
-      :nb_missings: 0
+    :scores:
+      - :values:
+          un: 5
+          de: 5
+          tr: 5
+          qu: 5
+        :attentes:
+          :note: 20.0
+          :note_abs: 20.0
+          :pourcentage: 100.0
+          :nombre_questions: 4
+          :nombre_reponses: 4
+          :nombre_missings: 0
+  :valeurs_au_minimum:
+    :titre: pour toutes les valeurs au minimum
+    :nombre_questions: 4
+    :scores:
+      - :values:
+          un: 0
+          de: 0
+          tr: 0
+          qu: 0
+        :attentes:
+          :note: 0.0
+          :note_abs: 0.0
+          :pourcentage: 100.0
+          :nombre_questions: 4
+          :nombre_reponses: 4
+          :nombre_missings: 0
 
-  -
-    :fails: pour toutes les valeurs au minimum
+  :valeurs_moyennes:
+    :titre: pour toutes les valeurs moyennes
     :nombre_questions: 4
-    :score:
-      un: 0
-      de: 0
-      tr: 0
-      qu: 0
-    :attente:
-      :note: 0.0
-      :note_abs: 0.0
-      :pourcentage: 100.0
-      :nb_questions: 4
-      :nb_reponses: 4
-      :nb_missings: 0
-
-  -
-    :fails: pour toutes les valeurs moyennes
+    :scores:
+      - :values:
+          un: 3
+          de: 3
+          tr: 3
+          qu: 3
+        :attentes:
+          :note: 12.0
+          :note_abs: 12.0
+          :pourcentage: 100.0
+          :nombre_questions: 4
+          :nombre_reponses: 4
+          :nombre_missings: 0
+  :moitie_valeurs_fournies:
+    :titre: pour la moitié des valeurs fournies
     :nombre_questions: 4
-    :score:
-      un: 3
-      de: 3
-      tr: 3
-      qu: 3
-    :attente:
-      :note: 12.0
-      :note_abs: 12.0
-      :pourcentage: 100.0
-      :nb_questions: 4
-      :nb_reponses: 4
-      :nb_missings: 0
-
-  -
-    :fails: pour la moitié des valeurs fournies
+    :scores:
+      - :values:
+          tr: '-'
+          un: 5
+          de: 5
+          qu: '-'
+        :attentes:
+          :note: 20.0
+          :note_abs: 10.0
+          :pourcentage: 50.0
+          :nombre_questions: 4
+          :nombre_reponses: 2
+          :nombre_missings: 2
+  :trois_quart_valeurs_fournies:
+    :titre: pour trois quarts des valeurs fournies
     :nombre_questions: 4
-    :score:
-      tr: '-'
-      un: 5
-      de: 5
-      qu: '-'
-    :attente:
-      :note: 20.0
-      :note_abs: 10.0
-      :pourcentage: 50.0
-      :nb_questions: 4
-      :nb_reponses: 2
-      :nb_missings: 2
-
-  -
-    :fails: pour trois quarts des valeurs fournies
-    :nombre_questions: 4
-    :score:
-      un: 1
-      de: 1
-      tr: '-'
-      qu: 1
-    :attente:
-      :note: 4.0
-      :note_abs: 3.0
-      :pourcentage: 75.0
-      :nb_questions: 4
-      :nb_reponses: 3
-      :nb_missings: 1
+    :scores:
+      - :values:
+          un: 1
+          de: 1
+          tr: '-'
+          qu: 1
+        :attentes:
+          :note: 4.0
+          :note_abs: 3.0
+          :pourcentage: 75.0
+          :nombre_questions: 4
+          :nombre_reponses: 3
+          :nombre_missings: 1

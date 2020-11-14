@@ -13,8 +13,9 @@ require './_lib/_pages_/concours/xmodules/synopsis/Evaluation'
 
 def teste_concours_calculs_scores(yaml_filename)
   data = YAML.load_file(File.join(__dir__,'data',yaml_filename))
+  yaml_name = File.basename(yaml_filename, File.extname(yaml_filename))
   data[:cases].each do |k, data_case|
-    traite_calcul_case(data_case.merge(id: k, main_titre: "[#{yaml_filename}] #{data[:titre]}"))
+    traite_calcul_case(data_case.merge(id: k, main_titre: "[#{yaml_name}] #{data[:titre]}"))
   end
 
 end #/ concours_calculs_scores
@@ -33,7 +34,7 @@ def traite_calcul_case(data_case)
     e.parse_and_calc(data_score[:values])
     dupe = e.dup # la subtilité pour tester vraiment
     # === Vérifications ===
-    check_evaluation_in_with(dupe, data_score[:attentes], "#{data_case[:main_titre]}/score:#{data_case[:id]}/score ##{idx}", coef200)
+    check_evaluation_in_with(dupe, data_score[:attentes], "#{data_case[:main_titre]}/CASE:#{data_case[:id].to_s.gsub(/_/,' ')}/score ##{idx}", coef200)
   end
 
   # return

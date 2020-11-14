@@ -1,21 +1,32 @@
-:context:
-  :description: Avec un nombre absolu de questions différent du nombre dans le fichier d'évaluation.
-  :deepness: Sans profondeur
-  :nombre_questions: Différent du nombre absolu
-
+:titre: Avec un nombre questions différent absolu/fichier
 :cases:
-  -
-    :fails: "avec un nombre de questions totales différents du score"
+  :nombre_questions_diff:
+    :titre: "avec un nombre de questions totales différents du score"
     :nombre_questions: 8
-    :score:
-      un: 5
-      de: 5
-      tr: 5
-      qu: 5
-    :attente:
-      :note: 20.0
-      :note_abs: 10.0
-      :pourcentage: 50.0
-      :nb_questions: 4
-      :nb_reponses: 4
-      :nb_missings: 4
+    :scores:
+      - :values:
+          un: 5
+          de: 5
+          tr: 5
+          qu: 5
+        :attentes:
+          :note: 20.0
+          :note_abs: 10.0
+          :pourcentage: 50.0
+          :nombre_questions: 4
+          :nombre_reponses: 4
+          :nombre_missings: 4
+  :nombre_diff_plusieurs_scores:
+    :titre: avec un nombre différent et plusieurs score
+    :nombre_questions: 8
+    :scores:
+      - :values: {un: 5, de: 5, tr: 5, qu: 5}
+        :attentes:
+          :note: 20.0
+          :note_abs: 10
+          :pourcentage: 50
+      - :values: {un: 0, de: 0, tr:0, qu: 0}
+        :attentes:
+          :note: 10
+          :note_abs: 5
+          :pourcentage: 50
