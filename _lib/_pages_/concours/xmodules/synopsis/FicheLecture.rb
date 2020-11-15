@@ -61,23 +61,20 @@ end #/ pdf_filename
 # Sortie de la fiche de lecture du synopsis
 #
 # IN    +options+ Table d'options, cnotient :
-#           :format     Le format de sortie (seulement :concurrent pour le
-#                       moment, mais ça s'adresse à tout le monde, en fait)
+#           :prix       True ou False suivant qu'on veuille voir la fiche de
+#                       lecture pour le prix ou pour les présélections.
+#           :admin      True/False — pour savoir si c'est pour un administrateur
+#                       Un administrateurp peut voir sa note (if any) et la
+#                       note générale.
 #           :evaluator  Si NIL, c'est la note totale qui est considérée.
 #                       Si défini, c'est l'identifiant de l'évaluateur et il
 #                       faut afficher la fiche en fonction de ses notes seulement.
 #                       Note : tout se joue simplement au niveau du rassemblement
 #                       des résultats : si :evaluator est défini, on prend SA
 #                       fiche seulement, sinon on prend TOUTES les fiches.
-def out(options = nil)
-  rassemble_resultats(options)
-  dispatche_per_element
-  case options[:format]
-  when :concurrent
-    out_for_concurrent
-  else
-    puts "Je ne sais pas encore faire ça"
-  end
+def out(options)
+  evaluation = synopsis.evaluation(options)
+  deserb('templates/fiche_lecture_template', self)
 end #/ out
 
 # OUT   True si la fiche de lecture est téléchargeable.
@@ -94,12 +91,6 @@ def download_link
   "#{App::URL}/tmp/concours/#{pdf_filename}"
 end #/ download_link
 
-# OUT   Retourne le code HTML de la fiche de lecture complète pour le
-#       synopsis.
-def out_for_concurrent
-  deserb('templates/fiche_lecture_template', self)
-end #/ out_for_concurrent
-
 def ecusson
   @ecusson ||= Emoji.new('objets/blason').regular
 end #/ ecusson
@@ -108,20 +99,6 @@ def annee_edition ; ANNEE_CONCOURS_COURANTE end
 def formated_auteurs
   synopsis.real_auteurs
 end #/ auteurs
-
-def formated_note
-  @formated_note ||= formate_float(synopsis.evaluation.note)
-end
-
-def formated_pourcentage
-  @f_pourcentage ||= "#{synopsis.evaluation.pourcentage} %"
-end #/ formated_pourcentage
-
-# IN    {Symbol} Une catégorie (p.e. :coherence, :personnages, :intrigues)
-# OUT   {String} La note à afficher
-def fnote_categorie(cate)
-  formate_float(synopsis.evaluation.note_categorie(cate))
-end #/ note_categorie
 
 def explication_categorie(cate)
   FicheLecture::DATA_MAIN_PROPERTIES[cate][:explication]

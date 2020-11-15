@@ -1,6 +1,9 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class Report
+  pref = ONLINE ? './www' : "#{APPFOLDER}"
+  require "#{pref}/_lib/required/__first/helpers/string_helpers_module"
+  # => StringHelpersMethods
 class << self
   attr_accessor :prefix # à ajouter avant le message
   def << msg

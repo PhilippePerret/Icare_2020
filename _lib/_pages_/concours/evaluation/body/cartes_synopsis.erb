@@ -1,5 +1,22 @@
 <%
 # frozen_string_literal: true
+
+
+
+# POUR ESSAI À SUPPRIMER TODO
+
+Synopsis.evaluate_all_synopsis(phase: 1, evaluator: html.evaluator)
+message("Synopsis évalués et classés")
+
+=begin
+
+  Section à deux offices :
+    1) montrer la liste des cartes de synopsis (chaque concurrent en possède
+       une, même s'il n'a pas encore envoyé son synopsis)
+    2) hors temps du concours, c'est l'accueil des évaluateurs, avec un
+       affichage minimal.
+
+=end
 phase = Concours.current.phase
 annee = Concours.current.annee
 CONCOURS_ON = [1,2,3,5,8].include?(phase)
@@ -7,7 +24,7 @@ CONCOURS_ON = [1,2,3,5,8].include?(phase)
 if CONCOURS_ON
   self.titre = "Cartes des synopsis"
 else
-  self.titre = "Accueil des membres du jury du concours"
+  self.titre = "Accueil du jury du concours"
 end
 %>
 
@@ -54,14 +71,26 @@ formsynoeval.submit_button_class = "inline small"
 
 
 <%
-  options_sorting = case phase
-                    when 1 then {}
-                    when 2 then {avec_fichier_conforme: true}
-                    when 3 then {preselecteds: true}
-                    else
-                      # À la demande ?
-                      {}
-                    end
+# Options pour les choix des synopsis à afficher
+# Pour un administrateur, on affiche toujours tous les synopsis.
+options_sorting = {} if user.admin?
+options_sorting ||= case phase
+                  when 1
+                    # En phase 1 (concours lancé) aucune option particulière,
+                    # on doit prendre tous les synopsis courant
+                    {}
+                  when 2
+                    # En phase 2 (échéance arrivée), on ne travaille plus
+                    # qu'avec les fichiers concormes.
+                    {avec_fichier_conforme: true}
+                  when 3
+                    # En phase 3 (présélection effectuée), on ne travaille
+                    # plus qu'avec les fichiers présélectionnés.
+                    {preselecteds: true}
+                  else
+                    # À la demande ?
+                    {}
+                  end
  %>
 <%= sorting_tools(param(:ks), param(:ss)) %>
 <div id="synopsis-container" class="nolimit">

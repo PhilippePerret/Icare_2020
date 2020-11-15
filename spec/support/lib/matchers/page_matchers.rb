@@ -164,7 +164,44 @@ end # /have_notification
 
 RSpec::Matchers.alias_matcher :have_notifications, :have_notification
 
-
+RSpec::Matchers.define :have_route do |expected_route, options|
+  match do |page|
+    if page.current_url == "about:blank"
+      raise "Aucune page internet n'est chargée…"
+    end
+    parsed = URI.parse(page.current_url)
+    # puts "URI.parse(page.current_url): #{parsed.inspect}"
+    # puts "URI.parse(page.current_url).query: #{parsed.query.inspect}"
+    # puts "parsed.methods: #{parsed.methods}"
+    # puts "parsed.path: #{parsed.path.inspect}"
+    @page_route = parsed.path.sub(/\/AlwaysData\/Icare_2020\//,'')
+    ok = expected_route == @page_route
+    if options
+      if options.key?(:query)
+        # TODO Plus tard, on pourra vraiment mettre dans une table clé=>valeur
+        # et tester comme ça. Ici, si les arguments ne sont pas mis dans le
+        # même ordre, le résultat est faux.
+        ok = ok && parsed.query == options[:query]
+        @page_route = "#{@page_route.inspect} avec le query-string #{parsed.query.inspect}"
+      elsif options.key?(:not_query)
+        @page_route = "#{@page_route.inspect} avec le query-string #{parsed.query.inspect}"
+        ok = ok && parsed.query != options[:query]
+      end
+      # Par exemple un query-string ?
+    end
+    ok
+  end
+  description do
+    "La page possède bien la route '#{expected_route}'"
+  end
+  failure_message do
+    expects = []
+    expects << "la route #{expected_route.inspect}"
+    expects << "le query-string #{options[:query].inspect}" if options[:query]
+    expects << "sans le query-string #{options[:not_query].inspect}" if options[:not_query]
+    "La page devrait posséder #{expects.join(', ')}. Sa route est #{@page_route}"
+  end
+end
 
 RSpec::Matchers.define :have_titre do |expected, options|
   match do |page|

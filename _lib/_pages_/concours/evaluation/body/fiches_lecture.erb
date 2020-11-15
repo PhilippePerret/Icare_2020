@@ -37,7 +37,7 @@ options = {
   <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss), options) %>
   <% if fiches_synopsis.count > 0 %>
     <% fiches_synopsis.each do |synopsis| %>
-      <%= synopsis.fiche_lecture.out(options.merge(format: :concurrent)) %>
+      <%= synopsis.fiche_lecture.out(options) %>
     <% end %>
   <% else %>
     <p>Il n'y a pas encore d’inscrit au concours <%= Concours.current.annee %>.</p>

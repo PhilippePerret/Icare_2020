@@ -30,7 +30,7 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
     scenario 'peut évaluer un fichier de candidature par la fiche' do
 
       pitch("Un membre du jury peut rejoindre le concours, passer à l'évaluation d'une fiche en trouvant son évaluation précédente correctement affichée.")
-      headless
+      headless(false)
       member.rejoint_le_concours
       expect(page).to be_cartes_synopsis
       syno_id = "#{concurrent.id}-#{annee}"

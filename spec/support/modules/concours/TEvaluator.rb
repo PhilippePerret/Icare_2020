@@ -5,9 +5,14 @@
   ----------------
   Pour gérer les évaluateurs (membres du jury) dans les tests
 =end
+# require 'capybara/rspec'
+require './spec/support/spec_modules/module_people_matchers'
+
 class TEvaluator
-  include Capybara::DSL
-  include SpecModuleNavigation
+
+include Capybara::DSL
+include SpecModuleNavigation
+include PeopleMatchersModule
 
 # ---------------------------------------------------------------------
 #

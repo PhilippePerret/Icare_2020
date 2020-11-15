@@ -2,7 +2,7 @@
  *    Code généré automatiquement à partir des feuilles css
  *    du dossier './css/required'
  *
- *    Date dernière modification : 2020-11-13 04:32:35 +0100
+ *    Date dernière modification : 2020-11-15 06:03:58 +0100
  *
  --------------------------------------------------------------------- */
 :root {
@@ -599,7 +599,7 @@ div.warning, p.warning, span.warning {
 
 .caps {
   font-variant:all-small-caps;
-  font-size:1.4em;
+  font-size:1.3em;
 }
 
 .tiny {

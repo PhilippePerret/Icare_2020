@@ -9,9 +9,16 @@
 =end
 require_relative './constants'
 require_relative './FicheLecture'
-require_relative './Evaluation'
+require_relative './Evaluation_module'
 
 class Synopsis
+
+# Le module qui permet de faire l'interface entre le synopsis
+# et l'évaluation, c'est-à-dire le comptage des points.
+# Ce module fournit les méthodes :note, :formated_note, :note_abs,
+# :evaluate_for, :evaluate_all, etc.
+include EvaluationMethodsModule
+
 # ---------------------------------------------------------------------
 #
 #   CLASSE
@@ -37,12 +44,124 @@ end #/ get
   def all_courant
     @all_courant ||= begin
       db_exec(REQUEST_ALL_CONCURRENTS, [ANNEE_CONCOURS_COURANTE]).collect do |dc|
-        dc.merge!(evaluator_id: Concours.evaluator.id)
-        log("dc : #{dc.inspect}")
         Synopsis.new(dc[:concurrent_id], ANNEE_CONCOURS_COURANTE, dc)
       end
     end
   end #/ all_courant
+
+  # Méthode principale qui prépare l'affichage des synopsis et des fiches
+  # de lecture. En fonction des +options+, on évalue les synopsis pour un
+  # membre du jury ou tous
+  #
+  # DO    La méthode définit la position de chaque synopsis
+  #
+  # +options+
+  #   :phase    Le phase courante du concours. En fonction de la phase et du
+  #             statut du visiteur, on peut établir ce qu'il faut prendre en
+  #             compte. Deux exemples :
+  #               - pour un administrateur, on affiche toujours la note person-
+  #                 nelle et la note totale. Sa note personnelle est modifiable
+  #               - pour un membre du premier jury en phase 3 du concours (qui
+  #                 permet d'établir le palmarès), il voit la note générale
+  #                 en note principale et sa note personnelle en note secondaire
+  #   :evaluator  Instance {Evaluator}. Permet de savoir qui est là.
+  #
+  # Question : la méthode doit-elle aussi fonctionner pour un synopsis
+  # unique, pour afficher seulement sa fiche de lecture pour l'auteur par
+  # exemple.
+  def evaluate_all_synopsis(options)
+    # La note principale, en fonction de la phase et de l'évaluateur, qui
+    # va aussi déterminer la note de classement du synopsis.
+    phase = options[:phase] || Concours.current.phase
+
+    # La Note Principale (NP)
+    # -----------------------
+    # C'est la note qui sera affichée "en gris" sur la fiche de synopsis et de
+    # lecture, en fonction du contexte. C'est elle aussi qui sert de clé de
+    # classement pour connaitre la position du synopsis/projet.
+
+    # Étude du contexte
+    #   1) nature du visiteur : 1:admin, 2:evaluateur jury 1 4:evaluateur jury 2
+    nature = case
+    when evaluator.nil?   then 0
+    when evaluator.admin? then 1
+    when evaluator.jury1? then 2
+    when evaluator.jury2? then 4
+    end
+
+    main_note_key, side_note_key =
+        case phase
+        when 0 then [nil, nil] # rien en phase, ne devrait jamais arriver
+        when 1, 2
+          case nature
+          when NONE   then [nil, nil]
+          when ADMIN  then [:note, :note_pres]
+          when JURY1  then [:note: nil]
+          when JURY2  then [nil, nil]
+          end
+        when 3 # présélections faites
+          case nature
+          when NONE   then [:note_pres, nil] # présélectionnés
+          when ADMIN  then [:note, :note_pres]
+          when JURY1  then [:note_pres, :note]
+          when JURY2  then [:note, nil]
+          end
+        when 5, 8, 9 # palmarès établi
+          case nature
+          when NONE   then [:note_prix, nil]
+          when ADMIN  then [:note, :note_prix]
+          when JURY1  then [:note_prix, :note]
+          when JURY2  then [:note_prix, :note]
+          end
+        end
+
+    case
+    when evaluator && evaluator.admin?
+      main_note_key = :note
+      side_note_key = :note_pres
+    when [1,2].include?(phase) && evaluator && evaluator.jury1?
+      main_note_key = :note
+      side_note_key = nil
+    when phase < 3 && evaluator && not(evaluator.jury1?)
+      raise "Un membre du second ne devrait pas pouvoir passer par ici avant la phase 3"
+    when phase == 3 && evaluator && evaluator.jury1?
+    when phase == 3 && evaluator && evaluator.jury2?
+    end
+    main_note_key = :note_pres  # :all => la note générale du synopsis
+
+    # La note secondaire (NS)
+    # -----------------------
+    # C'est la seconde note qui peut être affichée sur la fiche en fonction
+    # du contexte. Par exemple lorsque c'est l'administrateur, il peut voir sa
+    # propre note ainsi que la note générale. Lorsque c'est un membre du jury 1
+    # en phase 3, peut voir sa propre note, et en main_note la note générale du
+    # synopsis
+    side_note_key = :note  # :own => la note  de l'évaluateur courant
+
+    # On boucle sur chaque synopsis pour définir sa note
+    all_courant.each do |syno|
+      # Dans tous les cas, on calcule la note générale, même si on n'en fera
+      # aucun usage (par exemple lorsqu'un evaluator est en phase 5)
+      syno.calc_evaluation_for_all(options)
+      syno.calc_evaluation_for(options) if not(options[:evaluator].nil?)
+      syno.sort_note = syno.send(main_note_key)
+    end
+
+    # On affecte les positions en fonction des notes principales obtenues
+    synos_min_to_max = all_courant.sort_by do |syno|
+      syno.sort_note
+    end
+    log("\n\n=== CLASSÉS ===")
+    synos_min_to_max.reverse.each_with_index do |syno, idx|
+      syno.position = idx + 1
+      log("= #{syno.ref}")
+
+    end
+
+    # On peut maintenant définir l'affichage
+    # (on s'en retourne, quoi)
+
+  end #/ evaluate_all_synopsis
 
   # IN    La clé de classement ('note' ou 'progress')
   #       Le sens de classement ('desc' ou 'asc')
@@ -101,7 +220,7 @@ attr_reader :concurrent_id, :annee, :data, :id
 # Les données de score pour un évaluator donné
 # Note : pour le moment, l'évaluateur se donne dans :out
 attr_reader :data_score
-# L'évaluator courant
+# L'évaluator courant (TODO non, il faut l'envoyer chaque fois)
 attr_accessor :evaluator_id
 # Position de classement par rapport à la note
 attr_accessor :position
@@ -112,52 +231,20 @@ def initialize concurrent_id, annee, dat = nil
   @annee = annee
   @id = "#{concurrent_id}-#{annee}"
   @data = dat || get_data
-  @evaluator_id = @data[:evaluator_id]
+  @evaluator_id = @data[:evaluator_id] # TODO À retirer
 end #/ initialize
 
-# Évaluation en temps courant, en fonction du visiteur (admin, evaluator ou
-# concurrent) et la phase du concours. Sachant que :
-#   PHASE 0
-#     - Personne ne peut rien voir.
-#   PHASE 1
-#     - L'administrateur peut voir sa note, la note générale et la note de
-#       chaque membre du jury (peut-être en rangée)
-#     - un évaluateur du jury 1 peut voir sa fiche (et la modifier)
-#     - un évaluateur du jury 2 ne peut rien voir
-#     - un concurrent ne peut rien voir
-#   PHASE 2 (présélection)
-#     - Un administrateur peut voir sa note et la note générale
-#     - Un concurrent ne peut rien voir
-#     - Un évaluateur du jury 1 peut voir sa fiche (et la modifier)
-#     - Un évaluateur du jury 2 ne peut rien voir
-#   PHASE 3 (synopsis présélectionnés)
-#     - Un administrateur peut tout voir, dans le détail
-#     - Un évaluateur de jury 1 peut voir sa note et la note générale
-#     - Un évaluateur de jury 2 peut voir sa note (et la modifier)
-#     - Un concurrent peut voir sa note de présélections
-#   PHASE 5 (palmarès établi)
-#     - Un administrateur peut tout voir, dans le détail
-#     - Un évaluateur de jury 1 peut voir sa note et la note générale
-#     - Un évaluateur de jury 2 peut voir sa note et la note générale
-#       (il ne peut plus modifier sa note)
-#     - Un concurrent peut voir sa note et son prix (if any)
-#   Idem pour les phases suivantes
-# def evaluate
-#
-# end #/ evaluate
 
-def evaluation_for(jure_id)
-  @evaluations ||= {}
-  @evaluations[jure_id] ||= begin
-    Evaluation.new(checklist_for(jure_id))
+def ref
+  @ref ||= begin
+    str = ["SYNO"]
+    str << "#{position.inspect.to_s.rjust(3)}"
+    str << "#{id.ljust(20)}"
+    str << "#{note_pres.to_s.rjust(4)}"
+    str << "#{note.to_s.rjust(4)}" unless evaluation.nil?
+    str.join(' ')
   end
-end
-
-def evaluation_for_all
-  @evaluate_all ||= begin
-    Evaluation.new(checklist_paths)
-  end
-end #/ evaluate_all
+end #/ ref
 
 # OUT   Le path du fichier d'évaluation en fonction de la phase +phase+
 #       du concours et l'évaluateur d'identifiant +ev_id+ (ou l'évaluateur

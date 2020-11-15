@@ -17,7 +17,7 @@ end
 
 RSpec::Matchers.define :be_accueil_jury do
   match do |page|
-    page.has_css?("h2.page-title", text: "Accueil des membres du jury du concours")
+    page.has_css?("h2.page-title", text: "Accueil du jury du concours")
   end
   description do
     "C'est bien la page d'accueil du concours"
