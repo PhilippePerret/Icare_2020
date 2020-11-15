@@ -38,7 +38,7 @@ class Cronjob
     if res.nil?
       return nil
     else
-      res.first[:id]
+      res[:id]
     end
   end #/ max_id_tickets
 end #/Cronjob

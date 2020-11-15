@@ -12,6 +12,7 @@ Dir.chdir(APPFOLDER) do
   require './_lib/required/__first/Date_utils'
   require './_lib/required/__first/require_methods'
   require './_lib/required/__first/extensions/String'
+  require './_lib/required/__first/helpers/string_helpers_module'
   require './_lib/required/__first/db'
 end
 
