@@ -72,11 +72,8 @@ end
 # Les chemins d'accès aux fiches d'évaluation à prendre en compte
 attr_reader :score_paths
 
-# La note pour les présélections
-attr_reader :note_pres
-
-# La note pour les prix (donc tous les synopsis, "pres" et "prix")
-attr_reader :note_prix
+# La note
+attr_reader :note
 
 # La note générale, comme la précédente, mais où les réponses non encore
 # répondues ont été mises à zéro

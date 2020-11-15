@@ -1,13 +1,6 @@
 <%
 # frozen_string_literal: true
 
-
-
-# POUR ESSAI À SUPPRIMER TODO
-
-Synopsis.evaluate_all_synopsis(phase: 1, evaluator: html.evaluator)
-message("Synopsis évalués et classés")
-
 =begin
 
   Section à deux offices :
@@ -18,8 +11,10 @@ message("Synopsis évalués et classés")
 
 =end
 phase = Concours.current.phase
-annee = Concours.current.annee
 CONCOURS_ON = [1,2,3,5,8].include?(phase)
+annee = Concours.current.annee
+evaluator = html.evaluator
+
 
 if CONCOURS_ON
   self.titre = "Cartes des synopsis"
@@ -73,31 +68,14 @@ formsynoeval.submit_button_class = "inline small"
 <%
 # Options pour les choix des synopsis à afficher
 # Pour un administrateur, on affiche toujours tous les synopsis.
-options_sorting = {} if user.admin?
-options_sorting ||= case phase
-                  when 1
-                    # En phase 1 (concours lancé) aucune option particulière,
-                    # on doit prendre tous les synopsis courant
-                    {}
-                  when 2
-                    # En phase 2 (échéance arrivée), on ne travaille plus
-                    # qu'avec les fichiers concormes.
-                    {avec_fichier_conforme: true}
-                  when 3
-                    # En phase 3 (présélection effectuée), on ne travaille
-                    # plus qu'avec les fichiers présélectionnés.
-                    {preselecteds: true}
-                  else
-                    # À la demande ?
-                    {}
-                  end
+options_sorting = {phase: phase, evaluator: evaluator}
  %>
 <%= sorting_tools(param(:ks), param(:ss)) %>
 <div id="synopsis-container" class="nolimit">
-  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss), options_sorting) %>
+  <% fiches_synopsis = Synopsis.sorteds_by(param(:ks),param(:ss), options_sorting) %>
   <% if fiches_synopsis.count > 0 %>
     <% fiches_synopsis.each do |syno| %>
-      <%= syno.out(evaluator.id) %>
+      <%= syno.out %>
     <% end %>
   <% else %>
     <p>Il n'y a pas encore d’inscrit au concours <%= annee %>.</p>

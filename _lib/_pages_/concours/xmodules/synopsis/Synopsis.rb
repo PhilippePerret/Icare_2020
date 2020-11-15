@@ -69,16 +69,25 @@ end #/ get
   # Question : la méthode doit-elle aussi fonctionner pour un synopsis
   # unique, pour afficher seulement sa fiche de lecture pour l'auteur par
   # exemple.
+  NONE = 0; ADMIN = 1; JURY1 = 2; JURY2 = 4
   def evaluate_all_synopsis(options)
     # La note principale, en fonction de la phase et de l'évaluateur, qui
     # va aussi déterminer la note de classement du synopsis.
     phase = options[:phase] || Concours.current.phase
+    evaluator = options[:evaluator]
 
-    # La Note Principale (NP)
-    # -----------------------
+    # La Note Principale (main_note_key)
+    # ----------------------------------
     # C'est la note qui sera affichée "en gris" sur la fiche de synopsis et de
     # lecture, en fonction du contexte. C'est elle aussi qui sert de clé de
     # classement pour connaitre la position du synopsis/projet.
+    # La note secondaire (side_note_key)
+    # ----------------------------------
+    # C'est la seconde note qui peut être affichée sur la fiche en fonction
+    # du contexte. Par exemple lorsque c'est l'administrateur, il peut voir sa
+    # propre note ainsi que la note générale. Lorsque c'est un membre du jury 1
+    # en phase 3, peut voir sa propre note, et en main_note la note générale du
+    # synopsis
 
     # Étude du contexte
     #   1) nature du visiteur : 1:admin, 2:evaluateur jury 1 4:evaluateur jury 2
@@ -89,6 +98,8 @@ end #/ get
     when evaluator.jury2? then 4
     end
 
+    # Déterminer les clés qui doivent permettre de relever la note principale
+    # (main_note) et la note secondaire (side_note)
     main_note_key, side_note_key =
         case phase
         when 0 then [nil, nil] # rien en phase, ne devrait jamais arriver
@@ -96,7 +107,7 @@ end #/ get
           case nature
           when NONE   then [nil, nil]
           when ADMIN  then [:note, :note_pres]
-          when JURY1  then [:note: nil]
+          when JURY1  then [:note, nil]
           when JURY2  then [nil, nil]
           end
         when 3 # présélections faites
@@ -115,53 +126,62 @@ end #/ get
           end
         end
 
-    case
-    when evaluator && evaluator.admin?
-      main_note_key = :note
-      side_note_key = :note_pres
-    when [1,2].include?(phase) && evaluator && evaluator.jury1?
-      main_note_key = :note
-      side_note_key = nil
-    when phase < 3 && evaluator && not(evaluator.jury1?)
-      raise "Un membre du second ne devrait pas pouvoir passer par ici avant la phase 3"
-    when phase == 3 && evaluator && evaluator.jury1?
-    when phase == 3 && evaluator && evaluator.jury2?
-    end
-    main_note_key = :note_pres  # :all => la note générale du synopsis
+    # S'il n'y a pas de clé principale de classement, on s'en retourne sans
+    # rien faire.
+    return if main_note_key.nil?
 
-    # La note secondaire (NS)
-    # -----------------------
-    # C'est la seconde note qui peut être affichée sur la fiche en fonction
-    # du contexte. Par exemple lorsque c'est l'administrateur, il peut voir sa
-    # propre note ainsi que la note générale. Lorsque c'est un membre du jury 1
-    # en phase 3, peut voir sa propre note, et en main_note la note générale du
-    # synopsis
-    side_note_key = :note  # :own => la note  de l'évaluateur courant
+    # Pour déterminer la clé de classement pour le classement par
+    # progression de l'évaluation (pourcentage)
+    progress_key = main_note_key == :note ? :pourcentage : :pourcentage_total
 
-    # On boucle sur chaque synopsis pour définir sa note
+    # On boucle sur chaque synopsis pour définir sa note principale
+    # On s'assure qu'il possède un fichier (en phase 1, c'est loin d'être
+    # toujours le cas)
+    synos_avec_fichier = []
+    synos_sans_fichier = []
     all_courant.each do |syno|
-      # Dans tous les cas, on calcule la note générale, même si on n'en fera
-      # aucun usage (par exemple lorsqu'un evaluator est en phase 5)
-      syno.calc_evaluation_for_all(options)
-      syno.calc_evaluation_for(options) if not(options[:evaluator].nil?)
-      syno.sort_note = syno.send(main_note_key)
+      if syno.cfile.conforme?
+        # Dans tous les cas, on calcule la note générale, même si on n'en fera
+        # aucun usage (par exemple lorsqu'un evaluator est en phase 5)
+        syno.calc_evaluation_for_all(options)
+        syno.calc_evaluation_for(options) if not(options[:evaluator].nil?)
+        syno.sort_note = syno.send(main_note_key)
+        synos_avec_fichier << syno
+      else
+        synos_sans_fichier << syno
+      end
     end
 
     # On affecte les positions en fonction des notes principales obtenues
-    synos_min_to_max = all_courant.sort_by do |syno|
-      syno.sort_note
+    synos_max_to_min = synos_avec_fichier.sort_by do |syno|
+      - syno.sort_note
     end
-    log("\n\n=== CLASSÉS ===")
-    synos_min_to_max.reverse.each_with_index do |syno, idx|
-      syno.position = idx + 1
-      log("= #{syno.ref}")
 
+    # On classe par progression
+    synos_sorted_by_progress = synos_avec_fichier.sort_by do |syno|
+      - syno.send(progress_key)
+    end
+
+    synos_max_to_min.each_with_index do |syno, idx|
+      syno.position = idx + 1
     end
 
     # On peut maintenant définir l'affichage
     # (on s'en retourne, quoi)
+    [synos_max_to_min, synos_sans_fichier, synos_sorted_by_progress]
 
   end #/ evaluate_all_synopsis
+
+  def sorteds_by(key = 'note', sens = 'desc', options)
+    synos_max_to_min, synos_sans_fichier, synos_sorted_by_progress = evaluate_all_synopsis(options)
+    liste = if key == 'progress'
+              synos_sorted_by_progress
+            else # classement par note
+              synos_max_to_min.dup
+            end
+    # Il faut inverser la liste si nécessaire
+    sens == 'asc' ? liste.reverse : liste
+  end #/ sorteds_by
 
   # IN    La clé de classement ('note' ou 'progress')
   #       Le sens de classement ('desc' ou 'asc')
@@ -300,6 +320,7 @@ def bind; binding() end
 # IN    Optionnellement, ID de l'évaluateur ou table des options
 #       Note : il peut être fourni à l'instanciation (cf. initialize)
 def out(options = nil)
+  options ||= {}
   options = {evaluator_id: options} if options.is_a?(Integer)
   options ||= options
   options.merge!(format: :fiche_synopsis) unless options.key?(:format)

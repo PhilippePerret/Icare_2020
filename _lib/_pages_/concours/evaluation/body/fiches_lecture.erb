@@ -4,6 +4,7 @@ self.titre = "Fiches de lecture"
 # Boucle sur la liste des synopsis classés par note
 
 phase = Concours.current.phase
+evaluator = html.evaluator # peut être nil
 
 %>
 
@@ -26,7 +27,7 @@ param(:ss) || param(:ss, 'desc')
 # Options pour le total (pour savoir s'il faut prendre les notes pour le
 # palmarès final et/ou seulement les notes de l'évaluator courant)
 options = {
-  prix: (phase >= 3), evaluator: evaluator&.id, admin: evaluator.admin?
+  phase: phase, evaluator: evaluator
 }
 %>
 
@@ -34,7 +35,7 @@ options = {
   <%= sorting_tools(param(:ks), param(:ss)) %>
 </div>
 <div id="fiches-lecture">
-  <% fiches_synopsis = Synopsis.sorted_by(param(:ks),param(:ss), options) %>
+  <% fiches_synopsis = Synopsis.sorteds_by(param(:ks),param(:ss), options) %>
   <% if fiches_synopsis.count > 0 %>
     <% fiches_synopsis.each do |synopsis| %>
       <%= synopsis.fiche_lecture.out(options) %>
