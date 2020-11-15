@@ -58,6 +58,13 @@ class << self
     get(gel_name)&.remove
   end #/ remove
 
+  def verbose?
+    @mode_verbose === true && ENV['SPEC_FORMATTER'] == 'Documentation'
+  end #/ verbose?
+  def verbose= value
+    @mode_verbose = value
+  end
+
 end # /<< self
 
 # ---------------------------------------------------------------------
@@ -69,6 +76,8 @@ attr_reader :name
 def initialize name
   @name = name
 end #/ initialize
+
+def verbose?;self.class.verbose? end
 
 # Méthode qui dégel le gel s'il existe, ou procède à l'opération
 # voulue et produit le gel.
@@ -127,7 +136,9 @@ def degel
     proceed_gel
     return self
   end
-  puts "\tDégel de #{name}…".gris if ENV['SPEC_FORMATTER'] == 'Documentation'
+  if verbose?
+    puts "\tDégel de #{name}…".gris
+  end
   # Vider la base de données
   # Utile ?
   # Charger les données dans la base de données

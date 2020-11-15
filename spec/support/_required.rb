@@ -11,6 +11,7 @@ require './_lib/required/__first/extensions/String'
 
 require_relative './lib/constantes'
 require_relative './spec_modules/module_navigation'
+require_relative './spec_modules/module_people_matchers'
 require_relative './handies/handies'
 require_relative './handies/db'
 require_relative './handies/user'
@@ -30,4 +31,5 @@ class TMails
 end
 class TUser
   extend MethodMissionModule
+  include PeopleMatchersModule
 end

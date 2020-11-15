@@ -213,6 +213,16 @@ RSpec.configure do |config|
     puts "\t#{decoupe_string(msg.gsub(/^[\t ]+/,''), 70).join("\n\t")}".jaune
   end #/ pitch
 
+  # Retourne la page (Session Capybara) et retourne la route
+  # correspondante
+  # @alias : routeof
+  def route_of(pg)
+    puts "[route_of] pg : #{pg.inspect} / #{pg.current_url}"
+    path = URI.parse(pg.current_url).path
+    path.sub(/\/AlwaysData\/Icare_2020\//,'')
+  end #/ route_of
+  alias :routeof :route_of
+
   def decoupe_string(str, maxlong)
     segs = []
     mots = []
@@ -241,8 +251,9 @@ RSpec.configure do |config|
     require File.join(FOLDER_DATA, relpath)
   end #/ require_data
 
-  def degel(gel_name)
+  def degel(gel_name, verbeux = false)
     require_gel unless defined?(Gel)
+    Gel.verbose = verbeux
     Gel.get(gel_name).degel
   end #/ degel
 
