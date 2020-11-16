@@ -26,7 +26,7 @@ class HTML
       end
     elsif param(:op) == 'logout'
       Evaluator.deconnect_evaluator
-    elsif Evaluator.try_reconnect_evaluator
+    elsif try_to_reconnect_visitor
       add_js('./js/modules/ajax')
       require_xmodule('synopsis')
       require_xmodule('admin/constants')

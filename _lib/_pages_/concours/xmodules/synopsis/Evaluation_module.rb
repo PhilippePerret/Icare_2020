@@ -37,12 +37,12 @@ module EvaluationMethodsModule
 
 # La note de l'évaluateur
 def note
-  evaluation.note
+  evaluation&.note || 'NC'
 end #/ note
 
 # La note totale des présélections pour le synopsis
 def note_pres
-  evaluation_totale.note_pres
+  evaluation_totale&.note_pres || 'NC'
 end #/ note_totale
 
 # La note totale du palmarès pour le synopsis
@@ -50,15 +50,15 @@ end #/ note_totale
 # mieux additionner toutes les notes, même si ce total peut être inférieur à
 # des notes de synopsis non présélectionnés
 def note_prix
-  evaluation_totale.note_prix
+  evaluation_totale&.note_prix || 'NC'
 end #/ note_prix
 
 def pourcentage
-  evaluation.pourcentage
+  evaluation&.pourcentage || 'NC'
 end #/ pourcentage
 
 def pourcentage_total
-  evaluation_totale.pourcentage
+  evaluation_totale&.pourcentage || 'NC'
 end #/ pourcentage_total
 
 # ---------------------------------------------------------------------
@@ -78,7 +78,7 @@ end #/ formated_pourcentage
 # IN    {Symbol} Une catégorie (p.e. :coherence, :personnages, :intrigues)
 # OUT   {String} La note à afficher
 def fnote_categorie(cate)
-  formate_float(synopsis.evaluation.note_categorie(cate))
+  formate_float(evaluation&.note_categorie(cate) || 'NC')
 end #/ note_categorie
 
 # ---------------------------------------------------------------------

@@ -23,9 +23,18 @@ form.submit_button = "M’identifier"
 if OFFLINE
   require "#{DATA_FOLDER}/secret/concours"
 %>
-<pre class="small">
-  <% CONCOURS_DATA[:evaluators].each do |de| %>
-    <%= de[:mail].ljust(40) %> <%= de[:password] %>
-  <% end %>
-</pre>
+<div>
+  <legend>Se connecter en tant que :</legend>
+    <script type="text/javascript">
+    // Script pour simplifier l'auto connection
+    function ConnectEvaluator(data){
+      document.querySelector('*[name="member_mail"]').value = data.mail;
+      document.querySelector('*[name="member_password"]').value = data.password;
+      document.querySelector("form#concours-membre-login").submit();
+    }
+    </script>
+    <% CONCOURS_DATA[:evaluators].each do |de| %>
+      <a class="block" href="javascript:ConnectEvaluator({mail:'<%= de[:mail] %>', password:'<%=de[:password]%>'})"><%= de[:pseudo] %> (jury <%= de[:jury] %>)</a>
+    <% end %>
+</div>
 <% end %>

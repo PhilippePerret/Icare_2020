@@ -1,58 +1,5 @@
 <%
 # frozen_string_literal: true
-
-evaluator = html.evaluator
-# La note à afficher dépend de la phase du concours et du visiteur
-phase = Concours.current.phase
-pour_prix = phase >= 3
-
-# Le "context" dépend de :
-#   - la phase du concours
-#   - la nature du visiteur (simple visiteur — impossible normalement —,
-#     évaluateur, administrateur)
-options_per_context =
-  case phase
-  when 0
-    # On ne fait rien, cette page ne peut pas être consultée
-  when 1, 2 # phase 1 et 2 => lecture et évaluation par le premier jury (présélections)
-    # SI c'est un juré du premier jury, on affiche la liste des fiches de
-    # lecture avec sa note à lui (ainsi que les commentaires correspondant à
-    # cette note)
-    # SI c'est un juré du second jury, il ne peut pas venir ici
-    # SI C'est un administrateur, on affiche sa note et la note totale
-    case
-    when evaluator.admin?
-      {own_fiche: true, all_fiches: true, prix: pour_prix, modifiable: true}
-    when evaluator.jury1?
-      (own_fiche: true, all_fiches: false, prix: pour_prix, modifiable: true)
-    when evaluator.jury2?
-      raise "En tant que membre du second jury, vous ne devriez pas pouvoir passer par ici à ce stade du concours…"
-    else
-      raise "Il n'est rien de tout ça"
-    end
-  when 3 # phase 3 => le second jury travaille pour désigner les vainqueurs
-    # SI C'est un juré du premier jury, on affiche la liste des fiches
-    # de lecture avec la note générale (il ne peut plus changer sa note)
-    # SI c'est un juré du second jury, on affiche sa propre note seulement
-    # SI c'est un administrateur, on affiche sa propre note et la note totale
-    case
-    when evaluator.admin?
-      {own_fiche: true, all_fiches: true, prix: pour_prix, modifiable: true}
-    when evaluator.jury1?
-      {own_fiche: false, all_fiches: true, prix: false, modifiable: false}
-    when evaluator.jury2?
-      {own_fiche: true, all_fiches: false, prix: true, modifiable: true}
-    else
-      raise "Il n'est rien de tout ça"
-    end
-  when 5 # phase 5 => palmarès établi
-    # La note finale est affichée pour tout le monde, et ne peut être
-    # changée
-    # Rappel : quand c'est un synopsis présélectionné, la note finale correspond
-    # à la note maximale entre la note de présélection et la note (pour qu'elle
-    # soit toujours supérieure à la note des non présélectionnés)
-    {own_fiche: false, all_fiches: true, prix: true, modifiable: false}
-  end
 %>
 <div class="fiche-lecture" data_synopsis_id="<%=synopsis.id%>">
   <div class="header hidden">

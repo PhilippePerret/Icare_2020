@@ -35,39 +35,9 @@ class << self
     erreur("Désolé, je ne vous remets pas… Pouvez-vous réessayer ?")
   end #/ authentify_evaluator
 
-  def try_reconnect_evaluator
-    if user.admin?
-      # <=  Le visiteur est un administrateur identifié
-      # =>  On l'authentifie automatiquement comme évaluateur
-      html.evaluator = Evaluator.new(user.data)
-      self.current = html.evaluator
-      self.current.is_admin
-      return true
-    else
-      # <=  Le visiteur n'est pas un administrateur identifié
-      # =>  On regarde si on peut l'identifier à l'aide des informations de
-      #     la session. Sinon, on l'envoie à l'identification.
-      require File.join(DATA_FOLDER,'secret','concours') # => CONCOURS_DATA
-      if not session['concours_evaluator_id'].nil?
-        CONCOURS_DATA[:evaluators].each do |devaluator|
-          if session['concours_evaluator_mail'] == devaluator[:mail]
-            html.evaluator = Evaluator.new(devaluator)
-            self.current = html.evaluator
-            break
-          end
-        end
-        return not(html.evaluator.nil?)
-      else
-        # Il faut s'identifier
-        redirect_to("concours/evaluation?view=login")
-        return false
-      end
-    end
-  end #/ try_reconnect_evaluator
-
   # Pour déconnecter l'évaluateur courant
   def deconnect_evaluator
-    current || try_reconnect_evaluator
+    current || try_to_reconnect_visitor
     pseudo = (current&.pseudo || 'cher membre').freeze
     session.delete('concours_evaluator_id')
     session.delete('concours_evaluator_mail')
@@ -82,7 +52,7 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 attr_reader :data_ini, :pseudo, :mail, :id
-attr_accessor :is_admin
+attr_accessor :is_admin, :is_concurrent
 
 def initialize(data_ini)
   @data_ini = data_ini
@@ -92,6 +62,9 @@ end #/ initialize
 def admin?
   self.is_admin === true
 end #/ admin?
+def concurrent?
+  self.is_concurrent === true
+end #/ concurrent?
 def jury1?
   admin? || data_ini[:jury] & 1 > 0
 end #/ jury1?

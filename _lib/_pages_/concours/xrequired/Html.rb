@@ -4,6 +4,71 @@
   Extension de la class HTML pour le concours
 =end
 class HTML
+  # Instance {Concurrent} du concurrent courant (s'il y en a un)
+  attr_accessor :concurrent
+
   # Instance {Evaluator} de l'évaluateur (s'il y en a un)
   attr_accessor :evaluator
+
+  # Méthode qui va tenter de reconnecter un visiteur qui peut être soit :
+  #   - admin       => rien à faire
+  #   - concurrent  => rien à faire, on le reconnecte
+  #   - concurrent icarien
+  #   - membre jury
+  #
+  def try_to_reconnect_visitor(mandatory = false)
+    if user.admin?
+      reconnect_admin
+    elsif not(user.guest?) && session['concours_user_id'].nil?
+      reconnect_icarien(mandatory)
+    elsif session['concours_user_id']
+      reconnect_concurrent(mandatory)
+    elsif session['concours_evaluator_id']
+      reconnect_evaluator(mandatory)
+    elsif mandatory
+      unable_reconnection
+    end
+  end #/ try_to_reconnect_visitor
+
+  def reconnect_concurrent(mandatory)
+    self.concurrent = Concurrent.authentify(session['concours_user_id'])
+    if self.concurrent
+      log("RECONNEXION CONCURRENT #{concurrent.id} (#{concurrent.pseudo})")
+    elsif mandatory
+      return unable_reconnection
+    end
+  end #/ reconnect_concurrent
+
+  def reconnect_icarien(mandatory)
+    dc = db_exec("SELECT concurrent_id FROM #{DBTBL_CONCURRENTS} WHERE mail = ?", [user.mail]).first
+    if not dc.nil?
+      session['concours_user_id'] = dc[:concurrent_id]
+      db_exec("UPDATE #{DBTBL_CONCURRENTS} SET session_id = ? WHERE concurrent_id = ?", [session.id, dc[:concurrent_id]])
+    elsif mandatory
+      unable_reconnection
+    end
+  end #/ reconnect_icarien
+
+  def reconnect_evaluator(mandatory)
+    require './_lib/_pages_/concours/evaluation/lib/Evaluator'
+    require File.join(DATA_FOLDER,'secret','concours') # => CONCOURS_DATA
+    CONCOURS_DATA[:evaluators].each do |devaluator|
+      if session['concours_evaluator_mail'] == devaluator[:mail]
+        self.evaluator = Evaluator.new(devaluator)
+        Evaluator.current = self.evaluator
+        return true # ok
+      end
+    end
+    if mandatory
+      redirect_to("concours/evaluation?view=login")
+      return false
+    end
+  end #/ reconnecte_evaluator
+
+  # En cas de reconnection impossible
+  def unable_reconnection
+    erreur(ERRORS[:concours_login_required])
+    return redirect_to("concours/identification")
+  end #/ unable_reconnection
+
 end

@@ -49,6 +49,11 @@ end #/ get
     end
   end #/ all_courant
 
+  # = main =
+  #
+  # Méthode principale qui évalue les synopsis (détermine les propriétés
+  # :evaluation et :evaluation_all — cf. le module évaluation)
+  #
   # Méthode principale qui prépare l'affichage des synopsis et des fiches
   # de lecture. En fonction des +options+, on évalue les synopsis pour un
   # membre du jury ou tous
@@ -68,13 +73,14 @@ end #/ get
   #
   # Question : la méthode doit-elle aussi fonctionner pour un synopsis
   # unique, pour afficher seulement sa fiche de lecture pour l'auteur par
-  # exemple.
-  NONE = 0; ADMIN = 1; JURY1 = 2; JURY2 = 4
+  # exemple. Réponse : oui, même si ça prend de l'énergie pour rien.
+  NONE = 0; ADMIN = 1; JURY1 = 2; JURY2 = 4, CONCU = 8
   def evaluate_all_synopsis(options)
+    log("-> evaluate_all_synopsis")
     # La note principale, en fonction de la phase et de l'évaluateur, qui
     # va aussi déterminer la note de classement du synopsis.
     phase = options[:phase] || Concours.current.phase
-    evaluator = options[:evaluator]
+    cuser = options[:evaluator]
 
     # La Note Principale (main_note_key)
     # ----------------------------------
@@ -90,12 +96,18 @@ end #/ get
     # synopsis
 
     # Étude du contexte
-    #   1) nature du visiteur : 1:admin, 2:evaluateur jury 1 4:evaluateur jury 2
+    #   1) nature du visiteur :
+    #       0: simple visiteu
+    #       1: admin,
+    #       2: evaluateur jury 1
+    #       4: evaluateur jury 2
+    #       8: concurrent
     nature = case
-    when evaluator.nil?   then 0
-    when evaluator.admin? then 1
-    when evaluator.jury1? then 2
-    when evaluator.jury2? then 4
+    when cuser.nil?   then 0
+    when cuser.admin? then 1
+    when cuser.jury1? then 2
+    when cuser.jury2? then 4
+    when cuser.concurrent? then 8
     end
 
     # Déterminer les clés qui doivent permettre de relever la note principale
@@ -109,22 +121,27 @@ end #/ get
           when ADMIN  then [:note, :note_pres]
           when JURY1  then [:note, nil]
           when JURY2  then [nil, nil]
+          when CONCU  then [nil, nil]
           end
         when 3 # présélections faites
           case nature
-          when NONE   then [:note_pres, nil] # présélectionnés
+          when NONE   then [nil, nil] # présélectionnés
           when ADMIN  then [:note, :note_pres]
           when JURY1  then [:note_pres, :note]
           when JURY2  then [:note, nil]
+          when CONCU  then [:note_pres, nil]
           end
         when 5, 8, 9 # palmarès établi
           case nature
-          when NONE   then [:note_prix, nil]
+          when NONE   then [nil, nil]
           when ADMIN  then [:note, :note_prix]
           when JURY1  then [:note_prix, :note]
           when JURY2  then [:note_prix, :note]
+          when CONCU  then [:note_prix, nil]
           end
         end
+
+    log("Nature du visiteur : #{nature.inspect} / main_note_key:#{main_note_key.inspect} / side_note_key:#{side_note_key.inspect}")
 
     # S'il n'y a pas de clé principale de classement, on s'en retourne sans
     # rien faire.
@@ -137,8 +154,9 @@ end #/ get
     # On boucle sur chaque synopsis pour définir sa note principale
     # On s'assure qu'il possède un fichier (en phase 1, c'est loin d'être
     # toujours le cas)
-    synos_avec_fichier = []
+    synos_with_file_and_fiche = []
     synos_sans_fichier = []
+    synos_sans_fiche   = []
     all_courant.each do |syno|
       if syno.cfile.conforme?
         # Dans tous les cas, on calcule la note générale, même si on n'en fera
@@ -146,19 +164,23 @@ end #/ get
         syno.calc_evaluation_for_all(options)
         syno.calc_evaluation_for(options) if not(options[:evaluator].nil?)
         syno.sort_note = syno.send(main_note_key)
-        synos_avec_fichier << syno
+        if syno.sort_note.nil? # <= pas de fichier d'évaluation
+          synos_sans_fiche << syno
+        else
+          synos_with_file_and_fiche << syno
+        end
       else
         synos_sans_fichier << syno
       end
     end
 
     # On affecte les positions en fonction des notes principales obtenues
-    synos_max_to_min = synos_avec_fichier.sort_by do |syno|
+    synos_max_to_min = synos_with_file_and_fiche.sort_by do |syno|
       - syno.sort_note
     end
 
     # On classe par progression
-    synos_sorted_by_progress = synos_avec_fichier.sort_by do |syno|
+    synos_sorted_by_progress = synos_with_file_and_fiche.sort_by do |syno|
       - syno.send(progress_key)
     end
 
@@ -166,65 +188,72 @@ end #/ get
       syno.position = idx + 1
     end
 
-    # On peut maintenant définir l'affichage
-    # (on s'en retourne, quoi)
-    [synos_max_to_min, synos_sans_fichier, synos_sorted_by_progress]
+    @has_been_evaluated = true
 
+    log("<- evaluate_all_synopsis (établissement et return des listes)")
+    # On retourne les listes de synopsis
+    [synos_max_to_min, synos_sans_fiche, synos_sans_fichier, synos_sorted_by_progress]
   end #/ evaluate_all_synopsis
 
+  # Retourne TRUE si l'évaluation de tous les synopsis a été opérée
+  def evaluated?
+    @has_been_evaluated === true
+  end #/ evaluated?
+
+  # Retourne tous les synopsis classés suivant +key+ et +sens+.
   def sorteds_by(key = 'note', sens = 'desc', options)
-    synos_max_to_min, synos_sans_fichier, synos_sorted_by_progress = evaluate_all_synopsis(options)
+    synos_max_to_min, synos_sans_fiche, synos_sans_fichier, synos_sorted_by_progress = evaluate_all_synopsis(options)
     liste = if key == 'progress'
               synos_sorted_by_progress
             else # classement par note
               synos_max_to_min.dup
             end
     # Il faut inverser la liste si nécessaire
-    sens == 'asc' ? liste.reverse : liste
+    (sens == 'asc' ? liste.reverse : liste) + synos_sans_fiche + synos_sans_fichier
   end #/ sorteds_by
 
-  # IN    La clé de classement ('note' ou 'progress')
-  #       Le sens de classement ('desc' ou 'asc')
-  #       +options+ Table d'options
-  #         :preselecteds   Si true, seulement les présélectionnés
-  #         :avec_fichier   Si true, seulement les synopsis avec fichier conforme
-  # OUT   La liste des instances {Synopsis}
-  # Note  Les synopsis sans fichiers sont toujours mis à la fin
-  def sorted_by(key = 'note', sens = 'desc', options = nil)
-    options ||= {}
-    # 1) On ne prend que les synopsis avec fichier
-    avec_fichiers = []
-    sans_fichiers = []
-    all_courant.each do |syno|
-      if syno.fichier?
-        if options[:preselecteds]
-          avec_fichiers << syno if syno.preselected?
-        elsif options[:avec_fichier_conforme]
-          avec_fichiers << syno if syno.cfile.conforme?
-        else
-          avec_fichiers << syno
-        end
-      else
-        sans_fichiers << syno
-      end
-    end
-    # 2) On peut classer les synopsis avec fichier
-    if key == 'note'
-      # avec_fichiers = avec_fichiers.sort_by{ |syno| syno.fiche_lecture.total.note }.reverse
-      avec_fichiers = avec_fichiers.sort_by{ |syno| syno.note.to_f }
-      avec_fichiers.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total(options).undefined? }
-    else # ket = :progress
-      avec_fichiers.sort_by! { |syno| syno.evaluation_for(html.evaluator.id).nombre_reponses||0 }
-    end
-    avec_fichiers = avec_fichiers.reverse if sens == 'desc'
-    if options[:avec_fichier] || options[:avec_fichier_conforme]
-      avec_fichiers
-    elsif options[:avec_fichier] === false || options[:sans_fichier]
-      sans_fichiers
-    else
-      avec_fichiers + sans_fichiers
-    end
-  end #/ sorted_by
+  # # IN    La clé de classement ('note' ou 'progress')
+  # #       Le sens de classement ('desc' ou 'asc')
+  # #       +options+ Table d'options
+  # #         :preselecteds   Si true, seulement les présélectionnés
+  # #         :avec_fichier   Si true, seulement les synopsis avec fichier conforme
+  # # OUT   La liste des instances {Synopsis}
+  # # Note  Les synopsis sans fichiers sont toujours mis à la fin
+  # def sorted_by(key = 'note', sens = 'desc', options = nil)
+  #   options ||= {}
+  #   # 1) On ne prend que les synopsis avec fichier
+  #   avec_fichiers = []
+  #   sans_fichiers = []
+  #   all_courant.each do |syno|
+  #     if syno.fichier?
+  #       if options[:preselecteds]
+  #         avec_fichiers << syno if syno.preselected?
+  #       elsif options[:avec_fichier_conforme]
+  #         avec_fichiers << syno if syno.cfile.conforme?
+  #       else
+  #         avec_fichiers << syno
+  #       end
+  #     else
+  #       sans_fichiers << syno
+  #     end
+  #   end
+  #   # 2) On peut classer les synopsis avec fichier
+  #   if key == 'note'
+  #     # avec_fichiers = avec_fichiers.sort_by{ |syno| syno.fiche_lecture.total.note }.reverse
+  #     avec_fichiers = avec_fichiers.sort_by{ |syno| syno.note.to_f }
+  #     avec_fichiers.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total(options).undefined? }
+  #   else # ket = :progress
+  #     avec_fichiers.sort_by! { |syno| syno.evaluation_for(html.evaluator.id).nombre_reponses||0 }
+  #   end
+  #   avec_fichiers = avec_fichiers.reverse if sens == 'desc'
+  #   if options[:avec_fichier] || options[:avec_fichier_conforme]
+  #     avec_fichiers
+  #   elsif options[:avec_fichier] === false || options[:sans_fichier]
+  #     sans_fichiers
+  #   else
+  #     avec_fichiers + sans_fichiers
+  #   end
+  # end #/ sorted_by
 end # /<< self
 
 
@@ -423,22 +452,22 @@ def formated_keywords
   @formated_keywords ||= (data[:keywords]||'').split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
 end #/ keywords
 
-def formated_pre_note
-  if pre_note.nil?
-    calcule_note_preselection
-  end
-  color = pre_note > 100 ? 'green' : 'red'
-  Tag.span(text:"#{pre_note}/200", class:color)
-end #/ formated_note
-
-# Son instance de formulaire d'évaluation, pour un évaluateur donné
-def evaluation_form(evaluateur)
-  @evaluations ||= {}
-  @evaluations[evaluateur.id] || begin
-    @evaluations.merge!(evaluateur.id => EvaluationForm.new(self, evaluateur))
-  end
-  @evaluations[evaluateur.id]
-end #/ evaluation
+# def formated_pre_note
+#   if pre_note.nil?
+#     calcule_note_preselection
+#   end
+#   color = pre_note > 100 ? 'green' : 'red'
+#   Tag.span(text:"#{pre_note}/200", class:color)
+# end #/ formated_note
+#
+# # Son instance de formulaire d'évaluation, pour un évaluateur donné
+# def evaluation_form(evaluateur)
+#   @evaluations ||= {}
+#   @evaluations[evaluateur.id] || begin
+#     @evaluations.merge!(evaluateur.id => EvaluationForm.new(self, evaluateur))
+#   end
+#   @evaluations[evaluateur.id]
+# end #/ evaluation
 
 # ---------------------------------------------------------------------
 #   Méthodes d'état

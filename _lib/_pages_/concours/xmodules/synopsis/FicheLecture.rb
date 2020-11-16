@@ -60,6 +60,10 @@ end #/ pdf_filename
 
 # Sortie de la fiche de lecture du synopsis
 #
+# Quand la méthode est appelée sans aucun argument, cela signifie qu'on doit
+# retourner la fiche de lecture pour le visiteur courant (qui peut être admin,
+# concurrent ou membre du jury) et la phase courante du concours.
+#
 # IN    +options+ Table d'options, cnotient :
 #           :prix       True ou False suivant qu'on veuille voir la fiche de
 #                       lecture pour le prix ou pour les présélections.
@@ -72,8 +76,20 @@ end #/ pdf_filename
 #                       Note : tout se joue simplement au niveau du rassemblement
 #                       des résultats : si :evaluator est défini, on prend SA
 #                       fiche seulement, sinon on prend TOUTES les fiches.
-def out(options)
-  evaluation = synopsis.evaluation(options)
+def out(options = nil)
+  # Si l'évaluation des synopsis n'est pas faite, il faut la lancer
+  if not Synopsis.evaluated?
+    options ||= {}
+    options.merge!(phase: Concours.current.phase) if not options.key?(:phase)
+    options.merge!(evaluator: html.evaluator) if not options.key?(:evaluator)
+    Synopsis.evaluate_all_synopsis(options)
+    # Si les synopsis n'ont toujours pas été évalués, c'est que le visiteur
+    # ne peut pas consulter la fiche
+    if not Synopsis.evaluated?
+      message "Il semble que vous ne puissiez pas consulter cette fiche de lecture. Désolé."
+      redirect_to("concours")
+    end
+  end
   deserb('templates/fiche_lecture_template', self)
 end #/ out
 
@@ -100,13 +116,22 @@ def formated_auteurs
   synopsis.real_auteurs
 end #/ auteurs
 
+def note_categorie(cate)
+  synopsis.evaluation&.note_categorie(cate) || 'NC'
+end #/ note_categorie
+
+# Retourne la note pour la catégorie +cate+
+def fnote_categorie(cate)
+  synopsis.formate_note(note_categorie(cate))
+end #/ fnote_categorie
+
 def explication_categorie(cate)
   FicheLecture::DATA_MAIN_PROPERTIES[cate][:explication]
 end
 
 def explication_categorie_per_note(cate)
-  n = synopsis.evaluation.note_categorie(cate)
-  return if n.nil?
+  n = note_categorie(cate)
+  return if n.nil? || n == 'NC'
   FicheLecture::DATA_MAIN_PROPERTIES[cate][key_per_note(n)]
 end
 

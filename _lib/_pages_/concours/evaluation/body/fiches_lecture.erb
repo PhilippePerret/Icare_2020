@@ -35,12 +35,14 @@ options = {
   <%= sorting_tools(param(:ks), param(:ss)) %>
 </div>
 <div id="fiches-lecture">
-  <% fiches_synopsis = Synopsis.sorteds_by(param(:ks),param(:ss), options) %>
-  <% if fiches_synopsis.count > 0 %>
-    <% fiches_synopsis.each do |synopsis| %>
-      <%= synopsis.fiche_lecture.out(options) %>
-    <% end %>
-  <% else %>
-    <p>Il n'y a pas encore d’inscrit au concours <%= Concours.current.annee %>.</p>
-  <% end %>
+  <%
+    all_synopsis = Synopsis.sorteds_by(param(:ks),param(:ss), options)
+    if all_synopsis.count > 0
+      all_synopsis.each do |synopsis| %><%=
+        synopsis.fiche_lecture.out(options) %><%
+      end
+    else %>
+      <p>Il n'y a pas encore d’inscrit au concours <%= Concours.current.annee %>.</p><%
+    end
+  %>
 </div>

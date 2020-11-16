@@ -344,6 +344,8 @@ end #/ init_count
 # IN    {Symbol} La catégorie, p.e. :coherence, :adequation, :personnages, :forme
 # OUT   {Float} La note obtenue ou nil
 def note_categorie(cate)
+  log("cate: #{cate.inspect}")
+  log("FicheLecture::DATA_MAIN_PROPERTIES[#{cate.inspect}]: #{FicheLecture::DATA_MAIN_PROPERTIES[cate].inspect}")
   dim_cate = FicheLecture::DATA_MAIN_PROPERTIES[cate][:diminutif]
   owners[dim_cate][:note]
 end #/ fnote_categorie

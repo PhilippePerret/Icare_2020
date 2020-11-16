@@ -7,7 +7,7 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
-    try_reconnect_concurrent
+    try_to_reconnect_visitor
   end # /exec
 
   # Fabrication du body

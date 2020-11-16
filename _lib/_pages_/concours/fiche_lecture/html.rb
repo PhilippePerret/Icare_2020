@@ -9,6 +9,7 @@ class HTML
   def exec
     add_css('./_lib/_pages_/concours/evaluation/css/fiche_lecture.css')
     require_xmodule('synopsis')
+    try_to_reconnect_visitor
   end # /exec
 
   # Fabrication du body

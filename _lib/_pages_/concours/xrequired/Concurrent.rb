@@ -3,38 +3,6 @@
 require_relative './constants'
 require './_lib/required/__first/feminines'
 
-class HTML
-
-  attr_accessor :concurrent
-
-  # IN    required  Si TRUE, il faut vraiment qu'on puisse reconnecter un
-  #                 concurrent, sinon on renvoie le visiteur vers l'identifi-
-  #                 cation. Si required est false, peu importe qu'on puisse en
-  #                 reconnecter un.
-  # DO    Reconnecte le concurrent s'il est trouvé.
-  #
-  def try_reconnect_concurrent(required = false)
-    if session['concours_user_id'].nil? && not(user.guest?)
-      # Connecter un icarien qui fait le concours pour la première fois
-      dc = db_exec("SELECT concurrent_id FROM #{DBTBL_CONCURRENTS} WHERE mail = ?", [user.mail]).first
-      unless dc.nil?
-        session['concours_user_id'] = dc[:concurrent_id]
-        db_exec("UPDATE #{DBTBL_CONCURRENTS} SET session_id = ? WHERE concurrent_id = ?", [session.id, dc[:concurrent_id]])
-      end
-    end
-
-    if session['concours_user_id']
-      self.concurrent = Concurrent.authentify(session['concours_user_id'])
-      if self.concurrent
-        log("RECONNEXION CONCURRENT #{concurrent.id} (#{concurrent.pseudo})")
-      end
-    elsif required
-      erreur(ERRORS[:concours_login_required])
-      return redirect_to("concours/identification")
-    end
-  end #/ try_reconnect_concurrent
-end
-
 class Concurrent
   include FemininesMethods
 # ---------------------------------------------------------------------
@@ -287,6 +255,7 @@ end #/ warned?
 # Deux conditions :
 #   - le bit 0 de la propriété specs dans la DB est à 1
 #   - le fichier physique existe
+# TODO Supprimer la redondance et utiliser synopsis.cfile.transmis?
 def dossier_transmis?
   (@dossier_transmis ||= begin
     spec(0) == 1 ? :true : :false
@@ -294,6 +263,8 @@ def dossier_transmis?
 end #/ dossier_complete?
 
 # OUT   True si le fichier a été transmis et qu'il est conforme.
+# TODO Supprimer la redondance en utilisant synopsis.cfile.conforme?
+# (et peut-être aussi synopsis.cfile.transmis?)
 def fichier_conforme?
   (@fichier_is_conforme ||= begin
     dossier_transmis? && (spec(1) == 1) ? :true : :false
@@ -305,6 +276,7 @@ end #/ fichier_conforme?
 #       précédente. not(fichier_conforme?) retourne FALSE si le fichier n'a
 #       pas été transmis, comme si un fichier avait été transmis. Cette méthode
 #       retourne FALSE si le fichier n'a pas encore été transmis
+# TODO Supprimer la redondance et utiliser synopsis.cfile.non_conforme?
 def fichier_non_conforme?
   dossier_transmis? && spec(1) == 2
 end #/ not_fichier_conforme

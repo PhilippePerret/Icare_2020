@@ -51,19 +51,28 @@ const EVALUATOR_ID = <%= evaluator.id %>;
 %>
 
 <%
-# Le formulaire pour entrer un numéro de fichier, afin de pouvoir l'évaluer
-formsynoeval = Form.new(id:"goto-evaluate-synopsis-form", route:"concours/evaluation", class:"inline nolibelle mb2")
-formsynoeval.rows = {
-  "<view/>" => {type:"hidden", name:"view", value:"checklist"},
-  "Fichier (i.e. ID Synopsis)" => {name:"synoid", type:"text", style:"width:300px;", placeholder:"ID du synopsis à évaluer"}
-}
-formsynoeval.submit_button = "Évaluer"
-formsynoeval.submit_button_class = "inline small"
+# ---------------------------------------------------------------------
+# Si c'est un membre du second jury et qu'on en est encore à la
+# phase de présélection
+# ---------------------------------------------------------------------
+if not(evaluator.jury1?) && phase < 3
 %>
-<div class="right nolimit">
-  <%= formsynoeval.out %>
-</div>
-
+<p class="big air border">Vous ne pouvez pas encore évaluer les synopsis, mais ça ne devrait pas tarder.</p>
+<%
+else
+%>
+<% if phase < 3
+    # Le formulaire pour entrer un numéro de fichier, afin de pouvoir l'évaluer
+    formsynoeval = Form.new(id:"goto-evaluate-synopsis-form", route:"concours/evaluation", class:"inline nolibelle mb2")
+    formsynoeval.rows = {
+      "<view/>" => {type:"hidden", name:"view", value:"checklist"},
+      "Fichier (i.e. ID Synopsis)" => {name:"synoid", type:"text", style:"width:300px;", placeholder:"ID du synopsis à évaluer"}
+    }
+    formsynoeval.submit_button = "Évaluer"
+    formsynoeval.submit_button_class = "inline small"
+  %>
+  <div class="right nolimit"><%= formsynoeval.out %></div>
+<% end %>
 
 <%
 # Options pour les choix des synopsis à afficher
@@ -72,9 +81,9 @@ options_sorting = {phase: phase, evaluator: evaluator}
  %>
 <%= sorting_tools(param(:ks), param(:ss)) %>
 <div id="synopsis-container" class="nolimit">
-  <% fiches_synopsis = Synopsis.sorteds_by(param(:ks),param(:ss), options_sorting) %>
-  <% if fiches_synopsis.count > 0 %>
-    <% fiches_synopsis.each do |syno| %>
+  <% all_synopsis = Synopsis.sorteds_by(param(:ks),param(:ss), options_sorting) %>
+  <% if all_synopsis.count > 0 %>
+    <% all_synopsis.each do |syno| %>
       <%= syno.out %>
     <% end %>
   <% else %>
@@ -82,6 +91,9 @@ options_sorting = {phase: phase, evaluator: evaluator}
   <% end %>
 </div>
 
+<%
+end # si c'est un bon évaluateur pour la bonne phase
+%>
 
 <%
 end # si le concours est lancé
