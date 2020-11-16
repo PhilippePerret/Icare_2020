@@ -27,11 +27,12 @@ div.synopsis a.note-generale {
 div.synopsis span.note-globale {
   position:absolute;
   bottom:4px;
+  right:0px;
   font-size:15pt;
   color:#999;
 }
-div.synopsis span.note-globale:before{content:"("}
-div.synopsis span.note-globale:after{content:")"}
+div.synopsis span.note-globale:before{content:"["}
+div.synopsis span.note-globale:after{content:"]"}
 
 div.synopsis.ghost {
   opacity:0.5;
@@ -76,6 +77,12 @@ div.synopsis div.div-pct-reponses {
   text-align:left;
   font-size:10.5pt;
 }
+div.synopsis div.div-pct-reponses span.pct-reponses-all {
+  font-size:0.85em;
+}
+div.synopsis div.div-pct-reponses span.pct-reponses-all:before{content:"["}
+div.synopsis div.div-pct-reponses span.pct-reponses-all:after{content:"]"}
+
 div.synopsis div.jauge-pct-reponses {
   position:relative;
   background-color:red;

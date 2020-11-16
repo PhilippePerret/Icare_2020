@@ -18,6 +18,8 @@ class HTML
       ["Progression &gt;", "progress", "desc"],
       ["Progression &lt;", "progress", "asc"]
     ]
+    key ||= 'note'
+    sens ||= 'desc'
     links = data_tools.collect do |text, ks, ss|
       dtool = {text:text, route:"#{route}?view=#{param(:view)}&ks=#{ks}&ss=#{ss}"}
       dtool.merge!(class:"discret bold") if key == ks && sens == ss

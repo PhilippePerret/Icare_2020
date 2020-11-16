@@ -28,17 +28,17 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
   <div id="synopsis-<%=id%>-titre" class="titre"><%=titre%></div>
   <div class="auteur">de <span id="synopsis-<%=id%>-pseudo" class=""><%=concurrent.patronyme%></span></div>
   <a id="synopsis-<%=id%>-note-generale" class="note-generale" href="<%= href_evaluation %>">
-    <span class="note-evaluator"><%=formated_note%></span>
-    <% if user.admin? %>
-      <span class="note-globale" title="Note globale tenant compte des notes des autres membres du jury"><%= formated_note_totale %></span>
-    <% end %>
+    <span class="note-evaluator"><%=formated_note%></span><%
+    if user.admin? %>
+      <span class="note-globale" title="Note globale tenant compte des notes des autres membres du jury"><%= formated_note_totale %></span><%
+    end %>
   </a>
 
   <div id="synopsis-<%=id%>-pct-reponses" class="div-pct-reponses">
-    <span class="pct-reponses"><%=formated_pourcentage%></span><span> %</span>
-    <% if user.admin? %>
-      <span class="pct-reponses-all"><%=formated_all_pourcentages%></span><span> %</span>
-    <% end %>
+    <span class="pct-reponses"><%=formated_pourcentage%></span><%
+    if user.admin? %>
+      <span class="pct-reponses-all"><%=formated_all_pourcentages%></span><%
+    end %>
   </div>
 
   <div id="synopsis-<%=id%>-jauge-pct-reponses" class="jauge-pct-reponses">
@@ -47,7 +47,7 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
   <div id="synopsis-<%=id%>-keywords" class="keywords"><%=formated_keywords%></div>
   <%# (Les boutons sont définis en haut de page) %>
   <div class="fiche-buttons center"><%=
-    bouton_edit if evaluator.admin? and cfile.conforme? %><%=
+    bouton_edit if user.admin? and cfile.conforme? %><%=
     bouton_evaluate if cfile.conforme? %><%
     if evaluator.admin? && not(cfile.conformity_defined?) %><%=
       bouton_marquer_conforme if not(cfile.conforme?) %><%=
