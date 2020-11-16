@@ -108,6 +108,7 @@ div.synopsis div.keywords {
   overflow:hidden;
   text-overflow:ellipsis;
   font-size:0.9em;
+  margin-top: 1em;
 }
 div.synopsis span.kword {
 

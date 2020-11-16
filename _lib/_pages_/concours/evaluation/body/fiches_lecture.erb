@@ -39,7 +39,7 @@ options = {
     all_synopsis = Synopsis.sorteds_by(param(:ks),param(:ss), options)
     if all_synopsis.count > 0
       all_synopsis.each do |synopsis| %><%=
-        synopsis.fiche_lecture.out(options) %><%
+        synopsis.fiche_lecture.out %><%
       end
     else %>
       <p>Il n'y a pas encore d’inscrit au concours <%= Concours.current.annee %>.</p><%

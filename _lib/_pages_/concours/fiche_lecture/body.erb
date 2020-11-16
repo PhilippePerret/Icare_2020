@@ -1,1 +1,4 @@
-<%= Synopsis.new(param(:cid), param(:an)).fiche_lecture.out %>
+<% Synopsis.evaluate_all_synopsis if not Synopsis.evaluated? %>
+<%= Synopsis.get(param(:cid), param(:an)).fiche_lecture.out %>
+
+<div class="mt3"><span class="small">Consultation : <%= designation_visiteur_courant %></span></div>

@@ -26,7 +26,12 @@ include EvaluationMethodsModule
 # ---------------------------------------------------------------------
 class << self
 
-def get(syno_id)
+# OUT   L'instance du synopsis
+# IN    +syno_id+ {String} Identifiant du synopsis OU identifiant du concurrent
+#       +annee+   {Integer} Année ou NIL si c'est l'id du synopsis qui est passé
+#                 en premier argument.
+def get(syno_id, annee = nil)
+  syno_id = "#{syno_id}-#{annee}" if not annee.nil?
   @table ||= {}
   @table[syno_id] ||= begin
     args = syno_id.split('-')
@@ -34,6 +39,12 @@ def get(syno_id)
     Synopsis.new(*args)
   end
 end #/ get
+
+# À l'instanciation d'un synopsis, on l'ajoute à la table des synopsis
+def add(syno)
+  @table ||= {}
+  @table.merge!(syno.id => syno)
+end #/ add
 
   # Retourne la liste de tous les synopsis courants (sous forme d'instances
   # synopsis). Note : il y en a une par concurrent de la session courante,
@@ -75,8 +86,10 @@ end #/ get
   # unique, pour afficher seulement sa fiche de lecture pour l'auteur par
   # exemple. Réponse : oui, même si ça prend de l'énergie pour rien.
   NONE = 0; ADMIN = 1; JURY1 = 2; JURY2 = 4, CONCU = 8
-  def evaluate_all_synopsis(options)
-    log("-> evaluate_all_synopsis")
+  def evaluate_all_synopsis(options = nil)
+    log("-> evaluate_all_synopsis(options:#{options.inspect})")
+    options ||= {}
+    options.merge!(evaluator: html.evaluator) if not options.key?(:evaluator)
     # La note principale, en fonction de la phase et de l'évaluateur, qui
     # va aussi déterminer la note de classement du synopsis.
     phase = options[:phase] || Concours.current.phase
@@ -158,18 +171,23 @@ end #/ get
     synos_sans_fichier = []
     synos_sans_fiche   = []
     all_courant.each do |syno|
+      # log("Synopsis étudié : #{syno.ref}")
       if syno.cfile.conforme?
         # Dans tous les cas, on calcule la note générale, même si on n'en fera
         # aucun usage (par exemple lorsqu'un evaluator est en phase 5)
         syno.calc_evaluation_for_all(options)
-        syno.calc_evaluation_for(options) if not(options[:evaluator].nil?)
+        syno.calc_evaluation_for(options) if cuser
+        # log("syno#{syno.id}.evaluation : #{syno.evaluation.inspect}")
         syno.sort_note = syno.send(main_note_key)
         if syno.sort_note.nil? # <= pas de fichier d'évaluation
+          # log("  -> pas de fichier d'évaluation")
           synos_sans_fiche << syno
         else
+          # log("  -> ok, un fichier et une évaluation")
           synos_with_file_and_fiche << syno
         end
       else
+        # log("  -> pas de fichier de candidature")
         synos_sans_fichier << syno
       end
     end
@@ -269,8 +287,6 @@ attr_reader :concurrent_id, :annee, :data, :id
 # Les données de score pour un évaluator donné
 # Note : pour le moment, l'évaluateur se donne dans :out
 attr_reader :data_score
-# L'évaluator courant (TODO non, il faut l'envoyer chaque fois)
-attr_accessor :evaluator_id
 # Position de classement par rapport à la note
 attr_accessor :position
 
@@ -280,7 +296,7 @@ def initialize concurrent_id, annee, dat = nil
   @annee = annee
   @id = "#{concurrent_id}-#{annee}"
   @data = dat || get_data
-  @evaluator_id = @data[:evaluator_id] # TODO À retirer
+  self.class.add(self)
 end #/ initialize
 
 

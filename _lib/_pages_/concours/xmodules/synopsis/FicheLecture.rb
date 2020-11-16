@@ -76,20 +76,7 @@ end #/ pdf_filename
 #                       Note : tout se joue simplement au niveau du rassemblement
 #                       des résultats : si :evaluator est défini, on prend SA
 #                       fiche seulement, sinon on prend TOUTES les fiches.
-def out(options = nil)
-  # Si l'évaluation des synopsis n'est pas faite, il faut la lancer
-  if not Synopsis.evaluated?
-    options ||= {}
-    options.merge!(phase: Concours.current.phase) if not options.key?(:phase)
-    options.merge!(evaluator: html.evaluator) if not options.key?(:evaluator)
-    Synopsis.evaluate_all_synopsis(options)
-    # Si les synopsis n'ont toujours pas été évalués, c'est que le visiteur
-    # ne peut pas consulter la fiche
-    if not Synopsis.evaluated?
-      message "Il semble que vous ne puissiez pas consulter cette fiche de lecture. Désolé."
-      redirect_to("concours")
-    end
-  end
+def out
   deserb('templates/fiche_lecture_template', self)
 end #/ out
 

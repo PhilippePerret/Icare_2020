@@ -3,8 +3,8 @@
 
 class User
   def evaluator?
-    admin?
-  end #/ evaluateur?
+    admin? || (defined?(Evaluator) && not(Evaluator.current.nil?))
+  end #/ evaluator?
 
   # OUT   TRUE si l'user est concurrent des concours (le concours courant
   #       ou non).

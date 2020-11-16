@@ -40,9 +40,14 @@ def note
   evaluation&.note || 'NC'
 end #/ note
 
+def note_totale
+  @note_totale ||= Concours.current.phase < 3 ? note_pres : note_prix
+end #/ note_totale
+
 # La note totale des présélections pour le synopsis
 def note_pres
-  evaluation_totale&.note_pres || 'NC'
+  # evaluation_totale&.note_pres || 'NC'
+  evaluation_totale&.note || 'NC'
 end #/ note_totale
 
 # La note totale du palmarès pour le synopsis
@@ -50,7 +55,8 @@ end #/ note_totale
 # mieux additionner toutes les notes, même si ce total peut être inférieur à
 # des notes de synopsis non présélectionnés
 def note_prix
-  evaluation_totale&.note_prix || 'NC'
+  # evaluation_totale&.note_prix || 'NC'
+  evaluation_totale&.note || 'NC'
 end #/ note_prix
 
 def pourcentage
@@ -68,17 +74,25 @@ end #/ pourcentage_total
 # ---------------------------------------------------------------------
 
 def formated_note
-  @formated_note ||= formate_float(note)
+  @formated_note ||= formate_note(note)
+end
+
+def formated_note_totale
+  @formated_note_totale ||= formate_note(note_totale)
 end
 
 def formated_pourcentage
   @f_pourcentage ||= "#{pourcentage} %"
 end #/ formated_pourcentage
 
+def formated_all_pourcentages
+  @fallpourcentage ||= "#{pourcentage_total} %"
+end #/ formated_all_pourcentages
+
 # IN    {Symbol} Une catégorie (p.e. :coherence, :personnages, :intrigues)
 # OUT   {String} La note à afficher
 def fnote_categorie(cate)
-  formate_float(evaluation&.note_categorie(cate) || 'NC')
+  formate_note(evaluation&.note_categorie(cate) || 'NC')
 end #/ note_categorie
 
 # ---------------------------------------------------------------------

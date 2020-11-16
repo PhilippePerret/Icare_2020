@@ -17,4 +17,15 @@ class HTML
     @body = deserb('body', self)
   end # /build_body
 
+  def designation_visiteur_courant
+    if user.admin?
+      "administrateur (#{user.pseudo})"
+    elsif user.evaluator?
+      "membre du jury (#{evaluator.pseudo} ##{evaluator.id})"
+    elsif user.concurrent?
+      "concurrent (#{concurrent.pseudo} ##{concurrent.id})"
+    else
+      "anonyme"
+    end
+  end #/ designation_visiteur_courant
 end #/HTML

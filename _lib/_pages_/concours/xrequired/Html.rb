@@ -17,18 +17,28 @@ class HTML
   #   - membre jury
   #
   def try_to_reconnect_visitor(mandatory = false)
+    log("-> try_to_reconnect_visitor")
     if user.admin?
+      log("   <- admin")
       reconnect_admin
     elsif not(user.guest?) && session['concours_user_id'].nil?
+      log("   <- icarien")
       reconnect_icarien(mandatory)
     elsif session['concours_user_id']
+      log("   <- concurrent")
       reconnect_concurrent(mandatory)
     elsif session['concours_evaluator_id']
       reconnect_evaluator(mandatory)
     elsif mandatory
+      log("   <- introuvable => login")
       unable_reconnection
     end
   end #/ try_to_reconnect_visitor
+
+  def reconnect_admin
+    Evaluator.current = self.evaluator = Evaluator.new({id:user.id, pseudo:user.pseudo, mail:user.mail, sexe:user.sexe, jury:3})
+    return true
+  end #/ reconnect_admin
 
   def reconnect_concurrent(mandatory)
     self.concurrent = Concurrent.authentify(session['concours_user_id'])
@@ -50,6 +60,7 @@ class HTML
   end #/ reconnect_icarien
 
   def reconnect_evaluator(mandatory)
+    log("-> reconnect_evaluator / session['concours_evaluator_mail'] = #{session['concours_evaluator_mail'].inspect}")
     require './_lib/_pages_/concours/evaluation/lib/Evaluator'
     require File.join(DATA_FOLDER,'secret','concours') # => CONCOURS_DATA
     CONCOURS_DATA[:evaluators].each do |devaluator|
@@ -71,4 +82,4 @@ class HTML
     return redirect_to("concours/identification")
   end #/ unable_reconnection
 
-end
+end #/class HTML

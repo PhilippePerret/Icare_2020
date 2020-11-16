@@ -13,7 +13,7 @@
 phase = Concours.current.phase
 CONCOURS_ON = [1,2,3,5,8].include?(phase)
 annee = Concours.current.annee
-evaluator = html.evaluator
+evaluator = html.evaluator || raise("Un membre du jury ou un administrateur est requis.")
 
 
 if CONCOURS_ON
