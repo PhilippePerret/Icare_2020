@@ -6,6 +6,7 @@
 class Synopsis
 class << self
   def exporter_les_fiches
+    Synopsis.evaluate_all_synopsis if not Synopsis.evaluated?
     Synopsis.all_courant.each do |synopsis|
       synopsis.fiche_lecture.export
     end

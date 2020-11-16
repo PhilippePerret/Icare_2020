@@ -1,4 +1,9 @@
 <% Synopsis.evaluate_all_synopsis if not Synopsis.evaluated? %>
-<%= Synopsis.get(param(:cid), param(:an)).fiche_lecture.out %>
+<%=
+  syno = Synopsis.get(param(:cid), param(:an))
+  log("Clés de catégories : #{syno.evaluation.owners.keys}")
+  log("syno catégories : #{syno.evaluation.owners.inspect}")
+  syno.fiche_lecture.out
+%>
 
 <div class="mt3"><span class="small">Consultation : <%= designation_visiteur_courant %></span></div>

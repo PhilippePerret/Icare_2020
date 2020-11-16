@@ -344,18 +344,18 @@ end #/ init_count
 # IN    {Symbol} La catégorie, p.e. :coherence, :adequation, :personnages, :forme
 # OUT   {Float} La note obtenue ou nil
 def note_categorie(cate)
-  log("cate: #{cate.inspect}")
-  log("FicheLecture::DATA_MAIN_PROPERTIES[#{cate.inspect}]: #{FicheLecture::DATA_MAIN_PROPERTIES[cate].inspect}")
+  # log("cate: #{cate.inspect}")
+  # log("FicheLecture::DATA_MAIN_PROPERTIES[#{cate.inspect}]: #{FicheLecture::DATA_MAIN_PROPERTIES[cate].inspect}")
   dim_cate = FicheLecture::DATA_MAIN_PROPERTIES[cate][:diminutif]
   owners[dim_cate][:note]
 end #/ fnote_categorie
 
-
-# IN    {Float} Une valeur réelle, normalement flottante
-# OUT   {String} Le nombre pour affichage. Principale, sans ".0" à la fin
-#       s'il y en a un
-def formate_float(v)
-  synopsis.formate_note
-end #/ formate_float
-
+#
+# # IN    {Float} Une valeur réelle, normalement flottante
+# # OUT   {String} Le nombre pour affichage. Principale, sans ".0" à la fin
+# #       s'il y en a un
+# def formate_float(v)
+#   synopsis.formate_note
+# end #/ formate_float
+#
 end #/Evaluation

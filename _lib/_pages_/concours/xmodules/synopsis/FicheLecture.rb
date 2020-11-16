@@ -123,11 +123,11 @@ def explication_categorie_per_note(cate)
 end
 
 def key_per_note(n)
-  case n.to_i
-  when (20...15)  then :plus15  # 20a16
-  when (15..10)   then :moins15
-  when (9..5)     then :moins10
-  else                 :moins5
+  case n
+  when 15.0..20.0   then  :plus15  # 20a16
+  when 10.0...15.0  then  :moins15
+  when 5.0...10.0   then  :moins10
+  else                    :moins5
   end
 end #/ key_per_note
 
