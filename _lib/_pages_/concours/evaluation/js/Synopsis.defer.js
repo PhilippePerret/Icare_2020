@@ -34,7 +34,7 @@ constructor(id) {
   this.id = id
 }
 prepare(){
-  // this.obj = $(`#synopsis-${this.id}`)
+  this.obj = $(`#synopsis-${this.id}`);
   // this.observe();
 }
 

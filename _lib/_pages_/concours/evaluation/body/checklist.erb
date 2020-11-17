@@ -28,6 +28,7 @@ const EVALUATOR_ID = <%= evaluator.id %>;
     <div class="small">Vous évaluez le projet de <strong><%= concurrent.pseudo %></strong> qui porte l'identifiant <strong class="red"><%= synopsis.id %></strong> (c'est le nom du fichier) et le titre : <span class="synopsis-titre bold" style="font-variant:all-small-caps;font-size:1.2em;"><%= synopsis.titre %></span>. <span class="red">Assurez-vous d'évaluer le bon synopsis. Le numéro ci-dessus en rouge doit correspondre au nom du fichier contenant le synopsis sur votre disque dur.</span></div>
     <div class="small">Vous pouvez tout à fait commencer cette évaluation maintenant, l'enregistrer et la poursuivre plus tard.</div>
   </p>
+  <div class="big"><%= Tag.retour(route:"concours/evaluation", titre:"Fiches des synopsis") %></div>
   <%= checklist %>
 <% else %>
   <div class="big-air">Vous ne pouvez <%= plus_ou_pas_encore %> évaluer ce synopsis.</div>

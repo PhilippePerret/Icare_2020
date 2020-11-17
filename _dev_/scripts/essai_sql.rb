@@ -1,6 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-ONLINE = true
+ONLINE = false
 require_relative 'required'
 
 puts "ONLINE = #{ONLINE.inspect}"
@@ -15,9 +15,17 @@ end
 # req = "SELECT created_at, updated_at FROM `users` LIMIT 1"
 # MyDB.DBNAME = "icare_modules"
 req = <<-SQL
-UPDATE icmodules SET pauses = NULL WHERE pauses = "[{";
-SELECT pauses FROM icmodules;
+SELECT concurrent_id FROM concurrents_per_concours
+WHERE concurrent_id  NOT IN (SELECT concurrent_id FROM concurrents_per_concours
+WHERE annee = 2021)
 SQL
+=begin
+EXCEPT
+SELECT concurrent_id
+FROM concurrents_per_concours
+WHERE annee = 2021
+
+=end
 
 # req = <<-SQL
 # SELECT

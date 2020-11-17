@@ -6,7 +6,10 @@ class HTML
     "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:concours_titre_participant]}"
   end #/titre
 
+  # Liens utiles
+  # (rappel : on passe dans exec avant toutes choses)
   def usefull_links
+    require_xmodule('synopsis/Synopsis')
     ul = []
     ul << Tag.link(route:"#{route}#concours-informations", text: "Informations concours")
     ul << Tag.link(route:"#{route}#concours-preferences", text: "Vos préférences")

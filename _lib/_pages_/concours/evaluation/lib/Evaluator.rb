@@ -13,6 +13,23 @@ class << self
     not(self.current.nil?)
   end #/ current
 
+  # Retourne l'instance {Evaluator} de l'évaluateur (membre du jury) d'id
+  # +evaluator_id+ (sert pour save_score par exemple)
+  def get(evaluator_id)
+    @table ||= {}
+    @table[evaluator_id] ||= begin
+      require File.join(DATA_FOLDER,'secret','concours') # => CONCOURS_DATA
+      e = nil
+      CONCOURS_DATA[:evaluators].each do |devaluator|
+        if devaluator[:id] == evaluator_id
+          e = new(devaluator)
+          break
+        end
+      end
+      e
+    end
+  end #/ get
+
   # Appelé lorsque le membre s'authentifie
   def authentify_evaluator
     if session['concours_login_tentatives'].to_i > 5
@@ -37,7 +54,7 @@ class << self
 
   # Pour déconnecter l'évaluateur courant
   def deconnect_evaluator
-    current || try_to_reconnect_visitor
+    current || html.try_to_reconnect_visitor
     pseudo = (current&.pseudo || 'cher membre').freeze
     session.delete('concours_evaluator_id')
     session.delete('concours_evaluator_mail')

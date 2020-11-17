@@ -39,7 +39,7 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
       pitch("Un administrateur peut venir marquer le synopsis non conforme en précisant les raisons. Le concurrent est alors averti et on l'invite à corriger son document.")
       phil.rejoint_le_site
       goto("concours/evaluation")
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_fiches_synopsis
       expect(page).to have_css(fiche_concurrent_selector)
       within(fiche_concurrent_selector) do
         expect(page).to have_link(BUTTON_NON_CONFORME)
@@ -124,7 +124,7 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
   context 'Un membre du jury' do
     scenario 'ne peut pas refuser un fichier pour non conformité' do
       member.rejoint_le_concours
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_fiches_synopsis
       expect(page).to have_css(fiche_concurrent_selector)
       within(fiche_concurrent_selector) do
         expect(page).not_to have_link(BUTTON_NON_CONFORME)

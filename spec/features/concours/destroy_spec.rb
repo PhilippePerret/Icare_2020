@@ -4,6 +4,7 @@ require_relative './_required'
 
 feature "Destruction d'un participant au concours" do
   before(:all) do
+    degel('concours-phase-1')
     @concurrent = TConcurrent.get_random
   end
   let(:concurrent) { @concurrent }

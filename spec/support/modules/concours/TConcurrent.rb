@@ -198,6 +198,7 @@ end #/ jury
     # puts "\n\noptions avant définition de where : #{options.inspect}"
 
     where = []
+    valus = []
     case options[:avec_fichier]
     when TrueClass  then where << "SUBSTRING(cpc.specs,1,1) = 1"
     when FalseClass then where << "SUBSTRING(cpc.specs,1,1) = 0"
@@ -216,7 +217,17 @@ end #/ jury
     end
     case options[:current]
     when TrueClass  then where << "cpc.annee = #{ANNEE_CONCOURS_COURANTE}"
-    when FalseClass then raise("Ce cas n'est pas encore traité (plus complexe puisqu'il faut trouver l'user qui n'a AUCUN enregistrement pour le concours courant)")
+    when FalseClass then
+      intermediaire_req = <<-SQL
+SELECT concurrent_id FROM concurrents_per_concours
+WHERE concurrent_id  NOT IN (SELECT concurrent_id FROM concurrents_per_concours
+WHERE annee = ?)
+      SQL
+      concurrent_id_hors_concours = db_exec(intermediaire_req, [ANNEE_CONCOURS_COURANTE]).first
+      concurrent_id_hors_concours = concurrent_id_hors_concours[:concurrent_id]
+      concurrent_id_hors_concours || raise("Impossible de trouver un ancien concurrent hors concours…")
+      where << "cpc.concurrent_id = ?"
+      valus << concurrent_id_hors_concours
     end
     case options[:preselected]
     when TrueClass  then where << "SUBSTRING(cpc.specs,3,1) = 1"
@@ -226,9 +237,16 @@ end #/ jury
 
     concurrents = [] # les candidats retenus
     # Liste d'instances {TConcurrent}
+    where = ["1 = 1"] if where.empty?
     request = REQUEST_ALL_CONCURRENTS_WHERE % {where: where.join(' AND ')}
-    # puts "#{request}"
-    candidats = db_exec(request).collect{|dc|new(dc)}
+    # puts "Request all concurrents : #{request.inspect}"
+    res = if valus.empty?
+            db_exec(request)
+          else
+            db_exec(request, valus)
+          end
+    # on prend les candidats
+    candidats = res.collect { |dc| new(dc) }
     if candidats.empty?
       candidat = all_current.shuffle.shuffle.first
       if options[:avec_fichier] === false

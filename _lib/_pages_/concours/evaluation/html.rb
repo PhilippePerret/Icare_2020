@@ -26,7 +26,7 @@ class HTML
       end
     elsif param(:op) == 'logout'
       Evaluator.deconnect_evaluator
-    elsif try_to_reconnect_visitor
+    elsif try_to_reconnect_visitor(mandatory = true)
       add_js('./js/modules/ajax')
       require_xmodule('synopsis')
       require_xmodule('admin/constants')
@@ -42,7 +42,6 @@ class HTML
 
       case param(:view)
       when "synopsis_form"
-        admin_required
         if param(:op) == 'save_synopsis'
           if param(:form_id) && Form.new.conform?
             synopsis.save(titre: param(:syno_titre), auteurs:param(:syno_auteurs), keywords:param(:syno_keywords))

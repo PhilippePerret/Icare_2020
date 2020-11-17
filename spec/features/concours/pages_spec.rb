@@ -38,6 +38,15 @@ feature "La section concours" do
 Un visiteur quelconque trouve les pages suivantes :
   * Accueil du concours avec les liens vers les différentes parties
     TEXT
-    pending("Implémenter")
+    goto("concours/accueil")
+    expect(page).to be_accueil_concours
+    goto("concours/faq")
+    expect(page).to be_faq_concours
+    goto("concours/identification")
+    expect(page).to be_identification
+    goto("concours/inscription")
+    expect(page).to be_page_inscription_concours
+    goto("concours/palmares")
+    expect(page).to be_palmares
   end
 end

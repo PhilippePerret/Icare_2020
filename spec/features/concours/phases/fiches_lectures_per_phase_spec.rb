@@ -102,7 +102,7 @@ feature "Quand on veut atteindre la liste des fiches de lecture" do
       it 'peut afficher les fiches de lecture avec ses notes' do
         find(".usefull-links").hover
         member_jury1.click_on("Fiches de lecture")
-        is_expected.to be_on_page(:fiches_lectures)
+        is_expected.to be_on_page(:fiches_lecture)
       end
     end
   end

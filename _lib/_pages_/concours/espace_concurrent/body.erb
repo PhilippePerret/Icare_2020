@@ -37,16 +37,16 @@
   <% if Concours.current.started? %>
     <div class="row">
       <span class="libelle">Année</span>
-      <span class="value bold"><%= concours.annee %></span>
+      <span class="value bold annee-concours"><%= concours.annee %></span>
     </div>
     <div class="row">
       <span class="libelle">Thème</span>
-      <span class="value bold"><%= concours.theme.upcase %></span>
+      <span class="value bold caps theme-concours"><%= concours.theme %></span>
     </div>
     <div class="row">
       <% if concours.phase1? %>
         <span class="libelle">Échéance</span>
-        <span class="value bold"><%= concours.h_echeance %></span>
+        <span class="value bold echeance-concours"><%= concours.h_echeance %></span>
       <% else %>
         <span class="libelle">Phase</span>
         <span class="concours-phase value bold"><%=
@@ -200,7 +200,7 @@ formdestroy.submit_button_class = "btn warning discret"
 <h3>Détruire mes informations</h3>
 <section id="concours-destruction">
   <p>Vous pouvez à tout moment détruire votre inscription — ainsi que toutes les données et tous les fichiers qui y sont associés en renseignant le champ ci-desous et en cliquant sur le bouton de destruction.</p>
-  <p>Bien noter que l'opération est irréversible. Une fois vos informations et vos fichiers détruits, il sera impossible de les récupérer.</p>
+  <p>Notez bien que cette opération est irréversible. Une fois vos informations et vos fichiers détruits, il sera impossible de les récupérer.</p>
   <p>Cette destruction s'applique à toutes les sessions auxquelles vous avez pu participer, c'est-à-dire <%= concurrent.all_concours.count == 1 ? "la session" : "les sessions" %>&nbsp;: <%= concurrent.all_concours.collect{|dc|dc[:annee]}.pretty_join %>.</p>
   <%= formdestroy.out %>
 </section>

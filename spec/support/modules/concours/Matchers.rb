@@ -5,7 +5,7 @@
 =end
 RSpec::Matchers.define :be_accueil_concours do
   match do |page|
-    page.has_css?("h2.page-title", text: "Concours de Synopsis de l'atelier Icare")
+    page.has_css?("h2.page-title", text: "Concours de synopsis de l’atelier Icare")
   end
   description do
     "C'est bien la page d'accueil du concours"
@@ -53,7 +53,7 @@ RSpec::Matchers.define :be_identification_evaluator do
   end
 end
 
-RSpec::Matchers.define :be_cartes_synopsis do
+RSpec::Matchers.define :be_fiches_synopsis do
   match do |page|
     page.has_css?("h2.page-title", text: "Cartes des synopsis")
   end
@@ -169,5 +169,45 @@ RSpec::Matchers.define :be_palmares do
   end
   failure_message do
     "Ce n'est pas la page du palmarès concours, elle devrait avoir le titre #{@titre}."
+  end
+end
+
+RSpec::Matchers.define :be_page_inscription_concours do
+  match do |page|
+    @errors = []
+    @titre = "Inscription au concours"
+    unless page.has_css?("h2.page-title", text: @titre)
+      @errors << "n'a pas le bon titre (“#{@titre}”)"
+    end
+    unless page.has_css?("form#concours-signup-form")
+      @errors << "ne contient pas le formulaire d'inscription"
+    end
+    return @errors.empty?
+  end
+  description do
+    "C'est bien la page d'inscription au concours"
+  end
+  failure_message do
+    "Ce n'est pas la page d'inscription pour les raisons suivantes : #{@errors.join(', ')}."
+  end
+end
+
+RSpec::Matchers.define :be_faq_concours do
+  match do |page|
+    @errors = []
+    @titre = "FAQ du concours"
+    unless page.has_css?("h2.page-title", text: @titre)
+      @errors << "n'a pas le bon titre (“#{@titre}”)"
+    end
+    unless page.has_css?("div.qr")
+      @errors << "ne contient pas de div question/réponse…"
+    end
+    return @errors.empty?
+  end
+  description do
+    "C'est bien la Foire Aux Questions du concours"
+  end
+  failure_message do
+    "Ce n'est pas la Foire Aux Question du concours, pour les raisons suivantes : #{@errors.join(', ')}."
   end
 end

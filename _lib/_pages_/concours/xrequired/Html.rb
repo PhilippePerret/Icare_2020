@@ -55,6 +55,7 @@ class HTML
     if not dc.nil?
       session['concours_user_id'] = dc[:concurrent_id]
       db_exec("UPDATE #{DBTBL_CONCURRENTS} SET session_id = ? WHERE concurrent_id = ?", [session.id, dc[:concurrent_id]])
+      self.concurrent = Concurrent.get(dc[:concurrent_id])
     elsif mandatory
       unable_reconnection
     end
@@ -66,8 +67,7 @@ class HTML
     require File.join(DATA_FOLDER,'secret','concours') # => CONCOURS_DATA
     CONCOURS_DATA[:evaluators].each do |devaluator|
       if session['concours_evaluator_mail'] == devaluator[:mail]
-        self.evaluator = Evaluator.new(devaluator)
-        Evaluator.current = self.evaluator
+        Evaluator.current = self.evaluator = Evaluator.new(devaluator)
         return true # ok
       end
     end
@@ -77,10 +77,20 @@ class HTML
     end
   end #/ reconnecte_evaluator
 
-  # En cas de reconnection impossible
+  # En cas de reconnexion impossible
+  # --------------------------------
+  # Si la route courante était une route d'évaluation, on renvoie au formulaire
+  # d'identification d'un évaluateur (membre du jury), sinon, au login du
+  # concours (pour concurrent)
   def unable_reconnection
     erreur(ERRORS[:concours_login_required])
-    return redirect_to("concours/identification")
+    redir = if route.to_s == 'concours/evaluation'
+              "concours/evaluation?view=login"
+            else
+              "concours/identification"
+            end
+    # On redirige le visiteur
+    return redirect_to(redir)
   end #/ unable_reconnection
 
 end #/class HTML

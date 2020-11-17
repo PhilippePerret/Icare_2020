@@ -27,7 +27,7 @@ RSpec.shared_examples "un juré renvoyé à la liste des synopsis" do |visitor|
     visitor.rejoint_le_concours if visitor.is_a?(TEvaluator)
     goto("concours/evaluation?view=fiches_lecture")
     expect(page).not_to be_fiches_lecture
-    expect(page).to be_cartes_synopsis
+    expect(page).to be_fiches_synopsis
     expect(page).to have_message("La liste des fiches de lecture n'est pas encore consultable")
     visitor.se_deconnecte if visitor.is_a?(TEvaluator)
     screenshot("deconnexion-membre-jury")

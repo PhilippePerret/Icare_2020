@@ -148,7 +148,7 @@ onSave(results){
     console.log("Retour de la sauvegarde des résultats :", ret);
     if (ret.error) erreur(ret.error)
     else {
-      message("Le nouveau score enregistré.");
+      message(`Le nouveau score est enregistré. Nouvelle note : <span id="nouvelle-note">${ret.note}</span>.`);
       this.synopsis.updateNote(ret.note);
       this.synopsis.updatePourcentReponses(ret.pourcentage_reponses)
     }

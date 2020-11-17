@@ -66,7 +66,7 @@ end #/ inscrire_au_concours_with_data
 
 feature "Inscription au concours courant suivant le type de visiteur" do
   before(:all) do
-    headless
+    # headless
     degel("concours-phase-1")
     require './_lib/_pages_/concours/inscription/constants' # propres à l'inscription
   end
@@ -119,7 +119,8 @@ feature "Inscription au concours courant suivant le type de visiteur" do
         fill_in("user_password", with: marion.password)
         click_on(UI_TEXTS[:btn_login])
       end
-      expect(page).to have_titre "Espace personnel"
+      sleep 10
+      expect(page).to be_espace_personnel
       expect(page).to have_link("Se déconnecter") # pas pour les icariens
     end
   end #/context 2)

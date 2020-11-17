@@ -7,8 +7,6 @@ require_relative './_required'
 
 feature "Phase 4 du concours" do
 
-  BTN_VOIR_PALMARES = "Voir le palmarès actuel"
-
   # Retourne le nombre de fichiers candidature conformes
   def nombre_fichiers_candidature
     TConcurrent.all_current.select{|c|c.specs[1]=="1"}.count
@@ -80,7 +78,7 @@ feature "Phase 4 du concours" do
 
     scenario 'ne peut pas rejoindre la page d’évaluation des synopsis' do
       goto("concours/evaluation")
-      expect(page).not_to be_cartes_synopsis
+      expect(page).not_to be_fiches_synopsis
       expect(page).to have_titre "Identification"
     end
   end #/ contexte : un non administrateur
@@ -90,7 +88,7 @@ feature "Phase 4 du concours" do
     scenario 'peut rejoindre la page d’évaluation' do
       phil.rejoint_le_site
       goto("concours/evaluation")
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_fiches_synopsis
     end
   end
 end

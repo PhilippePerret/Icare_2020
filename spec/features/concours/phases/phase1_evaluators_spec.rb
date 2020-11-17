@@ -11,9 +11,9 @@ require_relative './_required'
 =end
 feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
   before(:all) do
-    # headless()
+    headless()
     degel('concours-phase-1')
-    @member = TEvaluator.get_random
+    @member = TEvaluator.get_random(jury: 1)
   end
   let(:member) { @member }
   let(:annee) { ANNEE_CONCOURS_COURANTE }
@@ -32,7 +32,7 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
         click_on("M’identifier")
       end
       screenshot("after-login-member")
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_fiches_synopsis
       expect(page).to have_css("form#goto-evaluate-synopsis-form"),
         "La page devrait présenter un formulaire permettant de se rendre à la fiche d'évaluation du fichier."
 
@@ -75,7 +75,7 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
 
     scenario 'peut télécharger un fichier de candidature' do
       member.rejoint_le_concours
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_fiches_synopsis
       concurrent = TConcurrent.find(avec_fichier_conforme: true, count:1).first
       syno_id = "#{concurrent.id}-#{annee}"
       div_syno_id = "synopsis-#{syno_id}"
@@ -97,7 +97,7 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
 
     scenario 'peut évaluer un fichier de candidature par la fiche', only:true do
       member.rejoint_le_concours
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_fiches_synopsis
       concurrent = TConcurrent.find(avec_fichier_conforme: true).shuffle.shuffle.first
       syno_id = "#{concurrent.id}-#{annee}"
       div_syno_id = "synopsis-#{syno_id}"

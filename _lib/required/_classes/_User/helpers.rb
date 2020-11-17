@@ -28,7 +28,7 @@ class User
   # Retourne le visage de l'utilisateur, en fonction du fait que c'est
   # un homme ou une femme
   def visage
-    @face ||= (femme? ? '👩‍🎓' : '👨‍🎓').freeze
+    @face ||= (femme? ? '👩‍🎓' : '👨‍🎓')
   end #/ face
 
   # Retourne la pastille contenant les notifications non vues

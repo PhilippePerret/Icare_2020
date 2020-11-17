@@ -19,7 +19,7 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
     DATA_QUESTIONS = YAML.load_file('./_lib/_pages_/concours/evaluation/data/data_evaluation.yaml')
     # puts "DATA_QUESTIONS: #{DATA_QUESTIONS}"
     @concurrent = TConcurrent.find(avec_fichier_conforme: true).shuffle.shuffle.first
-    @member = TEvaluator.get_random(fiche_evaluation: @concurrent)
+    @member = TEvaluator.get_random(fiche_evaluation: @concurrent, jury: 1)
   end
   let(:member) { @member }
   let(:fiche_evaluation) { @fiche_evaluation ||= member.fiche_evaluation(concurrent) }
@@ -32,9 +32,10 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
       pitch("Un membre du jury peut rejoindre le concours, passer à l'évaluation d'une fiche en trouvant son évaluation précédente correctement affichée.")
       headless(false)
       member.rejoint_le_concours
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_fiches_synopsis
       syno_id = "#{concurrent.id}-#{annee}"
       div_syno_id = "synopsis-#{syno_id}"
+      expect(page).to have_css("div##{div_syno_id}")
       within("div##{div_syno_id}") do
         click_on("Évaluer")
       end
@@ -48,12 +49,12 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
       end
     end
 
-    scenario 'peut modifier son évaluation', only:true do
+    scenario 'peut modifier son évaluation' do
 
       pitch("Un membre du jury peut rejoindre le concours, passer à l'évaluation d'une fiche en modifiant son évaluation précédente.")
-      headless(false)
+      headless
       member.rejoint_le_concours
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_fiches_synopsis
       syno_id = "#{concurrent.id}-#{annee}"
       div_syno_id = "synopsis-#{syno_id}"
       within("div##{div_syno_id}") do
@@ -69,24 +70,30 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
         # dépasseront 5 on les passera en dessous
         # ATTENTION : il faut d'abord attendre que les valeurs aient été
         # affectée. En 3 secondes, ça devrait être suffisant
-        sleep 3
+        sleep 3 # NE PAS TOUCHER !!!
         fiche_evaluation.each do |key, value|
           new_value = value + 2
           new_value = new_value - 5 if new_value > 5
           # find("select[name=\"#{key}\"]").click
           select(CONCOURS_EVALUATION_VAL2TIT[new_value], from: key) rescue nil
+
+          # break # pour l'essai, on en fait qu'un
         end
       end
       within("div#row-buttons") do
         click_on("Enregistrer")
       end
-      sleep 5 # le temps d'enregistrer
+
+      screenshot("apres-save-score")
+      pitch("La nouvelle note est remontée par le programme et affichée dans le message de confirmation.")
+      expect(page).to have_message("Le nouveau score est enregistré.")
+      # On mémorise cette note affichée pour la retrouver dans la liste des
+      nouvelle_note = page.find("span#nouvelle-note").text
+
+      # sleep 5 # le temps d'enregistrer (non puisqu'on attend sur le message ci-dessus)
 
       old_fiche_evaluation = fiche_evaluation.dup
       new_fiche_evaluation = YAML.load_file(member.path_fiche_evaluation(concurrent))
-      # puts "old_fiche_evaluation: #{old_fiche_evaluation}"
-      # puts "new_fiche_evaluation: #{new_fiche_evaluation}"
-
 
       # L'évaluation doit avoir été modifiée
       # Comme certaines questions ont pu être passées pour erreur, on compte
@@ -102,34 +109,20 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
       expect(bonnes).to be > troisquart,
         "Au moins trois quart des nouvelles réponses devraient correspondre… (seulement #{bonnes} sur #{troisquart} correspondent)."
 
-      pitch("La nouvelle note est remontée par le programme et affichée dans le message de confirmation.")
-      expect(page).to have_message("Nouveau score enregistré. La nouvelle note est 12.3 (14.5 pour l'ensemble des évaluations)")
-      # On mémorise cette note affichée pour la retrouver dans la liste des
-      note_evaluator = page.find("#message-note_evaluator").text
-      note  = page.find("#message-note").text
-      expect(page).to have_css("span#note_evaluator", text: note_evaluator)
-      expect(page).to have_css("span#note",  text: note)
-
       pitch("Le membre du jury, grâce à un lien évident, retourne à la liste des synopsis pour voir la nouvelle note affichée")
       expect(page).to have_link("Fiches des synopsis")
       member.click_on("Fiches des synopsis")
-      expect(page).to be_page_evaluation
+      expect(page).to be_fiches_synopsis
 
       # La note doit avoir été recalculée et rectifiée
-      # TODO
-
-      # La note générale du synopsis doit avoir changé
-      # TODO
-
-      # Je dois être averti de cette modification (les autres membres aussi ?
-      # ou faire plutôt une information quotidienne ?)
-      # TODO
-    end
-
-    pending 'peut créer une nouvelle évaluation' do
+      expect(page).to have_css("div##{div_syno_id} span.note-evaluator", text: nouvelle_note)
 
     end
 
+    # pending 'peut créer une nouvelle évaluation' do
+    # TODO
+    # end
+    #
     scenario 'peut évaluer un fichier de candidature par le mini-champ' do
       member.rejoint_le_concours
       goto("concours/evaluation")

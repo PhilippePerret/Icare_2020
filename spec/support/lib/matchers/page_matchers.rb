@@ -52,24 +52,30 @@ RSpec::Matchers.alias_matcher :have_erreur, :have_error
 
 RSpec::Matchers.define :have_message do |msg|
   match do |page|
+    @errors = []
     msg || raise("Il faut fournir le message à trouver !")
     msg = msg.gsub(/<br ?>/,"\n").strip_tags
-    if page.has_css?('section#messages div.notices')
-      # if page.has_css?('div.errors', text: /#{Regexp.escape(msg)}/)
-      if page.has_css?('section#messages div.notices', text: msg.gsub(/ /,' '))
-        return true
-      else
-        actua_msg = page.find('section#messages div.notices').text
-        @ajout = "En revanche, le message “#{actua_msg}” a été trouvé."
-        return false
-      end
-    else
-      @ajout = "Elle ne contient aucun message."
-      return false
+    selector =  if page.has_css?('section#messages div.notices')
+                  'section#messages div.notices'
+                elsif page.has_css?('section#flash div.message')
+                  'section#flash div.message'
+                else
+                  nil
+                end
+    # A-t-on un message dans la page ?
+    if selector.nil?
+      @errors << "Aucun message n'est affiché dans la page."
+    elsif not page.has_css?(selector, text: msg.gsub(/ /,' '))
+      # Le message affiché
+      actua_msg = page.all(selector).collect do |el|
+        el.text
+      end.join(' / ')
+      @errors << "Le message #{msg.inspect} n'a pas été trouvé, en revanche la page affiche le message #{actua_msg.inspect}."
     end
+    return @errors.empty?
   end
   failure_message do
-    "La page devrait contenir le message “#{msg}”. #{@ajout}"
+    @errors.join(' ')
   end
   description do
     "La page contient bien le message  “#{msg}”."
