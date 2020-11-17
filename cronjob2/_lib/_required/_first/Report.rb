@@ -12,6 +12,7 @@ class << self
   end
   def reffile
     @reffile ||= begin
+      `mkdir -p "#{File.dirname(path)}"` # au cas où
       File.open(path,'a')
     end
   end #/ reffile
