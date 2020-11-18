@@ -2,11 +2,21 @@
 =begin
   Méthodes utiles pour les mails
 =end
+require_relative './TMails_matchers'
 class TMails
 class << self
   attr_reader :founds
   attr_accessor :error
   attr_accessor :raison_exclusion
+
+  # OBSOLÈTE Remplacée par un matcher RSpec::Machers
+  # def has_mails?(params)
+  #   destinataire = params[:destinataire]||params[:to]
+  #   destinataire = destinataire.mail if destinataire.is_a?(TUser)
+  #   exists?(destinataire, params[:content], params)
+  # end #/ has_mails?
+  # alias :has_mail? :has_mails?
+  # alias :has_item? :has_mails?
 
   # Pour savoir qu'elle est chargée complètement
   def loaded; true end
@@ -99,15 +109,6 @@ class << self
   end #/ exists?
   alias :has_item? :exists?
 
-
-  def has_mails?(params)
-    destinataire = params[:destinataire]||params[:to]
-    destinataire = destinataire.mail if destinataire.is_a?(TUser)
-    exists?(destinataire, params[:content], params)
-  end #/ has_mails?
-  alias :has_mail? :has_mails?
-  alias :has_item? :has_mails?
-
   def error= msg
     @error = msg
     return false
@@ -190,6 +191,15 @@ end # /<< self
 end #/Mails
 
 TMail = Struct.new(:path) do
+  attr_reader :contient, :ne_contient_pas
+  # Pour faire référence au mail dans les messages
+  def ref
+    @ref ||= begin
+      "Message du #{time.strftime("%d %m %Y à %H:%M:%I")}" +
+      " de #{expediteur} à #{destinataire}" +
+      " de sujet “#{subject}”"
+    end
+  end #/ ref
   def filename
     @filename ||= File.basename(path)
   end #/ filename
@@ -203,11 +213,18 @@ TMail = Struct.new(:path) do
     @content ||= File.read(path).force_encoding('utf-8')
   end #/ content
   def contains?(searched, options = nil)
-    oui = content.include?(searched)
-    unless options && options[:no_test]
-      raise("Le mail “#{subject}” à #{destinataire} devrait contenir “#{searched}”.\n\nContenu du mail :\n#{content}") if not(oui)
+    @contient = []        # pour les messages d'erreur du matcher
+    @ne_contient_pas = [] # idem
+    searched = [searched] if searched.is_a?(String)
+    searched.each do |seg|
+      if content.include?(seg)
+        @contient << seg
+      else
+        @ne_contient_pas << seg
+      end
     end
-    return oui
+    ok = @ne_contient_pas.empty?
+    return ok
   end #/ contains?
   def time
     @time ||= Time.at(timestamp)

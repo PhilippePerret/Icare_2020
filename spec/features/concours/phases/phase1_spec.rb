@@ -7,6 +7,7 @@ require_relative './_required'
 feature "Phase 1 du concours" do
   before(:all) do
     degel('concours-phase-0')
+    headless
   end
   before(:each) do
     # Il faut avoir un concours courant en phase 0 (pour le premier c'est
@@ -65,12 +66,12 @@ feature "Phase 1 du concours" do
       # Les anciens concurrents ont reçu un mail d'annonce.
       dcs = db_exec("SELECT mail, patronyme FROM concours_concurrents")
       dcs.each do |dc|
-        expect(TMails).to have_mail(to: dc[:mail], subject:"Lancement du Concours de Synopsis de l'atelier Icare", after: start_time),
-          "#{dc[:patronyme]} (#{dc[:mail]}) aurait dû recevoir un mail lui annonçant le démarrage du concours"
+        expect(TMails).to have_mail(to: dc[:mail], subject:"Lancement du Concours de Synopsis de l'atelier Icare", after: start_time)#,
+          # "#{dc[:patronyme]} (#{dc[:mail]}) aurait dû recevoir un mail lui annonçant le démarrage du concours"
       end
       TUser.contactables.each do |tuser|
-        expect(tuser).to have_mail(subject:"Lancement du Concours de Synopsis de l'atelier", after: start_time),
-          "#{tuser.pseudo} (icarien) aurait dû recevoir un mail lui annonçant le démarrage du concours."
+        expect(tuser).to have_mail(subject:"Lancement du Concours de Synopsis de l'atelier", after: start_time)#,
+          # "#{tuser.pseudo} (icarien) aurait dû recevoir un mail lui annonçant le démarrage du concours."
       end
 
 

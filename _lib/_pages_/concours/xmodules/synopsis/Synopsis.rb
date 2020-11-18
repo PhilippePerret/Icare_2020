@@ -110,7 +110,7 @@ end #/ add
 
     # Étude du contexte
     #   1) nature du visiteur :
-    #       0: simple visiteu
+    #       0: simple visiteur
     #       1: admin,
     #       2: evaluateur jury 1
     #       4: evaluateur jury 2
@@ -158,7 +158,7 @@ end #/ add
 
     # S'il n'y a pas de clé principale de classement, on s'en retourne sans
     # rien faire.
-    return if main_note_key.nil?
+    return [nil,nil,nil,nil] if main_note_key.nil?
 
     # Pour déterminer la clé de classement pour le classement par
     # progression de l'évaluation (pourcentage)
@@ -220,6 +220,7 @@ end #/ add
 
   # Retourne tous les synopsis classés suivant +key+ et +sens+.
   def sorteds_by(key = 'note', sens = 'desc', options)
+    options ||= {}
     synos_max_to_min, synos_sans_fiche, synos_sans_fichier, synos_sorted_by_progress = evaluate_all_synopsis(options)
     liste = if key == 'progress'
               synos_sorted_by_progress
@@ -227,7 +228,13 @@ end #/ add
               synos_max_to_min.dup
             end
     # Il faut inverser la liste si nécessaire
-    (sens == 'asc' ? liste.reverse : liste) + synos_sans_fiche + synos_sans_fichier
+    liste = sens == 'asc' ? liste.reverse : liste
+
+    if options[:phase] > 2
+      liste.select { |syno| syno.preselected? }
+    else
+      liste + synos_sans_fiche + synos_sans_fichier
+    end
   end #/ sorteds_by
 
   # # IN    La clé de classement ('note' ou 'progress')
@@ -299,6 +306,11 @@ def initialize concurrent_id, annee, dat = nil
   self.class.add(self)
 end #/ initialize
 
+def reset
+  @ref = nil
+  @pre_note = nil
+  @fin_note = nil
+end #/ reset
 
 def ref
   @ref ||= begin
@@ -404,7 +416,8 @@ def save(data)
   values << concurrent_id
   values << annee
   db_exec("UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET #{columns} WHERE concurrent_id = ? AND annee = ?", values)
-  # Pour actualiser
+  # Pour actualiser les valeurs courantes
+  reset
   data.each {|k,v| instance_variable_set("@#{k}", v)}
 end #/ save
 
@@ -468,14 +481,11 @@ def formated_keywords
   @formated_keywords ||= (data[:keywords]||'').split(',').collect{|kw| "<span class=\"kword\">#{kw}</span>"}.join(' ')
 end #/ keywords
 
-# def formated_pre_note
-#   if pre_note.nil?
-#     calcule_note_preselection
-#   end
-#   color = pre_note > 100 ? 'green' : 'red'
-#   Tag.span(text:"#{pre_note}/200", class:color)
-# end #/ formated_note
-#
+def formated_pre_note
+  color = pre_note > 100 ? 'green' : 'red'
+  Tag.span(text:"#{pre_note}/200", class:color)
+end #/ formated_note
+
 # # Son instance de formulaire d'évaluation, pour un évaluateur donné
 # def evaluation_form(evaluateur)
 #   @evaluations ||= {}

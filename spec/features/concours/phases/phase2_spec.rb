@@ -11,11 +11,12 @@ feature "Phase 2 du concours" do
     TConcurrent.all_current.select do |c| c.specs[1]=="1" end.count
   end #/ nombre_fichiers_candidature
 
-  before(:all) do
-    degel('concours-phase-2')
-  end
   before(:each) do
-    # Il faut avoir un concours courant en phase 0 (pour le premier c'est
+
+    # Nécessité de dégeler à chaque fois
+    degel('concours-phase-2')
+
+    # Il faut avoir un concours courant en phase 1 (pour le premier c'est
     # inutile, mais c'est pour ceux ensuite)
     TConcours.current.set_phase(1)
     TConcours.current.reset
@@ -211,7 +212,8 @@ feature "Phase 2 du concours" do
       expect(page).to be_fiches_synopsis
       phil.se_deconnecte
     end
-    scenario 'trouve toutes les fiches à évaluer (phase 2)' do
+
+    scenario 'trouve toutes les fiches à évaluer (phase 2), même les non conformes' do
       phil.rejoint_le_site
       goto("concours/evaluation")
       expect(page).to be_fiches_synopsis
@@ -219,9 +221,11 @@ feature "Phase 2 du concours" do
         if conc.fichier_conforme?
           expect(page).to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
             "Le concurrent #{conc.ref} devrait avoir une fiche d'évaluation pour son synopsis"
+          expect(page).not_to have_css("div.synopsis.not-conforme", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
+            "Le concurrent #{conc.ref} ne devrait pas avoir une fiche marquée non conforme"
         else
-          expect(page).not_to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
-            "Le concurrent #{conc.pseudo} ne devrait pas avoir de fiche (fichier absent ou non conforme)"
+          expect(page).to have_css("div.synopsis.not-conforme", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
+            "Le concurrent #{conc.pseudo} devrait avoir une fiche marquée non conforme"
         end
       end
       phil.se_deconnecte

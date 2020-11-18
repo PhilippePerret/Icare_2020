@@ -103,21 +103,21 @@ feature "Phase 3 du concours" do
 
       # *** Test de la page de résultats ***
       # TODO La remettre plus bas quand elle sera testée
-      goto("concours/palmares")
-      screenshot("palmares-phase-3")
-      expect(page).to be_palmares
-      expect(page).to have_css('h2', text: "Synopsis présélectionnés")
-      expect(page).to have_css('h2', text: "Synopsis non présélectionnés")
-      # Tous les concurrents avec un fichier doivent voir leur fiche
-      TConcurrent.all_current.each do |conc|
-        if conc.fichier_conforme?
-          expect(page).to have_css("div.fiche-lecture", id:"fiche-lecture-#{conc.id}"),
-            "Le concurrent #{conc.pseudo} (#{conc.id}) devrait avoir sa fiche dans le palmarès…"
-        else
-          expect(page).not_to have_css("div.fiche-lecture", id:"fiche-lecture-#{conc.id}"),
-            "Le concurrent #{conc.pseudo} (#{conc.id}) ne devrait pas avoir sa fiche dans le palmarès…"
-        end
-      end
+      # goto("concours/palmares")
+      # screenshot("palmares-phase-3")
+      # expect(page).to be_palmares
+      # expect(page).to have_css('h2', text: "Synopsis présélectionnés")
+      # expect(page).to have_css('h2', text: "Synopsis non présélectionnés")
+      # # Tous les concurrents avec un fichier doivent voir leur fiche
+      # TConcurrent.all_current.each do |conc|
+      #   if conc.fichier_conforme?
+      #     expect(page).to have_css("div.fiche-lecture", id:"fiche-lecture-#{conc.id}"),
+      #       "Le concurrent #{conc.pseudo} (#{conc.id}) devrait avoir sa fiche dans le palmarès…"
+      #   else
+      #     expect(page).not_to have_css("div.fiche-lecture", id:"fiche-lecture-#{conc.id}"),
+      #       "Le concurrent #{conc.pseudo} (#{conc.id}) ne devrait pas avoir sa fiche dans le palmarès…"
+      #   end
+      # end
 
       # La page d'accueil du concours présente le concours
       goto("concours/accueil")
@@ -283,7 +283,7 @@ feature "Phase 3 du concours" do
       goto("concours/evaluation")
       expect(page).to be_fiches_synopsis
     end
-    scenario 'trouve les bonnes fiches à évaluer (les 10 préssélections)', only:true do
+    scenario 'trouve les bonnes fiches à évaluer (les 10 présélections)', only:true do
       phil.rejoint_le_site
       # On s'assure que c'est la bonne phase
       goto("concours/admin")
@@ -291,7 +291,7 @@ feature "Phase 3 du concours" do
       goto("concours/evaluation")
       expect(page).to be_fiches_synopsis
       expect(page).to have_css("div#synopsis-container")
-      sleep 30
+      sleep 10
       TConcurrent.all_current.each do |conc|
         if conc.preselected?
           expect(page).to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
