@@ -38,6 +38,7 @@ class HTML
   def reconnect_admin
     require './_lib/_pages_/concours/evaluation/lib/Evaluator'
     Evaluator.current = self.evaluator = Evaluator.new({id:user.id, pseudo:user.pseudo, mail:user.mail, sexe:user.sexe, jury:3})
+    self.evaluator.is_admin = true
     return true
   end #/ reconnect_admin
 

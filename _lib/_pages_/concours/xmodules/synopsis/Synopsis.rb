@@ -154,7 +154,7 @@ end #/ add
           end
         end
 
-    log("Nature du visiteur : #{nature.inspect} / main_note_key:#{main_note_key.inspect} / side_note_key:#{side_note_key.inspect}")
+    # log("Nature du visiteur : #{nature.inspect} / main_note_key:#{main_note_key.inspect} / side_note_key:#{side_note_key.inspect}")
 
     # S'il n'y a pas de clé principale de classement, on s'en retourne sans
     # rien faire.
@@ -179,7 +179,7 @@ end #/ add
         syno.calc_evaluation_for(options) if cuser
         # log("syno#{syno.id}.evaluation : #{syno.evaluation.inspect}")
         syno.sort_note = syno.send(main_note_key)
-        if syno.sort_note.nil? # <= pas de fichier d'évaluation
+        if syno.sort_note == 'NC'#.nil? # <= pas de fichier d'évaluation
           # log("  -> pas de fichier d'évaluation")
           synos_sans_fiche << syno
         else

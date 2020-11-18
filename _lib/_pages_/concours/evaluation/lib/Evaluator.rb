@@ -77,7 +77,7 @@ def initialize(data_ini)
 end #/ initialize
 
 def admin?
-  self.is_admin === true
+  user.admin? || (self.is_admin === true)
 end #/ admin?
 def concurrent?
   self.is_concurrent === true

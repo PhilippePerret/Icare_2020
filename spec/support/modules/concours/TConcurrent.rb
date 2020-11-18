@@ -108,15 +108,18 @@ def find(filtre)
   values = []
   confo_undefined = filtre[:conformite_definie] === false
 
-  if filtre[:avec_fichier]
+  if filtre[:avec_fichier_conforme]
+    where << "SUBSTRING(cpc.specs,1,2) = '11'"
+  elsif filtre[:avec_fichier_conforme] === false
+    where << "SUBSTRING(cpc.specs,1,2) = '12'"
+  elsif filtre[:avec_fichier]
     if confo_undefined
       where << "SUBSTRING(cpc.specs,1,2)  = 10"
     else
       where << "SUBSTRING(cpc.specs,1,1)  = 1"
     end
   end
-  where << "SUBSTRING(cpc.specs,1,2) = '11'" if filtre[:avec_fichier_conforme]
-  where << "SUBSTRING(cpc.specs,1,2) = '12'" if filtre[:avec_fichier_conforme] === false
+
   where << "SUBSTRING(cpc.specs,3,1) = 1" if filtre[:preselected]
   where << "SUBSTRING(cpc.specs,4,1) IN (1,2,3)" if filtre[:primed]
   if filtre.key?(:avec_fichier) || filtre.key?(:avec_fichier_conforme) ||
@@ -239,6 +242,7 @@ WHERE annee = ?)
     # Liste d'instances {TConcurrent}
     where = ["1 = 1"] if where.empty?
     request = REQUEST_ALL_CONCURRENTS_WHERE % {where: where.join(' AND ')}
+    # puts "request concurrent: #{request.inspect}"
     # puts "Request all concurrents : #{request.inspect}"
     res = if valus.empty?
             db_exec(request)
@@ -274,7 +278,6 @@ WHERE annee = ?)
     end
 
     concurrents.each do |conc| conc.reset end
-
     if options[:count] == 1
       concurrents.first
     else

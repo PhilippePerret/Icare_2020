@@ -3,6 +3,8 @@
 =begin
   Données des questions/réponses concernant le concours.
 =end
+COLLECTION_NARRATION = Linker.new(text:"collection Narration", base_url:"https://www.scenariopole.fr/narration", target: :blank)
+
 QUESTIONS_REPONSES = [
   {
     question: "Pourquoi s'inscrire avant l'échéance ?",
@@ -17,12 +19,20 @@ QUESTIONS_REPONSES = [
     reponse: "Le formulaire d'identification se trouve à l'adresse #{CONCOURS_LOGIN.with("https://www.atelier-icare.net/concours/identification")}."
   },
   {
+    question: "À quoi doit ressembler le fichier à envoyer ?",
+    reponse: "Vous trouverez une explication précise sur le page #{DOSSIER_LINK.with("https://www.atelier-icare.net/concours/dossier")} et même un modèle à télécharger."
+  },
+  {
     question: "Faut-il raconter l'histoire dans son intégralité ?",
     reponse: "Oui, tout à fait. Ce n'est pas un pitch, mais un synopsis composé en général de trois parties distinctes : l'exposition (commencement), le développement et le dénouement (résolution). On peut trouve d'autres informations sur la #{Tag.link(route:"http://scenariopole.fr/narration/page/65", text:"Collection Narration", target: :blank)} de Philippe Perret."
   },
   {
-    question: "À quoi doit ressembler le fichier à envoyer ?",
-    reponse: "Vous trouverez une explication précise sur le page #{DOSSIER_LINK.with("https://www.atelier-icare.net/concours/dossier")} et même un modèle à télécharger."
+    question: "Une page et demi en A4 (750 mots ), c'est court, pour un synopsis…",
+    reponse: "Oui, les synopsis donnés en exemple dans la #{COLLECTION_NARRATION.with(route:"page/630")} sont plus longs. Mais ce sont des synopsis <em>de travail</em>, pas des synopsis destinés à présenter son projet. Présenter son projet en 1 page et demi est difficile, mais tout·e auteur·e doit s'y rompre. C'est parfois plus long que le temps dont on dispose pour en parler…"
+  },
+  {
+    question: "Peut-on dépasser la page et demi de synopsis ?",
+    reponse: "Comme cela est expliqué dans le #{REGLEMENT_LINK}, oui, c'est tout à fait possible, on peut même aller jusqu'à 2 pages ou 2 pages et demi. Mais le projet prend alors le risque d'être pénalisé si le jury estime que cette longueur ajoutée ne se justifie pas vraiment."
   },
   {
     question: "Doit-on obligatoirement développer le projet qui a remporté le concours ?",

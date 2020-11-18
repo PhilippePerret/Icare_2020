@@ -19,7 +19,7 @@ bouton_evaluate = if condition_evaluable
                     ""
                   end
 # Le bouton pour marquer conforme
-bouton_marquer_conforme = Tag.link(text:"Marquer conforme", class:"btn-confirm small btn", route:"concours/evaluation?synoid=#{id}&op=mark_conforme", title:"Confirmer la conformité du synopsis")
+bouton_marquer_conforme = Tag.link(text:"Conforme", class:"btn-confirm small btn", route:"concours/evaluation?synoid=#{id}&op=mark_conforme", title:"Confirmer la conformité du synopsis")
 bouton_marquer_non_conforme = Tag.link(text:UI_TEXTS[:button_marquer_non_conforme], class:"btn-not-confirm small btn", route:"concours/evaluation?view=synopsis_form&synoid=#{id}&op=non_conformite", title:"Quand le synopsis est non conforme et que ça doit être signalé au concurrent.")
 bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small btn", route:"concours/evaluation?view=download&cid=#{concurrent.id}", title:"Cliquer sur ce bouton pour télécharger le fichier du concurrent")
 
@@ -49,9 +49,9 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
   <div class="fiche-buttons center"><%=
     bouton_edit if user.admin? and cfile.conforme? %><%=
     bouton_evaluate if cfile.conforme? %><%
-    if evaluator.admin? && not(cfile.conformity_defined?) %><%=
-      bouton_marquer_conforme if not(cfile.conforme?) %><%=
-      bouton_marquer_non_conforme if not(cfile.conforme?) %><%
+    if evaluator.admin? && cfile.conformity_not_defined? %><%=
+      bouton_marquer_conforme %><%=
+      bouton_marquer_non_conforme %><%
     elsif cfile.conforme? && not(evaluator.id == phil.id) %><%=
       bouton_telecharger if cfile.conforme? %><%
     end

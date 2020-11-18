@@ -11,9 +11,12 @@ require_relative './_required'
 =end
 feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
   before(:all) do
-    headless()
+    use_profile_downloader
     degel('concours-phase-1')
     @member = TEvaluator.get_random(jury: 1)
+  end
+  after(:all) do
+    use_profile_downloader(false)
   end
   let(:member) { @member }
   let(:annee) { ANNEE_CONCOURS_COURANTE }
@@ -46,6 +49,7 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
         expect(page).to have_link("Notes <", href: "concours/evaluation?view=&ks=note&ss=asc")
       end
       # Il possède une fiche conforme pour chaque synopsis reçu
+      screenshot("cartes-synopsis-#{member.id}")
       TConcurrent.find(avec_fichier_conforme: true).each_with_index do |conc, idx|
         syno_id = "#{conc.id}-#{annee}"
         fiche_id = "synopsis-#{syno_id}"
@@ -54,21 +58,35 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
         # éditer la fiche
         within("div.synopsis##{fiche_id}") do
           expect(page).not_to have_link("Éditer"),
-            "#{member} ne devrait pas avoir de bouton 'Éditer' sur la fiche pour éditer la fiche du synosis"
-          expect(page).to have_link('Télécharger', href:"concours/evaluation?synoid=#{syno_id}&op=download"),
-            "#{member} devrait avoir un bouton 'Télécharger' sur la fiche pour télécharger le fichier"
-          expect(page).to have_button('Évaluer'),
-            "#{member} devrait avoir un bouton 'Évaluer' sur la fiche pour l'évaluer"
+            "#{member} ne devrait pas avoir de bouton 'Éditer' sur la fiche pour éditer la fiche du synosis #{syno_id}"
+          expect(page).to have_link('Télécharger'),
+            "#{member} devrait avoir un bouton 'Télécharger' sur la fiche pour télécharger le fichier #{syno_id}"
+          expect(page).to have_link('Évaluer'),
+            "#{member} devrait avoir un bouton 'Évaluer' sur la fiche pour évaluer le synopsis #{syno_id}"
         end
 
         case idx
         when 0
           # Le bouton Télécharger permet au membre du jury de télécharger
           # le texte.
-          pending "On vérifie le téléchargement du fichier"
+          within("div.synopsis##{fiche_id}") do
+            click_on("Télécharger")
+          end
+          expect(page).to have_titre("Télécharger le fichier de candidature")
+          click_on("TÉLÉCHARGER")
+          page.find(".usefull-links").hover
+          click_on("LES SYNOPSIS")
+          expect(page).to be_fiches_synopsis
+          # On vérifie que le fichier a bien été téléchargé
+          sleep 2
+          expect(File).to be_exists(File.join(DATA_FOLDER,'concours',conc.id,"#{syno_id}.pdf"))
+
         when 1
           # Le bouton Évaluer permet au membre du jury d'évaluer le synopsis
-          pending("on vérifie juste l'ouverture de la fenêtre")
+          within("div.synopsis##{fiche_id}"){click_on("Évaluer")}
+          expect(page).to be_checklist_page_for(syno_id)
+          click_on("Fiches des synopsis")
+          expect(page).to be_fiches_synopsis
         end
       end
     end
@@ -95,30 +113,21 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
 
     end
 
-    scenario 'peut évaluer un fichier de candidature par la fiche', only:true do
+    scenario 'peut évaluer un fichier de candidature par la fiche' do
       member.rejoint_le_concours
       expect(page).to be_fiches_synopsis
       concurrent = TConcurrent.find(avec_fichier_conforme: true).shuffle.shuffle.first
       syno_id = "#{concurrent.id}-#{annee}"
       div_syno_id = "synopsis-#{syno_id}"
-      within("div##{div_syno_id}") do
-        click_on("Évaluer")
-      end
-      expect(page).to have_titre "Évaluation"
-      expect(page).to have_css("div#checklist")
-      expect(page).to have_css("div#checklist form#ckecklist-form")
-      expect(page).to have_css("form#ckecklist-form div#row-buttons")
-      within("form#ckecklist-form") do
-        expect(page).to have_button "Enregistrer"
-      end
-
+      within("div##{div_syno_id}"){click_on("Évaluer")}
+      expect(page).to be_checklist_page_for(syno_id)
     end
 
-    scenario 'peut évaluer un fichier de candidature par le mini-champ' do
-      within("form#goto-evaluate-synopsis-form") do
-
-      end
-    end
+    # scenario 'peut évaluer un fichier de candidature par le mini-champ' do
+    #   within("form#goto-evaluate-synopsis-form") do
+    #
+    #   end
+    # end
 
   end
 end

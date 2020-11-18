@@ -6,7 +6,7 @@
 require './_lib/_pages_/concours/xmodules/synopsis/constants'
 
 UI_TEXTS.merge!({
-  button_marquer_non_conforme: "Marquer NON conforme",
+  button_marquer_non_conforme: "NON conforme",
 })
 
 MESSAGES.merge!({
@@ -43,6 +43,7 @@ MOTIF_NON_CONFORMITE = {
   signature:{motif:'absence de votre adresse mail (celle ayant servi à vous inscrire) en guise de signature dans l’attestation'},
   bio:{motif: 'absence de la courte biographie de l’auteur ou des auteurs', precision:"cette biographie, qui peut être très courte, nous permet de mieux vous connaitre"},
   incomplet: {motif: "synopsis incomplet", precision: "le synopsis doit raconter l'intégralité de l'histoire, du début jusqu'à sa conclusion"},
+  epured: {motif: "Lorem ipsum intempestif", precision: "Tous les textes ne servant qu'à mettre en forme les modèles (les “lorem ipsum”) sont à supprimer"},
   corrupted: {motif: "fichier corrompu", precision: "malgré tous nos efforts, le fichier n'a pas pu être ouvert"},
   non_respect: {motif:"non respect des contraintes de contenu", precision:"cf. particulièrement l'alinea 4 de l'article 17 du #{REGLEMENT_LINK.with(full:true)}"}
 }

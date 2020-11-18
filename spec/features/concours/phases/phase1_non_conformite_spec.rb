@@ -22,6 +22,7 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
 
   context 'Un administrateur' do
     scenario 'peut refuser un fichier pour non conformité' do
+      # headless(false)
 
       pitch("Quand une concurrente avec un fichier non encore vérifié rejoint l'espace personnel, elle ne trouve plus le champ de saisie pour transmettre son fichier.")
       concurrent.rejoint_le_concours
@@ -33,14 +34,15 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
       start_time = Time.now.to_i - 1
 
       # *** Vérifications préliminaires ***
-      expect(synopsis.specs[0]).to eq('1')
-      expect(synopsis.specs[1]).to eq('0')
+      expect(concurrent.specs[0]).to eq('1')
+      expect(concurrent.specs[1]).to eq('0')
 
       pitch("Un administrateur peut venir marquer le synopsis non conforme en précisant les raisons. Le concurrent est alors averti et on l'invite à corriger son document.")
       phil.rejoint_le_site
       goto("concours/evaluation")
       expect(page).to be_fiches_synopsis
       expect(page).to have_css(fiche_concurrent_selector)
+      screenshot("avec-bouton-fichier-concours-non-conforme")
       within(fiche_concurrent_selector) do
         expect(page).to have_link(BUTTON_NON_CONFORME)
         phil.click_on(BUTTON_NON_CONFORME)
@@ -70,7 +72,7 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
       concurrent.reset
       expect(concurrent.specs[0]).to eq('1')
       expect(concurrent.specs[1]).to eq('2'),
-        "Le deuxième bit des specs du synopsis devrait être à 2 (non conforme) il est à #{synopsis.specs[1].inspect}"
+        "Le deuxième bit des specs du synopsis devrait être à 2 (non conforme) il est à #{concurrent.specs[1].inspect}"
 
 
       # La concurrent a reçu le mail avec chaque motif explicité

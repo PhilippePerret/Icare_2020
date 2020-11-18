@@ -41,10 +41,11 @@ require_relative './Tag'
 require './_lib/required/_classes/App'
 
 class Linker
-  attr_reader :data, :default_text, :route
+  attr_reader :data, :default_text, :route, :base_url
   def initialize(withdata)
     @default_text = withdata[:text]
     @route        = withdata[:route]
+    @base_url     = withdata[:base_url] # p.e. "https://www.scenariopole.fr"
     @data = withdata
   end #/ initialize
 
@@ -56,6 +57,10 @@ class Linker
   end #/ to_str
   alias :to_s :to_str
 
+  # Retourner un lien avec les données +wdata+ qui peuvent redéfinir presque
+  # tous les aspects du lien original, jusqu'à la route (quand le linker, par
+  # exemple, c'est un lien "générique" comme un lien vers la collection
+  # narration).
   def with(wdata)
     reset
     wdata = {text: wdata} if wdata.is_a?(String)
@@ -64,8 +69,8 @@ class Linker
     has_distant_path if data.delete(:online) || data.delete(:distant)
     @qs = data[:query_string]
     data.merge!(text: default_text) unless data.key?(:text)
-    data.merge!(text: real_route) if data[:text].nil?
-    Tag.link(filldata.merge!(route: real_route))
+    data.merge!(text: real_route(wdata[:route])) if data[:text].nil?
+    Tag.link(filldata.merge!(route: real_route(wdata[:route])))
   end #/ with
 
 private
@@ -78,12 +83,17 @@ private
     return d
   end #/ filldata
 
-  def real_route
-    @real_route ||= "#{base}#{route}#{query_string}"
+  def real_route(def_route = nil)
+    def_route ||= route
+    real_base = base
+    if not real_base.nil?
+      real_base = "#{real_base}/" if not(def_route.nil?) && not(real_base.end_with?("/"))
+    end
+    "#{real_base}#{def_route}#{query_string}"
   end #/ real_route
 
   def base
-    if absolute_path? then "#{url}/" else "" end
+    base_url || (absolute_path? ? "#{url}/" : nil)
   end #/ base
 
   def url

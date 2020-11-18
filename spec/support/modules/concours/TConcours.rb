@@ -73,7 +73,7 @@ class << self
     # cette année-là.
     if phase == 0
       Dir["#{CONCOURS_DATA_FOLDER}/**/*-#{ANNEE_CONCOURS_COURANTE}.*"].each do |f|
-        puts "DELETE #{f}"
+        # puts "DELETE #{f}"
         File.delete(f)
       end
       request = "DELETE FROM concurrents_per_concours WHERE annee = ?"

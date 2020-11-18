@@ -42,7 +42,11 @@ def bind; binding() end
 #       de 0 — mais il peut être égal à 1:conforme ou 2:non conforme)
 def conformity_defined?
   concurrent.spec(1) != 0
-end #/ conformity_defined?
+end
+
+def conformity_not_defined?
+  concurrent.spec(1) == 0
+end
 
 # OUT   True si la conformité du synopsis a été marquée
 def conforme?
