@@ -35,8 +35,14 @@ Ch<%=fem(:ere)%> <%= patronyme.patronimize %>,
 <% else %>
   <%# CAS D'UN FICHIER PAS ENCORE ENVOYÉ %>
   <%# --- Ici un message qui guidera l'auteur sur l'étape où il devrait être --- %>
-  <% nbjours = CONCOURS.nombre_jours_echeance %>
-  <p>Il vous reste <%= nbjours %> jour<%= nbjours > 1 ? 's' : '' %> avant l'échéance,
+  <%
+    nbjours = CONCOURS.nombre_jours_echeance
+    color_echeance =  if nbjours > 30 then 'green'
+                      elsif nbjours > 10 then 'orange'
+                      else 'red'
+                      end
+  %>
+  <p>Il vous reste <span style="color:<%= color_echeance %>;font-weight:bold;"><%= nbjours %> jour<%= nbjours > 1 ? 's' : '' %></span> avant l'échéance,
   <%= CONCOURS.conseil_per_nombre_jours_echeance %>
 <% end %>
 
