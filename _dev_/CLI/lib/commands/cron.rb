@@ -43,6 +43,7 @@ HEURES_CHOICES = [
   {name: "3 h (envoi des activités, etc.)", value: 3},
   {name: "1 h (nettoyage mails, etc.)", value: 1},
   {name: "2 h (nettoyage des dossiers, etc.)", value: 2},
+  {name: "Samedi à 11h (mail concours)", value: "S11"},
   {name: "Renoncer", value: :cancel}
 ]
 
@@ -59,9 +60,20 @@ def run_distant_cron
     q.choices HEURES_CHOICES
     q.per_page HEURES_CHOICES.count
   end
-  heure != :cancel || return
 
-  now = Time.now
+  case heure
+  when :cancel
+    return
+  when "S11" # => pour le mail du concours
+    now = Time.now
+    diff = 6 - now.wday
+    if diff > 0 # <= On n'est pas samedi => trouver le jour
+      now = Time.now + diff.days
+    end
+    heure = 11
+  else # heure
+    now = Time.now
+  end
 
   cmd = []
   cmd << "ssh #{SSH_ICARE_SERVER}"
