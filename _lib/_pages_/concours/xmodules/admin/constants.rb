@@ -10,7 +10,8 @@
 ADMIN_USEFULL_LINKS = [
   Tag.link(text:"LES SYNOPSIS", route:"concours/evaluation"),
   Tag.link(text:"Fiches de lecture", route:"concours/evaluation?view=fiches_lecture"),
-  Tag.link(text:"Palmarès", route:"concours/palmares")
+  Tag.link(text:"Palmarès", route:"concours/palmares"),
+  Tag.link(text:"Accueil public", route:"concours/accueil")
 ]
 if user.admin?
   ADMIN_USEFULL_LINKS += [
