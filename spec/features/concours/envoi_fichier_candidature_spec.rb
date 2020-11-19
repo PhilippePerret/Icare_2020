@@ -80,7 +80,7 @@ feature "Dépôt du fichier de candidature" do
 
 
     context 'Un concurrent inscrit sans fichier déposé' do
-      scenario 'peut déposer son fichier de candidature', only:true do
+      scenario 'peut déposer son fichier de candidature' do
         # *** Préparation ***
         start_time = Time.now.to_i
         concurrent = TConcurrent.get_random(avec_fichier: false)

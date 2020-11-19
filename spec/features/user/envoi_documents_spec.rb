@@ -1,6 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_relative './_required'
+require './spec/support/optional_classes/TDocuments'
 
 feature "Envoi des documents de travail" do
   before(:all) do
@@ -45,7 +46,7 @@ feature "Envoi des documents de travail" do
 
 
   context 'un icarien actif' do
-    scenario 'peut envoyer ses documents de travail', only:true do
+    scenario 'peut envoyer ses documents de travail' do
       degel('demarrage_module')
       pitch("Marion, après le démarrage de son module, peut rejoindre la section qui lui permet d'envoyer ses documents. Elle trouve un formulaire conforme et peut envoyer ses documents.")
       marion.rejoint_son_bureau

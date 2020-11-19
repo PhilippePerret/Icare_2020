@@ -6,7 +6,7 @@
 require_relative './_required'
 
 feature "Changement du mot de passe" do
-  before(:all) do
+  before :all do
     degel('define_sharing')
   end
 
@@ -18,11 +18,6 @@ feature "Changement du mot de passe" do
       expect(page).to have_titre('Identification')
     end
   end
-
-
-
-
-
 
   context 'un icarien' do
 

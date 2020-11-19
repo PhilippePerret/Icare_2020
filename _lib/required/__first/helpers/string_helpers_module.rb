@@ -18,9 +18,11 @@
 =end
 module StringHelpersMethods
 
-def fem(key)
-  user.fem(key)
-end #/ fem
+# Impossible de mettre cette méthode là, sinon, ça plante toutes les
+# utilisations qui ne définissent pas 'user' comme dans le cron job.
+# def fem(key)
+#   user.fem(key)
+# end #/ fem
 
 # Retourne un lien vers un mot du scénodico
 def mot(mot_id, mot_mot, options = nil)

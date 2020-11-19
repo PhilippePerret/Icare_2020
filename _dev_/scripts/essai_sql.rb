@@ -1,6 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-ONLINE = false
+ONLINE = true
 require_relative 'required'
 
 puts "ONLINE = #{ONLINE.inspect}"
@@ -15,10 +15,11 @@ end
 # req = "SELECT created_at, updated_at FROM `users` LIMIT 1"
 # MyDB.DBNAME = "icare_modules"
 req = <<-SQL
-SELECT concurrent_id FROM concurrents_per_concours
-WHERE concurrent_id  NOT IN (SELECT concurrent_id FROM concurrents_per_concours
-WHERE annee = 2021)
+select id, pauses from icmodules where pauses is not null;
 SQL
+# UPDATE icmodules SET pauses = ? WHERE id = 8
+# VALUES = [{start:1442686770 , end: nil}].to_json
+
 =begin
 EXCEPT
 SELECT concurrent_id
@@ -142,8 +143,11 @@ WHERE annee = 2021
 # SQL
 
 
-
-res = db_exec(req)
+if defined?(VALUES) && not(VALUES.empty?)
+  res = db_exec(req, VALUES)
+else
+  res = db_exec(req)
+end
 # puts "db_exec(req): #{res.inspect}"
 res&.each do |res|
   puts res.inspect

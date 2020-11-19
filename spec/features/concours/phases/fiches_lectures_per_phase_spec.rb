@@ -88,7 +88,7 @@ feature "Quand on veut atteindre la liste des fiches de lecture" do
     end
   end
 
-  context 'pour un membre du premier jury (présélections)', only:true do
+  context 'pour un membre du premier jury (présélections)' do
     subject { member_jury1 }
     context 'en phase 0' do
       before { goto_fiches_on_phase_with(0, subject) }

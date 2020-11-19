@@ -4,11 +4,15 @@ require 'fileutils'
 
 # `wkhtmltopdf http://localhost/AlwaysData/Icare_2020/overview/policy ./atelier.pdf`
 
-n = 19
-
-case n
-when 16.0..20.0 then puts "entre 20 et 16"
-when 16.0...10.0 then puts "entre 16 et 10"
-else
-  puts "#{n.inspect} est un autre nombre"
+def methode
+  puts "pour voir"
 end
+
+
+if self.respond_to?(:methode)
+  puts ":methode est définie"
+else
+  puts "elle n'est pas définie"
+end
+
+puts "Je suis là"

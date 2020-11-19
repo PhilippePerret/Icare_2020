@@ -48,7 +48,7 @@ feature "Commande d'un module" do
       degel('phil_arrete_module_marion')
       TMails.remove_all
     end
-    scenario 'peut commander un nouveau module comme il veut', only:true do
+    scenario 'peut commander un nouveau module comme il veut' do
       start_time = Time.now.to_i
       pitch("Marion, en tant qu'icarienne inactive, peut commander un nouveau module. ELle suit alors toute la procédure normale jusqu'au démarrage de son nouveau module.")
       marion.rejoint_son_bureau

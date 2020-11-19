@@ -70,6 +70,10 @@ class User
 
   SPAN_PAUSE = '<span class="pause"> Actuellement %{pseudo} est en pause.</span>'
 
+
+  # = main =
+  #
+  # Sortie pour l'affiche de l'icarien en question
   def out
 
     divcontact = []
@@ -77,6 +81,8 @@ class User
     divcontact << BOUTON_HISTO % id if histo_enabled?
     divcontact << BOUTON_FRIGO % id if frigo_enabled?
     divcontact << BOUTON_MAIL  % id if mail_enabled?
+    # Si c'est l'administrateur qui visite la salle des icariens, un bouton
+    # lui permet d'éditer l'icarien.
     if user.admin?
       divcontact << BOUTON_EDIT % id
     end
@@ -84,14 +90,14 @@ class User
 
     datacard = {
       picto: visage, id:id, pseudo: pseudo,
-      date_signup: formate_date(created_at, {jour:true}).downcase,
-      date_signout: formate_date(date_sortie, {jour:true}).downcase,
+      date_signup: formate_date(created_at, {jour:false}).downcase,
+      date_signout: formate_date(date_sortie, {jour:false}).downcase,
       duree: formate_duree(created_at, date_sortie, {nojours: true}),
       s: plusieurs_modules? ? 's' : '',
       e: fem(:e),
       Elle:fem(:Elle),
       Il:fem(:Elle),
-      modules_suivis: modules_suivis,
+      modules_suivis: formated_modules_suivis,
       span_pause: span_pause,
       div_tools: div_tools
     }
@@ -109,32 +115,50 @@ class User
   end #/ out
 
   def precedemment(datacard)
-    return '' unless actif?
+    return '' if not actif?
     return '' if modules.count == 1
-    SPAN_PRECEDEMMENT % datacard.merge(modules_suivis: modules_suivis)
+    return '' if autres_modules_suivis.count == 0
+    SPAN_PRECEDEMMENT % datacard.merge(modules_suivis: formated_modules_suivis)
   end #/ precedemment
 
   def plusieurs_modules?
-    if actif?
-      modules.count > 3 # le courant plus deux autres
-    elsif inactif?
-      modules.count > 1 # Au moins deux
-    else
-      false
-    end
+    autres_modules_suivis.count > 1 # Au moins deux
   end #/ plusieurs_modules?
 
-  def modules_suivis
-    if actif?
-      # <= C'est un icarien en activité
-      # => Il ne faut mettre que les modules hors du module courant
-      modules.collect { |m| m.id == icmodule_id ? nil : m.name_with_project }
-    else
-      # <= C'est un ancien
-      # => On prend tous ses modules
-      modules.collect { |m| m.name_with_project rescue nil}
-    end.compact.pretty_join
-  end #/ modules_suivis
+  def autres_modules_suivis
+    @autres_modules_suivis ||= begin
+      if actif?
+        # <= C'est un icarien en activité
+        # => Il ne faut mettre que les modules hors du module courant
+        modules.collect do |m|
+          if m.id == icmodule_id
+            nil
+          elsif m.ended_at.nil?
+            nil
+          elsif ((m.ended_at.to_i - m.started_at.to_i) / 1.day) < 20
+            # Si l'icarien a passé moins de 20 jours sur son module
+            nil
+          else
+            m.name_with_project
+          end
+        end
+      else
+        # <= C'est un ancien
+        # => On prend tous ses modules
+        modules.collect do |m|
+          if m.ended_at.nil?
+            nil
+          else
+            m.name_with_project
+          end
+        end
+      end.compact
+    end
+  end #/ autres_modules_suivis
+
+  def formated_modules_suivis
+    autres_modules_suivis.pretty_join
+  end #/ formated_modules_suivis
 
   def span_pause
     return '' unless en_pause?
@@ -172,6 +196,7 @@ class User
 
 # Retourne la date de dernière activité de l'icarien actif (pour savoir
 # s'il est vraiment actif)
+# OBSOLÈTE Doit être remplacé par une méthode qui va faire ça automatiquement
 def date_last_activite
   @date_last_activite ||= begin
     # Date de dernier document
@@ -212,7 +237,7 @@ class << self
         # pour voir si c'est vraiment un actif. Si elle remonte à plus de
         # 6 mois, il passe en inactif (pour la liste seulement).
         if u.date_last_activite < (Time.now.to_i - (6 * 31).days)
-          log("--- #{u.pseudo} rétrogradé d'actif à inactif (dernière activité : #{formate_date(u.date_last_activite)})")
+          # log("--- #{u.pseudo} rétrogradé d'actif à inactif (dernière activité : #{formate_date(u.date_last_activite)})")
           state = :inactif
         end
       end
@@ -220,9 +245,10 @@ class << self
     end
   end #/ dispatch_all_users
 
-  def actifs
-    @listes[:actif]
-  end #/ actifs
+  # def actifs
+  #   real_actifs
+  #   # @listes[:actif]
+  # end #/ actifs
   def en_pause
     @listes[:pause]
   end #/ en_pause
@@ -238,5 +264,51 @@ class << self
   def all_but_users_out
     @all_but_users_out ||= find("id > 9 AND SUBSTRING(options,4,1) = '0'").values
   end #/ all_but_users_out
+
+
+  # ---------------------------------------------------------------------
+  #   Nouvelles méthodes de récupération des icariens par type
+  # ---------------------------------------------------------------------
+
+  # Les "real actifs" sont des icariens qui possèdent un module courant et qui
+  # ont eu au moins une activité dans les 6 derniers mois
+  def real_actifs
+    @real_actifs ||= get_real_actifs
+  end
+
+  # Les "faux actifs" sont des icariens qui possède un module courant mais qui
+  # n'ont pas donné signe de vie depuis plus de 6 mois
+  def faux_actifs
+    @faux_actifs ||= get_faux_actifs
+  end #/ faux_actifs
+
+  def get_real_actifs
+    request = <<-SQL
+SELECT u.*
+  FROM users u
+  INNER JOIN icdocuments docs ON docs.user_id = u.id
+  WHERE u.id > 9
+        AND SUBSTRING(u.options,4,1) = 0
+        AND u.icmodule_id IS NOT NULL
+        AND docs.updated_at > ?
+  GROUP BY u.id
+    SQL
+    db_exec(request, [(Time.now - 24.weeks).to_i]).collect { |du| User.instantiate(du) }
+  end #/ get_real_actifs
+
+  def get_faux_actifs
+    request = <<-SQL
+SELECT u.*
+  FROM users u
+  INNER JOIN icdocuments docs ON docs.user_id = u.id
+  WHERE u.id > 9
+        AND SUBSTRING(u.options,4,1) = 0
+        AND u.icmodule_id IS NOT NULL
+        AND docs.updated_at < ?
+  GROUP BY u.id
+    SQL
+    db_exec(request, [(Time.now - 24.weeks).to_i]).collect { |du| User.instantiate(du) }
+  end #/ get_faux_actifs
+
 end #/<< self
 end #/User

@@ -176,7 +176,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       TXT
     end
 
-    scenario 'ne peut pas simuler le paiement en appelant op=ok', only:true do
+    scenario 'ne peut pas simuler le paiement en appelant op=ok' do
       pitch("Élie, qui suit le module de suivi de projet intensif vient payer son module, ce qui lui affecte une nouvelle date d'échéance de paiement.")
 
       degel('elie-avec-paiement')

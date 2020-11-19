@@ -5,8 +5,9 @@
 require_relative './_required'
 
 feature "Destruction d'un icarien" do
-  before(:all) do
+  before :all do
     require './_lib/_pages_/user/profil/constants'
+    headless
   end
 
   scenario "Un non icarien ne peut pas rejoindre son profil" do

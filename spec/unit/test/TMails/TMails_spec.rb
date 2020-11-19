@@ -93,7 +93,7 @@ describe TMails do
 
 
 
-    context 'avec une recherche par contenu', only:true do
+    context 'avec une recherche par contenu' do
       it 'ne produit pas d’erreur si le contenu String a été trouvé' do
         essaye(message: "Un contenu tout simple").not_to raise_error
       end

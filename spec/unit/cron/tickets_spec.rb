@@ -25,7 +25,7 @@ describe 'CRONJOB' do
     let(:nombre_tickets_init) { @nombre_tickets_init }
 
     context 'à l’heure prévue' do
-      it 'sont supprimés s’ils sont plus vieux que 30 jours et l’auto-incrément est réajusté', only:true do
+      it 'sont supprimés s’ils sont plus vieux que 30 jours et l’auto-incrément est réajusté' do
         htime = "2020/10/25/1/15"
         res = run_cronjob(noop:false, time:htime)
         expect(nombre_tickets).to eq(nombre_tickets_init - 10),

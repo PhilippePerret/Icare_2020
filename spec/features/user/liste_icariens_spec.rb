@@ -32,7 +32,7 @@ end #/ admins
 
 
 feature "La liste des icariens" do
-  before(:all) do
+  before :all do
     degel('real-icare')
   end
   scenario "peut être atteinte depuis le plan du site" do
@@ -41,7 +41,8 @@ feature "La liste des icariens" do
     find('a.goto[href="overview/icariens"]').click
     expect(page).to have_titre('Icariennes et icariens')
   end
-  scenario 'affiche correctement les icariens actifs' do
+  scenario 'affiche correctement les icariens actifs', only:true do
+    pitch("En visitant la salle des icariens, un visiteur quelconque trouve la liste des icariens vraiment (*) actifs.(*) C'est-à-dire ceux qui possèdent un module courant et dont la dernière activité ne remonte pas à trop longtemps.")
     goto("overview/icariens")
     expect(page).to have_css("section#body h2", text: "Icariennes et icariens en activité")
     expect(icariens_actifs.count).to be > 4
@@ -49,7 +50,7 @@ feature "La liste des icariens" do
       expect(page).to have_css("div.icarien#icarien-#{dic[:id]}")
       within("div#icarien-#{dic[:id]}") do
         expect(page).to have_css("span.pseudo", text: dic[:pseudo])
-        expect(page).to have_css("span.date-signup", text: formate_date(dic[:created_at], jour: true).downcase)
+        expect(page).to have_css("span.date-signup", text: formate_date(dic[:created_at], jour: false).downcase)
         expect(page).to have_css("span.duree")
         expect(page).to have_css("span.module", text: "le module “#{dic[:module_name]}”")
       end
@@ -62,6 +63,7 @@ feature "La liste des icariens" do
     implementer(__FILE__,__LINE__)
   end
   scenario 'ne contient pas les administrateurs' do
+    pitch("Lorsqu'il visite la salle des icariens, un visiteur quelconque ne trouve pas les administrateurs du site.")
     goto("overview/icariens")
     expect(page).to have_titre("Icariennes et icariens")
     admins.each do |admin|

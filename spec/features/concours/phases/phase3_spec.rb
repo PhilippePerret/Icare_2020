@@ -283,7 +283,7 @@ feature "Phase 3 du concours" do
       goto("concours/evaluation")
       expect(page).to be_fiches_synopsis
     end
-    scenario 'trouve les bonnes fiches à évaluer (les 10 présélections)', only:true do
+    scenario 'trouve les bonnes fiches à évaluer (les 10 présélections)' do
       phil.rejoint_le_site
       # On s'assure que c'est la bonne phase
       goto("concours/admin")

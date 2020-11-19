@@ -2,7 +2,9 @@
 def icarien_required(message = nil)
   if user.guest?
     log("# user est un invité (guest?) et essaie d'atteindre une partie protégée")
-    raise IdentificationRequiredError.new(message||MESSAGES[:ask_identify])
+    # raise IdentificationRequiredError.new(message||MESSAGES[:ask_identify])
+    erreur(message||MESSAGES[:ask_identify])
+    redirect_to(:identification)
   end
 end
 

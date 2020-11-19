@@ -132,7 +132,7 @@ feature "Gestion de la non conformité d'un fichier de candidature" do
         expect(page).not_to have_link(BUTTON_NON_CONFORME)
       end
     end
-    scenario 'ne peut pas refuser un fichier même par route directe', only:true do
+    scenario 'ne peut pas refuser un fichier même par route directe' do
       member.rejoint_le_concours
       goto("concours/evaluation?view=synopsis_form&op=set_non_conforme&synoid=#{synopsis.id}&motif=support")
       expect(concurrent.specs[1]).not_to eq("2")

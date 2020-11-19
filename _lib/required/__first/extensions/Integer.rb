@@ -15,5 +15,11 @@ class Integer
   def days
     self * 24 * 3600
   end #/ days
-  
+  alias :day :days
+
+  def weeks
+    self * 7.days
+  end #/ weeks
+  alias :week :weeks
+
 end #/Integer

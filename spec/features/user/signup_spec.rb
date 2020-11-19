@@ -98,7 +98,7 @@ feature 'Inscription à l’atelier Icare' do
   end
 
 
-  scenario 'des données valides permettent de créer un candidat', only:true do
+  scenario 'des données valides permettent de créer un candidat' do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire
@@ -129,7 +129,7 @@ feature 'Inscription à l’atelier Icare' do
 
   end #/test d'un bon candidat
 
-  scenario 'des données valides permettent de créer une candidate', only:true do
+  scenario 'des données valides permettent de créer une candidate' do
     # Les méthodes utiles
     extend SpecModuleNavigation
     extend SpecModuleFormulaire

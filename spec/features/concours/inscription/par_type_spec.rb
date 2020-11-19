@@ -250,7 +250,7 @@ feature "Inscription au concours courant suivant le type de visiteur" do
       @candidat = cand
     end
     let(:candidat) { @candidat }
-    scenario 'se voit proposé de s’identifier avec un bon message puis de s’inscrire à la session courante', only:true do
+    scenario 'se voit proposé de s’identifier avec un bon message puis de s’inscrire à la session courante' do
       # headless(false)
       goto("concours")
       click_on("Inscription au concours")

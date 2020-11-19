@@ -11,6 +11,10 @@
 require_relative './_required'
 
 feature 'Validation du mail' do
+  before :all do
+    headless
+  end
+
   before(:each) do
     degel('inscription_marion')
   end
@@ -66,6 +70,7 @@ feature 'Validation du mail' do
         "L'identifiant du ticket devrait être défini, dans le mail de validation."
       # Appeler le ticket
       goto("bureau/home?tik=#{ticket_id}")
+      screenshot("traitement-ticket-mail-validation")
       # goto("plan?tik=#{ticket_id}") # n'importe quelle route doit reconduire au formulaire d'identification
       expect(page).to have_titre('Identification'),
         "Marion devrait être retournée vers le formulaire d’identification."

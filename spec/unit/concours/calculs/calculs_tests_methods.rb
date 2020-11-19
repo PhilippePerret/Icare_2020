@@ -65,7 +65,7 @@ end #/ traite_calcul_case
 
 def check_evaluation_in_with(e, attentes, name, coef200)
   # puts "attentes: #{attentes.inspect}"
-  describe name.bleu, only:true do
+  describe name.bleu do
     attentes.each do |key, value|
       it "produit la bonne valeur pour #{key.inspect}" do
         if key != :categories

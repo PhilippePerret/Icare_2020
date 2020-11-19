@@ -184,7 +184,7 @@ feature "Section d'inscription de la partie concours" do
   end
 
   context 'un icarien identifié' do
-    scenario 'peut s’inscrire au concours en cliquant sur un simple bouton', only:true do
+    scenario 'peut s’inscrire au concours en cliquant sur un simple bouton' do
       marion.rejoint_le_site
       goto("concours/accueil")
       marion.click_on(UI_TEXTS[:concours_bouton_inscription])

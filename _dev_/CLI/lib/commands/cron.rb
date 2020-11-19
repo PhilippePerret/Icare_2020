@@ -39,6 +39,7 @@ MODES_NOOP = [
   {name: "Renoncer", value: :cancel}
 ]
 HEURES_CHOICES = [
+  {name: "4 h (réparation DB)", value: 4},
   {name: "5 h (produit le test)", value: 5},
   {name: "3 h (envoi des activités, etc.)", value: 3},
   {name: "1 h (nettoyage mails, etc.)", value: 1},
@@ -74,6 +75,12 @@ def run_distant_cron
   else # heure
     now = Time.now
   end
+
+  # Pour effacer le rapport
+  cmd = "ssh #{SSH_ICARE_SERVER} 'rm -f #{report_path_of(now)};rm -f ./www/tmp/logs/cronjob.log'"
+  res = `#{cmd}`
+  # puts "Commande d'effacement du rapport : #{cmd}"
+  # puts "Résultat d'effacement du rapport : #{res.inspect}"
 
   cmd = []
   cmd << "ssh #{SSH_ICARE_SERVER}"
@@ -134,7 +141,7 @@ end
   end #/ read_file
 
   def report_path_of(time)
-    "./www/cronjob/data/report-#{time.strftime('%Y-%m-%d')}.txt"
+    "./www/cronjob2/tmp/report-#{time.strftime('%Y-%m-%d')}.txt"
   end #/ report_path_of
 
   # Joue la commande ruby +cmd+ sur le site distant
