@@ -76,7 +76,7 @@ class Cronjob
         Report << "[NOOP] Les étapes et documents suivants seront détruits : #{erasables.inspect}"
       else
         erasables.each do |dbtable, id_list|
-          db_exec("DELETE FROM #{dbtable} WHERE id IN (#{id_list})")
+          db_exec("DELETE FROM #{dbtable} WHERE id IN (#{id_list.join(", ")})")
         end
         Report << "Étapes et documents détruits : #{erasables.inspect}"
       end
