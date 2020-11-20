@@ -1,4 +1,7 @@
-<% extend StringHelpersMethods %>
+<%
+# frozen_string_literal: true
+extend StringHelpersMethods
+%>
 <p>
 <%= user.guest? ? 'V' : "#{user.pseudo}, v" %>ous rejoignez cette page parce que vous avez l'intention de détruire votre profil. Nous sommes évidemment déçus de vous voir partir. Mais avant de procéder à cette opération, laissez-moi vous rappeler les implications de cette destruction :
 </p>
@@ -18,8 +21,8 @@ form.rows = {
   'Votre mot de passe' => {name:'user_password', type:'password'},
   'operation' => {name:'op', type:'hidden', value:'destroy-user'}
 }
-form.submit_button = "Détruire définitivement mon profil".freeze
-form.submit_button_class = "btn warning".freeze
+form.submit_button = UI_TEXTS[:btn_detruire_definitivement_profil]
+form.submit_button_class = "btn warning"
 %>
 <%= form.out %>
 </div>

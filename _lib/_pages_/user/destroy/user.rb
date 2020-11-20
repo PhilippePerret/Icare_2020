@@ -5,18 +5,14 @@ class User
   # Méthode principale de destruction du l'utilisateur courant
   def destroy
     # On anonymise ses éléments (user#9)
-    tmp_request = "UPDATE `%{table}` SET user_id = 9 WHERE user_id = #{id}"
+    tmp_request = "UPDATE `%{table}` SET user_id = 9 WHERE user_id = ?"
     [
       'actualites', 'icdocuments', 'icetapes', 'icmodules',
       'frigo_discussions', 'frigo_messages',
       'lectures_qdd', 'minifaq', 'temoignages'
     ].each do |table|
-      db_exec(tmp_request % {table: table})
+      db_exec(tmp_request % {table: table}, [id])
     end
-
-    # Destruction dans les discussions de frigo
-    request_owner = "UPDATE `frigo_discussions` SET user_id = 9 WHERE user_id = #{id}"
-    db_exec(request_owner)
 
     # On détruit les éventuels tickets en cours
     request_delete = "DELETE FROM %{table} WHERE user_id = #{id}"
@@ -31,12 +27,15 @@ class User
       log("--> Destruction des participations éventuelles aux concours")
       dc = db_exec("SELECT concurrent_id FROM concours_concurrents WHERE mail = ?", [mail]).first
       unless dc.nil?
-        concurrent_id = dc[:concurrent_id]
+        concurrent_id = dc[:concurrent_id].freeze
         req_destroy_cpc = "DELETE FROM concurrents_per_concours WHERE concurrent_id = ?"
         db_exec(req_destroy_cpc, [concurrent_id])
         req_destroy_cc = "DELETE FROM concours_concurrents WHERE concurrent_id = ?"
         db_exec(req_destroy_cc, [concurrent_id])
         log("   Destruction des participations effectuée avec succès")
+        # Destruction du dossier éventuel
+        folder_concours_path = File.join('.','_lib','data','concours')
+        FileUtils.rm_rf(folder_concours_path) if File.exists?(folder_concours_path)
       else
         log("   Aucune participation n'a été trouvée")
       end
