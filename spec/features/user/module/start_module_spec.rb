@@ -3,6 +3,8 @@
 =begin
   Test de démarrage de module d'apprentissage
 =end
+
+
 require_relative './_required'
 
 feature "Test du démarrage de module" do
@@ -61,7 +63,6 @@ feature "Test du démarrage de module" do
     end
 
     scenario 'ne peut pas démarrer le module d’apprentissage d’un autre icarien' do
-
       # --- Vérifications préliminaires ---
       dwat = db_get('watchers', 18)
       expect(dwat).not_to eq(nil)
@@ -69,7 +70,7 @@ feature "Test du démarrage de module" do
       # C'est bon, ce watcher de démarrage de module existe.
 
       marion.rejoint_le_site
-      goto('bureau?op=run&wid=18')
+      goto('bureau/notifications?op=run&wid=18')
       screenshot('Marion-force-start-module')
 
       # --- Vérifications ---
@@ -90,7 +91,7 @@ feature "Test du démarrage de module" do
 
 
   context 'un icarien inactif' do
-    scenario 'peut démarrer un module approuvé' do
+    scenario 'peut démarrer un module approuvé', only:true do
       degel('elie_demarre_son_module')
 
       # --- Vérifications préliminaires ---
@@ -122,7 +123,7 @@ feature "Test du démarrage de module" do
       expect(benoit).to have_etape(numero:1, after:start_time),
         "Benoit devrait avoir une étape de travail courante".freeze
       pitch('Une étape de travail a été créée pour Benoit'.freeze)
-      expect(phil).to have_mail(subject:DATA_WATCHERS[:start_module][:titre], after:start_time),
+      expect(phil).to have_mail(subject:subject_of_mail('_watchers_processus_/IcModule/start/mail_admin.erb'), after:start_time),
         "J'aurais dû recevoir un mail d'avertissement de démarrage de module.".freeze
       pitch("Phil a été averti par mail du démarrage de module".freeze)
 

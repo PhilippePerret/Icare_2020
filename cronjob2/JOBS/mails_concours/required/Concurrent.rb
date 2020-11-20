@@ -47,7 +47,7 @@ end # /<< self
 # ---------------------------------------------------------------------
 def send_mail_info
   MailSender.send(to:mail, file:self.class.info_hebdo_mail_path, bind:self)
-  Logger << "Envoi du mail d'information à #{ref}."
+  Logger << "Mail d'information concours à #{ref}."
 end #/ send_mail_info
 
 def synopsis

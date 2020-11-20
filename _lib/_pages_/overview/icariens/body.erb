@@ -1,32 +1,36 @@
 <p class="explication">Cette salle des icarien·ne·s présente tous les auteur·e·s en activité à l'atelier ou l’ayant été.</p>
-<h2>Icariennes et icariens en activité</h2>
-  <% unless User.real_actifs.empty? %>
-    <%= User.real_actifs.collect { |u| u.out }.join %>
-  <% else %>
-    <p class="explication">Aucun icarien actif en ce moment.</p>
-  <% end %>
+<h2>Icariennes et icariens en activité</h2><%
+unless User.vrais_actifs.empty? %><%=
+  User.vrais_actifs.collect { |u| u.out }.join %><%
+else %>
+  <p class="explication">Aucun icarien actif en ce moment.</p><%
+end %>
 
-<h2>Icariennes et icariens en pause</h2>
-<% if User.en_pause.empty? && User.faux_actifs.empty? %>
-  <p class="explication">Aucun icarien en pause en ce moment.</p>
-<% else %>
-  <%= User.en_pause.collect { |u| u.out }.join %>
-  <%= User.faux_actifs.collect { |u| u.out }.join %>
-<% end %>
+<h2>Icariennes et icariens en pause</h2><%
+if User.en_pause.empty? && User.faux_actifs.empty? %>
+  <p class="explication">Aucun icarien en pause en ce moment.</p><%
+else %><%=
+  User.faux_actifs.collect { |u| u.out }.join %><%=
+  User.en_pause.collect { |u| u.out }.join %><%
+end %>
 
-<h2>Anciennes icariennes et anciens icariens</h2>
-<%= User.anciens.collect{|u|u.out}.join %>
+<h2>Anciennes icariennes et anciens icariens</h2><%
+if User.anciens.empty? %>
+  <p class="explication">Aucun anciens icariens n'a été trouvé.</p><%
+else %><%=
+  User.anciens.collect{|u|u.out}.join %><%
+end %>
 
-<h2>Récemment reçues et reçus</h2>
-<% if User.recus.empty? %>
-  <p class="explication">Aucun candidat reçu n’est en passe de commencer son module.</p>
-<% else %>
-  <%= User.recus.collect{|u|u.out}.join %>
-<% end %>
+<h2>Récemment reçues et reçus</h2><%
+if User.recus.empty? %>
+  <p class="explication">Aucun candidat reçu n’est en passe de commencer son module.</p><%
+else %><%=
+  User.recus.collect{|u|u.out}.join %><%
+end %>
 
-<h2>Candidats et candidates</h2>
-<% unless User.candidats.empty? %>
-  <%= User.candidats.collect{|u|u.out unless u.id == 0}.join %>
-<% else %>
-  <p class="explication">Aucun candidat en ce moment.</p>
-<% end %>
+<h2>Candidats et candidates</h2><%
+unless User.candidats.empty? %><%=
+  User.candidats.collect{|u|u.out unless u.id == 0}.join %><%
+else %>
+  <p class="explication">Aucun candidat en ce moment.</p><%
+end %>

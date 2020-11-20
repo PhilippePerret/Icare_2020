@@ -4,7 +4,8 @@ class Route
 ROUTES_SHORTCUTS = {
   'concours'        => 'concours/accueil',
   'bureau'          => 'bureau/home',
-  'identification'  => 'user/login'
+  'identification'  => 'user/login',
+  'icariens'        => 'overview/icariens'
 }
 class << self
 

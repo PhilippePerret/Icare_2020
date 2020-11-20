@@ -7,7 +7,7 @@
 
 # Le traitement qu'il faut appliquer À TOUS LES GELS des tests
 DB_REQUEST = <<-SQL.strip
-DROP TABLE IF EXISTS mini_faq;
+UPDATE users SET options = "00100000000000004-0-000-11330000" WHERE id IN (13,16,48,93,95,97,104)
 SQL
 DB_VALUES = nil
 

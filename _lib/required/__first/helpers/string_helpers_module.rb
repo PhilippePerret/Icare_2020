@@ -18,6 +18,17 @@
 =end
 module StringHelpersMethods
 
+def method_missing method_name, *args, &block
+  if method_name == :fem
+    if defined?(user) && not(user.nil?) && user.respond_to?(:fem)
+      user.fem(*args)
+    else
+      super
+    end
+  else
+    super
+  end
+end #/ method_missing
 # Impossible de mettre cette méthode là, sinon, ça plante toutes les
 # utilisations qui ne définissent pas 'user' comme dans le cron job.
 # def fem(key)

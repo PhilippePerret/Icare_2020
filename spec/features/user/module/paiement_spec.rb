@@ -44,6 +44,9 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
   scenario "un icarien peut payer par virement bancaire" do
 
+    # Pour les titres de mails, notamment
+    require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
+
     degel('marion_avec_paiement')
     pitch("Marion va rejoindre son bureau pour payer son module d'apprentissage.")
 
@@ -101,10 +104,10 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
     click_on(UI_TEXTS[:button_confirm_virement])
 
     # Phil reçoit un mail pour l'avertir
-    expect(phil).to have_mail(subject:DATA_WATCHERS[:annonce_virement][:titre], after: start_time)
+    expect(phil).to have_mail(subject:MESSAGES[:titre_mail_admin], after: start_time)
     # Marion reçoit un mail lui confirmant l'annonce de virement et la
     # remerciant
-    expect(marion).to have_mail(subject:DATA_WATCHERS[:annonce_virement][:titre], after: start_time)
+    expect(marion).to have_mail(subject:MESSAGES[:titre_mail_icarien], after: start_time)
     pitch("Marion et Phil ont reçu un mail annonçant le virement.".freeze)
 
     # Le watcher d'annonce doit avoir été détruit
@@ -285,6 +288,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
 
   context 'un icarien m’ayant déjà mis en bénéficiaire' do
+
     scenario 'peut directement informer du virement' do
 
       pitch("Marion, qui a déjà téléchargé mon IBAN, et m'a mis en bénéficiaire, veut simplement m'informer de son virement. Elle peut rejoindre son bureau pour le faire.")
@@ -299,7 +303,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
       # Pré-vérifiations
       expect(marion).not_to be_real,
-        "Marion ne devrait pas être une *vraie* icarienne"
+        "Marion ne devrait pas être une *vraie* icarienne (son bit 24 vaut #{marion.options[24]})"
 
       # --- On peut procéder à l'opération
 
@@ -343,11 +347,11 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       click_on(UI_TEXTS[:button_confirm_virement])
 
       # Phil reçoit un mail pour l'avertir
-      expect(phil).to have_mail(subject:DATA_WATCHERS[:annonce_virement][:titre], after: start_time),
+      expect(phil).to have_mail(subject:subject_of_mail('_watchers_processus_/IcModule/annonce_virement/mail_admin.erb'), after: start_time),
         "Phil devrait avoir reçu un mail annonçant le virement."
       # Marion reçoit un mail lui confirmant l'annonce de virement et la
       # remerciant
-      expect(marion).to have_mail(subject:DATA_WATCHERS[:annonce_virement][:titre], after: start_time),
+      expect(marion).to have_mail(subject:subject_of_mail('_watchers_processus_/IcModule/annonce_virement/mail_user.erb'), after: start_time),
         "Marion devrait avoir reçu un mail confirmant l'annonce du virement."
       pitch("Marion et Phil ont reçu un mail annonçant le virement.".freeze)
 

@@ -3456,6 +3456,8 @@ TMails.count
 TMails.exists?(<dest.>[, <cherché>][,<options>])			TMails.exists?("phil@chez.moi", "Bonjour Phil !")
 ~~~
 
+
+
 #### Tester si un mail a été envoyé sans tester son contenu
 
 ~~~ruby
@@ -3473,6 +3475,21 @@ Donc pour les tests :
 ~~~ruby
 expect(TMails).to be_exists("phil@chez.moi", {subject: 'Mon mail', after: start_time})
 ~~~
+
+
+
+#### Obtenir le titre (subject) d'un mail
+
+Maintenant, grâce à `MailSender`, on peut définir le titre (subject) du mail dans le fichier `ERB` lui-même, grâce à la méthode `subject`.
+
+Dans les tests, on peut obtenir ce titre grâce à la méthode `subject_of_mail(path/to/mail)`.
+
+~~~ruby
+sujet = subject_of_mail('path/depuis/_lib/folder/mail.erb')
+~~~
+
+> Noter que le path s'exprime depuis le dossier `_lib/` qu'il ne faut donc pas mettre dans le chemin d'accès.
+
 
 
 #### Récupérer tous les mails d’un certain utilisateur

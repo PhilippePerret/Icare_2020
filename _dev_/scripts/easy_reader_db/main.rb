@@ -7,12 +7,27 @@
       etc.
 
   Jouer plutôt le scrit dans le Terminal pour un affichage parfait.
-  
+
 =end
+
+ONLINE = false
 
 # La requête à exécuter pour récupérer les données distantes.
 REQUEST = <<-SQL
-SELECT id, pseudo, mail FROM users WHERE mail = 'benoitlemeunier@hotmail.fr'
+SELECT d.user_id, max(d.updated_at) AS last_activity_at
+FROM icdocuments d
+GROUP BY d.user_id
+
+-- SELECT
+--   u.id, u.pseudo, d.updated_at, MAX(d.updated_at)
+--   FROM users u
+--   INNER JOIN icdocuments d ON d.user_id = u.id
+--   INNER JOIN (
+--     SELECT d.user_id, max(d.updated_at)
+--     FROM icdocuments d
+--     GROUP BY d.user_id
+--   ) AS newD
+--   ORDER BY d.updated_at DESC
 SQL
 
 
@@ -23,10 +38,9 @@ options = {
   pseudo:   {value:true, name:"Ajouter le pseudo si user_id est défini", dim: 'p'},
 }
 
-ONLINE = true
 require_relative './lib/required'
-MyDB.DBNAME = 'icare_db'
-MyDB.online = true
+MyDB.DBNAME = ONLINE ? 'icare_db' : 'icare_test'
+MyDB.online = ONLINE
 
 result = db_exec(REQUEST)
 

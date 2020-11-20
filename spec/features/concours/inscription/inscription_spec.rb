@@ -184,7 +184,8 @@ feature "Section d'inscription de la partie concours" do
   end
 
   context 'un icarien identifié' do
-    scenario 'peut s’inscrire au concours en cliquant sur un simple bouton' do
+    scenario 'peut s’inscrire au concours en cliquant sur un simple bouton', gel:true do
+      # NOTE : produit le gel 'marion-concurrente-concours'
       marion.rejoint_le_site
       goto("concours/accueil")
       marion.click_on(UI_TEXTS[:concours_bouton_inscription])
@@ -199,6 +200,12 @@ feature "Section d'inscription de la partie concours" do
       expect(dc[:patronyme]).to eq(marion.patronyme || marion.pseudo)
       dcc = db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} where annee = ? AND concurrent_id = ?", [ANNEE_CONCOURS_COURANTE, dc[:concurrent_id]]).first
       expect(dcc).not_to eq(nil)
+
+      gel('marion-concurrente-concours', <<-TEXT)
+      Gel qui permet d'avoir une icarienne, Marion, qui s'est inscrite au concours de synopsis
+      organisé tous les ans par l'atelier Icare.
+      TEXT
+      pitch("Production du gel 'marion-concurrente-concours'")
     end
   end
 
