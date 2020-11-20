@@ -1,6 +1,46 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+=begin
+  Module ruby qui permet de faire des tests ou des changements sur la
+  base locale ou distante.
+
+  Trois éléments sont à régler :
+
+    ONLINE      true si base distante
+                false si base locale
+
+    REQUEST     {String} La requête SQL à jouer
+
+    VALUES      {Array} liste des valeurs pour la requête préparée
+                ou {Nil}
+
+=end
 ONLINE = true
+
+# REQUEST = "SELECT created_at, updated_at FROM `users` LIMIT 1"
+# MyDB.DBNAME = "icare_modules"
+REQUEST = <<-SQL
+SELECT id, pseudo, mail, options FROM users WHERE pseudo LIKE "% (SUPP)"
+SQL
+# UPDATE icmodules SET pauses = ? WHERE id = 8
+
+VALUES = nil
+# VALUES = [{start:1442686770 , end: nil}].to_json
+
+# La procédure à exécuter après, sur chaque rangée récoltée
+# AFTER_PROC = Proc.new do |du|
+#   puts "pseudo avant : #{du[:pseudo]}"
+#   new_pseudo = du[:pseudo].sub(/ \(SUPP\)/,'').strip
+#   puts "pseudo après : #{new_pseudo.inspect}"
+#   db_exec("UPDATE users SET pseudo = ? WHERE id = ?", [new_pseudo, du[:id]])
+# end
+
+# ---------------------------------------------------------------------
+#
+#   NE RIEN TOUCHER CI-DESSOUS
+#
+# ---------------------------------------------------------------------
+
 require_relative 'required'
 
 puts "ONLINE = #{ONLINE.inspect}"
@@ -12,23 +52,7 @@ else
   # MyDB.DBNAME = 'icare'
 end
 
-# req = "SELECT created_at, updated_at FROM `users` LIMIT 1"
-# MyDB.DBNAME = "icare_modules"
-req = <<-SQL
-select id, pauses from icmodules where pauses is not null;
-SQL
-# UPDATE icmodules SET pauses = ? WHERE id = 8
-# VALUES = [{start:1442686770 , end: nil}].to_json
-
-=begin
-EXCEPT
-SELECT concurrent_id
-FROM concurrents_per_concours
-WHERE annee = 2021
-
-=end
-
-# req = <<-SQL
+# REQUEST = <<-SQL
 # SELECT
 #   doc.id, icet.id AS icetape, doc.icetape_id,
 #   abset.id AS absetape, absmod.id AS absmodule,
@@ -42,7 +66,7 @@ WHERE annee = 2021
 #   LIMIT 20;
 # SQL
 
-# req = <<-SQL
+# REQUEST = <<-SQL
 # SELECT
 #   icdocument_id,
 #   SUM(cote_original) AS pertinence_original,
@@ -51,7 +75,7 @@ WHERE annee = 2021
 #   GROUP BY icdocument_id
 # SQL
 
-# req = <<-SQL
+# REQUEST = <<-SQL
 # SELECT
 #   lect.icdocument_id,
 #   AVG(lect.cote_original) + AVG(lect.cote_comments) AS pertinence
@@ -61,7 +85,7 @@ WHERE annee = 2021
 #   ORDER BY pertinence DESC
 # SQL
 
-# req = <<-SQL
+# REQUEST = <<-SQL
 # SELECT
 #   doc.id, doc.original_name, doc.user_id, doc.options,
 #   doc.updated_at, doc.time_original, doc.time_comments,
@@ -81,7 +105,7 @@ WHERE annee = 2021
 
 # # Pour relever les discussions
 # user_id = 1
-# req = <<-SQL
+# REQUEST = <<-SQL
 # SELECT
 #   *
 #   FROM `frigo_users` AS fu
@@ -90,12 +114,12 @@ WHERE annee = 2021
 #   WHERE fu.user_id = %i
 #   ORDER BY dis.created_at DESC
 # SQL
-# req = req % [user_id]
-# puts "REQUEST: #{req}"
+# REQUEST = REQUEST % [user_id]
+# puts "REQUEST: #{REQUEST}"
 
 # # Pour relever tous les participants à une discussion
 # discussion_id = 3
-# req = <<-SQL
+# REQUEST = <<-SQL
 # SELECT
 #   dis.id AS discussion_id, u.pseudo AS owner_pseudo
 #   FROM `frigo_discussions` AS dis
@@ -104,11 +128,11 @@ WHERE annee = 2021
 #   WHERE dis.id = %i
 #   ORDER BY dis.created_at DESC
 # SQL
-# req = req % [discussion_id]
-# puts "REQUEST: #{req}"
+# REQUEST = REQUEST % [discussion_id]
+# puts "REQUEST: #{REQUEST}"
 
 # user_id = 1
-# req = <<-SQL
+# REQUEST = <<-SQL
 # SELECT
 #     COUNT(mes.id)
 #   FROM `frigo_messages` AS mes
@@ -120,7 +144,7 @@ WHERE annee = 2021
 
 # uid = 11 # Élie
 # disid = 2
-# req = <<-SQL.freeze
+# REQUEST = <<-SQL.freeze
 # SELECT COUNT(fm.id)
 #   FROM `frigo_messages` AS fm
 #   INNER JOIN `frigo_users` AS fu  ON fu.user_id = fm.user_id
@@ -134,7 +158,7 @@ WHERE annee = 2021
 # SQL
 
 # users_ids = '1, 11, 12'
-# req = <<-SQL.freeze
+# REQUEST = <<-SQL.freeze
 # SELECT COUNT(*)
 #   FROM frigo_discussions AS fd
 #   INNER JOIN frigo_users AS fu ON fu.discussion_id = fd.id
@@ -143,13 +167,19 @@ WHERE annee = 2021
 # SQL
 
 
-if defined?(VALUES) && not(VALUES.empty?)
-  res = db_exec(req, VALUES)
+if defined?(VALUES) && not(VALUES.nil? || VALUES.empty?)
+  res = db_exec(REQUEST, VALUES)
 else
-  res = db_exec(req)
+  res = db_exec(REQUEST)
 end
-# puts "db_exec(req): #{res.inspect}"
+# puts "db_exec(REQUEST): #{res.inspect}"
 res&.each do |res|
   puts res.inspect
 end
-puts "ERREUR MYSQL: #{MyDB.error.inspect}" if MyDB.error
+# puts "ERREUR MYSQL: #{MyDB.error.inspect}" if MyDB.error
+
+if defined?(AFTER_PROC) && not(AFTER_PROC.nil?)
+  res&.each do |res|
+    AFTER_PROC.call(res)
+  end
+end

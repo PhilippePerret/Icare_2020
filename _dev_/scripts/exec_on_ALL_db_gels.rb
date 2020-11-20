@@ -7,7 +7,7 @@
 
 # Le traitement qu'il faut appliquer À TOUS LES GELS des tests
 DB_REQUEST = <<-SQL.strip
-ALTER TABLE concours CHANGE `step` `phase` INTEGER(1) NOT NULL DEFAULT 0;
+DROP TABLE IF EXISTS mini_faq;
 SQL
 DB_VALUES = nil
 
