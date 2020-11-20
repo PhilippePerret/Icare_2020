@@ -1,14 +1,26 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 =begin
-  Pour effectuer des réparations rapides sur la base de données distantes.
+  Pour afficher de façon intelligente (*) les données de la base distante.
 
+  (*) Les dates sont humanisées, les ID de users remplacés par leur pseudo,
+      etc.
+
+  Jouer plutôt le scrit dans le Terminal pour un affichage parfait.
+  
 =end
+
+# La requête à exécuter pour récupérer les données distantes.
+REQUEST = <<-SQL
+SELECT id, pseudo, mail FROM users WHERE mail = 'benoitlemeunier@hotmail.fr'
+SQL
+
+
 # Les options
 options = {
   time:     {value:true, name:"Changer les timestamp en date", dim: 't'},
   nodate:   {value:false, name:"Passer les created_at et updated_at", dim: 'n'},
-  pseudo:   {value:false, name:"Ajouter le pseudo si user_id est défini", dim: 'p'},
+  pseudo:   {value:true, name:"Ajouter le pseudo si user_id est défini", dim: 'p'},
 }
 
 ONLINE = true
@@ -16,11 +28,7 @@ require_relative './lib/required'
 MyDB.DBNAME = 'icare_db'
 MyDB.online = true
 
-request = <<-SQL
--- Ici la requête --
-SELECT id, pseudo, mail FROM users
-SQL
-result = db_exec(request)
+result = db_exec(REQUEST)
 
 
 
