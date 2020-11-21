@@ -3,7 +3,7 @@
 =begin
   Test du passage à la phase 3 du concours (donc la phase de lancement)
 =end
-require_relative './_required'
+require_relative '../_required'
 
 feature "Phase 3 du concours" do
 

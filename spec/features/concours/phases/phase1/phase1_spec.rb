@@ -3,7 +3,7 @@
 =begin
   Test du passage à la phase 1 du concours (donc la phase de lancement)
 =end
-require_relative './_required'
+require_relative '../_required'
 feature "Phase 1 du concours" do
   before(:all) do
     degel('concours-phase-0')

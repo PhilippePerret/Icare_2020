@@ -1,6 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-require_relative './_required'
+require_relative '../_required'
 
 feature "Gestion de la non conformité d'un fichier de candidature" do
   before(:all) do
