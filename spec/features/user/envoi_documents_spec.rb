@@ -39,8 +39,25 @@ feature "Envoi des documents de travail" do
   end
 
   context 'un icarien inactif' do
+    before :all do
+      degel "real-icare"
+      @icarien = TUser.get_random(status: :inactif, femme: true)
+    end
+    let(:icarien) { @icarien }
     scenario 'ne peut pas envoyer de documents' do
-      implementer(__FILE__,__LINE__)
+      # headless false
+      icarien.rejoint_le_site
+      find('section#header').click
+      click_on('Bureau')
+      click_on('Travail courant')
+      screenshot('inactif-dans-travail-courant')
+      expect(page).not_to have_link(UI_TEXTS[:btn_remettre_travail])
+      expect(page).to have_content(/vous n’êtes pas en activité/i)
+      # Il essaie de se rendre de force sur la page d'envoi
+      goto("bureau/sender")
+      expect(page).not_to have_css('form#send-work-form')
+      expect(page).to have_message(/vous ne pouvez donc pas envoyer de documents/i)
+      expect(page).to have_route("bureau/home")
     end
   end
 

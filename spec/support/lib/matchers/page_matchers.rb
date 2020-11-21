@@ -54,7 +54,7 @@ RSpec::Matchers.define :have_message do |msg|
   match do |page|
     @errors = []
     msg || raise("Il faut fournir le message à trouver !")
-    msg = msg.gsub(/<br ?>/,"\n").strip_tags
+    msg = msg.gsub(/<br ?>/,"\n").gsub(/ /,' ').strip_tags if msg.is_a?(String)
     selector =  if page.has_css?('section#messages div.notices')
                   'section#messages div.notices'
                 elsif page.has_css?('section#flash div.message')
@@ -65,7 +65,7 @@ RSpec::Matchers.define :have_message do |msg|
     # A-t-on un message dans la page ?
     if selector.nil?
       @errors << "Aucun message n'est affiché dans la page."
-    elsif not page.has_css?(selector, text: msg.gsub(/ /,' '))
+    elsif not page.has_css?(selector, text: msg)
       # Le message affiché
       actua_msg = page.all(selector).collect do |el|
         el.text

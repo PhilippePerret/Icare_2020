@@ -22,6 +22,66 @@ class << self
     end
   end #/ get
 
+  # OUT   {TUser} Un icarien ou une icarienne définie par +params+
+  # IN    {Hash} +param+ Définition de ce qu'on cherche
+  #         :real   Si true, ça doit être un "vrai" icarien, donc un icarien
+  #                 a déjà payé un module.
+  #         :sexe   'H' pour 'homme' ou 'F' pour 'femme'
+  #         :femme  Si true, une femme, sinon, un homme
+  #         :status   Le statut attendu, parmi : :actif, :inactif, :candidat
+  #                   :recu, :détruit, :en_pause.
+  #         :contact    Contactabilité de l'icarien.
+  #                     Soit false ou :none pour dire que personne ne doit
+  #                     pouvoir le contacter, soit un hash définissant chaque
+  #                     type de contact :
+  #                     {
+  #                       admin: :mail/:frigo/:both,
+  #                       icarien: idem
+  #                       world: idem
+  #                     }
+  #         :concours   Si true, l'icarien doit participer au concours.
+  #
+  BITSCONTACTVALUES = {none: 0, mail: 1, frigo:2, both: 3}
+  BITSTATUSVALUES = {actif: 2, candidat:3, inactif:4, detruit:5, recu:6, en_pause:8}
+  def get_random(params)
+    where = []
+    valus = []
+    # :real
+    where << "SUBSTRING(options,25,1) = 1" if params[:real]
+    # :sexe ou :femme
+    if params[:sexe] == 'F' || params[:femme] == true
+      where << "sexe = ?"
+      valus << 'F'
+    end
+    # :status
+    if params.key?(:status)
+      where << "SUBSTRING(options,17,1) = ?"
+      valus << BITSTATUSVALUES[params[:status]] || '0'
+    end
+    # :contact
+    if params.key?(:contact)
+      vcon = params[:contact]
+      if vcon == :none || vcon === false
+        where << "SUBSTRING(options,27,3) = '000'"
+      else
+        vbitadmin = BITSCONTACTVALUES[vcon[:admin]] || '?'
+        vbiticar  = BITSCONTACTVALUES[vcon[:icarien]] || '?'
+        vbitworld = BITSCONTACTVALUES[vcon[:world]] || '?'
+        where << "SUBSTRING(options,27,3) IS LIKE ?"
+        valus << "#{vbitadmin}#{vbiticar}#{vbitworld}"
+      end
+    end
+    res = db_exec("SELECT * FROM users WHERE #{where.join(' AND ')}", valus)
+    if res.empty?
+      raise "Impossible de trouver un user avec le filtre #{params.inspect}…"
+    else
+      TUser.instantiate(res.shuffle.shuffle.first.merge!(password: 'unmotdepasse'))
+      # Note : concernant le mot de passe, tous les icariens possède le même
+      # dans le gel real-icare ("unmotdepasse"), seul leur :salt permet de
+      # produire un mot de passe crypté différent.
+    end
+  end #/ get_random
+
   def instantiate(donnees)
     @items ||= {}
     @items_by_mail ||= {}
