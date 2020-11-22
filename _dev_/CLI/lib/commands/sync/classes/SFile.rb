@@ -72,8 +72,11 @@ def synchronize_as_lonely
   # On compare avec l'état distant
   res = JSON.parse(`#{SSH_REQUEST_FILE % {dis_path: dis_path}}`)
   self.dis_mtime = res['mtime']
-  if not out_of_date?
-    puts "√ Le fichier est à jour".vert
+  if ignored?
+    puts "🚦 Ce fichier est ignoré".bleu
+    return
+  elsif not out_of_date?
+    puts "√ Ce fichier est à jour".vert
     return
   end
   puts "🆘 Le fichier n'est pas à jour.".rouge
