@@ -73,7 +73,10 @@ class << self
       eval_file = e.path_fiche_evaluation(conc)
       if not File.exists?(eval_file)
         dossier = File.dirname(eval_file)
-        une_fiche = Dir["#{dossier}/evaluation-pres-*.json"].first
+        une_fiche = Dir["#{CONCOURS_FOLDER_FICHES_EVALUATIONS}/evaluation-pres-*.json"].shuffle.first
+        if une_fiche.nil?
+          raise "Problème… Impossible de trouve une fiche d'évaluation… Normalement, ça ne peut pas arriver…"
+        end
         FileUtils.copy(une_fiche, eval_file)
       end
     end
@@ -82,7 +85,10 @@ class << self
       eval_file = e.path_fiche_evaluation_prix(conc)
       if not File.exists?(eval_file)
         dossier = File.dirname(eval_file)
-        une_fiche = Dir["#{dossier}/evaluation-prix-*.json"].first
+        une_fiche = Dir["#{CONCOURS_FOLDER_FICHES_EVALUATIONS}/evaluation-prix-*.json"].first
+        if une_fiche.nil?
+          raise "Problème… Impossible de trouve une fiche d'évaluation… Normalement, ça ne peut pas arriver…"
+        end
         FileUtils.copy(une_fiche,eval_file)
       end
     end
