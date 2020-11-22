@@ -54,8 +54,9 @@ Ch<%=fem(:ere)%> <%= patronyme.patronimize %>,
   <% end
   %><span> aujourd’hui en lice contre </span><span style="font-weight:bold;"><%= Concurrent.count - 1 %> autres concurrents</span> (*).<br/><span style="font-size:0.8em;">(*) Mais attention : beaucoup de concurrents s’inscrivent au tout dernier moment.</span></p>
 
-
-<p style="font-weight:bold;margin-top:50px;">ÉCHÉANCIER</p>
+<%
+if Cronjob.current_time.day < 8 %>
+  <p style="font-weight:bold;margin-top:50px;">ÉCHÉANCIER</p>
 <table style="font-size:0.9em;" border="1" cellpadding="8">
   <tr>
     <td>Démarrage du concours</td><td>le <%= formate_date(CONCOURS.date_lancement) %>.</td>
@@ -76,6 +77,9 @@ Ch<%=fem(:ere)%> <%= patronyme.patronimize %>,
     <td>Palmarès final</td><td>le <%= formate_date(CONCOURS.date_palmares) %> environ.</td>
   </tr>
 </table>
+<%
+end #/ fin de si on est la première semaine du mois
+%>
 
 <p style="font-size:0.85em;">Rappel : si vous ne voulez plus recevoir ces mails d'information, modifiez vos réglages dans votre <%= Tag.link(route:"concours/espace_concurrent", full:true, text:"espace personnel") %> dans la section “Concours” de l'atelier.</p>
 
