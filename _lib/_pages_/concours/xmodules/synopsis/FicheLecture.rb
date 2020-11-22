@@ -48,7 +48,7 @@ def bind; binding() end
 # DO    Produit le fichier HTML de la fiche de lecture (ou peut-être aussi pdf)
 def export
   log("---> Export fiche de lecture de “#{synopsis.titre}”")
-  res = `/usr/local/bin/wkhtmltopdf "#{App::URL}/concours/fiche_lecture?cid=#{synopsis.concurrent_id}&an=#{Concours.current.annee}" "#{pdf_file_path}" 2>&1`
+  res = `/usr/local/bin/wkhtmltopdf "#{App::URL}/concours/fiches_lecture?cid=#{synopsis.concurrent_id}&an=#{Concours.current.annee}" "#{pdf_file_path}" 2>&1`
   log("     Res: #{res.inspect}")
 end #/ export
 def pdf_file_path

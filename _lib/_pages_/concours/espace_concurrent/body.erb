@@ -4,7 +4,43 @@
 <div class="right">
   <%= Tag.link(text:"Se déconnecter", route:"#{route}?op=logout") %>
 </div>
-<p><strong><%= concurrent.pseudo.patronimize %></strong>, bienvenue dans votre espace du <strong>Concours de Synopsis de l’atelier Icare</strong>. Retrouvez dans cette partie les informations sur vos participations ainsi que des informations sur le concours actuel.<%=
+
+
+<%
+# ---------------------------------------------------------------------
+#
+#   ENCART PROBLÈME AVEC CONCURRENTS
+#
+# ---------------------------------------------------------------------
+
+if concurrent.mail == "gaetan.deves@hotmail.fr"
+%>
+<div class="border big air mb3 mt3" style="background-color:red;color:white;">
+Bonjour Gaetan. Nous ne parvenons pas à vous envoyer de mails… Soit votre boite
+est pleine, soit vous avez un autre problème. Merci de le résoudre. Dans le cas
+contraire, nous ne pourrions pas vous attribuer de prix le cas échéant…
+<div class="small mt2">Nous vous signalons d'autre part que votre fichier de candidature n'est
+  pas conforme et qu'il convient de le corriger pour participer. Merci de
+  <a href="mailto:concours@atelier-icare.net" style="color:inherit;">prendre contact avec
+  l'administration</a> pour avoir les détails ou de consulter le règlement.</div>
+</div>
+<%
+end # si c'est gaetan deves
+%>
+<%
+# ---------------------------------------------------------------------
+#
+#   DÉBUT NORMAL DE LA PAGE
+#
+# ---------------------------------------------------------------------
+%>
+<p>
+  <strong><%= concurrent.pseudo.patronimize %></strong>, bienvenue dans votre espace du <strong>Concours de Synopsis de l’atelier Icare</strong>. <%
+  if Concours.current.started? %>
+    <span>Retrouvez dans cette partie les informations sur vos participations ainsi que des informations sur le concours actuel.</span><%
+  else %>
+    <span>En attendant le démarrage du prochain concours, retrouvez dans cette partie les informations sur vos participations précédentes.</span><%
+  end %><%=
   if concurrent.current?
     if concurrent.dossier_transmis? || not(concours.phase2?)
       ""
@@ -167,22 +203,28 @@ end # /si le concours est démarré
 
 # ---------------------------------------------------------------------
 #
-# Informations sur le concurrent et ses participations
+# Informations sur le concurrent et ses participations précédentes
+# Contient aussi un lien vers ses fiches (if any)
 #
 # ---------------------------------------------------------------------
 %>
 <h3>Vos participations aux concours de l’atelier Icare</h3>
-<section id="concours-historique">
-  <% if concurrent.all_concours.count == 1 %>
-    <p>C'est votre première participation à ce concours. Bonne chance à vous !</p>
-  <% else %>
+<section id="concours-historique"><%
+  if concurrent.current? && concurrent.all_concours.count == 1 %>
+    <p>C'est votre première participation à ce concours. Bonne chance à vous !</p><%
+  else %>
     <div class="italic">Nombre de participations : <%= concurrent.all_concours.count %></div>
-    <ul>
-      <% concurrent.all_concours.each do |dcon| %>
-        <li><%= "Session #{dcon[:annee]} (thème “#{dcon[:theme]}” — #{dcon[:prix]})" %></li>
-      <% end %>
-    </ul>
-  <% end %>
+    <div class="right"><%=
+      Tag.link(text:UI_TEXTS[:btn_vers_fiches_lecture], route:"concours/fiches_lecture?cid=#{concurrent.id}") %>
+    </div>
+    <ul><%
+      concurrent.all_concours.each do |dcon| %>
+        <li><%=
+          "Session #{dcon[:annee]} (thème “#{dcon[:theme]}” — #{dcon[:prix]})" %>
+        </li><%
+      end %>
+    </ul><%
+  end %>
 </section>
 
 <%

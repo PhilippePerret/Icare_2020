@@ -2,14 +2,14 @@
 # frozen_string_literal: true
 class HTML
   def titre
-    "Votre fiche de lecture"
+    "Vos fiches de lecture"
   end #/titre
 
   # Code à exécuter avant la construction de la page
   def exec
     add_css('./_lib/_pages_/concours/evaluation/css/fiche_lecture.css')
     require_xmodule('synopsis')
-    try_to_reconnect_visitor
+    try_to_reconnect_visitor(required = true)
   end # /exec
 
   # Fabrication du body
@@ -28,4 +28,20 @@ class HTML
       "anonyme"
     end
   end #/ designation_visiteur_courant
+
+  def code_css_fiche_lecture
+    "<style media=\"screen\" type=\"text/css\">#{css_fiche_lecture}</style>"
+  end #/ code_css_fiche_lecture
+
+  # OUT   Code CSS qu'il faut ajouter à la page quand c'est une seule
+  #       fiche de lecture qui est affichée.
+  def css_fiche_lecture
+    <<-CSS
+* {color:black!important}
+@media print {section#header {display:none;}}
+section#header,section#footer,h2.page-title,.noprint{display:none}
+.header.hidden,.detail.hidden{display:block!important}
+div#lien_revenir{display:normal}
+    CSS
+  end #/ css_fiche_lecture
 end #/HTML

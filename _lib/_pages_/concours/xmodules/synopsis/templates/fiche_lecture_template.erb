@@ -8,7 +8,7 @@
   </div>
   <div class="bande-buttons right noprint">
     <%= Tag.div(class:'fleft small', text:'(cliquer sur le titre pour ouvrir/fermer la fiche)') %>
-    <%= Tag.link(class:"small", text:'Afficher', target: :blank, route:"concours/fiche_lecture?cid=#{synopsis.concurrent.id}&an=#{annee_edition}") %>
+    <%= Tag.link(class:"small", text:'Afficher', target: :blank, route:"concours/fiches_lecture?cid=#{synopsis.concurrent.id}&an=#{annee_edition}") %>
   </div>
   <div class="infos-projet">
     <div class="projet-titre">

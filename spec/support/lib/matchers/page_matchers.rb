@@ -4,6 +4,16 @@
   Matchers de page (Capybara::Session)
 =end
 
+# ---------------------------------------------------------------------
+#
+#   Avant les matchers proprement dits, quelques méthodes qui
+#   permettent de récupérer des informations de la page courante,
+#   par exemple le titre (title_of_page) ou la route (route_of_page)
+#   Par convention, toutes ces méthodes commencent par le nom de la
+#   propriété demandée et se terminent par 'of_page' (au mépris des
+#   règles de l'anglais)
+#
+# ---------------------------------------------------------------------
 # Retourne le titre de la page courante
 def title_of_page
   "“" + if page.has_css?('h2.page-title')
@@ -13,6 +23,19 @@ def title_of_page
   end + "”"
 end #/ title_of_page
 
+def route_of_page
+  if page.current_url == "about:blank"
+    return nil
+  end
+  parsed = URI.parse(page.current_url)
+  parsed.path.sub(/\/AlwaysData\/Icare_2020\//,'')
+end #/ route_of_page
+
+# ---------------------------------------------------------------------
+#
+#   Les matchers proprement dits.
+#
+# ---------------------------------------------------------------------
 
 RSpec::Matchers.define :have_no_erreur do
   match do |page|

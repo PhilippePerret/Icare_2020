@@ -27,14 +27,26 @@ login_form.submit_button = UI_TEXTS[:concours_bouton_sidentifier]
 <div class="right mt4 small">
   <%= Tag.link(text:"S’identifier comme membre du jury", route:"concours/evaluation?view=login") %>
 </div>
+
 <%
-# Si on est OFFLINE, je présente des identifications possibles en fonction
-# des utilisateurs de la base
+# En offline, j'indique les évaluateurs pour me connecter sous un de
+# leur nom
+
 if OFFLINE
+  require "#{DATA_FOLDER}/secret/concours"
 %>
-<pre>
-  <% db_exec("SELECT concurrent_id, mail FROM #{DBTBL_CONCURRENTS}").each do |dc| %>
-    <%= dc[:mail] %> <%= dc[:concurrent_id] %>
-  <% end %>
-</pre>
+<div>
+  <legend>Se connecter en tant que :</legend>
+    <script type="text/javascript">
+    // Script pour simplifier l'auto connection en tant que concurrent
+    function ConnectConcurrent(data){
+      document.querySelector('*[name="p_mail"]').value = data.mail;
+      document.querySelector('*[name="p_concurrent_id"]').value = data.id;
+      document.querySelector("form#concours-login-form").submit();
+    }
+    </script>
+    <% db_exec("SELECT patronyme AS pseudo, concurrent_id AS id, mail FROM #{DBTBL_CONCURRENTS}").each do |de| %>
+      <a class="block" href="javascript:ConnectConcurrent({mail:'<%= de[:mail] %>', id:'<%=de[:id]%>'})"><%= de[:pseudo] %></a>
+    <% end %>
+</div>
 <% end %>

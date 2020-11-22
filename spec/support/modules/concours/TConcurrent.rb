@@ -150,6 +150,11 @@ end #/ find
 #                     Si true, un concurrent avec un fichier conforme.
 #                 :current
 #                     Un concurrent courant
+#                 :ancien
+#                     Si true, le concurrent doit déjà avoir des participations
+#                     aux concours précédent (si :current est explicitement
+#                     false, le concurrent ne doit pas être inscrit au
+#                     concours courant)
 #                 :preselected
 #                     Si true, un présélectionné
 #                     Si false, un non présélectionné (avec fichier conforme)
@@ -220,7 +225,14 @@ end #/ jury
     end
     case options[:current]
     when TrueClass  then where << "cpc.annee = #{ANNEE_CONCOURS_COURANTE}"
-    when FalseClass then
+    end
+    case options[:preselected]
+    when TrueClass  then where << "SUBSTRING(cpc.specs,3,1) = 1"
+    when FalseClass then where << "SUBSTRING(cpc.specs,3,1) = 0"
+    end
+
+    # Dans le cas où il faut trouver un concurrent ancien
+    if options[:current] === false || options[:ancien]
       intermediaire_req = <<-SQL
 SELECT concurrent_id FROM concurrents_per_concours
 WHERE concurrent_id  NOT IN (SELECT concurrent_id FROM concurrents_per_concours
@@ -232,11 +244,6 @@ WHERE annee = ?)
       where << "cpc.concurrent_id = ?"
       valus << concurrent_id_hors_concours
     end
-    case options[:preselected]
-    when TrueClass  then where << "SUBSTRING(cpc.specs,3,1) = 1"
-    when FalseClass then where << "SUBSTRING(cpc.specs,3,1) = 0"
-    end
-
 
     concurrents = [] # les candidats retenus
     # Liste d'instances {TConcurrent}

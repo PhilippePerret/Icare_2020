@@ -60,7 +60,11 @@ RSpec::Matchers.define :be_palmares_concours do
     if not page.has_css?('h2', text: /Lauréats du Concours de Synopsis/i)
       @errors << "la page devrait contenir le sous-titre “Lauréats du Concours de Synopsis”"
     end
-
+    actual_route = route_of_page
+    expected_route = 'concours/palmares'
+    if not actual_route == expected_route
+      @errors << "la route de la page devrait être '#{expected_route}', or c'est '#{actual_route}'"
+    end
     @errors.empty?
   end
   description do
@@ -135,7 +139,7 @@ RSpec::Matchers.define :be_fiches_synopsis do
   end
 end
 
-RSpec::Matchers.define :be_fiches_lecture do
+RSpec::Matchers.define :be_fiches_lecture_jury do
   match do |page|
     page.has_css?("h2.page-title", text: "Fiches de lecture")
   end
@@ -144,6 +148,29 @@ RSpec::Matchers.define :be_fiches_lecture do
   end
   failure_message do
     "Ce n'est pas la page des fiches de lecture."
+  end
+end
+
+RSpec::Matchers.define :be_fiches_lecture_concurrent do
+  match do |page|
+    @errors = []
+    expected_titre = "Vos fiches de lecture"
+    actual_titre = title_of_page
+    if not page.has_css?("h2.page-title", text: expected_titre)
+      @errors << "la page ne porte pas le titre “#{expected_titre}” (son titre est #{actual_titre})"
+    end
+    expected_route = "concours/fiches_lecture"
+    actual_route = route_of_page.freeze
+    if not(actual_route == expected_route)
+      @errors << "la route de la page devrait être '#{expected_route}', or c'est '#{actual_route}'."
+    end
+    return @errors.empty?
+  end
+  description do
+    "C'est bien la page des fiches de lecture du concurrent"
+  end
+  failure_message do
+    "Ce n'est pas la page des fiches de lecture du concurrent : #{@errors.join(', ')}."
   end
 end
 

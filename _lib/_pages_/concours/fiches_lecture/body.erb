@@ -1,0 +1,25 @@
+<% Synopsis.evaluate_all_synopsis if not Synopsis.evaluated? %>
+
+<%
+# ---------------------------------------------------------------------
+#
+#   Si un synopsis est désigné, i.e. paramètres 'cid' (ID du concurrent)
+#   et 'an' (année du concours à voir, pas forcément courant)
+#
+# ---------------------------------------------------------------------
+if param(:cid) && param(:an) %><%=
+  code_css_fiche_lecture
+  %><%=
+  syno = Synopsis.get(param(:cid), param(:an))
+  log("Clés de catégories : #{syno.evaluation.owners.keys}")
+  log("syno catégories : #{syno.evaluation.owners.inspect}")
+  syno.fiche_lecture.out %><%
+else %>
+  <span>Ici, il faut afficher la liste des concours auquels a participé le concurrent avec comme titre "Fiche de lecture du concours [année]".</span>
+  <%
+end %>
+
+<div id="lien_revenir" class="right" style="display:none;">
+  <%= Tag.lien(text: "☞ Liste des fiches de lecture", route:"concours/fiches_lecture?cid=#{param(:cid)}") %>
+</div>
+<div class="mt3"><span class="small">Consultation : <%= designation_visiteur_courant %></span></div>

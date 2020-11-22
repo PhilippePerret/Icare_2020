@@ -7,7 +7,7 @@
 RSpec.shared_examples "un visiteur renvoyé à l’identification" do
   it 'est renvoyé à l’identification' do
     goto("concours/evaluation?view=fiches_lecture")
-    expect(page).not_to be_fiches_lecture
+    expect(page).not_to be_fiches_lecture_jury
     expect(page).to be_identification_evaluator
   end
 end
@@ -15,7 +15,7 @@ RSpec.shared_examples "un juré renvoyé à l'accueil du jury" do |visitor|
   it 'est renvoyé à l’accueil du jury' do
     visitor.rejoint_le_concours if visitor.is_a?(TEvaluator)
     goto("concours/evaluation?view=fiches_lecture")
-    expect(page).not_to be_fiches_lecture
+    expect(page).not_to be_fiches_lecture_jury
     expect(page).to be_accueil_jury
     visitor.se_deconnecte if visitor.is_a?(TEvaluator)
     screenshot("deconnexion-membre-jury")
@@ -26,7 +26,7 @@ RSpec.shared_examples "un juré renvoyé à la liste des synopsis" do |visitor|
   it 'confirmé' do
     visitor.rejoint_le_concours if visitor.is_a?(TEvaluator)
     goto("concours/evaluation?view=fiches_lecture")
-    expect(page).not_to be_fiches_lecture
+    expect(page).not_to be_fiches_lecture_jury
     expect(page).to be_fiches_synopsis
     expect(page).to have_message("La liste des fiches de lecture n'est pas encore consultable")
     visitor.se_deconnecte if visitor.is_a?(TEvaluator)
@@ -39,7 +39,7 @@ RSpec.shared_examples "un juré autorisé à voir les fiches de lecture" do |vis
     is_jure = visitor.is_a?(TEvaluator)
     visitor.rejoint_le_concours if is_jure
     goto("concours/evaluation?view=fiches_lecture&ks=note&ss=desc")
-    expect(page).to be_fiches_lecture
+    expect(page).to be_fiches_lecture_jury
 
     # Fonctionnement : on prend les fiches qui sont affichées, dans leur ordre
     actuals = page.all("div#fiches-lecture div.fiche-lecture").collect do |div|

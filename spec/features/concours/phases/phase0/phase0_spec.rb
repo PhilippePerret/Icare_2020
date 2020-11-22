@@ -8,14 +8,14 @@ require_relative "../_required"
 
 feature "Concours de Synopsis - PHASE 0" do
   before :all do
+    require './_lib/_pages_/concours/espace_concurrent/constants'
     degel('concours-phase-0')
-    # headless
+    headless
   end
   context 'un visiteur quelconque' do
     it 'trouve une page d’accueil minimale valide' do
       goto("concours")
       screenshot("accueil-concours-phase0-visitor")
-      sleep 5
       expect(page).to be_accueil_concours
       expect(page).to have_content("Le prochain concours de synopsis de l'atelier Icare n'est pas encore lancé.")
       expect(page).to have_link("vous inscrire")
@@ -48,7 +48,7 @@ feature "Concours de Synopsis - PHASE 0" do
 
   context 'un ancien concurrent' do
     before :all do
-      @conc = TConcurrent.get_random(current: false)
+      @conc = TConcurrent.get_random(current: false, ancien: true)
     end
     let(:conc) { @conc }
 
@@ -64,7 +64,7 @@ feature "Concours de Synopsis - PHASE 0" do
       expect(page).to be_accueil_concours
     end
 
-    it 'peut rejoindre son espace personnel', only:true do
+    it 'peut rejoindre son espace personnel' do
       goto("concours")
       expect(page).to have_link("vous identifier")
       click_on("vous identifier")
@@ -83,7 +83,7 @@ feature "Concours de Synopsis - PHASE 0" do
       expect(page).to be_espace_personnel
     end
 
-    it 'trouve un espace personnel conforme à la phase courante', only:true do
+    it 'trouve un espace personnel conforme à la phase courante' do
       conc.rejoint_le_concours
       conc.click_on("rejoindre votre espace personnel")
       expect(page).to be_espace_personnel
@@ -92,10 +92,21 @@ feature "Concours de Synopsis - PHASE 0" do
       expect(page).to have_css("fieldset#concours-preferences")
       expect(page).to have_css("section#concours-historique")
       expect(page).to have_css("section#concours-destruction")
+      expect(page).to have_content("En attendant le démarrage du prochain concours")
       # Les différences
       expect(page).not_to have_css("fieldset#concours-informations")
       expect(page).not_to have_link("TÉLÉCHARGER LA FICHE DE LECTURE")
       expect(page).not_to have_css("fieldset#concours-fichier-candidature")
+      expect(page).not_to have_content("des informations sur le concours actuel")
+    end
+
+    it 'peut rejoindre ses fiches de lecture' do
+      conc.rejoint_le_concours
+      conc.click_on("rejoindre votre espace personnel")
+      expect(page).to be_espace_personnel
+      expect(page).to have_link(UI_TEXTS[:btn_vers_fiches_lecture])
+      conc.click_on(UI_TEXTS[:btn_vers_fiches_lecture])
+      expect(page).to be_fiches_lecture_concurrent
     end
   end
 
