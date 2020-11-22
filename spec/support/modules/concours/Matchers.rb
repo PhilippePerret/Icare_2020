@@ -15,28 +15,98 @@ RSpec::Matchers.define :be_accueil_concours do
   end
 end
 
+RSpec::Matchers.define :be_inscription_concours do
+  match do |page|
+    @errors = []
+    @titre = "Inscription au concours"
+    unless page.has_css?("h2.page-title", text: @titre)
+      @errors << "n'a pas le bon titre (“#{@titre}”). Son titre est #{title_of_page}"
+    end
+    unless page.has_css?("form#concours-signup-form")
+      @errors << "ne contient pas le formulaire d'inscription"
+    end
+    return @errors.empty?
+  end
+  description do
+    "C'est bien la page d'inscription au concours"
+  end
+  failure_message do
+    "Ce n'est pas la page d'inscription pour les raisons suivantes : #{@errors.join(', ')}."
+  end
+end
+
 RSpec::Matchers.define :be_accueil_jury do
   match do |page|
-    page.has_css?("h2.page-title", text: "Accueil du jury du concours")
+    if not page.has_css?("h2.page-title", text: "Accueil du jury du concours")
+      @errors << "la page n'a pas le titre “Accueil du jury du concours” (son titre est #{title_of_page})."
+    end
+
+    return @errors.empty?
   end
   description do
     "C'est bien la page d'accueil du concours"
   end
   failure_message do
-    "Ce n'est pas la page d'accueil du concours, ou alors elle n'est pas conforme."
+    "Ce n'est pas la page d'accueil du concours, ou alors elle n'est pas conforme : #{@errors.join(', ')}"
   end
 end
 
-RSpec::Matchers.define :be_identification do
+RSpec::Matchers.define :be_palmares_concours do
   match do |page|
-    page.has_css?("h2.page-title", text: "Identification") &&
-    page.has_css?("form#concours-login-form")
+    @errors = []
+    if not page.has_css?("h2.page-title", text: "Palmarès du concours de synopsis")
+      @errors << "la page devrait avoir le titre “Palmarès du concours de synopsis” (son titre est #{title_of_page})"
+    end
+    if not page.has_css?('h2', text: /Lauréats du Concours de Synopsis/i)
+      @errors << "la page devrait contenir le sous-titre “Lauréats du Concours de Synopsis”"
+    end
+
+    @errors.empty?
+  end
+  description do
+    "C'est bien la page de palmarès du concours"
+  end
+  failure_message do
+    "Ce n'est pas la page de palmarès du concours : #{@errors.join(', ')}."
+  end
+end
+
+RSpec::Matchers.define :be_espace_personnel do
+  match do |page|
+    @errors = []
+    if not page.has_css?("h2.page-title", text: "Espace personnel")
+      @errors << "la page devrait porter le titre “Espace personnel” (son titre est #{title_of_page})"
+    end
+    if not page.has_css?("section#concours-destruction")
+      @errors << "la page ne contient pas la section #concours-destruction"
+    end
+    return @errors.empty?
+  end
+  description do
+    "C'est bien la page de l'espace personnel du concours"
+  end
+  failure_message do
+    "Ce n'est pas la page de l'espace personnel du concours : #{@errors.join(', ')}."
+  end
+end
+
+
+RSpec::Matchers.define :be_identification_concours do
+  match do |page|
+    @errors = []
+    if not page.has_css?("h2.page-title", text: "Identification")
+      @errors << "la page n'a pas le titre “Identification” (son titre est #{title_of_page})"
+    end
+    if not page.has_css?("form#concours-login-form")
+      @errors << "le page ne possède aucun formulaire #concours-login-form"
+    end
+    return @errors.empty?
   end
   description do
     "C'est bien la page d'identification du concours"
   end
   failure_message do
-    "Ce n'est pas la page d'identification du concours, ou alors elle n'est pas conforme."
+    "Ce n'est pas la page d'identification du concours : #{@errors.join(', ')}."
   end
 end
 
@@ -107,18 +177,6 @@ RSpec::Matchers.define :be_formulaire_synopsis do |options=nil|
   end
 end
 
-RSpec::Matchers.define :be_espace_personnel do
-  match do |page|
-    page.has_css?("h2.page-title", text: "Espace personnel")
-  end
-  description do
-    "C'est bien la page de l'espace personnel du concours"
-  end
-  failure_message do
-    "Ce n'est pas la page de l'espace personnel du concours, ou alors elle n'est pas conforme."
-  end
-end
-
 RSpec::Matchers.define :be_checklist_page_for do |syno_id|
   match do |page|
     # puts "page: #{page.html}"
@@ -159,38 +217,6 @@ RSpec::Matchers.define :be_checklist_page_for do |syno_id|
   end
 end
 
-RSpec::Matchers.define :be_palmares do
-  match do |page|
-    @titre = "Résultats du concours de synopsis"
-    page.has_css?("h2.page-title", text: @titre)
-  end
-  description do
-    "C'est bien la page du palmarès du concours"
-  end
-  failure_message do
-    "Ce n'est pas la page du palmarès concours, elle devrait avoir le titre #{@titre}."
-  end
-end
-
-RSpec::Matchers.define :be_page_inscription_concours do
-  match do |page|
-    @errors = []
-    @titre = "Inscription au concours"
-    unless page.has_css?("h2.page-title", text: @titre)
-      @errors << "n'a pas le bon titre (“#{@titre}”)"
-    end
-    unless page.has_css?("form#concours-signup-form")
-      @errors << "ne contient pas le formulaire d'inscription"
-    end
-    return @errors.empty?
-  end
-  description do
-    "C'est bien la page d'inscription au concours"
-  end
-  failure_message do
-    "Ce n'est pas la page d'inscription pour les raisons suivantes : #{@errors.join(', ')}."
-  end
-end
 
 RSpec::Matchers.define :be_faq_concours do
   match do |page|

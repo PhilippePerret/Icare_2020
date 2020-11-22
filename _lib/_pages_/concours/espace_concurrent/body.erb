@@ -31,60 +31,57 @@
 # avec notamment le nombre de concurrents actuels.
 #
 # ---------------------------------------------------------------------
-%>
-<fieldset id="concours-informations">
-  <legend>Informations sur le concours en cours</legend>
-  <% if Concours.current.started? %>
-    <div class="row">
-      <span class="libelle">Année</span>
-      <span class="value bold annee-concours"><%= concours.annee %></span>
-    </div>
-    <div class="row">
-      <span class="libelle">Thème</span>
-      <span class="value bold caps theme-concours"><%= concours.theme %></span>
-    </div>
-    <div class="row">
-      <% if concours.phase1? %>
-        <span class="libelle">Échéance</span>
-        <span class="value bold echeance-concours"><%= concours.h_echeance %></span>
-      <% else %>
-        <span class="libelle">Phase</span>
-        <span class="concours-phase value bold"><%=
-          case concours.phase
-          when 2 then "Présélections"
-          when 3 then "Sélection finale"
-          else "Concours achevé"
-          end
-          %></span>
-      <% end %>
-    </div>
-    <div class="row right mt2">
-      <% if concours.phase1? %>
-        <span class="italic">Nombre de concurrents inscrits : </span>
-        <span id="nombre-concurrents">
-          <% if concours.nombre_concurrents == 0 %>
-            Vous serez le premier inscrit au concours !
-          <% else %>
-            <%= concours.nombre_concurrents.to_s.rjust(3, "0") %>
-          <% end %>
-        </span>
-      <% elsif concours.phase2?%>
-        <span class="italic">Nombre de synopsis en lice : <span id="nombre-concurrents"><%= concours.nombre_synopsis_conformes %></span></span>
-      <% elsif concours.phase3? %>
-        <span class="italic">Les 10 synopsis présélectionnés sont en phase finale.</span>
-        <div class="center"><%= PALMARES_LINK.with(text: '☞ Voir le palmarès actuel ☜') %></div>
-      <% end %>
-    </div>
-  <%
-    else # si le concours n'est pas en cours
-  %>
-    <div>
-      Le prochain concours de synopsis n'est pas encore lancé.
-    </div>
-  <% end %>
-</fieldset>
 
-<%
+if Concours.current.started? %>
+  <fieldset id="concours-informations">
+    <legend>Informations sur le concours en cours</legend>
+      <div class="row">
+        <span class="libelle">Année</span>
+        <span class="value bold annee-concours"><%= concours.annee %></span>
+      </div>
+      <div class="row">
+        <span class="libelle">Thème</span>
+        <span class="value bold caps theme-concours"><%= concours.theme %></span>
+      </div>
+      <div class="row">
+        <% if concours.phase1? %>
+          <span class="libelle">Échéance</span>
+          <span class="value bold echeance-concours"><%= concours.h_echeance %></span>
+        <% else %>
+          <span class="libelle">Phase</span>
+          <span class="concours-phase value bold"><%=
+            case concours.phase
+            when 2 then "Présélections"
+            when 3 then "Sélection finale"
+            else "Concours achevé"
+            end
+            %></span>
+        <% end %>
+      </div>
+      <div class="row right mt2">
+        <% if concours.phase1? %>
+          <span class="italic">Nombre de concurrents inscrits : </span>
+          <span id="nombre-concurrents">
+            <% if concours.nombre_concurrents == 0 %>
+              Vous serez le premier inscrit au concours !
+            <% else %>
+              <%= concours.nombre_concurrents.to_s.rjust(3, "0") %>
+            <% end %>
+          </span>
+        <% elsif concours.phase2?%>
+          <span class="italic">Nombre de synopsis en lice : <span id="nombre-concurrents"><%= concours.nombre_synopsis_conformes %></span></span>
+        <% elsif concours.phase3? %>
+          <span class="italic">Les 10 synopsis présélectionnés sont en phase finale.</span>
+          <div class="center"><%= PALMARES_LINK.with(text: '☞ Voir le palmarès actuel ☜') %></div>
+        <% end %>
+      </div>
+    </fieldset><%
+else # si le concours n'est pas en cours %>
+  <div>
+    Le prochain concours de synopsis n'est pas encore lancé.
+  </div><%
+end
+
 # ---------------------------------------------------------------------
 #
 # Le concurrent a toujours la possibilité de changer sa préférence
@@ -136,19 +133,22 @@
 # OU    Téléchargement de la fiche de lecture
 #
 # ---------------------------------------------------------------------
-%>
+
+if Concours.current.started? %>
 <fieldset id="concours-fichier-candidature">
-  <legend>Fichier de candidature</legend>
-  <% if concours.phase1? %>
-    <%= section_fichier_candidature %>
-  <% elsif concours.phase2? %>
-    <p><% if concurrent.fichier_conforme? %>
-      <span>Votre synopsis est conforme, il est en lice</span>
-    <% else %>
-      <span>Vous n'êtes pas en lice</span>
-    <% end %>
-    <span> pour la session <%= ANNEE_CONCOURS_COURANTE %></span>.</p>
-  <% elsif concours.phase3? %>
+  <legend>Fichier de candidature</legend><%
+  if concours.phase1? %><%=
+    section_fichier_candidature %><%
+  elsif concours.phase2? %>
+    <p><%
+      if concurrent.fichier_conforme? %>
+        <span>Votre synopsis est conforme, il est en lice</span><%
+      else %>
+        <span>Vous n'êtes pas en lice</span><%
+      end %>
+      <span> pour la session <%= ANNEE_CONCOURS_COURANTE %></span>.
+    </p><%
+  elsif concours.phase3? %>
     <p><%
       if not(concurrent.fichier_conforme?)
         %>Sans fichier envoyé ou conforme, vous ne pouvez pas être en lice<%
@@ -156,13 +156,15 @@
         %>Votre synopsis est en lice<%
        else
          %>Votre projet n'a pas été sélectionné. Vous n'êtes pas en lice<%
-      end
-      %><span> pour la sélection finale de la session <%=ANNEE_CONCOURS_COURANTE%> du concours.</span>
+      end %>
+      <span> pour la sélection finale de la session <%=ANNEE_CONCOURS_COURANTE%> du concours.</span>
     </p>
   <% end %>
 </fieldset>
 
 <%
+end # /si le concours est démarré
+
 # ---------------------------------------------------------------------
 #
 # Informations sur le concurrent et ses participations

@@ -43,10 +43,10 @@ Un visiteur quelconque trouve les pages suivantes :
     goto("concours/faq")
     expect(page).to be_faq_concours
     goto("concours/identification")
-    expect(page).to be_identification
+    expect(page).to be_identification_concours
     goto("concours/inscription")
-    expect(page).to be_page_inscription_concours
+    expect(page).to be_inscription_concours
     goto("concours/palmares")
-    expect(page).to be_palmares
+    expect(page).to be_palmares_concours
   end
 end

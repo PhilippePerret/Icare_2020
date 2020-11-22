@@ -14,7 +14,7 @@ class HTML
   def build_body
     phase = Concours.current.phase
     partial = case phase
-    when 0 then 'no_concours'
+    when 0 then '0_no_concours'
     when 1 then '1_en_cours'
     when 2 then '2_preselection'
     when 3 then '3_selection'

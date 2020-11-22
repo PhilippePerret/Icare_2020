@@ -3,6 +3,17 @@
 =begin
   Matchers de page (Capybara::Session)
 =end
+
+# Retourne le titre de la page courante
+def title_of_page
+  "“" + if page.has_css?('h2.page-title')
+    page.find('h2.page-title').text
+  else
+    "--- aucun ---"
+  end + "”"
+end #/ title_of_page
+
+
 RSpec::Matchers.define :have_no_erreur do
   match do |page|
     if page.has_css?('div.errors')

@@ -7,18 +7,95 @@
 require_relative "../_required"
 
 feature "Concours de Synopsis - PHASE 0" do
+  before :all do
+    degel('concours-phase-0')
+    # headless
+  end
   context 'un visiteur quelconque' do
-    pending 'trouve une page d’accueil minimale' do
-
+    it 'trouve une page d’accueil minimale valide' do
+      goto("concours")
+      screenshot("accueil-concours-phase0-visitor")
+      sleep 5
+      expect(page).to be_accueil_concours
+      expect(page).to have_content("Le prochain concours de synopsis de l'atelier Icare n'est pas encore lancé.")
+      expect(page).to have_link("vous inscrire")
     end
-    pending 'trouve une pag de palmarès minimale' do
 
+    it 'ne peut pas se rendre sur la page du palmarès' do
+      goto("concours/palmares")
+      expect(page).not_to be_palmares_concours
+      expect(page).to be_accueil_concours
+      expect(page).to have_message("Aucun concours en route. Le palmarès n'est pas consultable.")
+      expect(page).to have_link("vous inscrire")
     end
-    pending 'ne peut pas atteindre l’espace personne' do
 
+    it 'ne peut pas atteindre l’espace personnel' do
+      goto("concours/espace_concurrent")
+      expect(page).not_to be_espace_personnel
+      expect(page).to be_identification_concours
     end
-    pending 'peut tout à fait s’inscrire pour la prochaine session' do
 
+    it 'peut tout à fait s’inscrire pour la prochaine session' do
+      goto("concours")
+      expect(page).to be_accueil_concours
+      expect(page).to have_link("vous inscrire")
+      click_on("vous inscrire")
+      expect(page).to be_inscription_concours
+    end
+
+  end #/contexte : un visiteur quelconque
+
+
+  context 'un ancien concurrent' do
+    before :all do
+      @conc = TConcurrent.get_random(current: false)
+    end
+    let(:conc) { @conc }
+
+    it 'trouve une page d’accueil conforme' do
+      goto("concours")
+      expect(page).to be_accueil_concours
+      expect(page).to have_link("vous identifier")
+    end
+
+    it 'ne peut pas rejoindre la page des palmarès' do
+      goto("concours/palmares")
+      expect(page).not_to be_palmares_concours
+      expect(page).to be_accueil_concours
+    end
+
+    it 'peut rejoindre son espace personnel', only:true do
+      goto("concours")
+      expect(page).to have_link("vous identifier")
+      click_on("vous identifier")
+      expect(page).to be_identification_concours
+      within("form#concours-login-form") do
+        fill_in("p_mail", with: conc.mail)
+        fill_in("p_concurrent_id", with: conc.id)
+        click_on("S’identifier")
+      end
+      screenshot("ancien-after-identification")
+      # Avant de rejoindre son espace personnel, il passe par la
+      # demande d'inscription
+      expect(page).to have_titre("Inscription au concours")
+      expect(page).to have_link("rejoindre votre espace personnel")
+      conc.click_on("rejoindre votre espace personnel")
+      expect(page).to be_espace_personnel
+    end
+
+    it 'trouve un espace personnel conforme à la phase courante', only:true do
+      conc.rejoint_le_concours
+      conc.click_on("rejoindre votre espace personnel")
+      expect(page).to be_espace_personnel
+      expect(page).to have_link("Se déconnecter")
+      expect(page).to have_link("S’inscrire à la session")
+      expect(page).to have_css("fieldset#concours-preferences")
+      expect(page).to have_css("section#concours-historique")
+      expect(page).to have_css("section#concours-destruction")
+      # Les différences
+      expect(page).not_to have_css("fieldset#concours-informations")
+      expect(page).not_to have_link("TÉLÉCHARGER LA FICHE DE LECTURE")
+      expect(page).not_to have_css("fieldset#concours-fichier-candidature")
     end
   end
 

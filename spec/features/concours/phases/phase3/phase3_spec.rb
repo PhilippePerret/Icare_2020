@@ -105,7 +105,7 @@ feature "Phase 3 du concours" do
       # TODO La remettre plus bas quand elle sera testée
       # goto("concours/palmares")
       # screenshot("palmares-phase-3")
-      # expect(page).to be_palmares
+      # expect(page).to be_palmares_concours
       # expect(page).to have_css('h2', text: "Synopsis présélectionnés")
       # expect(page).to have_css('h2', text: "Synopsis non présélectionnés")
       # # Tous les concurrents avec un fichier doivent voir leur fiche
@@ -212,7 +212,7 @@ feature "Phase 3 du concours" do
       pitch("Le concurrent non présélectionné se rend sur la page des palmarès et trouve son synopsis en exergue.")
       conc_non_selected.click_on(BTN_VOIR_PALMARES)
       screenshot("non-selected-sur-palmares")
-      expect(page).to be_palmares
+      expect(page).to be_palmares_concours
       expect(page).to have_css("h2", text:"Synopsis présélectionnés")
       expect(page).to have_css("h2", text:"Synopsis non présélectionnés")
       expect(page).to have_css("div.fiche-lecture.current", id:"fiche-lecture-#{conc_non_selected.id}")
@@ -231,7 +231,7 @@ feature "Phase 3 du concours" do
       expect(page).to have_content("Sans fichier envoyé ou conforme, vous ne pouvez pas être en lice pour la sélection finale de la session #{ANNEE_CONCOURS_COURANTE}")
       # Le palmarès ne doit pas présenter son synopsis
       goto("concours/palmares")
-      expect(page).to be_palmares
+      expect(page).to be_palmares_concours
       expect(page).not_to have_css("div.fiche-lecture", id:"fiche-lecture-#{conc_sans_fichier.id}")
     end
 

@@ -208,7 +208,7 @@ feature "Phase 2 du concours" do
     scenario 'peut rejoindre la section des évaluations' do
       phil.rejoint_le_site
       goto("concours/evaluation")
-      expect(page).not_to be_identification
+      expect(page).not_to be_identification_concours
       expect(page).to be_fiches_synopsis
       phil.se_deconnecte
     end
