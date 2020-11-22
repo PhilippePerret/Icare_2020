@@ -42,7 +42,7 @@ end # si c'est gaetan deves
     <span>En attendant le démarrage du prochain concours, retrouvez dans cette partie les informations sur vos participations précédentes.</span><%
   end %><%=
   if concurrent.current?
-    if concurrent.dossier_transmis? || not(concours.phase2?)
+    if concurrent.cfile.transmis? || not(concours.phase2?)
       ""
     else
       " C'est ici que vous pouvez transmettre votre fichier de candidature."
@@ -173,11 +173,13 @@ end
 if Concours.current.started? %>
 <fieldset id="concours-fichier-candidature">
   <legend>Fichier de candidature</legend><%
-  if concours.phase1? %><%=
+  if not(concurrent.current?) %>
+    <p class="explication">Vous n'êtes pas en lice pour cette session du concours.</p><%
+  elsif concours.phase1? %><%=
     section_fichier_candidature %><%
   elsif concours.phase2? %>
     <p><%
-      if concurrent.fichier_conforme? %>
+      if concurrent.current? && concurrent.cfile.conforme? %>
         <span>Votre synopsis est conforme, il est en lice</span><%
       else %>
         <span>Vous n'êtes pas en lice</span><%
@@ -186,7 +188,7 @@ if Concours.current.started? %>
     </p><%
   elsif concours.phase3? %>
     <p><%
-      if not(concurrent.fichier_conforme?)
+      if not(concurrent.cfile.conforme?)
         %>Sans fichier envoyé ou conforme, vous ne pouvez pas être en lice<%
       elsif concurrent.preselected?
         %>Votre synopsis est en lice<%

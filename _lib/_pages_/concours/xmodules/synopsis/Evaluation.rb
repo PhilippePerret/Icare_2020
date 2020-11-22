@@ -112,7 +112,14 @@ def initialize(paths = nil)
 end #/ initialize
 
 def self.NOMBRE_ABSOLU_QUESTIONS
-  @nombre_absolu_questions ||= File.read(NOMBRE_QUESTIONS_PATH).to_i
+  @nombre_absolu_questions ||= begin
+    if not File.exists?(NOMBRE_QUESTIONS_PATH)
+      require_xmodule('evaluation/rebuild_checklist')
+      CheckList.remake_nombre_questions_file
+      message("J'ai dû reconstruire le fichier du nombre de questions…")
+    end
+    File.read(NOMBRE_QUESTIONS_PATH).to_i
+  end
 end #/ NOMBRE_ABSOLU_QUESTIONS
 def self.NOMBRE_ABSOLU_QUESTIONS=(val)
   @nombre_absolu_questions = val

@@ -598,3 +598,227 @@ DATABASE = icare_test
 UUID Bad uuid (inexistant)
 STOP PIRATE (Le check UUID est invalide)
 --- Pirate ---
+
+
+--- [2020-11-22 09:50:11 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 09:50:31 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 09:51:18 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator_id: 2, synopsis_id:1207202041022-2021, score:{"po"=>2, "po-fO"=>2, "po-fU"=>2, "po-adth"=>2, "po-ti"=>2, "po-ti-fO"=>2, "po-ti-fU"=>2, "po-ti-adth"=>2, "po-p"=>2, "po-p-fO"=>2, "po-p-fU"=>2, "po-p-adth"=>2, "po-p-cohe"=>2, "po-p-idio"=>2, "po-p-prota"=>2, "po-p-prota-fO"=>2, "po-p-prota-fU"=>2, "po-p-prota-adth"=>2, "po-p-prota-cohe"=>2, "po-p-prota-idio"=>2, "po-p-anta"=>2, "po-p-anta-fO"=>2, "po-p-anta-fU"=>2, "po-p-anta-adth"=>2, "po-p-anta-cohe"=>2, "po-p-anta-idio"=>2, "po-p-psec"=>2, "po-p-psec-fO"=>2, "po-p-psec-fU"=>2, "po-p-psec-adth"=>2, "po-p-psec-cohe"=>2, "po-p-psec-idio"=>2, "po-p-autp"=>2, "po-p-autp-fO"=>2, "po-p-autp-fU"=>2, "po-p-autp-adth"=>2, "po-p-autp-cohe"=>2, "po-p-autp-idio"=>2, "po-p-dials"=>2, "po-p-dials-fO"=>2, "po-p-dials-fU"=>2, "po-p-dials-adth"=>2, "po-p-dials-cohe"=>2, "po-p-dials-idio"=>2, "po-f"=>2, "po-f-fO"=>2, "po-f-fU"=>2, "po-f-adth"=>2, "po-f-pfa"=>2, "po-f-3acts"=>2, "po-f-foncact"=>2, "po-f-pvts"=>2, "po-i"=>2, "po-i-fO"=>2, "po-i-fU"=>2, "po-i-adth"=>2, "po-i-cohe"=>2, "po-i-menee"=>2, "po-i-predic"=>2, "po-i-mainint"=>2, "po-i-mainint-fO"=>2, "po-i-mainint-fU"=>2, "po-i-mainint-adth"=>2, "po-i-mainint-cohe"=>2, "po-i-mainint-menee"=>2, "po-i-mainint-predic"=>2, "po-i-secint"=>2, "po-i-secint-fO"=>2, "po-i-secint-fU"=>2, "po-i-secint-adth"=>2, "po-i-secint-cohe"=>2, "po-i-secint-menee"=>2, "po-i-secint-predic"=>2, "po-i-autint"=>2, "po-i-autint-fO"=>2, "po-i-autint-fU"=>2, "po-i-autint-adth"=>2, "po-i-autint-cohe"=>2, "po-i-autint-menee"=>2, "po-i-autint-predic"=>2, "po-t"=>2, "po-t-fO"=>2, "po-t-fU"=>2, "po-t-adth"=>2, "po-t-cla"=>2, "po-t-cohe"=>2, "po-t-antithese"=>2, "po-t-thprinc"=>2, "po-t-thprinc-fO"=>2, "po-t-thprinc-fU"=>2, "po-t-thprinc-adth"=>2, "po-t-thprinc-cla"=>2, "po-t-thprinc-cohe"=>2, "po-t-thprinc-antithese"=>2, "po-t-thsec"=>2, "po-t-thsec-fO"=>2, "po-t-thsec-fU"=>2, "po-t-thsec-adth"=>2, "po-t-thsec-cla"=>2, "po-t-thsec-cohe"=>2, "po-t-thsec-antithese"=>2, "po-r"=>2, "po-r-cla"=>2, "po-r-cla-fO"=>2, "po-r-cla-fU"=>2, "po-r-cla-adth"=>2, "po-r-cla-ortho"=>2, "po-r-cla-ortho-fO"=>5, "po-r-cla-ortho-fU"=>5, "po-r-cla-ortho-adth"=>5, "po-r-cla-style"=>2, "po-r-cla-style-fO"=>5, "po-r-cla-style-fU"=>5, "po-r-cla-style-adth"=>5, "po-r-sim"=>2, "po-r-sim-fO"=>2, "po-r-sim-fU"=>2, "po-r-sim-adth"=>2, "po-r-emo"=>2, "po-r-emo-fO"=>2, "po-r-emo-fU"=>2, "po-r-emo-adth"=>2}
+Résultat de l'évaluation : #<Evaluation:0x00007f8231070840 @score_paths=["/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/data/concours/1207202041022/1207202041022-2021/evaluation-pres-2.json"], @nombre_scores=1, @owners={"po"=>{:total=>192.6, :totmax=>454.5, :nombre=>122, :notes=>[2.0, 1.8, 1.8, 1.8, 1.8, 1.6, 1.6, 1.6, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4], :note=>8.5}, "fO"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "fU"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "adth"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "ti"=>{:total=>6.6, :totmax=>16.5, :nombre=>4, :notes=>[1.8, 1.6, 1.6, 1.6], :note=>8.0}, "p"=>{:total=>52.8, :totmax=>132.0, :nombre=>36, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "cohe"=>{:total=>18.8, :totmax=>47.0, :nombre=>13, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4], :note=>8.0}, "idio"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "prota"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "anta"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "psec"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "autp"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "dials"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "f"=>{:total=>13.0, :totmax=>32.5, :nombre=>8, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6], :note=>8.0}, "pfa"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "3acts"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "foncact"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "pvts"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "i"=>{:total=>41.4, :totmax=>103.5, :nombre=>28, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "menee"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "predic"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "mainint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "secint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "autint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "t"=>{:total=>31.4, :totmax=>78.5, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "cla"=>{:total=>31.0, :totmax=>50.5, :nombre=>15, :notes=>[1.6, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0], :note=>12.3}, "antithese"=>{:total=>4.4, :totmax=>11.0, :nombre=>3, :notes=>[1.6, 1.4, 1.4], :note=>8.0}, "thprinc"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "thsec"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "r"=>{:total=>40.0, :totmax=>73.0, :nombre=>21, :notes=>[1.8, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4], :note=>11.0}, "ortho"=>{:total=>10.4, :totmax=>12.5, :nombre=>4, :notes=>[1.4, 3.0, 3.0, 3.0], :note=>16.6}, "style"=>{:total=>10.4, :totmax=>12.5, :nombre=>4, :notes=>[1.4, 3.0, 3.0, 3.0], :note=>16.6}, "sim"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "emo"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}}, @sum_note=8.5, @sum_note_abs=8.5, @sum_pourcentage=100.0, @sum_nombre_questions=122, @sum_nombre_reponses=122, @sum_nombre_missings=0, @coef200=0.04400440044004401, @coefa200=0.04400440044004401, @note=8.5, @note_abs=8.5, @pourcentage=100.0, @nombre_questions=122.0, @nombre_reponses=122.0, @nombre_missings=0.0>
+
+
+--- [2020-11-22 09:51:26 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:13:44 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:14:10 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:16:37 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:17:05 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:18:14 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:19:13 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:20:11 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:20:58 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator_id: 4, synopsis_id:21012020191012-2021, score:{"po"=>2, "po-fO"=>2, "po-fU"=>2, "po-adth"=>2, "po-ti"=>2, "po-ti-fO"=>2, "po-ti-fU"=>2, "po-ti-adth"=>2, "po-p"=>2, "po-p-fO"=>2, "po-p-fU"=>2, "po-p-adth"=>2, "po-p-cohe"=>2, "po-p-idio"=>2, "po-p-prota"=>2, "po-p-prota-fO"=>2, "po-p-prota-fU"=>2, "po-p-prota-adth"=>2, "po-p-prota-cohe"=>2, "po-p-prota-idio"=>2, "po-p-anta"=>2, "po-p-anta-fO"=>2, "po-p-anta-fU"=>2, "po-p-anta-adth"=>2, "po-p-anta-cohe"=>2, "po-p-anta-idio"=>2, "po-p-psec"=>2, "po-p-psec-fO"=>2, "po-p-psec-fU"=>2, "po-p-psec-adth"=>2, "po-p-psec-cohe"=>2, "po-p-psec-idio"=>2, "po-p-autp"=>2, "po-p-autp-fO"=>2, "po-p-autp-fU"=>2, "po-p-autp-adth"=>2, "po-p-autp-cohe"=>2, "po-p-autp-idio"=>2, "po-p-dials"=>2, "po-p-dials-fO"=>2, "po-p-dials-fU"=>2, "po-p-dials-adth"=>2, "po-p-dials-cohe"=>2, "po-p-dials-idio"=>2, "po-f"=>2, "po-f-fO"=>2, "po-f-fU"=>2, "po-f-adth"=>2, "po-f-pfa"=>2, "po-f-3acts"=>2, "po-f-foncact"=>2, "po-f-pvts"=>2, "po-i"=>2, "po-i-fO"=>2, "po-i-fU"=>2, "po-i-adth"=>2, "po-i-cohe"=>2, "po-i-menee"=>2, "po-i-predic"=>2, "po-i-mainint"=>2, "po-i-mainint-fO"=>2, "po-i-mainint-fU"=>2, "po-i-mainint-adth"=>2, "po-i-mainint-cohe"=>2, "po-i-mainint-menee"=>2, "po-i-mainint-predic"=>2, "po-i-secint"=>2, "po-i-secint-fO"=>2, "po-i-secint-fU"=>2, "po-i-secint-adth"=>2, "po-i-secint-cohe"=>2, "po-i-secint-menee"=>2, "po-i-secint-predic"=>2, "po-i-autint"=>2, "po-i-autint-fO"=>2, "po-i-autint-fU"=>2, "po-i-autint-adth"=>2, "po-i-autint-cohe"=>2, "po-i-autint-menee"=>2, "po-i-autint-predic"=>2, "po-t"=>2, "po-t-fO"=>2, "po-t-fU"=>2, "po-t-adth"=>2, "po-t-cla"=>2, "po-t-cohe"=>2, "po-t-antithese"=>2, "po-t-thprinc"=>2, "po-t-thprinc-fO"=>2, "po-t-thprinc-fU"=>2, "po-t-thprinc-adth"=>2, "po-t-thprinc-cla"=>2, "po-t-thprinc-cohe"=>2, "po-t-thprinc-antithese"=>2, "po-t-thsec"=>2, "po-t-thsec-fO"=>2, "po-t-thsec-fU"=>2, "po-t-thsec-adth"=>2, "po-t-thsec-cla"=>2, "po-t-thsec-cohe"=>2, "po-t-thsec-antithese"=>2, "po-r"=>2, "po-r-cla"=>2, "po-r-cla-fO"=>2, "po-r-cla-fU"=>2, "po-r-cla-adth"=>2, "po-r-cla-ortho"=>2, "po-r-cla-ortho-fO"=>5, "po-r-cla-ortho-fU"=>5, "po-r-cla-ortho-adth"=>5, "po-r-cla-style"=>2, "po-r-cla-style-fO"=>5, "po-r-cla-style-fU"=>5, "po-r-cla-style-adth"=>5, "po-r-sim"=>2, "po-r-sim-fO"=>2, "po-r-sim-fU"=>2, "po-r-sim-adth"=>2, "po-r-emo"=>2, "po-r-emo-fO"=>2, "po-r-emo-fU"=>2, "po-r-emo-adth"=>2}
+Résultat de l'évaluation : #<Evaluation:0x00007f99be1ac980 @score_paths=["/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/data/concours/21012020191012/21012020191012-2021/evaluation-pres-4.json"], @nombre_scores=1, @owners={"po"=>{:total=>192.6, :totmax=>454.5, :nombre=>122, :notes=>[2.0, 1.8, 1.8, 1.8, 1.8, 1.6, 1.6, 1.6, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4], :note=>8.5}, "fO"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "fU"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "adth"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "ti"=>{:total=>6.6, :totmax=>16.5, :nombre=>4, :notes=>[1.8, 1.6, 1.6, 1.6], :note=>8.0}, "p"=>{:total=>52.8, :totmax=>132.0, :nombre=>36, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "cohe"=>{:total=>18.8, :totmax=>47.0, :nombre=>13, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4], :note=>8.0}, "idio"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "prota"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "anta"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "psec"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "autp"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "dials"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "f"=>{:total=>13.0, :totmax=>32.5, :nombre=>8, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6], :note=>8.0}, "pfa"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "3acts"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "foncact"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "pvts"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "i"=>{:total=>41.4, :totmax=>103.5, :nombre=>28, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "menee"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "predic"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "mainint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "secint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "autint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "t"=>{:total=>31.4, :totmax=>78.5, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "cla"=>{:total=>31.0, :totmax=>50.5, :nombre=>15, :notes=>[1.6, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0], :note=>12.3}, "antithese"=>{:total=>4.4, :totmax=>11.0, :nombre=>3, :notes=>[1.6, 1.4, 1.4], :note=>8.0}, "thprinc"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "thsec"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "r"=>{:total=>40.0, :totmax=>73.0, :nombre=>21, :notes=>[1.8, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4], :note=>11.0}, "ortho"=>{:total=>10.4, :totmax=>12.5, :nombre=>4, :notes=>[1.4, 3.0, 3.0, 3.0], :note=>16.6}, "style"=>{:total=>10.4, :totmax=>12.5, :nombre=>4, :notes=>[1.4, 3.0, 3.0, 3.0], :note=>16.6}, "sim"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "emo"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}}, @sum_note=8.5, @sum_note_abs=8.5, @sum_pourcentage=100.0, @sum_nombre_questions=122, @sum_nombre_reponses=122, @sum_nombre_missings=0, @coef200=0.04400440044004401, @coefa200=0.04400440044004401, @note=8.5, @note_abs=8.5, @pourcentage=100.0, @nombre_questions=122.0, @nombre_reponses=122.0, @nombre_missings=0.0>
+
+
+--- [2020-11-22 10:21:07 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:23:48 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:24:34 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator_id: 2, synopsis_id:1107202051100-2021, score:{"po"=>2, "po-fO"=>2, "po-fU"=>2, "po-adth"=>2, "po-ti"=>2, "po-ti-fO"=>2, "po-ti-fU"=>2, "po-ti-adth"=>2, "po-p"=>2, "po-p-fO"=>2, "po-p-fU"=>2, "po-p-adth"=>2, "po-p-cohe"=>2, "po-p-idio"=>2, "po-p-prota"=>2, "po-p-prota-fO"=>2, "po-p-prota-fU"=>2, "po-p-prota-adth"=>2, "po-p-prota-cohe"=>2, "po-p-prota-idio"=>2, "po-p-anta"=>2, "po-p-anta-fO"=>2, "po-p-anta-fU"=>2, "po-p-anta-adth"=>2, "po-p-anta-cohe"=>2, "po-p-anta-idio"=>2, "po-p-psec"=>2, "po-p-psec-fO"=>2, "po-p-psec-fU"=>2, "po-p-psec-adth"=>2, "po-p-psec-cohe"=>2, "po-p-psec-idio"=>2, "po-p-autp"=>2, "po-p-autp-fO"=>2, "po-p-autp-fU"=>2, "po-p-autp-adth"=>2, "po-p-autp-cohe"=>2, "po-p-autp-idio"=>2, "po-p-dials"=>2, "po-p-dials-fO"=>2, "po-p-dials-fU"=>2, "po-p-dials-adth"=>2, "po-p-dials-cohe"=>2, "po-p-dials-idio"=>2, "po-f"=>2, "po-f-fO"=>2, "po-f-fU"=>2, "po-f-adth"=>2, "po-f-pfa"=>2, "po-f-3acts"=>2, "po-f-foncact"=>2, "po-f-pvts"=>2, "po-i"=>2, "po-i-fO"=>2, "po-i-fU"=>2, "po-i-adth"=>2, "po-i-cohe"=>2, "po-i-menee"=>2, "po-i-predic"=>2, "po-i-mainint"=>2, "po-i-mainint-fO"=>2, "po-i-mainint-fU"=>2, "po-i-mainint-adth"=>2, "po-i-mainint-cohe"=>2, "po-i-mainint-menee"=>2, "po-i-mainint-predic"=>2, "po-i-secint"=>2, "po-i-secint-fO"=>2, "po-i-secint-fU"=>2, "po-i-secint-adth"=>2, "po-i-secint-cohe"=>2, "po-i-secint-menee"=>2, "po-i-secint-predic"=>2, "po-i-autint"=>2, "po-i-autint-fO"=>2, "po-i-autint-fU"=>2, "po-i-autint-adth"=>2, "po-i-autint-cohe"=>2, "po-i-autint-menee"=>2, "po-i-autint-predic"=>2, "po-t"=>2, "po-t-fO"=>2, "po-t-fU"=>2, "po-t-adth"=>2, "po-t-cla"=>2, "po-t-cohe"=>2, "po-t-antithese"=>2, "po-t-thprinc"=>2, "po-t-thprinc-fO"=>2, "po-t-thprinc-fU"=>2, "po-t-thprinc-adth"=>2, "po-t-thprinc-cla"=>2, "po-t-thprinc-cohe"=>2, "po-t-thprinc-antithese"=>2, "po-t-thsec"=>2, "po-t-thsec-fO"=>2, "po-t-thsec-fU"=>2, "po-t-thsec-adth"=>2, "po-t-thsec-cla"=>2, "po-t-thsec-cohe"=>2, "po-t-thsec-antithese"=>2, "po-r"=>2, "po-r-cla"=>2, "po-r-cla-fO"=>2, "po-r-cla-fU"=>2, "po-r-cla-adth"=>2, "po-r-cla-ortho"=>2, "po-r-cla-ortho-fO"=>5, "po-r-cla-ortho-fU"=>5, "po-r-cla-ortho-adth"=>5, "po-r-cla-style"=>2, "po-r-cla-style-fO"=>5, "po-r-cla-style-fU"=>5, "po-r-cla-style-adth"=>5, "po-r-sim"=>2, "po-r-sim-fO"=>2, "po-r-sim-fU"=>2, "po-r-sim-adth"=>2, "po-r-emo"=>2, "po-r-emo-fO"=>2, "po-r-emo-fU"=>2, "po-r-emo-adth"=>2}
+Résultat de l'évaluation : #<Evaluation:0x00007fc59e8a83b8 @score_paths=["/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/data/concours/1107202051100/1107202051100-2021/evaluation-pres-2.json"], @nombre_scores=1, @owners={"po"=>{:total=>192.6, :totmax=>454.5, :nombre=>122, :notes=>[2.0, 1.8, 1.8, 1.8, 1.8, 1.6, 1.6, 1.6, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.8, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4], :note=>8.5}, "fO"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "fU"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "adth"=>{:total=>34.0, :totmax=>76.0, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 3.0, 3.0, 1.4, 1.4], :note=>8.9}, "ti"=>{:total=>6.6, :totmax=>16.5, :nombre=>4, :notes=>[1.8, 1.6, 1.6, 1.6], :note=>8.0}, "p"=>{:total=>52.8, :totmax=>132.0, :nombre=>36, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "cohe"=>{:total=>18.8, :totmax=>47.0, :nombre=>13, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4], :note=>8.0}, "idio"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "prota"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "anta"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "psec"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "autp"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "dials"=>{:total=>8.6, :totmax=>21.5, :nombre=>6, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "f"=>{:total=>13.0, :totmax=>32.5, :nombre=>8, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6], :note=>8.0}, "pfa"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "3acts"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "foncact"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "pvts"=>{:total=>1.6, :totmax=>4.0, :nombre=>1, :notes=>[1.6], :note=>8.0}, "i"=>{:total=>41.4, :totmax=>103.5, :nombre=>28, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "menee"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "predic"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "mainint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "secint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "autint"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "t"=>{:total=>31.4, :totmax=>78.5, :nombre=>21, :notes=>[1.8, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "cla"=>{:total=>31.0, :totmax=>50.5, :nombre=>15, :notes=>[1.6, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0], :note=>12.3}, "antithese"=>{:total=>4.4, :totmax=>11.0, :nombre=>3, :notes=>[1.6, 1.4, 1.4], :note=>8.0}, "thprinc"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "thsec"=>{:total=>10.0, :totmax=>25.0, :nombre=>7, :notes=>[1.6, 1.4, 1.4, 1.4, 1.4, 1.4, 1.4], :note=>8.0}, "r"=>{:total=>40.0, :totmax=>73.0, :nombre=>21, :notes=>[1.8, 1.6, 1.4, 1.4, 1.4, 1.4, 3.0, 3.0, 3.0, 1.4, 3.0, 3.0, 3.0, 1.6, 1.4, 1.4, 1.4, 1.6, 1.4, 1.4, 1.4], :note=>11.0}, "ortho"=>{:total=>10.4, :totmax=>12.5, :nombre=>4, :notes=>[1.4, 3.0, 3.0, 3.0], :note=>16.6}, "style"=>{:total=>10.4, :totmax=>12.5, :nombre=>4, :notes=>[1.4, 3.0, 3.0, 3.0], :note=>16.6}, "sim"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}, "emo"=>{:total=>5.8, :totmax=>14.5, :nombre=>4, :notes=>[1.6, 1.4, 1.4, 1.4], :note=>8.0}}, @sum_note=8.5, @sum_note_abs=8.5, @sum_pourcentage=100.0, @sum_nombre_questions=122, @sum_nombre_reponses=122, @sum_nombre_missings=0, @coef200=0.04400440044004401, @coefa200=0.04400440044004401, @note=8.5, @note_abs=8.5, @pourcentage=100.0, @nombre_questions=122.0, @nombre_reponses=122.0, @nombre_missings=0.0>
+
+
+--- [2020-11-22 10:24:43 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+
+
+--- [2020-11-22 10:25:30 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/save_score.rb
+evaluator_id: 2, synopsis_id:1107202051100-2021, score:{"po"=>4, "po-fO"=>4, "po-fU"=>4, "po-adth"=>4, "po-ti"=>4, "po-ti-fO"=>4, "po-ti-fU"=>4, "po-ti-adth"=>4, "po-p"=>4, "po-p-fO"=>4, "po-p-fU"=>4, "po-p-adth"=>4, "po-p-cohe"=>4, "po-p-idio"=>4, "po-p-prota"=>4, "po-p-prota-fO"=>4, "po-p-prota-fU"=>4, "po-p-prota-adth"=>4, "po-p-prota-cohe"=>4, "po-p-prota-idio"=>4, "po-p-anta"=>4, "po-p-anta-fO"=>4, "po-p-anta-fU"=>4, "po-p-anta-adth"=>4, "po-p-anta-cohe"=>4, "po-p-anta-idio"=>4, "po-p-psec"=>4, "po-p-psec-fO"=>4, "po-p-psec-fU"=>4, "po-p-psec-adth"=>4, "po-p-psec-cohe"=>4, "po-p-psec-idio"=>4, "po-p-autp"=>4, "po-p-autp-fO"=>4, "po-p-autp-fU"=>4, "po-p-autp-adth"=>4, "po-p-autp-cohe"=>4, "po-p-autp-idio"=>4, "po-p-dials"=>4, "po-p-dials-fO"=>4, "po-p-dials-fU"=>4, "po-p-dials-adth"=>4, "po-p-dials-cohe"=>4, "po-p-dials-idio"=>4, "po-f"=>4, "po-f-fO"=>4, "po-f-fU"=>4, "po-f-adth"=>4, "po-f-pfa"=>4, "po-f-3acts"=>4, "po-f-foncact"=>4, "po-f-pvts"=>4, "po-i"=>4, "po-i-fO"=>4, "po-i-fU"=>4, "po-i-adth"=>4, "po-i-cohe"=>4, "po-i-menee"=>4, "po-i-predic"=>4, "po-i-mainint"=>4, "po-i-mainint-fO"=>4, "po-i-mainint-fU"=>4, "po-i-mainint-adth"=>4, "po-i-mainint-cohe"=>4, "po-i-mainint-menee"=>4, "po-i-mainint-predic"=>4, "po-i-secint"=>4, "po-i-secint-fO"=>4, "po-i-secint-fU"=>4, "po-i-secint-adth"=>4, "po-i-secint-cohe"=>4, "po-i-secint-menee"=>4, "po-i-secint-predic"=>4, "po-i-autint"=>4, "po-i-autint-fO"=>4, "po-i-autint-fU"=>4, "po-i-autint-adth"=>4, "po-i-autint-cohe"=>4, "po-i-autint-menee"=>4, "po-i-autint-predic"=>4, "po-t"=>4, "po-t-fO"=>4, "po-t-fU"=>4, "po-t-adth"=>4, "po-t-cla"=>4, "po-t-cohe"=>4, "po-t-antithese"=>4, "po-t-thprinc"=>4, "po-t-thprinc-fO"=>4, "po-t-thprinc-fU"=>4, "po-t-thprinc-adth"=>4, "po-t-thprinc-cla"=>4, "po-t-thprinc-cohe"=>4, "po-t-thprinc-antithese"=>4, "po-t-thsec"=>4, "po-t-thsec-fO"=>4, "po-t-thsec-fU"=>4, "po-t-thsec-adth"=>4, "po-t-thsec-cla"=>4, "po-t-thsec-cohe"=>4, "po-t-thsec-antithese"=>4, "po-r"=>4, "po-r-cla"=>4, "po-r-cla-fO"=>4, "po-r-cla-fU"=>4, "po-r-cla-adth"=>4, "po-r-cla-ortho"=>4, "po-r-cla-ortho-fO"=>5, "po-r-cla-ortho-fU"=>5, "po-r-cla-ortho-adth"=>5, "po-r-cla-style"=>4, "po-r-cla-style-fO"=>5, "po-r-cla-style-fU"=>5, "po-r-cla-style-adth"=>5, "po-r-sim"=>4, "po-r-sim-fO"=>4, "po-r-sim-fU"=>4, "po-r-sim-adth"=>4, "po-r-emo"=>4, "po-r-emo-fO"=>4, "po-r-emo-fU"=>4, "po-r-emo-adth"=>4}
+Résultat de l'évaluation : #<Evaluation:0x00007fed4c1cd608 @score_paths=["/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/data/concours/1107202051100/1107202051100-2021/evaluation-pres-2.json"], @nombre_scores=1, @owners={"po"=>{:total=>367.2, :totmax=>454.5, :nombre=>122, :notes=>[4.0, 3.6, 3.6, 3.6, 3.6, 3.2, 3.2, 3.2, 3.6, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.6, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 3.6, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 3.6, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 3.6, 3.2, 2.8, 2.8, 2.8, 2.8, 3.0, 3.0, 3.0, 2.8, 3.0, 3.0, 3.0, 3.2, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8], :note=>16.2}, "fO"=>{:total=>62.0, :totmax=>76.0, :nombre=>21, :notes=>[3.6, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 3.2, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 3.0, 3.0, 2.8, 2.8], :note=>16.3}, "fU"=>{:total=>62.0, :totmax=>76.0, :nombre=>21, :notes=>[3.6, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 3.2, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 3.0, 3.0, 2.8, 2.8], :note=>16.3}, "adth"=>{:total=>62.0, :totmax=>76.0, :nombre=>21, :notes=>[3.6, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 3.2, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 3.0, 3.0, 2.8, 2.8], :note=>16.3}, "ti"=>{:total=>13.2, :totmax=>16.5, :nombre=>4, :notes=>[3.6, 3.2, 3.2, 3.2], :note=>16.0}, "p"=>{:total=>105.6, :totmax=>132.0, :nombre=>36, :notes=>[3.6, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "cohe"=>{:total=>37.6, :totmax=>47.0, :nombre=>13, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8], :note=>16.0}, "idio"=>{:total=>17.2, :totmax=>21.5, :nombre=>6, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "prota"=>{:total=>17.2, :totmax=>21.5, :nombre=>6, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "anta"=>{:total=>17.2, :totmax=>21.5, :nombre=>6, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "psec"=>{:total=>17.2, :totmax=>21.5, :nombre=>6, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "autp"=>{:total=>17.2, :totmax=>21.5, :nombre=>6, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "dials"=>{:total=>17.2, :totmax=>21.5, :nombre=>6, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "f"=>{:total=>26.0, :totmax=>32.5, :nombre=>8, :notes=>[3.6, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2], :note=>16.0}, "pfa"=>{:total=>3.2, :totmax=>4.0, :nombre=>1, :notes=>[3.2], :note=>16.0}, "3acts"=>{:total=>3.2, :totmax=>4.0, :nombre=>1, :notes=>[3.2], :note=>16.0}, "foncact"=>{:total=>3.2, :totmax=>4.0, :nombre=>1, :notes=>[3.2], :note=>16.0}, "pvts"=>{:total=>3.2, :totmax=>4.0, :nombre=>1, :notes=>[3.2], :note=>16.0}, "i"=>{:total=>82.8, :totmax=>103.5, :nombre=>28, :notes=>[3.6, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "menee"=>{:total=>11.6, :totmax=>14.5, :nombre=>4, :notes=>[3.2, 2.8, 2.8, 2.8], :note=>16.0}, "predic"=>{:total=>11.6, :totmax=>14.5, :nombre=>4, :notes=>[3.2, 2.8, 2.8, 2.8], :note=>16.0}, "mainint"=>{:total=>20.0, :totmax=>25.0, :nombre=>7, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "secint"=>{:total=>20.0, :totmax=>25.0, :nombre=>7, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "autint"=>{:total=>20.0, :totmax=>25.0, :nombre=>7, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "t"=>{:total=>62.8, :totmax=>78.5, :nombre=>21, :notes=>[3.6, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "cla"=>{:total=>44.0, :totmax=>50.5, :nombre=>15, :notes=>[3.2, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8, 2.8, 3.0, 3.0, 3.0, 2.8, 3.0, 3.0, 3.0], :note=>17.4}, "antithese"=>{:total=>8.8, :totmax=>11.0, :nombre=>3, :notes=>[3.2, 2.8, 2.8], :note=>16.0}, "thprinc"=>{:total=>20.0, :totmax=>25.0, :nombre=>7, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "thsec"=>{:total=>20.0, :totmax=>25.0, :nombre=>7, :notes=>[3.2, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8], :note=>16.0}, "r"=>{:total=>62.0, :totmax=>73.0, :nombre=>21, :notes=>[3.6, 3.2, 2.8, 2.8, 2.8, 2.8, 3.0, 3.0, 3.0, 2.8, 3.0, 3.0, 3.0, 3.2, 2.8, 2.8, 2.8, 3.2, 2.8, 2.8, 2.8], :note=>17.0}, "ortho"=>{:total=>11.8, :totmax=>12.5, :nombre=>4, :notes=>[2.8, 3.0, 3.0, 3.0], :note=>18.9}, "style"=>{:total=>11.8, :totmax=>12.5, :nombre=>4, :notes=>[2.8, 3.0, 3.0, 3.0], :note=>18.9}, "sim"=>{:total=>11.6, :totmax=>14.5, :nombre=>4, :notes=>[3.2, 2.8, 2.8, 2.8], :note=>16.0}, "emo"=>{:total=>11.6, :totmax=>14.5, :nombre=>4, :notes=>[3.2, 2.8, 2.8, 2.8], :note=>16.0}}, @sum_note=16.2, @sum_note_abs=16.2, @sum_pourcentage=100.0, @sum_nombre_questions=122, @sum_nombre_reponses=122, @sum_nombre_missings=0, @coef200=0.04400440044004401, @coefa200=0.04400440044004401, @note=16.2, @note_abs=16.2, @pourcentage=100.0, @nombre_questions=122.0, @nombre_reponses=122.0, @nombre_missings=0.0>
+
+
+--- [2020-11-22 10:25:38 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb

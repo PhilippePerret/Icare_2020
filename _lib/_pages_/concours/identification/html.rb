@@ -37,7 +37,7 @@ class HTML
       # la session courante. Si c'est le 1), on l'envoie vers l'inscription (qui
       # lui présentera un panneau propre à son cas) soit on l'envoie vers
       # l'espace personnel normal
-      if Concurrent.is_current_concurrent?(session['concours_user_id'])
+      if Concurrent.is_current_concurrent?(session['concours_user_id']) || Concours.current.phase > 1
         redirect_to("concours/espace_concurrent")
       else
         redirect_to("concours/inscription")

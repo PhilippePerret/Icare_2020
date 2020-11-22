@@ -23,7 +23,7 @@ class Operation
     Concurrent.all_current.each do |conc|
       min_data = conc.min_data.merge(titre: conc.projet_titre)
       # log("\nCONC ÉTUDIÉ : #{conc.inspect}")
-      if not(conc.fichier_conforme?)
+      if not(conc.cfile.conforme?)
         # log("  FICHIER NON CONFORME")
         sans_fichier << min_data
       elsif conc.preselected?

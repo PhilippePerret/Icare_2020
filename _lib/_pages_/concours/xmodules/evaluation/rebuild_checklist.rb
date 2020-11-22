@@ -35,6 +35,16 @@ class << self
     # ff.close if not ff.nil?
   end #/ rebuild_check_list
 
+  # Parfois le fichier NOMBRE_QUESTIONS n'est pas construit, on peut le
+  # refaire grâce à cette méthode
+  def remake_nombre_questions_file
+    log("-> remake_nombre_questions_file")
+    @nombre_questions = 0
+    build_sujet(data, [], [])
+    File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(nombre_questions)}
+    log("Le fichier du nombre de questions est reconstruit.")
+  end #/ remake_nombre_questions_file
+
   # = Construction du sujet =
   def build_sujet(datasuj, fullid, commons_props)
     common_properties = commons_props.dup # pour ne pas toutes les ajouter

@@ -18,7 +18,11 @@ class HTML
       message("Aucun concours en route. Le palmarès n'est pas consultable.")
       redirect_to("concours")
     end
-    try_to_reconnect_visitor(required = false)
+    if Concours.current.phase < 5
+      try_to_reconnect_visitor(required = true)
+    else
+      try_to_reconnect_visitor(required = false)
+    end
     @concours = Concours.current
     require_xmodule('synopsis')
     transactions = ['START TRANSACTIONS;']

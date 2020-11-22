@@ -8,7 +8,7 @@ class HTML
       # =>  Affichage du formulaire si le concurrent n'a pas encore transmis
       #     son fichier, sinon une message lui indiquant
       if concurrent.current?
-        if not(concurrent.dossier_transmis?) || concurrent.fichier_non_conforme?
+        if not(concurrent.cfile.transmis?) || concurrent.cfile.non_conforme?
           # <=  Un concurrent qui n'a pas encore transmis son fichier ou un
           #     fichier non conforme
           # =>  On lui propose le formulaire.
@@ -28,7 +28,7 @@ class HTML
   end #/ section_fichier_candidature
 
   def formulaire_depot_fichier_candidature
-    ajout_non_conforme = concurrent.fichier_non_conforme? ? "<p>Vous pouvez transmettre un nouveau fichier conforme.</p>" : ""
+    ajout_non_conforme = concurrent.cfile.non_conforme? ? "<p>Vous pouvez transmettre un nouveau fichier conforme.</p>" : ""
     form = Form.new(id: "concours-fichier-form", route:route.to_s, class:"nomargin noborder nobackground", file: true, value_size: "600px")
     form.rows = {
       "Titre du projet" => {type:"text", name:"p_titre"},

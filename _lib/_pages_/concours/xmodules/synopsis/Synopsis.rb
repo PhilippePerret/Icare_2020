@@ -236,49 +236,6 @@ end #/ add
       liste + synos_sans_fiche + synos_sans_fichier
     end
   end #/ sorteds_by
-
-  # # IN    La clé de classement ('note' ou 'progress')
-  # #       Le sens de classement ('desc' ou 'asc')
-  # #       +options+ Table d'options
-  # #         :preselecteds   Si true, seulement les présélectionnés
-  # #         :avec_fichier   Si true, seulement les synopsis avec fichier conforme
-  # # OUT   La liste des instances {Synopsis}
-  # # Note  Les synopsis sans fichiers sont toujours mis à la fin
-  # def sorted_by(key = 'note', sens = 'desc', options = nil)
-  #   options ||= {}
-  #   # 1) On ne prend que les synopsis avec fichier
-  #   avec_fichiers = []
-  #   sans_fichiers = []
-  #   all_courant.each do |syno|
-  #     if syno.fichier?
-  #       if options[:preselecteds]
-  #         avec_fichiers << syno if syno.preselected?
-  #       elsif options[:avec_fichier_conforme]
-  #         avec_fichiers << syno if syno.cfile.conforme?
-  #       else
-  #         avec_fichiers << syno
-  #       end
-  #     else
-  #       sans_fichiers << syno
-  #     end
-  #   end
-  #   # 2) On peut classer les synopsis avec fichier
-  #   if key == 'note'
-  #     # avec_fichiers = avec_fichiers.sort_by{ |syno| syno.fiche_lecture.total.note }.reverse
-  #     avec_fichiers = avec_fichiers.sort_by{ |syno| syno.note.to_f }
-  #     avec_fichiers.each_with_index { |syno, idx| syno.position = idx + 1 unless syno.fiche_lecture.total(options).undefined? }
-  #   else # ket = :progress
-  #     avec_fichiers.sort_by! { |syno| syno.evaluation_for(html.evaluator.id).nombre_reponses||0 }
-  #   end
-  #   avec_fichiers = avec_fichiers.reverse if sens == 'desc'
-  #   if options[:avec_fichier] || options[:avec_fichier_conforme]
-  #     avec_fichiers
-  #   elsif options[:avec_fichier] === false || options[:sans_fichier]
-  #     sans_fichiers
-  #   else
-  #     avec_fichiers + sans_fichiers
-  #   end
-  # end #/ sorted_by
 end # /<< self
 
 
@@ -352,10 +309,6 @@ end #/ all_checklist_paths
 def preselected?
   concurrent.spec(2) == 1
 end
-
-def cfile
-  @cfile ||= Concours::CFile.new(concurrent, annee, self)
-end #/ cfile
 
 def template_fiche_synopsis
   @template_fiche_synopsis ||= begin
@@ -454,6 +407,10 @@ end #/ concurrent
 def fiche_lecture
   @fiche_lecture ||= FicheLecture.new(self)
 end #/ fiche_lecture
+
+def cfile
+  @cfile ||= concurrent.cfile
+end #/ cfile
 
 # OUT   La note générale pour un évaluateur donné
 #       (sinon, pour la note moyenne, cf. formated_pre_note ou

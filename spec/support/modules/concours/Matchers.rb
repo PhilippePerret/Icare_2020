@@ -51,14 +51,16 @@ RSpec::Matchers.define :be_accueil_jury do
   end
 end
 
-RSpec::Matchers.define :be_palmares_concours do
+RSpec::Matchers.define :be_palmares_concours do |phase|
   match do |page|
     @errors = []
     if not page.has_css?("h2.page-title", text: "Palmarès du concours de synopsis")
       @errors << "la page devrait avoir le titre “Palmarès du concours de synopsis” (son titre est #{title_of_page})"
     end
-    if not page.has_css?('h2', text: /Lauréats du Concours de Synopsis/i)
-      @errors << "la page devrait contenir le sous-titre “Lauréats du Concours de Synopsis”"
+    if phase > 2
+      if not page.has_css?('h2', text: /Lauréats du Concours de Synopsis/i)
+        @errors << "la page devrait contenir le sous-titre “Lauréats du Concours de Synopsis”"
+      end
     end
     actual_route = route_of_page
     expected_route = 'concours/palmares'
@@ -138,6 +140,7 @@ RSpec::Matchers.define :be_fiches_synopsis do
     "Ce n'est pas la page des cartes des synopsis."
   end
 end
+RSpec::Matchers.alias_matcher :be_page_evaluation, :be_fiches_synopsis
 
 RSpec::Matchers.define :be_fiches_lecture_jury do
   match do |page|

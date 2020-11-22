@@ -155,12 +155,20 @@ def concours
   @concours ||= ConcurrentConcours.new(self)
 end #/ concours
 
+# Le synopsis
+# Note : l'instance sera "nil" si le synopsis n'existe pas
 def synopsis
   @synopsis ||= begin
     html.require_xmodule('synopsis')
     Synopsis.new(id, ANNEE_CONCOURS_COURANTE)
   end
-end #/ synopsis
+end
+
+def cfile
+  @cfile ||= begin
+    Concours::CFile.new(self, ANNEE_CONCOURS_COURANTE, synopsis)
+  end
+end
 
 # Retourne la liste Array de tous les concours du concurrent
 def all_concours
@@ -250,37 +258,6 @@ def warned?
     option(0) == 1 ? :true : :false
   end) == :true
 end #/ warned?
-
-# Retourne TRUE si le dossier de participation a été transmis
-# Deux conditions :
-#   - le bit 0 de la propriété specs dans la DB est à 1
-#   - le fichier physique existe
-# TODO Supprimer la redondance et utiliser synopsis.cfile.transmis?
-def dossier_transmis?
-  (@dossier_transmis ||= begin
-    spec(0) == 1 ? :true : :false
-  end) == :true
-end #/ dossier_complete?
-
-# OUT   True si le fichier a été transmis et qu'il est conforme.
-# TODO Supprimer la redondance en utilisant synopsis.cfile.conforme?
-# (et peut-être aussi synopsis.cfile.transmis?)
-def fichier_conforme?
-  (@fichier_is_conforme ||= begin
-    dossier_transmis? && (spec(1) == 1) ? :true : :false
-  end) == :true
-end #/ fichier_conforme?
-
-# OUT   True si le fichier a été transmis et qu'il n'est pas conforme
-# Note  Noter que cette méthode n'est pas la méthode inverse de la méthode
-#       précédente. not(fichier_conforme?) retourne FALSE si le fichier n'a
-#       pas été transmis, comme si un fichier avait été transmis. Cette méthode
-#       retourne FALSE si le fichier n'a pas encore été transmis
-# TODO Supprimer la redondance et utiliser synopsis.cfile.non_conforme?
-def fichier_non_conforme?
-  dossier_transmis? && spec(1) == 2
-end #/ not_fichier_conforme
-
 
 # OUT   True si le concurrent, pour le concours courant, a été présélectionné
 def preselected?

@@ -41,26 +41,31 @@ def bind; binding() end
 # OUT   True si la conformité a été définie (i.e. le bit 2 est différent
 #       de 0 — mais il peut être égal à 1:conforme ou 2:non conforme)
 def conformity_defined?
-  concurrent.spec(1) != 0
+  concurrent.current? && concurrent.spec(1) != 0
 end
 
 def conformity_not_defined?
-  concurrent.spec(1) == 0
+  concurrent.current? && concurrent.spec(1) == 0
 end
 
 # OUT   True si la conformité du synopsis a été marquée
 def conforme?
-  concurrent.spec(1) == 1
+  concurrent.current? && concurrent.spec(1) == 1
+end
+
+def non_conforme?
+  concurrent.current? && concurrent.spec(1) == 2
 end
 
 def sent?
-  concurrent.spec(0) == 1
+  concurrent.current? && concurrent.spec(0) == 1
 end #/ sent?
+alias :transmis? :sent?
 
 # Retourne TRUE quand le fichier de candidature a été marqué non conforme
 # et que le concurrent doit le modifier.
 def to_modify?
-  concurrent.spec(1) == 2
+  concurrent.current? && concurrent.spec(1) == 2
 end #/ to_modify?
 
 

@@ -4,7 +4,7 @@
   Test du passage à la phase 2 du concours (donc la phase de lancement)
 =end
 require_relative '../_required'
-feature "Phase 2 du concours" do
+feature "PHASE 2 DU CONCOURS" do
 
   # Retourne le nombre de fichiers candidature conformes
   def nombre_fichiers_candidature
@@ -43,12 +43,13 @@ feature "Phase 2 du concours" do
 
 
   context 'Un administrateur' do
-    scenario 'peut lancer la phase 2 du concours en se rendant à l’administration' do
+    scenario 'peut passer le concours en phase 2' do
 
       # *** Vérifications préliminaires
       expect(TConcours.current.phase).to eq 1
       goto("concours/accueil")
       expect(page).to have_content("Le concours est ouvert !")
+
 
       # *** Pré-opérations ***
       TMails.remove_all
@@ -68,12 +69,17 @@ feature "Phase 2 du concours" do
       screenshot("admin-passe-phase-2")
 
       # *** On vérifie grossièrement la page ***
-      expect(page).to have_css("div.etape-titre", text:"ÉTAPE 2. Annoncer l'échéance des dépôts")
+      expect(page).to have_css("div.etape-titre", text:"ÉTAPE 2. Annoncer l'échéance des dépôts"),
+        "La page devrait annoncer le titre de la phase 2"
       btn_proceder = "Procéder aux opérations cochées"
       expect(page).to have_button(btn_proceder)
       # Le menu a changé
-      expect(page).not_to have_select("current_phase", selected:"Concours lancé et annoncé")
-      expect(page).to have_select("current_phase", selected:"Première sélection en cours")
+      menu_lanced_et_warned = "Concours lancé et annoncé"
+      expect(page).not_to have_select("current_phase", selected:menu_lanced_et_warned),
+        "Le menu sélectionné ne devrait plus être “#{menu_lanced_et_warned}”"
+      menu_selection_en_cours = "Première sélection en cours"
+      expect(page).to have_select("current_phase", selected:menu_selection_en_cours),
+        "Le menu sélectionné devrait être “#{menu_selection_en_cours}”…"
 
       # *** On procède vraiment au changement ***
       start_time = Time.now.to_i.freeze
@@ -181,7 +187,7 @@ feature "Phase 2 du concours" do
   end #/contexte un administrateur
 
   context 'Un non administrateur' do
-    scenario 'ne peut pas lancer la phase21 du concours en se rendant à l’administration' do
+    scenario 'ne peut pas lancer la phase2 du concours' do
       goto("concours/admin")
       expect(page).not_to have_titre "Administration du concours"
     end
@@ -213,7 +219,7 @@ feature "Phase 2 du concours" do
       phil.se_deconnecte
     end
 
-    scenario 'trouve toutes les fiches à évaluer (phase 2), même les non conformes' do
+    scenario 'trouve toutes les fiches à évaluer, même les non conformes' do
       phil.rejoint_le_site
       goto("concours/evaluation")
       expect(page).to be_fiches_synopsis
