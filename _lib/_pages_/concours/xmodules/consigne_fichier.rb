@@ -35,6 +35,7 @@ class HTML
     @candidature_filename = file.original_name
     MailSender.send({
       to:concurrent.mail,
+      from:CONCOURS_MAIL,
       path: File.join(XMODULES_FOLDER,'mails','phase1','confirm_reception_fichier.erb'),
       bind: self
     })

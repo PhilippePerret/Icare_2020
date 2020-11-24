@@ -61,6 +61,7 @@ class HTML
       })
     MailSender.send({
       to: user.mail,
+      from:CONCOURS_MAIL,
       file: File.join(XMODULES_FOLDER,'mails','inscription','confirm-icarien-signup'),
       bind: self # html
     })

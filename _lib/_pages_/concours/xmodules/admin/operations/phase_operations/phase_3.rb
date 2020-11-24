@@ -36,13 +36,13 @@ class Operation
       end
     end
     if not selecteds.empty?
-      MailSender.send_mailing({to:selecteds, file:mail_path('phase3/mail_preselected'), bind:self}, options)
+      MailSender.send_mailing({from:CONCOURS_MAIL, to:selecteds, file:mail_path('phase3/mail_preselected'), bind:self}, options)
     end
     if not not_selecteds.empty?
-      MailSender.send_mailing({to:not_selecteds, file:mail_path('phase3/mail_non_preselected'), bind:self}, options)
+      MailSender.send_mailing({from:CONCOURS_MAIL, to:not_selecteds, file:mail_path('phase3/mail_non_preselected'), bind:self}, options)
     end
     if not sans_fichier.empty?
-      MailSender.send_mailing({to:sans_fichier, file:mail_path('phase3/mail_sans_fichier'), bind:self}, options)
+      MailSender.send_mailing({from:CONCOURS_MAIL, to:sans_fichier, file:mail_path('phase3/mail_sans_fichier'), bind:self}, options)
     end
 
   end #/ send_mail_concurrents_preselection
@@ -67,7 +67,7 @@ class Operation
     end
     jurys.each do |idjury, membres|
       next if membres.empty?
-      MailSender.send_mailing({to: membres, file: mail_path("phase3/mail_jury_#{idjury}"), bind: self}, options)
+      MailSender.send_mailing({from:CONCOURS_MAIL, to: membres, file: mail_path("phase3/mail_jury_#{idjury}"), bind: self}, options)
     end
   end #/ send_mail_jury_preselection
 

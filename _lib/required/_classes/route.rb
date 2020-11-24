@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 class Route
 ROUTES_SHORTCUTS = {
+  'modules'         => 'modules/home',
   'concours'        => 'concours/accueil',
   'bureau'          => 'bureau/home',
   'identification'  => 'user/login',

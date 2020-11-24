@@ -55,6 +55,7 @@ class HTML
     require_module('mail')
     Mail.send({
       to: mail,
+      from: CONCOURS_MAIL,
       subject: MESSAGES[:concours_sujet_retrieve_numero],
       message: <<-HTML
 <p>Bonjour #{@mail_data[:patronyme]},</p>

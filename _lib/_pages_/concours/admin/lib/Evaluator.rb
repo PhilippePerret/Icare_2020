@@ -22,7 +22,7 @@ def send(params)
     condition = condition && evaluator.jury == params[:jury]
     condition
   end
-  MailSender.send_mailing(file:params[:file], to:destinataires)
+  MailSender.send_mailing(file:params[:file], to:destinataires, from: CONCOURS_MAIL)
 end #/ send
 
 def all

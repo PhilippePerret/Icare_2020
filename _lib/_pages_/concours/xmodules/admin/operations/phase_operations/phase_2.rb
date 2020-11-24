@@ -31,12 +31,12 @@ SELECT
       end
     end
     # On peut faire le mailing des deux mails
-    MailSender.send_mailing({to:destinataires_file_ok, file:mail_path('phase2/mail_fin_echeance_file_ok'), bind:self}, options)
-    MailSender.send_mailing({to:destinataires_file_notok, file:mail_path('phase2/mail_fin_echeance_file_notok'), bind:self}, options)
+    MailSender.send_mailing({from:CONCOURS_MAIL, to:destinataires_file_ok, file:mail_path('phase2/mail_fin_echeance_file_ok'), bind:self}, options)
+    MailSender.send_mailing({from:CONCOURS_MAIL, to:destinataires_file_notok, file:mail_path('phase2/mail_fin_echeance_file_notok'), bind:self}, options)
   end #/ send_mail_concurrents_echeance
 
   def send_mail_jury_echeance(options)
-    MailSender.send_mailing({to:Concours.current.jury, file:mail_path('phase2/mail_fin_echeance_jury'), bind:self}, options)
+    MailSender.send_mailing({from:CONCOURS_MAIL, to:Concours.current.jury, file:mail_path('phase2/mail_fin_echeance_jury'), bind:self}, options)
   end #/ send_mail_jury_echeance
 
   # Méthode qui s'assure que toutes les conformités sont bien réglées
