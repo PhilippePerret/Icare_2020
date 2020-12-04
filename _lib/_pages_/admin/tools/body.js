@@ -14,6 +14,7 @@ function executeOperation(){
   }
   // Opération choisie
   data.operation = document.querySelector('#operations').value
+
   // Valeurs transmises
   OPES_KEYS.forEach(key => {
     if ( key == 'cb_value' ) {
@@ -22,6 +23,10 @@ function executeOperation(){
       data[key] = document.querySelector(`#${key}`).value
     }
   })
+
+  // Est-ce une simulation
+  data.simulation = document.querySelector('#simulation').checked
+
   // Données absolues pour cette opération
   const dataOperation = DATA_OPERATIONS[data.operation]
   // Vérification des données
@@ -53,7 +58,7 @@ function executeOperation(){
   // Appel de la méthode (ajax) et attente du retour
   Ajax.send('operation_icarien.rb', data)
   .then(afterOperationExecution.bind(null))
-  .catch(erreur)
+  .catch(erreur.bind(null))
 }
 
 /*

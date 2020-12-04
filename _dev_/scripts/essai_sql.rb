@@ -15,25 +15,80 @@
                 ou {Nil}
 
 =end
-ONLINE = true
+# On fait le traitement sur toutes les tables de matières
+DATA_LIVRES = {
+  1   => {name: 'La Structure', id: 1, dossier: 'structure'},
+  2   => {name: 'Les Personnages', id: 2, dossier: 'personnages'},
+  3   => {name: 'La Dynamique narrative', id: 3, dossier:'dynamique'},
+  4   => {name: 'Les Thèmes', id: 4, dossier: 'themes'},
+  5   => {name: 'Les Documents', id: 5, dossier: 'documents'},
+  6   => {name: 'Le Travail de l’auteur', id: 6, dossier: 'travail_auteur'},
+  7   => {name: 'Les Procédés', id: 7, dossier: 'procedes'},
+  8   => {name: 'Les Concepts narratifs', id: 8, dossier: 'concepts'},
+  9   => {name: 'Le Dialogue', id: 9, dossier: 'dialogue'},
+  10  => {name: 'L’analyse de film', id: 10, dossier: 'analyse'},
+  11  => {name: 'Recueil d’exemples', id: 11, dossier: 'exemples'}
+}
+
+ONLINE = false
 
 # REQUEST = "SELECT created_at, updated_at FROM `users` LIMIT 1"
 # MyDB.DBNAME = "icare_modules"
 REQUEST = <<-SQL
-SELECT id, pseudo, mail, options FROM users WHERE pseudo LIKE "% (SUPP)"
+START TRANSACTION;
+SELECT id, tdm FROM tdms;
+SELECT id, titre, livre_id, SUBSTRING(options,1,1) AS level FROM narration;
+COMMIT;
 SQL
-# UPDATE icmodules SET pauses = ? WHERE id = 8
+
 
 VALUES = nil
 # VALUES = [{start:1442686770 , end: nil}].to_json
 
 # La procédure à exécuter après, sur chaque rangée récoltée
-# AFTER_PROC = Proc.new do |du|
-#   puts "pseudo avant : #{du[:pseudo]}"
-#   new_pseudo = du[:pseudo].sub(/ \(SUPP\)/,'').strip
-#   puts "pseudo après : #{new_pseudo.inspect}"
-#   db_exec("UPDATE users SET pseudo = ? WHERE id = ?", [new_pseudo, du[:id]])
-# end
+premier = tdms = hpages = dernier = nil
+AFTER_PROC = Proc.new do |du|
+  if premier.nil?
+    premier = du
+  elsif tdms.nil?
+    tdms = du
+  elsif hpages.nil?
+    hpages = {}
+    du.each do |dp|
+      hpages.merge!( dp[:id] => dp.merge!(level: 3 - dp[:level].to_i))
+    end
+  else
+    dernier = du
+
+    tdms.each do |dt|
+      dossier = DATA_LIVRES[dt[:id]][:dossier]
+      path = File.join(Dir.home,'Sites','AlwaysData','Narration_JK_recups',"#{dossier}.tdm")
+      File.delete(path) if File.exists?(path)
+      file = File.open(path,'a')
+      file.puts <<-FRONTMATTER
+---
+title: #{DATA_LIVRES[dt[:id]][:name]}
+lid: #{dt[:id]}
+dossier: #{dossier}
+layout: tdm
+---
+#{dossier}
+      FRONTMATTER
+      begin
+        dt[:tdm].split(',').collect{|n|n.to_i}.each do |page_id|
+          dpage = hpages[page_id]
+          # puts "La page ##{page_id} : #{dpage.inspect}"
+          indent = dpage[:level] > 0 ? "#{'——' * dpage[:level]} " : ''
+          file.puts "#{indent}#{dpage[:id]} ::#{dpage[:titre]}"
+          # break # pour un seul
+        end
+      ensure
+        file.close
+      end
+      # break # pour un seul
+    end
+  end
+end
 
 # ---------------------------------------------------------------------
 #
@@ -48,7 +103,8 @@ puts "ONLINE = #{ONLINE.inspect}"
 if ONLINE
   MyDB.DBNAME = 'icare_db'
 else
-  MyDB.DBNAME = 'icare_test'
+  # MyDB.DBNAME = 'icare_test'
+  MyDB.DBNAME = 'scenariopole_cnarration'
   # MyDB.DBNAME = 'icare'
 end
 

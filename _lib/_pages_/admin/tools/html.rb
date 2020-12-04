@@ -9,6 +9,7 @@ class HTML
   def exec
     admin_required
     require_js_module('jquery')
+    require_js_module('flash')
     add_js('./js/modules/ajax.js')
   end
   # Fabrication du body

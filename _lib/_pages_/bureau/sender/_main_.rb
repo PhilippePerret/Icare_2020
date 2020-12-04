@@ -158,6 +158,8 @@ def init_icdocument
     time_original: now,
     options: options
   }
+  # ATTENTION : si cette méthode est modifiée, il faut aussi modifier
+  # l'outil administration 'inject_document'
   log(" ---- data_doc: #{data_doc.inspect}")
 
   # DEBUG
@@ -191,7 +193,9 @@ def duree_commentaire
 
   nombre_pages = (nombre_mots.to_f / MOTS_PER_PAGE).round(2)
 
-  return (nombre_pages * NOMBRE_JOURS_PER_PAGE * JOUR)
+  nombre_jours = nombre_pages * NOMBRE_JOURS_PER_PAGE
+  nombre_jours = 10 if nombre_jours > 10
+  return nombre_jours * JOUR
 end #/ duree_commentaire
 
 end #/SentDocument

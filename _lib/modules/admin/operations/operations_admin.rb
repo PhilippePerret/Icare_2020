@@ -3,6 +3,12 @@
   Opérations administrateur
 =end
 
+# Certaines méthodes ont besoin de connaitre l'user courant, par exemple
+# les watchers. Ici, c'est forcément moi.
+def user
+  @phil ||= User.get(1)
+end
+
 class Admin
 class << self
   # Raccourci pour Admin::Operation::exec
@@ -67,6 +73,12 @@ def owner
     User.get(Ajax.param(:icarien)) if Ajax.param(:icarien)
   end
 end #/ owner
+
+def simulation?
+  (@for_simulation ||= begin
+    Ajax.param(:simulation) === true ? :true : :false
+  end) == :true
+end #/ simulation?
 
 def cb_value
   @cb_value ||= Ajax.param(:cb_value) == true
