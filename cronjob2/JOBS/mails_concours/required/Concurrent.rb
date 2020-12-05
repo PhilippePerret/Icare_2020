@@ -54,9 +54,11 @@ def synopsis
   @synopsis ||= Synopsis.new(id, Concours.current.annee)
 end #/ synopsis
 
-def cfile
-  @cfile ||= synopsis.cfile
-end #/ cfile
+# DÉFINI DANS concours/xrequired/Concurrent
+# SINON boucle sans fin
+# def cfile
+#   @cfile ||= synopsis.cfile
+# end #/ cfile
 
 
 
