@@ -208,7 +208,7 @@ class HTML
     # On commence par s'assurer que le visiteur qui s'inscrit n'est pas un
     # icarien. Si c'est le cas, on renvoie tout de suite false pour que
     # ce cas soit traité juste après
-    mail = param(:p_mail).nil_if_empty
+    mail = param(:p_mail).strip.nil_if_empty
     patronyme = param(:p_patronyme).nil_if_empty
     genre     = param(:p_sexe)
     dcandidat = {
@@ -230,7 +230,7 @@ class HTML
       patronyme_unique?(patronyme) || raise(ERRORS[:concours_patronyme_exists])
       mail || raise("Mail non défini.")
       mail.length < 256 || raise(ERRORS[:mail_too_long])
-      mail.match?(/(.*)@(.*)\.(.*){1,7}/) || raise(ERRORS[:mail_invalide])
+      mail.downcase.match?(/^(.+)@(.+)\.([a-z]{1,7})$/) || raise(ERRORS[:mail_invalide])
       mail_unique?(mail) || raise(ERRORS[:concours_mail_exists])
       mailconf  = param(:p_mail_confirmation).nil_if_empty
       mailconf == mail || raise("La confirmation du mail ne correspond pas.")
