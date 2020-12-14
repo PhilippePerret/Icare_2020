@@ -24,5 +24,5 @@ DATA_OPERATIONS_ICARIENS = {
   'restart_module'  => {id:'restart_module',  name:'Reprise après pause',       for: :pause,    required: [:icarien]},
   'temoignage'      => {id:'temoignage',      name:'Nouveau témoignage',        for: :all,      required: [:long_value, :icarien], short_value: 'ID du témoignage si c’est une modification', medium_value: nil, long_value: "Code HTML du témoignage à ajouter"},
   'titre_projet'    => {id:'titre_projet',    name:'Définir titre projet',      for: [:actif, :inactif, :pause], required: [:icarien], short_value: 'ID du IcModule si ça n’est pas le courant', medium_value: 'Titre du projet (ou rien pour le supprimer)'},
-  'travail_propre'  => {id:'travail_propre',  name:'Travail propre',            for: :actif,    required: [:long_value, :icarien], short_value: nil, long_value: "Description du travail propre (format ERB).<br>Laisser vide et cliquez sur “Exécuter” pour charger le travail qui peut déjà exister."},
+  'travail_propre'  => {id:'travail_propre',  name:'Travail propre',            for: :actif,    required: [:icarien], short_value: nil, long_value: "Description du travail propre (format ERB).<br>Laisser vide et cliquez sur “Exécuter” pour charger le travail qui peut déjà exister."},
 }
