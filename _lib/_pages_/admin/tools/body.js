@@ -72,6 +72,11 @@ function afterOperationExecution(reta) {
     return
   }
   if (reta.message) message(reta.message) ;
+  const preDebug = document.querySelector('pre#tool-debug')
+  if (reta.debug) {
+    preDebug.querySelector('code').innerHTML = reta.debug.join("\n")
+  }
+  preDebug.classList[reta.debug?'remove':'add']('hidden')
 }
 
 // Appelé quand la page est prête
@@ -116,6 +121,11 @@ function onToggleCbStatut(cb, ev) {
 function onChooseOperation(menu_operations){
   const opid    = menu_operations.value
   const opdata  = DATA_OPERATIONS[opid]
+  const divDescription = document.querySelector('div#tool-description')
+  divDescription.classList[opdata.description?'remove':'add']('hidden')
+  if ( opdata.description ) {
+    divDescription.innerHTML = opdata.description
+  }
   document.querySelector('#div-fields').classList.remove('hidden');
   OPES_KEYS.forEach(key => {
     // console.log("Traitement clé '%s'", key)

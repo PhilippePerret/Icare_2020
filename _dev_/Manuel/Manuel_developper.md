@@ -2970,14 +2970,45 @@ Là aussi, pour le créer, s'inspirer des autres opérations.
 On pourra retenir seulement les points suivants, récurrents.
 
 * Une opération est une méthode d’instance de la classe `Amin::Operation`.
+* `description` définit la description de l'outil qui précise ce qu'il permet de faire.
 * `owner` contient l'instance `User` de l'icarien visé par l'opération s'il y en a un.
 * `short_value` contient la valeur `String` de la valeur courte si elle est définie (sinon, `nil`).
 * `medium_value` contient la valeur `String` de la valeur moyenne si elle est définie (sinon, `nil`).
 * `long_value` contient la valeur `String` de la valeur longue si elle est définie (sinon, `nil`).
+* `select_value` contient la valeur `String` d’un menu (sinon, `nil`). Note : un seul par outil.
+* `cb_value` contient `true` ou `false` suivant qu'une case à cocher est cochée ou non. Note : une seule par outil. Cf. ci-dessous pour sa définition.
 * Si on doit ajouter d’autres données récurrentes, on doit le faire dans le [module de la class Admin::Operation](/Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/modules/admin/operations/operations_admin.rb).
 * Pour pouvoir faire un retour ajax, et notamment le message de retour, on utilisera `Ajax << {message: "le message de retour", error: "ou l'erreur de retour"}`.
+* Pour pouvoir faire un retour qui sera marqué dans la page (pour copier un texte par exemple), on doit utiliser `Ajax << {debug: [array messages]}` ou simplement `debug([array messages])`.
 
+#### Définition d'un `select`
 
+La propriété `select_value` doit être définie ainsi :
+
+~~~ruby
+{select_value: {values: [<les valeurs>], default: "<valeur par défaut>", message:"<message sur le menu>"}}
+
+# Où `[<les valeurs>]` est une liste d’éléments Array où le premier 
+# élément est la valeur du menu et le second le titre du menu
+# Par exemple :
+
+values = [
+	['A', 'Première lettre de l’alphabet'],
+	['B', 'Deuxième lettre de l’alphabet']
+	# etc.
+]
+
+~~~
+
+#### Définition de la `cb_value`
+
+Dans l'outil, la case à cocher doit être définie ainsi :
+
+~~~ruby
+"<outil>" => {id: ... , cb_value: {checked:true/false, message: "<le message de la case à cocher>"}}
+~~~
+
+---
 
 
 <a name="admin-toolbox"></a>
