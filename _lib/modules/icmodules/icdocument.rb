@@ -34,6 +34,16 @@ def shared?(fordoc)
   option(fordoc == :original ? 1 : 9) == 1
 end #/ shared?
 
+def path_qdd(which)
+  defined?(QddDoc) || require_module('qdd')
+  @document_qdd ||= QddDoc.new(id)
+  if which == :original
+    @path_qdd_original || @document_qdd.path(:original)
+  else
+    @path_qdd_comments || @document_qdd.path(:comments)
+  end
+end
+
 # Méthode pour définir le partage du document
 # +fordoc+ :original ou :comments
 # +shareit+ TRUE si on doit le partager
