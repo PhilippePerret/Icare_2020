@@ -126,9 +126,9 @@ def pseudo_auteur
 # MESSAGE : #{e.message}
 # BACKTRACE :
 # #{e.backtrace.join(RC+DIESE+SPACE)}
-# RÉPARATION PROVISOIRE : mis à "indéfini"
+# RÉPARATION PROVISOIRE : mis à "PseudoNonDefini"
     ERROR
-    "indéfini"
+    "PseudoNonDefini"
   end
 end #/ pseudo_auteur
 

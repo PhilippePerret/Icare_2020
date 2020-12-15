@@ -61,5 +61,13 @@ class << self
     end) == :true
   end #/ noop?
 
+  def debug?
+    if ["false","0"].include?(ENV['DEBUG'])
+      false
+    else
+      true
+    end
+  end #/ debug?
+
 end # /<< self
 end #/Cronjob

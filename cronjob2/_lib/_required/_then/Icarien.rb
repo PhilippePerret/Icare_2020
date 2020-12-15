@@ -6,6 +6,7 @@
   Pour le cronjob. Pour le moment, on se contente de cette classe, sans
   charger la classe User du site. Mais si vraiment on voit que ça n'est pas
   "rentable" on chargera la classe du site.
+  Utiliser alors : 'require_user_class' en haut du module.
 =end
 class Icarien
 # ---------------------------------------------------------------------

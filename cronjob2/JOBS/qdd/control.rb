@@ -10,8 +10,95 @@ class << self
   # sont marqués existants dans la base de document (table icdocuments) soient
   # bien présents en tant que documents physique.
   def control
+    require_module('icmodules')
+    errors_found = false
+    nombre_documents_checked = 0
+    @errors = []
+    @nombre_reparations = 0
+    IcDocument.each do |idoc|
+      missing_docs = 0
+      missing_docs += check_document_original(idoc)
+      missing_docs += check_document_comments(idoc)
+      nombre_documents_checked += 1
+      if missing_docs > 0
+        Report << "# ERR Document #{idoc.name} (##{idoc.id})"
+        Report << "      #{@errors.join("\n      ")}"
+        @errors = []
+        # Dans tous les cas, on indique que des documents n'ont pas été trouvés
+        errors_found = true
+      elsif Cronjob.debug?
+        # En cas de document conforme
+        Report << "= Document ##{idoc.id} (#{idoc.name}) OK"
+      end
+    end #/ fin de boucle sur chaque document
+
+    if errors_found
+      Report << "Des erreurs de documents manquants ont été trouvés. Utiliser l'outil administrateur 'Nom de document QDD' pour pouvoir les importer sur le Quai des docs."
+      Report << "= Nombre de réparations : #{@nombre_reparations}"
+    end
+
+    Report << "= Nombre de documents QDD contrôlés : #{nombre_documents_checked}"
 
   end #/ control
+
+  # RETOURNE 0 si le document n'a aucun problème, 1 dans le cas contraire
+  def check_document_original(idoc)
+    bitpartage = idoc.option(1)
+    file_exists = File.exists?(idoc.qdd_path(:original))
+    document_is_shared = bitpartage == 1
+    sharing_is_not_defined = bitpartage == 0
+    if document_is_shared && file_exists
+      # <= Le document est partagé + Le document existe
+      # => tout est bon, on retourne 0
+      return 0
+    elsif document_is_shared && not(file_exists)
+      # <= Le document est partagé MAIS le document n'existe pas
+      # => Ça n'est pas bon du tout, c'est une erreur
+      @errors << "Le document original n'existe pas."
+      return 1
+    elsif sharing_is_not_defined && file_exists
+      # <= Le partage n'est pas défini mais pourtant le document existe
+      # => Signaler cette erreur (si NOOP) ou la corriger
+      @errors << "Le document existe mais le partage n'est pas défini (CORRIGÉ)"
+      if not(Cronjob.noop?)
+        idoc.set_option(1,1)
+        @nombre_reparations += 1
+      end
+      return 1
+    else
+      # <= Pas de partage défini, pas de fichier existant
+      # => C'est bon
+      return 0
+    end
+  end #/ check_document_original
+
+  # RETOURNE 2 si le document a des problèmes, 0 dans le cas contraire
+  def check_document_comments(idoc)
+    bitpartage = idoc.option(9)
+    file_exists = File.exists?(idoc.qdd_path(:comments))
+    document_is_shared = bitpartage == 1
+    sharing_is_not_defined = bitpartage == 0
+    if document_is_shared && file_exists
+      # <= Le document est partagé + Le document existe
+      # => tout est bon, on retourne 0
+      return 0
+    elsif document_is_shared && not(file_exists)
+      # <= Le document est partagé MAIS le document n'existe pas
+      # => Ça n'est pas bon du tout, c'est une erreur
+      @errors << "Le document commentaires n'existe pas."
+      return 1
+    elsif sharing_is_not_defined && file_exists
+      # <= Le partage n'est pas défini mais pourtant le document existe
+      # => Signaler cette erreur (si NOOP) ou la corriger
+      @errors << "Le document commentaires existe mais le partage n'est pas défini (CORRIGÉ)"
+      idoc.set_option(9,1) if not(Cronjob.noop?)
+      return 1
+    else
+      # <= Pas de partage défini, pas de fichier existant
+      # => C'est bon
+      return 0
+    end
+  end #/ check_document_comments
 
 end # /<< self
 end #/QDD

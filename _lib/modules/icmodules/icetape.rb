@@ -1,4 +1,10 @@
-class IcEtape
+# encoding: UTF-8
+# frozen_string_literal: true
+
+# Notamment pour le cronjob
+require './_lib/required/__first/ContainerClass_definition'
+
+class IcEtape < ContainerClass
   class << self
     def table
       @table ||= 'icetapes'
@@ -21,7 +27,7 @@ class IcEtape
       elsif params.key?(:absetape_id)
         absetape = AbsEtape.get(params[:absetape_id])
       else
-        raise "Il faut indiquer l'étape absolue à prendre.".freeze
+        raise "Il faut indiquer l'étape absolue à prendre."
       end
       now = Time.now.to_i
       data_newetape = {
@@ -32,7 +38,7 @@ class IcEtape
         expected_end: now + (absetape.duree).days,
         status: 1
       }
-      icetape_id = db_compose_insert('icetapes'.freeze, data_newetape)
+      icetape_id = db_compose_insert('icetapes', data_newetape)
       data_newetape.merge!(id: icetape_id)
 
       # Watcher pour dire à l'icarien de rejoindre sa partie travail et
@@ -58,13 +64,13 @@ class IcEtape
 
 def ref
   # log("--- [dans ref] data:#{data.inspect}")
-  @ref ||= "étape #{numero}. “#{titre}”#{f_id}</span> du #{icmodule.ref}".freeze
+  @ref ||= "étape #{numero}. “#{titre}”#{f_id}</span> du #{icmodule.ref}"
 end #/ ref
 
 # Retourne la liste des instances IcDocuments de l'étape
 def documents
   @documents ||= begin
-    request = "SELECT * FROM icdocuments WHERE icetape_id = #{id}".freeze
+    request = "SELECT * FROM icdocuments WHERE icetape_id = #{id}"
     db_exec(request).collect { |ddoc| IcDocument.instantiate(ddoc) }
   end
 end #/ documents

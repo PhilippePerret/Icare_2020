@@ -1,9 +1,14 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Class IcDocument
   ----------------
   Gestion des documents
 =end
+
+# Notamment pour le cronjob
+require './_lib/required/__first/ContainerClass_definition'
+
 class IcDocument < ContainerClass
 # ---------------------------------------------------------------------
 #
@@ -12,7 +17,7 @@ class IcDocument < ContainerClass
 # ---------------------------------------------------------------------
 class << self
   def table
-    @table ||= 'icdocuments'.freeze
+    @table ||= 'icdocuments'
   end #/ table
 end # /<< self
 

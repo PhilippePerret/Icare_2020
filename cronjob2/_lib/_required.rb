@@ -3,8 +3,13 @@
 
 CRON_LIB_FOLDER   = File.join(CRON_FOLDER,'_lib')
 APPFOLDER         = File.dirname(CRON_FOLDER)
+APP_LIB_FOLDER    = File.join(APPFOLDER, '_lib')
 
 ONLINE = ENV['ONLINE'] != "false"
+
+MESSAGES = {}
+ERRORS   = {}
+UI_TEXTS = {}
 
 # Les modules du site utiles pour le cron
 Dir.chdir(APPFOLDER) do

@@ -1,4 +1,9 @@
 # encoding: UTF-8
+# frozen_string_literal: true
+
+# Notamment pour le cronjob
+require './_lib/required/__first/ContainerClass_definition'
+
 require_module('absmodules')
 class IcModule < ContainerClass
 class << self

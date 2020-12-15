@@ -13,6 +13,7 @@ class Cronjob
   end #/ data
 
   def qdd
+    require_relative './qdd/required'
     require_relative './qdd/control.rb'
     QDD.control
     return true

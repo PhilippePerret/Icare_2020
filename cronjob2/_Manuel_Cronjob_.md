@@ -90,3 +90,81 @@ frequency: {hour:<heure>[, day:<week day>]}
 
 
 > Tout est géré ensuite par la méthode d’instance commune `runnable?` en fonction de l’heure courante.
+
+
+
+### Écriture du rapport
+
+Pour ajouter une ligne au rapport de cron qui sera produit, il suffit d’ajouter le code :
+
+~~~ruby
+Report << "<La ligne de rapport>"
+~~~
+
+> Noter qu’elle sera automatiquement indentée correctement.
+
+
+
+
+
+---
+
+
+
+## Test du cronjob
+
+Le cronjob peut être testé en tant que test unitaire. Cf. dans `./spec/unit/cron`.
+
+
+
+### Commande d'appel
+
+La commande d'appel pour simuler le travail du cronjob est :
+
+~~~ruby
+run_cronjob(time: date_test)
+~~~
+
+> `date_test` ci-dessus est une [date formatée][].
+
+Suivant l’heure de la date de test spécifiée les commandes de cron correspondantes seront jouées. Par exemple, si la date de test correspond à 3 heures, le cron job sera joué comme s’il était 3 heures.
+
+Les options (premier argument) de la commande sont :
+
+~~~
+:time			La date formatée à laquelle jouer le cronjob
+:noop			True/false pour préciser de ne rien faire "en vrai"
+~~~
+
+
+
+
+
+
+### Test du rapport produit
+
+Pour tester le rapport produit par le cronjob, il suffit d’utiliser le code :
+
+~~~ruby
+expect(cron_report(date_test)).to include "<la phrase à trouver>"
+~~~
+
+`date_test` ci-dessus est une [date formatée][].
+
+
+
+## Lexique
+
+
+
+<a id="formated_date"></a>
+
+#### Date formatée
+
+On appelle « date formatée » en parlant du Cronjob une date qui est au format `{String}` suivant : `"AAAA/MM/JJ/HH/MM"` par exemple `"2020/12/15/5/43"` au moment où j'écris ces lignes.
+
+
+
+
+
+[date formatée]: #formated_date
