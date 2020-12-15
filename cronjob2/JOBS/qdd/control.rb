@@ -14,7 +14,8 @@ class << self
     errors_found = false
     nombre_documents_checked = 0
     @errors = []
-    @nombre_reparations = 0
+    @nombre_documents_ok  = 0
+    @nombre_reparations   = 0
     IcDocument.each do |idoc|
       missing_docs = 0
       missing_docs += check_document_original(idoc)
@@ -22,22 +23,27 @@ class << self
       nombre_documents_checked += 1
       if missing_docs > 0
         Report << "# ERR Document #{idoc.name} (##{idoc.id})"
-        Report << "      #{@errors.join("\n      ")}"
+        @errors.each { |err| Report << "      #{err}" }
         @errors = []
         # Dans tous les cas, on indique que des documents n'ont pas été trouvés
         errors_found = true
-      elsif Cronjob.debug?
+      else
         # En cas de document conforme
-        Report << "= Document ##{idoc.id} (#{idoc.name}) OK"
+        @nombre_documents_ok += 1
+        if Cronjob.debug?
+          Report << "= Document ##{idoc.id} (#{idoc.name}) OK"
+        end
       end
     end #/ fin de boucle sur chaque document
 
     if errors_found
       Report << "Des erreurs de documents manquants ont été trouvés. Utiliser l'outil administrateur 'Nom de document QDD' pour pouvoir les importer sur le Quai des docs."
-      Report << "= Nombre de réparations : #{@nombre_reparations}"
     end
 
-    Report << "= Nombre de documents QDD contrôlés : #{nombre_documents_checked}"
+    Report << "= Nombre documents QDD checkés : #{nombre_documents_checked}"
+    Report << "  Nombre documents conformes   : #{@nombre_documents_ok}"
+    Report << "  Nombre documents erronés     : #{nombre_documents_checked - @nombre_documents_ok}"
+    Report << "  Nombre de réparations : #{@nombre_reparations}"
 
   end #/ control
 
@@ -59,11 +65,15 @@ class << self
     elsif sharing_is_not_defined && file_exists
       # <= Le partage n'est pas défini mais pourtant le document existe
       # => Signaler cette erreur (si NOOP) ou la corriger
-      @errors << "Le document existe mais le partage n'est pas défini (CORRIGÉ)"
+      m = "Le document existe mais le partage n'est pas défini"
       if not(Cronjob.noop?)
         idoc.set_option(1,1)
         @nombre_reparations += 1
+        m = "#{m} (CORRIGÉ)"
+      else
+        m = "#{m} (NON CORRIGÉ)"
       end
+      @errors << m
       return 1
     else
       # <= Pas de partage défini, pas de fichier existant

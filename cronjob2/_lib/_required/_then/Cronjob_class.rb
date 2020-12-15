@@ -62,11 +62,9 @@ class << self
   end #/ noop?
 
   def debug?
-    if ["false","0"].include?(ENV['DEBUG'])
-      false
-    else
-      true
-    end
+    (@is_debuged ||= begin
+      ["true", "1"].include?(ENV['DEBUG']) ? :true : :false
+    end) == :true
   end #/ debug?
 
 end # /<< self
