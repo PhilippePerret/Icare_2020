@@ -35,14 +35,23 @@ def shared?(fordoc)
 end #/ shared?
 
 def path_qdd(which)
-  defined?(QddDoc) || require_module('qdd')
-  @document_qdd ||= QddDoc.new(id)
+  # defined?(QddDoc) || require_module('qdd')
+  # @document_qdd ||= QddDoc.get(id)
   if which == :original
-    @path_qdd_original || @document_qdd.path(:original)
+    @path_qdd_original || qdd_doc.path(:original)
   else
-    @path_qdd_comments || @document_qdd.path(:comments)
+    @path_qdd_comments || qdd_doc.path(:comments)
   end
 end
+alias :qdd_path :path_qdd
+
+# RETOURNE l'instance du document QDD du document courant
+def qdd_doc
+  @qdd_doc ||= begin
+    defined?(QddDoc) || require_module('qdd')
+    QddDoc.get(id)
+  end
+end #/ qdd_doc
 
 # Méthode pour définir le partage du document
 # +fordoc+ :original ou :comments
