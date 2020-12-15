@@ -15,6 +15,6 @@ class Cronjob
   def NOM_DU_FICHIER                # <==== METTRE LE NOM DU FICHIER
                                     # <==== LE CODE DU PROGRAMME
     return true
-  end #/
+  end
 
 end #/Cronjob
