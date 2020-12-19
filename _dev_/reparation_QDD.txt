@@ -2,6 +2,9 @@ Liste des documents QDD à "réparer"
 - certains sont à mettre sur le QDD
 - d'autres sont à marquer "inexistants" (l'outil doit être fabriqué)
 
+Un dossier contenant d'anciens fichier se trouve à :
+/Volumes/BackupPlusDrive/iCloud_MBAir/NARRATION/XDIVERS/QDD-Icare
+
 Les_Cruches_draft_Dublin.doc (#14)
 armen.doc (#17)
 Cyril.doc (#18)
@@ -461,17 +464,3 @@ La_thematique_1er_travail.doc (#643)
 Travail_sur_le_theme_4eme_partie.doc (#644)
 MMAV_Synopsis_151010.odt (#652)
 E15Explicitation.docx (#655)
-ARIANETTE_Exposition_v4.docx (#676)
-ARIANETTE_Chemin_de_fer_v2.docx (#679)
-ARIANETTE_REDACTION_0704.docx (#680)
-Arianette_01.06_2016.docx (#686)
-Bonjour_Phil.docx (#692)
-Arianette_janvier2017.docx (#739)
-PQCL_idees_denouement_v1_16082017.docx (#775)
-Les_carnets_Sujet_1.pdf (#979)
-Je_sais_tout.pdf (#980)
-Sujet_3_Une_nouvelle_vie.pdf (#981)
-Je_sais_tout_Etape_11.docx (#983)
-Les_carnets_Etape_11.docx (#984)
-Une_nouvelle_vie_Etape_11.docx (#985)
-Projet_pour_le_Book.docx (#997)

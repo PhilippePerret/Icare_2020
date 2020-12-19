@@ -18,8 +18,9 @@ def docqdd_name
 
   doc_folder = File.basename(File.dirname(docqdd.path(:original)))
   msg << "Le nom de l'original est #{docqdd.name(:original)}"
-  debug << "Dossier/Nom original de #{doc.name.inspect} :"
+  debug << "Document « #{doc.name} » :"
   debug << "/#{doc_folder}/#{docqdd.name(:original)}"
+  debug << "Du : #{formate_date(doc.created_at)}"
   if docqdd.exists?(:original)
     alerte = File.exists?(docqdd.path(:original)) ? ' <span class="green">et il existe</span>' : ' <span class="red">mais il est introuvable… Dépose-le à la main avec le nom fourni.</span>'
     msg << "Il est marqué existant#{alerte}."
