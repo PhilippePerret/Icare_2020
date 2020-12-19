@@ -79,6 +79,7 @@ def simulation?
     Ajax.param(:simulation) === true ? :true : :false
   end) == :true
 end #/ simulation?
+alias :noop? :simulation?
 
 def cb_value
   @cb_value ||= Ajax.param(:cb_value) == true
