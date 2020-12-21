@@ -74,7 +74,7 @@ onChangeStatus(newStatus, ev){
   newStatus = Number(newStatus)
   const human_status = DATA_ETAPES_STATUS[newStatus].text
   if (confirm(`Dois-je mettre le statut de :\n\n\tl'étape ${this.as_human}\nà :\n\t${human_status} ?`)){
-    ietape.fiche.execCodeUpdate('icetapes',`SET status = ${newStatus}`,{no_confirmation:true})
+    this.execCodeUpdate('icetapes',`SET status = ${newStatus}`,{no_confirmation:true})
     message(`J'ai mis le statut de l'étape ${this.as_human} à ${human_status}.`)
   }
 }

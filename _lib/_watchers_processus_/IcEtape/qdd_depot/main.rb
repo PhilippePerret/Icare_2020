@@ -8,16 +8,15 @@ require_module('icmodules')
 class Watcher < ContainerClass
   def qdd_depot
     if param(:form_id) == "qdd-depot-form-#{icetape.id}"
-      form = Form.new
-      if form.conform?
-        proceder_au_depot_des_documents(form)
+      if Form.new.conform?
+        proceder_au_depot_des_documents()
       else
         raise WatcherInterruption.new
       end
     end
   end # / qdd_depot
 
-  def proceder_au_depot_des_documents(form)
+  def proceder_au_depot_des_documents()
     require_module('ticket')
     folder_depot = File.join(QDD_FOLDER, icetape.icmodule.absmodule.id.to_s)
     documents_ids = [] # pour les tickets, plus bas
