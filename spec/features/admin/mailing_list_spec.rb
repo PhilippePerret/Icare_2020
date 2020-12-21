@@ -94,7 +94,7 @@ feature 'Mailing-list d’administration' do
 
   context 'Un administrateur' do
 
-    scenario 'peut envoyer des messages par le formulaire de contact' do
+    scenario 'peut envoyer des messages par le formulaire de contact', only:true do
 
       # Avant toute chose, on s'assure qu'il n'existe pas un mailing
       # enregistré

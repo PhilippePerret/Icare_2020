@@ -1,15 +1,14 @@
 # encoding: UTF-8
-ERRORS.merge!({
-  doc_qdd_required: 'Le document %s pour “%s” est absolument requis !'.freeze,
-  doc_qdd_empty: 'Le document %s pour “%s” est vide !'.freeze
-})
+# frozen_string_literal: true
+require_relative './constants'
 
 require_module('icmodules')
 class Watcher < ContainerClass
   def qdd_depot
-    if param(:form_id) == "qdd-depot-form-#{icetape.id}"
+    if param(:form_id) == "qdd-depot-form-etape-#{icetape.id}"
       if Form.new.conform?
         proceder_au_depot_des_documents()
+        message(MESSAGES[:qdd_confirm_depot])
       else
         raise WatcherInterruption.new
       end
@@ -22,6 +21,7 @@ class Watcher < ContainerClass
     documents_ids = [] # pour les tickets, plus bas
     icetape.documents.each do |document|
       opts = document.options
+      log("Nom du document pour dépôt : #{File.basename(document.qdd_path(:original))}")
       # Déposer les documents bien nommés sur le QDD
       docfile_o = param("document-#{document.id}-original")
       docfile_o || raise(ERRORS[:doc_qdd_required] % ['original', document.name])
@@ -31,7 +31,9 @@ class Watcher < ContainerClass
         docfile_c || raise(ERRORS[:doc_qdd_required] % ['commentaires', document.name])
         docfile_c.size > 0 || raise(ERRORS[:doc_qdd_empty] % ['commentaires', document.name])
       end
-      File.open(document.path_qdd(:original),'wb'){|f| f.write(docfile_o.read)}
+      opath = document.path_qdd(:original)
+      FileUtils.mkdir_p(File.dirname(opath)) # on s'assure que le dossier existe
+      File.open(opath,'wb'){|f| f.write(docfile_o.read)}
       opts[3] = '1'
       if document.has_comments?
         File.open(document.path_qdd(:comments),'wb'){|f| f.write(docfile_c.read)}
@@ -52,7 +54,7 @@ class Watcher < ContainerClass
     icetape.documents.each do |doc|
       docid = doc.id
       @tickets.merge!(docid => {
-        name: docid.name,
+        name: doc.name,
         share: Ticket.create(user_id:owner.id, code:"require_module('icdocuments');IcDocument.share(#{docid})"),
         unshare: Ticket.create(user_id:owner.id, code:"require_module('icdocuments');IcDocument.unshare(#{docid})")
       })

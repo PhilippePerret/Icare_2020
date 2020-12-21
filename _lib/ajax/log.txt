@@ -822,3 +822,29 @@ Résultat de l'évaluation : #<Evaluation:0x00007fed4c1cd608 @score_paths=["/Use
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
 = Script : concours/get_score.rb
+
+
+--- [2020-12-21 09:56:32 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : db_exec.rb
+Requête à exécuter avec les valeurs nil : "SELECT * FROM users WHERE id > 9 AND SUBSTRING(options,4,1) <> \"1\" ORDER BY pseudo"
+
+
+--- [2020-12-21 11:52:27 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : db_exec.rb
+Requête à exécuter avec les valeurs nil : "SELECT * FROM users WHERE id > 9 AND SUBSTRING(options,4,1) <> \"1\" ORDER BY pseudo"
