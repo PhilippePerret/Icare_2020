@@ -71,7 +71,7 @@ def shared?(dtype)
   shared_sharing(dtype) || shared_same_etape
 end #/ shared?
 
-# Return si le fichier PDF de type +dtype+ existe
+# Return TRUE si le fichier PDF de type +dtype+ existe
 def pdf_exists?(dtype)
   File.exists?(path(dtype))
 end #/ pdf_exists?

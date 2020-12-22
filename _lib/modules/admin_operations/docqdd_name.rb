@@ -1,7 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 class Admin::Operation
-attr_reader :next_paiement, :nombre_jours
 def docqdd_name
   require_modules(['icmodules', 'qdd'])
   msg = []
@@ -56,12 +55,5 @@ end #/ free_days
 
 def next_paiement_formated
   @next_paiement_formated ||= formate_date(next_paiement)
-end #/ next_paiement_formated
+end
 end #/Admin::Operation
-
-
-ERRORS.merge!({
-  module_suivi_required: "Impossible d’offrir des jours gratuits à %{pseudo}. Son module n’est pas un module de suivi de projet…",
-  nombre_jours_required: "Le nombre de jours est requis !",
-  bad_paiement_trigger: "Le déclencheur de paiement est mal réglé (pas de date définie)…"
-})
