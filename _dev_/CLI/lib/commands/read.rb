@@ -10,6 +10,7 @@ MESSAGES.merge!({
 
 DATA_WHAT_READ = [
   {name:'Journal', value: :log},
+  {name:'Erreur fatale', value: :fatal},
   {name:'Journal', value: :cronjob},
   {name:'Rapports Cronjob', value: :report},
   {name:'Traceur', value: :tracer},
@@ -43,6 +44,10 @@ class << self
     path = './www/tmp/logs/journal2020.log'
     read_it(path)
   end #/ read_log
+  def read_fatal
+    path = './www/fatal_errors.log'
+    read_it(path)
+  end #/ read_fatal
   def read_cronjob
     path = './www/tmp/logs/cronjob.log'
     read_it(path)
