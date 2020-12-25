@@ -41,8 +41,9 @@ class User
   end #/ set_real
 
   def simple_watcher_pour_virement
-    add_watcher_pour_virement
-    message(MESSAGES[:annonce_new_notif_virement])
+    if add_watcher_pour_virement
+      message(MESSAGES[:annonce_new_notif_virement])
+    end
   end #/ simple_watcher_pour_virement
 
   # Détruit le watcher de paiement de module et retourne ses données.
@@ -54,7 +55,7 @@ class User
     if dwatcher.nil? # [1]
       dwatcher = db_get('watchers', {user_id: id, wtype:'confirm_virement'})
     end
-    db_delete('watchers', dwatcher[:id])
+    db_delete('watchers', dwatcher[:id]) unless dwatcher.nil?
     return dwatcher
   end #/ remove_watcher_paiement
 
@@ -62,16 +63,19 @@ class User
   # de paiement
   def add_watcher_pour_virement
     dwatcher = remove_watcher_paiement
+    return false if dwatcher.nil?
     self.watchers.add('annonce_virement', objet_id: dwatcher[:objet_id], vu_user:false)
+    return true
   end #/ add_watcher_pour_virement
 
   # En cas de volonté de paiement par IBAN
   # pour ajouter le watcher permettant d'annoncer le virement effectué et pour
   # détruire le watcher courant de paiement.
   def remplace_watcher_paiement_par_annonce_virement
-    add_watcher_pour_virement
-    message(MESSAGES[:notification_to_inform_phil_when_virement])
-    self.send_mail(subject:MESSAGES[:subject_mail_paiement_per_virement], message:deserb('mail_user_per_virement', self))
+    if add_watcher_pour_virement
+      message(MESSAGES[:notification_to_inform_phil_when_virement])
+      self.send_mail(subject:MESSAGES[:subject_mail_paiement_per_virement], message:deserb('mail_user_per_virement', self))
+    end
   end #/ remplace_watcher_paiement_par_annonce_virement
 
 end #/User

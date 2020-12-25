@@ -43,6 +43,7 @@ class << self
       return cand
     else
       session.delete('concours_user_id')
+      return nil
     end
   end #/ authentify
 
