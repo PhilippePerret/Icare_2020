@@ -10,8 +10,7 @@ end
 def exec
   if param(:form_id) == 'user-login'
     # debug "Soumission du formulaire d'identification"
-    form = Form.new
-    if form.conform?
+    if Form.new.conform?
       User.check_user
     else
       log('Le formulaire #user-login n’est pas conforme')

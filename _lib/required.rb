@@ -30,6 +30,7 @@ if not String.respond_to?(:match?)
   Dir["#{LIB_FOLDER}/xtra_old_ruby_versions/**/*.rb"].each{|m|require m}
 end
 
+# log("ENV : #{ENV.inspect}") rescue nil
 # log("Version ruby #{RUBY_VERSION}")
 # log("ONLINE: #{ONLINE.inspect} (OFFLINE est #{OFFLINE.inspect})")
 # log("DATABASE: #{MyDB.DBNAME.inspect}")
