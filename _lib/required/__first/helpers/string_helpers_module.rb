@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 =begin
   Méthodes d'helpers générales qui permettent de traiter tous les textes
 
@@ -76,19 +77,19 @@ def votre_bureau(titre = nil)
 end #/ votre_bureau
 
 def vos_notifications(titre = nil)
-  @vos_notifications ||= Tag.lien(route:'bureau/notifications'.freeze, text:titre||'vos notifications'.freeze).freeze
+  @vos_notifications ||= Tag.lien(route:'bureau/notifications', text:titre||'vos notifications')
 end #/ vos_notifications
 
 def quai_des_docs(titre = nil)
-  @quai_des_docs ||= Tag.lien(route:'qdd/home', text:titre||'Quai des docs').freeze
+  @quai_des_docs ||= Tag.lien(route:'qdd/home', text:titre||'Quai des docs')
 end #/ Quai_des_docs
 
 def hall_of_fame(titre = nil)
-  @hall_of_fame ||= Tag.lien(route:'overview/reussites', text:titre||'Hall of Fame').freeze
+  @hall_of_fame ||= Tag.lien(route:'overview/reussites', text:titre||'Hall of Fame')
 end #/ Quai_des_docs
 
 def profil(titre = nil)
-  Tag.lien(text:titre||'profil'.freeze, route:'user/profil')
+  Tag.lien(text:titre||'profil', route:'user/profil')
 end #/ profil
 
 def section_aide(titre = nil)
@@ -96,11 +97,11 @@ def section_aide(titre = nil)
 end #/ section_aide
 
 def section_preferences(titre = nil)
-  Tag.lien(text:titre||'section Préférences'.freeze, route:'bureau/preferences')
+  Tag.lien(text:titre||'section Préférences', route:'bureau/preferences')
 end #/ section_preferences
 
 def section_modules(titre = nil)
-  Tag.lien(text:titre||'section “Modules d’apprentissage”'.freeze, route:'modules/home')
+  Tag.lien(text:titre||'section “Modules d’apprentissage”', route:'modules/home')
 end #/ section_modules
 
 def salle_des_icariens(titre = nil)
@@ -124,7 +125,7 @@ end #/ scenariopole
 
 
 def politique_confidentialite(titre = nil)
-  Tag.lien(text:titre||'politique de confidentialité'.freeze, route:'overview/policy', target:true)
+  Tag.lien(text:titre||'politique de confidentialité', route:'overview/policy', target:true)
 end #/ politique_confientialite
 
 # ---------------------------------------------------------------------
@@ -136,7 +137,7 @@ end #/ politique_confientialite
 
 # Signature pour les mails
 def le_bot
-  @le_bot ||= '🤖 Le Bot de l’atelier Icare'.freeze
+  @le_bot ||= '🤖 Le Bot de l’atelier Icare'
 end #/ Le_bot
 
 def srps(titre=nil)

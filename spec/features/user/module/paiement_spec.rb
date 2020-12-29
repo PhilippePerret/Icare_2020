@@ -42,7 +42,10 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
 
 
-  scenario "un icarien peut payer par virement bancaire" do
+  scenario "un icarien peut payer par virement bancaire", only:true do
+
+    headless(true) # pour voir ce qui se passe
+    use_profile_downloader(true)
 
     # Pour les titres de mails, notamment
     require './_lib/_watchers_processus_/IcModule/annonce_virement/constants'
@@ -80,12 +83,12 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       "Marion devrait avoir le watcher d'annonce de virement"
     pitch("Le watcher de paiement de Marion a été remplacé par un watcher pour informer du virement.")
 
+    # Marion se déconnecte
+    logout
+
     # Un mail est envoyé à Marion pour l'informer de la procédure à suivre
     expect(marion).to have_mail(subject: MESSAGES[:subject_mail_paiement_per_virement], after:start_time)
     pitch("Marion reçoit un mail l'informant de la procédure à suivre.")
-
-    # Marion se déconnecte
-    logout
 
     pitch("Phil va venir sur son bureau et trouver la nouvelle notification pour annonce de paiement de Marion.")
     phil.rejoint_ses_notifications
@@ -104,11 +107,13 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
     click_on(UI_TEXTS[:button_confirm_virement])
 
     # Phil reçoit un mail pour l'avertir
-    expect(phil).to have_mail(subject:MESSAGES[:titre_mail_admin], after: start_time)
+    pitch("Un mail m'est envoyé pour m'annoncer le virement")
+    expect(phil).to have_mail(subject:MESSAGES[:titre_mail_admin], after: start_time, message:"vient de procéder au paiement par virement")
+
     # Marion reçoit un mail lui confirmant l'annonce de virement et la
     # remerciant
-    expect(marion).to have_mail(subject:MESSAGES[:titre_mail_icarien], after: start_time)
-    pitch("Marion et Phil ont reçu un mail annonçant le virement.".freeze)
+    pitch("Un mail est envoyé à Marion pour lui annoncer le virement.")
+    expect(marion).to have_mail(subject:MESSAGES[:titre_mail_icarien], after: start_time, message:"Vous venez de confirmer le paiement de votre module")
 
     # Le watcher d'annonce doit avoir été détruit
     expect(marion).not_to have_watcher(wtype:'annonce_virement', after:start_time)
@@ -130,6 +135,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
       click_on('Confirmer le paiement'.freeze)
     end
     screenshot('phil-confirm-virement-marion')
+    expect(page).to have_message("Le paiement a bien été confirmé.")
 
     marion.reset
 

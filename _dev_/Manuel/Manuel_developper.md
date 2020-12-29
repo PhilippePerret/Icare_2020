@@ -3086,8 +3086,53 @@ feature "Mon test" do
 end
 ~~~
 
+### Inclusion des modules requis
 
+On requiert aussi automatiquement le module `_required.rb` qui doit obligatoirement se trouver dans chaque dossier et doit, lui-même, requérir son fichier parent de niveau supérieur :
 
+~~~ruby
+require_relative '../_required'
+~~~
+
+---
+
+### Le mode sans entête (headless)
+
+Ce mode permet de ne pas afficher le navigateur pendant les tests de fonctionnalité.
+
+Ce mode peut être activé par la commande :
+
+~~~ruby
+headless(true)
+~~~
+
+> À mettre en début de test ou dans un `before` par exemple.
+
+Il peut être désactivé par :
+
+~~~
+headless(true)
+~~~
+
+---
+
+### Test des téléchargements
+
+Afin de tester les procédures qui utilisent le téléchargement d'un fichier, il a été créé un profil Firefox spécial qui permet d'enregistrer directement le fichier dans le dossier téléchargement (aucune fenêtre pop-up à cliquer, donc).
+
+Pour utiliser ce profil, il suffit d'ajouter le code suivant en début de test :
+
+~~~ruby
+use_profile_downloader
+~~~
+
+Pour ne plus utiliser ce profil :
+
+~~~ruby
+use_profile_downloader(false)
+~~~
+
+---
 
 ### Les gels
 

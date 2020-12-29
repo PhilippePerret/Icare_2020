@@ -5,7 +5,7 @@ subject(MESSAGES[:titre_mail_admin])
 <p>Bonjour Phil,</p>
 
 <p><%= owner.pseudo %> vient de procéder au paiement par virement de son module “<%= objet.absmodule.name %>”.</p>
-<p>Il faut vérifier que le virement a bien été effectué et marquer le module payé depuis ta <%= section_notifications %>.</p>
+<p>Il faut vérifier que le virement a bien été effectué et marquer le module payé depuis ta <%= vos_notifications('section Notifications') %>.</p>
 <p>Informations précises :</p>
 <pre><code>
 ICARIEN : <%= owner.pseudo %> (#<%= owner.id %>)

@@ -6,5 +6,6 @@ class Watcher < ContainerClass
     # On ajoute le paiement en créant un enregistrement
     require "#{FOLD_REL_PAGES}/modules/paiement/lib/user_paiement"
     owner.add_paiement(objet_id) # fait tout
+    message("Le paiement a bien été confirmé.")
   end # / confirm_virement
 end # /Watcher < ContainerClass
