@@ -129,16 +129,16 @@ def facture_mail
 .
 . À L'ORDRE DE : #{owner.patronyme||owner.pseudo} (#{owner.mail})
 .
-. DÉLIVRÉ LE   : #{formate_date}
+.   DÉLIVRÉ LE : #{formate_date}
 .
-.         PAR  : Atelier Icare (atelier d'écriture en
+.          PAR : Atelier Icare (atelier d'écriture en
 .                ligne : https://www.atelier-icare.net)
 .
-. OBJET        : Module d'apprentissage
+.        OBJET : Module d'apprentissage
 .
 .  DÉSIGNATION : #{icmodule.ref.titleize}
 .
-. MONTANT TTC  : #{montant} €
+.  MONTANT TTC : #{montant} €
 .
 .........................................................
 </code></pre>
