@@ -49,6 +49,8 @@ class << self
 
   # RETOURNE 0 si le document n'a aucun problème, 1 dans le cas contraire
   def check_document_original(idoc)
+    # Si le document n'existe pas, on le passe
+    return 0 if idoc.option(0) == 0
     bitpartage = idoc.option(1)
     file_exists = File.exists?(idoc.qdd_path(:original))
     document_is_shared = bitpartage == 1
@@ -84,6 +86,8 @@ class << self
 
   # RETOURNE 2 si le document a des problèmes, 0 dans le cas contraire
   def check_document_comments(idoc)
+    # Si le document n'existe pas, on le passe
+    return 0 if idoc.option(8) == 0
     bitpartage = idoc.option(9)
     file_exists = File.exists?(idoc.qdd_path(:comments))
     document_is_shared = bitpartage == 1
