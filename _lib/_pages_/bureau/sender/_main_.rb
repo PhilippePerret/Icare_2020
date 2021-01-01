@@ -95,8 +95,8 @@ class HTML
     @date_commentaires = formate_date(user.icetape.expected_comments, duree: true)
     sent_docs.each do |sdoc|
       @documents_ids << "##{sdoc.id}"
-      @documents_ids_n_names << "#{sdoc.original_filename} (##{sdoc.id})"
-      @documents_names << sdoc.original_filename
+      @documents_ids_n_names << "#{String.safe_path(sdoc.original_filename)} (##{sdoc.id})"
+      @documents_names << String.safe_path(sdoc.original_filename)
     end
     @documents_ids    = @documents_ids.join(VG)
     @documents_names  = @documents_names.join(VG)
