@@ -62,7 +62,7 @@ end #/ doctype=
 # seulement utile pour le document commentaire, mais on peut imaginer qu'un
 # document original a été marqué inexistant)
 def exists?(dtype)
-  options[dtype === :original ? 0 : 8].to_i == 1
+  options[dtype == :original ? 0 : 8].to_i == 1
 end #/ exists?
 
 # Retourne TRUE si le document de type +dtype+ (:original ou :comments) est

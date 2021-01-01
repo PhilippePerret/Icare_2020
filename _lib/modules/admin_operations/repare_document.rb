@@ -42,11 +42,12 @@ def reparer_le_document(document_id)
     key_deposed = key == :original ? 3 : 11
 
     le_fichier_existe     = docqdd.pdf_exists?(key)
+    doc_maybe_existant    = option_is(key_existe, 1) || option_is(key_deposed, 1)
     doc_marqued_existant  = option_is(key_existe, 1) && option_is(key_deposed, 1)
     # Si le document original est marqué existant dans les options et qu'il
     # n'existe pas, c'est une erreur qu'il faut corriger
     # if docqdd.exists?(key) && not(le_fichier_existe)
-    if doc_marqued_existant && not(le_fichier_existe)
+    if doc_maybe_existant && not(le_fichier_existe)
       # Quand le document original n'existe pas en tant que fichier mais
       # qu'il est marqué existant
       if noop?
