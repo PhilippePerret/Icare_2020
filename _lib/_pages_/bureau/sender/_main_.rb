@@ -52,7 +52,7 @@ class HTML
           sent_doc.traite
           sent_docs << sent_doc
         else
-          erreur(ERRORS[:unable_document_treatment] % {name:sent_doc.original_filename, error:sent_doc.error})
+          erreur(ERRORS[:unable_document_treatment] % {name:String.safe_path(sent_doc.original_filename), error:sent_doc.error})
           return false
         end
       end

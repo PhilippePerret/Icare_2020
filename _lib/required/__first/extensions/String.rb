@@ -1,5 +1,41 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class String
+
+  # ---------------------------------------------------------------------
+  #
+  #   CLASSE
+  #
+  # ---------------------------------------------------------------------
+  class << self
+
+    # Utiliser :
+    #
+    #   String.safe(<str>)
+    #
+    # pour encoder de façon sûr (enfin… presque…)
+    def safe(str)
+      str.dup.force_encoding('utf-8')
+    end #/ safe
+
+    # Pour obtenir un nom de fichier "sûr", mais avec tous les caractères
+    # problématiques remplacés par des '@'
+    #
+    # @usage
+    #
+    #   res = String.safe_path(str)
+    #
+    def safe_path(str)
+      safe(str).gsub(/[^a-zA-Z_\.0-9\-]/,'@')
+    end #/ safe_path
+
+  end #<< self
+
+  # ---------------------------------------------------------------------
+  #
+  #   INSTANCE
+  #
+  # ---------------------------------------------------------------------
 
   def numeric?
     Float(self) != nil rescue false

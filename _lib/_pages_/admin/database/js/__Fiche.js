@@ -377,6 +377,8 @@ execCode(){
   const firstWord = fieldcode.split(' ')[0]
   if (firstWord == 'SET') {
     this.execCodeUpdate(sqlTable, fieldcode)
+  } else if ( firstWord == 'GET') {
+    this.execCodeGet(sqlTable, fieldcode)
   } else if ( firstWord == 'DESTROY') {
     this.execCodeDestroy(sqlTable, fieldcode)
   }
@@ -400,6 +402,13 @@ execCodeUpdate(sqlTable, fieldcode, options){
       this.update()
     }
   })
+}
+
+execCodeGet(sqlTable, fieldcode){
+  const [theget, columnName] = fieldcode.split(' ')
+  const realcode  = `SELECT ${columnName} FROM ${sqlTable} WHERE id = ?`
+  const values    = [this.objet.data.id]
+  Ajax.send("db_exec.rb", {request: realcode, values: values, sql_table: sqlTable, sql_id: this.objet.data.id})
 }
 
 execCodeDestroy(sqlTable, fieldcode){
