@@ -3,15 +3,76 @@
 =begin
   Matchers pour le concours
 =end
-RSpec::Matchers.define :be_accueil_concours do
+RSpec::Matchers.define :be_page_annonce_concours do
   match do |page|
     page.has_css?("h2.page-title", text: "Concours de synopsis de l’atelier Icare")
+
   end
   description do
-    "C'est bien la page d'accueil du concours"
+    "be la page d'annonce du prochain concours"
   end
   failure_message do
-    "Ce n'est pas la page d'accueil du concours, ou alors elle n'est pas conforme."
+    "be la page d'annonce du concours, ou alors elle n'est pas conforme : #{@errors.join(', ')}."
+  end
+end
+
+
+RSpec::Matchers.define :be_accueil_concours do |phase|
+  match do |page|
+    @errors = []
+    unless page.has_css?("h2.page-title", text: "Concours de synopsis de l’atelier Icare")
+      @errors << "n'a pas le bon titre. Son titre est #{title_of_page}"
+    end
+    titre_inscription = phase < 2 ? "vous inscrire" : "Inscription au prochain concours"
+    unless page.has_link?(titre_inscription, {href: 'concours/inscription'})
+      @errors << "ne contient pas le lien pour s'inscrire"
+    end
+    titre_login = phase < 2 ? "vous identifier" : "Identifiez-vous"
+    unless page.has_link?(titre_login, href: 'concours/identification')
+      @errors << "ne contient pas le lien pour s'identifier"
+    end
+    case phase
+    when 1
+      unless page.has_content?("Le concours est ouvert !")
+        @errors << "devrait annoncer que le concours est ouvert"
+      end
+    when 2
+      if page.has_content?("Le concours est ouvert !")
+        @errors << "ne devrait pas annoncer que le concours est ouvert"
+      end
+      unless page.has_content?("en cours de présélection")
+        @errors << "devrait annoncer que les synopsis sont en présélection"
+      end
+    when 3
+      if page.has_content?("en cours de présélection")
+        @errors << "ne devrait pas annoncer que les synopsis sont en présélection"
+      end
+      unless page.has_content?("sont en finale")
+        @errors << "devrait annoncer que les synopsis sélectionnés sont en final"
+      end
+    when 5
+      if page.has_content?("sont en finale")
+        @errors << "ne devrait pas annoncer que les synopsis sélectionnés sont en final"
+      end
+      unless page.has_content?("Les synopsis lauréats ont été choisis !")
+        @errors << "devrait annoncer que les synopsis sélectionnés sont en final"
+      end
+    when 8
+      if page.has_content?("Les synopsis lauréats ont été choisis !")
+        @errors << "ne devrait pas annoncer que les synopsis sélectionnés sont en final"
+      end
+      unless page.has_content?("Le concours est achevé")
+        @errors << "devrait annoncer que le concours est achevé"
+      end
+    end
+
+    return @errors.empty?
+  end
+  description do
+    "be la page d'accueil du concours (lancé)"
+  end
+  failure_message do
+    "must be la page d'accueil du concours (lancé), ou alors elle n'est pas conforme : #{@errors.join(', ')}."
   end
 end
 

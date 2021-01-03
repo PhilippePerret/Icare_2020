@@ -291,7 +291,7 @@ feature "Phase 3 du concours" do
       goto("concours/evaluation")
       expect(page).to be_fiches_synopsis
       expect(page).to have_css("div#synopsis-container")
-      sleep 10
+      # sleep 10
       TConcurrent.all_current.each do |conc|
         if conc.preselected?
           expect(page).to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),

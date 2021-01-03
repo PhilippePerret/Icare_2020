@@ -1,5 +1,29 @@
 # Concours<br>Manuel d'utilisation
 
+
+
+## Tables SQL
+
+### Table « concours »
+
+Table pour un concours donné. Sa propriété `annee` conserve l’année du concours.
+
+`phase` détermine la phase courante du concours.
+
+### Table « concours_concurrents »
+
+Table consignant tous les concurrents aux concours (précédents, présents et futurs), icariens ou non.
+
+### Table « concurrents_per_concours »
+
+Table qui lie un concurrent et un concours, par les propriétés `annee` (pour le concours) et `concurrent_id` pour le concurrent.
+
+
+
+---
+
+
+
 # Phases du concours
 
 La phase courante du concours détermine là où on se trouve du concours. Elle est maintenue par la propriété `phase` dans la base de données
@@ -8,17 +32,54 @@ La phase courante du concours détermine là où on se trouve du concours. Elle 
 | ---- | -------------------------- | -------- | ------------------------------------------------------------ |
 | 0    | Concours en attente        | *état*   | Le concours est en attente, rien n’est affiché.<br />Un visiteur quelconque peut s’inscrire (notamment pour être averti) |
 |      |                            | *action* | Déterminer le prochain thème.<br />Composer le jury.         |
+| |  | *pivot* | Le concours est lancé |
 | 1    | Le concours est en cours   | *état*   | Un visiteur peut s’inscrire, un visiteur peut transmettre son synopsis.<br />Un évaluateur peut commencer à lire le synopsis et l’évaluer.<br />Le concours est annoncé sur l’atelier.<br />Le thème est déterminé, le concurrent peut commencer à écrire. |
 |      |                            | *action* | Les concurrents sont avertis du lancement du concours.       |
+| |  | *pivot* | Arrivée à échéance/fin du dépôt possible |
 | 2    | Échéance                   | *état*   | Un visiteur peut toujours s’inscrire, mais pour la session suivante (avertissement).<br />Un concurrent ne peut plus transmettre de document.<br />Un évaluateur peut toujours lire et évaluer le synopsis.<br />L’administrateur ne peut pas produire les fiches de lecture (officiellement) ni afficher les résultats. |
 |      |                            | *action* | Un mail est envoyé aux concurrents pour annoncer la fin de l’échéance et décrire un peu la suite (sélection). |
+| |  | *pivot* | Les dix scénarios de la première sélection ont été choisis. |
 | 3    | Première sélection         | *état*   | Les synopsis sont sélectionnés pour la sélection finale.<br />Un mail annonce aux perdants qu’ils n’ont pas été retenus.<br />Un mail annonce aux gagnants du premier tour qu’ils ont été retenus. |
 |      |                            | *action* | Mail envoyé aux concurrents pour annonce de la première sélection |
+| | | *pivot* | Les 3 synopsis lauréats ont été choisis |
 | 5    | Palmarès                   | *état*   | L’administrateur peut afficher les résultats, produire les fiches de lectures, informer les concurrents des résultats.<br />Les concurrents peuvent consulter leurs résultats sur leur espace.<br />Un visiteur quelconque peut toujours s’inscrire, mais pour la session suivante (avertissement). |
 |      |                            | *action* | Mail d’annonce des résultats aux concurrents                 |
+| | | *pivot* | Fin officielle du concours |
 | 8    | Fin officielle du concours | *état*   | Le concours n’est plus annoncé sur l’atelier.                |
 |      |                            | *action* | Mail de fin de concours, remerciements aux concurrents, annonce de la prochaine session.<br />Remerciements aux membres du jury. |
 | 9    | Concours nettoyé           | *état*   | Les éléments du concours sont nettoyés pour permettre le lancement et le traitement du prochain concours. |
+
+---
+
+### Phase 0
+
+C’est la phase où le concours de telle année (l’année suivante) n’est pas encore lancé. Les visiteurs trouvent un encart sur la page d’accueil qui leur annonce cet état et permet aux non inscrits de s’inscrire avant l’heure.
+
+### Phase 1
+
+C’est la phase qui commence quand le concours est lancé et se termine à l’échéance du dépôt de tous les synopsis. N’importe quel participant peut s’inscrire et déposer son dossier de candidature. Il peut définir ses préférences, par exemple déterminer s’il veut recevoir un mail de rappel ou non.
+
+### Phase 2
+
+C’est la phase qui débute à l’échéance des dépôts et se termine lorsque les 10 dossiers de la présélection ont été choisis par le premier jury. Dans cette phase, le premier jury doit choisir 10 dossiers qui concourront pour les trois prix finaux.
+
+### Phase 3
+
+Phase qui commence à la sélection des 10 dossiers finaux et s’achève lorsque le palmarès a été déterminé et que les trois prix ont été décernés (ou pas).
+
+### Phase 5
+
+Phase qui commence à l’annonce du palmarès et s’achève lorsque l’administrateur détermine que le concours est fini. Pendant cette phase, les concurrents (et le monde) peut consulter le palmarès et lire les synopsis des trois lauréats. Les concurrents peuvent récupérer leur fiche de lecture détaillée.
+
+### Phase 8
+
+Phase qui commence lorsque l’administrateur définit la fin du concours de cette session. Environ 1 mois après l’annonce des résultats ? Elle se termine lorsque le « nettoyage » de cette session est terminé.
+
+### Phase 9
+
+Le nettoyage de la session du concours est terminé, il est officiellement et définitivement terminé. Tous les dossiers doivent avoir été « compilés » pour tenir moins de place.
+
+---
 
 
 

@@ -1,18 +1,5 @@
 # Réflexions sur le concours
 
-## Nom Evaluator
-
-Maintenant qu'un `Evaluator` peut être administrateur ou concurrent, je me demande si c'est la bonne définition. Ne pourrait-on pas utiliser la classe `User` pour ça, avec les méthodes suivantes :
-
-* User#concurrent? (qui existe déjà)
-* User#admin? (qui existe déjà)
-* User#jury1?
-* User#jury2?
-* User#evaluator? (lorsque jury1? || jury2?)
-
-Un des avantages possibles, c'est qu'on pourrait utiliser une seule boite de login pour tout (ou, pour le moment, laisser quand même séparés le login de l'atelier avec le login du concours)
-
-MAIS : en fait, on ne peut pas trop le faire avec le concurrent, qui possède trop de méthodes particulières qui risque de rentrer en conflit avec les données User normales (par exemple la propriété :options qui est radicalement différente). Il serait peut-être possible de "couper la poire en deux" et d'utiliser les méthodes User ci-dessus quand c'est pertinent, par exemple pour l'affichage des fiches de lecture.
 
 ## Calcul des notes et des positions
 

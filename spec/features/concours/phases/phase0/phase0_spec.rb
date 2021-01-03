@@ -10,7 +10,7 @@ feature "Concours de Synopsis - PHASE 0" do
   before :all do
     require './_lib/_pages_/concours/espace_concurrent/constants'
     degel('concours-phase-0')
-    headless
+    headless(false)
   end
   context 'un visiteur quelconque' do
     it 'trouve une page d’accueil minimale valide' do

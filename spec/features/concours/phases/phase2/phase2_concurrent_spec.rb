@@ -9,7 +9,6 @@ feature "EN PHASE 2 (présélections)" do
   require_relative './it_cases.rb'
   before :all do
     degel('concours-phase-2')
-    # headless
   end
 
   context 'Un concurrent courant du concours' do
