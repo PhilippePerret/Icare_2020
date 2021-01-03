@@ -1,6 +1,14 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+=begin
 
+  TODO
+    Pour le moment, on utilise deux procédures différentes, pour le chargement
+    d'un seul dossier et pour le chargement de tous. Il faut unifier les
+    procédure pour ne plus utiliser que la classe CDossier.
+    
+=end
+require 'yaml'
 require_relative './CDossier'
 
 DATA_CONCOURS = {}
@@ -20,8 +28,6 @@ class << self
         # Une erreur s'est produite (peut-être qu'on va continuer)
       end
     end
-
-    return # en attendant que ça fonctionne
 
     get_data_concours
 
@@ -50,13 +56,15 @@ class << self
       `mkdir -p "#{File.dirname(data_fichier[:local_path])}"`
       cmd_download = SSH_CONCOURS_DOWNLOAD_FILE % {local_path: data_fichier[:local_path], cid: data_fichier[:concurrent][:id], fname: data_fichier[:filename]}
       res = `#{cmd_download} 2>&1`
-      puts "Résulat du download : #{res.inspect}"
+      unless res.empty?
+        puts "Résulat du download : #{res.inspect}"
+      end
 
       data_fichier.delete(:local_exists)
       data_fichier[:concurrent].delete(:fichiers)
-      infos_file = File.join(File.dirname(data_fichier[:local_path]), "#{data_fichier[:id]}.json")
+      infos_file = File.join(File.dirname(data_fichier[:local_path]), "#{data_fichier[:id]}.yaml")
       # puts "data_fichier: #{data_fichier.inspect}"
-      File.open(infos_file, 'wb') { |f| f.write(data_fichier.to_json) }
+      File.open(infos_file,'wb'){|f| f.write YAML.dump(data)}
 
       puts "-> '#{data_fichier[:local_path]}'".vert
     end#/fin de boucle sur tous les fichiers à télécharger
@@ -107,7 +115,7 @@ private
 
   # Renseigne la constante DATA_CONCOURS avec les données des concurrents
   def get_data_concours
-    res = `#{SSH_CONCOURS_DATA_CONCURRENT} 2>&1`
+    res = `#{SSH_CONCOURS_DATA_CONCURRENTS} 2>&1`
     DATA_CONCOURS.merge!(JSON.parse(res))
     # puts "DATA_CONCOURS: #{DATA_CONCOURS.inspect}"
 
@@ -134,7 +142,7 @@ private
       concurrent_id, filename = fpath.split('/')[-2..-1]
       fichier_id = File.basename(filename, File.extname(filename))
       cid, annee = fichier_id.split('-')
-      local_path = File.join('.','_lib','data','concours','distant',concurrent_id, filename)
+      local_path = File.join(CDossier.folder, concurrent_id, filename)
       DATA_CONCOURS[:concurrents][concurrent_id].merge!(annees: [])
       DATA_CONCOURS[:concurrents][concurrent_id][:fichiers].merge!(annee => {
         filename: filename,
@@ -190,7 +198,8 @@ scp -p #{SSH_ICARE_SERVER}:www/_lib/data/concours/%{cid}/%{fname} %{local_path}
 SSH
 
 
-SSH_CONCOURS_DATA_CONCURRENT = <<-SSH
+# Commande pour obtenir les données de tous les concurrents
+SSH_CONCOURS_DATA_CONCURRENTS = <<-SSH
 ssh #{SSH_ICARE_SERVER} ruby << RUBY
 require 'json'
 data = {}
@@ -210,5 +219,24 @@ end
 puts data.to_json
 RUBY
 SSH
+
+# Commande pour obtenir les données d'un seul concurrent
+# Utiliser :
+#   command = SSH_CONCOURS_DATA_CONCURRENT % [concurrent_id.to_s]
+#   data_concurrent = JSON.parse(`#{command}`)
+SSH_CONCOURS_DATA_CONCURRENT = <<-SSH
+ssh #{SSH_ICARE_SERVER} ruby << RUBY
+require 'json'
+data = nil
+Dir.chdir('./www') do
+  ONLINE = true
+  require './_lib/required/__first/db'
+  MyDB.DBNAME = 'icare_db'
+  data = db_exec("SELECT * FROM concours_concurrents WHERE concurrent_id = %s")[0]
+end
+puts data.to_json
+RUBY
+SSH
+
 
 end #/IcareCLI

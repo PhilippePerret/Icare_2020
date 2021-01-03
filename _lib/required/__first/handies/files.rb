@@ -10,11 +10,16 @@ ERRORS.merge!({
   mark_unfound_file: '[FICHIER MANQUANT : `%s`]'.freeze,
 })
 
-# Permet de créer le path +dirpath+ si le dossier n'existe pas
+# Utiliser à la création d'un dossier, pour s'assurer de son existence. Par
+# exemple avec :
+#   def mon_dossier
+#     @mon_dossier ||= ensure_folder(File.join('to','my','folder'))
+#   end
 def mkdir dirpath
   `mkdir -p "#{dirpath}"` unless File.exists?(dirpath)
   dirpath
 end #/ mkdir
+alias :ensure_folder :mkdir
 
 def file_read(path)
   if File.exists?(path)

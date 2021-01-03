@@ -27,3 +27,13 @@ def formate_choices(command, data)
   end
   return data
 end #/ formate_choices
+
+# Utiliser à la création d'un dossier, pour s'assurer de son existence. Par
+# exemple avec :
+#   def mon_dossier
+#     @mon_dossier ||= ensure_folder(File.join('to','my','folder'))
+#   end
+def ensure_folder(dos)
+  `mkdir -p "#{dos}"`
+  return dos
+end #/ ensure_folder
