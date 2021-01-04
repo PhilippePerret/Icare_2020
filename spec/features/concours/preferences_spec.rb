@@ -53,35 +53,6 @@ feature "Changement des préférences pour le concours" do
       @concurrent = TConcurrent.get_random(current: true)
     end
 
-    scenario 'peut définir sa préférence pour la fiche de lecture' do
-      # *** Vérification préliminaire ***
-      expect(concurrent.options[1]).to eq("1")
-      concurrent.identify
-      expect(page).to be_espace_personnel
-      expect(page).to have_content(MESSAGE_RECOIT_FICHE_LECTURE)
-      expect(page).to have_link(LINK_DONT_WANT_FICHE_LECTURE)
-      # *** Test ***
-      concurrent.click_on(LINK_DONT_WANT_FICHE_LECTURE)
-      # *** Vérifications ***
-      expect(page).to have_message("D'accord, vous ne recevrez plus la fiche de lecture")
-      expect(page).to have_content(MESSAGE_DONT_WANT_FICHE_LECTURE)
-      expect(page).to have_link(LINK_WANT_FICHE_LECTURE)
-      # Dans les données du concurrent
-      concurrent.reset
-      expect(concurrent.options[1]).to eq("0")
-      # *** Test 2***
-      concurrent.click_on(LINK_WANT_FICHE_LECTURE)
-      # *** Vérifications ***
-      expect(page).to have_message("D'accord, vous recevrez la fiche de lecture.")
-      expect(page).to have_content(MESSAGE_RECOIT_FICHE_LECTURE)
-      expect(page).to have_link(LINK_DONT_WANT_FICHE_LECTURE)
-      # Dans les données du concurrent
-      concurrent.reset
-      expect(concurrent.options[1]).to eq("1")
-      concurrent.logout
-    end
-
-
     scenario 'peut définir sa préférence pour son mail d’information' do
       # *** Vérification préliminaire ***
       expect(concurrent.options[0]).to eq("1")

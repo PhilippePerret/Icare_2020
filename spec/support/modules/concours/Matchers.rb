@@ -3,6 +3,8 @@
 =begin
   Matchers pour le concours
 =end
+
+
 RSpec::Matchers.define :be_page_annonce_concours do
   match do |page|
     page.has_css?("h2.page-title", text: "Concours de synopsis de l’atelier Icare")
