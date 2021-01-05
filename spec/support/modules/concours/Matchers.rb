@@ -179,16 +179,25 @@ RSpec::Matchers.define :be_identification_concours do
   end
 end
 
-RSpec::Matchers.define :be_identification_evaluator do
+RSpec::Matchers.define :be_indentification_jury do
   match do |page|
-    page.has_css?("h2.page-title", text: "Identification") &&
-    page.has_css?("form#concours-membre-login")
+    @errors = []
+    unless page.has_css?("h2.page-title", text: /Identification/i)
+      @errors << "devrait avoir “Identification” dans son titre"
+    end
+    unless page.has_css?("h2.page-title", text: /membre du jury/i)
+      @errors << "devrait avoir “membre du jury” dans son titre"
+    end
+    unless page.has_css?("form#concours-membre-login")
+      @errors << "devrait contenir un formulaire d'identification valide"
+    end
+    return @errors.empty?
   end
   description do
     "C'est bien la page d'identification des membres du jury du concours"
   end
   failure_message do
-    "Ce n'est pas la page d'identification des membres du jury du concours, ou alors elle n'est pas conforme."
+    "Ce n'est pas la page d'identification des membres du jury du concours : #{@errors.join(', ')}"
   end
 end
 

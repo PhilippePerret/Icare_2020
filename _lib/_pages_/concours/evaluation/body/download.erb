@@ -1,5 +1,8 @@
 <%
 # frozen_string_literal: true
+
+evaluator = html.evaluator || redirect_to("concours/evaluation?view=login")
+
 self.titre = "Télécharger le fichier de candidature"
 =begin
   Page de téléchargement du fichier désigné par param(:cid)

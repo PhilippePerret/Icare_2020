@@ -8,7 +8,7 @@ RSpec.shared_examples "un visiteur renvoyé à l’identification" do
   it 'est renvoyé à l’identification' do
     goto("concours/evaluation?view=fiches_lecture")
     expect(page).not_to be_fiches_lecture_jury
-    expect(page).to be_identification_evaluator
+    expect(page).to be_indentification_jury
   end
 end
 RSpec.shared_examples "un juré renvoyé à l'accueil du jury" do |visitor|

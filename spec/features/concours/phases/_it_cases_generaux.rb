@@ -46,7 +46,7 @@ def ne_peut_pas_atteindre_la_section_evalutation
   try_identify_visitor
   goto("concours/evaluation")
   expect(page).not_to be_page_evaluation
-  expect(page).to be_identification_evaluator
+  expect(page).to be_indentification_jury
 end
 
 def peut_rejoindre_son_espace_personnel

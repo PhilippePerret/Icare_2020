@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 # Pour éditer le synopsis
 
+evaluator = html.evaluator || redirect_to("concours/evaluation?view=login")
+
 self.titre = "Édition du synopsis"
 
 prix_values = [

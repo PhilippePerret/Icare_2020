@@ -26,7 +26,7 @@ feature "Un membre du premier jury" do
   before(:all) do
     @visitor = TEvaluator.new(jury:1)
   end
-  context 'en PHASE 0', only:true do
+  context 'en PHASE 0' do
     before :all do
       degel('concours-phase-0')
       headless(false)
