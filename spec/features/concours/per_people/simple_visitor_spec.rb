@@ -24,14 +24,14 @@ require_relative './_required'
 
 feature "Un simple visiteur" do
   before(:all) do
-    headless
+    headless(false)
   end
-  context 'en PHASE 0', only:true do
+  context 'en PHASE 0' do
     before :all do
       degel('concours-phase-0')
     end
     peut_atteindre_lannonce_du_prochain_concours
-    peut_sinscrire_au_concours
+    peut_sinscrire_au_concours(as = :simple)
     # scenario { atteint_lannonce_du_prochain_concours }
     # scenario { ne_peut_pas_atteindre_la_section_evalutation }
     # scenario { peut_sinscrire_au_concours }

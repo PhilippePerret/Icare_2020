@@ -3,19 +3,19 @@
 =begin
   Test de toutes les phases du concours pour un :
 
-    NOUVEAU CONCURRENT
+    ICARIEN JAMAIS INSCRIT
 
 =end
 require_relative './_required'
 
-feature 'Un ancien concurrent' do
+feature 'Un icarien' do
   before :all do
     headless(false)
   end
 
   before(:each) do
-    @visitor = TConcurrent.get_random(current:false, ancien:true, femme:true)
-    @visitor.rejoint_le_concours
+    @visitor = TUser.get_random(concours:false, admin:false)
+    @visitor.rejoint_le_site
   end
 
   let(:visitor) { @visitor }
@@ -24,7 +24,7 @@ feature 'Un ancien concurrent' do
     before :all do
       degel('concours-phase-0')
     end
-    peut_sinscrire_au_concours(as = :ancien)
+    peut_sinscrire_au_concours(as = :icarien)
     # peut_atteindre_lannonce_du_prochain_concours
     # ne_peut_pas_atteindre_lespace_personnel
     # ne_peut_pas_atteindre_la_section_evalutation
@@ -32,18 +32,19 @@ feature 'Un ancien concurrent' do
   end #/context PHASE 0
 
 
-  context 'PHASE 1' do
+  context 'PHASE 1', only:true do
     before :all do
       degel('concours-phase-1')
     end
 
-    context 'si déjà inscrit au concours courant' do
+    context 'si déjà inscrit' do
+      before(:all){ degel('concours-phase-1') }
       before(:each) { make_visitor_current_concurrent(@visitor) }
-      after(:all) { degel('concours-phase-1') }
-      ne_peut_pas_sinscrire_au_concours("déjà concurrent")
+      after(:all){ degel('concours-phase-1') }
+      ne_peut_pas_sinscrire_au_concours("déjà inscrit")
     end
 
-    peut_sinscrire_au_concours(as = :ancien)
+    peut_sinscrire_au_concours(as = :icarien)
     # ne_peut_pas_atteindre_la_section_evalutation
     # peut_modifier_ses_preferences_notifications
     # peut_modifier_ses_preferences_fiche_de_lecture

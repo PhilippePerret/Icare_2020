@@ -241,42 +241,4 @@ feature "Inscription au concours courant suivant le type de visiteur" do
     end
   end #/ context 7)
 
-
-  context '8) Un concurrent non identifié qui ne participe pas au concours courant' do
-    before(:all) do
-      cand = Candidat.new("Alain Esquerre", "alain.esquerre@gmail.com", "H")
-      cand.destroy if cand.exists?
-      cand.signup(session_courante: false)
-      @candidat = cand
-    end
-    let(:candidat) { @candidat }
-    scenario 'se voit proposé de s’identifier avec un bon message puis de s’inscrire à la session courante' do
-      # headless(false)
-      goto("concours")
-      click_on("Inscription au concours")
-      inscrire_au_concours_with_data({
-        pseudo:candidat.patronyme,
-        mail:candidat.mail,
-        genre:candidat.genre,
-      })
-      expect(page).to have_no_erreur
-      expect(page).not_to have_titre "Espace personnel"
-      expect(page).to have_titre "Identification"
-      expect(page).to have_message(MESSAGES[:concurrent_login_required])
-      within("form#concours-login-form") do
-        fill_in("p_mail", with: candidat.mail)
-        fill_in("p_concurrent_id", with: candidat.id)
-        click_on(UI_TEXTS[:concours_bouton_sidentifier])
-      end
-      screenshot("login-ancien-concurrent")
-      expect(page).not_to have_titre "Espace personnel"
-      expect(page).not_to have_link("Se déconnecter")
-      expect(page).to have_titre UI_TEXTS[:titre_page_inscription]
-      btn_name = UI_TEXTS[:concours_signup_session_concours] % {annee: ANNEE_CONCOURS_COURANTE}
-      expect(page).to have_link(btn_name)
-      click_on(btn_name)
-      expect(page).to have_titre "Espace personnel"
-      expect(page).to have_link("Se déconnecter")
-    end
-  end #/ context 8)
 end

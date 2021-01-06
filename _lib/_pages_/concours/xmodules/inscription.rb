@@ -12,8 +12,7 @@ class HTML
       specs:  "00000000"
     }
     db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data)
-    add_actualite_inscription_concours_for(concurrent.patronyme)
-    message("#{concurrent.pseudo}, vous êtes inscrit#{concurrent.fem(:e)} à la session #{Concours.current.annee} du concours ! Bon courage et inspiration à vous !")
+    finish_inscription(concurrent)
   end #/ traite_inscription_ancien
 
   # Dans le cas d'un icarien identifié
@@ -29,8 +28,7 @@ class HTML
     dc = db_get(DBTBL_CONCURRENTS, {mail: user.mail})
     dc || raise("Vous n'êtes pas un ancien concurrent… Je dois renoncer.")
     make_inscription_session_courante_for(dc[:concurrent_id])
-    add_actualite_inscription_concours_for(user.pseudo, user.id)
-    message(MESSAGES[:concours_confirm_inscription_session_courante] % {e: user.fem(:e)})
+    finish_inscription(user, {icarien: true})
   end #/ traite_inscription_icarien_session_courante
 
   # Procède à l'inscription de l'icarien
@@ -53,24 +51,7 @@ class HTML
     db_compose_insert(DBTBL_CONCURRENTS, data_cc)
     make_inscription_session_courante_for(concid)
     session['concours_user_id'] = concid
-    # Envoyer un mail à l'administration
-    MailSender.send({
-      from: user.mail,
-      file: File.join(XMODULES_FOLDER,'mails','inscription','mail-admin-signup-icarien'),
-      bind: user
-      })
-    MailSender.send({
-      to: user.mail,
-      from:CONCOURS_MAIL,
-      file: File.join(XMODULES_FOLDER,'mails','inscription','confirm-icarien-signup'),
-      bind: self # html
-    })
-
-    add_actualite_inscription_concours_for(user.pseudo, user.id)
-
-    message(MESSAGES[:concours_signup_ok] % [user.pseudo])
-
-    redirect_to('concours/espace_concurrent')
+    finish_inscription(user, {icarien: true})
   end #/ traite_inscription_icarien
 
   def make_inscription_session_courante_for(concurrent_id)
@@ -160,12 +141,6 @@ class HTML
     # et notamment pour les mails envoyés.
     @concurrent = Concurrent.new(concurrent_id: user_id, session_id: session.id)
 
-    # Envoyer un mail pour confirmer l'inscription
-    Mail.send({
-      to:       data_concurrent[:mail],
-      subject:  MESSAGES[:concours_signed_confirmation],
-      message:  deserb('mails/inscription/mail-signup-confirmation', self)
-    })
 
     # Annonce à l'administration
     # Pour connaitre la source d'information (la façon dont le concurrent
@@ -182,16 +157,8 @@ class HTML
     end
     @source_concours = source || "--- source non donnée ---"
 
-    # Envoyer un mail à l'administration
-    phil.send_mail({
-      subject: MESSAGES[:concours_new_signup_titre],
-      message: deserb('mails/inscription/mail-signup-admin', self)
-    })
-
-    # Ajouter une actualité pour l'inscription
-    add_actualite_inscription_concours_for(data_concurrent[:patronyme])
-
-    return true
+    # Finir l'inscription
+    finish_inscription(@concurrent)
 
   rescue Exception => e
     log(e)
@@ -199,8 +166,44 @@ class HTML
     return false
   end #/ traite_inscription
 
+  # Pour finir l'inscription, dans tous les cas, que ce soit un tout nouveau
+  # concurrent, un ancien, un icarien, etc.
+  # Cette méthode permet d'unifier les procédures terminales :
+  #   - affichage du message de confirmation
+  #   - envoi du mail de confirmation
+  #   - génération de l'actualité de nouveau candidat
+  #   - information à l'administration de l'inscription
+  def finish_inscription(who, options = nil)
+    options ||= {icarien: false}
+    # Envoyer un mail à l'administration
+    mail_admin = options[:icarien] ? 'mail-admin-signup-icarien' : 'mail-signup-admin'
+    MailSender.send({
+      from: who.mail,
+      file: File.join(XMODULES_FOLDER,'mails','inscription', mail_admin),
+      bind: who
+      })
+    # Envoyer un mail pour confirmer l'inscription
+    mail_concu = options[:icarien] ? 'confirm-icarien-signup' : 'mail-signup-confirmation'
+    MailSender.send({
+      to: who.mail,
+      from:CONCOURS_MAIL,
+      file: File.join(XMODULES_FOLDER,'mails','inscription', mail_concu),
+      bind: who
+    })
+
+    # Actualité
+    add_actualite_inscription_concours_for(who.pseudo, who.id)
+    # Le message qui apparaitra en page d'espace personnel
+    message(MESSAGES[:concours_confirm_inscription_session_courante] % {e: who.fem(:e), pseudo:who.pseudo})
+    # Redirection vers l'espace personnel, toujours
+    redirect_to("concours/espace_concurrent")
+  end #/ finish_inscription
+
+
   def add_actualite_inscription_concours_for(pseudo, id = nil)
-    log("AJOUT ACTUALITÉ CONCOURS avec #{pseudo.inspect} / #{id.inspect}")
+    # Pour les concurrents, l'identifiant est un string avec 14 chiffres. Or,
+    # dans la base, on attend un nombre de 11 chiffres (enfin… façon de parler).
+    id = id[-10..-1].to_i if id && id.is_a?(String)
     Actualite.add('CONCOURS', id, "<strong>#{pseudo}</strong> s'inscrit au concours de synopsis.")
   end
 

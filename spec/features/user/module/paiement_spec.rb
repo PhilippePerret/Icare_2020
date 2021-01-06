@@ -42,7 +42,7 @@ On peut aussi le jouer en cherchant les tags `gel` (`-t gel`)
 
 
 
-  scenario "un icarien peut payer par virement bancaire", only:true do
+  scenario "un icarien peut payer par virement bancaire" do
 
     headless(true) # pour voir ce qui se passe
     use_profile_downloader(true)

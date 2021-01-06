@@ -8,6 +8,7 @@ require './_lib/required/__first/handies/string' # par exemple 'safe'
 require './_lib/required/__first/extensions/Integer' # par exemple X.days
 require './_lib/required/__first/extensions/Formate_helpers' # par exemple pour formate_date
 require './_lib/required/__first/extensions/String'
+require './_lib/required/__first/extensions/Hash'
 
 require_relative './lib/constantes'
 require_relative './spec_modules/module_navigation'

@@ -78,14 +78,14 @@ RSpec::Matchers.define :be_accueil_concours do |phase|
   end
 end
 
-RSpec::Matchers.define :be_inscription_concours do
+RSpec::Matchers.define :be_inscription_concours do |with_form|
   match do |page|
     @errors = []
     @titre = "Inscription au concours"
     unless page.has_css?("h2.page-title", text: @titre)
       @errors << "n'a pas le bon titre (“#{@titre}”). Son titre est #{title_of_page}"
     end
-    unless page.has_css?("form#concours-signup-form")
+    if (with_form || with_form.nil?) && not(page.has_css?("form#concours-signup-form"))
       @errors << "ne contient pas le formulaire d'inscription"
     end
     return @errors.empty?
@@ -147,7 +147,10 @@ RSpec::Matchers.define :be_espace_personnel do
       @errors << "la page devrait porter le titre “Espace personnel” (son titre est #{title_of_page})"
     end
     if not page.has_css?("section#concours-destruction")
-      @errors << "la page ne contient pas la section #concours-destruction"
+      @errors << "ne contient pas la section #concours-destruction"
+    end
+    unless page.has_link?("Se déconnecter")
+      @errors << "ne contient pas de bouton pour se déconnecter (i.e. le visiteur devrait être identifié)"
     end
     return @errors.empty?
   end

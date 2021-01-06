@@ -6,10 +6,13 @@
 =end
 require 'capybara/rspec'
 require_relative './TUser_tdd'
+require './_lib/required/__first/feminines'
 
 class TUser
 include Capybara::DSL
 extend SpecModuleNavigation
+
+include FemininesMethods
 
 class << self
   def get(uid)
@@ -27,6 +30,7 @@ class << self
   #         :real   Si true, ça doit être un "vrai" icarien, donc un icarien
   #                 a déjà payé un module.
   #         :sexe   'H' pour 'homme' ou 'F' pour 'femme'
+  #         :admin    Si true, on renvoie un administrateur (false par défaut)
   #         :femme  Si true, une femme, sinon, un homme
   #         :status   Le statut attendu, parmi : :actif, :inactif, :candidat
   #                   :recu, :détruit, :en_pause.
@@ -48,6 +52,11 @@ class << self
     valus = []
     # :real
     where << "SUBSTRING(options,25,1) = 1" if params[:real]
+    if params[:admin] === true
+      where << "SUBSTRING(options,1,1) > 0"
+    else
+      where << "SUBSTRING(options,1,1) = 0"
+    end
     # :sexe ou :femme
     if params[:sexe] == 'F' || params[:femme] == true
       where << "sexe = ?"
@@ -71,9 +80,17 @@ class << self
         valus << "#{vbitadmin}#{vbiticar}#{vbitworld}"
       end
     end
-    res = db_exec("SELECT * FROM users WHERE #{where.join(' AND ')}", valus)
+    where << "id > 9"
+    request = "SELECT * FROM users WHERE #{where.join(' AND ')}"
+
+    # Debug
+    # puts "REQUÊTE TUser.random : #{request} (values = #{valus.inspect})"
+
+    res = db_exec(request, valus)
     if res.empty?
-      raise "Impossible de trouver un user avec le filtre #{params.inspect}…"
+      puts "Impossible de trouver un user avec le filtre #{params.inspect} dans :…".rouge
+      puts db_exec("SELECT * FROM users")
+      raise "Trouver un autre moyen"
     else
       TUser.instantiate(res.shuffle.shuffle.first.merge!(password: 'unmotdepasse'))
       # Note : concernant le mot de passe, tous les icariens possède le même
@@ -340,6 +357,10 @@ def real?
   option(24) == 1
 end #/ real?
 
+def femme?
+  sexe == "F"
+end #/ femme?
+
 # ---------------------------------------------------------------------
 #
 #   PROPERTIES
@@ -386,15 +407,22 @@ end
 def options   ; @options  ||= data[:options]  end
 def cpassword ; @cpassword||= data[:cpassword]end
 def password
-  @password ||= begin
-    pwd = data[:password]
-    if pwd.nil?
-      # raise("Le mot de passe ne devrait pas pouvoir être nil")
-      pwd = 'motdepasse'
-    end
-    pwd
+  if not(index_knowned_user.nil?)
+    DATA_SPEC_SIGNUP_VALID[index_knowned_user][:password][:value]
+  else
+    data[:password] || 'motdepasse'
   end
 end
+
+def index_knowned_user
+  @index_knowned_user ||= case pseudo
+    when 'Benoit' then 2
+    when 'Manon'  then 1
+    when 'Phil'   then 0
+    when 'Élie'   then 3
+    else nil
+    end
+end #/ index_knowned_user
 
 def reset
   @data = nil

@@ -119,7 +119,7 @@ feature "La SALLE DES ICARIENS" do
     end
   end
 
-  scenario 'affiche correctement les anciens icariens (inactifs)', only:true do
+  scenario 'affiche correctement les anciens icariens (inactifs)' do
     goto("icariens")
     expect(page).to be_salle_icariens
     unless inactifs.nil?
@@ -155,7 +155,7 @@ feature "La SALLE DES ICARIENS" do
     end
   end
 
-  scenario 'affiche correctement les icariens reçus', only:true do
+  scenario 'affiche correctement les icariens reçus' do
     if recus.nil?
       puts "Aucun reçu, impossible de tester leur affichage".rouge
     else

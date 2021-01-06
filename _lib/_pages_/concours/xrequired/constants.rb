@@ -39,10 +39,9 @@ MESSAGES.merge!({
   concours_sujet_retrieve_numero: "Récupération de votre numéro d'inscription au concours",
   concours_confirm_destroyed: "Votre inscription au concours est détruite.",
   merci_fichier_et_titre: "Merci %s, votre fichier de candidature et votre titre ont bien été pris en compte.",
-  concours_signup_ok: "Votre inscription au concours a été effectuée avec succès, %s !",
   concours_just_icarien_login_required: "Vous êtes icarien%{ne}, identifiez-vous pour vous inscrire facilement au concours !",
   concours_icarien_inscrit_login_required: "%{pseudo}, vous êtes déjà inscrit%{e}. Il vous suffit de vous identifier pour demander à participer à cette session du concours.",
-  concours_confirm_inscription_session_courante: "Vous êtes maintenant inscrit%{e} à la session courante du concours.",
+  concours_confirm_inscription_session_courante: "Bravo, %{pseudo}, vous êtes inscrit%{e} à la session #{ANNEE_CONCOURS_COURANTE} du concours.",
   concurrent_login_required: "Vous êtes déjà concurrent du concours, vous devez vous identifier (pour participer à la nouvelle session ou rejoindre votre espace personnel).",
 })
 

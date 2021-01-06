@@ -91,7 +91,7 @@ feature "Test du démarrage de module" do
 
 
   context 'un icarien inactif' do
-    scenario 'peut démarrer un module approuvé', only:true do
+    scenario 'peut démarrer un module approuvé' do
       degel('elie_demarre_son_module')
 
       # --- Vérifications préliminaires ---

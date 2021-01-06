@@ -17,9 +17,7 @@ class HTML
       if Form.new.conform?
         case param(:form_id)
         when 'concours-signup-form'
-          if traite_inscription
-            redirect_to("concours/espace_concurrent")
-          end
+          traite_inscription
         end
       end
     elsif param(:op) == 'signupcursessancien'

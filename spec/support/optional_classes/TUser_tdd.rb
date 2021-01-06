@@ -24,6 +24,7 @@ class TUser
 
   # Rejoint le site (signifie qu'il va s'identifier)
   def rejoint_le_site
+    # puts "\t-> rejoint le site avec (#{pseudo}/#{password})"
     loginit
   end #/ rejoint_le_site
 

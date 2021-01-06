@@ -13,6 +13,13 @@ class Array
     ary.join(VG) + ET + lst
   end #/ pretty_join
 
+  def pretty_inspect(level = 0)
+    self.collect do |el|
+      elh = el.respond_to?(:pretty_inspect) ? el.pretty_inspect(level+1) : el.inspect
+      "#{"\t"*level}#{elh}"
+    end.join("\n")
+  end #/ pretty_inspect
+
   def nil_if_empty
     if self.empty?
       nil

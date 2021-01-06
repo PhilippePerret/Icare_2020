@@ -25,7 +25,7 @@
 =end
 require_relative './_required'
 
-feature 'Un nouveau concurrent', only:true do
+feature 'Un nouveau concurrent' do
   before :all do
     @visitor = TConcurrent.get_random(current:true, ancien:false, femme:true)
     headless(false)
