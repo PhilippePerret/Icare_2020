@@ -32,10 +32,7 @@ feature "Un simple visiteur" do
     end
     peut_atteindre_lannonce_du_prochain_concours
     peut_sinscrire_au_concours(as = :simple)
-    # scenario { atteint_lannonce_du_prochain_concours }
-    # scenario { ne_peut_pas_atteindre_la_section_evalutation }
-    # scenario { peut_sinscrire_au_concours }
-
+    ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 0
 
 
@@ -43,46 +40,35 @@ feature "Un simple visiteur" do
     before :all do
       degel('concours-phase-1')
     end
-    scenario { atteint_la_page_daccueil_du_concours(phase = 1) }
-    scenario { ne_peut_pas_atteindre_la_section_evalutation }
-    scenario { peut_sinscrire_au_concours }
-
+    ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 1
 
   context 'PHASE 2' do
     before :all do
       degel('concours-phase-2')
     end
-    scenario { atteint_la_page_daccueil_du_concours(phase = 2) }
-    scenario { ne_peut_pas_atteindre_la_section_evalutation }
-    scenario { peut_sinscrire_au_concours }
+    ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 2
 
   context 'PHASE 3' do
     before :all do
       degel('concours-phase-3')
     end
-    scenario { atteint_la_page_daccueil_du_concours(phase = 3) }
-    scenario { ne_peut_pas_atteindre_la_section_evalutation }
-    scenario { peut_sinscrire_au_concours }
+    ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 3
 
   context 'PHASE 5' do
     before :all do
       degel('concours-phase-5')
     end
-    scenario { atteint_la_page_daccueil_du_concours(phase = 5) }
-    scenario { ne_peut_pas_atteindre_la_section_evalutation }
-    scenario { peut_sinscrire_au_concours }
+    ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 5
 
   context 'PHASE 8 et 9' do
     before :all do
       degel('concours-phase-8')
     end
-    scenario { atteint_la_page_daccueil_du_concours(phase = 8) }
-    scenario { ne_peut_pas_atteindre_la_section_evalutation }
-    scenario { peut_sinscrire_au_concours }
+    ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 8 et 9
 
 end

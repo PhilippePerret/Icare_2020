@@ -22,6 +22,15 @@ HUMAN_VISITOR_STATE = {
 # identifié quand il arrive ici.
 #
 def peut_sinscrire_au_concours(as)
+  scenario "trouve des liens pour rejoindre l'inscription" do
+    phase = TConcours.current.phase || 0
+    goto("plan")
+    click_on("CONCOURS")
+    btn_name = phase < 2 ? "vous inscrire" : "Inscription au prochain concours"
+    click_on(btn_name)
+    expect(page).to be_inscription_concours(form = nil)
+  end
+
   scenario "peut s'inscrire au concours en tant que #{HUMAN_VISITOR_STATE[as]}" do
     start_time = Time.now.to_i
     require './_lib/_pages_/concours/inscription/constants'
@@ -110,7 +119,6 @@ def ne_peut_pas_sinscrire_au_concours(raison_affichee = "déjà concurrent")
     require './_lib/_pages_/concours/inscription/constants'
     goto("concours/inscription")
     expect(page).to be_inscription_concours(formulaire = false)
-    expect(page).not_to have_css("form#concours-signup-form")
     expect(page).to have_content(raison_affichee)
   end
 end #/ne_peut_pas_sinscrire_au_concours

@@ -32,7 +32,7 @@ feature 'Un icarien' do
   end #/context PHASE 0
 
 
-  context 'PHASE 1', only:true do
+  context 'PHASE 1' do
     before :all do
       degel('concours-phase-1')
     end
@@ -41,9 +41,11 @@ feature 'Un icarien' do
       before(:all){ degel('concours-phase-1') }
       before(:each) { make_visitor_current_concurrent(@visitor) }
       after(:all){ degel('concours-phase-1') }
+      peut_rejoindre_le_concours
       ne_peut_pas_sinscrire_au_concours("déjà inscrit")
     end
 
+    peut_rejoindre_le_concours
     peut_sinscrire_au_concours(as = :icarien)
     # ne_peut_pas_atteindre_la_section_evalutation
     # peut_modifier_ses_preferences_notifications
@@ -57,6 +59,8 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-2')
     end
+
+    peut_rejoindre_le_concours
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
@@ -68,6 +72,7 @@ feature 'Un icarien' do
       degel('concours-phase-3')
     end
 
+    peut_rejoindre_le_concours
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
@@ -79,6 +84,7 @@ feature 'Un icarien' do
       degel('concours-phase-5')
     end
 
+    peut_rejoindre_le_concours
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription

@@ -5,16 +5,22 @@
 =end
 
 
-RSpec::Matchers.define :be_page_annonce_concours do
+RSpec::Matchers.define :have_encart_concours do
   match do |page|
-    page.has_css?("h2.page-title", text: "Concours de synopsis de l’atelier Icare")
-
+    @errors = []
+    unless page.has_css?('a[href="concours/accueil"]', id:"annonce")
+      @errors << "devrait posséder un encart lié à l'accueil du concours"
+    end
+    unless page.has_css?("a > span", text: "Concours #{TConcours.current.annee}")
+      @errors << "devrait afficher le texte “Concours #{TConcours.current.annee}”"
+    end
+    return @errors.empty?
   end
   description do
-    "be la page d'annonce du prochain concours"
+    "have encart pour rejoindre le concours"
   end
   failure_message do
-    "be la page d'annonce du concours, ou alors elle n'est pas conforme : #{@errors.join(', ')}."
+    "devrait posséder l'encart pour rejoindre le concours. Erreurs : #{@errors.join(', ')}"
   end
 end
 
@@ -78,6 +84,12 @@ RSpec::Matchers.define :be_accueil_concours do |phase|
   end
 end
 
+# Pour vérifier que ce soit la page d'inscription
+# +with_form+ peut avoir 3 valeurs :
+#   true      Le formulaire doit exister
+#   false     Le formulaire ne doit pas exister
+#   nil       Peu importe que le formulaire existe ou non
+#
 RSpec::Matchers.define :be_inscription_concours do |with_form|
   match do |page|
     @errors = []
@@ -85,8 +97,14 @@ RSpec::Matchers.define :be_inscription_concours do |with_form|
     unless page.has_css?("h2.page-title", text: @titre)
       @errors << "n'a pas le bon titre (“#{@titre}”). Son titre est #{title_of_page}"
     end
-    if (with_form || with_form.nil?) && not(page.has_css?("form#concours-signup-form"))
-      @errors << "ne contient pas le formulaire d'inscription"
+    if with_form === true
+      unless page.has_css?("form#concours-signup-form")
+        @errors << "ne contient pas le formulaire d'inscription"
+      end
+    elsif with_form === false
+      if page.has_css?("form#concours-signup-form")
+        @errors << "ne devrait pas contenir le formulaire d'inscription"
+      end
     end
     return @errors.empty?
   end

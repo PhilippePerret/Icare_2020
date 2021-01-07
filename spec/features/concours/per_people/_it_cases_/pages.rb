@@ -10,7 +10,7 @@ def peut_atteindre_lannonce_du_prochain_concours
   scenario "peut atteindre l'annonce du prochain concours" do
     try_identify_visitor
     goto("concours")
-    expect(page).to be_page_annonce_concours
+    expect(page).to be_accueil_concours(0)
   end
 end
 

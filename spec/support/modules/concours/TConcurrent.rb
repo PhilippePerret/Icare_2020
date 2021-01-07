@@ -391,6 +391,7 @@ def reset
   # ci-dessus renverra nil. Il faut alors prendre les données seulement  dans
   # la table concours_concurrents
   d = db_exec(REQUEST_CONCURRENT_MIN_DATA, [id]).first if d.nil?
+  log("d après reset : #{d}")
   dispatch(d)
   @fichier_is_conforme = nil
   @dossier_is_transmis = nil
@@ -402,19 +403,30 @@ end #/ reset
 # Fabrique un fichier de candidature pour le concurrent pour l'année +annee+
 # (ou l'année courante si nil), en réglant ses specs à "11" pour les
 # deux premières
-def make_fichier_conforme(annee = nil)
+#
+# +conforme+ Si on le met à true, ça crée un fichier non conforme
+#
+def make_fichier_conforme(annee = nil, conforme = true)
   annee ||= ANNEE_CONCOURS_COURANTE
   make_fichier(annee)
   dc = db_get(DBTBL_CONCURS_PER_CONCOURS,"annee = #{annee} AND concurrent_id = #{id}")
   sp = dc[:specs].split('')
   sp[0] = "1"
-  sp[1] = "1"
+  sp[1] = conforme ? "1" : "2"
   request = "UPDATE #{DBTBL_CONCURS_PER_CONCOURS} SET specs = ? WHERE annee = ? AND concurrent_id = ?"
   db_exec(request, [sp.join(''), annee, id])
   reset
 end #/ make_fichier
 
+# Produit un fichier non conforme pour le concurrent
+# En fait, un fichier non, conforme, c'est un fichier normal, mais les bits
+# des specs ont été modifiés (le bit 1 — 2e — à 2)
+def make_fichier_non_conforme(annee = nil)
+  make_fichier_conforme(annee, false)
+end #/ make_fichier_non_conforme
+
 def make_fichier(annee = nil)
+  destroy_fichier(annee) # au cas où
   annee ||= ANNEE_CONCOURS_COURANTE
   fsrc = File.join(SPEC_SUPPORT_FOLDER,'asset','documents','autre_doc.pdf')
   fdst = File.join(folder, "#{id}-#{annee}.pdf")

@@ -20,7 +20,7 @@ class HTML
     when 3 then '3_selection'
     when 5 then '5_palmares'
     when 8 then '8_acheved'
-    when 9 then 'no_concours'
+    when 9 then '0_no_concours'
     end
     @body = deserb("partials/phases/#{partial}", self)
   end # /build_body

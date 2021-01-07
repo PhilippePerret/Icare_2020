@@ -39,3 +39,20 @@ def try_identify_visitor
     visitor.rejoint_le_concours
   end
 end #/ try_identify_visitor
+
+
+def peut_rejoindre_le_concours
+  scenario "trouve des liens pour rejoindre le concours" do
+    phase = TConcours.current.phase || 0
+    if phase > 0 && phase < 6
+      # Lien par l'encard d'annonce
+      ['/','user/login','user/signup', 'plan'].each do |endroit|
+        goto(endroit)
+        expect(page).to have_encart_concours
+      end
+    end
+    # Lien sur le plan
+    goto("plan")
+    expect(page).to have_css('a[href="concours"].goto')
+  end
+end #/ peut_rejoindre_le_concours

@@ -31,6 +31,7 @@ feature "Un membre du premier jury" do
       degel('concours-phase-0')
       headless(false)
     end
+    peut_rejoindre_le_concours
     peut_atteindre_lannonce_du_prochain_concours
     ne_peut_pas_sinscrire_au_concours("membre du jury")
   end #/context PHASE 0
@@ -40,30 +41,35 @@ feature "Un membre du premier jury" do
     before :all do
       degel('concours-phase-1')
     end
+    peut_rejoindre_le_concours
   end #/context PHASE 1
 
   context 'PHASE 2' do
     before :all do
       degel('concours-phase-2')
     end
+    peut_rejoindre_le_concours
   end #/context PHASE 2
 
   context 'PHASE 3' do
     before :all do
       degel('concours-phase-3')
     end
+    peut_rejoindre_le_concours
   end #/context PHASE 3
 
   context 'PHASE 5' do
     before :all do
       degel('concours-phase-5')
     end
+    peut_rejoindre_le_concours
   end #/context PHASE 5
 
   context 'PHASE 8 et 9' do
     before :all do
       degel('concours-phase-8')
     end
+    peut_rejoindre_le_concours
   end #/context PHASE 8 et 9
 
 end

@@ -26,51 +26,62 @@
 require_relative './_required'
 
 feature 'Un nouveau concurrent' do
-  before :all do
-    @visitor = TConcurrent.get_random(current:true, ancien:false, femme:true)
-    headless(false)
-  end
+
+  before(:all){ headless(true) }
 
   before(:each) do
     # puts "J'identifie le visiteur".bleu
+    @visitor = TConcurrent.get_random(current:true, ancien:false, femme:true, fichier:false)
     try_identify_visitor
   end
 
-  let(:visitor) { @visitor ||= begin
-    puts "J'initialise un nouveau concurrent"
-    TConcurrent.get_random(current:true, ancien:false, femme:true)
-  end }
+  let(:visitor) { @visitor }
 
   context 'en PHASE 0' do
-    before :all do
-      # puts "Je dégèle la phase 0".bleu
-      degel('concours-phase-0')
-    end
+
+    before(:all) { degel('concours-phase-0') }
+
+    peut_rejoindre_le_concours
     peut_atteindre_lannonce_du_prochain_concours
     ne_peut_pas_sinscrire_au_concours
     peut_rejoindre_son_espace_personnel(0)
+    ne_peut_pas_transmettre_de_dossier("Vous pourrez transmettre votre dossier lorsque le concours sera lancé")
     ne_peut_pas_atteindre_la_section_evalutation
-    ne_peut_pas_sinscrire_au_concours
     ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_detruire_son_inscription
 
   end #/context PHASE 0
 
 
-  context 'PHASE 1' do
+  context 'PHASE 1', only:true do
     before :all do
       # puts "Je dégèle la phase 1".bleu
       degel('concours-phase-1')
     end
 
+    peut_rejoindre_le_concours
     # ne_peut_pas_atteindre_la_section_evalutation
     # ne_peut_pas_sinscrire_au_concours
     peut_rejoindre_son_espace_personnel(1)
     peut_modifier_ses_preferences_notifications
     peut_modifier_ses_preferences_fiche_de_lecture
-    peut_transmettre_son_dossier
     ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_detruire_son_inscription
+
+    context 's’il n’a pas encore déposé son dossier' do
+      before(:each){ visitor.destroy_fichier } # au cas où
+      peut_transmettre_son_dossier
+    end
+
+    context 's’il a déjà déposé un dossier valide' do
+      before(:each){ visitor.make_fichier_conforme }
+      ne_peut_pas_transmettre_de_dossier("Votre fichier de candidature a bien été transmis.")
+    end
+
+    context 's’il a déposé un dossier invalide' do
+      before(:each){ visitor.make_fichier_non_conforme }
+      peut_transmettre_son_dossier
+    end
 
   end #/context PHASE 1
 
@@ -79,10 +90,25 @@ feature 'Un nouveau concurrent' do
       # puts "Je dégèle la phase 2".bleu
       degel('concours-phase-2')
     end
-    ne_peut_plus_transmettre_son_dossier
+    peut_rejoindre_le_concours
     ne_peut_pas_atteindre_la_section_evalutation
     ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_detruire_son_inscription
+
+    context 'qui a envoyé un dossier valide' do
+      before(:each){ visitor.make_fichier_conforme }
+      ne_peut_plus_transmettre_son_dossier("Votre dossier a été pris en compte")
+    end
+
+    context 'qui a envoyé un dossier invalide' do
+      before(:each){ visitor.make_fichier_non_conforme }
+      ne_peut_plus_transmettre_son_dossier("Votre dossier est invalide")
+    end
+
+    context 'qui n’a pas envoyé de dossier' do
+      before(:each){ visitor.destroy_fichier } # au cas où
+      ne_peut_plus_transmettre_son_dossier("Vous n'avez transmis aucun dossier de candidature")
+    end
 
   end #/context PHASE 2
 
@@ -91,6 +117,7 @@ feature 'Un nouveau concurrent' do
       degel('concours-phase-3')
     end
 
+    peut_rejoindre_le_concours
     ne_peut_plus_transmettre_son_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     ne_peut_pas_telecharger_sa_fiche_de_lecture
@@ -103,6 +130,7 @@ feature 'Un nouveau concurrent' do
       degel('concours-phase-5')
     end
 
+    peut_rejoindre_le_concours
     ne_peut_plus_transmettre_son_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_telecharger_sa_fiche_de_lecture

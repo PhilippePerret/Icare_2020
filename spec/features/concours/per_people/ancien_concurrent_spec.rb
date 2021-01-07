@@ -24,7 +24,10 @@ feature 'Un ancien concurrent' do
     before :all do
       degel('concours-phase-0')
     end
+
+    peut_rejoindre_le_concours
     peut_sinscrire_au_concours(as = :ancien)
+    ne_peut_pas_transmettre_de_dossier
     # peut_atteindre_lannonce_du_prochain_concours
     # ne_peut_pas_atteindre_lespace_personnel
     # ne_peut_pas_atteindre_la_section_evalutation
@@ -40,14 +43,16 @@ feature 'Un ancien concurrent' do
     context 'si déjà inscrit au concours courant' do
       before(:each) { make_visitor_current_concurrent(@visitor) }
       after(:all) { degel('concours-phase-1') }
+      peut_rejoindre_le_concours
       ne_peut_pas_sinscrire_au_concours("déjà concurrent")
     end
 
+    peut_rejoindre_le_concours
     peut_sinscrire_au_concours(as = :ancien)
+    ne_peut_pas_transmettre_de_dossier
     # ne_peut_pas_atteindre_la_section_evalutation
     # peut_modifier_ses_preferences_notifications
     # peut_modifier_ses_preferences_fiche_de_lecture
-    # ne_peut_pas_transmettre_de_dossier
     # peut_detruire_son_inscription
 
   end #/context PHASE 1
@@ -56,6 +61,8 @@ feature 'Un ancien concurrent' do
     before :all do
       degel('concours-phase-2')
     end
+
+    peut_rejoindre_le_concours
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
@@ -67,6 +74,7 @@ feature 'Un ancien concurrent' do
       degel('concours-phase-3')
     end
 
+    peut_rejoindre_le_concours
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
@@ -78,6 +86,7 @@ feature 'Un ancien concurrent' do
       degel('concours-phase-5')
     end
 
+    peut_rejoindre_le_concours
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
