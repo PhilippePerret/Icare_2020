@@ -1,5 +1,9 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+=begin
+  Cette section affiche les fiches de lecture du concurrent et lui permet
+  de les télécharger, pendant x années (5 ans).
+=end
 class HTML
   def titre
     "Vos fiches de lecture"
