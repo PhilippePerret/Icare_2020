@@ -7,19 +7,21 @@ class Report
 class << self
   attr_accessor :prefix # à ajouter avant le message
   def << msg
-    reffile.puts("#{Time.now} --- #{prefix}#{msg}")
+    reffile.puts("#{Time.now.strftime('%H:%M:%S')} --- #{prefix}#{msg}")
     Logger << "#{prefix}#{msg}"
   end
   def reffile
     @reffile ||= begin
       `mkdir -p "#{File.dirname(path)}"` # au cas où
-      File.open(path,'a')
+      rf = File.open(path,'a')
+      rf.puts("--- #{Time.now.strftime('%d %m %Y - %Hh')} ---")
+      rf # pour le rendre
     end
   end #/ reffile
 
   def delete
     reffile.close
-    File.delete(path)
+    File.delete(path) if File.exists?(path)
     @reffile = nil
   end #/ delete
 
@@ -33,8 +35,10 @@ class << self
   # DO    Envoi le rapport à l'administrateur, mais seulement s'il n'est pas
   #       vide.
   # Note  Un rapport n'est pas vide si son contenu contient un "RUN IT!"
+  # Dans tous les cas on détruit le fichier
   def send_if_not_empty
     send if File.read(path).include?('RUN IT!')
+    delete
   end #/ send_if_not_empty
 
   # DO    Envoi le rapport d'activité du jour à l'administration

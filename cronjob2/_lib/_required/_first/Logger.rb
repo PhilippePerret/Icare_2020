@@ -3,11 +3,13 @@
 class Logger
 class << self
   def << msg
-    reffile.puts("#{Time.now} --- #{msg}")
+    reffile.puts("#{Time.now.strftime('%H:%M:%S')} --- #{msg}")
   end
   def reffile
     @reffile ||= begin
-      File.open(path,'a')
+      rf = File.open(path,'a')
+      rf.puts("--- #{Time.now.strftime('%d %m %Y - %Hh')} ---")
+      rf # pour le rendre
     end
   end #/ reffile
 
