@@ -7,6 +7,7 @@
 #   et 'an' (année du concours à voir, pas forcément courant)
 #
 # ---------------------------------------------------------------------
+log("concurrent.options: #{concurrent.options}")
 if param(:cid) && param(:an) %><%=
   code_css_fiche_lecture
   %><%=
@@ -14,9 +15,13 @@ if param(:cid) && param(:an) %><%=
   log("Clés de catégories : #{syno.evaluation.owners.keys}")
   log("syno catégories : #{syno.evaluation.owners.inspect}")
   syno.fiche_lecture.out %><%
-else %>
-  <span>Ici, il faut afficher la liste des concours auquels a participé le concurrent avec comme titre "Fiche de lecture du concours [année]".</span>
-  <%
+
+elsif user.concurrent? && not(concurrent.fiche_lecture?) %><%=
+  MESSAGES[:prefs_dont_want_fiches_lecture] %><%
+elsif concurrent %><%
+  concurrent.all_concours.each do |dconcours| %>
+    <div><%= link_to_fiche_lecture_concours(dconcours) %></div><%
+  end %><%
 end %>
 
 <div id="lien_revenir" class="right" style="display:none;">

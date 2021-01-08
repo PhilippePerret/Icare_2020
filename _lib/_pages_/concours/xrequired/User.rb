@@ -11,7 +11,8 @@ class User
   # Pour voir s'il est concurrent du concours courant, voir la méthode
   # concurrent_session_courante?
   def concurrent?
-    db_count(DBTBL_CONCURRENTS, {mail: mail}) > 0
+    return true if defined?(html.concurrent) && html.concurrent.is_a?(Concurrent)
+    return db_count(DBTBL_CONCURRENTS, {mail: mail}) > 0
   end #/ concurrent?
 
   # OUT   TRUE si l'user est concurrent de la session courante du concours

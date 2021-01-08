@@ -106,7 +106,7 @@ feature "Concours de Synopsis - PHASE 0" do
       expect(page).to be_espace_personnel
       expect(page).to have_link(UI_TEXTS[:btn_vers_fiches_lecture])
       conc.click_on(UI_TEXTS[:btn_vers_fiches_lecture])
-      expect(page).to be_fiches_lecture_concurrent
+      expect(page).to be_section_fiches_lecture
     end
   end
 

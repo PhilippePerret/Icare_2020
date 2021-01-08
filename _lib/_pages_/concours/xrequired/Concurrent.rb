@@ -34,7 +34,7 @@ class << self
   # de session doit correspondre à la session courante
   def authentify(concurrent_id)
     log("Tentative d'authentification de #{concurrent_id}")
-    log("Session ID courant : #{session.id}")
+    # log("Session ID courant : #{session.id}")
     cand = get(concurrent_id)
     log("Candidat.data : #{cand.data.inspect}")
     log("Session enregistrée : #{cand.session_id.inspect}")

@@ -23,6 +23,7 @@ def peut_detruire_son_inscription
     expect(File).not_to be_exists(visitor.folder), "Le dossier du concurrent ne devrait plus exister."
 
     goto("concours/accueil")
+    btn_login_name = TConcours.current.phase < 2 ? "vous identifier" : "Identifiez-vous"
     click_on(btn_login_name)
     expect(page).to have_titre("Identification au concours") # juste pour être sûr
     within("form#concours-login-form") do

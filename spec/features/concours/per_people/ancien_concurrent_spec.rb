@@ -8,7 +8,7 @@
 =end
 require_relative './_required'
 
-feature 'Un ancien concurrent' do
+feature 'Un ancien concurrent (non courant)' do
   before :all do
     headless(false)
   end
@@ -31,6 +31,8 @@ feature 'Un ancien concurrent' do
     # peut_atteindre_lannonce_du_prochain_concours
     # ne_peut_pas_atteindre_lespace_personnel
     # ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 0
 
@@ -54,6 +56,8 @@ feature 'Un ancien concurrent' do
     # peut_modifier_ses_preferences_notifications
     # peut_modifier_ses_preferences_fiche_de_lecture
     # peut_detruire_son_inscription
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 1
 
@@ -66,6 +70,8 @@ feature 'Un ancien concurrent' do
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 2
 
@@ -78,6 +84,8 @@ feature 'Un ancien concurrent' do
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 3
 
@@ -90,6 +98,8 @@ feature 'Un ancien concurrent' do
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 5, 8 et 9
 

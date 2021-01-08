@@ -3,6 +3,15 @@
 =begin
   Cette section affiche les fiches de lecture du concurrent et lui permet
   de les télécharger, pendant x années (5 ans).
+
+  Cette partie peut être aussi bien consultée par un administrateur (qui veut
+  voir les fiches d'un concurrent) par un membre d'un jury que par un concurrent
+  Seul quelqu'un qui n'a aucun rapport avec le concours ne peut pas visiter
+  cette partie.
+
+  Les données :cid (concurrent_id) et :an (année) permettent de déterminer
+  la fiche de lecture à voir.
+
 =end
 class HTML
   def titre
@@ -21,7 +30,23 @@ class HTML
     @body = deserb('body', self)
   end # /build_body
 
+  # Retourne un lien vers la fiche de lecture du concours de données +dconcours+
+  # +dconcours+ {Hash} Données du concours (et notamment :annee)
+  def link_to_fiche_lecture_concours(dconcours)
+    @template_link ||= Tag.link(
+      route:"concours/fiches_lecture?op=download&cid=#{concurrent.id}&an=%{annee}",
+      text: "Télécharger la fiche de lecture du concours %{annee}"
+    )
+    annee = dconcours[:annee].to_i
+    if annee == Concours.current.annee && Concours.current.phase < 5
+      MESSAGES[:too_soon_to_get_fiche_lecture]
+    else
+      @template_link % {annee: annee}
+    end
+  end
+
   def designation_visiteur_courant
+    log("-> designation_visiteur_courant. concurrent = #{concurrent.inspect}")
     if user.admin?
       "administrateur (#{user.pseudo})"
     elsif user.evaluator?
@@ -34,18 +59,17 @@ class HTML
   end #/ designation_visiteur_courant
 
   def code_css_fiche_lecture
-    "<style media=\"screen\" type=\"text/css\">#{css_fiche_lecture}</style>"
-  end #/ code_css_fiche_lecture
-
-  # OUT   Code CSS qu'il faut ajouter à la page quand c'est une seule
-  #       fiche de lecture qui est affichée.
-  def css_fiche_lecture
-    <<-CSS
+    <<-STYLESHEET
+<style media="screen" type="text/css">
 * {color:black!important}
-@media print {section#header {display:none;}}
 section#header,section#footer,h2.page-title,.noprint{display:none}
 .header.hidden,.detail.hidden{display:block!important}
 div#lien_revenir{display:normal}
-    CSS
-  end #/ css_fiche_lecture
+</style>
+<style media="print" type="text/css">
+section#header {display:none;}
+</style>
+    STYLESHEET
+  end
+
 end #/HTML

@@ -34,11 +34,19 @@ def annee ; ANNEE_CONCOURS_COURANTE end
 # identifié.
 def try_identify_visitor
   if visitor.is_a?(TConcurrent)
-    visitor.rejoint_le_concours
+    visitor.identify
   elsif visitor.is_a?(TEvaluator)
     visitor.rejoint_le_concours
   end
 end #/ try_identify_visitor
+
+# Quand on a changé un attribut du visiteur (par exemple ses options, ses
+# préférences) on peut avoir besoin de le reconnecter.
+def reconnecte_visitor
+  visitor.logout
+  Capybara.reset_sessions!
+  try_identify_visitor
+end #/
 
 
 def peut_rejoindre_le_concours

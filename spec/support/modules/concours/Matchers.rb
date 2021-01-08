@@ -235,22 +235,12 @@ RSpec::Matchers.define :be_fiches_synopsis do
 end
 RSpec::Matchers.alias_matcher :be_page_evaluation, :be_fiches_synopsis
 
-RSpec::Matchers.define :be_fiches_lecture_jury do
-  match do |page|
-    page.has_css?("h2.page-title", text: "Fiches de lecture")
-  end
-  description do
-    "C'est bien la page des fiches de lecture"
-  end
-  failure_message do
-    "Ce n'est pas la page des fiches de lecture."
-  end
-end
 
-RSpec::Matchers.define :be_fiches_lecture_concurrent do
+RSpec::Matchers.define :be_section_fiches_lecture do |as|
   match do |page|
     @errors = []
-    expected_titre = "Vos fiches de lecture"
+    for_concurrent = as == :concurrent
+    expected_titre = for_concurrent ? "Vos fiches de lecture" : "Fiches de lecture"
     actual_titre = title_of_page
     if not page.has_css?("h2.page-title", text: expected_titre)
       @errors << "la page ne porte pas le titre “#{expected_titre}” (son titre est #{actual_titre})"

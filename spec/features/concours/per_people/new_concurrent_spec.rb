@@ -27,7 +27,7 @@ require_relative './_required'
 
 feature 'Un nouveau concurrent' do
 
-  before(:all){ headless(true) }
+  before(:all){ headless(false) }
 
   before(:each) do
     # puts "J'identifie le visiteur".bleu
@@ -35,25 +35,37 @@ feature 'Un nouveau concurrent' do
     try_identify_visitor
   end
 
-  let(:visitor) { @visitor }
-
   context 'en PHASE 0' do
 
     before(:all) { degel('concours-phase-0') }
 
-    peut_rejoindre_le_concours
-    peut_atteindre_lannonce_du_prochain_concours
-    ne_peut_pas_sinscrire_au_concours
-    peut_rejoindre_son_espace_personnel(0)
-    ne_peut_pas_transmettre_de_dossier("Vous pourrez transmettre votre dossier lorsque le concours sera lancé")
-    ne_peut_pas_atteindre_la_section_evalutation
-    ne_peut_pas_telecharger_sa_fiche_de_lecture
-    peut_detruire_son_inscription
+    # peut_rejoindre_le_concours
+    # peut_atteindre_lannonce_du_prochain_concours
+    # ne_peut_pas_sinscrire_au_concours
+    # peut_rejoindre_son_espace_personnel(0)
+    # ne_peut_pas_transmettre_de_dossier("Vous pourrez transmettre votre dossier lorsque le concours sera lancé")
+
+    context 'qui ne veut pas recevoir sa fiche de lecture' do
+      before(:each){ visitor.set_pref_fiche_lecture(false);reconnecte_visitor }
+      peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent, MESSAGES[:prefs_dont_want_fiches_lecture])
+      ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :not_want)
+    end
+
+    context 'qui veut recevoir sa fiche de lecture' do
+      before(:each){ visitor.set_pref_fiche_lecture(true);reconnecte_visitor }
+      peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent, MESSAGES[:too_soon_to_get_fiche_lecture])
+      ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :new)
+    end
+
+    # peut_detruire_son_inscription
+
+    # --- Sections interdites ---
+    # ne_peut_pas_atteindre_la_section_evalutation
 
   end #/context PHASE 0
 
 
-  context 'PHASE 1', only:true do
+  context 'PHASE 1' do
     before :all do
       # puts "Je dégèle la phase 1".bleu
       degel('concours-phase-1')
@@ -65,7 +77,10 @@ feature 'Un nouveau concurrent' do
     peut_rejoindre_son_espace_personnel(1)
     peut_modifier_ses_preferences_notifications
     peut_modifier_ses_preferences_fiche_de_lecture
-    ne_peut_pas_telecharger_sa_fiche_de_lecture
+
+    peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(:new)
+
     peut_detruire_son_inscription
 
     context 's’il n’a pas encore déposé son dossier' do
@@ -92,7 +107,10 @@ feature 'Un nouveau concurrent' do
     end
     peut_rejoindre_le_concours
     ne_peut_pas_atteindre_la_section_evalutation
-    ne_peut_pas_telecharger_sa_fiche_de_lecture
+
+    peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(:new)
+
     peut_detruire_son_inscription
 
     context 'qui a envoyé un dossier valide' do
@@ -120,7 +138,8 @@ feature 'Un nouveau concurrent' do
     peut_rejoindre_le_concours
     ne_peut_plus_transmettre_son_dossier
     ne_peut_pas_atteindre_la_section_evalutation
-    ne_peut_pas_telecharger_sa_fiche_de_lecture
+    peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :new)
     peut_detruire_son_inscription
 
   end #/context PHASE 3

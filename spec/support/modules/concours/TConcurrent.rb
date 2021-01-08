@@ -52,6 +52,7 @@ def logout
   click_on("Se déconnecter")
 end #/ logout
 
+# Note : on peut aussi utiliser set_spec(bit, value[, save])
 def set_specs(new_specs)
   request = "UPDATE concurrents_per_concours SET specs = ? WHERE concurrent_id = ? AND annee = ?"
   db_exec(request, [new_specs, id, ANNEE_CONCOURS_COURANTE])
@@ -471,8 +472,22 @@ end #/ femme?
 def set_spec(bit,value, save = true)
   sp = specs.dup.split('')
   sp[bit] = value.to_s
-  set_specs(sp.join(''))
+  set_specs(sp.join('')) if save
 end
+
+# Note : penser à utiliser 'reconnecte_visitor' après si on est déjà connecté
+def set_pref_fiche_lecture(value)
+  set_option(1, value ? 1 : 0)
+end
+
+# Réglage d'un bit d'option
+def set_option(bit, value, save = true)
+  @options[bit] = value.to_s
+  request = "UPDATE #{DBTBL_CONCURRENTS} SET options = ? WHERE concurrent_id = ?"
+  db_exec(request, [@options, id])
+end
+
+
 
 REQUEST_CONCURRENTS_COURANTS = <<-SQL
 SELECT

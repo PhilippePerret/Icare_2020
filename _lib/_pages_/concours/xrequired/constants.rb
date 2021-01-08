@@ -43,6 +43,8 @@ MESSAGES.merge!({
   concours_icarien_inscrit_login_required: "%{pseudo}, vous êtes déjà inscrit%{e}. Il vous suffit de vous identifier pour demander à participer à cette session du concours.",
   concours_confirm_inscription_session_courante: "Bravo, %{pseudo}, vous êtes inscrit%{e} à la session #{ANNEE_CONCOURS_COURANTE} du concours.",
   concurrent_login_required: "Vous êtes déjà concurrent du concours, vous devez vous identifier (pour participer à la nouvelle session ou rejoindre votre espace personnel).",
+  prefs_dont_want_fiches_lecture: "Vos préférences indiquent que vous ne désirez pas de fiches de lecture.",
+  too_soon_to_get_fiche_lecture: "Il est trop tôt pour obtenir votre fiche de lecture.",
 })
 
 REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
