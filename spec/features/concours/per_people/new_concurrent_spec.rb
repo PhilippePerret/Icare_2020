@@ -72,8 +72,8 @@ feature 'Un nouveau concurrent' do
     end
 
     peut_rejoindre_le_concours
-    # ne_peut_pas_atteindre_la_section_evalutation
-    # ne_peut_pas_sinscrire_au_concours
+    peut_rejoindre_toutes_les_sections_depuis_laccueil
+    ne_peut_pas_sinscrire_au_concours
     peut_rejoindre_son_espace_personnel(1)
     peut_modifier_ses_preferences_notifications
     peut_modifier_ses_preferences_fiche_de_lecture
@@ -97,6 +97,9 @@ feature 'Un nouveau concurrent' do
       before(:each){ visitor.make_fichier_non_conforme }
       peut_transmettre_son_dossier
     end
+
+    # --- Sections interdites ---
+    # ne_peut_pas_atteindre_la_section_evalutation
 
   end #/context PHASE 1
 

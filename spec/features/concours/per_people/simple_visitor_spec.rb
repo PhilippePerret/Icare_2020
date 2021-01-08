@@ -40,6 +40,7 @@ feature "Un simple visiteur" do
     before :all do
       degel('concours-phase-1')
     end
+    peut_rejoindre_toutes_les_sections_depuis_laccueil
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 1
 

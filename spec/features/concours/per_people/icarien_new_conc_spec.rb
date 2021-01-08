@@ -47,11 +47,14 @@ feature 'Un icarien' do
 
     peut_rejoindre_le_concours
     peut_sinscrire_au_concours(as = :icarien)
-    # ne_peut_pas_atteindre_la_section_evalutation
+    peut_rejoindre_toutes_les_sections_depuis_laccueil
     # peut_modifier_ses_preferences_notifications
     # peut_modifier_ses_preferences_fiche_de_lecture
     # ne_peut_pas_transmettre_de_dossier
     # peut_detruire_son_inscription
+
+    # --- Sections interdites ---
+    ne_peut_pas_atteindre_la_section_evalutation
 
   end #/context PHASE 1
 

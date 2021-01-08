@@ -22,6 +22,31 @@ def atteint_la_page_daccueil_du_concours(phase)
   end
 end #/ atteint_la_page_daccueil_du_concours
 
+def peut_rejoindre_toutes_les_sections_depuis_laccueil
+  def revenir_accueil; click_on("Le Concours") end
+  goto("concours/accueil")
+  expect(page).to have_link(UI_TEXTS[:concours_bouton_inscription])
+  click_on(UI_TEXTS[:concours_bouton_inscription])
+  expect(page).to have_titre(UI_TEXTS[:titre_page_inscription])
+  revenir_accueil
+  expect(page).to have_link(UI_TEXTS[:concours_btn_identifiez_vous])
+  click_on(UI_TEXTS[:concours_btn_identifiez_vous])
+  expect(page).to have_titre("Identification au concours")
+  revenir_accueil
+  expect(page).to have_link("format du fichier de candidature", href: "concours/dossier")
+  click_on("format du fichier de candidature")
+  expect(page).to have_titre("Fichier du concours")
+  revenir_accueil
+  expect(page).to have_link("Foire Aux Questions", href:"concours/faq")
+  # first(text:"Foire Aux Questions").click
+  click_on(class:'btn-faq')
+  expect(page).to have_titre("FAQ du concours")
+  revenir_accueil
+  expect(page).to have_link("Règlement du concours")
+  click_on("Règlement du concours")
+  sleep 10
+end #/ peut_rejoindre_toutes_les_sections_depuis_laccueil
+
 # Utiliser it { ne_peut_pas_atteindre_la_section_evalutation } pour tester
 # que le membre courant ne peut pas atteindre la section d'évaluation
 def ne_peut_pas_atteindre_la_section_evalutation

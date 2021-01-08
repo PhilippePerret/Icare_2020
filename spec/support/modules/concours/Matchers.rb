@@ -24,7 +24,6 @@ RSpec::Matchers.define :have_encart_concours do
   end
 end
 
-
 RSpec::Matchers.define :be_accueil_concours do |phase|
   match do |page|
     @errors = []
@@ -39,10 +38,42 @@ RSpec::Matchers.define :be_accueil_concours do |phase|
     unless page.has_link?(titre_login, href: 'concours/identification')
       @errors << "ne contient pas le lien pour s'identifier"
     end
+
+    # --- Test suivant la phase du concours ---
     case phase
     when 1
       unless page.has_content?("Le concours est ouvert !")
         @errors << "devrait annoncer que le concours est ouvert"
+      end
+      unless page.has_css?("h3", text: "Objet du concours")
+        @errors << "devrait avoir un titre “Objet du concours”"
+      end
+      unless page.has_css?("h3", text: "Trois Prix")
+        @errors << "devrait avoir un titre “Trois Prix”"
+      end
+      unless page.has_css?("h3", text: "Thème")
+        @errors << "devrait avoir un titre “Thème”"
+      end
+      unless page.has_css?("span.concours-theme", text: /#{TConcours.current.theme.upcase}/i)
+        @errors << "devrait afficher le thème du concours"
+      end
+      unless page.has_css?("h3", text: "Fichier de candidature")
+        @errors << "devrait avoir un titre “Fichier de candidature”"
+      end
+      unless page.has_css?('a[href="concours/dossier"]', text:"format du fichier de candidature")
+        @errors << "devrait présenter un lien pour voir le format du fichier de candidature"
+      end
+      unless page.has_css?("h3", text: "Règlement complet")
+        @errors << "devrait présenter le titre “Règlement complet”"
+      end
+      unless page.has_css?("a", text:"Règlement du concours")
+        @errors << "devrait posséder un lien vers le règlement du concours"
+      end
+      unless page.has_css?("h3", text: "Faq")
+        @errors << "devrait possèder le titre “Faq”"
+      end
+      unless page.has_css?('a[href="concours/faq"]', text:"Foire Aux Questions")
+        @errors << "devrait posséder un lien conforme vers la F.A.Q."
       end
     when 2
       if page.has_content?("Le concours est ouvert !")
@@ -50,6 +81,19 @@ RSpec::Matchers.define :be_accueil_concours do |phase|
       end
       unless page.has_content?("en cours de présélection")
         @errors << "devrait annoncer que les synopsis sont en présélection"
+      end
+      nb_participants = db_count(DBTBL_CONCURS_PER_CONCOURS, {annee:ANNEE_CONCOURS_COURANTE})
+      unless page.has_css?("span#nombre-concurrents", text: nb_participants.to_s.rjust(3,'0'))
+        @errors << "devrait afficher le nombre de participants"
+      end
+      unless page.has_css?("span.annee-concours", text: ANNEE_CONCOURS_COURANTE)
+        @errors << "devrait afficher l'année du concours"
+      end
+      unless page.has_css?("span.theme-concours.caps", text: TConcours.current.theme)
+        @errors << "devrait afficher le thème du concours"
+      end
+      unless page.has_css?("span.echeance-concours", text: "1er mars #{ANNEE_CONCOURS_COURANTE}")
+        @errors << "devrait afficher l'échéance du concours"
       end
     when 3
       if page.has_content?("en cours de présélection")
