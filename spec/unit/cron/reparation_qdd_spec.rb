@@ -16,7 +16,7 @@ describe 'Contrôle et réparation des documents QDD' do
       pitch("Noter que ça ne teste que le fonctionnement général du contrôle. Un test en profondeur pourrait être développé.")
       # code = File.read(MAIN_LOG_PATH)
       # puts "MAIN LOG:\n#{code}"
-      expect(cron_report(@test_time)).to include "= Nombre de documents QDD contrôlés : "
+      expect(cron_report(@test_time)).to include "= Nombre documents QDD checkés : "
     end
   end
 end

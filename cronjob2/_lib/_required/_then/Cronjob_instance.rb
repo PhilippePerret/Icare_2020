@@ -25,15 +25,13 @@ end #/ run
 # Juste pour la ligne de rapport, pour préciser si le job doit être
 # joué ou non.
 def start_mark_report
-  msg = "JOB [#{method_name}]"
   if not runnable?
-    Report << "#{msg} NOT TIME"
+    Report << "NOT TIME FOR [#{method_name}]"
     return
   else
-    Report << "#{msg} (#{name})"
+    Report << "RUN [#{method_name}] (#{name})"
   end
   Report.prefix = " " * 4
-  Report << "RUN IT!"
   return true
 end #/ start_mark_report
 

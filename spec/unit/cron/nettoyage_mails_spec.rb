@@ -29,7 +29,7 @@ describe 'CRON:Nettoyage des mails' do
     # puts res
     # = On vérifie =
     code = read_main_log
-    expect(code).not_to include("JOB [nettoyage_mails] NOT TIME"),
+    expect(code).not_to include("NOT TIME FOR [nettoyage_mails]"),
       "Le job de nettoyage des mails aurait dû être joué"
 
     expect(File).to be_exists(path_mail_recent),
