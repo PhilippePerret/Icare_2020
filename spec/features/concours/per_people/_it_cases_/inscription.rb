@@ -32,8 +32,8 @@ def peut_sinscrire_au_concours(as)
   end
 
   scenario "peut s'inscrire au concours en tant que #{HUMAN_VISITOR_STATE[as]}" do
-    start_time = Time.now.to_i
     require './_lib/_pages_/concours/inscription/constants'
+    start_time = Time.now.to_i
     goto("concours/inscription")
     case as
     when :simple
@@ -99,6 +99,14 @@ def peut_sinscrire_au_concours(as)
 
     # L'inscription a été annoncée par une actualité
     expect(TActualites).to have_actualite(after: start_time, type:"CONCOURS", message:"<strong>#{concurrent_pseudo}</strong> s'inscrit au concours de synopsis.")
+
+    # Un mail m'avertit de la nouvelle inscription
+    # Le message est différent en fonction du fait que c'est un icarien ou non
+    msg = case as
+    when :icarien then "vient de s'inscrire au concours de synopsis"
+    else "nouvelle inscription au concours de synopsis"
+    end
+    expect(TMails).to have_mail(to:CONCOURS_MAIL, after: start_time, subject: MESSAGES[:concours_new_signup_titre], message:[msg])
 
     # L'inscrit a reçu un mail de confirmation (différent en fonction de
     # son statut à son arrivée)

@@ -14,7 +14,7 @@ feature 'Un icarien' do
   end
 
   before(:each) do
-    @visitor = TUser.get_random(concours:false, admin:false)
+    @visitor = TUser.get_random(concours:true, admin:false)
     @visitor.rejoint_le_site
   end
 
@@ -24,7 +24,7 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-0')
     end
-    peut_sinscrire_au_concours(as = :icarien)
+    ne_peut_pas_sinscrire_au_concours("déjà inscrit")
     # peut_atteindre_lannonce_du_prochain_concours
     # ne_peut_pas_atteindre_lespace_personnel
     # ne_peut_pas_atteindre_la_section_evalutation
@@ -37,16 +37,9 @@ feature 'Un icarien' do
       degel('concours-phase-1')
     end
 
-    context 'si déjà inscrit' do
-      before(:all){ degel('concours-phase-1') }
-      before(:each) { make_visitor_current_concurrent(@visitor) }
-      after(:all){ degel('concours-phase-1') }
-      peut_rejoindre_le_concours
-      ne_peut_pas_sinscrire_au_concours("déjà inscrit")
-    end
+    ne_peut_pas_sinscrire_au_concours("déjà inscrit")
 
     peut_rejoindre_le_concours
-    peut_sinscrire_au_concours(as = :icarien)
     peut_rejoindre_toutes_les_sections_depuis_laccueil
     # peut_modifier_ses_preferences_notifications
     # peut_modifier_ses_preferences_fiche_de_lecture
