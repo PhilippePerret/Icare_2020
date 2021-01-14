@@ -43,7 +43,7 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-2')
     end
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours)
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 2
@@ -52,7 +52,7 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-3')
     end
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours)
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 3
@@ -61,7 +61,7 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-5')
     end
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours)
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 5, 8 et 9
@@ -70,7 +70,7 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-8')
     end
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours)
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 5, 8 et 9
@@ -79,7 +79,7 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-9')
     end
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours)
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 5, 8 et 9

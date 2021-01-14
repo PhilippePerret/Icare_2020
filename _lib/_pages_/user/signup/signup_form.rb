@@ -64,7 +64,7 @@ class HTML
       [(Emoji.get('objets/statue-paques').page_title+ISPACE+'Identité'), STRINGS[:titre]],
       ['Pseudo*', TEXT],
       ['Patronyme',TEXT],
-      ['Naissance*', SELECT, nil, (1960..(Time.now.year - 16))],
+      ['Naissance*', SELECT, nil, ((Time.now.year - 100)..(Time.now.year - 16)).to_a.reverse],
       ['Vous êtes…*', SELECT, 'usexe', [['F','une femme'],['H','un homme'],['X','autre']]],
       [(Emoji.get('objets/cadenas-cle').page_title+ISPACE+'Contact et accès au site'), STRINGS[:titre]],
       ['Mail*', TEXT],

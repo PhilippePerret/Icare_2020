@@ -2,6 +2,7 @@
 # apparaitre en premier car le fichier est lu séquentiellement jusqu'à la
 # date une semaine avant.
 
+14 01 2021::Diverses corrections
 26 12 2020::Réparation de tous les documents QDD::qdd/home
 14 12 2020::Outils pour obtenir le nom des documents QDD et vérifier leur existence::qdd/home
 26 10 2020::Ajout d'un bouton “Concours” sur le bureau d'un icarien-concurrent du concours.::bureau/home

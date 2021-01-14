@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 class User
   attr_accessor :errors
 
@@ -155,19 +156,19 @@ end #/ pseudo_exists?
 
 def naissance_valid?
   if naissance.nil?
-    errors << 'Votre date de naissance est requise'.freeze
+    errors << 'Votre date de naissance est requise'
   elsif naissance.to_i < Time.now.year - 100
-    errors << 'Vous êtes un peu vieux pour rejoindre l’atelier icare'.freeze
+    errors << 'Vous êtes un peu vieux pour rejoindre l’atelier icare'
   elsif naissance.to_i > Time.now.year - 16
-    errors << 'Vous êtes trop jeune pour rejoindre l’atelier'.freeze
+    errors << 'Vous êtes trop jeune pour rejoindre l’atelier'
   end
 end #/ naissance_valid?
 
 def sexe_valid?
   if sexe.nil?
-    errors << 'Votre sexe est requis'.freeze
+    errors << 'Votre sexe est requis'
   elsif ['F','H','X'].include?(sexe).false?
-    errors << 'Tiens, tiens, je ne connais pas ce genre…'.freeze
+    errors << 'Tiens, tiens, je ne connais pas ce genre…'
   end
 end #/ sexe_valid?
 
@@ -195,7 +196,7 @@ end #/ rgpd_valid?
 
 def modules_valid?
   modules_ids = []
-  db_exec("SELECT id FROM absmodules".freeze).each do |dmod|
+  db_exec("SELECT id FROM absmodules").each do |dmod|
     mod_id = dmod[:id]
     modules_ids << mod_id if param("umodule_#{mod_id}".to_sym)
   end

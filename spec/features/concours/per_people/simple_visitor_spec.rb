@@ -44,10 +44,11 @@ feature "Un simple visiteur" do
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 1
 
-  context 'PHASE 2' do
+  context 'PHASE 2', only:true do
     before :all do
       degel('concours-phase-2')
     end
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 2
 
@@ -55,6 +56,7 @@ feature "Un simple visiteur" do
     before :all do
       degel('concours-phase-3')
     end
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 3
 
@@ -62,13 +64,23 @@ feature "Un simple visiteur" do
     before :all do
       degel('concours-phase-5')
     end
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 5
 
-  context 'PHASE 8 et 9' do
+  context 'PHASE 8' do
     before :all do
       degel('concours-phase-8')
     end
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
+    ne_peut_pas_transmettre_de_dossier
+  end #/context PHASE 8 et 9
+
+  context 'PHASE 9' do
+    before :all do
+      degel('concours-phase-9')
+    end
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 8 et 9
 

@@ -12,7 +12,7 @@ class HTML
       specs:  "00000000"
     }
     db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data)
-    finish_inscription(concurrent)
+    finish_inscription(concurrent, {icarien: false})
   end #/ traite_inscription_ancien
 
   # Dans le cas d'un icarien identifié
@@ -141,7 +141,6 @@ class HTML
     # et notamment pour les mails envoyés.
     @concurrent = Concurrent.new(concurrent_id: user_id, session_id: session.id)
 
-
     # Annonce à l'administration
     # Pour connaitre la source d'information (la façon dont le concurrent
     # a entendu parler du concours)
@@ -158,13 +157,16 @@ class HTML
     @source_concours = source || "--- source non donnée ---"
 
     # Finir l'inscription
-    finish_inscription(@concurrent)
+    finish_inscription(@concurrent, {icarien: false})
 
   rescue Exception => e
     log(e)
     erreur("Les données sont invalides… #{e.message}")
     return false
   end #/ traite_inscription
+
+  # Pour le mail à l'administration
+  def source_concours; @source_concours end
 
   # Pour finir l'inscription, dans tous les cas, que ce soit un tout nouveau
   # concurrent, un ancien, un icarien, etc.
@@ -173,21 +175,22 @@ class HTML
   #   - envoi du mail de confirmation
   #   - génération de l'actualité de nouveau candidat
   #   - information à l'administration de l'inscription
-  def finish_inscription(who, options = nil)
+  def finish_inscription(who, options)
     options ||= {icarien: false}
     # Envoyer un mail à l'administration
-    mail_admin = options[:icarien] ? 'mail-admin-signup-icarien' : 'mail-signup-admin'
+    msg_admin = options[:icarien] ? 'mail-admin-signup-icarien' : 'mail-signup-admin'
     MailSender.send({
+      to: CONCOURS_MAIL,
       from: who.mail,
-      file: File.join(XMODULES_FOLDER,'mails','inscription', mail_admin),
+      file: File.join(XMODULES_FOLDER,'mails','inscription', msg_admin),
       bind: who
       })
     # Envoyer un mail pour confirmer l'inscription
-    mail_concu = options[:icarien] ? 'confirm-icarien-signup' : 'mail-signup-confirmation'
+    msg_concu = options[:icarien] ? 'confirm-icarien-signup' : 'mail-signup-confirmation'
     MailSender.send({
       to: who.mail,
-      from:CONCOURS_MAIL,
-      file: File.join(XMODULES_FOLDER,'mails','inscription', mail_concu),
+      from: CONCOURS_MAIL,
+      file: File.join(XMODULES_FOLDER,'mails','inscription', msg_concu),
       bind: who
     })
 

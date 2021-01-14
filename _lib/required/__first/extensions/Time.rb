@@ -17,6 +17,10 @@ class << self
     now = Time.now
     year = now.year   - (params[:years] ? params[:years] : 0)
     mois = now.month  - (params[:months] ? params[:months] : 0)
+    if mois <= 0
+      year = year - 1
+      mois = 12 - params[:months]
+    end
     jour = now.day    - (params[:days] ? params[:days] : 0)
     unless params[:hours].nil?
       heure = now.hour - (params[:hours] ? params[:hours] : 0)
@@ -28,7 +32,7 @@ class << self
     else
       minutes = 0
     end
-
+    log("year=#{year}, mois=#{mois}, jour=#{jour}")
     Time.new(year, mois, jour, heure, minutes)
   end #/ ilya
 end # /<< self

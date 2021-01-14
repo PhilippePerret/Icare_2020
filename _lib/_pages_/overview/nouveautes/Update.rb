@@ -39,8 +39,8 @@ class Update
 
   def date
     @date ||= begin
-      jour,mois,annee = date_str.split(' ')
-      Time.new(annee.to_i, mois.to_i, jour.to_i)
+      jour,mois,annee = date_str.split(' ').collect{|n|n.to_i}
+      Time.new(annee, mois, jour)
     end
   end #/ date
 

@@ -8,7 +8,7 @@
 =end
 require_relative './_required'
 
-feature 'Un icarien' do
+feature 'Un icarien inscrit au concours courant' do
   before :all do
     headless(false)
   end
@@ -39,15 +39,15 @@ feature 'Un icarien' do
 
     ne_peut_pas_sinscrire_au_concours("déjà inscrit")
 
-    peut_rejoindre_le_concours
-    peut_rejoindre_toutes_les_sections_depuis_laccueil
+    # peut_rejoindre_le_concours
+    # peut_rejoindre_toutes_les_sections_depuis_laccueil
     # peut_modifier_ses_preferences_notifications
     # peut_modifier_ses_preferences_fiche_de_lecture
     # ne_peut_pas_transmettre_de_dossier
     # peut_detruire_son_inscription
 
     # --- Sections interdites ---
-    ne_peut_pas_atteindre_la_section_evalutation
+    # ne_peut_pas_atteindre_la_section_evalutation
 
   end #/context PHASE 1
 
@@ -56,10 +56,14 @@ feature 'Un icarien' do
       degel('concours-phase-2')
     end
 
-    peut_rejoindre_le_concours
-    ne_peut_pas_transmettre_de_dossier
+    ne_peut_pas_sinscrire_au_concours("déjà inscrit")
+    # peut_rejoindre_le_concours
+    # ne_peut_pas_transmettre_de_dossier
+    # ne_peut_pas_atteindre_la_section_evalutation
+    # peut_detruire_son_inscription
+
+    # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
-    peut_detruire_son_inscription
 
   end #/context PHASE 2
 

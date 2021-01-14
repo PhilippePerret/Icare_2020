@@ -38,8 +38,10 @@ def peut_sinscrire_au_concours(as)
     case as
     when :simple
       expect(page).to be_inscription_concours(with_formulaire = true)
-      concurrent_pseudo = "Concurrent #{Time.now.to_i}"
+      concurrent_pseudo = concurrent_patro = "Concurrent #{Time.now.to_i}"
       concurrent_mail   = "#{concurrent_pseudo.downcase.gsub(/ /,'')}@philippeperret.fr"
+      concurrent_e      = "e"
+      concurrent_sexe   = 'F'
       within("form#concours-signup-form") do
         fill_in("p_patronyme", with: concurrent_pseudo)
         fill_in("p_mail", with: concurrent_mail)
@@ -48,8 +50,6 @@ def peut_sinscrire_au_concours(as)
         check("p_reglement")
         check("p_fiche_lecture")
         click_on(UI_TEXTS[:concours_bouton_signup])
-        concurrent_e = "e"
-        concurrent_sexe = 'F'
       end
       screenshot('after-inscription')
       # On récupère l'identifiant du concurrent
@@ -67,7 +67,7 @@ def peut_sinscrire_au_concours(as)
     end
 
     concurrent_pseudo ||= visitor.pseudo.freeze
-    concurrent_patro  ||= (visitor.patronyme || visitor.pseudo).freeze
+    concurrent_patro  ||= ((visitor.respond_to?(:patronyme) && visitor.patronyme) || visitor.pseudo).freeze
     concurrent_mail   ||= visitor.mail.freeze
     concurrent_id     ||= begin
       dc = db_exec("SELECT * FROM #{DBTBL_CONCURRENTS} WHERE patronyme = ?", [concurrent_patro]).first
@@ -122,7 +122,7 @@ end
 
 # Dans ce test, le visiteur (@visitor) essaie par tous les moyens possibles
 # de s'inscrire (alors qu'il l'est déjà)
-def ne_peut_pas_sinscrire_au_concours(raison_affichee = "déjà concurrent")
+def ne_peut_pas_sinscrire_au_concours(raison_affichee = "déjà inscrit")
   it "ne peut pas s'inscrire au concours (#{raison_affichee})" do
     require './_lib/_pages_/concours/inscription/constants'
     goto("concours/inscription")
