@@ -22,12 +22,14 @@
 =end
 require_relative './_required'
 
-feature "Un administrateur" do
+feature "Un administrateur", admin:true do
   before(:all) do
-    @visitor = phil
-    headless
+    headless(false)
   end
-  context 'en PHASE 0' do
+  before(:each) do
+    phil.rejoint_le_site
+  end
+  context 'en PHASE 0', admin:'phase0', phase0:true do
     before :all do
       degel('concours-phase-0')
     end
@@ -37,35 +39,35 @@ feature "Un administrateur" do
   end #/context PHASE 0
 
 
-  context 'PHASE 1' do
+  context 'PHASE 1', admin:'phase1' do
     before :all do
       degel('concours-phase-1')
     end
     peut_passer_le_concours_a_la_phase_suivante(2)
   end #/context PHASE 1
 
-  context 'PHASE 2' do
+  context 'PHASE 2', admin:'phase2' do
     before :all do
       degel('concours-phase-2')
     end
     peut_passer_le_concours_a_la_phase_suivante(3)
   end #/context PHASE 2
 
-  context 'PHASE 3' do
+  context 'PHASE 3', admin:'phase3' do
     before :all do
       degel('concours-phase-3')
     end
     peut_passer_le_concours_a_la_phase_suivante(5)
   end #/context PHASE 3
 
-  context 'PHASE 5' do
+  context 'PHASE 5', admin:'phase5' do
     before :all do
       degel('concours-phase-5')
     end
     peut_passer_le_concours_a_la_phase_suivante(8)
   end #/context PHASE 5
 
-  context 'PHASE 8 et 9' do
+  context 'PHASE 8 et 9', admin:'phase8' do
     before :all do
       degel('concours-phase-8')
     end

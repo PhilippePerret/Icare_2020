@@ -41,6 +41,7 @@ class TUser
   end #/ rejoint_ses_notifications
 
   def fill_and_submit_login_form
+    # puts "Login avec #{mail}/#{password}"
     within("form#user-login") do
       fill_in('user_mail',    with: mail)
       fill_in('user_password', with: password)

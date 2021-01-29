@@ -48,6 +48,7 @@ class HTML
 
   def panneau_name
     case true
+    when user.admin?              then 'admin'
     when icarien_inscrit?         then 'icarien_deja_inscrit'
     when concurrent_inscrit?      then 'concurrent_deja_inscrit'
     when concours_en_cours?       then 'concours_en_cours'

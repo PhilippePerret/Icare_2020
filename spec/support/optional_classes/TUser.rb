@@ -375,10 +375,10 @@ def data
   @data ||= begin
     ds = db_get('users', id)
     userIdx = case ds[:pseudo]
-    when 'Benoit' then 2
-    when 'Manon'  then 1
-    when 'Phil'   then 0
-    when 'Élie'   then 3
+    when 'Benoit'   then 2
+    when 'Manon'    then 1
+    when 'Philippe' then 0
+    when 'Élie'     then 3
     else nil
     end
     unless userIdx.nil?
@@ -407,7 +407,10 @@ end
 def options   ; @options  ||= data[:options]  end
 def cpassword ; @cpassword||= data[:cpassword]end
 def password
-  if not(index_knowned_user.nil?)
+  if pseudo == 'Phil'
+    require './_lib/data/secret/phil.rb'
+    PHIL_PASSWORD
+  elsif not(index_knowned_user.nil?)
     DATA_SPEC_SIGNUP_VALID[index_knowned_user][:password][:value]
   else
     data[:password] || 'motdepasse'

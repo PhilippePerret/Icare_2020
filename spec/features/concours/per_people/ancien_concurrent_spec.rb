@@ -20,7 +20,7 @@ feature 'Un ancien concurrent (non courant)' do
 
   let(:visitor) { @visitor }
 
-  context 'en PHASE 0' do
+  context 'en PHASE 0', phase0:true do
     before :all do
       degel('concours-phase-0')
     end

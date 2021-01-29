@@ -26,7 +26,7 @@ feature "Un simple visiteur" do
   before(:all) do
     headless(false)
   end
-  context 'en PHASE 0' do
+  context 'en PHASE 0', phase0:true do
     before :all do
       degel('concours-phase-0')
     end

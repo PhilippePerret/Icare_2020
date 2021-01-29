@@ -12,8 +12,23 @@ def peut_passer_le_concours_a_la_phase_suivante(phase_expected)
     old_phase = conc.phase.freeze
 
     # === OPÉRATION ===
+    # Le nom du menu en fonction de la phase
+    item_menu = case phase_expected - 1
+                when 0 then 'Lancer et annoncer le concours'
+                when 1 then 'Annoncer l\'échéance des dépôts'
+                when 2 then 'Annoncer fin de présélection'
+                when 3 then 'Annoncer le palmarès'
+                when 5 then 'Annoncer fin officielle du concours'
+                when 8 then 'Nettoyer le concours'
+                when 9 then raise "C'est impossible, normalement"
+                end
     goto("concours/admin")
-    # TODO
+    # sleep 15
+    within('form#concours-phase-form') do
+      select(item_menu, from: 'current_phase')
+      click_on('Simuler pour procéder à cette étape…')
+    end
+    click_on('Procéder aux opérations cochées')
 
     # === VÉRIFICATION ===
     conc.reset

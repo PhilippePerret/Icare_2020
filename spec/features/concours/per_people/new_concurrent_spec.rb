@@ -35,7 +35,7 @@ feature 'Un nouveau concurrent' do
     try_identify_visitor
   end
 
-  context 'en PHASE 0' do
+  context 'en PHASE 0', phase0:true do
 
     before(:all) { degel('concours-phase-0') }
 
