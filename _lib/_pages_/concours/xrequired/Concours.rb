@@ -93,21 +93,4 @@ def date_palmares
   @date_palmares ||= Time.new(annee, 6, 1)
 end #/ date_palmares
 
-# # ---------------------------------------------------------------------
-# #   CONFIGURATION
-# #   (OBSOLETE)
-# # ---------------------------------------------------------------------
-# def config
-#   @config ||= begin
-#     h = {}
-#     JSON.parse(File.read(config_path)).each do |k,v|
-#       h.merge!(k.to_sym => v)
-#     end ; h
-#   end
-# end #/ config
-#
-# def config_path
-#   @config_path ||= File.expand_path(File.join('.','_lib','_pages_','concours','xrequired','config.json'))
-# end #/ config_path
-
 end #/Concours

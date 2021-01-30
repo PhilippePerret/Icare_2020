@@ -21,14 +21,19 @@ class HTML
 
   # Fabrication du body
   def build_body
-    @body = deserb('body', self)
+    @body = deserb("partials/#{param(:section)||'home'}", self)
   end # /build_body
 
   # IN    Opération à jouer
   # OUT   void
   def run_operation(op)
-    require_relative "../xmodules/admin/operations/#{op}"
-    concours.send(op.to_sym)
+    if File.exists?(File.expand_path("#{__dir__}/operations/#{op}"))
+      Dir["#{__dir__}/operations/#{op}/**/*.rb"].each{|m|require m}
+      send(op.to_sym)
+    else
+      require_relative "../xmodules/admin/operations/#{op}"
+      concours.send(op.to_sym)
+    end
   end #/ run_operation
 
   def res

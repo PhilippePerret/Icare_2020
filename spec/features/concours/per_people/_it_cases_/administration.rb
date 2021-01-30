@@ -43,10 +43,29 @@ end #/ peut_passer_le_concours_a_la_phase_suivante
 
 def ne_peut_pas_passer_le_concours_a_la_phase_suivante
   it "ne peut pas passer le concours a la phase suivante" do
-    pending "à programmer"
+    goto("concours/admin")
+
     # En rejoignant l'administration
     # TODO
     # Par route directe
     # TODO
   end
 end
+
+def peut_produire_les_fiches_de_lecture
+  # Méthode qui teste complètement la génération des fiches de lecture après l'évaluation complète des synopsis. C'est seulement une méthode d'administration.
+  it "peut rejoindre la section contenant le bouton pour produire les fiches" do
+    goto("concours/admin")
+    expect(page).to be_dashboard_administration
+    find('div.usefull-links .handler').hover
+    click_on('Fiches de lecture')
+  end
+  it "peut lancer la procédure de production des fiches" do
+
+  end
+  it "produit des fiches cohérente" do
+    # Note : c'est la plus grosse partie du test, on doit vraiment s'assurer
+    # que les fiches de lecture sont produites en accord avec l'évaluation du
+    # synopsis.
+  end
+end #/ peut_produire_les_fiches_de_lecture

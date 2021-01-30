@@ -1,6 +1,12 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 =begin
+
+  ============================================================================
+  JOUER CE SCRIPT (CMD i) POUR ACTUALISER LA LISTE DES MÉTHODES TDD (IT-CASES)
+  DANS LE FICHIER __all_it-cases__.html
+  ============================================================================
+
   Script qui récupère tous les it-cases pour les documenter (une liste
   complète, avec description et lien vers la méthode)
 

@@ -47,17 +47,17 @@ feature 'Un nouveau concurrent', newconc:true do
 
     before(:all) { degel('concours-phase-0') }
 
-    # peut_rejoindre_le_concours
-    # peut_atteindre_lannonce_du_prochain_concours
-    # ne_peut_pas_sinscrire_au_concours
-    # peut_rejoindre_son_espace_personnel(0)
-    # ne_peut_pas_transmettre_de_dossier("Vous pourrez transmettre votre dossier lorsque le concours sera lancé")
+    peut_rejoindre_le_concours
+    peut_atteindre_lannonce_du_prochain_concours
+    ne_peut_pas_sinscrire_au_concours
+    peut_rejoindre_son_espace_personnel(0)
+    ne_peut_pas_transmettre_de_dossier("Vous pourrez transmettre votre dossier lorsque le concours sera lancé")
 
-    # context 'qui ne veut pas recevoir sa fiche de lecture' do
-    #   before(:each){ visitor.set_pref_fiche_lecture(false);reconnecte_visitor }
-    #   peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent, MESSAGES[:prefs_dont_want_fiches_lecture])
-    #   ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :not_want)
-    # end
+    context 'qui ne veut pas recevoir sa fiche de lecture' do
+      before(:each){ visitor.set_pref_fiche_lecture(false);reconnecte_visitor }
+      peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent, MESSAGES[:prefs_dont_want_fiches_lecture])
+      ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :not_want)
+    end
 
     context 'qui veut recevoir sa fiche de lecture' do
       before(:each){ visitor.set_pref_fiche_lecture(true);reconnecte_visitor }
@@ -65,10 +65,10 @@ feature 'Un nouveau concurrent', newconc:true do
       peut_telecharger_ses_fiches_de_lecture(:new)
     end
 
-    # peut_detruire_son_inscription
+    peut_detruire_son_inscription
 
     # --- Sections interdites ---
-    # ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_atteindre_la_section_evalutation
 
   end #/context PHASE 0
 

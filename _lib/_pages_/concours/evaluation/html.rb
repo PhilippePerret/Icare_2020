@@ -55,10 +55,6 @@ class HTML
         when 'mark_conforme'
           require_xmodule('admin/mark_fichier_conforme')
           synopsis.cfile.confirme_validite
-        when 'exportfiches'
-          require_xmodule('evaluation/export_fiches')
-          message("Exportation des fiches…")
-          Synopsis.exporter_les_fiches
         end
         check_up_to_date
       end

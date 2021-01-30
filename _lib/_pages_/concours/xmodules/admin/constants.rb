@@ -9,14 +9,13 @@
 
 ADMIN_USEFULL_LINKS = [
   Tag.link(text:"LES SYNOPSIS", route:"concours/evaluation"),
-  Tag.link(text:"Fiches de lecture", route:"concours/evaluation?view=fiches_lecture"),
   Tag.link(text:"Palmarès", route:"concours/palmares"),
   Tag.link(text:"Accueil public", route:"concours/accueil")
 ]
 if user.admin?
   ADMIN_USEFULL_LINKS += [
     Tag.link(text:"Tableau de bord", route:"concours/admin"),
-    Tag.link(text:"Exporter les fiches", route:"concours/evaluation?view=fiches_lecture&op=exportfiches")
+    Tag.link(text:"Fiches de lecture", route:"concours/admin?section=fiches_lecture"),
   ]
 end
 

@@ -280,6 +280,30 @@ end
 RSpec::Matchers.alias_matcher :be_page_evaluation, :be_fiches_synopsis
 
 
+RSpec::Matchers.define :be_dashboard_administration do
+  match do |page|
+    @errors = []
+    expected_titre = 'Administration du concours'
+    actual_titre = title_of_page
+    if not page.has_css?('h2.page-title', text: expected_titre)
+      @errors << "la page devrait porter le titre “#{expected_titre}” (son titre est #{actual_titre})"
+    end
+    if not page.has_css?('form#concours-phase-form')
+      @errors << "La page devrait contenir le formulaire pour changer la phase courante"
+    end
+    if not page.has_css?('form#concours-form')
+      @errors << "La page devrait contenir un formulaire pour définir les données du concours"
+    end
+    return @errors.empty?
+  end
+  description do
+    "C'est bien le tableau de bord de l'administration"
+  end
+  failure_message do
+    "Ce n'est pas le tableau de bord de l'administration : #{@errors.join(', ')}."
+  end
+end
+
 RSpec::Matchers.define :be_section_fiches_lecture do |as|
   match do |page|
     @errors = []
