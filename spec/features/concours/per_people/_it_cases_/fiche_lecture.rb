@@ -38,16 +38,20 @@ def peut_telecharger_sa_fiche_de_lecture(as = nil)
   end
 end
 
-def peut_telecharger_une_ancienne_fiche_de_lecture
+def peut_telecharger_une_ancienne_fiche_de_lecture(as = :ancien)
   it "peut télécharger une ancienne fiche de lecture" do
-    goto("concours/espace_personnel")
-    expect(page).to have_link("Mes fiches de lecture")
-    visitor.click_on("Mes fiches de lecture")
+    require './_lib/_pages_/concours/espace_concurrent/constants'
+    goto("concours/espace_concurrent")
+    expect(page).to have_link(UI_TEXTS[:btn_vers_fiches_lecture])
+    visitor.click_on(UI_TEXTS[:btn_vers_fiches_lecture])
     expect(page).to be_section_fiches_lecture(:concurrent)
-    dold = db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ?", [visitor.id]).first
-    expect(dold).not_to eq(nil), "Un ancien concurrent devrait avoir un enregistrement pour un concours précédent… (erreur de test)"
-    annee = dold[:annee]
+    if as == :ancien
+      dold = db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ?", [visitor.id]).first
+      expect(dold).not_to eq(nil), "Un ancien concurrent devrait avoir un enregistrement pour un concours précédent… (erreur de test)"
+      annee = dold[:annee]
+    end
   end
+  alias :peut_telecharger_ses_fiches_de_lecture :peut_telecharger_une_ancienne_fiche_de_lecture
 
 end #/ peut_telecharger_une_ancienne_fiche_de_lecture
 

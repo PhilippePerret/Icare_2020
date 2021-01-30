@@ -49,6 +49,9 @@ end #/ identify
 alias :rejoint_le_concours :identify
 
 def logout
+  if not page.has_css?('a', text: 'Se déconnecter')
+    page.execute_javascript('alert("Pas de bouton pour se déconnecter")')
+  end
   click_on("Se déconnecter")
 end #/ logout
 

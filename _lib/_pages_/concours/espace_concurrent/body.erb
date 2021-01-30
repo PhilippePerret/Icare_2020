@@ -36,11 +36,17 @@ end # si c'est gaetan deves
 %>
 <p>
   <strong><%= concurrent.pseudo.patronimize %></strong>, bienvenue dans votre espace du <strong>Concours de Synopsis de l’atelier Icare</strong>. <%
-  if Concours.current.started? %>
-    <span>Retrouvez dans cette partie les informations sur vos participations ainsi que des informations sur le concours actuel.</span><%
-  else %>
-    <span>En attendant le démarrage du prochain concours, retrouvez dans cette partie les informations sur vos participations précédentes.</span><%
+
+  if Concours.current.started?
+
+    %><span>Retrouvez dans cette partie les informations sur vos participations ainsi que des informations sur le concours actuel.</span><%
+
+  else
+
+    %><span>En attendant le démarrage du prochain concours, retrouvez dans cette partie les informations sur vos participations précédentes.</span><%
+
   end %><%=
+
   if concurrent.current?
     if concurrent.cfile.transmis? || not(concours.phase2?)
       ""
@@ -52,13 +58,17 @@ end # si c'est gaetan deves
   end
 %></p>
 
-<% if not(concurrent.current?) && Concours.current.phase < 2 %>
+<%
+
+if not(concurrent.current?) && Concours.current.phase < 2 %>
+
   <div class="right mt2 mb2">
     <%= CONCOURS_SIGNUP.with("☞#{ISPACE}S’inscrire à la session #{Concours.current.annee} du concours.") %>
   </div>
-<% end %>
 
-<%
+  <%
+end
+
 # ---------------------------------------------------------------------
 #
 # Informations sur le concours
@@ -170,38 +180,69 @@ end
 #
 # ---------------------------------------------------------------------
 
-if Concours.current.started? %>
+%>
 <fieldset id="concours-fichier-candidature">
   <legend>Fichier de candidature</legend><%
-  if not(concurrent.current?) %>
-    <p class="explication">Vous n'êtes pas en lice pour cette session du concours.</p><%
-  elsif concours.phase1? %><%=
-    section_fichier_candidature %><%
-  elsif concours.phase2? %>
-    <p><%
-      if concurrent.current? && concurrent.cfile.conforme? %>
-        <span>Votre synopsis est conforme, il est en lice</span><%
-      else %>
-        <span>Vous n'êtes pas en lice</span><%
-      end %>
-      <span> pour la session <%= ANNEE_CONCOURS_COURANTE %></span>.
-    </p><%
-  elsif concours.phase3? %>
-    <p><%
-      if not(concurrent.cfile.conforme?)
-        %>Sans fichier envoyé ou conforme, vous ne pouvez pas être en lice<%
-      elsif concurrent.preselected?
-        %>Votre synopsis est en lice<%
-       else
-         %>Votre projet n'a pas été sélectionné. Vous n'êtes pas en lice<%
-      end %>
-      <span> pour la sélection finale de la session <%=ANNEE_CONCOURS_COURANTE%> du concours.</span>
-    </p>
-  <% end %>
-</fieldset>
 
+    if Concours.current.started?
+
+      if concurrent.current?
+
+        %><p class='explication'>Vous pourrez transmettre votre dossier lorsque le concours sera lancé</p><%
+
+      else
+
+        %><p class="explication">Vous n'êtes pas en lice pour cette session du concours.</p><%
+
+      end
+
+    elsif concours.phase1?
+
+      %><%= section_fichier_candidature %><%
+
+    elsif concours.phase2?
+
+      %><p><%
+
+        if concurrent.current? && concurrent.cfile.conforme?
+
+          %><span>Votre synopsis est conforme, il est en lice</span><%
+
+        else
+
+          %><span>Vous n'êtes pas en lice</span><%
+
+        end
+
+        %><span> pour la session <%= ANNEE_CONCOURS_COURANTE %></span>.
+
+      </p><%
+
+  elsif concours.phase3?
+
+    %><p><%
+
+      if not(concurrent.cfile.conforme?)
+
+        %>Sans fichier envoyé ou conforme, vous ne pouvez pas être en lice<%
+
+      elsif concurrent.preselected?
+
+        %>Votre synopsis est en lice<%
+
+      else
+
+         %>Votre projet n'a pas été sélectionné. Vous n'êtes pas en lice<%
+
+      end
+      %><span> pour la sélection finale de la session <%=ANNEE_CONCOURS_COURANTE%> du concours.</span>
+
+    </p><%
+
+  end
+%>
+</fieldset>
 <%
-end # /si le concours est démarré
 
 # ---------------------------------------------------------------------
 #
@@ -210,25 +251,44 @@ end # /si le concours est démarré
 #
 # ---------------------------------------------------------------------
 %>
+
 <h3>Vos participations aux concours de l’atelier Icare</h3>
+
 <section id="concours-historique"><%
-  if concurrent.current? && concurrent.all_concours.count == 1 %>
-    <p>C'est votre première participation à ce concours. Bonne chance à vous !</p><%
-  else %>
-    <div class="italic">Nombre de participations : <%= concurrent.all_concours.count %></div>
-    <div class="right"><%=
-      Tag.link(text:UI_TEXTS[:btn_vers_fiches_lecture], route:"concours/fiches_lecture?cid=#{concurrent.id}") %>
-    </div>
-    <ul><%
-      concurrent.all_concours.each do |dcon| %>
-        <li><%=
+
+  if concurrent.current? && concurrent.all_concours.count == 1
+
+    %><p>C'est votre première participation à ce concours. Bonne chance à vous !</p><%
+
+  else
+
+    %><div class="italic">Nombre de participations : <%= concurrent.all_concours.count %></div>
+
+    <%# Lien vers les fiches de lecture %><%
+
+    if concurrent.want_fiche_lecture?
+
+      %><div class="right"><%=
+        Tag.link(text:UI_TEXTS[:btn_vers_fiches_lecture], route:"concours/fiches_lecture?cid=#{concurrent.id}") %>
+      </div><%
+
+    end # Si le concurrent veut recevoir sa fiche de lecture
+
+    %><ul><%
+
+      concurrent.all_concours.each do |dcon|
+
+        %><li><%=
           "Session #{dcon[:annee]} (thème “#{dcon[:theme]}” — #{dcon[:prix]})" %>
         </li><%
-      end %>
-    </ul><%
-  end %>
-</section>
 
+      end
+
+    %></ul><%
+
+  end
+%>
+</section>
 <%
 # ---------------------------------------------------------------------
 #

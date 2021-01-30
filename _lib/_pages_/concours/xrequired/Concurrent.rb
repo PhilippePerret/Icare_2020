@@ -250,7 +250,8 @@ def fiche_lecture?
   (@fiche_lecture ||= begin
     option(1) == 1 ? :true : :false
   end) == :true
-end #/ fiche_lecture?
+end
+alias :want_fiche_lecture? :fiche_lecture?
 
 # Retourne TRUE si le concurrent veut recevoir des informations sur
 # le concours.

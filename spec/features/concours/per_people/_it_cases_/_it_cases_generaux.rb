@@ -33,6 +33,7 @@ def annee ; ANNEE_CONCOURS_COURANTE end
 # Méthode à appeler avant les tests où il faut que le visiteur soit
 # identifié.
 def try_identify_visitor
+  # doc:out
   if visitor.is_a?(TConcurrent)
     visitor.identify
   elsif visitor.is_a?(TEvaluator)
@@ -43,13 +44,14 @@ end #/ try_identify_visitor
 # Quand on a changé un attribut du visiteur (par exemple ses options, ses
 # préférences) on peut avoir besoin de le reconnecter.
 def reconnecte_visitor
+  # doc:out
   visitor.logout
   Capybara.reset_sessions!
   try_identify_visitor
 end #/
 
-
 def peut_rejoindre_le_concours
+  # S'assure qu'un visiteur quelconque peut rejoindre l'accueil du concours par les différents moyens offerts : l'encart suivant la phase, le plan ou les formulaires d'identification ou d'inscription.
   scenario "trouve des liens pour rejoindre le concours" do
     phase = TConcours.current.phase || 0
     if phase > 0 && phase < 6

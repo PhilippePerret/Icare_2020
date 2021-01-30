@@ -1,0 +1,164 @@
+<h2>Liste des it-cases pour le test du concours</h2><!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Méthodes TDD Test concours</title>
+<style media="screen">
+body{font-size:16pt;width:680px;}
+div#method_list{
+  height:600px;font-size:0.9em;
+  border:1px solid grey;
+  overflow:auto;
+}
+dl {}
+dl dt {font-family:Arial,Geneva, Helvetica;cursor:pointer;margin-top:0.3em;}
+dl dd {font-size: 0.9em;}
+.hidden {display:none;}
+div#boutons, div#boutons * {font-size:inherit;}
+div#boutons {
+  position:fixed;bottom: 0;right:0;padding:0.5em 1em;
+}
+</style>
+<script type="text/javascript">
+function toggleMethod(titre){
+  const o = titre.nextSibling.nextSibling
+  const ouvrir = o.classList.contains('hidden')
+  o.classList[ouvrir?'remove':'add']('hidden')
+}
+function search(){
+  const searched = []
+  DGet('#searched').value.split(' ').forEach(str => {
+    searched.push(new RegExp(`${str}`))
+  })
+  var outers = 0
+  DGet('#method_list').querySelectorAll('dt').forEach(dt => {
+    const isOk = containsSearch(dt.innerText, searched)
+    dt.classList[isOk?'remove':'add']('hidden')
+    isOk || ++outers
+  })
+  outers && DGet('#btn-show-all').classList.remove('hidden')
+}
+function afficherTout(){
+  DGet('#method_list').querySelectorAll('dt').forEach(dt => dt.classList.remove('hidden'))
+  DGet('#btn-show-all').classList.add('hidden')
+}
+function containsSearch(str, expected){
+  for(var i = 0, len = expected.length; i < len; ++i){
+    if ( ! str.match(expected[i]) ){
+      console.log("Le texte '%s' ne contient pas '%s'", str, expected[i])
+      return false
+    }
+  }
+  return true
+}
+function DGet(selector){return document.querySelector(selector)}
+</script>
+
+
+  </head>
+  <body>
+    <div>Le visiteur testé…</div>
+    <div id="boutons">
+      <button id="btn-show-all" class="hidden" type="button" onclick="afficherTout()">Tout afficher</button>
+      <input type="text" id="searched" value="" style="width:300px;" placeholder="Mots à filtrer" />
+      <button type="button" onclick="search()">Filtrer</button>
+    </div>
+    <div id="method_list">
+
+<dl>
+<dt onclick="toggleMethod(this)">… peut sinscrire au concours(as)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/inscription.rb:23'>peut_sinscrire_au_concours(as)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… ne peut pas sinscrire au concours(raison affichee = "déjà inscrit")</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/inscription.rb:124'>ne_peut_pas_sinscrire_au_concours(raison_affichee = "déjà inscrit")</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut atteindre lannonce du prochain concours</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/pages.rb:8'>peut_atteindre_lannonce_du_prochain_concours</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… atteint la page daccueil du concours(phase)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/pages.rb:16'>atteint_la_page_daccueil_du_concours(phase)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut rejoindre toutes les sections depuis laccueil</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/pages.rb:24'>peut_rejoindre_toutes_les_sections_depuis_laccueil</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… ne peut pas atteindre la section evalutation</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/pages.rb:53'>ne_peut_pas_atteindre_la_section_evalutation</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut rejoindre son espace personnel(phase)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/pages.rb:69'>peut_rejoindre_son_espace_personnel(phase)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… ne peut pas atteindre lespace personnel</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/pages.rb:89'>ne_peut_pas_atteindre_lespace_personnel</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… ne peut pas atteindre le palmares</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/pages.rb:97'>ne_peut_pas_atteindre_le_palmares</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut rejoindre la page des palmares</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/pages.rb:105'>peut_rejoindre_la_page_des_palmares</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut modifier ses preferences notifications</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/preferences.rb:13'>peut_modifier_ses_preferences_notifications</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut modifier ses preferences fiche de lecture</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/preferences.rb:50'>peut_modifier_ses_preferences_fiche_de_lecture</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut transmettre son dossier(data = nil)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/dossier.rb:3'>peut_transmettre_son_dossier(data = nil)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… ne peut pas transmettre de dossier(message = nil)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/dossier.rb:37'>ne_peut_pas_transmettre_de_dossier(message = nil)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut rejoindre la section fiches de lecture as(as = nil, msg = nil)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/fiche_lecture.rb:6'>peut_rejoindre_la_section_fiches_de_lecture_as(as = nil, msg = nil)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… ne peut pas atteindre la section fiches de lecture</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/fiche_lecture.rb:18'>ne_peut_pas_atteindre_la_section_fiches_de_lecture</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut telecharger sa fiche de lecture(as = nil)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/fiche_lecture.rb:25'>peut_telecharger_sa_fiche_de_lecture(as = nil)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut telecharger une ancienne fiche de lecture(as = :ancien)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/fiche_lecture.rb:40'>peut_telecharger_une_ancienne_fiche_de_lecture(as = :ancien)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… ne peut pas telecharger sa fiche de lecture(raison)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/fiche_lecture.rb:69'>ne_peut_pas_telecharger_sa_fiche_de_lecture(raison)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut rejoindre le concours</dt><!-- rien ! --><dd class="hidden">
+  <div class="description">S'assure qu'un visiteur quelconque peut rejoindre l'accueil du concours par les différents moyens offerts : l'encart suivant la phase, le plan ou les formulaires d'identification ou d'inscription.</div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/_it_cases_generaux.rb:52'>peut_rejoindre_le_concours</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut passer le concours a la phase suivante(phase expected)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/administration.rb:7'>peut_passer_le_concours_a_la_phase_suivante(phase_expected)</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… ne peut pas passer le concours a la phase suivante</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/administration.rb:43'>ne_peut_pas_passer_le_concours_a_la_phase_suivante</a></div>
+</dd>
+<dt onclick="toggleMethod(this)">… peut detruire son inscription</dt><!-- rien ! --><dd class="hidden">
+  <div class="description"></div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/concurrent.rb:3'>peut_detruire_son_inscription</a></div>
+</dd>
+</dl>
+</div>
+</body>
+</html>
