@@ -307,11 +307,11 @@ end
 RSpec::Matchers.define :be_production_fiches_lecture do |phase|
   match do |page|
     @errors = []
-    expected_titre = 'Administration | Production des fiches de lecture'
-    if not page.has_css?('h2.page-titre', text: expected_titre)
-      @errors << "devrait avoir le titre « #{expected_titre} », possède le titre « #{title_of_page} »"
+    expected_titre = 'Administration | Production des fiches de lecture'
+    if not page.has_css?('h2.page-title', text: expected_titre)
+      @errors << "devrait avoir le titre « #{expected_titre} », possède le titre #{title_of_page}"
     end
-    if phase >= 5
+    if (phase||TConcours.current.phase) >= 5
       if not page.has_link?('Produire les fiches de lecture', href: 'concours/admin?section=fiches_lecture&op=produce_fiches_lecture')
         @errors << "devrait posséder un bouton pour produire les fiches de lecture"
       end

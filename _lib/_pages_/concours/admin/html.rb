@@ -4,7 +4,10 @@ require_module('form')
 class HTML
   attr_reader :concours
   def titre
-    "Administration du concours"
+    case param(:section)
+    when 'fiches_lecture' then 'Administration | Production des fiches de lecture'
+    else 'Administration du concours'
+    end
   end #/titre
 
   def usefull_links
