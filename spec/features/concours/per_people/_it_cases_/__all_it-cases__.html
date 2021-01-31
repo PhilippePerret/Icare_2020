@@ -1,25 +1,28 @@
 <h2>Liste des it-cases pour le test du concours</h2><!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang='fr' dir='ltr'>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <title>Méthodes TDD Test concours</title>
 <style media="screen">
-body{font-size:16pt;width:680px;}
-div#method_list{
+body {
+  font-size:16pt;
+  }
+div#method_list {
   height:600px;font-size:0.9em;
   border:1px solid grey;
   overflow:auto;
+  width: 680px;
 }
 dl {}
 dl dt {font-family:Arial,Geneva, Helvetica;cursor:pointer;margin-top:0.3em;}
 dl dd {font-size: 0.9em;}
 .hidden {display:none;}
+.invisible {visibility: hidden;}
 div#boutons, div#boutons * {font-size:inherit;}
-div#boutons {
-  position:fixed;bottom: 0;right:0;padding:0.5em 1em;
-}
+div#boutons {position:fixed;top: 100px;left: calc(680px + 20px);padding: 0.5em 1em;}
 </style>
-<script type="text/javascript">
+
+<script type='text/javascript'>
 function toggleMethod(titre){
   const o = titre.nextSibling.nextSibling
   const ouvrir = o.classList.contains('hidden')
@@ -36,11 +39,11 @@ function search(){
     dt.classList[isOk?'remove':'add']('hidden')
     isOk || ++outers
   })
-  outers && DGet('#btn-show-all').classList.remove('hidden')
+  outers && DGet('#btn-show-all').classList.remove('invisible')
 }
 function afficherTout(){
   DGet('#method_list').querySelectorAll('dt').forEach(dt => dt.classList.remove('hidden'))
-  DGet('#btn-show-all').classList.add('hidden')
+  DGet('#btn-show-all').classList.add('invisible')
 }
 function containsSearch(str, expected){
   for(var i = 0, len = expected.length; i < len; ++i){
@@ -59,7 +62,8 @@ function DGet(selector){return document.querySelector(selector)}
   <body>
     <div>Le visiteur testé…</div>
     <div id="boutons">
-      <button id="btn-show-all" class="hidden" type="button" onclick="afficherTout()">Tout afficher</button>
+      <button id="btn-show-all" class="invisible" type="button" onclick="afficherTout()">Tout afficher</button>
+      <br />
       <input type="text" id="searched" value="" style="width:300px;" placeholder="Mots à filtrer" />
       <button type="button" onclick="search()">Filtrer</button>
     </div>
@@ -154,11 +158,16 @@ function DGet(selector){return document.querySelector(selector)}
   <div class="description"></div>
   <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/administration.rb:43'>ne_peut_pas_passer_le_concours_a_la_phase_suivante</a></div>
 </dd>
+<dt onclick="toggleMethod(this)">… peut produire les fiches de lecture</dt><!-- rien ! --><dd class="hidden">
+  <div class="description">Méthode qui teste complètement la génération des fiches de lecture après l'évaluation complète des synopsis. C'est seulement une méthode d'administration.</div>
+  <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/administration.rb:54'>peut_produire_les_fiches_de_lecture</a></div>
+</dd>
 <dt onclick="toggleMethod(this)">… peut detruire son inscription</dt><!-- rien ! --><dd class="hidden">
   <div class="description"></div>
   <div class='method'><a href='atm://open?url=file:///Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/concurrent.rb:3'>peut_detruire_son_inscription</a></div>
 </dd>
 </dl>
 </div>
+<em>Pour actualiser cette liste, lancer le script '/Users/philippeperret/Sites/AlwaysData/Icare_2020/spec/features/concours/per_people/_it_cases_/__documente_all_cases__.rb' et recharger cette page</em>
 </body>
 </html>

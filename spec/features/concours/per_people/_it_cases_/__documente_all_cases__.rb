@@ -53,67 +53,18 @@ class << self
   def header
     <<-HTML
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang='fr' dir='ltr'>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <title>Méthodes TDD Test concours</title>
-<style media="screen">
-body{font-size:16pt;width:680px;}
-div#method_list{
-  height:600px;font-size:0.9em;
-  border:1px solid grey;
-  overflow:auto;
-}
-dl {}
-dl dt {font-family:Arial,Geneva, Helvetica;cursor:pointer;margin-top:0.3em;}
-dl dd {font-size: 0.9em;}
-.hidden {display:none;}
-div#boutons, div#boutons * {font-size:inherit;}
-div#boutons {
-  position:fixed;bottom: 0;right:0;padding:0.5em 1em;
-}
-</style>
-<script type="text/javascript">
-function toggleMethod(titre){
-  const o = titre.nextSibling.nextSibling
-  const ouvrir = o.classList.contains('hidden')
-  o.classList[ouvrir?'remove':'add']('hidden')
-}
-function search(){
-  const searched = []
-  DGet('#searched').value.split(' ').forEach(str => {
-    searched.push(new RegExp(`${str}`))
-  })
-  var outers = 0
-  DGet('#method_list').querySelectorAll('dt').forEach(dt => {
-    const isOk = containsSearch(dt.innerText, searched)
-    dt.classList[isOk?'remove':'add']('hidden')
-    isOk || ++outers
-  })
-  outers && DGet('#btn-show-all').classList.remove('hidden')
-}
-function afficherTout(){
-  DGet('#method_list').querySelectorAll('dt').forEach(dt => dt.classList.remove('hidden'))
-  DGet('#btn-show-all').classList.add('hidden')
-}
-function containsSearch(str, expected){
-  for(var i = 0, len = expected.length; i < len; ++i){
-    if ( ! str.match(expected[i]) ){
-      console.log("Le texte '%s' ne contient pas '%s'", str, expected[i])
-      return false
-    }
-  }
-  return true
-}
-function DGet(selector){return document.querySelector(selector)}
-</script>
-
-
+#{CSS_CODE.gsub(/_LISTE_WIDTH_/, '680')}
+#{JS_CODE}
   </head>
   <body>
     <div>Le visiteur testé…</div>
     <div id="boutons">
-      <button id="btn-show-all" class="hidden" type="button" onclick="afficherTout()">Tout afficher</button>
+      <button id="btn-show-all" class="invisible" type="button" onclick="afficherTout()">Tout afficher</button>
+      <br />
       <input type="text" id="searched" value="" style="width:300px;" placeholder="Mots à filtrer" />
       <button type="button" onclick="search()">Filtrer</button>
     </div>
@@ -122,12 +73,20 @@ function DGet(selector){return document.querySelector(selector)}
     HTML
   end #/ header
   def footer
-    @footer ||= "</div>\n</body>\n</html>\n"
+    @footer ||= <<-HTML
+</div>
+<em>Pour actualiser cette liste, lancer le script '#{__FILE__}' et recharger cette page</em>
+</body>
+</html>
+    HTML
   end
+
   def path_documentation
     @path_documentation ||= File.join(THIS_FOLDER,'__all_it-cases__.html')
-  end #/ path_documentation
+  end
+
 end # /<< self
+
 
 attr_reader :data
 attr_accessor :description # pour la définir après
@@ -152,6 +111,7 @@ def method_linked
     "<a href='atm://open?url=file://#{file}:#{line}'>#{method}</a>"
   end
 end
+
 end #/ItCase
 
 
@@ -180,5 +140,65 @@ Dir["#{THIS_FOLDER}/**/*.rb"].each do |fpath|
     end
   end
 end
+
+
+JS_CODE = <<-JAVASCRIPT
+<script type='text/javascript'>
+function toggleMethod(titre){
+  const o = titre.nextSibling.nextSibling
+  const ouvrir = o.classList.contains('hidden')
+  o.classList[ouvrir?'remove':'add']('hidden')
+}
+function search(){
+  const searched = []
+  DGet('#searched').value.split(' ').forEach(str => {
+    searched.push(new RegExp(`${str}`))
+  })
+  var outers = 0
+  DGet('#method_list').querySelectorAll('dt').forEach(dt => {
+    const isOk = containsSearch(dt.innerText, searched)
+    dt.classList[isOk?'remove':'add']('hidden')
+    isOk || ++outers
+  })
+  outers && DGet('#btn-show-all').classList.remove('invisible')
+}
+function afficherTout(){
+  DGet('#method_list').querySelectorAll('dt').forEach(dt => dt.classList.remove('hidden'))
+  DGet('#btn-show-all').classList.add('invisible')
+}
+function containsSearch(str, expected){
+  for(var i = 0, len = expected.length; i < len; ++i){
+    if ( ! str.match(expected[i]) ){
+      console.log("Le texte '%s' ne contient pas '%s'", str, expected[i])
+      return false
+    }
+  }
+  return true
+}
+function DGet(selector){return document.querySelector(selector)}
+</script>
+
+JAVASCRIPT
+
+CSS_CODE = <<-CSS
+<style media="screen">
+body {
+  font-size:16pt;
+  }
+div#method_list {
+  height:600px;font-size:0.9em;
+  border:1px solid grey;
+  overflow:auto;
+  width: _LISTE_WIDTH_px;
+}
+dl {}
+dl dt {font-family:Arial,Geneva, Helvetica;cursor:pointer;margin-top:0.3em;}
+dl dd {font-size: 0.9em;}
+.hidden {display:none;}
+.invisible {visibility: hidden;}
+div#boutons, div#boutons * {font-size:inherit;}
+div#boutons {position:fixed;top: 100px;left: calc(_LISTE_WIDTH_px + 20px);padding: 0.5em 1em;}
+</style>
+CSS
 
 ItCase.build_documentation
