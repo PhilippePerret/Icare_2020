@@ -32,7 +32,6 @@ class FicheLecture
 
 DATA_MAIN_PROPERTIES = YAML.load_file(DATA_MAIN_PROPERTIES_FILE)
 
-
 # ---------------------------------------------------------------------
 #
 #   INSTANCE
@@ -45,14 +44,14 @@ end #/ initialize
 
 def bind; binding() end
 
-# DO    Produit le fichier HTML de la fiche de lecture (ou peut-être aussi pdf)
+# DO    Produit le fichier HTML de la fiche de lecture (le PDF)
 def export
   log("---> Export fiche de lecture de “#{synopsis.titre}”")
   res = `/usr/local/bin/wkhtmltopdf "#{App::URL}/concours/fiches_lecture?cid=#{synopsis.concurrent_id}&an=#{Concours.current.annee}" "#{pdf_file_path}" 2>&1`
   log("     Res: #{res.inspect}")
 end #/ export
 def pdf_file_path
-  @pdf_file_path ||=  File.join(TEMP_FOLDER,'concours',pdf_filename)
+  @pdf_file_path ||=  File.join(TEMP_CONCOURS_FOLDER,pdf_filename)
 end #/ pdf_file_path
 def pdf_filename
   @pdf_filename ||= "fiche-#{synopsis.concurrent_id}-#{Concours.current.annee}.pdf"
@@ -91,8 +90,8 @@ def downloadable?
 end #/ downloadable?
 
 def download_link
-  "#{App::URL}/tmp/concours/#{pdf_filename}"
-end #/ download_link
+  File.join(TEMP_CONCOURS_FOLDER,pdf_filename)
+end
 
 def ecusson
   @ecusson ||= Emoji.new('objets/blason').regular

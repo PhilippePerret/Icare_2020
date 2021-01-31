@@ -69,6 +69,7 @@ feature 'Un nouveau concurrent', newconc:true do
 
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 0
 
@@ -108,6 +109,7 @@ feature 'Un nouveau concurrent', newconc:true do
 
     # --- Sections interdites ---
     # ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 1
 
@@ -139,6 +141,9 @@ feature 'Un nouveau concurrent', newconc:true do
       ne_peut_plus_transmettre_son_dossier("Vous n'avez transmis aucun dossier de candidature")
     end
 
+    # === Interdictions ===
+    ne_peut_pas_produire_les_fiches_de_lecture
+
   end #/context PHASE 2
 
   context 'PHASE 3', phase3:true, newconc:'phase3' do
@@ -153,6 +158,9 @@ feature 'Un nouveau concurrent', newconc:true do
     ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :new)
     peut_detruire_son_inscription
 
+    # === Interdictions ===
+    ne_peut_pas_produire_les_fiches_de_lecture
+
   end #/context PHASE 3
 
   context 'PHASE 5', phase5:true, newconc:'phase5' do
@@ -165,6 +173,9 @@ feature 'Un nouveau concurrent', newconc:true do
     ne_peut_pas_atteindre_la_section_evalutation
     peut_telecharger_sa_fiche_de_lecture
     peut_detruire_son_inscription
+
+    # === Interdictions ===
+    ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 5
 
@@ -179,6 +190,9 @@ feature 'Un nouveau concurrent', newconc:true do
     peut_telecharger_sa_fiche_de_lecture
     peut_detruire_son_inscription
 
+    # === Interdictions ===
+    ne_peut_pas_produire_les_fiches_de_lecture
+
   end #/context PHASE 8
 
   context 'PHASE 9', phase9:true, newconc:'phase9' do
@@ -191,6 +205,9 @@ feature 'Un nouveau concurrent', newconc:true do
     ne_peut_pas_atteindre_la_section_evalutation
     peut_telecharger_sa_fiche_de_lecture
     peut_detruire_son_inscription
+
+    # === Interdictions ===
+    ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 9
 

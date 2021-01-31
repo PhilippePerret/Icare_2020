@@ -304,6 +304,36 @@ RSpec::Matchers.define :be_dashboard_administration do
   end
 end
 
+RSpec::Matchers.define :be_production_fiches_lecture do |phase|
+  match do |page|
+    @errors = []
+    expected_titre = 'Administration | Production des fiches de lecture'
+    if not page.has_css?('h2.page-titre', text: expected_titre)
+      @errors << "devrait avoir le titre « #{expected_titre} », possède le titre « #{title_of_page} »"
+    end
+    if phase >= 5
+      if not page.has_link?('Produire les fiches de lecture', href: 'concours/admin?section=fiches_lecture&op=produce_fiches_lecture')
+        @errors << "devrait posséder un bouton pour produire les fiches de lecture"
+      end
+    else
+      if page.has_link?('Produire les fiches de lecture', href: 'concours/admin?section=fiches_lecture&op=produce_fiches_lecture')
+        @errors << "NE devrait PAS posséder le bouton pour produire les fiches de lecture (phase < 5)"
+      end
+      if not page.has_content?("Le concours est en cours. Impossible de produire les fiches de lecture.")
+        @errors << "devrait contenir le texte « Le concours est en cours. Impossible de produire les fiches de lecture. »"
+      end
+    end
+
+    return @errors.empty?
+  end
+  description do
+    "C'est bien la page administration de production des fiches de lecture."
+  end
+  failure_message do
+    "Ce n'est pas la page administration de production des fiches de lecture : #{@errors.join(', ')}"
+  end
+end
+
 RSpec::Matchers.define :be_section_fiches_lecture do |as|
   match do |page|
     @errors = []

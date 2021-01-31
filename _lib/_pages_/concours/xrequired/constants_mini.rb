@@ -1,8 +1,10 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-PAGES_FOLDER  = File.expand_path(File.join('.','_lib','_pages_'))
-DATA_FOLDER   = File.expand_path(File.join('.','_lib','data'))
+require './_lib/required/__first/handies/files'
+# PAGES_FOLDER  = File.expand_path(File.join('.','_lib','_pages_'))
+# DATA_FOLDER   = File.expand_path(File.join('.','_lib','data'))
 CONCOURS_FOLDER = File.join(PAGES_FOLDER,'concours')
+TEMP_CONCOURS_FOLDER = mkdir(File.join(TEMP_FOLDER,'concours'))
 XMODULES_FOLDER = File.join(CONCOURS_FOLDER,'xmodules')
 CONCOURS_DATA_FOLDER = File.expand_path(File.join(DATA_FOLDER,'concours')).tap{|p|`mkdir -p #{p}`}
 NOMBRE_QUESTIONS_PATH = File.join(CONCOURS_DATA_FOLDER,'NOMBRE_QUESTIONS')
