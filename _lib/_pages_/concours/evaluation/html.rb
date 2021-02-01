@@ -1,7 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_module('form')
-require_js_module(['flash','jquery'])
+require_js_module(['flash','jquery','ajax'])
 class HTML
   # Pour pouvoir définir le titre dans la fiche
   attr_accessor :titre

@@ -1,5 +1,12 @@
 # Todo list
 
+## Rapid list
+
+* Pouvoir rapatrier les fiches d'évaluation
+
+
+## Toutes les tâches
+
 Voir surtout avec `ghi list`. Ici, on ne place que les informations qui ont besoin d'être réfléchies
 
 ## Command pour HOME

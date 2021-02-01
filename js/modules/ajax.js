@@ -17,7 +17,7 @@ class Ajax {
         , success: ok
         , error: this.onError.bind(this,ko)
       }
-      console.log("Data ajax :", data)
+      // console.log("Data ajax :", data)
       $.ajax(data)
     })
   }

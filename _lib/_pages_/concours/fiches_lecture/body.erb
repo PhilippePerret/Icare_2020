@@ -1,4 +1,4 @@
-<% Synopsis.evaluate_all_synopsis if not Synopsis.evaluated? %>
+<% Synopsis.evaluated? || Synopsis.evaluate_all_synopsis %>
 
 <%
 # ---------------------------------------------------------------------
@@ -7,7 +7,7 @@
 #   et 'an' (année du concours à voir, pas forcément courant)
 #
 # ---------------------------------------------------------------------
-log("concurrent.options: #{concurrent.options}")
+log("concurrent.options: #{concurrent ? concurrent.options : 'pas de concurrent'}")
 if param(:cid) && param(:an) %><%=
   code_css_fiche_lecture
   %><%=

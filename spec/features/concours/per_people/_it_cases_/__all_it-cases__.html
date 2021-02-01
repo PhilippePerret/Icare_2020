@@ -70,17 +70,13 @@ function DGet(selector){return document.querySelector(selector)}
     <div id="method_list">
 
 <dl>
-<dt onclick="toggleMethod(this)">… initialize(data)</dt><!-- rien ! --><dd class="hidden">
-  <div class="description"></div>
-  <div class='method'><a href='atm://open?url=file://./spec/features/concours/per_people/_it_cases_/__documente_all_cases__.rb:92'>initialize(data)</a></div>
+<dt onclick="toggleMethod(this)">… ne peut pas produire les fiches de lecture(as = :visitor)</dt><!-- rien ! --><dd class="hidden">
+  <div class="description">Méthode qui s'assure que le visiteur courant, quel qu'il soit à part administrateur, ne peut pas lancer la production des fiches de lecture. Soit en rejoignant la section de production, soit par lien direct.</div>
+  <div class='method'><a href='atm://open?url=file://./spec/features/concours/per_people/_it_cases_/fiche_lecture_admin.rb:5'>ne_peut_pas_produire_les_fiches_de_lecture(as = :visitor)</a></div>
 </dd>
-<dt onclick="toggleMethod(this)">… output</dt><!-- rien ! --><dd class="hidden">
-  <div class="description"></div>
-  <div class='method'><a href='atm://open?url=file://./spec/features/concours/per_people/_it_cases_/__documente_all_cases__.rb:96'>output</a></div>
-</dd>
-<dt onclick="toggleMethod(this)">… method linked</dt><!-- rien ! --><dd class="hidden">
-  <div class="description"></div>
-  <div class='method'><a href='atm://open?url=file://./spec/features/concours/per_people/_it_cases_/__documente_all_cases__.rb:108'>method_linked</a></div>
+<dt onclick="toggleMethod(this)">… peut produire les fiches de lecture</dt><!-- rien ! --><dd class="hidden">
+  <div class="description">Méthode qui teste complètement la génération des fiches de lecture après l'évaluation complète des synopsis. C'est seulement une méthode d'administration.</div>
+  <div class='method'><a href='atm://open?url=file://./spec/features/concours/per_people/_it_cases_/fiche_lecture_admin.rb:29'>peut_produire_les_fiches_de_lecture</a></div>
 </dd>
 <dt onclick="toggleMethod(this)">… peut sinscrire au concours(as)</dt><!-- rien ! --><dd class="hidden">
   <div class="description"></div>
@@ -169,14 +165,6 @@ function DGet(selector){return document.querySelector(selector)}
 <dt onclick="toggleMethod(this)">… ne peut pas passer le concours a la phase suivante</dt><!-- rien ! --><dd class="hidden">
   <div class="description"></div>
   <div class='method'><a href='atm://open?url=file://./spec/features/concours/per_people/_it_cases_/administration.rb:43'>ne_peut_pas_passer_le_concours_a_la_phase_suivante</a></div>
-</dd>
-<dt onclick="toggleMethod(this)">… ne peut pas produire les fiches de lecture(as = :visitor)</dt><!-- rien ! --><dd class="hidden">
-  <div class="description">Méthode qui s'assure que le visiteur courant, quel qu'il soit à part administrateur, ne peut pas lancer la production des fiches de lecture. Soit en rejoignant la section de production, soit par lien direct.</div>
-  <div class='method'><a href='atm://open?url=file://./spec/features/concours/per_people/_it_cases_/administration.rb:54'>ne_peut_pas_produire_les_fiches_de_lecture(as = :visitor)</a></div>
-</dd>
-<dt onclick="toggleMethod(this)">… peut produire les fiches de lecture</dt><!-- rien ! --><dd class="hidden">
-  <div class="description">Méthode qui teste complètement la génération des fiches de lecture après l'évaluation complète des synopsis. C'est seulement une méthode d'administration.</div>
-  <div class='method'><a href='atm://open?url=file://./spec/features/concours/per_people/_it_cases_/administration.rb:78'>peut_produire_les_fiches_de_lecture</a></div>
 </dd>
 <dt onclick="toggleMethod(this)">… peut detruire son inscription</dt><!-- rien ! --><dd class="hidden">
   <div class="description"></div>

@@ -37,8 +37,6 @@ feature "Un administrateur", admin:true do
     ne_peut_pas_sinscrire_au_concours("administrateur")
     peut_passer_le_concours_a_la_phase_suivante(1)
 
-    ne_peut_pas_produire_les_fiches_de_lecture(as = :admin)
-
   end #/context PHASE 0
 
 
@@ -48,8 +46,6 @@ feature "Un administrateur", admin:true do
     end
     peut_passer_le_concours_a_la_phase_suivante(2)
 
-    ne_peut_pas_produire_les_fiches_de_lecture(as = :admin)
-
   end #/context PHASE 1
 
   context 'PHASE 2', admin:'phase2', phase2:true do
@@ -57,8 +53,6 @@ feature "Un administrateur", admin:true do
       degel('concours-phase-2')
     end
     peut_passer_le_concours_a_la_phase_suivante(3)
-
-    ne_peut_pas_produire_les_fiches_de_lecture(as = :admin)
 
   end #/context PHASE 2
 
@@ -68,8 +62,6 @@ feature "Un administrateur", admin:true do
     end
     # peut_passer_le_concours_a_la_phase_suivante(5)
 
-    ne_peut_pas_produire_les_fiches_de_lecture(as = :admin)
-
   end #/context PHASE 3
 
   context 'PHASE 5', admin:'phase5', phase5:true do
@@ -77,8 +69,6 @@ feature "Un administrateur", admin:true do
       degel('concours-phase-5')
     end
     # peut_passer_le_concours_a_la_phase_suivante(8)
-
-    peut_produire_les_fiches_de_lecture
 
   end #/context PHASE 5
 

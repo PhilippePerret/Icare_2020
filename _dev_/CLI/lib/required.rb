@@ -5,6 +5,8 @@
 # require 'rubygems'
 require 'tty-prompt'
 require './_lib/required/__first/extensions/Formate_helpers'
+require './_lib/required/__first/handies/files'
+require 'pp' # pretty print
 
 LIB_FOLDER = File.join(APP_FOLDER, '_lib') # NOTE ATTENTION : celui du site
 DEV_FOLDER = File.join(APP_FOLDER, '_dev_')

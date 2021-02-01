@@ -6,7 +6,7 @@
     Pour le moment, on utilise deux procédures différentes, pour le chargement
     d'un seul dossier et pour le chargement de tous. Il faut unifier les
     procédure pour ne plus utiliser que la classe CDossier.
-    
+
 =end
 require 'yaml'
 require_relative './CDossier'
@@ -81,7 +81,7 @@ class << self
     return CDossier.new(dosname).download
   end #/ download_dossier
 
-private
+# private
 
   # Retourne la liste des fichiers non téléchargés
   def get_dossier_file_not_downloaded

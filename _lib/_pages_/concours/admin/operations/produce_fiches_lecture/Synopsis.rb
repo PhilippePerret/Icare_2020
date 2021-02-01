@@ -6,8 +6,9 @@
 class Synopsis
 class << self
   def exporter_les_fiches
-    Synopsis.evaluate_all_synopsis if not Synopsis.evaluated?
+    Synopsis.evaluated? || Synopsis.evaluate_all_synopsis(evaluator: user)
     Synopsis.all_courant.each do |synopsis|
+      log("- Production de la fiche du synopsis : #{synopsis}")
       synopsis.fiche_lecture.export
     end
     message("Les fiches ont été exportées avec succès.")

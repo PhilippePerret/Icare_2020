@@ -5,21 +5,23 @@
 =end
 require 'json'
 
+CHOICES_CONCOURS = [
+  {name:"Rejoindre la section Administration", value: 'administration'},
+  {name:"Récupérer un dossier de concurrent", value: 'download'},
+  {name:'Produire les fiches de lecture', value:'fiches_lecture'},
+  {name:"Renoncer", value: :cancel}
+]
+ACTIONS_CONCOURS = CHOICES_CONCOURS.collect{|d|d[:value]}
 class IcareCLI
 class << self
 
   def proceed_concours
     clear
     command = params[1]
-    unless command == 'download'
-      puts "La seule commande CLI utile pour le concours concerne la récupération des synopsis.\nPour gérer le concours, rejoindre la section “Concours” du site online.".bleu
+    unless ACTIONS_CONCOURS.include?(command)
       command = Q.select("Que veux-tu faire ?") do |q|
-        q.choices [
-          {name:"Rejoindre la section Administration", value: 'administration'},
-          {name:"Récupérer un dossier de concurrent", value: 'download'},
-          {name:"Renoncer", value: :cancel}
-        ]
-        q.per_page 3
+        q.choices CHOICES_CONCOURS
+        q.per_page CHOICES_CONCOURS.count
       end
       return if command == :cancel
     end

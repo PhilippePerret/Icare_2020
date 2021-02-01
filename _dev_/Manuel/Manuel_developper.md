@@ -1218,11 +1218,11 @@ Tag.retour(:route, :titre)
 
 Par défaut, il doit être fait un usage minimal de javascript (c'est un choix, peut-être que la version suivante prendra l'option opposée). Par défaut, jQuery et Ajax, par exemple, ne sont pas chargés.
 
-<a name="require_js_module"></a>
+<a id="require_js_module"></a>
 
 ### Requérir un module javascript
 
-Ce qu'on appelle un « molule javascript », c'est un dossier qui contient 
+Ce qu'on appelle un « module javascript », c'est un dossier qui contient 
 
 * des fichiers javascript (`.js` ou `.mjs`),
 * des fichiers CSS utiles au module pour la mise en forme.
