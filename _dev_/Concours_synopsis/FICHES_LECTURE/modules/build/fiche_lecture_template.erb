@@ -1,22 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Fiche de lecture du projet “<%= projet.titre %>” de <%= formated_auteurs %></title>
+    <%= styles_css_code %>
+  </head>
+  <body>
+
+  </body>
+</html>
 <%
 # frozen_string_literal: true
 %>
-<div class="fiche-lecture" data_synopsis_id="<%=synopsis.id%>">
+<div class="fiche-lecture" data_projet_id="<%=projet.id%>">
   <div class="header hidden">
     <div class="grand-titre"><%= ecusson %>&nbsp;Concours de Synopsis de L'atelier Icare&nbsp;<%= ecusson %></div>
     <div class="div-annee">Édition <span class="annee"><%= annee_edition %></span></div>
   </div>
-  <div class="bande-buttons right noprint">
-    <%= Tag.div(class:'fleft small', text:'(cliquer sur le titre pour ouvrir/fermer la fiche)') %>
-    <%= Tag.link(class:"small", text:'Afficher', target: :blank, route:"concours/fiches_lecture?cid=#{synopsis.concurrent.id}&an=#{annee_edition}") %>
-  </div>
   <div class="infos-projet">
     <div class="projet-titre">
-      <div class="titre"><%= synopsis.titre %></div>
+      <div class="titre"><%= projet.titre %></div>
       <div class="auteurs"><%= formated_auteurs %></div>
     </div>
     <div class="note-totale">
-      <div class="note"><%= synopsis.formated_note %></div>
+      <div class="note"><%= projet.formated_note %></div>
       <div class="position"><%= formated_position %></div>
     </div>
   </div>
@@ -51,4 +58,5 @@
 
   </div><!-- div.details -->
 
+  <!-- TODO Ici une partie où sera insérée une note spéciale, écrite "à la main" -->
 </div>

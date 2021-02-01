@@ -1,5 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+require './_lib/required/__first/constants/paths'
 require './_lib/required/__first/handies/files'
 # PAGES_FOLDER  = File.expand_path(File.join('.','_lib','_pages_'))
 # DATA_FOLDER   = File.expand_path(File.join('.','_lib','data'))

@@ -3,33 +3,33 @@
 
 class FLFactory
 class << self
-  attr_reader :options
+attr_reader :options
 
-  # = main =
-  #
-  # Méthode principale qui lance la procédure de fabrication des fiches
-  # de lecture pour tous les participants du concours
-  #
-  # Sans options, donc avec la commande 'icare concours fiches_lecture', on
-  # option simplement des informations sur les projets et sur ce qu'on peut
-  # faire au niveau des fiches de lecture.
-  #
-  def build_fiches_lecture(options)
-    @options = options
-    puts "=== CONSTRUCTION DES FICHES DE LECTURE ===\n===".bleu
-    puts "=== Mode : #{verbose? ? 'verbeux' : 'silencieux'}".bleu
-    puts "=== Options: #{options.inspect}".bleu
-    if option?(:build)
-      require_module('build')
-      proceed_build_fiches_lecture
-    elsif option?(:upload)
-      require_module('upload')
-      proceed_upload_fiches_lecture
-    else
-      require_module('infos')
-      show_infos_fiches_lecture
-    end
-  end #/ build_fiches_lecture
+# = main =
+#
+# Méthode principale qui lance la procédure de fabrication des fiches
+# de lecture pour tous les participants du concours
+#
+# Sans options, donc avec la commande 'icare concours fiches_lecture', on
+# option simplement des informations sur les projets et sur ce qu'on peut
+# faire au niveau des fiches de lecture.
+#
+def build_fiches_lecture(options)
+  @options = options
+  puts "=== CONSTRUCTION DES FICHES DE LECTURE ===\n===".bleu
+  puts "=== Mode : #{verbose? ? 'verbeux' : 'silencieux'}".bleu
+  puts "=== Options: #{options.inspect}".bleu
+  if option?(:build)
+    require_module('build')
+    proceed_build_fiches_lecture
+  elsif option?(:upload)
+    require_module('upload')
+    proceed_upload_fiches_lecture
+  else
+    require_module('infos')
+    show_infos_fiches_lecture
+  end
+end #/ build_fiches_lecture
 
 # Pour obtenir des concurrents répondant au filtre +filtre+
 def concurrents(filtre = nil)
@@ -42,6 +42,14 @@ def concurrents(filtre = nil)
 
   return filtred
 end #/ concurrents
+
+# Retourne la liste Array des chemins d'accès aux évaluations du projet du
+# concurrent d'identifiant +concurrent_id+ pour l'année courante
+def evaluations_for(concurrent_id)
+  dossier = File.join(data_folder,concurrent_id,"#{concurrent_id}-#{annee_courante}")
+  return Dir["#{dossier}/**/evaluation-*.json"]
+end #/ evaluations_for
+
 
 # Les données des concurrents
 # ---------------------------
@@ -108,7 +116,14 @@ end #/ data_concurrents_request
 private
 
   def require_module(name)
-    require File.join(FL_MODULES_FOLDER, name)
+    pth = File.join(FL_MODULES_FOLDER, name)
+    if File.exists?("#{pth}.rb")
+      require pth
+    elsif File.directory?(pth)
+      Dir["#{pth}/**/*.rb"].each { |m| require m }
+    else
+      raise "Je ne trouve pas le module #{pth}"
+    end
   end #/ require_module
 
 end # /<< self

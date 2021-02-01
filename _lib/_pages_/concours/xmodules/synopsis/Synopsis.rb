@@ -8,7 +8,7 @@
   pas été envoyé. Mais dans ce cas, l'évaluation n'est pas encore possible.
 =end
 require_relative './constants'
-require_relative './FicheLecture'
+# require_relative './FicheLecture'
 require_relative './Evaluation_module'
 
 class Synopsis
@@ -404,6 +404,8 @@ def concurrent
 end #/ concurrent
 
 # Son instance de fiche de lecture
+# Obsolète : maintenant, la fiche de lecture est construite en local et
+# téléchargée pour être simplement affichée ou downloadée.
 def fiche_lecture
   @fiche_lecture ||= FicheLecture.new(self)
 end #/ fiche_lecture

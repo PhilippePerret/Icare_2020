@@ -20,7 +20,6 @@ class HTML
 
   # Code à exécuter avant la construction de la page
   def exec
-    add_css('./_lib/_pages_/concours/evaluation/css/fiche_lecture.css')
     require_xmodule('synopsis')
     try_to_reconnect_visitor(required = true)
   end # /exec

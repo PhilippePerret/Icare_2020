@@ -1,6 +1,19 @@
 /*
   *** Fiche de lecture ***
 */
+
+div.explication {
+  font-size: 0.75em;
+  font-style: italic;
+  margin-bottom: 1.5em;
+  color: #333333;
+}
+
+img.img-trophee {
+  width: 40px;
+  vertical-align: text-bottom;
+}
+
 div.fiche-lecture {
   border:1px solid;
   margin-bottom: 1em;

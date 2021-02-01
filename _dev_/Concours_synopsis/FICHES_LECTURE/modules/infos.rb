@@ -18,9 +18,5 @@ class << self
     end
   end #/ proceed_build_fiches_lecture
 
-  def line_info(label, value)
-    puts "#{label.ljust(45).vert} #{value.to_s.bleu}"
-  end #/ line_info
-
 end # /<< self
 end #/FLFactory
