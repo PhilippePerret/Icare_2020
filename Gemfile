@@ -10,3 +10,4 @@ gem 'kramdown'
 gem 'rubyzip' # pas 'zip'
 gem 'tty-prompt'
 gem 'paypal-checkout-sdk'
+gem "nokogiri", ">= 1.11.0"

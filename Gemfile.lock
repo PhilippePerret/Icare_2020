@@ -16,16 +16,18 @@ GEM
     kramdown (2.3.0)
       rexml
     mini_mime (1.0.2)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.5.0)
     mysql2 (0.5.3)
-    nokogiri (1.10.10)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.11.1)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
     pastel (0.8.0)
       tty-color (~> 0.5)
     paypal-checkout-sdk (1.0.3)
       paypalhttp (~> 1.0.0)
     paypalhttp (1.0.0)
     public_suffix (4.0.6)
+    racc (1.5.2)
     rack (2.2.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -69,6 +71,7 @@ DEPENDENCIES
   capybara
   kramdown
   mysql2
+  nokogiri (>= 1.11.0)
   paypal-checkout-sdk
   rspec
   rubyzip
