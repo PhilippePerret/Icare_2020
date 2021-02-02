@@ -10,3 +10,8 @@ def docx2pdf(src, dst = nil)
   dst ||= File.dirname(src)
   res = `cd '#{dst}' && #{CL_LIBRE_OFFICE} --headless --convert-to pdf '#{src}'`
 end #/ docx2pdf
+
+def odt2pdf(src, dst = nil)
+  dst ||= File.dirname(src)
+  res = `cd '#{dst}' && #{CL_LIBRE_OFFICE} --headless --convert-to pdf '#{src}'`
+end #/ odt2pdf

@@ -243,10 +243,13 @@ WHERE concurrent_id  NOT IN (SELECT concurrent_id FROM concurrents_per_concours
 WHERE annee = ?)
       SQL
       concurrent_id_hors_concours = db_exec(intermediaire_req, [ANNEE_CONCOURS_COURANTE]).first
-      concurrent_id_hors_concours = concurrent_id_hors_concours[:concurrent_id]
-      concurrent_id_hors_concours || raise("Impossible de trouver un ancien concurrent hors concours…")
-      where << "cpc.concurrent_id = ?"
-      valus << concurrent_id_hors_concours
+      if not concurrent_id_hors_concours.nil?
+        concurrent_id_hors_concours = concurrent_id_hors_concours[:concurrent_id]
+        where << "cpc.concurrent_id = ?"
+        valus << concurrent_id_hors_concours
+      else
+        Factory.create_ancien
+      end
     end
 
     concurrents = [] # les candidats retenus

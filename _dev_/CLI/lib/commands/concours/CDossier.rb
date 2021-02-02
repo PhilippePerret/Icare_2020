@@ -6,6 +6,7 @@
   Gestion du dossier (c'est un fichier) de participation à un concours
 =end
 require 'yaml'
+require_relative './constants'
 
 class CDossier
 # ---------------------------------------------------------------------
@@ -69,7 +70,8 @@ end #/ concurrent_data
 def to_pdf
   print "Je fabrique le PDF, merci de patienter…".bleu
   case extension
-  when '.docx' then docx2pdf(local_path)
+  when '.docx'  then docx2pdf(local_path)
+  when '.odt'   then odt2pdf(local_path)
   else raise "Je ne sais pas comment transformer un document #{extension} en PDF…"
   end
   puts "\rFichier #{extension} converti en PDF avec succès.".vert
