@@ -8,7 +8,7 @@
   pas été envoyé. Mais dans ce cas, l'évaluation n'est pas encore possible.
 =end
 require_relative './constants'
-# require_relative './FicheLecture'
+require_relative './FicheLecture'
 require_relative './Evaluation_module'
 
 class Synopsis

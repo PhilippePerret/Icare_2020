@@ -3,7 +3,7 @@
 =begin
   Test de toutes les phases du concours pour un :
 
-    MEMBRE DU PREMIER JURY
+    MEMBRE DU SECOND JURY
 
   Description des phases :
 
@@ -23,14 +23,14 @@
 =end
 require_relative './_required'
 
-feature "Un membre du premier jury", jury1:true do
+feature "Un membre du second jury" do
   before(:all) do
   end
   before(:each) do
-    @visitor = TEvaluator.get_random(jury:1)
+    @visitor = TEvaluator.get_random(jury:2)
     try_identify_visitor
   end
-  context 'en PHASE 0', phase0:true, jury1:'phase0' do
+  context 'en PHASE 0', phase0:true do
     before :all do
       degel('concours-phase-0')
       headless(false)
@@ -41,46 +41,37 @@ feature "Un membre du premier jury", jury1:true do
   end #/context PHASE 0
 
 
-  context 'PHASE 1', jury1:'phase1' do
+  context 'PHASE 1' do
     before :all do
       degel('concours-phase-1')
-      use_profile_downloader(false)
     end
-    # peut_rejoindre_le_concours
-    peut_lire_un_projet
+    peut_rejoindre_le_concours
   end #/context PHASE 1
 
-  context 'PHASE 2', jury1:'phase2', phase2:true do
+  context 'PHASE 2' do
     before :all do
       degel('concours-phase-2')
     end
     peut_rejoindre_le_concours
   end #/context PHASE 2
 
-  context 'PHASE 3', jury1:'phase3', phase3:true do
+  context 'PHASE 3' do
     before :all do
       degel('concours-phase-3')
     end
     peut_rejoindre_le_concours
   end #/context PHASE 3
 
-  context 'PHASE 5', jury1:'phase5', phase5:true do
+  context 'PHASE 5' do
     before :all do
       degel('concours-phase-5')
     end
     peut_rejoindre_le_concours
   end #/context PHASE 5
 
-  context 'PHASE 8', jury1:'phase8', phase8:true do
+  context 'PHASE 8 et 9' do
     before :all do
       degel('concours-phase-8')
-    end
-    peut_rejoindre_le_concours
-  end #/context PHASE 8 et 9
-
-  context 'PHASE 9', jury1:'phase9', phase9:true do
-    before :all do
-      degel('concours-phase-9')
     end
     peut_rejoindre_le_concours
   end #/context PHASE 8 et 9
