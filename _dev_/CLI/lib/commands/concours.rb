@@ -6,9 +6,10 @@
 require 'json'
 
 CHOICES_CONCOURS = [
-  {name:"Rejoindre la section Administration", value: 'administration'},
-  {name:"Récupérer un dossier de concurrent", value: 'download'},
-  {name:'Produire les fiches de lecture', value:'fiches_lecture'},
+  {name:"Rejoindre la section Administration [#{'administration'.jaune}]", value: 'administration'},
+  {name:"Récupérer un dossier de concurrent [#{'download'.jaune}]", value: 'download'},
+  {name:"Transformer tous les docs en PDF [#{'doc_to_pdf'.jaune}]", value:'docs_to_pdf'},
+  {name:"Produire les fiches de lecture [#{'fiches_lecture'.jaune}]", value:'fiches_lecture'},
   {name:"Renoncer", value: :cancel}
 ]
 ACTIONS_CONCOURS = CHOICES_CONCOURS.collect{|d|d[:value]}

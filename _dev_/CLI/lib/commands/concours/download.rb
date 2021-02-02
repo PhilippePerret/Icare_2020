@@ -52,21 +52,8 @@ class << self
 
     data_fichiers.each do |data_fichier|
       # puts "CHOIX FINAL: #{data_fichier}"
-
-      `mkdir -p "#{File.dirname(data_fichier[:local_path])}"`
-      cmd_download = SSH_CONCOURS_DOWNLOAD_FILE % {local_path: data_fichier[:local_path], cid: data_fichier[:concurrent][:id], fname: data_fichier[:filename]}
-      res = `#{cmd_download} 2>&1`
-      unless res.empty?
-        puts "Résulat du download : #{res.inspect}"
-      end
-
-      data_fichier.delete(:local_exists)
-      data_fichier[:concurrent].delete(:fichiers)
-      infos_file = File.join(File.dirname(data_fichier[:local_path]), "#{data_fichier[:id]}.yaml")
-      # puts "data_fichier: #{data_fichier.inspect}"
-      File.open(infos_file,'wb'){|f| f.write YAML.dump(data)}
-
-      puts "-> '#{data_fichier[:local_path]}'".vert
+      cprojet = CDossier.new(data_fichier[:filename])
+      cprojet.download
     end#/fin de boucle sur tous les fichiers à télécharger
 
     `open -a Finder "#{File.dirname(data_fichiers.first[:local_path])}"`

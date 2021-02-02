@@ -2,7 +2,8 @@
 
 ## Rapid list
 
-* Pouvoir rapatrier les fiches d'évaluation
+* Pouvoir transformer tous les fichiers en fichiers PDF
+* Pouvoir lire Online un dossier de concurrent (pdf)
 
 
 ## Toutes les tâches
