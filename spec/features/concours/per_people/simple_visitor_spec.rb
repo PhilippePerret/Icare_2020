@@ -22,11 +22,11 @@
 =end
 require_relative './_required'
 
-feature "Un simple visiteur" do
+feature "Un simple visiteur", visitor:true do
   before(:all) do
     headless(false)
   end
-  context 'en PHASE 0', phase0:true do
+  context 'en PHASE 0', phase0:true, visitor:'phase0' do
     before :all do
       degel('concours-phase-0')
     end
@@ -36,7 +36,7 @@ feature "Un simple visiteur" do
   end #/context PHASE 0
 
 
-  context 'PHASE 1' do
+  context 'PHASE 1', phase1:true, visitor:'phase1' do
     before :all do
       degel('concours-phase-1')
     end
@@ -44,7 +44,7 @@ feature "Un simple visiteur" do
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 1
 
-  context 'PHASE 2', only:true do
+  context 'PHASE 2', phase2:true, visitor:'phase2' do
     before :all do
       degel('concours-phase-2')
     end
@@ -52,7 +52,7 @@ feature "Un simple visiteur" do
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 2
 
-  context 'PHASE 3' do
+  context 'PHASE 3', phase3:true, visitor:'phase3' do
     before :all do
       degel('concours-phase-3')
     end
@@ -60,7 +60,7 @@ feature "Un simple visiteur" do
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 3
 
-  context 'PHASE 5' do
+  context 'PHASE 5', phase5:true, visitor:'phase5' do
     before :all do
       degel('concours-phase-5')
     end
@@ -68,20 +68,20 @@ feature "Un simple visiteur" do
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 5
 
-  context 'PHASE 8' do
+  context 'PHASE 8', phase8:true, visitor:'phase8' do
     before :all do
       degel('concours-phase-8')
     end
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
-  end #/context PHASE 8 et 9
+  end #/context PHASE 8
 
-  context 'PHASE 9' do
+  context 'PHASE 9', phase9:true, visitor:'phase9' do
     before :all do
       degel('concours-phase-9')
     end
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
-  end #/context PHASE 8 et 9
+  end #/context PHASE 9
 
 end

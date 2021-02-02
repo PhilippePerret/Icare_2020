@@ -20,7 +20,7 @@ feature 'Un icarien' do
 
   let(:visitor) { @visitor }
 
-  context 'en PHASE 0', phase0:true do
+  context 'en PHASE 0', phase0:true, icarien:'phase0' do
     before :all do
       degel('concours-phase-0')
     end
@@ -30,7 +30,7 @@ feature 'Un icarien' do
   end #/context PHASE 0
 
 
-  context 'PHASE 1' do
+  context 'PHASE 1', phase1:true, icarien:'phase1' do
     before :all do
       degel('concours-phase-1')
     end
@@ -39,7 +39,7 @@ feature 'Un icarien' do
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 1
 
-  context 'PHASE 2' do
+  context 'PHASE 2', phase2:true, icarien:'phase2' do
     before :all do
       degel('concours-phase-2')
     end
@@ -48,7 +48,7 @@ feature 'Un icarien' do
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 2
 
-  context 'PHASE 3' do
+  context 'PHASE 3', phase3:true, icarien:'phase3' do
     before :all do
       degel('concours-phase-3')
     end
@@ -57,7 +57,7 @@ feature 'Un icarien' do
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 3
 
-  context 'PHASE 5' do
+  context 'PHASE 5', phase5:true, icarien:'phase5' do
     before :all do
       degel('concours-phase-5')
     end
@@ -66,7 +66,7 @@ feature 'Un icarien' do
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 5, 8 et 9
 
-  context 'PHASE 8' do
+  context 'PHASE 8', phase8:true, icarien:'phase8' do
     before :all do
       degel('concours-phase-8')
     end
@@ -75,7 +75,7 @@ feature 'Un icarien' do
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 5, 8 et 9
 
-  context 'PHASE 9' do
+  context 'PHASE 9', phase9:true, icarien:'phase9' do
     before :all do
       degel('concours-phase-9')
     end

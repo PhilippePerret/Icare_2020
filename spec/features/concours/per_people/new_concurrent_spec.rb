@@ -80,36 +80,36 @@ feature 'Un nouveau concurrent', newconc:true do
       degel('concours-phase-1')
     end
 
-    # peut_rejoindre_le_concours
-    # peut_rejoindre_toutes_les_sections_depuis_laccueil
-    # ne_peut_pas_sinscrire_au_concours
-    # peut_rejoindre_son_espace_personnel(1)
-    # peut_modifier_ses_preferences_notifications
-    # peut_modifier_ses_preferences_fiche_de_lecture
-    #
-    # peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
-    # ne_peut_pas_telecharger_sa_fiche_de_lecture(:new)
-    #
-    # peut_detruire_son_inscription
-    #
-    # context 's’il n’a pas encore déposé son dossier' do
-    #   before(:each){ visitor.destroy_fichier } # au cas où
-    #   peut_transmettre_son_dossier
-    # end
-    #
-    # context 's’il a déjà déposé un dossier valide' do
-    #   before(:each){ visitor.make_fichier_conforme }
-    #   ne_peut_pas_transmettre_de_dossier("Votre fichier de candidature a bien été transmis.")
-    # end
-    #
-    # context 's’il a déposé un dossier invalide' do
-    #   before(:each){ visitor.make_fichier_non_conforme }
-    #   peut_transmettre_son_dossier
-    # end
-    #
-    # # --- Sections interdites ---
-    # # ne_peut_pas_atteindre_la_section_evalutation
-    # ne_peut_pas_produire_les_fiches_de_lecture
+    peut_rejoindre_le_concours
+    peut_rejoindre_toutes_les_sections_depuis_laccueil
+    ne_peut_pas_sinscrire_au_concours
+    peut_rejoindre_son_espace_personnel(1)
+    peut_modifier_ses_preferences_notifications
+    peut_modifier_ses_preferences_fiche_de_lecture
+
+    peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(:new)
+
+    peut_detruire_son_inscription
+
+    context 's’il n’a pas encore déposé son dossier' do
+      before(:each){ visitor.destroy_fichier } # au cas où
+      peut_transmettre_son_dossier
+    end
+
+    context 's’il a déjà déposé un dossier valide' do
+      before(:each){ visitor.make_fichier_conforme }
+      ne_peut_pas_transmettre_de_dossier("Votre fichier de candidature a bien été transmis.")
+    end
+
+    context 's’il a déposé un dossier invalide' do
+      before(:each){ visitor.make_fichier_non_conforme }
+      peut_transmettre_son_dossier
+    end
+
+    # --- Sections interdites ---
+    ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
     ne_peut_pas_lire_un_projet
 
   end #/context PHASE 1
@@ -182,7 +182,7 @@ feature 'Un nouveau concurrent', newconc:true do
 
   context 'PHASE 8', phase8:true, newconc:'phase8' do
     before :all do
-      degel('concours-phase-5')
+      degel('concours-phase-8')
     end
 
     peut_rejoindre_le_concours
@@ -198,7 +198,7 @@ feature 'Un nouveau concurrent', newconc:true do
 
   context 'PHASE 9', phase9:true, newconc:'phase9' do
     before :all do
-      degel('concours-phase-5')
+      degel('concours-phase-9')
     end
 
     peut_rejoindre_le_concours

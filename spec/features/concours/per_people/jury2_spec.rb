@@ -30,7 +30,7 @@ feature "Un membre du second jury" do
     @visitor = TEvaluator.get_random(jury:2)
     try_identify_visitor
   end
-  context 'en PHASE 0', phase0:true do
+  context 'en PHASE 0', phase0:true, jury2:'phase0' do
     before :all do
       degel('concours-phase-0')
       headless(false)
@@ -41,39 +41,49 @@ feature "Un membre du second jury" do
   end #/context PHASE 0
 
 
-  context 'PHASE 1' do
+  context 'PHASE 1', phase1:true, jury2:'phase1' do
     before :all do
       degel('concours-phase-1')
     end
     peut_rejoindre_le_concours
+    peut_lire_un_projet
   end #/context PHASE 1
 
-  context 'PHASE 2' do
+  context 'PHASE 2', phase2:true, jury2:'phase2' do
     before :all do
       degel('concours-phase-2')
     end
     peut_rejoindre_le_concours
+    peut_lire_un_projet
   end #/context PHASE 2
 
-  context 'PHASE 3' do
+  context 'PHASE 3', phase3:true, jury2:'phase3' do
     before :all do
       degel('concours-phase-3')
     end
     peut_rejoindre_le_concours
+    peut_lire_un_projet
   end #/context PHASE 3
 
-  context 'PHASE 5' do
+  context 'PHASE 5', phase5:true, jury2:'phase5' do
     before :all do
       degel('concours-phase-5')
     end
     peut_rejoindre_le_concours
   end #/context PHASE 5
 
-  context 'PHASE 8 et 9' do
+  context 'PHASE 8', phase8:true, jury2:'phase8' do
     before :all do
       degel('concours-phase-8')
     end
     peut_rejoindre_le_concours
-  end #/context PHASE 8 et 9
+  end #/context PHASE 8
+
+  context 'PHASE 9', phase9:true, jury2:'phase9' do
+    before :all do
+      degel('concours-phase-9')
+    end
+    peut_rejoindre_le_concours
+  end #/context PHASE 9
 
 end

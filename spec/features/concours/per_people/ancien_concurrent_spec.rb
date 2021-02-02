@@ -37,7 +37,7 @@ feature 'Un ancien concurrent (non courant)' do
   end #/context PHASE 0
 
 
-  context 'PHASE 1' do
+  context 'PHASE 1', phase1:true, ancien:'phase1'  do
     before :all do
       degel('concours-phase-1')
     end
@@ -52,16 +52,16 @@ feature 'Un ancien concurrent (non courant)' do
     peut_rejoindre_le_concours
     peut_sinscrire_au_concours(as = :ancien)
     ne_peut_pas_transmettre_de_dossier
-    # ne_peut_pas_atteindre_la_section_evalutation
-    # peut_modifier_ses_preferences_notifications
-    # peut_modifier_ses_preferences_fiche_de_lecture
-    # peut_detruire_son_inscription
+    ne_peut_pas_atteindre_la_section_evalutation
+    peut_modifier_ses_preferences_notifications
+    peut_modifier_ses_preferences_fiche_de_lecture
+    peut_detruire_son_inscription
     ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
     peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 1
 
-  context 'PHASE 2' do
+  context 'PHASE 2', phase2:true, ancien:'phase2' do
     before :all do
       degel('concours-phase-2')
     end
@@ -75,7 +75,7 @@ feature 'Un ancien concurrent (non courant)' do
 
   end #/context PHASE 2
 
-  context 'PHASE 3' do
+  context 'PHASE 3', phase3:true, ancien:'phase3' do
     before :all do
       degel('concours-phase-3')
     end
@@ -89,7 +89,7 @@ feature 'Un ancien concurrent (non courant)' do
 
   end #/context PHASE 3
 
-  context 'PHASE 5, 8 et 9' do
+  context 'PHASE 5', phase5:true, ancien:'phase5' do
     before :all do
       degel('concours-phase-5')
     end
@@ -101,6 +101,34 @@ feature 'Un ancien concurrent (non courant)' do
     ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
     peut_telecharger_une_ancienne_fiche_de_lecture
 
-  end #/context PHASE 5, 8 et 9
+  end #/context PHASE 5
+
+  context 'PHASE 8', phase8:true, ancien:'phase8' do
+    before :all do
+      degel('concours-phase-8')
+    end
+
+    peut_rejoindre_le_concours
+    ne_peut_pas_transmettre_de_dossier
+    ne_peut_pas_atteindre_la_section_evalutation
+    peut_detruire_son_inscription
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    peut_telecharger_une_ancienne_fiche_de_lecture
+
+  end #/context PHASE 8
+
+  context 'PHASE 9', phase9:true, ancien:'phase9' do
+    before :all do
+      degel('concours-phase-9')
+    end
+
+    peut_rejoindre_le_concours
+    ne_peut_pas_transmettre_de_dossier
+    ne_peut_pas_atteindre_la_section_evalutation
+    peut_detruire_son_inscription
+    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    peut_telecharger_une_ancienne_fiche_de_lecture
+
+  end #/context PHASE 9
 
 end

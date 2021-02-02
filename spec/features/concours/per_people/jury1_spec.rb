@@ -41,12 +41,12 @@ feature "Un membre du premier jury", jury1:true do
   end #/context PHASE 0
 
 
-  context 'PHASE 1', jury1:'phase1' do
+  context 'PHASE 1', phase1:true, jury1:'phase1' do
     before :all do
       degel('concours-phase-1')
       use_profile_downloader(false)
     end
-    # peut_rejoindre_le_concours
+    peut_rejoindre_le_concours
     peut_lire_un_projet
   end #/context PHASE 1
 

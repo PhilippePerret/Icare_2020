@@ -20,7 +20,7 @@ feature 'Un icarien inscrit au concours courant' do
 
   let(:visitor) { @visitor }
 
-  context 'en PHASE 0', phase0:true do
+  context 'en PHASE 0', phase0:true, icnewconc:'phase0' do
     before :all do
       degel('concours-phase-0')
     end
@@ -32,26 +32,26 @@ feature 'Un icarien inscrit au concours courant' do
   end #/context PHASE 0
 
 
-  context 'PHASE 1' do
+  context 'PHASE 1', phase1:true, icnewconc:'phase1' do
     before :all do
       degel('concours-phase-1')
     end
 
     ne_peut_pas_sinscrire_au_concours("déjà inscrit")
 
-    # peut_rejoindre_le_concours
-    # peut_rejoindre_toutes_les_sections_depuis_laccueil
-    # peut_modifier_ses_preferences_notifications
-    # peut_modifier_ses_preferences_fiche_de_lecture
-    # ne_peut_pas_transmettre_de_dossier
-    # peut_detruire_son_inscription
+    peut_rejoindre_le_concours
+    peut_rejoindre_toutes_les_sections_depuis_laccueil
+    peut_modifier_ses_preferences_notifications
+    peut_modifier_ses_preferences_fiche_de_lecture
+    ne_peut_pas_transmettre_de_dossier
+    peut_detruire_son_inscription
 
     # --- Sections interdites ---
-    # ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_atteindre_la_section_evalutation
 
   end #/context PHASE 1
 
-  context 'PHASE 2' do
+  context 'PHASE 2', phase2:true, icnewconc:'phase2' do
     before :all do
       degel('concours-phase-2')
     end
@@ -67,7 +67,7 @@ feature 'Un icarien inscrit au concours courant' do
 
   end #/context PHASE 2
 
-  context 'PHASE 3' do
+  context 'PHASE 3', phase3:true, icnewconc:'phase3' do
     before :all do
       degel('concours-phase-3')
     end
@@ -79,7 +79,7 @@ feature 'Un icarien inscrit au concours courant' do
 
   end #/context PHASE 3
 
-  context 'PHASE 5, 8 et 9' do
+  context 'PHASE 5', phase5:true, icnewconc:'phase5' do
     before :all do
       degel('concours-phase-5')
     end
@@ -89,6 +89,30 @@ feature 'Un icarien inscrit au concours courant' do
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
 
-  end #/context PHASE 5, 8 et 9
+  end #/context PHASE 5
+
+  context 'PHASE 8', phase8:true, icnewconc:'phase8' do
+    before :all do
+      degel('concours-phase-8')
+    end
+
+    peut_rejoindre_le_concours
+    ne_peut_pas_transmettre_de_dossier
+    ne_peut_pas_atteindre_la_section_evalutation
+    peut_detruire_son_inscription
+
+  end #/context PHASE 8
+
+  context 'PHASE 9', phase9:true, icnewconc:'phase9' do
+    before :all do
+      degel('concours-phase-9')
+    end
+
+    peut_rejoindre_le_concours
+    ne_peut_pas_transmettre_de_dossier
+    ne_peut_pas_atteindre_la_section_evalutation
+    peut_detruire_son_inscription
+
+  end #/context PHASE 9
 
 end
