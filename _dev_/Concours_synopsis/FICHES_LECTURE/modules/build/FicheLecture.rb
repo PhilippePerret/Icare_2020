@@ -60,7 +60,7 @@ end #/ build
 
 def build_with_whtmltopdf
    res = `/usr/local/bin/wkhtmltopdf "file://#{html_file}" "#{pdf_file}" 2>&1`
-   puts "Retour : #{res.inspect}"
+   # puts "Retour : #{res.inspect}"
 end #/ build_with_whtmltopdf
 
 def build_HTML_file
@@ -69,7 +69,7 @@ def build_HTML_file
 end
 def build_PDF_file
   res = `#{EBOOK_CONVERT_CMD} '#{html_file}' '#{pdf_file}' 2>&1`
-  puts "Res : #{res.inspect}"
+  # puts "Res : #{res.inspect}"
 end
 def html_file
   @html_file ||= File.join(projet.folder,'fiche_lecture.html')

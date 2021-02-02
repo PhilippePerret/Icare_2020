@@ -7,12 +7,13 @@ require './_lib/_pages_/concours/xmodules/synopsis/Evaluation'
 class FLFactory
 class << self
   attr_reader :projets_valides
-  
+
   # = main =
   #
   # Méthode principale procédant à la fabrication des fiches de lecture
   def proceed_build_fiches_lecture
-    # rapatriement_des_fiches_evaluations
+    puts "-> proceed_build_fiches_lecture"
+    option?(:reload) && rapatriement_des_fiches_evaluations
     @projets_valides = evaluations_des_synopsis
     production_des_fiches(@projets_valides)
   end #/ proceed_build_fiches_lecture
@@ -26,25 +27,20 @@ class << self
     else
       # On n'est pas en mode test il faut ramener les évaluations des
       # synopsis.
-      # SSH_ICARE_SERVER
-
-      # IcareCLI.files_per_annee
-      # puts "DATA_CONCOURS = #{DATA_CONCOURS.inspect}"
-
       # cmd = "scp -C -r -p -q #{SSH_ICARE_SERVER}:www/_lib/data/concours/**/evaluation-*.json #{mkdir(data_folder)}"
       cmd = "rsync -avm --include='*/' --include='evaluation-*.json' --exclude='*' #{SSH_ICARE_SERVER}:www/_lib/data/concours/ #{mkdir(data_folder)}"
       # Options :
       #   a : archiver => récursif
       #   m : prune empty dirs (ne les copie pas)
       #   v : verbose
+      puts "Command RSync: #{cmd.inspect}"
+      res = `#{cmd} 2>&1`
       if false
-        puts "Command RSync: #{cmd.inspect}"
-        res = `#{cmd} 2>&1`
         puts "Retour de rsync : #{res.gsub(/\\n/,"\n")}"
       end
 
       # DATA_CONCOURS.merge!(data_concurrents)
-      puts "DATA_CONCOURS: #{data_concurrents.pretty_inspect}"
+      # puts "DATA_CONCOURS: #{data_concurrents.pretty_inspect}"
     end
   end #/ rapatriement_des_fiches_evaluations
 

@@ -19,15 +19,41 @@ def build_fiches_lecture(options)
   puts "=== CONSTRUCTION DES FICHES DE LECTURE ===\n===".bleu
   puts "=== Mode : #{verbose? ? 'verbeux' : 'silencieux'}".bleu
   puts "=== Options: #{options.inspect}".bleu
+
   if option?(:build)
     require_module('build')
     proceed_build_fiches_lecture
   elsif option?(:upload)
     require_module('upload')
     proceed_upload_fiches_lecture
-  else
+  elsif option?(:infos)
     require_module('infos')
     show_infos_fiches_lecture
+  else
+    puts <<-AIDE
+
+Produire les fiches de lecture
+===============================
+#{'icare concours fiches_lecture --build[ --reload]'.jaune}
+
+    --reload => Recharcer les fiches d'évaluation distantes (sinon,
+    prendre celles qui sont déjà téléchargées)
+
+Uploader les fiches de lecture
+==============================
+#{'icare concours fiches_lecture --upload'.jaune}
+
+Infos sur le fiches de lecture
+==============================
+#{'icare concours fiches_lecture --infos'.jaune}
+
+
+Options
+-------
+  -v/--verbose    Mode verbeux
+  
+
+    AIDE
   end
 end #/ build_fiches_lecture
 
