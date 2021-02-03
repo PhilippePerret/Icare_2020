@@ -38,6 +38,7 @@ Produire les fiches de lecture
 
     --reload => Recharcer les fiches d'évaluation distantes (sinon,
     prendre celles qui sont déjà téléchargées)
+    --only_one    => Seulement la première fiche (pour essai)
 
 Uploader les fiches de lecture
 ==============================
@@ -51,7 +52,7 @@ Infos sur le fiches de lecture
 Options
 -------
   -v/--verbose    Mode verbeux
-  
+
 
     AIDE
   end

@@ -72,6 +72,7 @@ class << self
       print "Production fiche lecture projet “#{projet.titre}”…".bleu
       projet.fiche_lecture.build
       puts "\r= Fiche du projet “#{projet.titre}” produite avec succès".vert
+      break if option?(:only_one)
     end
   end #/ production_des_fiches
 

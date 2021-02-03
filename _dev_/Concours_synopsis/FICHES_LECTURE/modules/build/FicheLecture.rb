@@ -103,6 +103,23 @@ def out
   ERB.new(File.read(File.join(__dir__,'fiche_lecture_template.erb')).force_encoding('utf-8')).result(self.bind)
 end #/ out
 
+# Une des méthodes principales qui retourne le texte dynamique en fonction
+# de la note et du contexte.
+#
+def explication_categorie_per_note(cate)
+  n = note_categorie(cate)
+  # puts "Traitement catégorie #{cate.inspect}"
+  # puts "  Note : #{n}"
+  # puts "  Key  : #{key_per_note(n)}"
+  return if n.nil? || n == 'NC'
+  FicheLecture::DATA_MAIN_PROPERTIES[cate][key_per_note(n)]
+end
+
+def note_clarte
+  projet.evaluation.categories['cla'][:note]
+end
+
+
 def ecusson
   @ecusson ||= begin
     require './_lib/required/__first/constants/emojis'
@@ -128,18 +145,14 @@ def explication_categorie(cate)
   FicheLecture::DATA_MAIN_PROPERTIES[cate][:explication]
 end
 
-def explication_categorie_per_note(cate)
-  n = note_categorie(cate)
-  return if n.nil? || n == 'NC'
-  FicheLecture::DATA_MAIN_PROPERTIES[cate][key_per_note(n)]
-end
+
 
 def key_per_note(n)
   case n
-  when 15.0..20.0   then  :plus15  # 20a16
-  when 10.0...15.0  then  :moins15
-  when 5.0...10.0   then  :moins10
-  when 0.0...5.0    then  :moins5
+  when 15.0..20.0   then  'A'   # 15 compris à 20
+  when 10.0...15.0  then  'B'   # 10 compris à 15 non compris
+  when 5.0...10.0   then  'C'   # 5 compris à 10 non compris
+  when 0.0...5.0    then  'D'   # 0 à 5 non compris
   else :not_evaluated
   end
 end #/ key_per_note

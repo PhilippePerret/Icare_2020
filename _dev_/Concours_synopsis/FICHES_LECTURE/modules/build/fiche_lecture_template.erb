@@ -39,13 +39,14 @@
     # TODO Reprendre cette table pour faire la table générale ?
     {
       projet: {name:"Projet dans sa globalité"},
+      facteurO: {name: "Facteur O (originalité)"},
+      facteurU: {name: "Facteur U (universalité)"},
       adequation: {name: "Adéquation avec le thème"},
       personnages: {name:'Personnages'},
       forme: {name: "Forme/structure"},
       themes: {name: "Thèmes"},
       intrigues: {name: "Intrigues"},
-      facteurO: {name: "Facteur O (originalité)"},
-      facteurU: {name: "Facteur U (universalité)"}
+      redaction: {name: 'Rédaction'}
     }.each do |cate, dcate|
     %>
       <div class="divnote note-<%= cate.to_s %>">

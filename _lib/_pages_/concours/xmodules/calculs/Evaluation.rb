@@ -258,10 +258,14 @@ def parse(score)
     # l'adéquation avec le thème ("adth"). On ajoutera la valeur de la note
     # à chaque élément.
     dk = k.to_s.split('-')
+
     # Le coefficiant à appliquer à la note de la réponse, en fonction
     # de sa profondeur. Il sera appliqué à la réponse elle-même mais aussi
-    # à la valeur totale.
+    # à la valeur totale. Ce coefficiant est doublé si c'est une question
+    # concernant l'adéquation avec le thème
     coef = DEEPNESS_COEF[dk.count]
+    coef = coef * 2 if dk.include?('adth')
+
     # La valeur maximale de cette question, en fonction de sa profondeur.
     maxcoef = 5.0 * coef
 

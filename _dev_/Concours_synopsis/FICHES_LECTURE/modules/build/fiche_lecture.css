@@ -55,6 +55,10 @@ div.fiche-lecture div.div-annee
   text-align: center;
 }
 
+div.fiche-lecture div.grand-titre img.emoji {
+  vertical-align: middle;
+}
+
 /* INFOS DU PROJET */
 
 div.fiche-lecture div.infos-projet {
