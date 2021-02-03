@@ -1,26 +1,35 @@
+# Textes divers en fonction des situations
+
+# = Texte sur la subjectivité de la lecture =
+# Condition : lorsque la note générale est inférieure à 10
+:subjectivite: >
+  Bien que les lecteurs soient attentifs et bien disposés, juger de la valeur d’un projet sur la base de son synopsis est un exercice périlleux. Il demande aux lecteurs d’avoir une imagination au moins aussi grande que celle de l’auteur·e et telle qu’elle doit résonner en phase avec le récit et les intentions du texte. La part de subjectivité est donc immense, et l’on voudra bien pardonner les éventuelles erreurs de jugement et en prendre compte également dans la réception de cette fiche de lecture qui n’a, de fait, rien d’absolu.
+
+# --- Ci-dessous commence les textes par catégorie ---
+
 :projet:
   :diminutif: po
-  :explication: Note moyenne calculée d'après les notes attribuées par les jurés pour l'ensemble du projet. Elle est attribuée sur une impression générale ainsi que certains critères tels que les facteurs O et U (cf. plus bas), l'adéquation au thème, etc.
+  :explication: Note moyenne calculée d’après les notes attribuées par les jurés pour l’ensemble du projet. Elle est attribuée sur une impression générale ainsi que certains critères tels que les facteurs O et U (cf. plus bas), l’adéquation au thème, etc.
 
 :personnages:
   :diminutif: p
   :explication: Perception par les lecteurs des personnages, protagoniste, antagoniste, personnages secondaires ou autres, au niveau de leur idiosyncrasie et de leur intérêt.
   A: Les lecteurs ont particulièrement apprécié les personnages de cette histoire et leur traitement (qui comprend notamment leur facteur O et U, leur cohérence, leur idiosyncrasie ou encore leurs dialogues).
-  B: Les lecteurs ont perçu les personnages comme intéressants et bien traités, mais qu'ils mériteraient sans doute d'être encore approfondis. Renforcer leur idiosyncrasie, leurs facteurs O et U, améliorer leur fonction dans l'histoire, pourraient être des pistes à suivre.
-  C: Les personnages n'ont pas été bien perçus par les lecteurs, qui les ont trouvé peu intéressants. Peut-être manquent-ils d'originalité (facteur O) ou d'universalité (facteur U), peut-être leur idiosyncrasie n'est pas suffisamment marquée pour qu'ils deviennent mémorables, attachants ou reconnaissables.
-  D: Une note inférieure à 5 indique que les lecteurs sont complètement passés à côté de vos personnages. Dans l'ensemble, ils les ont trouvé faibles, peu caractérisé, sans intérêt. C'est un point d'amélioration important de votre histoire, dans le sens où une bonne histoire ne peut se passer de personnages forts.
+  B: Les lecteurs ont perçu les personnages comme intéressants et bien traités, mais qu’ils mériteraient sans doute d’être encore approfondis. Renforcer leur idiosyncrasie, leurs facteurs O et U, améliorer leur fonction dans l’histoire, pourraient être des pistes à suivre.
+  C: Les personnages n’ont pas été bien perçus par les lecteurs, qui les ont trouvé peu intéressants. Peut-être manquent-ils d’originalité (facteur O) ou d’universalité (facteur U), peut-être leur idiosyncrasie n’est pas suffisamment marquée pour qu’ils deviennent mémorables, attachants ou reconnaissables.
+  D: Une note inférieure à 5 indique que les lecteurs sont complètement passés à côté de vos personnages. Dans l’ensemble, ils les ont trouvé faibles, peu caractérisé, sans intérêt. C’est un point d’amélioration important de votre histoire, dans le sens où une bonne histoire ne peut se passer de personnages forts.
 
 :forme:
   :diminutif: f
-  :explication: Perception par les lecteurs de la forme générale de l'histoire, de sa structure et de ses éléments (actes, scènes-clés, etc.).
-  A: Cette note indique que la structure (actes et scènes-clés) ont fait grande impression sur le lecteur, que l'histoire lui a paru parfaitement construite, dans les règles de l'art ou qu'au contraire elle faisait preuve d'une originalité forte.
-  B: Une note entre 10 et 15 indique que la structure a été perçue par le lecteur mais qu'elle peut être sans doute renforcée, affirmée. Commencer par s'assurer que tous les éléments, actes et scènes-clés, remplissent parfaitemetn leur rôle peut être intéressant.
-  C: Une note inférieure à 10 peut indiquer que le lecteur a perçu la structure comme un peu trop floue, un peu trop molle. Il convient peut-être de s'assurer qu'elle est bien en place et que tous les nœuds remplissent leurs rôles.
+  :explication: Perception par les lecteurs de la forme générale de l’histoire, de sa structure et de ses éléments (actes, scènes-clés, etc.).
+  A: Cette note indique que la structure (actes et scènes-clés) ont fait grande impression sur le lecteur, que l’histoire lui a paru parfaitement construite, dans les règles de l’art ou qu’au contraire elle faisait preuve d’une originalité forte.
+  B: Une note entre 10 et 15 indique que la structure a été perçue par le lecteur mais qu’elle peut être sans doute renforcée, affirmée. Commencer par s’assurer que tous les éléments, actes et scènes-clés, remplissent parfaitemetn leur rôle peut être intéressant.
+  C: Une note inférieure à 10 peut indiquer que le lecteur a perçu la structure comme un peu trop floue, un peu trop molle. Il convient peut-être de s’assurer qu’elle est bien en place et que tous les nœuds remplissent leurs rôles.
   D: Une note inférieure à 5 indique que le lecteur a été incapable de percevoir la moindre forme dans cette histoire.
 
 :intrigues:
   :diminutif: i
-  :explication: Impressions laissées aux lecteurs par les différentes intrigues du projet, et notamment l'intrigue principale et l'intrigue secondaire si elle existe.
+  :explication: Impressions laissées aux lecteurs par les différentes intrigues du projet, et notamment l’intrigue principale et l’intrigue secondaire si elle existe.
   A: Une note supérieure à 15…
   B: Une note entre 10 et 15…
   C: Une note inférieure à 10…
@@ -30,27 +39,27 @@
   :diminutif: t
   :explication: Perception des thèmes abordés, de leur exploitation et de leur développement.
   A: Une note supérieure à 15 indique que les lecteurs se sont passionnés pour les thèmes développés dans ce projet et la façon dont ils ont été exploités.
-  B: Une note entre 10 et 15 révèle que les lecteurs de ce projet ont été sensibles aux thèmes développés et leur façon d'être exploités. L'approche peut toutefois être renforcée et affinée afin de pouvoir tirer vraiment tout le potentiel des choses mises en place.
-  C: Une note inférieure à 10 révèle une faiblesse au niveau des thèmes, tout au moins dans la perception des lecteurs. Ces lecteurs ont senti leur présence, mais ne les ont pas suffisamment imbriqués et exploités dans l'histoire.
-  D: Les lecteurs se sont malheureusement montrés indifférents à vos thèmes ou la façon de les exploiter/développer. Un travail important est à mener à ce niveau, entendu qu'une bonne histoire, même une histoire d'action de comédie ou d'aventure, ne peut faire l'économie de thèmes précis et bien exploités.
+  B: Une note entre 10 et 15 révèle que les lecteurs de ce projet ont été sensibles aux thèmes développés et leur façon d’être exploités. L’approche peut toutefois être renforcée et affinée afin de pouvoir tirer vraiment tout le potentiel des choses mises en place.
+  C: Une note inférieure à 10 révèle une faiblesse au niveau des thèmes, tout au moins dans la perception des lecteurs. Ces lecteurs ont senti leur présence, mais ne les ont pas suffisamment imbriqués et exploités dans l’histoire.
+  D: Les lecteurs se sont malheureusement montrés indifférents à vos thèmes ou la façon de les exploiter/développer. Un travail important est à mener à ce niveau, entendu qu’une bonne histoire, même une histoire d’action de comédie ou d’aventure, ne peut faire l’économie de thèmes précis et bien exploités.
 
 :facteurO:
   :diminutif: fO
   :short_name: Facteur O
-  :name: Facteur O (facteur d'originalité)
-  :explication: Ce facteur indique comment a été perçu l'histoire ainsi que ses différents “ingrédients” au niveau de leur originalité, c'est-à-dire au niveau de leur singularité et de leur fréquence d'utilisation dans les histoires. Plus la note est élevée, plus l'histoire a été perçue comme originale ou possédant des éléments originaux.
-  A: Votre histoire et/ou ses ingrédients ont été perçus comme très originaux, et c'est un point fort.
-  B: Les lecteurs ont perçu l'histoire comme plutôt originale, sans que cette originalité ne soit trop affirmée.
-  C: L'histoire et ses ingrédients ont été jugés comme manquant d'originalité.
-  D: Les lecteurs n'ont rien trouvé d'originale dans cette histoire. Que ce soit au niveau des personnages, des intrigues, de la forme, des thèmes, elle a été perçue comme trop banale.
+  :name: Facteur O (facteur d’originalité)
+  :explication: Ce facteur indique comment a été perçu l’histoire ainsi que ses différents “ingrédients” au niveau de leur originalité, c’est-à-dire au niveau de leur singularité et de leur fréquence d’utilisation dans les histoires. Plus la note est élevée, plus l’histoire a été perçue comme originale ou possédant des éléments originaux.
+  A: Votre histoire et/ou ses ingrédients ont été perçus comme très originaux, et c’est un point fort.
+  B: Les lecteurs ont perçu l’histoire comme plutôt originale, sans que cette originalité ne soit trop affirmée.
+  C: L’histoire et ses ingrédients ont été jugés comme manquant d’originalité.
+  D: Les lecteurs n’ont rien trouvé d’originale dans cette histoire. Que ce soit au niveau des personnages, des intrigues, de la forme, des thèmes, elle a été perçue comme trop banale.
 
 :facteurU:
   :diminutif: fU
-  :name: Facteur U (facteur d'Universalité)
+  :name: Facteur U (facteur d’Universalité)
   :short_name: Facteur U
-  :explication: Le facteur d'universalité est le complémentaire du facteur O. Il indique comment a été perçu l'histoire et ses différents éléments au niveau de l'universalité qu'ils dégagent, c'est-à-dire leur capacité à toucher les autres — les lecteurs, les spectateurs, les auditeurs… — dans leur grande diversité. Plus la note est élevée, plus l'histoire a été perçue comme universelle ou possédant des éléments d'universalité.
+  :explication: Le facteur d’universalité est le complémentaire du facteur O. Il indique comment a été perçu l’histoire et ses différents éléments au niveau de l’universalité qu’ils dégagent, c’est-à-dire leur capacité à toucher les autres — les lecteurs, les spectateurs, les auditeurs… — dans leur grande diversité. Plus la note est élevée, plus l’histoire a été perçue comme universelle ou possédant des éléments d’universalité.
   A: Votre histoire a été perçue comme très universelle, avec un fort potentiel pour parler aux autres, les interpeler, les accrocher.
-  B: Votre histoire a été perçue comme assez universelle, susceptible de capter l'attention d'une audience assez large. Mais cette note inférieure ou égale à 15 indique également que son universalité peut être approfondie, renforcée, afin de toucher un plus grand nombre encore de lecteurs, de spectateurs ou d'auditeurs.
+  B: Votre histoire a été perçue comme assez universelle, susceptible de capter l’attention d’une audience assez large. Mais cette note inférieure ou égale à 15 indique également que son universalité peut être approfondie, renforcée, afin de toucher un plus grand nombre encore de lecteurs, de spectateurs ou d’auditeurs.
   C: Une note inférieure à 10 peut indiquer une faiblesse de votre histoire au niveau de sa capacité à intéresser le plus grand nombre. Elle est peut-être un peu trop particulière.
   D: Une note inférieure à 5 peut indiquer que votre histoire manque peut-être de cette capacité à communier avec les autres, à les intéresser et les captiver.
 
@@ -58,28 +67,28 @@
   :diminutif: cohe
   :name: Cohérence
   :short_name: Cohérence
-  :explication: Cette note concerne la cohérence de l'histoire et de ses éléments perçue par les lecteurs. La cohérence concerne principalement la conduite des intrigues et le comportement des personnages.
+  :explication: Cette note concerne la cohérence de l’histoire et de ses éléments perçue par les lecteurs. La cohérence concerne principalement la conduite des intrigues et le comportement des personnages.
   A: Les lecteurs ont perçu une très forte cohérence dans cette histoire.
-  B: Si les lecteurs ont indéniablement cru en l'avancée de l'histoire et le comportement des différents personnages, il n'en reste pas moins qu'ils pensent que cette cohérence pourrait être encore renforcée afin de rendre l'histoire plus crédible encore et, partant, plus forte et impactante.
-  C: Tout en gardant à l'esprit que la cohérence peut revêtir un caractère subjectif, les lecteurs ont jugé que cette histoire comportaient trop d'incohérences pour accorder de la crédibilité de cette histoire et de ses personnages.
-  D: Cette histoire, que ce soit au niveau des personnages ou au niveau des intrigues, a paru bien trop incohérente aux lecteurs. Et l'incohérence nuit de sa façon rédhibitoire au récit le plus simple.
+  B: Si les lecteurs ont indéniablement cru en l’avancée de l’histoire et le comportement des différents personnages, il n’en reste pas moins qu’ils pensent que cette cohérence pourrait être encore renforcée afin de rendre l’histoire plus crédible encore et, partant, plus forte et impactante.
+  C: Tout en gardant à l’esprit que la cohérence peut revêtir un caractère subjectif, les lecteurs ont jugé que cette histoire comportaient trop d’incohérences pour accorder de la crédibilité de cette histoire et de ses personnages.
+  D: Cette histoire, que ce soit au niveau des personnages ou au niveau des intrigues, a paru bien trop incohérente aux lecteurs. Et l’incohérence nuit de sa façon rédhibitoire au récit le plus simple.
 
 :adequation:
   :diminutif: adth
   :name: Adéquation avec le thème
   :short_name: Adéquation thème
-  :explication: Perception par les lecteurs de l'adéquation entre le projet et le thème du concours.
+  :explication: Perception par les lecteurs de l’adéquation entre le projet et le thème du concours.
   A: Les lecteurs ont perçu sans ambiguïté une adéquation très forte entre le projet et le thème du concours, ce qui a considérablement augmenté les chances de votre dossier.
-  B: Les lecteurs ont perçu l'adéquation entre le projet et le thème du concours, mais ils ont jugé que cette adéquation aurait pu être plus poussée encore, en l'exploitant dans les différents aspects de la narration.
-  C: Les lecteurs n'ont pas assez senti l'adéquation entre le projet et le thème du concours. Sans être hors-sujet pour autant, l'exploitation du thème a plus été ressenti comme un prétexte que comme réellement le sujet au cœur de la narration.
-  D: Aucune adéquation n'a été perçue par les membres du jury entre votre projet et le thème du concours. Cette adéquation jouant pour beaucoup dans la valeur attribuée à votre dossier, cette note explique en grande partie le fait que vous n'ayez pas été choisi comme lauréat.
+  B: Les lecteurs ont perçu l’adéquation entre le projet et le thème du concours, mais ils ont jugé que cette adéquation aurait pu être plus poussée encore, en l’exploitant dans les différents aspects de la narration.
+  C: Les lecteurs n’ont pas assez senti l’adéquation entre le projet et le thème du concours. Sans être hors-sujet pour autant, l’exploitation du thème a plus été ressenti comme un prétexte que comme réellement le sujet au cœur de la narration.
+  D: Aucune adéquation n’a été perçue par les membres du jury entre votre projet et le thème du concours. Cette adéquation jouant pour beaucoup dans la valeur attribuée à votre dossier, cette note explique en grande partie le fait que vous n’ayez pas été choisi comme lauréat.
 
 :redaction:
   :diminutif: r
   :name: Rédaction du dossier
   :short_name: Rédaction
-  :explication: Cette note concerne l'aspect rédaction du projet, au niveau principalement de sa clarté, et son orthographe et de sa pertinence générale.
+  :explication: Cette note concerne l’aspect rédaction du projet, au niveau principalement de sa clarté, et son orthographe et de sa pertinence générale.
   A: Les lecteurs ont jugé excellente la rédaction et la présentation de ce projet, tant au niveau de son orthographe que de son style.
   B: Les lecteurs ont jugé que la rédaction et la présentation de ce projet étaient tout à fait correctes. Peut-être pourraient-elles être encore améliorées pour donner une chance supplémentaire à cette histoire.
-  C: La rédaction et l'orthographe de ce dossier a été jugé d'un niveau insuffisant par les lecteurs.
-  D: Les lecteurs ont jugé que le projet se mettaient lui-même en danger de par sa rédaction et son orthographe plus qu'approximative. Que ce soit pour l'écrit pour l'écran, le projet s'insère dans le monde de la <em>lecture</em> et nécessite donc à ce niveau une attention tout à fait particulière.
+  C: La rédaction et l’orthographe de ce dossier a été jugé d’un niveau insuffisant par les lecteurs.
+  D: Les lecteurs ont jugé que le projet se mettaient lui-même en danger de par sa rédaction et son orthographe plus qu’approximative. Que ce soit pour l’écrit pour l’écran, le projet s’insère dans le monde de la <em>lecture</em> et nécessite donc à ce niveau une attention tout à fait particulière.

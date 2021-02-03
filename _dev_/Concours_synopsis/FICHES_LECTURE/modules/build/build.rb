@@ -69,7 +69,8 @@ class << self
   def production_des_fiches(projets)
     suivi("\n== Production des fiches de lecture ==", :bleu)
     projets.each do |projet|
-      print "Production fiche lecture projet “#{projet.titre}”…".bleu
+      next if projet.evaluation.note > 10
+      print "Production fiche lecture projet “#{projet.titre}” (#{projet.concurrent_id})…".bleu
       projet.fiche_lecture.build
       puts "\r= Fiche du projet “#{projet.titre}” produite avec succès".vert
       break if option?(:only_one)

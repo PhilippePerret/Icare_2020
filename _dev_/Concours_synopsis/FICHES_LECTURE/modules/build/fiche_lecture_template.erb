@@ -33,9 +33,19 @@
 
     <div class="type-fiche">
       FICHE DE LECTURE
-    </div>
+    </div><%
 
-    <%
+    if projet.evaluation.note <= 10
+
+      %><div id="avertissement-subjectivity" class="divnote">
+        <span class="libelle">Avertissement</span>
+        <div class="explication"></div>
+        <div class="explication-note"><%= avertissement_subjectivite %></div>
+      </div><%
+
+    end
+
+    %><%
     # TODO Reprendre cette table pour faire la table générale ?
     {
       projet: {name:"Projet dans sa globalité"},

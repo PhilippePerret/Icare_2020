@@ -119,6 +119,9 @@ def note_clarte
   projet.evaluation.categories['cla'][:note]
 end
 
+def avertissement_subjectivite
+  FicheLecture::DATA_MAIN_PROPERTIES[:subjectivite]
+end
 
 def ecusson
   @ecusson ||= begin
