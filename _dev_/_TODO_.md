@@ -2,14 +2,13 @@
 
 ## Rapid list
 
-* Un bouton pour appliquer la valeur "écartée" à toutes les questions non répondues
+* Corriger le Bug #490
 * Revoir le calcul des évalutations (je crois qu'il faut tenir compte du fait que certaines questions peuvent être laissées de côté)
-* Il faudrait pouvoir marquer, dans le formulaire d'évaluation, qu'une question ne sera pas répondue.
 
 
 ## Toutes les tâches
 
-Voir surtout avec `ghi list`. Ici, on ne place que les informations qui ont besoin d'être réfléchies
+Voir surtout avec `ghi list` avec le label 'concours' (`ghi list -L concours`). Ici, on ne place que les informations qui ont besoin d'être réfléchies
 
 ## Command pour HOME
 

@@ -232,22 +232,26 @@ def parse(score)
   nmax  = 0.0 # pour la note maximale possible
   namax = 0.0 # pour la note maximale avec les "-" qui sont comptabilisées
   naq   = Evaluation.NOMBRE_ABSOLU_QUESTIONS
-  nqs   = 0.0 # nombre de questions dans le score (répondues ou non)
+  nqs   = 0.0 # Pour [n]ombre de [q]uestion dans le [s]core
+              # nombre de questions dans le score (répondues ou non)
               # Elle peut diverger d'une évaluation à l'autre si des
               # questions ont été ajoutées. C'est un nombre absolu qui ne
-              # dépend pas du nombre de réponses effectivement données.
+              # dépend pas du nombre de réponses effectivement données
+              # MAIS qui tient compte des questions écartées
   nqe   = 0.0 # pour [n]ombre [q]uestions [é]cartées. Le nombre de questions
               # qui ont été écartées pour le synopsis donné.
   nr    = 0.0 # pour [n]ombre [r]éponses, le nombre de réponses données
 
   score.each do |k, v|
-    nqs += 1.0
     # Si la question a été écartée, on n'en tient pas compte dans le
     # calcul.
     if v == 'x'
       nqe += 1.0
       next
     end
+    # Le nombre de questions, répondues ou non. Cette valeur permettra de
+    # déterminer le pourcentage de questions restantes.
+    nqs += 1.0
     # Les +categories+ de la clé, qui détermine les appartenances de la
     # question. Par exemple, si la clé contient "p-cohe-adth", la note
     # appartient aux personnage ("p"), à la cohérence ("cohe") et à
@@ -308,11 +312,12 @@ def parse(score)
   # du nombre absolu (quand, par exemple, des questions ont été créées après
   # l'établissement de cette évaluation)
   # Alors il faut ajouter à la note max possible
-  if naq > nqs
-    (naq - nqs).to_i.times do
-      namax += 5.0
-    end
-  end
+  # NON : on ne tient compte que des réponses données
+  # if naq > nqs
+  #   (naq - nqs).to_i.times do
+  #     namax += 5.0
+  #   end
+  # end
 
   # --- Coefficiant 200 ---
   coef200   = 20.0 / nmax
@@ -324,7 +329,8 @@ def parse(score)
   if nr > 0
     n   = (n  * coef200 ).round(1)
     na  = (na * coefa200).round(1)
-    pct = (100.0 / (naq.to_f / nr)).round(1)
+    # pct = (100.0 / (naq.to_f / nr)).round(1)
+    pct = (100.0 / (nqs.to_f / nr)).round(1)
   else
     n   = 0.0
     na  = 0.0

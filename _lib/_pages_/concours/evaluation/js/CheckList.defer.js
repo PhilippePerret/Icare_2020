@@ -23,7 +23,7 @@ static getValues(){
   let results = {}
   this.obj.find('select').each((i, select) => {
     var value = select.value ;
-    if ( value != "-" ) value = parseInt(value,10);
+    if ( value != '-' && value != 'x') value = parseInt(value,10);
     Object.assign(results, {[select.name]: value})
   })
   return results

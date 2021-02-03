@@ -329,6 +329,10 @@ def bind; binding() end
 #       générale, toutes notes confondues
 # IN    Optionnellement, ID de l'évaluateur ou table des options
 #       Note : il peut être fourni à l'instanciation (cf. initialize)
+#
+# Note : c'est la méthode qui est appelée pour afficher les cartes des
+# synopsis dans la section d'évaluation.
+# 
 def out(options = nil)
   options ||= {}
   options = {evaluator_id: options} if options.is_a?(Integer)

@@ -28,7 +28,7 @@ bouton_telecharger = Tag.link(text:"Télécharger", class:"btn-download small bt
   <div id="synopsis-<%=id%>-titre" class="titre"><%=titre%></div>
   <div class="auteur">de <span id="synopsis-<%=id%>-pseudo" class=""><%=concurrent.patronyme%></span></div>
   <a id="synopsis-<%=id%>-note-generale" class="note-generale" href="<%= href_evaluation %>">
-    <span class="note-evaluator"><%=formated_note%></span><%
+    <span class="note-evaluator"><%= formated_note %></span><%
     if user.admin? %>
       <span class="note-globale" title="Note globale tenant compte des notes des autres membres du jury"><%= formated_note_totale %></span><%
     end %>
