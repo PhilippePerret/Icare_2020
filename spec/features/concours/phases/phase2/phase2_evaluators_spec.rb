@@ -13,7 +13,7 @@ feature "En PHASE 2" do
   before(:all) do
     degel('concours-phase-2')
     require './_lib/_pages_/concours/evaluation/lib/constants'
-    DATA_QUESTIONS = YAML.load_file('./_lib/_pages_/concours/evaluation/data/data_evaluation.yaml')
+    DATA_QUESTIONS = YAML.load_file(DATA_QUESTIONS_CONCOURS)
   end
   let(:member) { @member }
   let(:fiche_evaluation) { @fiche_evaluation ||= member.fiche_evaluation(concurrent) }

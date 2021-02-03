@@ -9,7 +9,7 @@
 =end
 require_relative './constants'
 require_relative './FicheLecture'
-require_relative './Evaluation_module'
+html.require_xmodule('calculs')
 
 class Synopsis
 
@@ -332,7 +332,7 @@ def bind; binding() end
 #
 # Note : c'est la méthode qui est appelée pour afficher les cartes des
 # synopsis dans la section d'évaluation.
-# 
+#
 def out(options = nil)
   options ||= {}
   options = {evaluator_id: options} if options.is_a?(Integer)

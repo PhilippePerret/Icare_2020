@@ -36,4 +36,4 @@ end #/ formate_choices
 def ensure_folder(dos)
   `mkdir -p "#{dos}"`
   return dos
-end #/ ensure_folder
+end

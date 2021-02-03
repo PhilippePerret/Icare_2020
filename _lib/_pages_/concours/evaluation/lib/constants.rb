@@ -27,10 +27,11 @@ CHECKLIST_TEMPLATE = File.join(XMODULES_FOLDER,'evaluation','checklist_template.
 FICHE_LECTURE_TEMP_PATH = File.join(XMODULES_FOLDER,'synopsis','templates','fiche_lecture_template.erb')
 
 # * Data *
-DATA_CHECK_LIST_FILE = File.join(EVAL_DATA_FOLDER, 'data_evaluation.yaml')
+DATA_QUESTIONS_CONCOURS = File.join(CALCUL_FOLDER, 'data_evaluation.yaml')
 
 # * Développement *
 REBUILDER_CHECK_LIST = File.join(XMODULES_FOLDER,'evaluation','rebuild_checklist.rb')
+
 
 # *** Les motifs de non conformité du synopsis ***
 # Alimente la liste des checkboxes du formulaire de non conformité et

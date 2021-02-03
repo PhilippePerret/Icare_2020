@@ -1,0 +1,65 @@
+:projet:
+  :diminutif: po
+  :explication: Note moyenne calculée d'après les notes attribuées par les jurés pour l'ensemble du projet. Elle est attribuée sur une impression générale ainsi que certains critères tels que les facteurs O et U (cf. plus bas), l'adéquation au thème, etc.
+
+:personnages:
+  :diminutif: p
+  :explication: Note moyenne calculée d'après les notes attribuées par les jurés pour les personnages dans leur ensemble, ainsi que, plus spécifiquement, sur le protagoniste (s'il existe), l'antagoniste (s'il existe), les personnages secondaires, les dialogues, etc.
+  A: Une note supérieure à 15 indique que les lecteurs ont particulièrement apprécié les personnages de cette histoire et leur traitement (qui comprend notamment leur facteur O et U, leur cohérence, leur idiosyncrasie ou encore leurs dialogues).
+  B: Une note entre 10 et 15 indique que les lecteurs ont perçu les personnages comme intéressants et bien traités, mais qu'ils mériteraient sans doute d'être encore approfondis. Renforcer leur idiosyncrasie, leurs facteurs O et U, améliorer leur fonction dans l'histoire, pourraient être des pistes à suivre.
+  C: Une note inférieure à 10 indique que les personnages n'ont pas été bien perçus par les lecteurs, qui les ont trouvé peu intéressants. Peut-être manquent-ils d'originalité (facteur O) ou d'universalité (facteur U), peut-être leur idiosyncrasie n'est pas suffisamment marquée pour qu'ils deviennent mémorables, attachants ou reconnaissables.
+  D: Une note inférieure à 5 indique que les lecteurs sont complètement passés à côté de vos personnages. Dans l'ensemble, ils les ont trouvé faibles, peu caractérisé, sans intérêt. C'est un point d'amélioration important de votre histoire, dans le sens où une bonne histoire ne peut se passer de personnages forts.
+
+:forme:
+  :diminutif: f
+  :explication: Note moyenne pour la forme générale de l'histoire, sa structure. Notes attribuées en fonction de l'impression produite par les actes et les scènes-clés propres à une histoire.
+  A: Cette note indique que la structure (actes et scènes-clés) ont fait grande impression sur le lecteur, que l'histoire lui a paru parfaitement construite, dans les règles de l'art ou qu'au contraire elle faisait preuve d'une originalité forte.
+  B: Une note entre 10 et 15 indique que la structure a été perçue par le lecteur mais qu'elle peut être sans doute renforcée, affirmée. Commencer par s'assurer que tous les éléments, actes et scènes-clés, remplissent parfaitemetn leur rôle peut être intéressant.
+  C: Une note inférieure à 10 peut indiquer que le lecteur a perçu la structure comme un peu trop floue, un peu trop molle. Il convient peut-être de s'assurer qu'elle est bien en place et que tous les nœuds remplissent leurs rôles.
+  D: Une note inférieure à 5 indique que le lecteur a été incapable de percevoir la moindre forme dans cette histoire.
+
+:intrigues:
+  :diminutif: i
+  :explication: Note moyenne de l'impression laissée par les intrigues du projet, et notamment l'intrigue principale et l'intrigue secondaire si elle existe. Sont particulièrement appréciés leur intérêt, leur cohérence et la manière dont elles sont conduites.
+  A: Une note supérieure à 15…
+  B: Une note entre 10 et 15…
+  C: Une note inférieure à 10…
+  D: Une note inférieure à 5…
+
+:themes:
+  :diminutif: t
+  :explication: Note moyenne concernant les thèmes, leur développement, leur adéquation avec le thème du concours, leur exploitation (thèse, antithèse, etc.).
+  A: Une note supérieure à 15 indique que les lecteurs se sont passionnés pour les thèmes développés dans ce projet et la façon dont ils ont été exploités.
+  B: Une note entre 10 et 15 révèle que les lecteurs de ce projet ont été sensibles aux thèmes développés et leur façon d'être exploités. L'approche peut toutefois être renforcée et affinée afin de pouvoir tirer vraiment tout le potentiel des choses mises en place.
+  C: Une note inférieure à 10 révèle une faiblesse au niveau des thèmes, tout au moins dans la perception des lecteurs. Ces lecteurs ont senti leur présence, mais ne les ont pas suffisamment imbriqués et exploités dans l'histoire.
+  D: Une note inférieure à 5 révèle une indifférence des lecteurs à vos thèmes ou la façon de les exploiter/développer. Un travail important est à mener à ce niveau, entendu qu'une bonne histoire, même une histoire d'action ou d'aventure, ne peut se passer de thèmes précis et exploités.
+
+:facteurO:
+  :diminutif: fO
+  :short_name: Facteur O
+  :name: Facteur O (facteur d'originalité)
+  :explication: Ce facteur indique comment a été perçu l'histoire ainsi que ses différents “ingrédients” au niveau de leur originalité, c'est-à-dire au niveau de leur singularité et de leur fréquence d'utilisation dans les histoires. Plus la note est élevée, plus l'histoire a été perçue comme originale ou possédant des éléments originaux.
+  A: Une note supérieure à 15 indique que votre histoire et/ou ses ingrédients ont été perçus comme très originaux, et c'est un point fort.
+  B: Une note entre 10 et 15 indique que les lecteurs ont perçu l'histoire comme plutôt originale, sans que cette originalité ne soit trop affirmée.
+  C: Une note inférieure à 10 peut indiquer que l'histoire et ses ingrédients manquent peut-être d'originalité pour vraiment être bien perçue.
+  D: Une note inférieure à 5 indique que les lecteurs n'ont pas trouvé l'histoire très originale. Elle a été perçue comme trop banale.
+
+:facteurU:
+  :diminutif: fU
+  :name: Facteur U (facteur d'Universalité)
+  :short_name: Facteur U
+  :explication: Le facteur d'universalité est le complémentaire du facteur O. Il indique comment a été perçu l'histoire et ses différents éléments au niveau de l'universalité qu'ils dégagent, c'est-à-dire leur capacité à toucher les autres — les lecteurs, les spectateurs, les auditeurs… — dans leur grande diversité. Plus la note est élevée, plus l'histoire a été perçue comme universelle ou possédant des éléments d'universalité.
+  A: Avec une note supérieure à 15, votre histoire a été perçue comme très universelle, avec un fort potentiel pour parler aux autres, les interpeler, les accrocher.
+  B: Avec une note supérieure à 10, votre histoire a été perçue comme assez universelle, susceptible de capter l'attention d'une audience assez large. Mais cette note inférieure ou égale à 15 indique également que son universalité peut être approfondie, renforcée, afin de toucher un plus grand nombre encore de lecteurs, de spectateurs ou d'auditeurs.
+  C: Une note inférieure à 10 peut indiquer une faiblesse de votre histoire au niveau de sa capacité à intéresser le plus grand nombre. Elle est peut-être un peu trop particulière.
+  D: Une note inférieure à 5 peut indiquer que votre histoire manque peut-être de cette capacité à communier avec les autres, à les intéresser et les captiver.
+:coherence:
+  :diminutif: cohe
+  :name: Cohérence
+  :short_name: Cohérence
+  :explication: Cette note indique comment les lecteurs ont perçu la cohérence de l'histoire et de ses éléments. La cohérence concerne principalement la conduite des intrigues et la psychologie des personnages. Plus la note est élevée, plus l'histoire a semblé cohérente.
+:adequation:
+  :diminutif: adth
+  :name: Adéquation avec le thème
+  :short_name: Adéquation thème
+  :explication: Cette note indique comment les lecteurs ont perçu l'adéquation de l'histoire et de ses “ingrédients” avec le thème imposé du concours. Cette adéquation relève de la présence et de l'importance du thème dans l'histoire, mais également de son exploitation, de son utilisation pour définir les personnages, de son rôle dans les intrigues et ses développements dans les thèmes eux-mêmes. Plus la note est élevée, et puis l'histoire et ses éléments ont paru en adéquation avec le thème.

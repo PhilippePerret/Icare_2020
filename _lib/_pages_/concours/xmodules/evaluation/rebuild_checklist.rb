@@ -102,7 +102,7 @@ class << self
 
   # Les données d'évaluation (questions) dans le fichier data_evaluation.yaml
   def data
-    @data ||= YAML.load_file(DATA_CHECK_LIST_FILE)
+    @data ||= YAML.load_file(DATA_QUESTIONS_CONCOURS)
   end #/ data
 end # /<< self
 

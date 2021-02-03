@@ -69,7 +69,7 @@ class HTML
   # Méthode qui s'assure que tout soit à jour (pour ne pas tout refaire
   # chaque fois, à commencer par la check list)
   def check_up_to_date
-    if not File.uptodate?(PARTIAL_CHECKLIST, [CHECKLIST_TEMPLATE, DATA_CHECK_LIST_FILE, REBUILDER_CHECK_LIST])
+    if not File.uptodate?(PARTIAL_CHECKLIST, [CHECKLIST_TEMPLATE, DATA_QUESTIONS_CONCOURS, REBUILDER_CHECK_LIST])
       require_xmodule('evaluation/rebuild_checklist.rb')
       CheckList.rebuild_checklist
     end

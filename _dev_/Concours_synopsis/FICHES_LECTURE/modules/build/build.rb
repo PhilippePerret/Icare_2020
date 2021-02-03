@@ -1,9 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-# La class Evaluation qui va permettre d'obtenir les notes
-require './_lib/_pages_/concours/xmodules/synopsis/Evaluation'
-
 class FLFactory
 class << self
   attr_reader :projets_valides
@@ -12,7 +9,7 @@ class << self
   #
   # Méthode principale procédant à la fabrication des fiches de lecture
   def proceed_build_fiches_lecture
-    puts "-> proceed_build_fiches_lecture"
+    require_folder(CALCUL_FOLDER)
     option?(:reload) && rapatriement_des_fiches_evaluations
     @projets_valides = evaluations_des_synopsis
     production_des_fiches(@projets_valides)
@@ -33,14 +30,12 @@ class << self
       #   a : archiver => récursif
       #   m : prune empty dirs (ne les copie pas)
       #   v : verbose
-      puts "Command RSync: #{cmd.inspect}"
+      # puts "Command RSync: #{cmd.inspect}"
       res = `#{cmd} 2>&1`
       if false
         puts "Retour de rsync : #{res.gsub(/\\n/,"\n")}"
       end
 
-      # DATA_CONCOURS.merge!(data_concurrents)
-      # puts "DATA_CONCOURS: #{data_concurrents.pretty_inspect}"
     end
   end #/ rapatriement_des_fiches_evaluations
 
@@ -59,12 +54,14 @@ class << self
         sans_fiches_evaluation << projet
       end
     end
-    line_info('Projets avec fiches d’évaluation : ', avec_fiches_evaluation.count)
-    line_info('Projets sans fiches d’évaluation : ', sans_fiches_evaluation.count)
+    line_info('= Projets avec fiches d’évaluation : ', avec_fiches_evaluation.count)
+    line_info('= Projets sans fiches d’évaluation : ', sans_fiches_evaluation.count)
     # On définit la position de chaque projet
+    print "Calcul de la position respective des projets…".bleu
     avec_fiches_evaluation.sort_by { |projet| projet.note }.reverse.each_with_index do |projet, idx|
       projet.position = 1 + idx
     end
+    puts "\r= Calcul de la position respective des projets effectué".vert
 
     return avec_fiches_evaluation
   end #/ evaluations_des_synopsis
@@ -72,7 +69,9 @@ class << self
   def production_des_fiches(projets)
     suivi("\n== Production des fiches de lecture ==", :bleu)
     projets.each do |projet|
+      print "Production fiche lecture projet “#{projet.titre}”…".bleu
       projet.fiche_lecture.build
+      puts "\r= Fiche du projet “#{projet.titre}” produite avec succès".vert
     end
   end #/ production_des_fiches
 

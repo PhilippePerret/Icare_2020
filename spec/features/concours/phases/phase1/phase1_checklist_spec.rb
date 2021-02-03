@@ -16,7 +16,7 @@ feature "ÉVALUATEUR EN PHASE 1 DU CONCOURS" do
     # headless()
     degel('concours-phase-1')
     require './_lib/_pages_/concours/evaluation/lib/constants'
-    DATA_QUESTIONS = YAML.load_file('./_lib/_pages_/concours/evaluation/data/data_evaluation.yaml')
+    DATA_QUESTIONS = YAML.load_file(DATA_QUESTIONS_CONCOURS)
     # puts "DATA_QUESTIONS: #{DATA_QUESTIONS}"
     @concurrent = TConcurrent.find(avec_fichier_conforme: true).shuffle.shuffle.first
     @member = TEvaluator.get_random(fiche_evaluation: @concurrent, jury: 1)

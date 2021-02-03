@@ -2,8 +2,10 @@
 
 ## Rapid list
 
-* Corriger le Bug #490
-* Revoir le calcul des évalutations (je crois qu'il faut tenir compte du fait que certaines questions peuvent être laissées de côté)
+* Placer tous les éléments au même endroit
+* Rendre la note d'adéquation "rédhibitoire", c'est-à-dire avec un fort facteur de profondeur (double)
+* Établir le moyen de produire les fiches de lecture de façon fine, avec le traitement de la propriété `:if`.
+* Finaliser les textes
 
 
 ## Toutes les tâches
