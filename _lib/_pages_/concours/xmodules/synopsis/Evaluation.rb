@@ -10,7 +10,8 @@
   Notes
   -----
   Ce module doit pouvoir être chargé par les modules Ajax (donc ne pas
-  dépendre trop de librairie tiers)
+  dépendre trop de librairie tiers) ainsi que par la ligne de commande
+  qui produit les fiches de lecture.
 
   Pour calculer un seul score, si on a les valeurs et pas le path, on peut
   utiliser :
@@ -21,18 +22,21 @@
 
   Algorithme
   ----------
-  La difficulté du comptage tient au fait que les réponses ont une valeur
-  différente en fonction de leur profondeur. Les questions de premier niveau
-  ont un coefficiant de 1, les questions de deuxième niveau un coefficiant de
-  0.9 (elles valent moins), les questions de troisième niveau un coefficiant de
-  0.8 (elles valent encore moins), etc.
+  La difficulté du comptage tient au fait que
+      1.  les réponses ont une valeur différente en fonction de leur profondeur.
+          Les questions de premier niveau ont un coefficiant de 1, les questions
+          de deuxième niveau un coefficiant de 0.9 (elles valent moins), les
+          questions de troisième niveau un coefficiant de 0.8 (elles valent
+          encore moins), etc.
+      2.  Toutes les réponses n'ont pas à être données
 
   Pour obtenir la note finale, on procède ainsi :
   PREMIERS CALCULS
   - on additionne toutes les valeurs de réponses en leur appliquant leur
     coefficiant.
   - dans le même temps, on compte la note maximale, c'est-à-dire la note
-    qu'obtiendrait le synopsis si toutes les réponses étaient au maximumn (5)
+    qu'obtiendrait le synopsis si toutes les réponses DONNÉES étaient au
+    maximumn (5)
   COEFFICIANT
     - Ensuite, de la note maximale (p.e. 47), on tire le "coefficiant 200"
       c'est-à-dire le coefficiant qu'il faut appliquer à cette note pour obtenir
@@ -56,12 +60,6 @@ DEEPNESS_COEF = {}
 (1..20).each do |i|
   DEEPNESS_COEF.merge!( i => 1.0 - ( (i - 1).to_f / 10 )) # 1 => 1, 2 => 0.9, 3 => 0.8
 end
-
-# # Nombre de questions aujourd'hui
-# if not defined?(NOMBRE_ABSOLU_QUESTIONS) # pour les tests
-#   NOMBRE_ABSOLU_QUESTIONS = File.read(NOMBRE_QUESTIONS_PATH).to_i
-# end
-
 
 # ---------------------------------------------------------------------
 #
@@ -88,10 +86,10 @@ attr_reader :pourcentage
 # appartiendra aux catégories "po", "cohe" et "adth". On comptabilise les points
 # pour chaque catégories, même la première qui est toujours le projet lui-même
 # et correspond (?) à la note générale.
-attr_reader :owners
+attr_reader :categories
 
 # {Integer} Nombre de fiches d'évaluations fournies à l'instanciation
-# Ce nombre est très important puisque c'est lui permettra de calculer les
+# Ce nombre est très important puisque c'est lui qui permettra de calculer les
 # valeurs finale de sommes
 attr_reader :nombre_scores
 
@@ -111,6 +109,9 @@ def initialize(paths = nil)
   parse_scores(paths)
 end #/ initialize
 
+# Nombre absolu de questions, uniquement pour pouvoir connaitre le nombre
+# de questions non répondues.
+#
 def self.NOMBRE_ABSOLU_QUESTIONS
   @nombre_absolu_questions ||= begin
     if not File.exists?(NOMBRE_QUESTIONS_PATH)
@@ -118,7 +119,7 @@ def self.NOMBRE_ABSOLU_QUESTIONS
       CheckList.remake_nombre_questions_file
       message("J'ai dû reconstruire le fichier du nombre de questions…")
     end
-    File.read(NOMBRE_QUESTIONS_PATH).to_i
+    File.read(NOMBRE_QUESTIONS_PATH).strip.to_i
   end
 end #/ NOMBRE_ABSOLU_QUESTIONS
 def self.NOMBRE_ABSOLU_QUESTIONS=(val)
@@ -134,7 +135,7 @@ end
 def parse_and_calc(score)
   parse(score)
   calculate_values
-end #/ parse_and_calc
+end
 
 def parse_scores(paths)
   return if paths.nil? || paths.empty?
@@ -142,7 +143,7 @@ def parse_scores(paths)
   @score_paths = paths
   @score_paths.each { |path| parse_score(path) }
   calculate_values
-end #/ parse_scores
+end
 
 def calc_value(v)
   return nil if v.nil?
@@ -151,7 +152,7 @@ end
 
 def calculate_values
   @note = calc_value(@sum_note)
-  owners.each do |cate, dcate|
+  categories.each do |cate, dcate|
     rap = (dcate[:total].to_f / dcate[:totmax])
     dcate.merge!(note: (20.0 * rap).round(1))
   end
@@ -160,13 +161,14 @@ def calculate_values
   @nombre_questions = calc_value(@sum_nombre_questions)
   @nombre_reponses = calc_value(@sum_nombre_reponses)
   @nombre_missings = calc_value(@sum_nombre_missings)
-end #/ calculate_values
+end
 alias :calc :calculate_values
 
 def parse_score(path)
   return if not File.exists?(path)
   parse(JSON.parse(File.read(path)))
-end #/ parse_score
+end
+
 # ---------------------------------------------------------------------
 #
 #   Propriétés du score
@@ -177,18 +179,18 @@ def no_scores?
 end
 def preselections?
   no_scores? ? nil : (type == 'pres')
-end #/ preselections?
+end
 def palmares?
   no_scores? ? nil : (type == 'prix')
-end #/ palmares?
+end
 def first_score_name
-  @score_name ||= begin
+  @first_score_name ||= begin
     File.basename(score_paths.first) unless no_scores?
   end
-end #/ score_name
+end
 def type
   @type ||= first_score_name.split('-')[1] unless no_scores?
-end #/ type
+end
 
 # = main =
 #
@@ -204,7 +206,7 @@ end #/ type
 #           :note_absolue       Contrairement à :note qui ne compte
 #                               que les réponses qui ont été données, la note
 #                               absolue tient compte des réponses non données
-#           :owners  Les appartenances, en fonction de la clé de chaque
+#           :categories  Les appartenances, en fonction de la clé de chaque
 #               question. Cette table contient en clé l'élément de clé (par
 #               exemple les clés "p", "cohe" et "adth" si la question porte
 #               l'identifiant "p-cohe-adth") et en valeur :
@@ -231,22 +233,39 @@ def parse(score)
   namax = 0.0 # pour la note maximale avec les "-" qui sont comptabilisées
   naq   = Evaluation.NOMBRE_ABSOLU_QUESTIONS
   nqs   = 0.0 # nombre de questions dans le score (répondues ou non)
-  nr    = 0.0 # pour Nombre Réponses, le nombre de réponses données
+              # Elle peut diverger d'une évaluation à l'autre si des
+              # questions ont été ajoutées. C'est un nombre absolu qui ne
+              # dépend pas du nombre de réponses effectivement données.
+  nqe   = 0.0 # pour [n]ombre [q]uestions [é]cartées. Le nombre de questions
+              # qui ont été écartées pour le synopsis donné.
+  nr    = 0.0 # pour [n]ombre [r]éponses, le nombre de réponses données
 
   score.each do |k, v|
     nqs += 1.0
-    # Les éléments de la clé, qui détermine les appartenances de la
+    # Si la question a été écartée, on n'en tient pas compte dans le
+    # calcul.
+    if v == 'x'
+      nqe += 1.0
+      next
+    end
+    # Les +categories+ de la clé, qui détermine les appartenances de la
     # question. Par exemple, si la clé contient "p-cohe-adth", la note
     # appartient aux personnage ("p"), à la cohérence ("cohe") et à
     # l'adéquation avec le thème ("adth"). On ajoutera la valeur de la note
     # à chaque élément.
     dk = k.to_s.split('-')
     # Le coefficiant à appliquer à la note de la réponse, en fonction
-    # de sa profondeur
+    # de sa profondeur. Il sera appliqué à la réponse elle-même mais aussi
+    # à la valeur totale.
     coef = DEEPNESS_COEF[dk.count]
+    # La valeur maximale de cette question, en fonction de sa profondeur.
     maxcoef = 5.0 * coef
-    unless v == "-"
-      # <= Une note a été donnée
+
+    if v == "-"
+      vcoef = 0.0
+    else
+      # <= Une note a été donnée à la question
+      # => On la rentre dans le calcul
       v = v.to_f
       # On calcule la note en fonction de sa profondeur. Si elle est de profondeur
       # 2 par exemple, 1 point en vaut que 0.8. Donc la note max ne vaudra
@@ -258,8 +277,6 @@ def parse(score)
       n    += vcoef
       # On ajoute aussi à la note max la valeur max en fonction de la profondeur
       nmax += maxcoef
-    else
-      vcoef = 0.0
     end
     # On comptabilise toujours pour la note absolue
     na    += vcoef
@@ -268,23 +285,23 @@ def parse(score)
     # On règle toutes les appartenances grâce aux clés
     dk.each do |sk|
       sk = sk.to_s
-      if not owners.key?(sk)
-        owners.merge!(sk =>{total:0, totmax:0, nombre:0, notes:[]})
+      if not categories.key?(sk)
+        categories.merge!(sk =>{total:0, totmax:0, nombre:0, notes:[]})
       end
-      owners[sk][:total]  += vcoef
-      owners[sk][:totmax] += maxcoef
-      owners[sk][:nombre] += 1
-      owners[sk][:notes]  << vcoef.round(1)
+      categories[sk][:total]  += vcoef
+      categories[sk][:totmax] += maxcoef
+      categories[sk][:nombre] += 1
+      categories[sk][:notes]  << vcoef.round(1)
     end
 
   end #/ fin de si cette note est définie
   # --- On a fini de calculer la note totale et la note maximale ---
   # --- ainsi que les notes pour chaque "catégorie"
 
-  # Pour finaliser owners, on boucle et on arrondit les valeurs
-  owners.each do |k, v|
-    v[:total] = v[:total].round(1)
-    v[:totmax] = v[:totmax].round(1)
+  # Pour finaliser categories, on boucle et on arrondit les valeurs
+  categories.each do |k, v|
+    v[:total]   = v[:total].round(1)
+    v[:totmax]  = v[:totmax].round(1)
   end
 
   # Si le nombre de réponses dans le score (même celles à "-") est différent
@@ -301,7 +318,7 @@ def parse(score)
   coef200   = 20.0 / nmax
   coefa200  = 20.0 / namax
   # Pour les tests
-  self.coef200 = coef200
+  self.coef200  = coef200
   self.coefa200 = coefa200
 
   if nr > 0
@@ -332,7 +349,7 @@ end #/ parse
 # Pour initialiser les valeurs au début du décompte
 def init_count
   @nombre_scores = 0
-  @owners = {}
+  @categories = {}
   @sum_note = 0.0
   @sum_note_abs = 0.0
   @sum_pourcentage = 0.0
@@ -354,19 +371,11 @@ def note_categorie(cate)
   # log("cate: #{cate.inspect}")
   # log("FicheLecture::DATA_MAIN_PROPERTIES[#{cate.inspect}]: #{FicheLecture::DATA_MAIN_PROPERTIES[cate].inspect}")
   dim_cate = FicheLecture::DATA_MAIN_PROPERTIES[cate][:diminutif]
-  if not(owners.nil?) && not(owners[dim_cate].nil?) && not(owners[dim_cate][:note].nil?)
-    owners[dim_cate][:note]
+  if not(categories.nil?) && not(categories[dim_cate].nil?) && not(categories[dim_cate][:note].nil?)
+    categories[dim_cate][:note]
   else
     nil
   end
 end #/ fnote_categorie
 
-#
-# # IN    {Float} Une valeur réelle, normalement flottante
-# # OUT   {String} Le nombre pour affichage. Principale, sans ".0" à la fin
-# #       s'il y en a un
-# def formate_float(v)
-#   synopsis.formate_note
-# end #/ formate_float
-#
 end #/Evaluation

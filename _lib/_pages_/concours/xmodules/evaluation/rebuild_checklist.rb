@@ -100,15 +100,6 @@ class << self
     ['deep','soft'][@ifondline]
   end #/ fond_line
 
-  # # La référence au fichier partiel de la checklist
-  # #
-  # def ff
-  #   @ff ||= begin
-  #     File.delete(PARTIAL_CHECKLIST) if File.exists?(PARTIAL_CHECKLIST)
-  #     File.open(PARTIAL_CHECKLIST,'a')
-  #   end
-  # end #/ ff
-
   # Les données d'évaluation (questions) dans le fichier data_evaluation.yaml
   def data
     @data ||= YAML.load_file(DATA_CHECK_LIST_FILE)
@@ -119,7 +110,8 @@ end # /<< self
 
 TEMPLATE_MENU_CHIFFRE = <<-HTML
 <select name="%{fullid}">
-  <option value="-">  -  </option>
+  <option value="-">#{CONCOURS_EVALUATION_VAL2TIT['-']}</option>
+  <option value="x">#{CONCOURS_EVALUATION_VAL2TIT['x']}</option>
   #{(0..5).to_a.reverse.collect{|i| "<option value=\"#{i}\">  #{i}  </option>"}.join('')}
 </select>
 HTML
@@ -127,6 +119,7 @@ HTML
 TEMPLATE_MENU_APPRE = <<-HTML
 <select name="%{fullid}">
   <option value="-">#{CONCOURS_EVALUATION_VAL2TIT['-']}</option>
+  <option value="x">#{CONCOURS_EVALUATION_VAL2TIT['x']}</option>
   <option value="5">#{CONCOURS_EVALUATION_VAL2TIT[5]}</option>
   <option value="4">#{CONCOURS_EVALUATION_VAL2TIT[4]}</option>
   <option value="3">#{CONCOURS_EVALUATION_VAL2TIT[3]}</option>

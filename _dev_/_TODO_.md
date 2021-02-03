@@ -2,8 +2,9 @@
 
 ## Rapid list
 
-* Pouvoir transformer tous les fichiers en fichiers PDF
-* Pouvoir lire Online un dossier de concurrent (pdf)
+* Un bouton pour appliquer la valeur "écartée" à toutes les questions non répondues
+* Revoir le calcul des évalutations (je crois qu'il faut tenir compte du fait que certaines questions peuvent être laissées de côté)
+* Il faudrait pouvoir marquer, dans le formulaire d'évaluation, qu'une question ne sera pas répondue.
 
 
 ## Toutes les tâches

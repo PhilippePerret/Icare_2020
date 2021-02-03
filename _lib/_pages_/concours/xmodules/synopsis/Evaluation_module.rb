@@ -21,11 +21,11 @@ module EvaluationMethodsModule
   #
   def calc_evaluation_for(options)
     @evaluation = Evaluation.new(score_paths_for(options))
-  end #/ evaluation
+  end
 
   def calc_evaluation_for_all(options)
     @evaluation_totale = Evaluation.new(score_paths_for(options.merge(evaluator:nil)))
-  end #/ calc_evaluation_for_all
+  end
 
 # ---------------------------------------------------------------------
 #
@@ -38,17 +38,17 @@ module EvaluationMethodsModule
 # La note de l'évaluateur
 def note
   evaluation&.note || 'NC'
-end #/ note
+end
 
 def note_totale
   @note_totale ||= Concours.current.phase < 3 ? note_pres : note_prix
-end #/ note_totale
+end
 
 # La note totale des présélections pour le synopsis
 def note_pres
   # evaluation_totale&.note_pres || 'NC'
   evaluation_totale&.note || 'NC'
-end #/ note_totale
+end
 
 # La note totale du palmarès pour le synopsis
 # TODO Réfléchir encore à la pertinence de ce choix. Peut-être vaudrait-il
@@ -57,15 +57,16 @@ end #/ note_totale
 def note_prix
   # evaluation_totale&.note_prix || 'NC'
   evaluation_totale&.note || 'NC'
-end #/ note_prix
+end
 
+# Note (?) exprimée en pourcentage
 def pourcentage
   evaluation&.pourcentage || 'NC'
-end #/ pourcentage
+end
 
 def pourcentage_total
   evaluation_totale&.pourcentage || 'NC'
-end #/ pourcentage_total
+end
 
 # ---------------------------------------------------------------------
 #
@@ -102,8 +103,13 @@ end #/ note_categorie
 # ---------------------------------------------------------------------
 
 
-  # Retourne la liste DES scores du synopsis ou DU score de l'évaluateur
-  # options[:evaluator].
+  # Retourne :
+  #   la liste Array
+  #       DES chemins d'accès aux FICHIERS D'ÉVALUATION du synopsis
+  #   OU
+  #       DU chemin d'accès AU FICHIER D'ÉVALUATION
+  #       DU membre du jury options[:evaluator].
+  #
   # Note : dans tous les cas, c'est une liste qui est retournée.
   def score_paths_for(options)
     ktype = options[:prix] ? 'prix' : 'pres'

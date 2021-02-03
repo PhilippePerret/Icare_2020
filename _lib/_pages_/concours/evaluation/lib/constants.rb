@@ -14,7 +14,7 @@ MESSAGES.merge!({
 })
 
 CONCOURS_EVALUATION_VAL2TIT = {
-  '-' => '  -  ',
+  '-' => '  -  ', 'x' => '- Écartée -',
   0 => 'Nul', 1 => 'Bas', 2 => 'Faible', 3 => 'Moyen', 4 => 'Bon', 5 => 'Excellent'
 }
 

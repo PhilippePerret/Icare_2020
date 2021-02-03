@@ -48,6 +48,8 @@ static close(){
 static prepare(){
   this.obj.find('button#btn-save').bind('click', this.onSave.bind(this));
   this.obj.find('button#btn-only-undone').bind('click', this.showOnlyUndonesQuestions.bind(this));
+  this.obj.find('button#btn-ecarter-non-answered').bind('click',this.ecarteAllNonAnswered.bind(this));
+  this.obj.find('button#btn-mark-non-answered-ecarted').bind('click', this.markNonAnsweredAllEcarted.bind(this));
   this.obj.find('button#btn-see-all').bind('click', this.showAllQuestions.bind(this));
   this.obj.find('div.line-note select').bind('change', this.onChangeValueQuestion.bind(this));
   // Pour faire apparaitre les aides/explications
@@ -100,6 +102,23 @@ static get obj(){
   return this._obj || (this._obj = $('#checklist'))
 }
 
+// Pour écarter toutes les réponses non données
+static ecarteAllNonAnswered(ev){
+  this.obj.find('div.line-note').each((i,div) => {
+    div = $(div);
+    const menu = $(div.find('select'));
+    if (menu.val() == "-") menu.val('x')
+  })
+  message("J'ai écarté toutes les questions sans réponse.")
+}
+static markNonAnsweredAllEcarted(ev){
+  this.obj.find('div.line-note').each((i,div) => {
+    div = $(div);
+    const menu = $(div.find('select'));
+    if (menu.val() == "x") menu.val('-')
+  })
+  message("J'ai marqué non répondues toutes les questions précédemment écartées.")
+}
 // Pour ne montrer que les questions non répondues
 static showOnlyUndonesQuestions(){
   this.obj.find('div.line-note').each((i,div) => {

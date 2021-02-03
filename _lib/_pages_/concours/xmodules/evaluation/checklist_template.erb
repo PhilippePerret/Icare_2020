@@ -9,5 +9,25 @@
     <button type="button" id="btn-only-undone" class="small btn fleft">Questions non faites</button>
     <button type="button" id="btn-see-all" class="small btn fleft discret">Toutes les questions</button>
     <button type="button" id="btn-save" class="btn main">Enregistrer</button>
+  </div>  
+  <%
+    btn_ecartees = 'Écarter les questions non répondues'
+    btn_desecarte = 'Marquer « non répondue » les questions écartées'
+  %>
+  <p>
+    <button type="button" id='btn-ecarter-non-answered' class='small btn'><%= btn_ecartees %></button>
+    <button type="button" id='btn-mark-non-answered-ecarted' class='small btn'><%= btn_desecarte %></button>
+  </p>
+  <div class="explication">
+    Explication : toutes les questions doivent recevoir une réponse pour qu'une note soit correctement calculée. Mais parfois certaines questions ne peuvent être répondue (par exemple la question sur une personnage secondaire s'il n'y a pas de personnage secondaire). Dans ce cas, la question doit être « écartée ».
+  </div>
+  <div class="explication">
+    Une question « écartée », c'est donc une question qui ne peut être répondue, un point qui ne peut être évalué ou que le juré ne veut/peut pas évaluer.
+  </div>
+  <div class="explication">
+    Le bouton “<%= btn_ecartees %>” permet d'écarter toutes les questions qui n'ont pas de réponses dans le formulaire d'un seul coup.
+  </div>
+  <div class="explication">
+    Au contraire, le bouton “<%= btn_desecarte %>” remet au statut « non répondu » (« - ») toutes les questions écartées.
   </div>
 </div>
