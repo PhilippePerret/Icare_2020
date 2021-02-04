@@ -51,6 +51,7 @@ end #/ initialize
 #   1. produire le fichier HTML
 #   2. transformer le fichier HTML en fichier PDF
 def build
+  MotSujet.fiche = self
   File.delete(html_file)  if File.exists?(html_file)
   File.delete(pdf_file)   if File.exists?(pdf_file)
   build_HTML_file || return
@@ -59,9 +60,6 @@ def build
 end #/ build
 
 def built?
-  # (@is_built ||= begin
-  #   File.exists?(pdf_file) ? :true : :false
-  # end) == :true
   :true === (@is_built ||= File.exists?(pdf_file) ? :true : :false)
 end #/ built?
 
@@ -143,33 +141,6 @@ end
 # / Fin des balises
 # ---------------------------------------------------------------------
 
-def noteOf(key)
-  if not projet.evaluation.categories.key?(key)
-    key = case key
-    when 'projet'       then 'po'
-    when 'originalité'  then 'fO'
-    when 'universalité' then 'fU'
-    when 'personnages'  then 'p'
-    when 'forme', 'structure' then 'f'
-    when 'intrigues'    then 'i'
-    when 'thèmes'       then 't'
-    when 'rédaction'    then 'r'
-    when 'clarté'       then 'cla'
-    when 'simplicité'   then 'sim'
-    end
-  end
-  if projet.evaluation.categories.key?(key)
-    projet.evaluation.categories[key][:note]
-  else
-    puts "ERR: Impossible de trouve la catégorie de clé '#{key}'…".rouge
-    return 0.0
-  end
-end #/ noteOf
-
-def avertissement_subjectivite
-  FicheLecture::DATA_MAIN_PROPERTIES[:subjectivite]
-end
-
 def note_categorie(cate)
   projet.evaluation&.note_categorie(cate) || 'NC'
 end #/ note_categorie
@@ -182,8 +153,6 @@ end #/ fnote_categorie
 def explication_categorie(cate)
   FicheLecture::DATA_MAIN_PROPERTIES[cate][:explication]
 end
-
-
 
 def key_per_note(n)
   case n

@@ -53,6 +53,9 @@ MotSujet = Struct.new(:fiche, :sujet, :key, :genre, :pluriel, :voyelle, :main)
 
 class MotSujet
 
+  def self.fiche=(v) ; @@fiche = v end
+  def self.fiche     ; @@fiche     end
+
   # Retourne une :
   #       Liste Array
   #   des
@@ -84,7 +87,7 @@ class MotSujet
   end
 
   def self.list_from_key(keys)
-    keys.collect { |key| get(key) }
+    keys.collect { |key| get(key, self.fiche) }
   end
 
   # Par exemple "cohérence des personnages" si :sujet = 'cohérence' et
@@ -103,7 +106,17 @@ class MotSujet
 
   # Retourne la note pour le mot sujet (un flottant sur 20.0)
   def note
-    @note ||= evaluation(key) || fiche.noteOf(sujet)
+    @note ||= begin
+      evaluation[key][:note]
+    rescue Exception => e
+      puts "ERR: La clé #{key.inspect} est inconnue dans #{evaluation.keys.inspect}\nJe retourne 0.0".rouge
+      if FLFactory.option?(:verbose)
+        puts "La table projet.evaluation complète :\n#{evaluation.pretty_inspect}"
+      else
+        puts "Ajouter l'option -v/--verbose pour voir l'intégralité de la table".bleu
+      end
+      0.0
+    end
   end
 
   # Retourne 'A', 'B', 'C' ou 'D' en fonction de la note
@@ -114,7 +127,7 @@ class MotSujet
 class << self # MotCle.self
 # Retourne une structure MotSujet de clé +key+ (qui peut être 'personnage',
 # 'structure', etc.)
-def get(key)
+def get(key, fiche)
   @mots_sujets ||= {}
   @mots_sujets[key] ||= begin
     case key
@@ -125,51 +138,51 @@ def get(key)
 
     when 'projet', 'pro', 'po'
 
-      MotSujet.new(self, 'projet', 'po', 'M', false, false)
+      MotSujet.new(fiche, 'projet', 'po', 'M', false, false)
 
     when 'personnages', 'per', 'p'
 
-      MotSujet.new(self, 'personnages', 'p', 'M', true, false)
+      MotSujet.new(fiche, 'personnages', 'p', 'M', true, false)
 
     when 'cohérence personnages', 'coh per', 'p:co'
 
-      MotSujet.new(self, 'cohérence', 'p:co', 'F', false, false, 'personnages')
+      MotSujet.new(fiche, 'cohérence', 'p:co', 'F', false, false, 'personnages')
 
     when 'originalité personnages', 'ori per', 'p:fO'
 
-      MotSujet.new(self, 'originalité', 'p:fO', 'F', false, true, 'personnages')
+      MotSujet.new(fiche, 'originalité', 'p:fO', 'F', false, true, 'personnages')
 
     when 'universalité personnages', 'uni per', 'p:fU'
 
-      MotSujet.new(self, 'universalité', 'p:fU', 'F', false, true, 'personnages')
+      MotSujet.new(fiche, 'universalité', 'p:fU', 'F', false, true, 'personnages')
 
-    when 'thème', 'the', 'th'
+    when 'thème', 'the', 't'
 
-      MotSujet.new(self, 'thèmes', 'th', 'M', true, false)
+      MotSujet.new(fiche, 'thèmes', 't', 'M', true, false)
 
     when 'intrigues', 'int', 'i'
 
-      MotSujet.new(self, 'intrigues', 'i', 'F', true, true)
+      MotSujet.new(fiche, 'intrigues', 'i', 'F', true, true)
 
     when 'structure', 'stt', 'f'
 
-      MotSujet.new(self, 'structure', 'f', 'F', false, false)
+      MotSujet.new(fiche, 'structure', 'f', 'F', false, false)
 
     when 'universalité', 'uni', 'fU'
 
-      MotSujet.new(self, 'universalité', 'fU', 'F', false, true)
+      MotSujet.new(fiche, 'universalité', 'fU', 'F', false, true)
 
     when 'originalité', 'ori', 'fO'
 
-      MotSujet.new(self, 'originalité', 'fO', 'F', false, true)
+      MotSujet.new(fiche, 'originalité', 'fO', 'F', false, true)
 
     when 'rédaction', 'red', 'r'
 
-      MotSujet.new(self, 'rédaction', 'r', 'F', false, false)
+      MotSujet.new(fiche, 'rédaction', 'r', 'F', false, false)
 
     when 'clarté', 'clarté rédaction', 'cla red', 'cla'
 
-      MotSujet.new(self, 'clarté rédaction', 'r:cla', 'F', false, false, 'rédaction')
+      MotSujet.new(fiche, 'clarté rédaction', 'r:cla', 'F', false, false, 'rédaction')
 
     end
   end
@@ -190,8 +203,8 @@ private
 
 end #/Class MotSujet
 
-def motSujet(key)
-  return MotSujet.get(key)
+def motSujet(key, fiche = nil)
+  return MotSujet.get(key, fiche || MotSujet.fiche)
 end
 
 end #/ Class FicheLecture

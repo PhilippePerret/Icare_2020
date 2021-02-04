@@ -51,9 +51,18 @@ Infos sur le fiches de lecture
 ==============================
 #{'icare concours fiches_lecture --infos'.jaune}
 
+  Options
+  -------
+    --evaluation    Affiche l'évaluation de la première fiche trouvée
+                    Sans autre précision, c'est une version simplifiée, avec
+                    la clé et la note
+    --full_version  La version complète de l'évaluation de la première
+                    fiche trouvée.
+    --with_files    Affiche aussi le contenu des fichiers d'évaluation
 
-Options
--------
+
+Options générales
+-----------------
   -v/--verbose    Mode verbeux
 
 

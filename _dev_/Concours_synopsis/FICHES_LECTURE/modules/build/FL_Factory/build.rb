@@ -80,7 +80,7 @@ class << self
       next if option?(:not_built) && projet.fiche_lecture.built?
       print "Production fiche lecture projet “#{projet.titre}” (#{projet.concurrent_id})…".bleu
       projet.fiche_lecture.build
-      puts "\r= Fiche du projet “#{projet.titre}” produite avec succès".vert
+      puts "\r= Fiche du projet “#{projet.titre}” (#{projet.concurrent_id}) produite avec succès".vert
       break if option?(:only_one)
     end
   end #/ production_des_fiches

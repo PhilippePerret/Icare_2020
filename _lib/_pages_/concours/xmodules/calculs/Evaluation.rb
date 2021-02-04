@@ -83,9 +83,11 @@ attr_reader :pourcentage
 
 # {Hash} Table des catégories, pour connaitre la note pour chaque catégorie.
 # Par exemple, si la clé d'une question est "po-cohe-adth", cette question
-# appartiendra aux catégories "po", "cohe" et "adth". On comptabilise les points
-# pour chaque catégories, même la première qui est toujours le projet lui-même
-# et correspond (?) à la note générale.
+# appartiendra aux catégories "po", "cohe" et "adth", ainsi que la catégorie
+# 'cohe:adth'.
+# On comptabilise les points pour chaque catégories, même la première qui est
+# toujours le projet lui-même
+# et correspond à la note générale.
 attr_reader :categories
 
 # {Integer} Nombre de fiches d'évaluations fournies à l'instanciation
@@ -258,7 +260,21 @@ def parse(score)
     # l'adéquation avec le thème ("adth"). On ajoutera la valeur de la note
     # à chaque élément.
     dk = k.to_s.split('-')
-
+    # Maintenant, on doit faire la liste de toutes les catégories générées
+    # Je garde quand même 'dk' au cas où.
+    alldk = dk.dup
+    # Ensuite, on fait le travail en retirant le 'po' initial
+    loopdk = dk[1..-1]
+    # Si loopdk contient ['do','bak','ri'], on doit générer :
+    # 'do:bak', 'do:bak:ri'
+    # Mais doit-on faire aussi 'bak','ri' (qui pourrait renseigner aussi sur
+    # certains aspects -- Pour le moment, je ne le fais pas, car ça complique
+    # beaucoup une formule très simple pour le moment)
+    if not loopdk.empty?
+      begin
+        alldk << loopdk.join(':')
+      end until (loopdk = loopdk[0...-1]).empty?
+    end
     # Le coefficiant à appliquer à la note de la réponse, en fonction
     # de sa profondeur. Il sera appliqué à la réponse elle-même mais aussi
     # à la valeur totale. Ce coefficiant est doublé si c'est une question
@@ -291,7 +307,8 @@ def parse(score)
     namax += maxcoef
 
     # On règle toutes les appartenances grâce aux clés
-    dk.each do |sk|
+    # Note : avant, on prenait 'dk' au lieu de 'alldk'
+    alldk.each do |sk|
       sk = sk.to_s
       if not categories.key?(sk)
         categories.merge!(sk =>{total:0, totmax:0, nombre:0, notes:[]})

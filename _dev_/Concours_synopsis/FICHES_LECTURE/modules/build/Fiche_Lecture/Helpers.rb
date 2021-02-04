@@ -5,6 +5,10 @@
 =end
 class FicheLecture
 
+def avertissement_subjectivite
+  FicheLecture::DATA_MAIN_PROPERTIES[:subjectivite]
+end
+
 def ecusson
   @ecusson ||= begin
     require './_lib/required/__first/constants/emojis'
