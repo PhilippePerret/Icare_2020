@@ -5,8 +5,13 @@
 =end
 class FicheLecture
 
+# Retourne n'importe quel texte dans textes_fiches_lecture
+def texte(key)
+  FicheLecture::DATA_MAIN_PROPERTIES[key]
+end
+
 def avertissement_subjectivite
-  FicheLecture::DATA_MAIN_PROPERTIES[:subjectivite]
+  texte(:subjectivite)
 end
 
 def ecusson

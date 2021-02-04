@@ -2,11 +2,14 @@
 
 ## Rapid list
 
+* Voir peut-être un moyen/une commande pour afficher tel ou tel projet
+* Ajouter l'ID à la liste des projets étudiés
+* Afficher le classement des projets, après leur étude, dans '--build'
 * poursuivre le développement avec les balises
   *
   FORME :
     SI > 15
-      
+
     SI entre 10 et 15
       AMÉLIORATIONS POSSIBLES
     Forme/structure < 10

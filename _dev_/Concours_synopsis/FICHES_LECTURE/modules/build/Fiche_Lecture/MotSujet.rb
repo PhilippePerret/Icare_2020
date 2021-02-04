@@ -87,7 +87,14 @@ class MotSujet
   end
 
   def self.list_from_key(keys)
-    keys.collect { |key| get(key, self.fiche) }
+    keys.collect do |key|
+      ms = get(key, self.fiche)
+      if ms.nil?
+        raise "Problème avec la clé #{key.inspect} qui est introuvable dans les MotSujet(s)…".rouge
+      else
+        ms
+      end
+    end.compact
   end
 
   # Par exemple "cohérence des personnages" si :sujet = 'cohérence' et
@@ -144,7 +151,7 @@ def get(key, fiche)
 
       MotSujet.new(fiche, 'personnages', 'p', 'M', true, false)
 
-    when 'cohérence personnages', 'coh per', 'p:co'
+    when 'cohérence personnages', 'coh per', 'p:cohe'
 
       MotSujet.new(fiche, 'cohérence', 'p:co', 'F', false, false, 'personnages')
 
@@ -156,13 +163,49 @@ def get(key, fiche)
 
       MotSujet.new(fiche, 'universalité', 'p:fU', 'F', false, true, 'personnages')
 
-    when 'thème', 'the', 't'
+    when 'thèmes', 'the', 't'
 
       MotSujet.new(fiche, 'thèmes', 't', 'M', true, false)
+
+    when 'originalité thèmes', 'ori the', 't:fO'
+
+      MotSujet.new(fiche, 'originalité', 't:fO', 'F', false, true, 'thèmes')
+
+    when 'universalité thèmes', 'uni the', 't:fU'
+
+      MotSujet.new(fiche, 'universalité', 't:fU', 'F', false, true, 'thèmes')
+
+    when 'adéquation thèmes', 'adq the', 't:adth'
+
+      MotSujet.new(fiche, 'adéquation avec le thème', 't:adth', 'F', false, true, 'thèmes')
+
+    when 'cohérence thèmes', 'coh the', 't:cohe'
+
+      MotSujet.new(fiche, 'cohérence', 't:adth', 'F', false, false, 'thèmes')
 
     when 'intrigues', 'int', 'i'
 
       MotSujet.new(fiche, 'intrigues', 'i', 'F', true, true)
+
+    when 'originalité intrigues', 'ori int', 'i:fO'
+
+      MotSujet.new(fiche, 'originalité', 'i:fO', 'F', false, true, 'intrigues')
+
+    when 'universalité intrigues', 'uni int', 'i:fU'
+
+      MotSujet.new(fiche, 'universalité', 'i:fU', 'F', false, true, 'intrigues')
+
+    when 'cohérence intrigues', 'coh int', 'i:cohe'
+
+      MotSujet.new(fiche, 'cohérence', 'i:cohe', 'F', false, false, 'intrigues')
+
+    when 'adéquation thème intrigues', 'adq int', 'i:adth'
+
+      MotSujet.new(fiche, 'adéquation avec le thème', 'i:adth', 'F', false, true, 'intrigues')
+
+    when 'non prédictabilité', 'prd', 'predic'
+
+      MotSujet.new(fiche, 'non prédictabilité', 'predic', 'F', false, false, 'intrigues')
 
     when 'structure', 'stt', 'f'
 

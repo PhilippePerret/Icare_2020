@@ -5,45 +5,52 @@
 :subjectivite: >
   Bien que les lecteurs soient attentifs et bien disposés, juger de la valeur d’un projet sur la base de son synopsis est un exercice périlleux. Il demande aux lecteurs d’avoir une imagination au moins aussi grande que celle de l’auteur·e et telle qu’elle doit résonner en phase avec le récit et les intentions du texte. La part de subjectivité est donc immense, et l’on voudra bien pardonner les éventuelles erreurs de jugement et en prendre compte également dans la réception de cette fiche de lecture qui n’a, de fait, rien d’absolu.
 
+:manque_originalite: "leur manque d’originalité"
+:manque_universalite: "leur manque d’universalité"
+
+:adequation_avec_theme: "leur adéquation avec le thème du concours"
+
+:trop_grande_predictabilite: "leur trop grande prédictabilité (syndrome du “cousu de fil blanc”)"
+
 # --- Ci-dessous commence les textes par catégorie ---
 
 :projet:
   :diminutif: po
-  :explication: Cette note est une moyenne calculée d’après les notes attribuées par les jurés pour l’ensemble du projet et tous ses éléments et principalement les personnages, les intrigues, la forme, les thèmes.
+  :explication: Cette note est une moyenne calculée d’après les notes attribuées par les jurés pour l’ensemble du projet et tous ses éléments.
   A: Votre histoire a été très bien perçue, dans tous ses aspects, et notamment au niveau [[interets_histoire]]. Elle a incontestablement un réel potentiel et mérite d’être développée.
   B: Votre histoire a été bien perçue, principalement au niveau [[interets_histoire]]. Elle présente un certain potentiel, même si ce potentiel reste à renforcer, peut-être au niveau [[deficiences_histoire]].
   C: Votre histoire n’a pas vraiment rencontré l’approbation des lecteurs du concours. Ils y ont trouvé peut-être des faiblesses handicapantes, notamment au niveau [[deficiences_histoire]].
-  D: Votre histoire n’a pas du tout trouvé l’approbation des lecteurs du concours. Ils y ont vu des faiblesses rédhibitoires, notamment au niveau [[deficiences_histoire]].
+  D: Votre histoire n’a pas du tout trouvé l’adhésion des lecteurs du concours. Ils y ont vu des faiblesses rédhibitoires, notamment au niveau [[deficiences_histoire]].
 
 :personnages:
   :diminutif: p
   :explication: Perception par les lecteurs des personnages de votre récit, au niveau de leur idiosyncrasie, de leur cohérence et de leur intérêt.
-  A: Les lecteurs ont particulièrement apprécié les personnages de cette [[histoire]] et leur traitement (qui comprend notamment leur facteur O et U, leur cohérence, leur idiosyncrasie ou encore leurs dialogues).
+  A: Les lecteurs ont particulièrement apprécié les personnages de cette [[histoire]] et leur traitement notamment au niveau [[interets_personnages]].
   B: Les lecteurs ont perçu les personnages comme intéressants et bien traités, mais qu’ils mériteraient sans doute d’être encore approfondis. Renforcer leur idiosyncrasie, leurs facteurs O et U, améliorer leur fonction dans cette [[histoire]], pourraient être des pistes à suivre.
   C: Les personnages n’ont pas été bien perçus par les lecteurs, qui les ont trouvé peu intéressants dans cette [[histoire]]. Peut-être manquent-ils d’originalité (facteur O) ou d’universalité (facteur U), peut-être leur idiosyncrasie n’est pas suffisamment marquée pour qu’ils deviennent mémorables, attachants ou reconnaissables.
-  D: Une note inférieure à 5 indique que les lecteurs sont complètement passés à côté de vos personnages. Dans l’ensemble, ils les ont trouvé faibles, peu caractérisé, sans intérêt. C’est un point d’amélioration important de votre [[histoire]], dans le sens où une bonne histoire ne peut se passer de personnages forts. Les écueils principaux semblent résider au niveau [[deficiences_personnages]].
+  D: Les lecteurs sont complètement passés à côté de vos personnages. Dans l’ensemble, ils les ont trouvé faibles, peu caractérisé, sans intérêt. C’est un point d’amélioration important de votre [[histoire]], dans le sens où une bonne histoire ne peut se passer de personnages forts. Les écueils principaux semblent résider au niveau [[deficiences_personnages]].
 
 :forme:
   :diminutif: f
   :explication: Perception par les lecteurs de la forme générale de l’histoire, de sa structure et de ses éléments (actes, scènes-clés, etc.).
   A: Cette note indique que la structure (actes et scènes-clés) ont fait grande impression sur le lecteur, que cette [[histoire]] lui a paru parfaitement construite, dans les règles de l’art ou qu’au contraire elle faisait preuve d’une originalité forte.
   B: La structure de ce projet a été perçue par le lecteur mais qu’elle peut être sans doute renforcée, affirmée. Commencer par s’assurer que tous les éléments, actes et scènes-clés, remplissent parfaitement leur rôle peut être intéressant.
-  C: Une note inférieure à 10 peut indiquer que le lecteur a perçu la structure comme un peu trop floue, un peu trop molle dans cette [[histoire]]. Il convient peut-être de s’assurer qu’elle est bien en place et que tous les nœuds remplissent leurs rôles.
-  D: Une note inférieure à 5 indique que le lecteur a été incapable de percevoir la moindre forme dans cette [[histoire]].
+  C: Les lecteurs ont perçu la structure comme un peu trop floue, un peu trop incertaine dans cette [[histoire]]. Il convient peut-être de s’assurer qu’elle est bien en place et que tous les nœuds remplissent leurs rôles.
+  D: Les lecteurs ont trouvé que cette [[histoire]] s'appuyait sur une forme beaucoup trop lâche.
 
 :intrigues:
   :diminutif: i
-  :explication: Impressions laissées aux lecteurs par les différentes intrigues du projet, et notamment l’intrigue principale et l’intrigue secondaire si elle existe.
-  A: Une note supérieure à 15…
-  B: Une note entre 10 et 15…
-  C: Une note inférieure à 10…
-  D: Une note inférieure à 5…
+  :explication: Impressions laissées aux lecteurs par les intrigues du projet, et notamment l’intrigue principale et l’intrigue secondaire — si elle existe.
+  A: Vos intrigues ont vraiment accroché les lecteurs du concours, notamment au niveau [[raisons bonnes intrigues]].
+  B: Vos intrigues ont suscité un intérêt certain chez les lecteurs du concours, notamment au niveau [[raisons bonnes intrigues]].
+  C: Les lecteurs du concours n'ont pas été captivés par vos intrigues. La raison en est sans doute [[raisons mauvaises intrigues]].
+  D: Les lecteurs n'ont pas été sensibles à vos intrigues. La raison en est peut-être [[raisons mauvaises intrigues]].
 
 :themes:
   :diminutif: t
   :explication: Perception des thèmes abordés, de leur exploitation et de leur développement.
-  A: Une note supérieure à 15 indique que les lecteurs se sont passionnés pour les thèmes développés dans ce projet et la façon dont ils ont été exploités.
-  B: Une note entre 10 et 15 révèle que les lecteurs de ce projet ont été sensibles aux thèmes développés et leur façon d’être exploités. L’approche peut toutefois être renforcée et affinée afin de pouvoir tirer vraiment tout le potentiel des choses mises en place.
+  A: Les lecteurs se sont passionnés pour les thèmes développés dans ce projet et la façon dont ils ont été exploités notamment au niveau [[raisons bons themes]].
+  B: Le jury a été sensible aux thèmes développés et leur façon d’être exploités. L’approche peut toutefois être renforcée et affinée afin de pouvoir tirer vraiment tout le potentiel des choses mises en place.
   C: Une note inférieure à 10 révèle une faiblesse au niveau des thèmes, tout au moins dans la perception des lecteurs. Ces lecteurs ont senti leur présence, mais ne les ont pas suffisamment imbriqués et exploités dans l’histoire.
   D: Les lecteurs se sont malheureusement montrés indifférents à vos thèmes ou la façon de les exploiter/développer. Un travail important est à mener à ce niveau, entendu qu’une bonne histoire, même une histoire d’action de comédie ou d’aventure, ne peut faire l’économie de thèmes précis et bien exploités.
 
