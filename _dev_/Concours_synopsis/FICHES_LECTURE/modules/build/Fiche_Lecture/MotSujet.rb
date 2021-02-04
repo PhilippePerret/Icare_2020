@@ -84,7 +84,7 @@ class MotSujet
   end
 
   def self.list_from_key(keys)
-    keys.collect { |key| motSujet(key) }
+    keys.collect { |key| get(key) }
   end
 
   # Par exemple "cohérence des personnages" si :sujet = 'cohérence' et
@@ -111,23 +111,10 @@ class MotSujet
     @note_lettre ||= fiche.key_per_note(note)
   end
 
-private
-
-  def evaluation
-    @evaluation ||= fiche.projet.evaluation.categories
-  end
-
-  def formate_sujet
-    fs = sujet
-    return fs unless main
-    "#{fs} #{main_subject.du}#{main_subject.sujet}"
-  end
-
-end
-
+class << self # MotCle.self
 # Retourne une structure MotSujet de clé +key+ (qui peut être 'personnage',
 # 'structure', etc.)
-def motSujet(key)
+def get(key)
   @mots_sujets ||= {}
   @mots_sujets[key] ||= begin
     case key
@@ -187,5 +174,24 @@ def motSujet(key)
     end
   end
 end #/ motSujet
+end #/<< self class MotSujet
+
+private
+
+  def evaluation
+    @evaluation ||= fiche.projet.evaluation.categories
+  end
+
+  def formate_sujet
+    fs = sujet
+    return fs unless main
+    "#{fs} #{main_subject.du}#{main_subject.sujet}"
+  end
+
+end #/Class MotSujet
+
+def motSujet(key)
+  return MotSujet.get(key)
+end
 
 end #/ Class FicheLecture
