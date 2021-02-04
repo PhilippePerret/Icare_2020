@@ -9,23 +9,27 @@
 
 :projet:
   :diminutif: po
-  :explication: Note moyenne calculée d’après les notes attribuées par les jurés pour l’ensemble du projet. Elle est attribuée sur une impression générale ainsi que certains critères tels que les facteurs O et U (cf. plus bas), l’adéquation au thème, etc.
+  :explication: Cette note est une moyenne calculée d’après les notes attribuées par les jurés pour l’ensemble du projet et tous ses éléments et principalement les personnages, les intrigues, la forme, les thèmes.
+  A: Votre histoire a été très bien perçue, dans tous ses aspects, et notamment au niveau [[interets_histoire]]. Elle a incontestablement un réel potentiel et mérite d’être développée.
+  B: Votre histoire a été bien perçue, principalement au niveau [[interets_histoire]]. Elle présente un certain potentiel, même si ce potentiel reste à renforcer, peut-être au niveau [[deficiences_histoire]].
+  C: Votre histoire n’a pas vraiment rencontré l’approbation des lecteurs du concours. Ils y ont trouvé peut-être des faiblesses handicapantes, notamment au niveau [[deficiences_histoire]].
+  D: Votre histoire n’a pas du tout trouvé l’approbation des lecteurs du concours. Ils y ont vu des faiblesses rédhibitoires, notamment au niveau [[deficiences_histoire]].
 
 :personnages:
   :diminutif: p
-  :explication: Perception par les lecteurs des personnages, protagoniste, antagoniste, personnages secondaires ou autres, au niveau de leur idiosyncrasie et de leur intérêt.
-  A: Les lecteurs ont particulièrement apprécié les personnages de cette histoire et leur traitement (qui comprend notamment leur facteur O et U, leur cohérence, leur idiosyncrasie ou encore leurs dialogues).
-  B: Les lecteurs ont perçu les personnages comme intéressants et bien traités, mais qu’ils mériteraient sans doute d’être encore approfondis. Renforcer leur idiosyncrasie, leurs facteurs O et U, améliorer leur fonction dans l’histoire, pourraient être des pistes à suivre.
-  C: Les personnages n’ont pas été bien perçus par les lecteurs, qui les ont trouvé peu intéressants. Peut-être manquent-ils d’originalité (facteur O) ou d’universalité (facteur U), peut-être leur idiosyncrasie n’est pas suffisamment marquée pour qu’ils deviennent mémorables, attachants ou reconnaissables.
-  D: Une note inférieure à 5 indique que les lecteurs sont complètement passés à côté de vos personnages. Dans l’ensemble, ils les ont trouvé faibles, peu caractérisé, sans intérêt. C’est un point d’amélioration important de votre histoire, dans le sens où une bonne histoire ne peut se passer de personnages forts.
+  :explication: Perception par les lecteurs des personnages de votre récit, au niveau de leur idiosyncrasie, de leur cohérence et de leur intérêt.
+  A: Les lecteurs ont particulièrement apprécié les personnages de cette [[histoire]] et leur traitement (qui comprend notamment leur facteur O et U, leur cohérence, leur idiosyncrasie ou encore leurs dialogues).
+  B: Les lecteurs ont perçu les personnages comme intéressants et bien traités, mais qu’ils mériteraient sans doute d’être encore approfondis. Renforcer leur idiosyncrasie, leurs facteurs O et U, améliorer leur fonction dans cette [[histoire]], pourraient être des pistes à suivre.
+  C: Les personnages n’ont pas été bien perçus par les lecteurs, qui les ont trouvé peu intéressants dans cette [[histoire]]. Peut-être manquent-ils d’originalité (facteur O) ou d’universalité (facteur U), peut-être leur idiosyncrasie n’est pas suffisamment marquée pour qu’ils deviennent mémorables, attachants ou reconnaissables.
+  D: Une note inférieure à 5 indique que les lecteurs sont complètement passés à côté de vos personnages. Dans l’ensemble, ils les ont trouvé faibles, peu caractérisé, sans intérêt. C’est un point d’amélioration important de votre [[histoire]], dans le sens où une bonne histoire ne peut se passer de personnages forts. Les écueils principaux semblent résider au niveau [[deficiences_personnages]].
 
 :forme:
   :diminutif: f
   :explication: Perception par les lecteurs de la forme générale de l’histoire, de sa structure et de ses éléments (actes, scènes-clés, etc.).
-  A: Cette note indique que la structure (actes et scènes-clés) ont fait grande impression sur le lecteur, que l’histoire lui a paru parfaitement construite, dans les règles de l’art ou qu’au contraire elle faisait preuve d’une originalité forte.
-  B: Une note entre 10 et 15 indique que la structure a été perçue par le lecteur mais qu’elle peut être sans doute renforcée, affirmée. Commencer par s’assurer que tous les éléments, actes et scènes-clés, remplissent parfaitemetn leur rôle peut être intéressant.
-  C: Une note inférieure à 10 peut indiquer que le lecteur a perçu la structure comme un peu trop floue, un peu trop molle. Il convient peut-être de s’assurer qu’elle est bien en place et que tous les nœuds remplissent leurs rôles.
-  D: Une note inférieure à 5 indique que le lecteur a été incapable de percevoir la moindre forme dans cette histoire.
+  A: Cette note indique que la structure (actes et scènes-clés) ont fait grande impression sur le lecteur, que cette [[histoire]] lui a paru parfaitement construite, dans les règles de l’art ou qu’au contraire elle faisait preuve d’une originalité forte.
+  B: La structure de ce projet a été perçue par le lecteur mais qu’elle peut être sans doute renforcée, affirmée. Commencer par s’assurer que tous les éléments, actes et scènes-clés, remplissent parfaitement leur rôle peut être intéressant.
+  C: Une note inférieure à 10 peut indiquer que le lecteur a perçu la structure comme un peu trop floue, un peu trop molle dans cette [[histoire]]. Il convient peut-être de s’assurer qu’elle est bien en place et que tous les nœuds remplissent leurs rôles.
+  D: Une note inférieure à 5 indique que le lecteur a été incapable de percevoir la moindre forme dans cette [[histoire]].
 
 :intrigues:
   :diminutif: i
@@ -88,7 +92,7 @@
   :name: Rédaction du dossier
   :short_name: Rédaction
   :explication: Cette note concerne l’aspect rédaction du projet, au niveau principalement de sa clarté, et son orthographe et de sa pertinence générale.
-  A: Les lecteurs ont jugé excellente la rédaction et la présentation de ce projet, tant au niveau de son orthographe que de son style.
-  B: Les lecteurs ont jugé que la rédaction et la présentation de ce projet étaient tout à fait correctes. Peut-être pourraient-elles être encore améliorées pour donner une chance supplémentaire à cette histoire.
-  C: La rédaction et l’orthographe de ce dossier a été jugé d’un niveau insuffisant par les lecteurs.
+  A: Les lecteurs ont jugé excellente la rédaction et la présentation de [[ce projet]], tant au niveau de son orthographe que de son style.
+  B: Les lecteurs ont jugé que la rédaction et la présentation de ce projet étaient tout à fait correctes. Peut-être pourraient-elles être encore améliorées pour donner toutes ses chances à [[ce projet]].
+  C: La rédaction et l’orthographe de ce dossier a été jugé par les lecteurs d’un niveau insuffisant.
   D: Les lecteurs ont jugé que le projet se mettaient lui-même en danger de par sa rédaction et son orthographe plus qu’approximative. Que ce soit pour l’écrit pour l’écran, le projet s’insère dans le monde de la <em>lecture</em> et nécessite donc à ce niveau une attention tout à fait particulière.

@@ -27,8 +27,8 @@
 =end
 require 'yaml'
 require 'erb'
-require_relative './constants'
-require_relative './Projet'
+require_relative '../constants'
+require_relative '../Projet'
 
 
 class FicheLecture
@@ -100,40 +100,68 @@ def bind; binding() end
 #                       des résultats : si :evaluator est défini, on prend SA
 #                       fiche seulement, sinon on prend TOUTES les fiches.
 def out
-  ERB.new(File.read(File.join(__dir__,'fiche_lecture_template.erb')).force_encoding('utf-8')).result(self.bind)
+  ERB.new(template).result(self.bind)
 end #/ out
+
+def template
+  File.read(template_path).force_encoding('utf-8')
+end
+
+def template_path
+  File.expand_path(File.join(__dir__,'..','assets','fiche_lecture_template.erb'))
+end
+
+def styles_css_code
+  @styles_css_code ||= begin
+    '<style type="text/css">' + File.read(cssfile_path).force_encoding('utf-8') + '</style>'
+  end
+end #/ styles_css_code
+
+def cssfile_path
+  File.expand_path(File.join(__dir__,'..','assets','fiche_lecture.css'))
+end
 
 # Une des méthodes principales qui retourne le texte dynamique en fonction
 # de la note et du contexte.
+# - La méthode récupère le texte adéquat dans le fichier
+#   'textes_fiches_lecture.yaml', au niveau du A, B, C ou D.
+# - Elle le met ensuite en forme en fonction des balises.
 #
 def explication_categorie_per_note(cate)
   n = note_categorie(cate)
-  # puts "Traitement catégorie #{cate.inspect}"
-  # puts "  Note : #{n}"
-  # puts "  Key  : #{key_per_note(n)}"
   return if n.nil? || n == 'NC'
-  FicheLecture::DATA_MAIN_PROPERTIES[cate][key_per_note(n)]
+  traite_balises_in(FicheLecture::DATA_MAIN_PROPERTIES[cate][key_per_note(n)])
 end
 
-def note_clarte
-  projet.evaluation.categories['cla'][:note]
-end
+# / Fin des balises
+# ---------------------------------------------------------------------
+
+def noteOf(key)
+  if not projet.evaluation.categories.key?(key)
+    key = case key
+    when 'projet'       then 'po'
+    when 'originalité'  then 'fO'
+    when 'universalité' then 'fU'
+    when 'personnages'  then 'p'
+    when 'forme', 'structure' then 'f'
+    when 'intrigues'    then 'i'
+    when 'thèmes'       then 't'
+    when 'rédaction'    then 'r'
+    when 'clarté'       then 'cla'
+    when 'simplicité'   then 'sim'
+    end
+  end
+  if projet.evaluation.categories.key?(key)
+    projet.evaluation.categories[key][:note]
+  else
+    puts "ERR: Impossible de trouve la catégorie de clé '#{key}'…".rouge
+    return 0.0
+  end
+end #/ noteOf
 
 def avertissement_subjectivite
   FicheLecture::DATA_MAIN_PROPERTIES[:subjectivite]
 end
-
-def ecusson
-  @ecusson ||= begin
-    require './_lib/required/__first/constants/emojis'
-    Emoji.new('objets/blason').regular
-  end
-end #/ ecusson
-def annee_edition ; FLFactory.annee_courante end
-
-def formated_auteurs
-  projet.real_auteurs
-end #/ auteurs
 
 def note_categorie(cate)
   projet.evaluation&.note_categorie(cate) || 'NC'
@@ -159,24 +187,5 @@ def key_per_note(n)
   else :not_evaluated
   end
 end #/ key_per_note
-
-# Position formatée du projet par rapport aux autres projet
-def formated_position
-  @formated_position ||= begin
-    p = projet.position
-    pstr = ""
-    if not p.nil?
-      pstr = p == 1 ? "1<exp>er</exp>" : "#{p}<exp>e</exp>"
-      pstr = "#{pstr}#{ISPACE}<img src='/Users/philippeperret/Sites/AlwaysData/Icare_2020/img/Emojis/objets/coupe/coupe-regular.png' alt='Trophée' class='img-trophee' />" if p < 4 # => S'il est primé
-    end
-    "#{pstr} sur #{FLFactory.projets_valides.count} projets"
-  end
-end #/ position
-
-def styles_css_code
-  @styles_css_code ||= begin
-    '<style type="text/css">' + File.read(File.join(__dir__,'fiche_lecture.css')).force_encoding('utf-8') + '</style>'
-  end
-end #/ styles_css_code
 
 end #/FicheLecture
