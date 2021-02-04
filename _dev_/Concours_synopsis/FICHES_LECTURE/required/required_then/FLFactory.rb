@@ -38,7 +38,10 @@ Produire les fiches de lecture
 
     --reload => Recharcer les fiches d'évaluation distantes (sinon,
     prendre celles qui sont déjà téléchargées)
-    --only_one    => Seulement la première fiche (pour essai)
+    --only_good   => Seulement les fiches qui ont la moyenne
+    --only_bad    => Seulement les fiches qui n'ont pas la moyenne
+    --not_built   => Seulement les fiches inexistantes
+    --only_one    => Seulement la première fiche (parmi celles retenues)
 
 Uploader les fiches de lecture
 ==============================

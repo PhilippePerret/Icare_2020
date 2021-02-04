@@ -58,6 +58,13 @@ def build
   build_with_whtmltopdf
 end #/ build
 
+def built?
+  # (@is_built ||= begin
+  #   File.exists?(pdf_file) ? :true : :false
+  # end) == :true
+  :true === (@is_built ||= File.exists?(pdf_file) ? :true : :false)
+end #/ built?
+
 def build_with_whtmltopdf
    res = `/usr/local/bin/wkhtmltopdf "file://#{html_file}" "#{pdf_file}" 2>&1`
    # puts "Retour : #{res.inspect}"

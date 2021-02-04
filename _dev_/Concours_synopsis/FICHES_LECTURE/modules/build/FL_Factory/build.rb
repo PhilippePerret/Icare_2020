@@ -66,10 +66,18 @@ class << self
     return avec_fiches_evaluation
   end #/ evaluations_des_synopsis
 
+  # Méthode qui construit véritablement les fiches
+  # Cette construction peut dépendre des options (qui peuvent être combinées) :
+  #   --only_one    Une seule fiche est produite, puis on s'arrête
+  #   --not_built   On ne produit que des fiches inexistantes
+  #   --only_bad    Seulement les fiches qui n'ont pas la moyenne
+  #   --only_good   Seulement les fiches qui ont la moyenne
   def production_des_fiches(projets)
     suivi("\n== Production des fiches de lecture ==", :bleu)
     projets.each do |projet|
-      next if projet.evaluation.note < 10
+      next if option?(:only_good) && projet.evaluation.note < 10
+      next if option?(:only_bad)  && projet.evaluation.note > 10
+      next if option?(:not_built) && projet.fiche_lecture.built?
       print "Production fiche lecture projet “#{projet.titre}” (#{projet.concurrent_id})…".bleu
       projet.fiche_lecture.build
       puts "\r= Fiche du projet “#{projet.titre}” produite avec succès".vert
