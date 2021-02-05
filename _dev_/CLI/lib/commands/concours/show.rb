@@ -72,11 +72,11 @@ end #/ show_synopsis_of
 def open_if_exists(fpath)
   fname = File.basename(fpath)
   if File.exists?(fpath)
-    print "J'ouvre le fichier #{fname}…".bleu
+    print "J'ouvre le #{File.directory?(fpath) ? 'dossier' : 'fichier'} #{fname}…".bleu
     `open '#{fpath}'`
-    puts "\rFichier #{fname} ouvert avec succès. Bonne lecture.".vert
+    puts "\r#{File.directory?(fpath) ? 'Dossier' : 'Fichier'} #{fname} ouvert avec succès. Bonne lecture.".vert
   else
-    "Le fichier '#{fname}' est introuvable dans #{File.dirname(fpath)}.".rouge
+    "Le fichier/dossier '#{fname}' est introuvable dans #{File.dirname(fpath)}.".rouge
   end
 end #/ open_if_exists
 
