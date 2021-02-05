@@ -10,6 +10,7 @@ CHOICES_CONCOURS = [
   {name:"Récupérer un dossier de concurrent [#{'download'.jaune}]", value: 'download'},
   {name:"Transformer tous les docs en PDF [#{'doc_to_pdf'.jaune}]", value:'docs_to_pdf'},
   {name:"Produire les fiches de lecture [#{'fiches_lecture'.jaune}]", value:'fiches_lecture'},
+  {name:"Éléments ou informations sur un projet [#{'show'.jaune}]", value:'show'},
   {name:"Renoncer", value: :cancel}
 ]
 ACTIONS_CONCOURS = CHOICES_CONCOURS.collect{|d|d[:value]}
