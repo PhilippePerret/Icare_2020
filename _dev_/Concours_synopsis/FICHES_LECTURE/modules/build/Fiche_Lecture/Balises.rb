@@ -33,6 +33,15 @@ def balise_histoire
   end
 end
 
+def balise_la_note_generale
+  case motSujet('projet').note_lettre
+  when 'A' then 'l’excellente note'
+  when 'B' then 'la bonne note'
+  when 'C' then 'la note passable'
+  when 'D' then 'la mauvaise note'
+  end
+end
+
 def balise_ce_projet
   case motSujet('projet').note_lettre
   when 'A'  then 'cet excellent projet'
@@ -53,7 +62,11 @@ end
 def balise_interets_histoire
   ary = ['per','the','int','stt', 'uni', 'ori']
   MotSujet.meilleurs_parmi(ary).collect do |motsujet|
-    "#{motsujet.du}#{motsujet.sujet}"
+    if verbose?
+      "#{motsujet.du}#{motsujet.sujet} (#{motsujet.note})#{motsujet.as_quality}"
+    else
+      "#{motsujet.du}#{motsujet.sujet}#{motsujet.as_quality}"
+    end
   end.pretty_join
 end
 
@@ -61,19 +74,42 @@ end
 def balise_deficiences_histoire
   # ary = [motSujet('per'),motSujet('the'),motSujet('int'),motSujet('stt'), motSujet('uni'), motSujet('ori')]
   ary = ['per','the','int','stt', 'uni', 'ori']
-  MotSujet.inferieurs_a_10_parmi(ary).collect do |motsujet|
-    "#{motsujet.du}#{motsujet.sujet}"
-  end.pretty_join
+  MotSujet.formate_liste(MotSujet.inferieurs_a_10_parmi(ary, true), as: :defect)
+end
+
+def balise_deficiences_coherence
+  ary = ['i:cohe','p:cohe','t:cohe']
+  MotSujet.formate_liste( MotSujet.inferieurs_a_10_parmi(ary, true), as: :defect )
+end
+
+# La liste commune pour les personnages
+def ary_personnages
+  @ary_personnages ||= ary = ['p:fO', 'p:fU','p:cohe', 'p:idio', 'p:adth']
 end
 
 def balise_interets_personnages
-  interets_et_regrets_dans(['p:fO', 'p:fU','p:cohe', 'p:idio', 'p:adth'])
+  interets_et_regrets_dans(ary_personnages)
 end
 
+def balise_if_deficiences_personnages
+  perf = MotSujet.perfectibles_parmi(ary_personnages)
+  if not perf.empty?
+    traite_balises_in(texte(:personnages, :perfectibility))
+  end
+end
+def balise_perfectibilities_personnages
+  MotSujet.formate_liste(MotSujet.perfectibles_parmi(ary_personnages), as: :defect)
+end
+
+
 def balise_deficiences_personnages
-  ary = ['p:co', 'p:fO', 'p:fU']
-  MotSujet.inferieurs_a_10_parmi(ary).collect do |motsujet|
-    "#{motsujet.du}#{motsujet.sujet}"
+  ary = ['p:cohe', 'p:fO', 'p:fU']
+  MotSujet.inferieurs_a_10_parmi(ary, true).collect do |motsujet|
+    if verbose?
+      "#{motsujet.du}#{motsujet.sujet} (#{motsujet.note})#{motsujet.as_defect}"
+    else
+      "#{motsujet.du}#{motsujet.sujet}#{motsujet.as_defect}"
+    end
   end.pretty_join
 end
 
@@ -104,26 +140,43 @@ def balise_raisons_mauvaises_intrigues
   raisons.pretty_join
 end
 
+def ary_themes
+  @ary_themes ||= ['t:fO', 't:fU', 't:cohe', 't:adth']
+end
+
 def balise_raisons_bons_themes
-  interets_et_regrets_dans(['t:fO', 't:fU', 't:cohe', 't:adth'])
+  interets_et_regrets_dans(ary_themes)
+end
+
+def balise_les_ameliorations_themes
+  MotSujet.formate_liste(MotSujet.inferieurs_a_10_parmi(ary_themes, true), {as: :defect, article: :le})
+end
+
+def ary_redaction
+  @ary_redaction ||= ['r:cla', 'r:clar:ortho', 'r:clar:style', 'r:sim', 'r:emo']
+end
+
+def balise_deficiences_redaction
+  MotSujet.formate_liste(MotSujet.inferieurs_a_10_parmi(ary_redaction, true), as: :defect, article: :de)
+end
+
+def balise_importance_redaction
+  texte(:redaction, :importance)
 end
 
 # Méthode générique qui établit la liste des points positifs et des regrets
 # éventuels dans la liste de catégories +ary_cates+
-def interets_et_regrets_dans(ary_cates)
+def interets_et_regrets_dans(ary_cates, article = :de)
   # les bonnes raisons
-  raisons = MotSujet.meilleurs_parmi(ary_cates).collect do |motsujet|
-    "#{motsujet.du}#{motsujet.sujet}"
-  end
+  raisons = MotSujet.formate_liste(MotSujet.meilleurs_parmi(ary_cates), as: :quality, article:article)
+
   # éventuellement, les points à revoir
-  malgres = MotSujet.inferieurs_a_10_parmi(ary_cates).collect do |motsujet|
-    "#{motsujet.du}#{motsujet.sujet}"
-  end
+  malgres = MotSujet.inferieurs_a_10_parmi(ary_cates)
   if not malgres.empty?
-    raisons << "des manques peut-être au niveau #{malgres.pretty_join}"
+    raisons = raisons + " malgré des manques peut-être au niveau " + MotSujet.formate_liste(malgres, as: :defect, article:article)
   end
 
-  return raisons.pretty_join
+  return raisons
 end
 
 end #/class FicheLecture

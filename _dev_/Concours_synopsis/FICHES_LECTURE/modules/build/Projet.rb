@@ -46,6 +46,7 @@ def note; evaluation.note end
 def real_auteurs
   @real_auteurs ||= data[:auteurs] || data[:patronyme]
 end
+def patronyme ; @patronyme ||= data[:patronyme] end
 
 def evaluation
   @evaluation ||= Evaluation.new(fiches_evaluation)

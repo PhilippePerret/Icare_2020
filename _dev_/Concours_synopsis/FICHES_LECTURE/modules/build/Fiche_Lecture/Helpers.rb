@@ -6,8 +6,10 @@
 class FicheLecture
 
 # Retourne n'importe quel texte dans textes_fiches_lecture
-def texte(key)
-  FicheLecture::DATA_MAIN_PROPERTIES[key]
+def texte(key, subkey = nil)
+  str = FicheLecture::DATA_MAIN_PROPERTIES[key]
+  str = str[subkey] if subkey
+  return str
 end
 
 def avertissement_subjectivite

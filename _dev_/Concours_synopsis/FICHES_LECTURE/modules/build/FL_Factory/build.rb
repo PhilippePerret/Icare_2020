@@ -8,11 +8,21 @@ class << self
   # = main =
   #
   # Méthode principale procédant à la fabrication des fiches de lecture
-  def proceed_build_fiches_lecture
+  # Ou de la fiche de lecture du concurrent d'identifiant +concurrent_id+
+  def proceed_build_fiches_lecture(concurrent_id = nil)
     require_folder(CALCUL_FOLDER)
     option?(:reload) && rapatriement_des_fiches_evaluations
     @projets_valides = evaluations_des_synopsis
-    production_des_fiches(@projets_valides)
+    if concurrent_id
+      @projets_valides = @projets_valides.select {|projet| projet.concurrent_id == concurrent_id}
+    end
+    if not @projets_valides.empty?
+      production_des_fiches(@projets_valides)
+    elsif concurrent_id.nil?
+      erreur "Aucun projet susceptible d'être traité… Pas de fiches de lecture."
+    else
+      erreur "Le projet du concurrent #{concurrent_id} ne semble pas traitable…"
+    end
   end #/ proceed_build_fiches_lecture
 
   def rapatriement_des_fiches_evaluations
@@ -58,10 +68,14 @@ class << self
     line_info('= Projets sans fiches d’évaluation : ', sans_fiches_evaluation.count)
     # On définit la position de chaque projet
     print "Calcul de la position respective des projets…".bleu
-    avec_fiches_evaluation.sort_by { |projet| projet.note }.reverse.each_with_index do |projet, idx|
+    sorted_by_note = avec_fiches_evaluation.sort_by { |projet| projet.note }.reverse
+    sorted_by_note.each_with_index do |projet, idx|
       projet.position = 1 + idx
     end
     puts "\r= Calcul de la position respective des projets effectué".vert
+    sorted_by_note.each do |projet|
+      puts "#{projet.position}. #{projet.titre} de “#{projet.patronyme}”"
+    end
 
     return avec_fiches_evaluation
   end #/ evaluations_des_synopsis

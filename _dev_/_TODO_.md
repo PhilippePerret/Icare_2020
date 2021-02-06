@@ -2,21 +2,8 @@
 
 ## Rapid list
 
-* Détruire le fichier fiche_lecture.html après avoir fait le PDF
-* Voir, pour la fiche de lecture, si on ne pourrait pas fonctionner selon ce principe :
-  On passe en revue toutes les catégories de l'évaluation
-  en transformant la note en lettre
-  si le fichier texte contient un texte correspondant, on l'écrit
-  Il suffirait juste de définir l'ordre pour que les textes soient construits.
-  Par exempe, on a la catégorie 'p:cohe' (cohérence des personnages)
-  Si on trouve dans le fichier texte :
-    p:
-      cohe:
-        A: Les lecteurs ont apprécié la cohérence des personnages
-        D: Les lecteurs ont regretté le manque de cohérence des personnages
-  Le problème est que ça risque de donner un texte un peu trop découpé.
-
-* Ajouter l'ID à la liste des projets étudiés (???)
+* Pouvoir reconstruire une fiche de lecture précise avec l'id du concurrent
+* Ajouter l'ID à la liste des "projets étudiés" (liste)
 * Afficher le classement des projets, après leur étude, dans '--build'
 * poursuivre le développement avec les balises
   *

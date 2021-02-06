@@ -9,20 +9,24 @@ attr_reader :options
 #
 # Méthode principale qui lance la procédure de fabrication des fiches
 # de lecture pour tous les participants du concours
+# OU pour le concurrent d'identifiant +concurrent_id+
 #
 # Sans options, donc avec la commande 'icare concours fiches_lecture', on
 # option simplement des informations sur les projets et sur ce qu'on peut
 # faire au niveau des fiches de lecture.
 #
-def build_fiches_lecture(options)
+def build_fiches_lecture(options, concurrent_id = nil)
   @options = options
-  puts "=== CONSTRUCTION DES FICHES DE LECTURE ===\n===".bleu
+  puts "=== CONSTRUCTION FICHES DE LECTURE ===\n===".bleu
   puts "=== Mode : #{verbose? ? 'verbeux' : 'silencieux'}".bleu
   puts "=== Options: #{options.inspect}".bleu
+  if concurrent_id
+    puts "=== Concurrent : #{concurrent_id}".bleu
+  end
 
   if option?(:build)
     require_module('build')
-    proceed_build_fiches_lecture
+    proceed_build_fiches_lecture(concurrent_id)
   elsif option?(:upload)
     require_module('upload')
     proceed_upload_fiches_lecture
@@ -30,43 +34,7 @@ def build_fiches_lecture(options)
     require_module('infos')
     show_infos_fiches_lecture
   else
-    puts <<-AIDE
-
-Produire les fiches de lecture
-===============================
-#{'icare concours fiches_lecture --build[ --reload]'.jaune}
-
-    --reload => Recharcer les fiches d'évaluation distantes (sinon,
-    prendre celles qui sont déjà téléchargées)
-    --only_good   => Seulement les fiches qui ont la moyenne
-    --only_bad    => Seulement les fiches qui n'ont pas la moyenne
-    --not_built   => Seulement les fiches inexistantes
-    --only_one    => Seulement la première fiche (parmi celles retenues)
-
-Uploader les fiches de lecture
-==============================
-#{'icare concours fiches_lecture --upload'.jaune}
-
-Infos sur le fiches de lecture
-==============================
-#{'icare concours fiches_lecture --infos'.jaune}
-
-  Options
-  -------
-    --evaluation    Affiche l'évaluation de la première fiche trouvée
-                    Sans autre précision, c'est une version simplifiée, avec
-                    la clé et la note
-    --full_version  La version complète de l'évaluation de la première
-                    fiche trouvée.
-    --with_files    Affiche aussi le contenu des fichiers d'évaluation
-
-
-Options générales
------------------
-  -v/--verbose    Mode verbeux
-
-
-    AIDE
+    require_module('aide')
   end
 end #/ build_fiches_lecture
 

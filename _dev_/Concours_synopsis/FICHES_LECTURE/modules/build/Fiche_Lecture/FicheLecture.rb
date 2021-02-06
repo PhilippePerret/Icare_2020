@@ -55,13 +55,21 @@ def build
   File.delete(html_file)  if File.exists?(html_file)
   File.delete(pdf_file)   if File.exists?(pdf_file)
   build_HTML_file || return
-  # build_PDF_file
   build_with_whtmltopdf
+  if built?
+    # On détruit le fichier HTML qui a servi à faire le PDF
+    File.delete(html_file) if File.exists?(html_file)
+    `open '#{pdf_file}'` if IcareCLI.option?(:open)
+  end
 end #/ build
 
 def built?
   :true === (@is_built ||= File.exists?(pdf_file) ? :true : :false)
 end #/ built?
+
+def verbose?
+  FLFactory.verbose?
+end
 
 def build_with_whtmltopdf
    res = `/usr/local/bin/wkhtmltopdf "file://#{html_file}" "#{pdf_file}" 2>&1`
