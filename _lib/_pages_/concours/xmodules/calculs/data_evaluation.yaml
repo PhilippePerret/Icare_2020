@@ -7,16 +7,16 @@
     - :ti: Les Personnages
       :id: p
       :items:
-        - :ti: Le Protagoniste
-          :id: prota
-        - :ti: L'Antagoniste
-          :id: anta
-        - :ti: Les Personnages secondaires
-          :id: psec
-        - :ti: Les autres personnages
-          :id: autp
-        - :ti: Les Dialogues
-          :id: dials
+      - :ti: Le Protagoniste
+        :id: prota
+      - :ti: L'Antagoniste
+        :id: anta
+      - :ti: Les Personnages secondaires
+        :id: psec
+      - :ti: Les autres personnages
+        :id: autp
+      - :ti: Les Dialogues
+        :id: dials
       :common_properties:
         - :ti: Cohérence
           :id: cohe
@@ -82,11 +82,10 @@
       :items:
         - :ti: Clarté
           :id: cla
-          :items:
-            - :ti: Orthographe & grammaire
-              :id: ortho
-            - :ti: Maitrise de la langue (style)
-              :id: style
+        - :ti: Orthographe & grammaire
+          :id: ortho
+        - :ti: Maitrise de la langue (style)
+          :id: style
         - :ti: Simplicité
           :id: sim
           :ex: "La simplicité dans l'écriture, en tant que qualité."

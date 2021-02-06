@@ -2,6 +2,7 @@
 
 ## Rapid list
 
+* Faire une mention spécialement pour le titre, quelque part (peut en apparté dans l'histoire en général)
 * Pouvoir reconstruire une fiche de lecture précise avec l'id du concurrent
 * Ajouter l'ID à la liste des "projets étudiés" (liste)
 * Afficher le classement des projets, après leur étude, dans '--build'
