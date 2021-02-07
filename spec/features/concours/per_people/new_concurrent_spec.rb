@@ -120,7 +120,6 @@ feature 'Un nouveau concurrent', newconc:true do
       degel('concours-phase-2')
     end
     peut_rejoindre_le_concours
-    ne_peut_pas_atteindre_la_section_evalutation
 
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
     ne_peut_pas_telecharger_sa_fiche_de_lecture(:new)
@@ -143,6 +142,7 @@ feature 'Un nouveau concurrent', newconc:true do
     end
 
     # === Interdictions ===
+    ne_peut_pas_atteindre_la_section_evalutation
     ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 2
@@ -154,12 +154,12 @@ feature 'Un nouveau concurrent', newconc:true do
 
     peut_rejoindre_le_concours
     ne_peut_plus_transmettre_son_dossier
-    ne_peut_pas_atteindre_la_section_evalutation
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
     ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :new)
     peut_detruire_son_inscription
 
     # === Interdictions ===
+    ne_peut_pas_atteindre_la_section_evalutation
     ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 3

@@ -48,6 +48,9 @@ feature "Un membre du premier jury", jury1:true do
     end
     peut_rejoindre_le_concours
     peut_lire_un_projet
+    # TODO
+    # peut_evaluer_un_projet
+
   end #/context PHASE 1
 
   context 'PHASE 2', jury1:'phase2', phase2:true do
@@ -55,6 +58,8 @@ feature "Un membre du premier jury", jury1:true do
       degel('concours-phase-2')
     end
     peut_rejoindre_le_concours
+    ne_peut_plus_evaluer_les_projets
+
   end #/context PHASE 2
 
   context 'PHASE 3', jury1:'phase3', phase3:true do
@@ -62,6 +67,7 @@ feature "Un membre du premier jury", jury1:true do
       degel('concours-phase-3')
     end
     peut_rejoindre_le_concours
+    ne_peut_plus_evaluer_les_projets
   end #/context PHASE 3
 
   context 'PHASE 5', jury1:'phase5', phase5:true do
@@ -69,6 +75,7 @@ feature "Un membre du premier jury", jury1:true do
       degel('concours-phase-5')
     end
     peut_rejoindre_le_concours
+    ne_peut_plus_evaluer_les_projets
   end #/context PHASE 5
 
   context 'PHASE 8', jury1:'phase8', phase8:true do
@@ -76,7 +83,8 @@ feature "Un membre du premier jury", jury1:true do
       degel('concours-phase-8')
     end
     peut_rejoindre_le_concours
-  end #/context PHASE 8 et 9
+    ne_peut_plus_evaluer_les_projets
+  end #/context PHASE 8
 
   context 'PHASE 9', jury1:'phase9', phase9:true do
     before :all do

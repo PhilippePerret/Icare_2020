@@ -21,4 +21,4 @@ index.rb
 # Ignorer les data qdd et concours
 _lib/data/qdd/
 _lib/data/concours/
-
+_lib/data/concours_distant/
