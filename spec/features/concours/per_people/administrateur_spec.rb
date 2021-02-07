@@ -29,7 +29,8 @@ feature "Un administrateur", admin:true do
   before(:each) do
     phil.rejoint_le_site
   end
-  context 'en PHASE 0', admin:'phase0', phase0:true do
+
+  context 'PHASE 0', admin:'phase0', phase0:true do
     before :all do
       degel('concours-phase-0')
     end
@@ -60,7 +61,7 @@ feature "Un administrateur", admin:true do
     before :all do
       degel('concours-phase-3')
     end
-    # peut_passer_le_concours_a_la_phase_suivante(5)
+    peut_passer_le_concours_a_la_phase_suivante(5)
 
   end #/context PHASE 3
 
@@ -68,7 +69,7 @@ feature "Un administrateur", admin:true do
     before :all do
       degel('concours-phase-5')
     end
-    # peut_passer_le_concours_a_la_phase_suivante(8)
+    peut_passer_le_concours_a_la_phase_suivante(8)
 
   end #/context PHASE 5
 
@@ -77,13 +78,14 @@ feature "Un administrateur", admin:true do
       degel('concours-phase-8')
     end
     peut_passer_le_concours_a_la_phase_suivante(9)
-  end #/context PHASE 8 et 9
+  end #/context PHASE 8
 
-  context 'PHASE 9', admin:'phase9', phase9:true do
-    before :all do
-      degel('concours-phase-8')
-    end
-    peut_passer_le_concours_a_la_phase_suivante(9)
-  end #/context PHASE 8 et 9
+
+  # context 'PHASE 9', admin:'phase9', phase9:true do
+  #   before :all do
+  #     degel('concours-phase-8')
+  #   end
+  #   peut_passer_le_concours_a_la_phase_suivante(9)
+  # end #/context PHASE 9
 
 end

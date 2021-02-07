@@ -24,6 +24,7 @@ HUMAN_VISITOR_STATE = {
 def peut_sinscrire_au_concours(as)
   scenario "trouve des liens pour rejoindre l'inscription" do
     phase = TConcours.current.phase || 0
+    puts "phase courante du concours : #{phase}"
     goto("plan")
     click_on("CONCOURS")
     btn_name = phase < 2 ? "vous inscrire" : "Inscription au prochain concours"

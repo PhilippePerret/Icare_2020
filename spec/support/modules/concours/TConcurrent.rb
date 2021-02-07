@@ -411,12 +411,13 @@ end #/ reset
 # (ou l'année courante si nil), en réglant ses specs à "11" pour les
 # deux premières
 #
-# +conforme+ Si on le met à true, ça crée un fichier non conforme
+# +conforme+ Si on le met à false, ça crée un fichier non conforme
 #
 def make_fichier_conforme(annee = nil, conforme = true)
   annee ||= ANNEE_CONCOURS_COURANTE
   make_fichier(annee)
-  dc = db_get(DBTBL_CONCURS_PER_CONCOURS,"annee = #{annee} AND concurrent_id = #{id}")
+  request = "SELECT specs FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ? AND concurrent_id = ?"
+  dc = db_exec(request, [annee, id]).first
   sp = dc[:specs].split('')
   sp[0] = "1"
   sp[1] = conforme ? "1" : "2"
@@ -436,7 +437,7 @@ def make_fichier(annee = nil)
   destroy_fichier(annee) # au cas où
   annee ||= ANNEE_CONCOURS_COURANTE
   fsrc = File.join(SPEC_SUPPORT_FOLDER,'asset','documents','autre_doc.pdf')
-  fdst = File.join(folder, "#{id}-#{annee}.pdf")
+  fdst = File.join(mkdir(folder), "#{id}-#{annee}.pdf")
   FileUtils.copy(fsrc, fdst)
 end #/ make_fichier
 
@@ -447,7 +448,7 @@ end #/ make_fichier
 def destroy_fichier(annee = nil)
   annee ||= ANNEE_CONCOURS_COURANTE
   fpath = fichier_path(annee)
-  File.delete(fpath) if File.exists?(fpath)
+  File.delete(fpath) if fpath && File.exists?(fpath)
   set_specs("0"*8)
 end #/ destroy_fichier
 
@@ -468,7 +469,7 @@ end #/ folder
 
 def fichier_path(annee)
   Dir["#{folder}/#{id}-#{annee}.*"].first
-end #/ fichier_path
+end
 
 def femme?
   sexe == 'F'

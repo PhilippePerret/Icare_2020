@@ -13,6 +13,7 @@ class << self
       sexe: ['F','M'][rand(2)],
       concurrent_id: (Time.now - (rand(10000) + rand(10000))).strftime("%Y%m%d%H%M%S"),
       options: "11000000",
+      session_id: 'abdcde2fdq1fd2fdq',
       created_at: now,
       updated_at: now
     }
@@ -43,10 +44,11 @@ class << self
   def create_ancien
     annee = Time.now.year - 1
     data = random_concurrent_data
-    conc_id = db_compose_insert('concours_concurrents', data)
+    db_compose_insert('concours_concurrents', data)
+    conc_id = data[:concurrent_id]
     conc  = TConcurrent.new(data.merge(id: conc_id))
     data_participation = random_concours_data(annee: annee, concurrent_id: conc_id)
-    part_id = db_compose_insert('concurrents_per_concours', )
+    part_id = db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data_participation)
     conc.make_fichier_conforme(annee, conforme = true)
     return conc
   end #/ create_ancien

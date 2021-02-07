@@ -10,7 +10,7 @@ require_relative './_required'
 
 feature 'Un icarien' do
   before :all do
-    headless(true)
+    headless(false)
   end
 
   before(:each) do

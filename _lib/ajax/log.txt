@@ -1410,3 +1410,15 @@ DATABASE = icare_test
 ENV['HTTP_HOST'] = "localhost"
 DATABASE = icare_test
 = Script : concours/get_score.rb
+
+
+--- [2021-02-07 06:41:53 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb

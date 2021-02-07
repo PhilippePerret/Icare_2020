@@ -28,9 +28,9 @@ feature 'Un ancien concurrent (non courant)' do
     peut_rejoindre_le_concours
     peut_sinscrire_au_concours(as = :ancien)
     ne_peut_pas_transmettre_de_dossier
-    # peut_atteindre_lannonce_du_prochain_concours
-    # ne_peut_pas_atteindre_lespace_personnel
-    # ne_peut_pas_atteindre_la_section_evalutation
+    peut_atteindre_lannonce_du_prochain_concours
+    ne_peut_pas_atteindre_lespace_personnel
+    ne_peut_pas_atteindre_la_section_evalutation
     ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
     peut_telecharger_une_ancienne_fiche_de_lecture
 

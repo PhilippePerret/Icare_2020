@@ -6,7 +6,7 @@
 
 
 def peut_passer_le_concours_a_la_phase_suivante(phase_expected)
-  it "peut passer le concours à la phase suivante" do
+  it "peut passer le concours à la phase #{phase_expected}" do
     # Avant toute chose, on prend la phase courante
     conc = TConcours.current
     old_phase = conc.phase.freeze
@@ -44,7 +44,7 @@ end #/ peut_passer_le_concours_a_la_phase_suivante
 def ne_peut_pas_passer_le_concours_a_la_phase_suivante
   it "ne peut pas passer le concours a la phase suivante" do
     goto("concours/admin")
-
+    pending
     # En rejoignant l'administration
     # TODO
     # Par route directe

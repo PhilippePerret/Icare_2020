@@ -6,26 +6,6 @@
 * Pouvoir reconstruire une fiche de lecture précise avec l'id du concurrent
 * Ajouter l'ID à la liste des "projets étudiés" (liste)
 * Afficher le classement des projets, après leur étude, dans '--build'
-* poursuivre le développement avec les balises
-  *
-  FORME :
-    SI > 15
-
-    SI entre 10 et 15
-      AMÉLIORATIONS POSSIBLES
-    Forme/structure < 10
-    RAISONS
-      Prédictibilité des intrigues ?
-      PROBLÈME :
-        'predic' Prédictibilité < 10 => intrigues trop prévisibles
-      RAISONS :
-        "i:fO"    Originalité des intrigues
-          SI > 10   malgré l'originalité des intrigues
-          SI < 10   peut-être à cause du manque d'originalité des intrigues
-      MALGRÉ
-        "i:adth"  => "malgré l'adéquation de ces intrigues avec le thème" / <rien>
-        "i:cohe"  => "Bien que les intrigues soient cohérences" / "peut-être à cause de certaines incohérences"
-* Finaliser les textes
 * transmission de la fiche de lecture sur le site distant
 * chargement de la fiche de lecture
 
