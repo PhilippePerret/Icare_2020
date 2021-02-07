@@ -184,17 +184,13 @@ end
 <fieldset id="concours-fichier-candidature">
   <legend>Fichier de candidature</legend><%
 
-    if Concours.current.started?
+    if not concurrent.current?
 
-      if concurrent.current?
+      %><p class="explication">Vous n'êtes pas en lice pour cette session du concours. Vous n’avez pas de dossier à déposer.</p><%
 
-        %><p class='explication'>Vous pourrez transmettre votre dossier lorsque le concours sera lancé</p><%
+    elsif not Concours.current.started?
 
-      else
-
-        %><p class="explication">Vous n'êtes pas en lice pour cette session du concours.</p><%
-
-      end
+      %><p class='explication'>Vous pourrez transmettre votre dossier lorsque le concours sera lancé.</p><%
 
     elsif concours.phase1?
 

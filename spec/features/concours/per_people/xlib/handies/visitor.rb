@@ -28,7 +28,7 @@ def make_visitor_current_concurrent(v)
     data_cpc = {concurrent_id:vdata[:concurrent_id], annee:Concours.current.annee, specs:"00000000"}
     db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data_cpc)
   else
-    raise "Le visiteur courant est déjà un concurrent du concours courant…"
+    # raise "Le visiteur courant est déjà un concurrent du concours courant…"
   end
 end #/ make_visitor_current_concurrent
 

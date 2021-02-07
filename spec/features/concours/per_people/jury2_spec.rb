@@ -46,7 +46,7 @@ feature "Un membre du second jury" do
       degel('concours-phase-1')
     end
     peut_rejoindre_le_concours
-    peut_lire_un_projet
+    ne_peut_pas_lire_un_projet(raison = :too_soon)
   end #/context PHASE 1
 
   context 'PHASE 2', phase2:true, jury2:'phase2' do

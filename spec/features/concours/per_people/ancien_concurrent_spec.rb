@@ -46,17 +46,17 @@ feature 'Un ancien concurrent (non courant)' do
       before(:each) { make_visitor_current_concurrent(@visitor) }
       after(:all) { degel('concours-phase-1') }
       peut_rejoindre_le_concours
-      ne_peut_pas_sinscrire_au_concours("déjà concurrent")
+      ne_peut_pas_sinscrire_au_concours("déjà inscrit")
     end
 
-    peut_rejoindre_le_concours
-    peut_sinscrire_au_concours(as = :ancien)
-    ne_peut_pas_transmettre_de_dossier
-    ne_peut_pas_atteindre_la_section_evalutation
-    peut_modifier_ses_preferences_notifications
-    peut_modifier_ses_preferences_fiche_de_lecture
-    peut_detruire_son_inscription
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    # peut_rejoindre_le_concours
+    # peut_sinscrire_au_concours(as = :ancien)
+    # ne_peut_pas_transmettre_de_dossier
+    # ne_peut_pas_atteindre_la_section_evalutation
+    # peut_modifier_ses_preferences_notifications
+    # peut_modifier_ses_preferences_fiche_de_lecture
+    # peut_detruire_son_inscription
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 1

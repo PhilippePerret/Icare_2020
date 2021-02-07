@@ -54,9 +54,10 @@ class HTML
   def reconnect_icarien(mandatory)
     dc = db_exec("SELECT concurrent_id FROM #{DBTBL_CONCURRENTS} WHERE mail = ?", [user.mail]).first
     if not dc.nil?
+      log("RECONNEXION DE L'ICARIEN #{user.pseudo} en tant que concurrent au concours.")
       session['concours_user_id'] = dc[:concurrent_id]
       db_exec("UPDATE #{DBTBL_CONCURRENTS} SET session_id = ? WHERE concurrent_id = ?", [session.id, dc[:concurrent_id]])
-      self.concurrent = Concurrent.get(dc[:concurrent_id])
+      @concurrent = Concurrent.get(dc[:concurrent_id])
     elsif mandatory
       unable_reconnection
     end

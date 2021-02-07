@@ -14,7 +14,7 @@ feature 'Un icarien' do
   end
 
   before(:each) do
-    @visitor = TUser.get_random(concours:false, admin:false)
+    @visitor = TUser.get_random(concours:false, pseudo:'Élie', admin:false)
     @visitor.rejoint_le_site
   end
 

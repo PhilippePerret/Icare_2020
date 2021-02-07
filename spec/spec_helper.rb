@@ -104,8 +104,8 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL, :type => :feature
 
-  # POur se souvenir des tests qui échouent
-  config.example_status_persistence_file_path = './spec/tmp/failure_files.txt'
+  # Pour se souvenir des tests qui échouent
+  config.example_status_persistence_file_path = './spec/__failure_files.txt'
 
   # Pour ne pas écrire la ligne indiquant les options employées
   config.silence_filter_announcements = true

@@ -25,7 +25,11 @@ end #/ atteint_la_page_daccueil_du_concours
 def peut_rejoindre_toutes_les_sections_depuis_laccueil
   def revenir_accueil; click_on("Le Concours") end
   it "peut rejoindre toutes les sections depuis l’accueil" do
+    visitor&.logout
     goto("concours/accueil")
+    phase_min = TConcours.current.phase < 2
+    UI_TEXTS[:concours_bouton_inscription]  = phase_min ? "vous inscrire" : "Inscription au concours"
+    UI_TEXTS[:concours_btn_identifiez_vous] = phase_min ? "vous identifier" : "Identifiez-vous"
     expect(page).to have_link(UI_TEXTS[:concours_bouton_inscription])
     click_on(UI_TEXTS[:concours_bouton_inscription])
     expect(page).to have_titre(UI_TEXTS[:titre_page_inscription])

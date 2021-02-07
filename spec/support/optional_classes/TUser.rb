@@ -27,6 +27,7 @@ class << self
 
   # OUT   {TUser} Un icarien ou une icarienne définie par +params+
   # IN    {Hash} +param+ Définition de ce qu'on cherche
+  # =>      :pseudo   Le pseudo de l'icarien qu'on veut, quand on le connait
   #         :real   Si true, ça doit être un "vrai" icarien, donc un icarien
   #                 a déjà payé un module.
   #         :sexe   'H' pour 'homme' ou 'F' pour 'femme'
@@ -50,6 +51,11 @@ class << self
   def get_random(params)
     where = []
     valus = []
+    # :pseudo
+    if params[:pseudo]
+      where << "pseudo = ?"
+      valus << params[:pseudo]
+    end
     # :real
     where << "SUBSTRING(options,25,1) = 1" if params[:real]
     if params[:admin] === true
@@ -92,10 +98,35 @@ class << self
       puts db_exec("SELECT * FROM users")
       raise "Trouver un autre moyen"
     else
-      TUser.instantiate(res.shuffle.shuffle.first.merge!(password: 'unmotdepasse'))
+      u = TUser.instantiate(res.shuffle.shuffle.first.merge!(password: 'unmotdepasse'))
       # Note : concernant le mot de passe, tous les icariens possède le même
       # dans le gel real-icare ("unmotdepasse"), seul leur :salt permet de
       # produire un mot de passe crypté différent.
+
+      # Si :concours est true dans les paramètres, il faut faire un user
+      # qui participe au concours
+      if params[:concours]
+        if u.concurrent?(sans_erreur = true)
+          # L'user est déjà concurrent, on peut s'arrêter là
+        else
+          # L'user n'est pas concurrent, il faut le transformer en concurrent
+          TConcurrent.inscrire_icarien(u, session_courante:true)
+        end
+      elsif params[:concours] === false
+        # Si les paramètres précisent explicitement que l'icarien ne doit
+        # pas appartenir au concours, il faut détruire toute trace de lui
+        # dans les base de données
+        conc_id = u.concurrent?(sans_erreur = true) && u.concurrent_id
+        if conc_id
+          # <= conc_id n'est pas null, est défini
+          # => Il y a un icarien enregistré comme concurrent
+          # => On doit le détruire
+          db_exec("DELETE FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ?", [conc_id])
+          db_exec("DELETE FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ?", [conc_id])
+        end
+      end
+
+      return u
     end
   end #/ get_random
 

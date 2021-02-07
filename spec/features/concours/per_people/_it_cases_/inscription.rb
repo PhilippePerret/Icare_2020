@@ -36,6 +36,7 @@ def peut_sinscrire_au_concours(as)
     require './_lib/_pages_/concours/inscription/constants'
     start_time = Time.now.to_i
     goto("concours/inscription")
+    screenshot("inscription-#{as.inspect}")
     case as
     when :simple
       expect(page).to be_inscription_concours(with_formulaire = true)
@@ -67,20 +68,24 @@ def peut_sinscrire_au_concours(as)
       raise("Le cas #{as.inspect} n'est pas encore traité")
     end
 
-    concurrent_pseudo ||= visitor.pseudo.freeze
-    concurrent_patro  ||= ((visitor.respond_to?(:patronyme) && visitor.patronyme) || visitor.pseudo).freeze
-    concurrent_mail   ||= visitor.mail.freeze
+    screenshot('after-click-signup')
+
+    vtested = visitor.is_a?(TUser) ? visitor.as_concurrent : visitor
+    concurrent_pseudo ||= vtested.pseudo.freeze
+    concurrent_patro  ||= vtested.patronyme.freeze
+    concurrent_mail   ||= vtested.mail.freeze
     concurrent_id     ||= begin
       dc = db_exec("SELECT * FROM #{DBTBL_CONCURRENTS} WHERE patronyme = ?", [concurrent_patro]).first
       dc[:concurrent_id]
     end
-    concurrent_e      ||= visitor.fem(:e)
-    concurrent_sexe   ||= visitor.femme? ? 'F' : 'H'
+    concurrent_e      ||= vtested.fem(:e)
+    concurrent_sexe   ||= vtested.femme? ? 'F' : 'H'
 
     expect(page).to be_espace_personnel
 
     # Un message annonce la réussite de l'opération
-    expect(page).to have_message(MESSAGES[:concours_confirm_inscription_session_courante] % {e:concurrent_e, pseudo:concurrent_pseudo})
+    # pseudo_message = visitor.is_a?(TUser) ? visitor.pseudo
+    expect(page).to have_message(MESSAGES[:concours_confirm_inscription_session_courante] % {e:concurrent_e, pseudo:visitor.pseudo})
 
     # Les données sont justes, dans la table des concurrents
     dc = db_exec("SELECT * FROM #{DBTBL_CONCURRENTS} WHERE patronyme = ?", [concurrent_patro]).first
@@ -117,7 +122,7 @@ def peut_sinscrire_au_concours(as)
     else
       ["vous confirmons par la présente votre inscription au Concours de Synopsis","Numéro de concurrent",concurrent_id.to_s]
     end
-    expect(visitor).to have_mail(after:start_time, subject:MESSAGES[:concours_signed_confirmation], message:msg_content)
+    expect(vtested).to have_mail(after:start_time, subject:MESSAGES[:concours_signed_confirmation], message:msg_content)
   end
 end
 

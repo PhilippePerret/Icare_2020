@@ -51,13 +51,13 @@ def peut_telecharger_une_ancienne_fiche_de_lecture(as = :ancien)
       annee = dold[:annee]
     end
   end
-  alias :peut_telecharger_ses_fiches_de_lecture :peut_telecharger_une_ancienne_fiche_de_lecture
-
 end #/ peut_telecharger_une_ancienne_fiche_de_lecture
+alias :peut_telecharger_ses_fiches_de_lecture :peut_telecharger_une_ancienne_fiche_de_lecture
 
 # it-case qui teste que le visiteur ne peut pas télécharger sa fiche de
 # lecture. Il peut y avoir plusieurs raisons pour ça, qui sont décrites avec
 # le paramètre +raison+
+# OBSOLÈTE
 #   :new        C'est un nouveau concurrent, il n'a pas de lien le conduisant
 #               à sa fiche de lecture avant la phase 5.
 #   :too_soon   C'est un ancien concurrent qui peut rejoindre la section des
@@ -67,38 +67,11 @@ end #/ peut_telecharger_une_ancienne_fiche_de_lecture
 #               courant donc il ne pourra pas avoir de fiche de lecture.
 #   :not_want   Il ne veut pas sa fiche de lecture, dans ses préférences.
 #
-def ne_peut_pas_telecharger_sa_fiche_de_lecture(raison)
+def ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = nil)
   it "ne peut pas telecharger sa fiche de lecture" do
+    require './_lib/_pages_/concours/espace_concurrent/constants'
     goto("concours/espace_concurrent")
     expect(page).to be_espace_personnel
     expect(page).not_to have_link("TÉLÉCHARGER LA FICHE DE LECTURE")
-    case raison
-    when :not_want
-      expect(page).not_to have_link("Mes fiches de lecture")
-      # --- Essai par lien direct ---
-      goto("concours/fiches_lecture")
-      expect(page).to be_section_fiches_lecture(as = :concurrent)
-      expect(page).to have_content(MESSAGES[:prefs_dont_want_fiches_lecture])
-    when :new
-      # Le concurrent doit pouvoir atteindre sa liste de fiches de lecture
-      expect(page).not_to have_link("Mes fiches de lecture")
-      # --- Essai par lien direct ---
-      goto("concours/fiches_lecture")
-      expect(page).to be_section_fiches_lecture(as = :concurrent)
-      expect(page).not_to have_link("Télécharger votre fiche de lecture du concours #{ANNEE_CONCOURS_COURANTE}")
-    else
-      expect(page).to have_link("Mes fiches de lecture")
-      visitor.click_on("Mes fiches de lecture")
-      expect(page).to be_section_fiches_lecture(as = :concurrent)
-      # Mais on ne trouve pas la fiche de lecture pour le concours courant
-      if raison == :too_soon
-        expect(page).to have_content("Pas encore de fiche de lecture pour le concours courant (#{TConcours.current.annee})")
-      elsif raison == :old
-        expect(page).to have_content("Vous ne participez pas au concours courant.")
-      else
-        raise "Il faut définir la raison qui empêche de télécharger sa fiche de lecture."
-      end
-    end
-
   end
 end #/

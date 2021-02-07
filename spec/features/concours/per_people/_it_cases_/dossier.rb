@@ -6,10 +6,20 @@ def peut_transmettre_son_dossier(data = nil)
   data[:titre] ||= "Titre à #{Time.now.to_i}"
   it "peut transmettre son dossier pour le projet “#{data[:titre]}”" do
     start_time = Time.now.to_i - 1
+    # Préparation
+    # -----------
+    # Si le visiteur a déjà déposé son fichier, on le détruit
+    vtested = visitor.is_a?(TUser) ? visitor.as_concurrent : visitor
+    if vtested.dossier_transmis?
+      vtested.destroy_fichier
+      vtested.reset
+    end
     goto("concours/espace_concurrent")
+    screenshot('accueil-pour-depot-dossier')
     expect(page).to be_espace_personnel
-    expect(visitor.specs[0]).not_to eq "1"
+    expect(vtested.specs[0]).not_to eq "1"
     syno_path = File.expand_path(File.join('.','spec','support','asset','documents','synopsis_concours.pdf'))
+    expect(page).to have_css('form#concours-fichier-form')
     within("form#concours-fichier-form") do
       fill_in("p_titre",    with: data[:titre])
       fill_in("p_auteurs",  with: data[:auteurs]) if data.key?(:auteurs)
@@ -17,16 +27,16 @@ def peut_transmettre_son_dossier(data = nil)
       click_on(UI_TEXTS[:concours_bouton_send_dossier])
     end
     screenshot("after-send-fichier-concours")
-    visitor.reset
-    expect(visitor.specs[0..1]).to eq("10"), "Les deux premiers bit des specs du concurrent devrait être '01'…"
+    vtested.reset
+    expect(vtested.specs[0..1]).to eq("10"), "Les deux premiers bit des specs du concurrent devrait être '10'…"
     # *** Vérifications ***
     # Le document a été déposé avec le bon titre au bon endroit
     # (vérifier aussi la taille)
-    path = File.join(visitor.folder, "#{visitor.id}-#{ANNEE_CONCOURS_COURANTE}.pdf")
+    path = File.join(vtested.folder, "#{vtested.id}-#{ANNEE_CONCOURS_COURANTE}.pdf")
     expect(File).to be_exists(path)
     expect(File.stat(syno_path).size).to eq(File.stat(path).size)
     # Un mail de confirmation a été envoyé au concurrent
-    expect(visitor).to have_mail(subject:"[CONCOURS] Réception de votre fichier de candidature", after: start_time, message:["Je vous informe que votre dossier de candidature pour le concours de synopsis"])
+    expect(vtested).to have_mail(subject:"[CONCOURS] Réception de votre fichier de candidature", after: start_time, message:["Je vous informe que votre dossier de candidature pour le concours de synopsis"])
     # Les specs de son enregistrement pour le concours ont été modifiée
     # J'ai reçu un mail m'informant de l'envoi du synopsis
     expect(TMails).to have_mail(to:CONCOURS_MAIL, subject:"[CONCOURS] Dépôt d'un fichier de candidature", after: start_time, message:["Je t’informe d’un dépôt de dossier de cancidature", "icare concours download"])

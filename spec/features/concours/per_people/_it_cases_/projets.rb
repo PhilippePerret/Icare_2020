@@ -20,10 +20,18 @@ def peut_lire_un_projet
   end
 end
 
-def ne_peut_pas_lire_un_projet
+def ne_peut_pas_lire_un_projet(raison = nil)
   it "ne peut pas lire de projet en se rendant sur la page d'évaluation" do
     goto('concours/evaluation')
-    expect(page).not_to be_page_evaluation
+    # sleep 30
+    case raison
+    when :too_soon
+      expect(page).to be_page_evaluation
+      # mais…
+      expect(page).to have_content("Vous ne pouvez pas encore évaluer les synopsis")
+    else
+      expect(page).not_to be_page_evaluation
+    end
   end
   # it "ne peut pas lire un projet en jouant son lien direct" do
   #   # On trouve un projet

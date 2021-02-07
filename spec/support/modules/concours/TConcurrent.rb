@@ -96,6 +96,13 @@ end #/ set_not_preselected
 
 class << self
 
+def get(concurrent_id)
+  @items ||= {}
+  @items[concurrent_id] ||= begin
+    TConcurrent.new(db_exec("SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ?",[concurrent_id]).first)
+  end
+end #/ get
+
 # OUT   Une liste Array de {concurrent}s répondant au filtre +filtre+
 #       Ce sont des instances de concurrents.
 #
@@ -176,7 +183,7 @@ end #/ get_random
 # Pour inscrire un icarien au concours
 def inscrire_icarien(u, options)
   proceed_inscrire_icarien(u, options)
-end #/ self.inscrire_icarien
+end
 
 # Retourne la liste des jurés
 # OBSOLÈTE (il vaut mieux utiliser la classe TEvaluator)
@@ -314,13 +321,14 @@ WHERE annee = ?)
 
   # Pour inscrire un {TUser} qui est un icarien
   # Noter que cette inscription se fera toujours sur un concours précédent,
-  # jamais sur le concours présent.
+  # sauf si :session_courante est true.
   #
   # IN    +u+ {User} à inscrire
   #       +options+   {Hash} d'options, donc :
   #         :session_courante   Si true, on l'inscrit à la session courante
   #                             Sinon, non.
   def proceed_inscrire_icarien(u, options)
+    log("-> proceed_inscrire_icarien")
     data_cc = {
       patronyme: u.patronyme||u.pseudo,
       mail: u.mail,
@@ -330,7 +338,7 @@ WHERE annee = ?)
       options: "11100000" # 3e bit à 1 => icarien
     }
     db_compose_insert(DBTBL_CONCURRENTS, data_cc)
-    if options && false === options[:session_courante]
+    if options && !options[:session_courante]
       # Note : il faut forcément une participation à un concours, donc on prend
       # un des concours précédent
       dco = db_exec("SELECT annee FROM concours WHERE annee < ? LIMIT 1", Time.now.year).first
@@ -339,6 +347,7 @@ WHERE annee = ?)
     elsif options && options[:session_courante]
       data_cpc = {concurrent_id:data_cc[:concurrent_id], annee:ANNEE_CONCOURS_COURANTE, specs:"00000000"}
     end
+    log("Enregistrement dans la table #{DBTBL_CONCURS_PER_CONCOURS} de l'icarien #{u.ref} avec les données : #{data_cpc.inspect}")
     db_compose_insert(DBTBL_CONCURS_PER_CONCOURS, data_cpc)
   end #/ inscrire
 

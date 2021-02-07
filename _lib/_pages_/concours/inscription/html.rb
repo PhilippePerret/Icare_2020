@@ -66,7 +66,7 @@ class HTML
     icarien? && user.concurrent_session_courante?
   end
   def icarien_ancien_inscrit?
-    icarien? && not(user.concurrent_session_courante?)
+    icarien? && user.concurrent? && not(user.concurrent_session_courante?)
   end
   def concurrent_inscrit?
     guest? && concurrent && concurrent.current?
