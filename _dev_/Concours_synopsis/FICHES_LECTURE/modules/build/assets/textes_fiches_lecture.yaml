@@ -10,17 +10,23 @@
 
 :adequation_avec_theme: "leur adéquation avec le thème du concours"
 
-:trop_grande_predictabilite: "leur trop grande prédictabilité (syndrome du “cousu de fil blanc”)"
+:trop_grande_predictabilite: "leur trop grande prédictibilité (syndrome du “cousu de fil blanc”)"
 
 # --- Ci-dessous commence les textes par catégorie ---
 
 :projet:
   :diminutif: po
   :explication: Cette note est une moyenne calculée d’après les notes attribuées par les jurés pour l’ensemble du projet et tous ses éléments.
-  A: Votre histoire a été très bien perçue, dans tous ses aspects, et notamment au niveau [[interets_histoire]]. Elle a incontestablement un réel potentiel et mérite d’être développée. Bravo à vous !
-  B: Votre histoire a été bien perçue, principalement au niveau [[interets_histoire]]. Elle présente un certain potentiel, même si ce potentiel reste à renforcer, peut-être au niveau [[deficiences_histoire]]. Bravo à vous !
-  C: Votre histoire n’a pas vraiment rencontré l’adhésion des lecteurs du concours. Ils y ont trouvé des faiblesses par trop handicapantes, notamment au niveau [[deficiences_histoire]]. Ce sont des aspects que vous devriez retravailler si vous voulez donner une réelle chance à ce projet.
-  D: Votre histoire n’a pas du tout trouvé l’adhésion des lecteurs du concours. Ils y ont vu des faiblesses rédhibitoires, notamment au niveau [[deficiences_histoire]]. Ces points leur semblent à réfléchir avec le plus grand sérieux et la plus grande inspiration si vous voulez donner une chance à ce projet.
+  A: Votre histoire — [[estimation titre]] — a été très bien perçue, dans tous ses aspects, et notamment au niveau [[interets_histoire]]. Elle a incontestablement un réel potentiel et mérite d’être développée. Quoi qu’il en soit, bravo à vous !
+  B: Votre histoire — [[estimation titre]] — a été bien perçue, principalement au niveau [[interets_histoire]]. Elle présente un certain potentiel, même si ce potentiel reste à renforcer, peut-être au niveau [[deficiences_histoire]]. Quoi qu’il en soit, bravo à vous !
+  C: Votre histoire — [[estimation titre]] — n’a pas vraiment rencontré l’adhésion des lecteurs du concours. Ils y ont trouvé des faiblesses par trop handicapantes, notamment au niveau [[deficiences_histoire]]. Ce sont des aspects que vous devriez retravailler si vous voulez donner une réelle chance à ce projet.
+  D: Votre histoire — [[estimation titre]] — n’a pas du tout trouvé l’adhésion des lecteurs du concours. Ils y ont vu des faiblesses rédhibitoires, notamment au niveau [[deficiences_histoire]]. Ces points leur semblent à réfléchir avec le plus grand sérieux et la plus grande inspiration si vous voulez donner une chance à ce projet.
+
+:titre:
+  A: dont le titre a été très apprécié par les membres du jury
+  B: dont le titre a été apprécié par les membres du jury
+  C: dont le titre n’a pas été spécialement apprécié par le jury
+  D: dont le titre a été jugé faible par les membres du jury
 
 :personnages:
   :diminutif: p
@@ -62,8 +68,8 @@
   :explication: Le « facteur O », dans l’approche théorique de Philippe Perret (<a href="https://scenariopole.fr/narration">collection Narration</a>), indique le DEGRÉ D’ORIGINALITÉ de l’histoire et de ses “ingrédients”. C'est-à-dire, concrètement, leur singularité et la rareté de leur utilisation dans les histoires. Ce facteur est à mettre en regard avec le « facteur U ».
   A: Votre histoire et/ou ses ingrédients ont été perçus comme très originaux, et c’est un point fort.
   B: Les lecteurs ont perçu l’histoire comme plutôt originale, sans que cette originalité ne soit trop affirmée.
-  C: L’histoire et ses ingrédients ont été jugés comme manquant d’originalité.
-  D: Les lecteurs n’ont rien trouvé d’originale dans cette histoire. Que ce soit au niveau des personnages, des intrigues, de la forme, des thèmes, elle a été perçue comme trop banale.
+  C: L’histoire et ses ingrédients ont été jugés comme manquant d’originalité, particulièrement au niveau [[deficiences originalite]].
+  D: Les lecteurs n’ont rien trouvé d’originale dans cette histoire. Que ce soit au niveau [[deficiences originalite]], elle a été perçue comme trop banale.
 
 :facteurU:
   :diminutif: fU
@@ -109,16 +115,24 @@
 # --- SOUS CATÉGORIGES / QUALITÉS ET DÉFAUTS ---
 
 p:fO:
-  quality: "(par rapport à la réalité ou l’utilisation dans les histoires)"
-  defect: "(trop commun sans pourtant apporter d'universalité)"
+  :quality: "(par rapport à la réalité ou l’utilisation dans les histoires)"
+  :defect: "(trop commun sans pourtant apporter d'universalité)"
 
 p:fU:
-  quality: "(sa capacité à parler au plus grand nombre, à porter des problématiques universelles)"
-  defect: "(trop particulier pour que l'auditeur, le spectateur ou le lecteur se reconnaisse en lui)"
+  :quality: "(sa capacité à parler au plus grand nombre, à porter des problématiques universelles)"
+  :defect: "(trop particulier pour que l'auditeur, le spectateur ou le lecteur se reconnaisse en lui)"
 
 p:cohe:
-  quality: " (dans son comportement général, dans ces attitudes et ses décisions)"
-  defect: " (dans son comportement général, dans ces attitudes et ses décisions)"
+  :quality: "(dans son comportement général, dans ces attitudes et ses décisions)"
+  :defect: "(dans son comportement général, dans ces attitudes et ses décisions)"
 
 p:idio:
-  defect: " c’est-à-dire leur comportement qui n’a pas été jugé suffisamment particulier et unique"
+  :defect: "c’est-à-dire leur comportement qui n’a pas été jugé suffisamment particulier et unique"
+
+i:fO:
+  :quality: ", au niveau de leur énoncé comme au niveau de leur parcours"
+  :defect: ", au niveau de leur énoncé comme au niveau de leur menée au fil du récit"
+
+t:fO:
+  :quality: ", thèmes en eux-mêmes comme au niveau de leur traitrement propre dans l'histoire"
+  :defect: ", thèmes en eux-mêmes comme en ce qui concerne leur traitrement propre dans l'histoire"

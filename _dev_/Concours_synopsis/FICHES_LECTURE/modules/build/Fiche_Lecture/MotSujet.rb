@@ -64,14 +64,19 @@ class MotSujet
   # +params+
   #   :as       Pour l'ajout au bout (soit :defect soit :quality (défaut))
   #   :article  Soit :les/le, soit :des/:du (par défaut)
+  #   :full_name    Si cette propriété est true et que le mot sujet contient
+  #                 un sujet principal (par exemple "thèmes" pour l'originalité
+  #                 des thèmes) alors c'est le nom complet qui doit être
+  #                 employé (donc "originalité des thèmes" pour l'exemple)
   def self.formate_liste(ary, params = nil)
     method_as = "as_#{params[:as] || :quality}".to_sym
     params[:article] ||= :des
+    full_name = !!params[:full_name]
     template = verbose? ? '%{article}%{sujet} (%{note})%{as}' : '%{article}%{sujet}%{as}'
     ary.collect do |motsujet|
       template % {
         article:  motsujet.article(params[:article]),
-        sujet:    motsujet.sujet,
+        sujet:    full_name ? motsujet.full_sujet : motsujet.sujet,
         note:     motsujet.note,
         as:       motsujet.send(method_as)
       }
@@ -151,8 +156,13 @@ class MotSujet
 
   # Par exemple "cohérence des personnages" si :sujet = 'cohérence' et
   # :main = 'personnages'
-  def f_sujet ; @f_sujet ||= formate_sujet end
-  def main_subject ; @main_subject ||= motSujet(main) end
+  def full_sujet
+    fs = sujet.dup
+    return fs if main.nil?
+    fs = "#{fs} #{main_subject.du}#{main_subject.sujet}".freeze
+    return fs
+  end
+  def main_subject ; @main_subject ||= MotSujet.get(main, fiche) end
 
   def article(art)
     art = case art
@@ -168,6 +178,7 @@ class MotSujet
       elsif voyelle       then 'l’'
       elsif genre == 'F'  then 'la '
       elsif genre == 'M'  then 'le '
+      else raise "Genre inconnu pour :le…"
       end
     end
   end
@@ -178,6 +189,7 @@ class MotSujet
       elsif voyelle       then 'de l’'
       elsif genre == 'F'  then 'de la '
       elsif genre == 'M'  then 'du '
+      else raise "Genre inconnu pour :du…"
       end
     end
   end #/ du
@@ -201,12 +213,12 @@ class MotSujet
   # comme une qualité
   def as_quality
     str = fiche.texte("#{key}") # p.e. 'p:cohe:quality'
-    if str && str[:quality] then " #{str[:quality]}"
+    if str && str[:quality] then str[:quality].freeze
     else '' end
   end
   def as_defect
     str = fiche.texte(key)
-    if str && str[:defect] then " #{str[:defect]}"
+    if str && str[:defect] then str[:defect].freeze
     else '' end
   end
 
@@ -230,6 +242,10 @@ def get(key, fiche)
     when 'projet', 'pro', 'po'
 
       MotSujet.new(fiche, 'projet', 'po', 'M', false, false)
+
+    when 'titre', 'tit', 'ti'
+
+      MotSujet.new(fiche, 'titre', 'ti', 'M', false, false)
 
     # === PERSONNAGES ===
 
@@ -301,9 +317,9 @@ def get(key, fiche)
 
       MotSujet.new(fiche, 'adéquation avec le thème', 'i:adth', 'F', false, true, 'intrigues')
 
-    when 'non prédictabilité', 'prd', 'predic'
+    when 'non prédictibilité', 'prd', 'predic'
 
-      MotSujet.new(fiche, 'non prédictabilité', 'predic', 'F', false, false, 'intrigues')
+      MotSujet.new(fiche, 'non prédictibilité', 'predic', 'F', false, false, 'intrigues')
 
     # === STRUCTURE ===
 
@@ -356,12 +372,6 @@ private
 
   def evaluation
     @evaluation ||= fiche.projet.evaluation.categories
-  end
-
-  def formate_sujet
-    fs = sujet
-    return fs unless main
-    "#{fs} #{main_subject.du}#{main_subject.sujet}"
   end
 
 end #/Class MotSujet

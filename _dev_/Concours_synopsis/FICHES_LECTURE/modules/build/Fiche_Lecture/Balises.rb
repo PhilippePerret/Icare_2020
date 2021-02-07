@@ -58,16 +58,14 @@ def balise_projet
   end
 end
 
+def balise_estimation_titre
+  texte(:titre, key_per_note(motSujet('titre').note))
+end
+
 # Retourne le contenu pour la balise « [[interets_histoire]] »
 def balise_interets_histoire
   ary = ['per','the','int','stt', 'uni', 'ori']
-  MotSujet.meilleurs_parmi(ary).collect do |motsujet|
-    if verbose?
-      "#{motsujet.du}#{motsujet.sujet} (#{motsujet.note})#{motsujet.as_quality}"
-    else
-      "#{motsujet.du}#{motsujet.sujet}#{motsujet.as_quality}"
-    end
-  end.pretty_join
+  MotSujet.formate_liste(MotSujet.meilleurs_parmi(ary), as: :quality)
 end
 
 # Retourne le contenu pour la balise « [[deficience_histoire]] »
@@ -76,6 +74,12 @@ def balise_deficiences_histoire
   ary = ['per','the','int','stt', 'uni', 'ori']
   MotSujet.formate_liste(MotSujet.inferieurs_a_10_parmi(ary, true), as: :defect)
 end
+
+def balise_deficiences_originalite
+  ary = ['p:fO', 't:fO', 'i:fO']
+  MotSujet.formate_liste(MotSujet.inferieurs_a_10_parmi(ary, true), as: :defect, full_name:true)
+end
+
 
 def balise_deficiences_coherence
   ary = ['i:cohe','p:cohe','t:cohe']
@@ -121,7 +125,7 @@ end
 def balise_raisons_mauvaises_intrigues
 
   raisons = []
-  if motSujet('non prédictabilité').note < 10
+  if motSujet('non prédictibilité').note < 10
     raisons << texte(:trop_grande_predictabilite)
   end
   if motSujet('originalité intrigues').note < 10
@@ -153,7 +157,7 @@ def balise_les_ameliorations_themes
 end
 
 def ary_redaction
-  @ary_redaction ||= ['r:cla', 'r:clar:ortho', 'r:clar:style', 'r:sim', 'r:emo']
+  @ary_redaction ||= ['r:cla', 'r:ortho', 'r:style', 'r:sim', 'r:emo']
 end
 
 def balise_deficiences_redaction
