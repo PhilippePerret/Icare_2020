@@ -13,6 +13,7 @@ class CheckList {
 // +ev+ Evènement permettant de placer la fenêtre
 static openWith(ev, checklist){
   this.checklist = checklist ; // utile pour onSave
+  console.log("checklist dans CheckList::openWith: ", this.checklist)
   this.setValues(checklist.score)
 }
 static onSave(ev){

@@ -9,7 +9,12 @@
 =end
 require_relative './constants'
 require_relative './FicheLecture'
-html.require_xmodule('calculs')
+if defined?(HTML)
+  html.require_xmodule('calculs')
+else
+  # Quand chargé par ajax par exemple
+  Dir["#{File.dirname(__dir__)}/calculs/**/*.rb"].each { |m| require m }
+end
 
 class Synopsis
 
