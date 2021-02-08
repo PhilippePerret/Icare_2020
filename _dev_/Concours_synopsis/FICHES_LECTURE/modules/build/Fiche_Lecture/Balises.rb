@@ -163,9 +163,28 @@ end
 def balise_deficiences_redaction
   MotSujet.formate_liste(MotSujet.inferieurs_a_10_parmi(ary_redaction, true), as: :defect, article: :de)
 end
+def balise_les_deficiences_redaction
+  MotSujet.formate_liste(MotSujet.inferieurs_a_10_parmi(ary_redaction, true), as: :defect, article: :le)
+end
 
 def balise_importance_redaction
   texte(:redaction, :importance)
+end
+
+# Pour la mention à ajouter quand la clarté de la rédaction n'est pas bonne
+def balise_mention_manque_clarte
+  @nombre_iterations ||= 0
+  note_redaction = motSujet('rédaction').note
+  return "" if note_redaction > 12
+  if note_redaction < 8
+    # Note inférieure à 8
+    @iterations_redac_nulle ||= FicheLecture::DATA_MAIN_PROPERTIES[:mentions_redaction_nulle].dup
+    traite_balises_in(@iterations_redac_nulle.shift)
+  else
+    # Note entre 8 et 12
+    @iterations_redac_bad ||= FicheLecture::DATA_MAIN_PROPERTIES[:mentions_redaction_bad].dup
+    traite_balises_in(@iterations_redac_bad.shift)
+  end
 end
 
 # Méthode générique qui établit la liste des points positifs et des regrets

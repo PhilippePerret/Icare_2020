@@ -19,8 +19,8 @@
   :explication: Cette note est une moyenne calculée d’après les notes attribuées par les jurés pour l’ensemble du projet et tous ses éléments.
   A: Votre histoire — [[estimation titre]] — a été très bien perçue, dans tous ses aspects, et notamment au niveau [[interets_histoire]]. Elle a incontestablement un réel potentiel et mérite d’être développée. Quoi qu’il en soit, bravo à vous !
   B: Votre histoire — [[estimation titre]] — a été bien perçue, principalement au niveau [[interets_histoire]]. Elle présente un certain potentiel, même si ce potentiel reste à renforcer, peut-être au niveau [[deficiences_histoire]]. Quoi qu’il en soit, bravo à vous !
-  C: Votre histoire — [[estimation titre]] — n’a pas vraiment rencontré l’adhésion des lecteurs du concours. Ils y ont trouvé des faiblesses par trop handicapantes, notamment au niveau [[deficiences_histoire]]. Ce sont des aspects que vous devriez retravailler si vous voulez donner une réelle chance à ce projet.
-  D: Votre histoire — [[estimation titre]] — n’a pas du tout trouvé l’adhésion des lecteurs du concours. Ils y ont vu des faiblesses rédhibitoires, notamment au niveau [[deficiences_histoire]]. Ces points leur semblent à réfléchir avec le plus grand sérieux et la plus grande inspiration si vous voulez donner une chance à ce projet.
+  C: Votre histoire — [[estimation titre]] — n’a pas vraiment rencontré l’adhésion des lecteurs du concours.[[mention manque clarte]] Ils y ont trouvé des faiblesses par trop handicapantes, notamment au niveau [[deficiences_histoire]]. Ce sont des aspects que vous devriez retravailler si vous voulez donner une réelle chance à ce projet.
+  D: Votre histoire — [[estimation titre]] — n’a pas du tout trouvé l’adhésion des lecteurs du concours.[[mention manque clarte]] Ils y ont vu des faiblesses rédhibitoires, notamment au niveau [[deficiences_histoire]]. Ces points leur semblent à réfléchir avec le plus grand sérieux et la plus grande inspiration si vous voulez donner une chance à ce projet.
 
 :titre:
   A: dont le titre a été très apprécié par les membres du jury
@@ -33,8 +33,8 @@
   :explication: Perception par les lecteurs des personnages de votre récit, au niveau de leur idiosyncrasie, de leur cohérence et de leur intérêt.
   A: Les lecteurs ont particulièrement apprécié les personnages de cette [[histoire]] et leur traitement notamment au niveau [[interets personnages]].[[if deficiences personnages]]
   B: Les personnages de ce [[projet]] ont été perçus comme intéressants et bien traités, principalement au niveau [[interets personnages]].[[if deficiences personnages]]
-  C: Les personnages n’ont pas été bien perçus par les lecteurs, qui les ont trouvé peu intéressants dans cette [[histoire]]. Des faiblesses trop importantes ont été ressenties au niveau [[deficiences personnages]].
-  D: Les lecteurs sont complètement passés à côté de vos personnages. Dans l’ensemble, ils les ont trouvé faibles au niveau [[deficiences personnages]]. C’est un point d’amélioration important de votre [[projet]], dans le sens où une bonne histoire ne peut se passer de personnages forts.
+  C: Les personnages n’ont pas été bien perçus par les lecteurs, qui les ont trouvé peu intéressants dans cette [[histoire]].[[mention manque clarte]] Des faiblesses trop importantes ont été ressenties au niveau [[deficiences personnages]].
+  D: Les lecteurs sont complètement passés à côté de vos personnages. Dans l’ensemble, ils les ont trouvé faibles au niveau [[deficiences personnages]].[[mention manque clarte]] C’est un point d’amélioration important de votre [[projet]], dans le sens où une bonne histoire ne peut se passer de personnages forts.
   :perfectibility: " Il est apparu cependant aux lecteurs qu'ils méritaient sans doute d’être approdondis au niveau [[perfectibilities personnages]]."
 
 :forme:
@@ -42,24 +42,24 @@
   :explication: Perception par les lecteurs de la forme générale de l’histoire, de sa structure et de ses éléments (actes, scènes-clés, etc.).
   A: Cette note indique que la structure (actes et scènes-clés) ont fait grande impression sur le lecteur, que cette [[histoire]] lui a paru parfaitement construite, dans les règles de l’art ou qu’au contraire elle faisait preuve d’une originalité forte.
   B: La structure de ce projet a été perçue par le lecteur mais qu’elle peut être sans doute renforcée, affirmée. Commencer par s’assurer que tous les éléments, actes et scènes-clés, remplissent parfaitement leur rôle peut être intéressant.
-  C: Les lecteurs ont perçu la structure comme un peu trop floue, un peu trop incertaine dans cette [[histoire]]. Il convient peut-être de s’assurer qu’elle est bien en place et que tous les nœuds remplissent leurs rôles.
-  D: Les lecteurs ont trouvé que cette [[histoire]] s'appuyait sur une forme beaucoup trop lâche.
+  C: Les lecteurs ont perçu la structure comme un peu trop floue, un peu trop incertaine dans cette [[histoire]].[[mention manque clarte]] Il convient peut-être de s’assurer que cette structure est bien en place et que tous les nœuds remplissent leurs rôles.
+  D: Les lecteurs ont trouvé que cette [[histoire]] s'appuyait sur une forme beaucoup trop lâche.[[mention manque clarte]]
 
 :intrigues:
   :diminutif: i
   :explication: Impressions laissées aux lecteurs par les intrigues du projet, et notamment l’intrigue principale et l’intrigue secondaire — si elle existe.
   A: Vos intrigues ont vraiment accroché les lecteurs du concours, notamment au niveau [[raisons bonnes intrigues]].
   B: Vos intrigues ont suscité un intérêt certain chez les lecteurs du concours, notamment au niveau [[raisons bonnes intrigues]].
-  C: Les lecteurs du concours n'ont pas été captivés par vos intrigues. La raison en est sans doute [[raisons mauvaises intrigues]].
-  D: Les lecteurs n'ont pas été sensibles à vos intrigues. La raison en est peut-être [[raisons mauvaises intrigues]].
+  C: Les lecteurs du concours n'ont pas été captivés par vos intrigues.[[mention manque clarte]] La raison en est sans doute [[raisons mauvaises intrigues]].
+  D: Les lecteurs n'ont pas été sensibles à vos intrigues.[[mention manque clarte]] La raison en est peut-être [[raisons mauvaises intrigues]].
 
 :themes:
   :diminutif: t
   :explication: Perception des thèmes abordés, de leur exploitation et de leur développement.
   A: Les lecteurs se sont passionnés pour les thèmes développés dans ce projet et la façon dont ils ont été exploités notamment au niveau [[raisons bons themes]].
   B: Le jury a été sensible aux thèmes développés et leur façon d’être exploités, notamment au niveau [[raisons bons themes]]. Il leur a semblé toutefois que l’approche pouvait être renforcée et affinée afin de pouvoir tirer vraiment tout le potentiel des éléments mis en place, principalement en ce qui concerne [[les ameliorations themes]].
-  C: Une note inférieure à 10 révèle une faiblesse au niveau des thèmes, tout au moins dans la perception des lecteurs. Ces lecteurs ont senti leur présence, mais ne les ont pas suffisamment imbriqués et exploités dans l’histoire.
-  D: Les lecteurs se sont malheureusement montrés indifférents à vos thèmes ou la façon de les exploiter/développer. Un travail important est à mener à ce niveau, entendu qu’une bonne histoire, même une histoire d’action de comédie ou d’aventure, ne peut faire l’économie de thèmes précis et bien exploités.
+  C: Une note inférieure à 10 révèle une faiblesse au niveau des thèmes, tout au moins dans la perception des lecteurs.[[mention manque clarte]] Ces lecteurs ont senti leur présence, mais ne les ont pas suffisamment imbriqués et exploités dans l’histoire.
+  D: Les lecteurs se sont malheureusement montrés indifférents à vos thèmes ou la façon de les exploiter/développer.[[mention manque clarte]] Un travail important est à mener à ce niveau, entendu qu’une bonne histoire, même une histoire d’action de comédie ou d’aventure, ne peut faire l’économie de thèmes précis et bien exploités.
 
 :facteurO:
   :diminutif: fO
@@ -68,8 +68,8 @@
   :explication: Le « facteur O », dans l’approche théorique de Philippe Perret (<a href="https://scenariopole.fr/narration">collection Narration</a>), indique le DEGRÉ D’ORIGINALITÉ de l’histoire et de ses “ingrédients”. C'est-à-dire, concrètement, leur singularité et la rareté de leur utilisation dans les histoires. Ce facteur est à mettre en regard avec le « facteur U ».
   A: Votre histoire et/ou ses ingrédients ont été perçus comme très originaux, et c’est un point fort.
   B: Les lecteurs ont perçu l’histoire comme plutôt originale, sans que cette originalité ne soit trop affirmée.
-  C: L’histoire et ses ingrédients ont été jugés comme manquant d’originalité, particulièrement au niveau [[deficiences originalite]].
-  D: Les lecteurs n’ont rien trouvé d’originale dans cette histoire. Que ce soit au niveau [[deficiences originalite]], elle a été perçue comme trop banale.
+  C: L’histoire et ses ingrédients ont été jugés comme manquant d’originalité, particulièrement au niveau [[deficiences originalite]].[[mention manque clarte]]
+  D: Les lecteurs n’ont rien trouvé d’originale dans cette histoire. Que ce soit au niveau [[deficiences originalite]], elle a été perçue comme trop banale.[[mention manque clarte]]
 
 :facteurU:
   :diminutif: fU
@@ -99,7 +99,7 @@
   A: Les lecteurs ont perçu une adéquation très forte entre le projet et le thème du concours, ce qui n’est pas étranger à [[la note generale]] attribuée à votre dossier.
   B: Les lecteurs ont perçu l’adéquation entre le projet et le thème du concours, mais ils attendaient peut-être une adéquation plus forte et plus patente encore, en l’exploitant mieux dans tous les aspects de la narration.
   C: Les lecteurs n’ont pas assez senti l’adéquation entre le projet et le thème du concours. Sans être hors-sujet pour autant, l’exploitation du thème a plus été ressenti comme un prétexte que comme réellement le sujet au cœur de la narration, ce qui explique entre autres choses [[la note generale]] attribuée à ce dossier.
-  D: Aucune adéquation n’a été perçue par les membres du jury entre le projet et le thème du concours. Cette adéquation jouant pour pour beaucoup dans [[la note generale]] attribuée au dossier, elle explique en grande partie le fait que ce dossier n’ait pas été retenu comme lauréats.
+  D: Aucune adéquation n’a été perçue par les membres du jury entre le projet et le thème du concours. Cette adéquation jouant pour beaucoup dans [[la note generale]] attribuée au dossier, elle explique en grande partie le fait que ce dossier n’ait pas été retenu comme lauréats.
 
 :redaction:
   :diminutif: r
@@ -111,6 +111,17 @@
   C: La rédaction et l’orthographe de ce dossier a été jugé par les lecteurs d’un niveau très insuffisant, notamment au niveau [[deficiences redaction]]. [[importance redaction]]
   D: Les lecteurs ont jugé que le projet se mettaient lui-même en danger de par ses déficiences rédactionnelles, particulièrement au niveau [[deficiences redaction]]. [[importance redaction]]
   :importance: "Que vous écriviez pour l’écran, pour la scène, pour l’oreille ou pour le livre, il est capital de comprendre que tout projet narratif, à un moment ou à un autre, passe par la <em>lecture</em> pour être retenu et se réaliser, et nécessite donc à ce niveau une attention tout à fait particulière de l’auteur·e."
+
+:mentions_redaction_nulle:
+  - " Cela peut tenir à la mauvaise qualité de la rédaction, principalement en ce qui concerne [[les deficiences redaction]]."
+  - " Comme nous l’avons déjà mentionné, cela peut s’expliquer par la mauvaise qualité de l’écriture."
+  - " Nous le redisons, peut-être cela tient-il à la mauvaise qualité de la rédaction."
+  - " Encore une fois, la mauvaise qualité de la rédaction peut expliquer ce constat."
+:mentions_redaction_bad:
+  - " Cela peut être dû à la qualité perfectible de la rédaction du dossier, principalement en ce qui concerne [[les deficiences redaction]]."
+  - " Comme cela a été déjà mentionné, cela tient peut-être à la qualité approximative de l’écriture."
+  - " Nous le redisons, cette impression peut être mise sur le compte de la qualité perfectible de la rédaction."
+  - " Encore une fois, la qualité moyenne de la rédaction a-t-elle une part dans ce constat."
 
 # --- SOUS CATÉGORIGES / QUALITÉS ET DÉFAUTS ---
 

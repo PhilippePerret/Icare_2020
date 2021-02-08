@@ -199,13 +199,13 @@ class MotSujet
     @note ||= begin
       evaluation[key][:note]
     rescue Exception => e
-      puts "ERR: La clé #{key.inspect} est inconnue dans #{evaluation.keys.inspect}\nJe retourne 0.0".rouge
+      puts "ERREUR NON FATALE : La clé #{key.inspect} est inconnue dans les clés de l'évaluation du dossier : #{evaluation.keys.inspect}\nLe mieux serait de définir le sujet “#{full_sujet}”. Je retourne 8.0 en attendant".rouge
       if FLFactory.option?(:verbose)
         puts "La table projet.evaluation complète :\n#{evaluation.pretty_inspect}"
       else
         puts "Ajouter l'option -v/--verbose pour voir l'intégralité de la table".bleu
       end
-      0.0
+      8.0
     end
   end
 
@@ -228,9 +228,11 @@ class MotSujet
   end
 
 class << self # MotCle.self
+
 # Retourne une structure MotSujet de clé +key+ (qui peut être 'personnage',
 # 'structure', etc.)
 def get(key, fiche)
+  key = real_key_for(key)
   @mots_sujets ||= {}
   @mots_sujets[key] ||= begin
     case key
@@ -239,133 +241,111 @@ def get(key, fiche)
     #
     #   MotSujet.new(fiche, <nom humain>, <clé évaluation>, <sexe>, <pluriel ?>, <voyelle ?>[, <sujet principal>])
 
-    when 'projet', 'pro', 'po'
-
+    when 'projet'
       MotSujet.new(fiche, 'projet', 'po', 'M', false, false)
-
-    when 'titre', 'tit', 'ti'
-
+    when 'titre'
       MotSujet.new(fiche, 'titre', 'ti', 'M', false, false)
 
     # === PERSONNAGES ===
-
-    when 'personnages', 'per', 'p'
-
+    when 'personnages'
       MotSujet.new(fiche, 'personnages', 'p', 'M', true, false)
-
-    when 'adéquation thème personnages', 'adq per', 'p:adth'
-
+    when 'p:adth'
       MotSujet.new(fiche, 'adéquation avec le thème du concours', 'p:adth', 'F', false, true, 'personnages')
-
-    when 'cohérence personnages', 'coh per', 'p:cohe'
-
+    when 'p:cohe'
       MotSujet.new(fiche, 'cohérence', 'p:cohe', 'F', false, false, 'personnages')
-
-    when 'originalité personnages', 'ori per', 'p:fO'
-
+    when 'p:fO'
       MotSujet.new(fiche, 'originalité', 'p:fO', 'F', false, true, 'personnages')
-
-    when 'universalité personnages', 'uni per', 'p:fU'
-
+    when 'p:fU'
       MotSujet.new(fiche, 'universalité', 'p:fU', 'F', false, true, 'personnages')
-
-    when 'idiosyncrasie personnages', 'idi per', 'p:idio'
-
+    when 'p:idio'
       MotSujet.new(fiche, 'idiosyncrasie', 'p:idio', 'F', false, true, 'personnages')
 
     # === THÈMES ===
-
-    when 'thèmes', 'the', 't'
-
+    when 'thèmes'
       MotSujet.new(fiche, 'thèmes', 't', 'M', true, false)
-
-    when 'originalité thèmes', 'ori the', 't:fO'
-
+    when 't:fO'
       MotSujet.new(fiche, 'originalité', 't:fO', 'F', false, true, 'thèmes')
-
-    when 'universalité thèmes', 'uni the', 't:fU'
-
+    when 't:fU'
       MotSujet.new(fiche, 'universalité', 't:fU', 'F', false, true, 'thèmes')
-
-    when 'adéquation thèmes', 'adq the', 't:adth'
-
+    when 't:adth'
       MotSujet.new(fiche, 'adéquation avec le thème', 't:adth', 'F', false, true, 'thèmes')
-
-    when 'cohérence thèmes', 'coh the', 't:cohe'
-
+    when 't:cohe'
       MotSujet.new(fiche, 'cohérence', 't:adth', 'F', false, false, 'thèmes')
 
     # === INTRIGUES ===
-
-    when 'intrigues', 'int', 'i'
-
+    when 'intrigues'
       MotSujet.new(fiche, 'intrigues', 'i', 'F', true, true)
-
-    when 'originalité intrigues', 'ori int', 'i:fO'
-
+    when 'i:fO'
       MotSujet.new(fiche, 'originalité', 'i:fO', 'F', false, true, 'intrigues')
-
-    when 'universalité intrigues', 'uni int', 'i:fU'
-
+    when 'i:fU'
       MotSujet.new(fiche, 'universalité', 'i:fU', 'F', false, true, 'intrigues')
-
-    when 'cohérence intrigues', 'coh int', 'i:cohe'
-
+    when 'i:cohe'
       MotSujet.new(fiche, 'cohérence', 'i:cohe', 'F', false, false, 'intrigues')
-
-    when 'adéquation thème intrigues', 'adq int', 'i:adth'
-
+    when 'i:adth'
       MotSujet.new(fiche, 'adéquation avec le thème', 'i:adth', 'F', false, true, 'intrigues')
-
-    when 'non prédictibilité', 'prd', 'predic'
-
+    when 'predic'
       MotSujet.new(fiche, 'non prédictibilité', 'predic', 'F', false, false, 'intrigues')
 
     # === STRUCTURE ===
-
-    when 'structure', 'stt', 'f'
-
+    when 'structure'
       MotSujet.new(fiche, 'structure', 'f', 'F', false, false)
 
-    when 'universalité', 'uni', 'fU'
-
+    when 'universalité'
       MotSujet.new(fiche, 'universalité', 'fU', 'F', false, true)
-
-    when 'originalité', 'ori', 'fO'
-
+    when 'originalité'
       MotSujet.new(fiche, 'originalité', 'fO', 'F', false, true)
 
-
     # === RÉDACTION ===
-
-    when 'rédaction', 'red', 'r'
-
+    when 'rédaction'
       MotSujet.new(fiche, 'rédaction', 'r', 'F', false, false)
-
-    when 'clarté', 'clarté rédaction', 'cla red', 'cla', 'r:cla'
-
+    when 'r:cla'
       MotSujet.new(fiche, 'clarté rédaction', 'r:cla', 'F', false, false, 'rédaction')
-
-    when 'orthographe', 'r:cla:ortho'
-
+    when 'r:ortho'
       MotSujet.new(fiche, 'orthographe', 'r:cla:ortho', 'F', false, true)
-
-    when 'style', 'r:cla:style'
-
+    when 'r:style'
       MotSujet.new(fiche, 'style', 'r:cla:style', 'M', false, false)
-
-    when 'simplicité', 'simplicité rédactionnelle', 'r:sim'
-
+    when 'r:sim'
       MotSujet.new(fiche, 'simplicité', 'r:sim', 'F', false, false, 'rédaction')
-
-    when 'émotion', 'r:emo'
-
+    when 'r:emo'
       MotSujet.new(fiche, 'émotion révélée par la rédaction', 'r:emo', 'F', false, true)
-
     end
-
   end
 end #/ motSujet
+
+def real_key_for(key)
+  case key
+  when 'projet', 'pro', 'po'        then 'projet'
+  when 'titre', 'tit', 'ti'         then 'titre'
+  when 'personnages', 'per', 'p'    then 'personnages'
+  when 'thèmes', 'the', 't'         then 'thèmes'
+  when 'intrigues', 'int', 'i'      then 'intrigues'
+  when 'structure', 'stt', 'f'      then 'structure'
+  when 'rédaction', 'red', 'r'      then 'rédaction'
+  when 'universalité', 'uni', 'fU'  then 'universalité'
+  when 'originalité', 'ori', 'fO'   then 'originalité'
+  when 'adéquation thème personnages', 'adq per', 'p:adth'  then 'p:adth'
+  when 'cohérence personnages', 'coh per', 'p:cohe'         then 'p:cohe'
+  when 'originalité personnages', 'ori per', 'p:fO'         then 'p:fO'
+  when 'universalité personnages', 'uni per', 'p:fU'        then 'p:fU'
+  when 'idiosyncrasie personnages', 'idi per', 'p:idio'     then 'p:idio'
+  when 'originalité thèmes', 'ori the', 't:fO'              then 't:fO'
+  when 'universalité thèmes', 'uni the', 't:fU'             then 't:fU'
+  when 'adéquation thèmes', 'adq the', 't:adth'             then 't:adth'
+  when 'cohérence thèmes', 'coh the', 't:cohe'              then 't:cohe'
+  when 'originalité intrigues', 'ori int', 'i:fO'           then 'i:fO'
+  when 'universalité intrigues', 'uni int', 'i:fU'          then 'i:fU'
+  when 'cohérence intrigues', 'coh int', 'i:cohe'           then 'i:cohe'
+  when 'adéquation thème intrigues', 'adq int', 'i:adth'    then 'i:adth'
+  when 'non prédictibilité', 'prd', 'predic'                then 'predic'
+  when 'clarté', 'clarté rédaction', 'cla', 'r:cla'         then 'r:cla'
+  when 'orthographe', 'r:ortho'                             then 'r:ortho'
+  when 'style', 'r:style'                                   then 'r:style'
+  when 'simplicité', 'simplicité rédactionnelle', 'r:sim'   then 'r:sim'
+  when 'émotion', 'r:emo'                                   then 'r:emo'
+  end
+end #/ real_key_for
+
+
 end #/<< self class MotSujet
 
 private

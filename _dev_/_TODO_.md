@@ -2,7 +2,8 @@
 
 ## Rapid list
 
-* Insérer la mention genre "mais cela est peut-être dû au manque de clarté etc." quand la rédaction n'est pas bonne.
+* Reprendre la fiche de 20201227134821 et limiter toujours les listes à 3 éléments max (voir le projet dans sa globalité)
+* Bug au niveau du nombre de projets, dans la mention de la place du dossier
 * Pouvoir insérer un "vrai texte propre" dans la fiche de lecture
 * Dans le mail de phase 2, faire un premier bilan de la participation, avec :
   - le nombre d'inscrits
