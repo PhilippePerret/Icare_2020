@@ -22,10 +22,10 @@ def set_non_conforme(motifs, motif_detailled)
   motif_detailled = motif_detailled.nil_if_empty
   motifs || motif_detailled || raise("Il faut fournir au moins 1 motif de non conformité !")
   motifs = [motifs] if motifs.is_a?(String)
-  motifs = motifs.collect do |motif|
+  motifs = motifs&.collect do |motif|
     data_motif = MOTIF_NON_CONFORMITE[motif.to_sym]
     "#{data_motif[:motif]}#{" (#{data_motif[:precision]})" if data_motif[:precision]}"
-  end
+  end || [] # quand seulement autre motif
   if not motif_detailled.nil?
     motifs += motif_detailled.split(/\r?\n/)
   end
