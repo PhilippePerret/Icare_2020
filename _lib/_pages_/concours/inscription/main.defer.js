@@ -16,7 +16,7 @@ class MyForm {
       this.fields['patronyme'].isOK || raise();
       this.fields['mail'].isOK || raise();
       this.fields['mail_confirmation'].isOK || raise();
-      this.obj.querySelector('#p_reglement').checked || raise("Il faut approuver le règlement en cochant la case.")
+      this.obj.querySelector('#p_reglement').checked || raise("Il faut approuver le règlement en cochant la case.") // constant ruby
       return true ;
     } catch (err) {
       if (err == "Error") err = null ;
@@ -93,8 +93,8 @@ check(){
 checkPatronyme(){
   const val = this.value.trim();
   try {
-    val != "" || raise("Il faut donner votre patronyme.");
-    val.length < 200 || raise("Votre patronyme ne doit pas excéder 200 caractères.");
+    val != "" || raise("Le patronyme est absolument requis");// cf. constants ruby
+    val.length <= 200 || raise("Votre patronyme ne doit pas excéder 200 caractères.");// cf. constants ruby
     this.onOK();
   } catch (err) {
     this.onError(err);
@@ -103,9 +103,9 @@ checkPatronyme(){
 checkMail(){
   const value = this.value.trim();
   try {
-    value != "" || raise("Merci de donner votre mail.");
-    value.length < 256 || raise("Ce mail est trop long (255 max)");
-    value.search(/(.*)@(.*)\.(.*){1,7}/i) > -1 || raise("Ce mail n'est pas valide.");
+    value != "" || raise("Le mail est absolument requis"); // cf. constants ruby
+    value.length < 256 || raise("Ce mail est trop long…"); // cf. constants ruby
+    value.search(/(.*)@(.*)\.(.*){1,7}/i) > -1 || raise("Le mail est invalide…");// cf. constants ruby
     // Tout est OK avec le mail
     this.onOK();
   } catch (e) {

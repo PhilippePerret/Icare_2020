@@ -33,7 +33,7 @@ def peut_sinscrire_au_concours(as)
   end
 
   scenario "peut s'inscrire au concours en tant que #{HUMAN_VISITOR_STATE[as]}" do
-    require './_lib/_pages_/concours/inscription/constants'
+    require './_lib/_pages_/concours/xmodules/inscription/constants'
     start_time = Time.now.to_i
     goto("concours/inscription")
     screenshot("inscription-#{as.inspect}")
@@ -85,7 +85,7 @@ def peut_sinscrire_au_concours(as)
 
     # Un message annonce la réussite de l'opération
     # pseudo_message = visitor.is_a?(TUser) ? visitor.pseudo
-    expect(page).to have_message(MESSAGES[:concours_confirm_inscription_session_courante] % {e:concurrent_e, pseudo:visitor.pseudo})
+    expect(page).to have_message(MESSAGES[:concours_confirm_inscription_session_courante] % {e:concurrent_e, pseudo:visitor&.pseudo||concurrent_pseudo})
 
     # Les données sont justes, dans la table des concurrents
     dc = db_exec("SELECT * FROM #{DBTBL_CONCURRENTS} WHERE patronyme = ?", [concurrent_patro]).first
@@ -130,7 +130,6 @@ end
 # de s'inscrire (alors qu'il l'est déjà)
 def ne_peut_pas_sinscrire_au_concours(raison_affichee = "déjà inscrit")
   it "ne peut pas s'inscrire au concours (#{raison_affichee})" do
-    require './_lib/_pages_/concours/inscription/constants'
     goto("concours/inscription")
     expect(page).to be_inscription_concours(formulaire = false)
     expect(page).to have_content(raison_affichee)
@@ -138,16 +137,18 @@ def ne_peut_pas_sinscrire_au_concours(raison_affichee = "déjà inscrit")
 end #/ne_peut_pas_sinscrire_au_concours
 
 def ne_peut_pas_sinscrire_au_concours_avec_des_donnees_erronnees
+  require './_lib/_pages_/concours/xmodules/inscription/constants'
   dc = db_exec("SELECT mail FROM #{DBTBL_CONCURRENTS} LIMIT 1").first
   mauvaise_inscription_avec("un mail existant",  dc)
   dc = db_exec("SELECT mail FROM users WHERE id > 9 LIMIT 1").first
   mauvaise_inscription_avec('un mail d’icarien', dc)
-  mauvaise_inscription_avec('un mail invalide', mail: "#{'xy'*150}@chez.lui")
+  mauvaise_inscription_avec('un mail trop long', mail: "#{'xy'*256}@chez.lui")
   mauvaise_inscription_avec('un mail invalide', mail: "mauvais@mail")
   mauvaise_inscription_avec('une mauvaise confirmation de mail', mail_confirmation:'mauvaise@confirmation.com')
   mauvaise_inscription_avec('un patronyme trop long', patronyme: "x"*257)
   dc = db_exec("SELECT patronyme FROM #{DBTBL_CONCURRENTS} LIMIT 1").first
   mauvaise_inscription_avec('un patronyme existant', dc)
+  mauvaise_inscription_avec('un règlement non approuvé', reglement: false)
 end
 
 def mauvaise_inscription_avec(raison, data)
@@ -157,6 +158,8 @@ def mauvaise_inscription_avec(raison, data)
     when "un mail existant"
       "Vous êtes déjà concurrent du concours"
       ERRORS[:concours][:signup][:errors][:already_concurrent]
+    when 'un mail trop long'
+      ERRORS[:concours][:signup][:errors][:mail_too_long]
     when 'un mail invalide'
       ERRORS[:concours][:signup][:errors][:invalid_mail]
     when 'un mail d’icarien'
@@ -167,8 +170,10 @@ def mauvaise_inscription_avec(raison, data)
       ERRORS[:concours][:signup][:errors][:patronyme_exists]
     when 'un patronyme trop long'
       ERRORS[:concours][:signup][:errors][:patronyme_too_long]
+    when 'un règlement non approuvé'
+      ERRORS[:concours][:signup][:errors][:approbation_rules_required]
     end
-    expect(page).to have_erreur(error_msg)
+    expect(page).to have_content(error_msg)
   end
 end #/ mauvaise_inscription_avec
 
@@ -196,6 +201,7 @@ def proceed_inscription_with(data)
     else
       check("p_fiche_lecture")
     end
+    # sleep 10
     # On soumet le formulaire
     click_on(UI_TEXTS[:concours_bouton_signup])
   end

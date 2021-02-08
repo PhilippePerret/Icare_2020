@@ -2,7 +2,7 @@
 
 ## Rapid list
 
-* Faire un premier bilan de la participation, avec :
+* Dans le mail de phase 2, faire un premier bilan de la participation, avec :
   - le nombre d'inscrits
   - le nombre de dossier reçus
   - le nombre de dossier conforme finalement en lice
