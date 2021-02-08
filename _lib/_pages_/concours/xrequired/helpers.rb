@@ -11,8 +11,11 @@ class HTML
 
   # Retourne le code HTML du bouton pour rejoindre le formulaire
   # d'inscription au concours.
+  # Note : pas de formulaire d'inscription quand on est entre la phase 2 et 5
   def bouton_formulaire
-    btn_key = Concours.current.phase < 2 ? :concours_bouton_inscription : :concours_btn_signup_next
+    phase = Concours.current.phase
+    return "" if phase.between?(2,5)
+    btn_key = phase < 2 ? :concours_bouton_inscription : :concours_btn_signup_next
     cont = Tag.link(class:'btn main green pd1', text:UI_TEXTS[btn_key], route:"concours/inscription")
     Tag.div(class:'mt2 mb2 center', text: cont) + div_avantages_signup_before
   end #/ bouton_formulaire
@@ -23,7 +26,7 @@ class HTML
   end #/ div_avantages_signup_before
 
   # Produit un bouton pour s'identifier ou, si on est identifié, pour
-  # rejoindre son section à soi
+  # rejoindre son espace personnel
   def bouton_login_or_espace
     if concurrent
       cont = Tag.link(route:"concours/espace_concurrent", text:"Rejoindre votre espace.")
