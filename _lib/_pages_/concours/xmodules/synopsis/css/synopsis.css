@@ -18,6 +18,14 @@ div.synopsis {
 div.synopsis.not-conforme {
   border-color:red;
 }
+/* Pour les synopsis non conformes, on ne doit pas pouvoir mettre de note
+*/
+div.synopsis.not-conforme a.note-generale,
+div.synopsis.not-conforme div.div-pct-reponses,
+div.synopsis.not-conforme div.jauge-pct-reponses
+{
+  visibility: hidden;
+}
 
 div.synopsis a.note-generale {
   display:block;
