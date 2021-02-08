@@ -1,9 +1,9 @@
 # encoding: UTF-8
 require 'date'
 
-UI_TEXTS  = {}
-MESSAGES  = {}
-ERRORS    = {}
+UI_TEXTS  = {} if not defined?(UI_TEXTS)
+MESSAGES  = {} if not defined?(MESSAGES)
+ERRORS    = {} if not defined?(ERRORS)
 
 # Les constantes string utiles
 require './_lib/required/__first/constants/String'
