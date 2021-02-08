@@ -3,15 +3,12 @@
 
 def peut_detruire_son_inscription
   it "peut détruire son inscription" do
-    if visitor.is_a?(TUser)
-      # Cas particulier où le visiteur est un icarien
-      # Je pense qu'il faut transformer le 'visitor' ici par un vrai
-      # TConcurrent car sinon les propriétés '.folder', '.id' etc.
-      # seront fausses.
-      testedvisitor = visitor.as_concurrent
-    else
-      testedvisitor = visitor
-    end
+    # Cas particulier où le visiteur est un icarien
+    # Je pense qu'il faut transformer le 'visitor' ici par un vrai
+    # TConcurrent car sinon les propriétés '.folder', '.id' etc.
+    # seront fausses.
+    testedvisitor = visitor.is_a?(TUser) ? visitor.as_concurrent : visitor
+
     # *** Vérifications préliminaires ***
     if not File.exists?(testedvisitor.folder)
       mkdir(testedvisitor.folder)

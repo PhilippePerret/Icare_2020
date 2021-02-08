@@ -32,6 +32,7 @@ feature "Un simple visiteur", visitor:true do
     end
     peut_atteindre_lannonce_du_prochain_concours
     peut_sinscrire_au_concours(as = :simple)
+    ne_peut_pas_sinscrire_au_concours_avec_des_donnees_erronnees
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 0
 
@@ -41,8 +42,10 @@ feature "Un simple visiteur", visitor:true do
       degel('concours-phase-1')
     end
     peut_rejoindre_toutes_les_sections_depuis_laccueil
+    peut_sinscrire_au_concours(as = :simple)
+    ne_peut_pas_sinscrire_au_concours_avec_des_donnees_erronnees
     ne_peut_pas_transmettre_de_dossier
-  end #/context PHASE 1
+end #/context PHASE 1
 
   context 'PHASE 2', phase2:true, visitor:'phase2' do
     before :all do

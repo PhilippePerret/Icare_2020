@@ -1,9 +1,55 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+=begin
+  Cmd R   ---> liste des méthodes
+=end
+
+def trouve_les_dix_synopsis_preselectionnes
+  it 'trouve les dix cartes des synopsis présélectionnés à évaluer' do
+    visitor.rejoint_le_site
+    # On s'assure que c'est la bonne phase
+    goto("concours/admin")
+    expect(page).to have_select("current_phase", selected:"Sélection finale en cours")
+    goto("concours/evaluation")
+    expect(page).to be_fiches_synopsis
+    expect(page).to have_css("div#synopsis-container")
+    # sleep 10
+    TConcurrent.all_current.each do |conc|
+      if conc.preselected?
+        expect(page).to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
+          "Le concurrent #{conc.ref} devrait avoir sa fiche affichée (est présélectionné)"
+      else
+        expect(page).not_to have_css("div.synopsis", id: "synopsis-#{conc.id}-#{ANNEE_CONCOURS_COURANTE}"),
+          "Le concurrent #{conc.ref} NE devrait PAS avoir sa fiche affichée (ne fait pas partie des présélectionné)"
+      end
+    end
+  end
+end #/trouve_les_dix_synopsis_preselectionnes
+
+def peut_evaluer_un_projet
+  it "peut évaluer un projet" do
+    goto('concours/evaluation')
+    expect(page).to be_page_evaluation
+    id_synopsis = first('div.synopsis')[:id].split('-')[1..2].join('-')
+    id_concurrent = id_synopsis.split('-')[0]
+    first('div.synopsis').click_on('Évaluer')
+    expect(page).to have_titre("Évaluation de #{id_synopsis}")
+    pending "à implémenter"
+  end
+end #/ peut_evaluer_un_projet
+
+def ne_peut_plus_evaluer_les_projets
+  it "ne peut plus evaluer les projets" do
+    visit("concours/evaluation")
+    expect(page).to be_page_evaluation
+    id_synopsis = first('div.synopsis')[:id].split('-')[1..2].join('-')
+    expect(first('div.synopsis')).not_to have_link('Évaluer')
+  end
+end #/ ne_peut_plus_evaluer_les_projets
+
 
 def peut_evaluer_un_synopsis_par_la_fiche
-  pitch("#{member.pseudo}, un membre du premier jury, peut rejoindre le concours, passer à l'évaluation d'une fiche en trouvant son évaluation précédente correctement affichée.")
-  member.rejoint_le_concours
+  visitor.rejoint_le_concours
   expect(page).to be_fiches_synopsis
   syno_id = "#{concurrent.id}-#{annee}"
   div_syno_id = "synopsis-#{syno_id}"
@@ -22,8 +68,7 @@ def peut_evaluer_un_synopsis_par_la_fiche
 end #/ peut_evaluer_un_synopsis_par_la_fiche
 
 def peut_modifier_son_evaluation
-  pitch("#{member.pseudo}, membre du premier jury, peut rejoindre le concours, passer à l'évaluation d'une fiche en modifiant son évaluation précédente.")
-  member.rejoint_le_concours
+  visitor.rejoint_le_concours
   expect(page).to be_fiches_synopsis
   syno_id = "#{concurrent.id}-#{annee}"
   div_syno_id = "synopsis-#{syno_id}"
@@ -55,7 +100,6 @@ def peut_modifier_son_evaluation
   end
 
   screenshot("apres-save-score")
-  pitch("La nouvelle note est remontée par le programme et affichée dans le message de confirmation.")
   expect(page).to have_message("Le nouveau score est enregistré.")
   # On mémorise cette note affichée pour la retrouver dans la liste des
   nouvelle_note = page.find("span#nouvelle-note").text
@@ -63,7 +107,7 @@ def peut_modifier_son_evaluation
   # sleep 5 # le temps d'enregistrer (non puisqu'on attend sur le message ci-dessus)
 
   old_fiche_evaluation = fiche_evaluation.dup
-  new_fiche_evaluation = YAML.load_file(member.path_fiche_evaluation(concurrent))
+  new_fiche_evaluation = YAML.load_file(visitor.path_fiche_evaluation(concurrent))
 
   # L'évaluation doit avoir été modifiée
   # Comme certaines questions ont pu être passées pour erreur, on compte
@@ -81,7 +125,7 @@ def peut_modifier_son_evaluation
 
   pitch("Le membre du jury, grâce à un lien évident, retourne à la liste des synopsis pour voir la nouvelle note affichée")
   expect(page).to have_link("Fiches des synopsis")
-  member.click_on("Fiches des synopsis")
+  visitor.click_on("Fiches des synopsis")
   expect(page).to be_fiches_synopsis
 
   # La note doit avoir été recalculée et rectifiée
@@ -89,7 +133,7 @@ def peut_modifier_son_evaluation
 end #/ peut_modifier_son_evaluation
 
 def peut_evaluer_un_synopsis_par_le_minichamp
-  member.rejoint_le_concours
+  visitor.rejoint_le_concours
   goto("concours/evaluation")
   within("form#goto-evaluate-synopsis-form") do
     fill_in("synoid", with: synopsis_id)

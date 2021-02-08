@@ -136,3 +136,67 @@ def ne_peut_pas_sinscrire_au_concours(raison_affichee = "déjà inscrit")
     expect(page).to have_content(raison_affichee)
   end
 end #/ne_peut_pas_sinscrire_au_concours
+
+def ne_peut_pas_sinscrire_au_concours_avec_des_donnees_erronnees
+  dc = db_exec("SELECT mail FROM #{DBTBL_CONCURRENTS} LIMIT 1").first
+  mauvaise_inscription_avec("un mail existant",  dc)
+  dc = db_exec("SELECT mail FROM users WHERE id > 9 LIMIT 1").first
+  mauvaise_inscription_avec('un mail d’icarien', dc)
+  mauvaise_inscription_avec('un mail invalide', mail: "#{'xy'*150}@chez.lui")
+  mauvaise_inscription_avec('un mail invalide', mail: "mauvais@mail")
+  mauvaise_inscription_avec('une mauvaise confirmation de mail', mail_confirmation:'mauvaise@confirmation.com')
+  mauvaise_inscription_avec('un patronyme trop long', patronyme: "x"*257)
+  dc = db_exec("SELECT patronyme FROM #{DBTBL_CONCURRENTS} LIMIT 1").first
+  mauvaise_inscription_avec('un patronyme existant', dc)
+end
+
+def mauvaise_inscription_avec(raison, data)
+  it "ne réussit pas à s’inscrire au concours avec #{raison}" do
+    proceed_inscription_with(data)
+    error_msg = case raison
+    when "un mail existant"
+      "Vous êtes déjà concurrent du concours"
+      ERRORS[:concours][:signup][:errors][:already_concurrent]
+    when 'un mail invalide'
+      ERRORS[:concours][:signup][:errors][:invalid_mail]
+    when 'un mail d’icarien'
+      ERRORS[:concours][:signup][:errors][:is_icarien]
+    when 'une mauvaise confirmation de mail'
+      ERRORS[:concours][:signup][:errors][:confirmation_mail_doesnt_match]
+    when 'un patronyme existant'
+      ERRORS[:concours][:signup][:errors][:patronyme_exists]
+    when 'un patronyme trop long'
+      ERRORS[:concours][:signup][:errors][:patronyme_too_long]
+    end
+    expect(page).to have_erreur(error_msg)
+  end
+end #/ mauvaise_inscription_avec
+
+# Méthode utilitaire pour procéder à l'inscription en utilisant le formulaire.
+def proceed_inscription_with(data)
+  goto("concours/inscription")
+  start_time = Time.now.to_i
+  # Un utilisateur s'inscrit
+  data[:patronyme] ||= "Concurrent #{start_time + rand(10000)}"
+  data[:mail]   ||= "#{data[:patronyme].downcase.gsub(/ /,'')}@philippeperret.fr"
+  data[:mail_confirmation ] ||= data[:mail]
+  data[:sexe] ||= "féminin"
+  within("form#concours-signup-form") do
+    fill_in("p_patronyme", with: data[:patronyme])
+    fill_in("p_mail", with: data[:mail])
+    fill_in("p_mail_confirmation", with: data[:mail_confirmation])
+    select(data[:sexe], from: "p_sexe")
+    if data[:reglement] === false
+      uncheck("p_reglement")
+    else
+      check("p_reglement")
+    end
+    if data[:fiche_lecture] === false
+      uncheck("p_fiche_lecture")
+    else
+      check("p_fiche_lecture")
+    end
+    # On soumet le formulaire
+    click_on(UI_TEXTS[:concours_bouton_signup])
+  end
+end #/ proceed_inscription_with

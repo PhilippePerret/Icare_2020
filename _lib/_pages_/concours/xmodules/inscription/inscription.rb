@@ -1,6 +1,8 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_module('mail')
+require_relative './constants'
+
 class HTML
 
   # Traitement de l'inscription à la session courante d'un ancien concurrent
@@ -85,6 +87,7 @@ class HTML
     if data_concurrent[:is_icarien]
       fem_ne = data_concurrent[:sexe]=="F" ? "ne" : ""
       fem_e = data_concurrent[:sexe]=="F" ? "e" : ""
+      erreur(ERRORS[:concours][:signup][:errors][:is_icarien])
       if Concurrent.exists?(mail:data_concurrent[:mail])
         # <= L'icarien non identifié est inscrit aux concours
         # => On lui demande de s'identifier
@@ -102,6 +105,7 @@ class HTML
       #     Soit il utilise le formulaire par dépit, soit il est un ancien
       #     concurrent qui veut s'inscrire à la session courante.
       # =>  Dans les deux cas, on le renvoie à l'identification avec un message
+      erreur(ERRORS[:concours][:signup][:errors][:already_concurrent])
       message(MESSAGES[:concurrent_login_required])
       redirect_to("concours/identification")
       return
@@ -231,17 +235,18 @@ class HTML
     # qui veut s'inscrire à la session courante)
     if not(dcandidat[:is_icarien]) && not(dcandidat[:is_concurrent])
       # OK, on peut étudier sérieusement cette candidature
-      patronyme || raise("Patronyme non défini.")
-      patronyme.length < 256 || raise(ERRORS[:concours_patronyme_too_long])
-      patronyme_unique?(patronyme) || raise(ERRORS[:concours_patronyme_exists])
-      mail || raise("Mail non défini.")
-      mail.length < 256 || raise(ERRORS[:mail_too_long])
-      mail.downcase.match?(/^(.+)@(.+)\.([a-z]{1,7})$/) || raise(ERRORS[:mail_invalide])
-      mail_unique?(mail) || raise(ERRORS[:concours_mail_exists])
+      signup_errors = ERRORS[:concours][:signup][:errors]
+      patronyme || raise(signup_errors[:patronyme_required])
+      patronyme.length < 256 || raise(signup_errors[:patronyme_too_long])
+      patronyme_unique?(patronyme) || raise(signup_errors[:patronyme_exists])
+      mail || raise(signup_errors[:mail_required])
+      mail.length < 256 || raise(signup_errors[:mail_too_long])
+      mail.downcase.match?(/^(.+)@(.+)\.([a-z]{1,7})$/) || raise(signup_errors[:invalid_mail])
+      mail_unique?(mail) || raise(signup_errors[:mail_exists])
       mailconf  = param(:p_mail_confirmation).nil_if_empty
-      mailconf == mail || raise("La confirmation du mail ne correspond pas.")
+      mailconf == mail || raise(signup_errors[:confirmation_mail_doesnt_match])
       reglement = param(:p_reglement).nil_if_empty
-      reglement == "on" || raise("Le règlement doit être approuvé.")
+      reglement == "on" || raise(signup_errors[:approbation_rules_required])
     end
     return dcandidat
   end #/ data_are_valid

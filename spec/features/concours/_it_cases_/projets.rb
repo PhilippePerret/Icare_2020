@@ -33,17 +33,4 @@ def ne_peut_pas_lire_un_projet(raison = nil)
       expect(page).not_to be_page_evaluation
     end
   end
-  # it "ne peut pas lire un projet en jouant son lien direct" do
-  #   # On trouve un projet
-  #   id_synopsis = File.basename(Dir["./_lib/data/concours/**/*-#{ANNEE_CONCOURS_COURANTE}.pdf"].first)
-  #   id_synopsis = File.basename(id_synopsis, File.extname(id_synopsis))
-  #   puts "Projet : #{id_synopsis.inspect}"
-  #   id_concurrent = id_synopsis.split('-').first
-  #   url = "#{App.url}/_lib/data/concours/#{id_concurrent}/#{id_synopsis}.pdf"
-  #   visit(url)
-  #   sleep 2 # le temps que ça charge
-  #   tab_id = page.driver.browser.window_handles.last
-  #   page.driver.browser.switch_to.window tab_id
-  #   expect(page.current_url).not_to eq("#{App.url}/_lib/data/concours/#{id_concurrent}/#{id_synopsis}.pdf")
-  # end
 end #/ ne_peut_pas_lire_un_projet

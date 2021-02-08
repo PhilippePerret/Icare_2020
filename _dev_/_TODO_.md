@@ -2,6 +2,10 @@
 
 ## Rapid list
 
+* Faire un premier bilan de la participation, avec :
+  - le nombre d'inscrits
+  - le nombre de dossier reçus
+  - le nombre de dossier conforme finalement en lice
 * Faire une mention spécialement pour le titre, quelque part (peut en apparté dans l'histoire en général)
 * Pouvoir reconstruire une fiche de lecture précise avec l'id du concurrent
 * Ajouter l'ID à la liste des "projets étudiés" (liste)

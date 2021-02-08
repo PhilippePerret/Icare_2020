@@ -12,10 +12,10 @@ class HTML
   # Code à exécuter avant la construction de la page
   def exec
     try_to_reconnect_visitor(required = false)
+    require_xmodule('inscription')
     # Si le visiteur est déjà inscrit ou que le concours est en phase 2 ou
     # supérieur, l'inscription est impossible
     return if inscription_impossible?
-    require_relative '../xmodules/inscription'
     if param(:form_id)
       if Form.new.conform?
         case param(:form_id)
