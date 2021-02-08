@@ -1,5 +1,9 @@
 # encoding: UTF-8
 # frozen_string_literal: true
+
+ONLINE  = ENV['HTTP_HOST'] != "localhost" unless defined?(ONLINE)
+OFFLINE = !ONLINE unless defined?(OFFLINE)
+
 class MailSender
 class << self
 attr_reader :mail_subject
@@ -18,6 +22,10 @@ def verbose?(options = {})
     ["TRUE","1"].include?(ENV['VERBOSE']) ? :true : :false
   end) == :true || options[:verbose]
 end #/ verbose?
+
+def mode_test?
+  :TRUE == (@en_mode_test ||= (OFFLINE && File.exists?('./TESTS_ON') ? :TRUE : :FALSE))
+end
 
 def maillog(msg)
   if defined?(html) && html.respond_to?(:res)
@@ -139,6 +147,11 @@ def send_mailing(dmail, options = nil)
           "<li>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
         else
           "- #{dd[:pseudo]} (#{dd[:mail]})" # collect
+        end
+        # Si on n'est pas en mode test, on attend environ une seconde entre
+        # chaque envoi
+        unless mode_test?
+          sleep 0.75
         end
       rescue Exception => e
         maillog "<div class='error'>PROBLÈME D'ENVOI DE MAIL : #{e.message} (avec dd = #{dd.inspect})</div>"
