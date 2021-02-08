@@ -49,3 +49,52 @@ def check_phase_2
   # Les membres du jury 2 ont reçu unm ail seulement informatif
 
 end #/ check_phase_2
+
+
+# Avant de procéder au changement de phase, on s'assure d'avoir ce qu'il faut
+def ensure_test_phase_2
+  candidatures = db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ?", [ANNEE_CONCOURS_COURANTE])
+
+  if candidatures.count < 3
+    raise "Il faudrait plus de 3 candidatures, pour pouvoir tester la phase 2…"
+  end
+
+  sans_dossier  = candidatures.select { |dc| dc[:specs][0]    == '0' }
+  conformes     = candidatures.select { |dc| dc[:specs][0..1] == '11'}
+  non_conformes = candidatures.select { |dc| dc[:specs][0..1] == '12'}
+
+  if sans_dossier.empty?
+    if conformes.count > 1
+      concid = conforms.pop[:concurrent_id]
+    else
+      concid = non_conformes.pop[:concurrent_id]
+    end
+    conc = TConcurrent.get(concid)
+    conc.destroy_dossier
+  end
+
+  if conformes.empty?
+    raise "Il faudrait au moins une candidature avec dossier conforme, pour pouvoir bien checher."
+  end
+  if non_conformes.empty?
+    if conformes.count > 1
+      concid = conforms.pop[:concurrent_id]
+    elsif sans_dossier.count > 1
+      concid = sans_dossier.pop[:concurrent_id]
+    else
+      raise "Impossible de trouver une candidature pour un dossier non conforme…"
+    end
+    conc = TConcurrent.get(concid)
+    conc = make_fichier_non_conforme
+  end
+
+  # On refait la vérification
+  candidatures  = db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ?", [ANNEE_CONCOURS_COURANTE])
+  sans_dossier  = candidatures.select { |dc| dc[:specs][0]    == '0' }
+  conformes     = candidatures.select { |dc| dc[:specs][0..1] == '11'}
+  non_conformes = candidatures.select { |dc| dc[:specs][0..1] == '12'}
+
+  sans_dossier.count > 0 && conformes.count > 0 && non_conformes.count > 0 || begin
+    raise "Je n'ai pas pu établir des dossiers non transmis, conformes et non conformes pour le test de la phase 2… Je dois renoncer."
+  end
+end #/ ensure_test_phase_2

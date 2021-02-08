@@ -13,9 +13,14 @@ def peut_passer_le_concours_a_la_phase_suivante(phase_expected)
 
     # === OPÉRATION ===
     # Le nom du menu en fonction de la phase
+    # + Certaines opérations à exécuter pour s'assurer que les tests se
+    #   feront complètement
+    require_relative "../xlib/phases_check/phase-#{phase_expected}"
     item_menu = case phase_expected - 1
                 when 0 then 'Lancer et annoncer le concours'
-                when 1 then 'Annoncer l\'échéance des dépôts'
+                when 1
+                  ensure_test_phase_2
+                  'Annoncer l\'échéance des dépôts'
                 when 2 then 'Annoncer fin de présélection'
                 when 3 then 'Annoncer le palmarès'
                 when 5 then 'Annoncer fin officielle du concours'
@@ -37,7 +42,6 @@ def peut_passer_le_concours_a_la_phase_suivante(phase_expected)
     expect(new_phase).to eq(phase_expected)
 
     # === Vérification profonde ===
-    require_relative "../xlib/phases_check/phase-#{old_phase + 1}"
     send("check_phase_#{old_phase + 1}".to_sym)
 
     # === POST-OPÉRATION ===

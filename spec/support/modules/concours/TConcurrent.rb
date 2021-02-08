@@ -459,7 +459,9 @@ def destroy_fichier(annee = nil)
   fpath = fichier_path(annee)
   File.delete(fpath) if fpath && File.exists?(fpath)
   set_specs("0"*8)
-end #/ destroy_fichier
+end
+alias :destroy_dossier :destroy_fichier
+
 
 # ---------------------------------------------------------------------
 #

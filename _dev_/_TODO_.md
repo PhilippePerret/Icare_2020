@@ -2,16 +2,13 @@
 
 ## Rapid list
 
+* Insérer la mention genre "mais cela est peut-être dû au manque de clarté etc." quand la rédaction n'est pas bonne.
+* Pouvoir insérer un "vrai texte propre" dans la fiche de lecture
 * Dans le mail de phase 2, faire un premier bilan de la participation, avec :
   - le nombre d'inscrits
   - le nombre de dossier reçus
   - le nombre de dossier conforme finalement en lice
-* Faire une mention spécialement pour le titre, quelque part (peut en apparté dans l'histoire en général)
-* Pouvoir reconstruire une fiche de lecture précise avec l'id du concurrent
-* Ajouter l'ID à la liste des "projets étudiés" (liste)
-* Afficher le classement des projets, après leur étude, dans '--build'
 * transmission de la fiche de lecture sur le site distant
-* chargement de la fiche de lecture
 
 
 ## Toutes les tâches
