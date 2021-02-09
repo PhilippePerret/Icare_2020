@@ -123,7 +123,19 @@ def bind; binding() end
 #     Emoji.new('objets/blason').regular
 #   end
 # end #/ ecusson
-def annee_edition ; FLFactory.annee_courante end
+def annee_edition
+  @annee_edition ||= begin
+    if defined?(FLFactory)
+      FLFactory.annee_courante
+    elsif defined?(ANNEE_COURANTE_CONCOURS)
+      ANNEE_COURANTE_CONCOURS
+    elsif defined?(Concours)
+      Concours.current.annee
+    else
+      raise "Impossible de déterminer l'année courante du concours…"
+    end
+  end
+end
 
 # def formated_auteurs
 #   projet.real_auteurs

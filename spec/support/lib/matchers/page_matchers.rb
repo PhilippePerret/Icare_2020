@@ -36,6 +36,25 @@ end #/ route_of_page
 #   Les matchers proprement dits.
 #
 # ---------------------------------------------------------------------
+RSpec::Matchers.define :be_page_erreur do
+  match do |page|
+    is_page_erreur = page.has_content?('Une erreur est survenue')
+    if is_page_erreur
+      screenshot('page-erreur')
+    end
+    return is_page_erreur
+  end
+  description do
+    "La page est bien la page d'erreur."
+  end
+  failure_message do
+    "La page devrait être la page d'erreur"
+  end
+  failure_message_when_negated do
+    "La page ne devrait pas être la page d'erreur…"
+  end
+end
+
 
 RSpec::Matchers.define :have_no_erreur do
   match do |page|

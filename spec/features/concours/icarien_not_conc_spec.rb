@@ -43,7 +43,7 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-2')
     end
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     peut_rejoindre_le_concours
     ne_peut_pas_transmettre_de_dossier
     peut_detruire_son_inscription

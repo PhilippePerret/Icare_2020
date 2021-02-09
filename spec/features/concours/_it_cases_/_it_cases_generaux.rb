@@ -39,6 +39,7 @@ def try_identify_visitor
   elsif visitor.is_a?(TEvaluator)
     visitor.rejoint_le_concours
   end
+  expect(page).not_to be_page_erreur
 end #/ try_identify_visitor
 
 # Quand on a changé un attribut du visiteur (par exemple ses options, ses
@@ -54,15 +55,18 @@ def peut_rejoindre_le_concours
   # S'assure qu'un visiteur quelconque peut rejoindre l'accueil du concours par les différents moyens offerts : l'encart suivant la phase, le plan ou les formulaires d'identification ou d'inscription.
   scenario "trouve des liens pour rejoindre le concours" do
     phase = TConcours.current.phase || 0
+    expect(page).not_to be_page_erreur
     if phase > 0 && phase < 6
       # Lien par l'encard d'annonce
       ['/','user/login','user/signup', 'plan'].each do |endroit|
         goto(endroit)
+        expect(page).not_to be_page_erreur
         expect(page).to have_encart_concours
       end
     end
     # Lien sur le plan
     goto("plan")
+    expect(page).not_to be_page_erreur
     expect(page).to have_css('a[href="concours"].goto')
   end
 end #/ peut_rejoindre_le_concours

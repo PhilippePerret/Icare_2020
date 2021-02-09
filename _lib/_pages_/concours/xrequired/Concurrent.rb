@@ -137,7 +137,7 @@ end #/ projet_titre
 def folder
   @folder ||= File.join(CONCOURS_DATA_FOLDER, id)
   # Note : ne pas le créer ici
-end #/ folder
+end
 # === Options ===
 # Cf. le manuel (icare read/write concours)
 #
@@ -234,39 +234,29 @@ def exists?
 end #/ exists?
 
 def femme?
-  (@is_femme ||= begin
-    sexe == 'F' ? :true : :false
-  end) == :true
+  :TRUE == ( @is_femme ||= (sexe == 'F' ? :TRUE : :FALSE) )
 end #/ femme?
 
 def icarien?
-  (@is_icarien ||= begin
-    option(2) == 1 ? :true : :false
-  end) == :true
+  :TRUE == ( @is_icarien ||= (option(2) == 1 ? :TRUE : :FALSE) )
 end #/ icarien?
 
 # Retourne TRUE si le concurrent veut recevoir sa fiche de lecture
 def fiche_lecture?
-  (@fiche_lecture ||= begin
-    option(1) == 1 ? :true : :false
-  end) == :true
+  :TRUE == ( @fiche_lecture ||= (option(1) == 1 ? :TRUE : :FALSE) )
 end
 alias :want_fiche_lecture? :fiche_lecture?
 
 # Retourne TRUE si le concurrent veut recevoir des informations sur
 # le concours.
 def warned?
-  (@is_warned ||= begin
-    option(0) == 1 ? :true : :false
-  end) == :true
-end #/ warned?
+  :TRUE == ( @is_warned ||= (option(0) == 1 ? :TRUE : :FALSE) )
+end
 
 # OUT   True si le concurrent, pour le concours courant, a été présélectionné
 def preselected?
-  (@is_preselected ||= begin
-    spec(2) == 1 ? :true : :false
-  end) == :true
-end #/ preselected?
+  :TRUE == ( @is_preselected ||= (spec(2) == 1 ? :TRUE : :FALSE) )
+end
 
 # OUT   Le prix reçu (1, 2 ou 3) ou nil
 def prix

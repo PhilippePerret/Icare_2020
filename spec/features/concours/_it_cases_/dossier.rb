@@ -48,6 +48,7 @@ end #/ peut_transmettre_son_dossier
 def ne_peut_pas_transmettre_de_dossier(message = nil)
   it "ne peut pas/plus transmettre de dossier de candidature" do
     goto("concours/espace_concurrent")
+    expect(page).not_to be_page_erreur
     expect(page).not_to have_css('form#concours-fichier-form')
     unless message.nil?
       expect(page).to have_content(message)

@@ -120,7 +120,7 @@ feature 'Un nouveau concurrent', newconc:true do
       degel('concours-phase-2')
     end
     peut_rejoindre_le_concours
-
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
     ne_peut_pas_telecharger_sa_fiche_de_lecture(:new)
 

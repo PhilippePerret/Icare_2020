@@ -51,7 +51,7 @@ end #/context PHASE 1
     before :all do
       degel('concours-phase-2')
     end
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     ne_peut_pas_transmettre_de_dossier
   end #/context PHASE 2
 

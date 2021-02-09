@@ -49,13 +49,13 @@ feature 'Un ancien concurrent (non courant)' do
       ne_peut_pas_sinscrire_au_concours("déjà inscrit")
     end
 
-    # peut_rejoindre_le_concours
-    # peut_sinscrire_au_concours(as = :ancien)
-    # ne_peut_pas_transmettre_de_dossier
-    # ne_peut_pas_atteindre_la_section_evalutation
-    # peut_modifier_ses_preferences_notifications
-    # peut_modifier_ses_preferences_fiche_de_lecture
-    # peut_detruire_son_inscription
+    peut_rejoindre_le_concours
+    peut_sinscrire_au_concours(as = :ancien)
+    ne_peut_pas_transmettre_de_dossier
+    ne_peut_pas_atteindre_la_section_evalutation
+    peut_modifier_ses_preferences_notifications
+    peut_modifier_ses_preferences_fiche_de_lecture
+    peut_detruire_son_inscription
     ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
 
@@ -66,12 +66,13 @@ feature 'Un ancien concurrent (non courant)' do
       degel('concours-phase-2')
     end
 
-    peut_rejoindre_le_concours
-    ne_peut_pas_transmettre_de_dossier
-    ne_peut_pas_atteindre_la_section_evalutation
+    # peut_rejoindre_le_concours
+    # ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
+    # ne_peut_pas_transmettre_de_dossier
+    # ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
-    peut_telecharger_une_ancienne_fiche_de_lecture
+    # ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    # peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 2
 
