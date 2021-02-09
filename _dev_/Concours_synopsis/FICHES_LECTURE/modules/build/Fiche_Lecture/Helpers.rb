@@ -16,6 +16,13 @@ def avertissement_subjectivite
   texte(:subjectivite)
 end
 
+def avertissement_divergence_note_gene_notes_details(note_gene, note_detail)
+  diff = (note_gene - note_detail).abs
+  str = texte(diff > 4 ? :forte_divergence_notes : :divergence_notes)
+  str.gsub(/__note_generale__/, note_gene.to_s).gsub(/__note_details__/, note_detail.to_s)
+end
+
+
 def ecusson
   @ecusson ||= begin
     require './_lib/required/__first/constants/emojis'

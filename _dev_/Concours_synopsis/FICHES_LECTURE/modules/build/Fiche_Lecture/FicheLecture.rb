@@ -35,6 +35,29 @@ class FicheLecture
 
 DATA_MAIN_PROPERTIES = YAML.load_file(DATA_MAIN_PROPERTIES_FILE)
 
+TABLE_PROPERTIES_DETAIL = {
+  projet: {name:"Projet"},
+  facteurO: {name: "Facteur O (originalité)"},
+  facteurU: {name: "Facteur U (universalité)"},
+  adequation: {name: "Adéquation avec le thème"},
+  personnages: {name:'Personnages'},
+  themes: {name: "Thèmes"},
+  forme: {name: "Forme/structure"},
+  intrigues: {name: "Intrigues"},
+  redaction: {name: 'Rédaction'}
+}
+
+def moyenne_notes_detail
+  @moyenne_notes_detail ||= begin
+    nombre = TABLE_PROPERTIES_DETAIL.count
+    total  = 0.0
+    TABLE_PROPERTIES_DETAIL.each do |cate, dcate|
+      total += note_categorie(cate)
+    end
+    (total / nombre).round(1)
+  end
+end #/ moyenne_notes_detail
+
 # ---------------------------------------------------------------------
 #
 #   INSTANCE

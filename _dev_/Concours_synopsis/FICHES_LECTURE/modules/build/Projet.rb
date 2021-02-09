@@ -59,7 +59,10 @@ end
 def patronyme ; @patronyme ||= data[:patronyme] end
 
 def evaluation
-  @evaluation ||= Evaluation.new(fiches_evaluation)
+  @evaluation ||= begin
+    ENV['is_projet_suivi'] = (concurrent_id == '20210103111210').inspect
+    Evaluation.new(fiches_evaluation)
+  end
 end #/ evaluation
 
 # Retourne TRUE si le projet peut être évalué (i.e. s'il a des fiches

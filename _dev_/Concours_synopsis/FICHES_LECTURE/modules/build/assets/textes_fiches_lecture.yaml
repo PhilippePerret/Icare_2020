@@ -5,6 +5,25 @@
 :subjectivite: >
   Bien que les lecteurs soient attentifs et bien disposés, juger de la valeur d’un projet sur la base de son synopsis est un exercice périlleux. Il demande aux lecteurs d’avoir une imagination au moins aussi grande que celle de l’auteur·e et telle qu’elle doit résonner en phase avec le récit et les intentions du texte. La part de subjectivité est donc immense, et l’on voudra bien pardonner les éventuelles erreurs de jugement et en prendre compte également dans la réception de cette fiche de lecture qui n’a, de fait, rien d’absolu.
 
+:divergence_notes: >
+  La divergence de valeur existant entre la note générale (__note_generale__) et la moyenne des notes
+  de détail (__note_details__)
+  s’explique par le fait que les membres des jurés ne sont pas astreints à évaluer tous les aspects
+  du projet. Dans le détail — toutes les notes ci-dessous —, seules les estimations attribuées sont
+  prises en compte tandis que
+  la note totale qui sert au classement tient compte de l’appréciation générale ET des appréciations
+  de détail.
+
+:forte_divergence_notes: >
+  La forte divergence de valeur existant entre la note générale (__note_generale__) et la moyenne
+  des notes de détail (__note_details__)
+  s’explique par le fait que les membres des jurés ne sont pas astreints à évaluer tous les aspects
+  du projet. Dans le détail — toutes les notes ci-dessous —, seules les estimations attribuées
+  sont prises en compte tandis que
+  la note totale qui sert au classement tient compte de l’appréciation générale ET des appréciations
+  de détail. Une divergence importante révèle souvent un désaccord important entre les jurés
+  quant à la valeur du projet.
+
 :manque_originalite: "leur manque d’originalité"
 :manque_universalite: "leur manque d’universalité"
 
@@ -23,10 +42,10 @@
   D: Votre histoire — [[estimation titre]] — n’a pas du tout trouvé l’adhésion des lecteurs du concours.[[mention manque clarte]] Ils y ont vu des faiblesses rédhibitoires, notamment au niveau [[deficiences_histoire]]. Ces points leur semblent à réfléchir avec le plus grand sérieux et la plus grande inspiration si vous voulez donner une chance à ce projet.
 
 :titre:
-  A: dont le titre a été très apprécié par les membres du jury
-  B: dont le titre a été apprécié par les membres du jury
-  C: dont le titre n’a pas été spécialement apprécié par le jury
-  D: dont le titre a été jugé faible par les membres du jury
+  A: dont le titre a été très apprécié par les membres du jury qui l’ont évalué
+  B: dont le titre a été apprécié par les membres du jury qui l’ont évalué
+  C: dont le titre n’a pas été spécialement apprécié par le jury qui l’ont évalué
+  D: dont le titre a été jugé faible par les membres du jury qui l’ont évalué
 
 :personnages:
   :diminutif: p
@@ -106,8 +125,8 @@
   :name: Rédaction du dossier
   :short_name: Rédaction
   :explication: Cette note concerne l’aspect rédactionnel du projet (aisance, clarté, orthographe, style).
-  A: Les lecteurs ont jugé excellente la rédaction et la présentation de [[ce projet]], tant au niveau de son orthographe que de son style. Un grand bravo à vous !
-  B: Les lecteurs ont jugé que la rédaction et la présentation de ce projet étaient tout à fait correctes. Peut-être pourraient-elles être encore améliorées pour donner des chances encore meilleures à [[ce projet]].
+  A: Les lecteurs ont jugé excellente la rédaction et la présentation de ce projet, tant au niveau de son orthographe que de son style. Un grand bravo à vous !
+  B: Les lecteurs ont jugé que la rédaction et la présentation de [[ce projet]] étaient tout à fait correctes. Peut-être pourraient-elles être encore améliorées pour donner des chances encore meilleures à [[ce projet]].
   C: La rédaction et l’orthographe de ce dossier a été jugé par les lecteurs d’un niveau très insuffisant, notamment au niveau [[deficiences redaction]]. [[importance redaction]]
   D: Les lecteurs ont jugé que le projet se mettaient lui-même en danger de par ses déficiences rédactionnelles, particulièrement au niveau [[deficiences redaction]]. [[importance redaction]]
   :importance: "Que vous écriviez pour l’écran, pour la scène, pour l’oreille ou pour le livre, il est capital de comprendre que tout projet narratif, à un moment ou à un autre, passe par la <em>lecture</em> pour être retenu et se réaliser, et nécessite donc à ce niveau une attention tout à fait particulière de l’auteur·e."
@@ -126,19 +145,19 @@
 # --- SOUS CATÉGORIGES / QUALITÉS ET DÉFAUTS ---
 
 p:fO:
-  :quality: "(originalité par rapport à la réalité ou l’utilisation dans les histoires)"
-  :defect: "(trop commun sans pourtant apporter d'universalité)"
+  :quality: " (originalité par rapport à la réalité ou l’utilisation dans les histoires)"
+  :defect: " (trop commun sans pourtant apporter d'universalité)"
 
 p:fU:
-  :quality: "(c'est-à-dire sa capacité à parler au plus grand nombre, à porter des problématiques universelles)"
-  :defect: "(trop particulier pour que l'auditeur, le spectateur ou le lecteur se reconnaisse en lui)"
+  :quality: " (c'est-à-dire sa capacité à parler au plus grand nombre, à porter des problématiques universelles)"
+  :defect: " (trop particulier pour que l'auditeur, le spectateur ou le lecteur se reconnaisse en lui)"
 
 p:cohe:
-  :quality: "(cohérence dans son comportement général, dans ces attitudes et ses décisions)"
-  :defect: "(cohérence dans son comportement général, dans ces attitudes et ses décisions)"
+  :quality: " (cohérence dans son comportement général, dans ces attitudes et ses décisions)"
+  :defect: " (cohérence dans son comportement général, dans ces attitudes et ses décisions)"
 
 p:idio:
-  :defect: "c’est-à-dire leur comportement qui n’a pas été jugé suffisamment particulier et unique"
+  :defect: " c’est-à-dire leur comportement qui n’a pas été jugé suffisamment particulier et unique"
 
 i:fO:
   :quality: ", originalité au niveau de leur énoncé comme au niveau de leur parcours"

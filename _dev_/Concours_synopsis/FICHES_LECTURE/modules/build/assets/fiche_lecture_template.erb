@@ -45,19 +45,20 @@
 
     end
 
+    if projet.evaluation.note != moyenne_notes_detail
+
+      %><div id="avertissement-diff-note" class="divnote">
+        <span class="libelle">Divergence entre la note générale et la moyenne des notes de détail</span>
+        <div class="explication"></div>
+        <div class="explication-note"><%=
+          avertissement_divergence_note_gene_notes_details(projet.evaluation.note, moyenne_notes_detail)
+        %></div>
+      </div><%
+
+    end
+
     %><%
-    # TODO Reprendre cette table pour faire la table générale ?
-    {
-      projet: {name:"Projet dans sa globalité"},
-      facteurO: {name: "Facteur O (originalité)"},
-      facteurU: {name: "Facteur U (universalité)"},
-      adequation: {name: "Adéquation avec le thème"},
-      personnages: {name:'Personnages'},
-      themes: {name: "Thèmes"},
-      forme: {name: "Forme/structure"},
-      intrigues: {name: "Intrigues"},
-      redaction: {name: 'Rédaction'}
-    }.each do |cate, dcate|
+    FicheLecture::TABLE_PROPERTIES_DETAIL.each do |cate, dcate|
     %>
       <div class="divnote note-<%= cate.to_s %>">
         <span class="libelle"><%= dcate[:name] %></span>

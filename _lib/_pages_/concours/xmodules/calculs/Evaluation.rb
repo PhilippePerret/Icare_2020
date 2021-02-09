@@ -50,6 +50,41 @@ require './_lib/_pages_/concours/xrequired/constants_mini'
 
 class Evaluation
 
+# Liste des clés qui doivent obligatoirement avoir une valeur. Si cette
+# valeur n'existe pas ou est égal à 'x', on prend dans l'ordre la valeur
+# de la première valeur trouvée dans la liste des clés fournies.
+# NOTE : pour le moment, je ne m'en sers pas, je préfère indiquer à quoi
+# est dû une divergence entre la note générale et les notes dans le détail.
+MANDATORY_KEYS = {
+  "po-fO"       => ['po'],
+  "po-fU"       => ['po'],
+  'po-adth'     => ['adth', 'po'],
+  'po-ti'       => ['po'],
+  'po-p'        => ['p', 'po'],
+  'po-p-fO'     => ['fO', 'po-fO', 'po-p'],
+  'po-p-fU'     => ['fU', 'po-fU', 'po-p'],
+  'po-p-adth'   => ['adth', 'po-adth', 'po-p'],
+  'po-p-cohe'   => ['cohe', 'po-cohe', 'po-p'],
+  'po-p-idio'   => ['idio', 'po-idio', 'po-p'],
+  'po-f'        => ['f', 'po'],
+  'po-i'        => ['i', 'po'],
+  'po-i-cohe'   => ['i-cohe', 'cohe', 'po-i'],
+  'po-i-menee'  => ['i-menee', 'menee', 'po-i'],
+  'po-i-predic' => ['i-predic', 'predic', 'po-i'],
+  'po-t'        => ['t', 'po'],
+  'po-t-fO'     => ['fO', 'po-fO', 'po-t'],
+  'po-t-fU'     => ['fU', 'po-fU', 'po-t'],
+  'po-t-adth'   => ['adth', 'po-adth', 'po-t'],
+  'po-t-cohe'   => ['cohe', 'po-cohe', 'po-t'],
+  'po-t-cla'    => ['cla', 'po-cla', 'po-t'],
+  'po-r'        => ['po'],
+  'po-r-cla'    => ['cla', 'po-cla', 'po-r'],
+  'po-r-ortho'  => ['ortho', 'po-ortho', 'po-r'],
+  'po-r-style'  => ['style', 'po-style', 'po-r'],
+  'po-r-sim'    => ['sim', 'po-sim', 'po-r'],
+  'po-r-emo'    => ['emo', 'po-emo', 'po-r'],
+}
+
 # Coefficiant de profondeur.
 # Plus une question est "profonde" (i.e. imbriquée dans une autre) moins elle
 # possède d'influence sur la note finale.
@@ -139,6 +174,12 @@ def parse_and_calc(score)
   calculate_values
 end
 
+# Méthode appelée tout de suite à l'instanciation, qui "parse" les fiches
+# d'évaluation fournies.
+# Va suivre ensuite le parcours :
+#   - parse_score
+#   - parse
+#
 def parse_scores(paths)
   return if paths.nil? || paths.empty?
   paths = [paths] if paths.is_a?(String)
@@ -370,8 +411,28 @@ def parse(score)
   @sum_nombre_reponses += nr
   @sum_nombre_missings += nu
 
+  # if ENV['is_projet_suivi'] == 'true'
+  #   puts "\n\n---\n\nCatégories : #{categories.pretty_inspect}"
+  # end
+
   return self # chainage
 end #/ parse
+
+# Note : j'ai gardé cette méthode mais elle ne sert pas pour le moment, car
+# elle fausse trop l'appréciation. J'ai préféré préciser pourquoi il pouvait
+# y avoir divergence entre les notes dans le détail et la note totale.
+def rectifie_score(score)
+  MANDATORY_KEYS.each do |key, keyslist|
+    next if score.key?(key) && score[key] != 'x'
+    keyslist.each do |skey|
+      if score.key?(skey) && score[skey] != 'x'
+        score[key] = score[skey]
+        break # la liste des clés de substitution
+      end
+    end
+  end
+  return score
+end #/ rectifie_score
 
 # Pour initialiser les valeurs au début du décompte
 def init_count
