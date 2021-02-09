@@ -85,6 +85,9 @@ end #/ add
   #               - pour un membre du premier jury en phase 3 du concours (qui
   #                 permet d'établir le palmarès), il voit la note générale
   #                 en note principale et sa note personnelle en note secondaire
+  #   :total      Si true, il faut faire le classement non pas en fonction de la
+  #               note de l'évaluateur, mais de la note totale, tous évaluateurs
+  #               confondus.
   #   :evaluator  Instance {Evaluator}. Permet de savoir qui est là.
   #
   # Question : la méthode doit-elle aussi fonctionner pour un synopsis
@@ -94,6 +97,7 @@ end #/ add
   def evaluate_all_synopsis(options = nil)
     log("-> evaluate_all_synopsis(options:#{options.inspect})")
     options ||= {}
+    par_note_totale = !!options[:total]
     options.merge!(evaluator: html.evaluator) if not options.key?(:evaluator)
     # La note principale, en fonction de la phase et de l'évaluateur, qui
     # va aussi déterminer la note de classement du synopsis.
@@ -136,7 +140,7 @@ end #/ add
         when 1, 2
           case nature
           when NONE   then [nil, nil]
-          when ADMIN  then [:note, :note_pres]
+          when ADMIN  then par_note_totale ? [:note_pres, :note] : [:note, :note_pres]
           when JURY1  then [:note, nil]
           when JURY2  then [nil, nil]
           when CONCU  then [nil, nil]
@@ -144,7 +148,7 @@ end #/ add
         when 3 # présélections faites
           case nature
           when NONE   then [nil, nil] # présélectionnés
-          when ADMIN  then [:note, :note_pres]
+          when ADMIN  then par_note_totale ? [:note_pres, :note] : [:note, :note_pres]
           when JURY1  then [:note_pres, :note]
           when JURY2  then [:note, nil]
           when CONCU  then [:note_pres, nil]
@@ -152,7 +156,7 @@ end #/ add
         when 5, 8, 9 # palmarès établi
           case nature
           when NONE   then [nil, nil]
-          when ADMIN  then [:note, :note_prix]
+          when ADMIN  then par_note_totale ? [:note_pres, :note] : [:note, :note_pres]
           when JURY1  then [:note_prix, :note]
           when JURY2  then [:note_prix, :note]
           when CONCU  then [:note_prix, nil]
@@ -224,12 +228,22 @@ end #/ add
   end #/ evaluated?
 
   # Retourne tous les synopsis classés suivant +key+ et +sens+.
+  #
+  # +key+ La clé de classement. Peut être :
+  #   'note'          Note attribuée par l'user
+  #   'progress'      Progression du travail sur les fiches
+  #   'total'         Un administrateur peut voir le classement final,
+  #                   toutes notes confondues
+  #
+  # +sens+  Clé pour savoir si c'est un classement ascendant ou descendant
+  #
   def sorteds_by(key = 'note', sens = 'desc', options)
     options ||= {}
+    options.merge!(total: key == 'total')
     synos_max_to_min, synos_sans_fiche, synos_sans_fichier, synos_sorted_by_progress = evaluate_all_synopsis(options)
     liste = if key == 'progress'
               synos_sorted_by_progress
-            else # classement par note
+            else # classement par note de l'user OU classement par note totale
               synos_max_to_min.dup
             end
     # Il faut inverser la liste si nécessaire

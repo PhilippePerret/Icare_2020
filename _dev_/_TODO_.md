@@ -2,6 +2,7 @@
 
 ## Rapid list
 
+* Regarder si les évaluations du petit canard d'amour ont été comptabilisées
 * Reprendre la fiche de 20201227134821 et limiter toujours les listes à 3 éléments max (voir le projet dans sa globalité)
 * Bug au niveau du nombre de projets, dans la mention de la place du dossier
 * Pouvoir insérer un "vrai texte propre" dans la fiche de lecture

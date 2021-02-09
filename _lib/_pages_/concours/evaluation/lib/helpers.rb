@@ -18,6 +18,12 @@ class HTML
       ["Progression &gt;", "progress", "desc"],
       ["Progression &lt;", "progress", "asc"]
     ]
+    if user.admin?
+      data_tools += [
+        ["Classement final &gt;", 'total', 'desc'],
+        ["Classement final &lt;", 'total', 'asc']
+      ]
+    end
     key ||= 'note'
     sens ||= 'desc'
     links = data_tools.collect do |text, ks, ss|
