@@ -36,7 +36,8 @@ SELECT
   end #/ send_mail_concurrents_echeance
 
   def send_mail_jury_echeance(options)
-    MailSender.send_mailing({from:CONCOURS_MAIL, to:Concours.current.jury, file:mail_path('phase2/mail_fin_echeance_jury'), bind:self}, options)
+    MailSender.send_mailing({from:CONCOURS_MAIL, to:Concours.current.jury1, file:mail_path('phase2/mail_fin_echeance_jury1'), bind:self}, options)
+    MailSender.send_mailing({from:CONCOURS_MAIL, to:Concours.current.jury2, file:mail_path('phase2/mail_fin_echeance_jury2'), bind:self}, options)
   end #/ send_mail_jury_echeance
 
   # Méthode qui s'assure que toutes les conformités sont bien réglées

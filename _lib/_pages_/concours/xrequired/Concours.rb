@@ -20,7 +20,7 @@ class << self
   #  classe spéciale qui devra au moins répondre à la méthode :id)
   def evaluator
     user
-  end #/ evaluator
+  end
 end # / << self
 # ---------------------------------------------------------------------
 #
@@ -33,22 +33,22 @@ def formated_theme_d; eval("%Q(#{theme_d})") end
 
 def prix1
   @prix1 ||= data[:prix1]
-end #/ prix1
+end
 def formated_prix1
   @formated_prix1 ||= eval("%Q(#{prix1})")
-end #/ formated_prix1
+end
 def prix2
   @prix2 ||= data[:prix2]
-end #/ prix2
+end
 def formated_prix2
   @formated_prix2 ||= eval("%Q(#{prix2})")
-end #/ formated_prix2
+end
 def prix3
   @prix3 ||= data[:prix3]
-end #/ prix3
+end
 def formated_prix3
   @formated_prix3 ||= eval("%Q(#{prix3})")
-end #/ formated_prix3
+end
 
 # La modifier dans le fichier secret 'concours.rb'
 def jury_members
@@ -58,6 +58,14 @@ def jury_members
   end
 end #/ jury_members
 alias :jury :jury_members
+
+def jury1
+  @jury1 ||= jury_members.select { |dc| dc[:jury] != 2 }
+end
+
+def jury2
+  @jury2 ||= jury_members.select { |dc| dc[:jury] == 2 }
+end
 
 # ---------------------------------------------------------------------
 #

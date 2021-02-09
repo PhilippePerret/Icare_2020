@@ -1,0 +1,13 @@
+<%
+# frozen_string_literal: true
+=begin
+  Mail pour informer les membres du jury que l'échéance est arrivée
+=end
+subject("[CONCOURS] Fin de l’échéance des dépôts")
+%>
+<p>Bonjour %{pseudo},</p>
+<p>Ce mail pour vous informer que l'échéance de dépôt des fichiers de candidature pour le <%= CONCOURS_LINK.with(text:"Concours de Synopsis de l'atelier Icare", full:true) %> est arrivée à son terme.</p>
+<p>Les membres du premier jury vous procéder à la première sélection des dix meilleurs synopsis.</p>
+<p>Une fois cette première sélection effectuée, vous pourrez rentrer à l’action !</p>
+<p>Bien à vous,</p>
+<p>L'administration de l'atelier Icare</p>
