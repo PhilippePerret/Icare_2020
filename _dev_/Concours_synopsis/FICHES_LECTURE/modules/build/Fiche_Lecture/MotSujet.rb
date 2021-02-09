@@ -85,6 +85,8 @@ class MotSujet
 
   # Retourne une :
   #       Liste Array
+  #   de
+  #       au plus 3 items
   #   des
   #       Instances MotSujet (ou clés string)
   #   qui
@@ -102,7 +104,7 @@ class MotSujet
     if moinsdix.empty? && toujours_un
       [ary.sort_by{|s|s.note}.first]
     else
-      moinsdix
+      moinsdix[0..2]
     end
   end
 
@@ -130,11 +132,12 @@ class MotSujet
 
   # Retourne la liste Array des instances de MotSujet des sujets dont
   # la note est inférieure à 14 parmi les sujets +ary+
+  # 3 items au maximum
   def self.perfectibles_parmi(ary, min = 14)
     ary = list_from_key(ary) if ary.first.is_a?(String)
     ary = ary.select { |s| s.note < min.to_f }
     inspect_list(ary,'perfectibles')
-    return ary
+    return ary[0...3]
   end
 
   # Pour le débug des listes filtrées
@@ -301,9 +304,9 @@ def get(key, fiche)
     when 'r:cla'
       MotSujet.new(fiche, 'clarté rédaction', 'r:cla', 'F', false, false, 'rédaction')
     when 'r:ortho'
-      MotSujet.new(fiche, 'orthographe', 'r:cla:ortho', 'F', false, true)
+      MotSujet.new(fiche, 'orthographe', 'r:ortho', 'F', false, true)
     when 'r:style'
-      MotSujet.new(fiche, 'style', 'r:cla:style', 'M', false, false)
+      MotSujet.new(fiche, 'style', 'r:style', 'M', false, false)
     when 'r:sim'
       MotSujet.new(fiche, 'simplicité', 'r:sim', 'F', false, false, 'rédaction')
     when 'r:emo'

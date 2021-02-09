@@ -126,24 +126,24 @@
 # --- SOUS CATÉGORIGES / QUALITÉS ET DÉFAUTS ---
 
 p:fO:
-  :quality: "(par rapport à la réalité ou l’utilisation dans les histoires)"
+  :quality: "(originalité par rapport à la réalité ou l’utilisation dans les histoires)"
   :defect: "(trop commun sans pourtant apporter d'universalité)"
 
 p:fU:
-  :quality: "(sa capacité à parler au plus grand nombre, à porter des problématiques universelles)"
+  :quality: "(c'est-à-dire sa capacité à parler au plus grand nombre, à porter des problématiques universelles)"
   :defect: "(trop particulier pour que l'auditeur, le spectateur ou le lecteur se reconnaisse en lui)"
 
 p:cohe:
-  :quality: "(dans son comportement général, dans ces attitudes et ses décisions)"
-  :defect: "(dans son comportement général, dans ces attitudes et ses décisions)"
+  :quality: "(cohérence dans son comportement général, dans ces attitudes et ses décisions)"
+  :defect: "(cohérence dans son comportement général, dans ces attitudes et ses décisions)"
 
 p:idio:
   :defect: "c’est-à-dire leur comportement qui n’a pas été jugé suffisamment particulier et unique"
 
 i:fO:
-  :quality: ", au niveau de leur énoncé comme au niveau de leur parcours"
-  :defect: ", au niveau de leur énoncé comme au niveau de leur menée au fil du récit"
+  :quality: ", originalité au niveau de leur énoncé comme au niveau de leur parcours"
+  :defect: ", originalité au niveau de leur énoncé comme au niveau de leur menée au fil du récit"
 
 t:fO:
-  :quality: ", thèmes en eux-mêmes comme au niveau de leur traitrement propre dans l'histoire"
-  :defect: ", thèmes en eux-mêmes comme en ce qui concerne leur traitrement propre dans l'histoire"
+  :quality: ", originalité des thèmes en eux-mêmes comme au niveau de leur traitrement propre dans l'histoire"
+  :defect: ", originalité des thèmes en eux-mêmes comme en ce qui concerne leur traitrement propre dans l'histoire"

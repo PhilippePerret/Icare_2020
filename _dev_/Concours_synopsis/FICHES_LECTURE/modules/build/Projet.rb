@@ -44,7 +44,17 @@ end #/ formate_float
 def note; evaluation.note end
 
 def real_auteurs
-  @real_auteurs ||= data[:auteurs] || data[:patronyme]
+  @real_auteurs ||= begin
+    patros =  if data[:auteurs]
+                data[:auteurs].split(', ').collect{|p|p.strip}
+              else
+                [data[:patronyme]]
+              end
+    # On les transforme bien tous en noms
+    patros.collect do |patro|
+      patronimize(patro)
+    end.pretty_join
+  end
 end
 def patronyme ; @patronyme ||= data[:patronyme] end
 
