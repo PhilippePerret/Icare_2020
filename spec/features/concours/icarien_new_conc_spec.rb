@@ -7,6 +7,8 @@
 
 =end
 require_relative './_required'
+require './_lib/_pages_/concours/xrequired/constants'
+require './_lib/_pages_/concours/inscription/constants'
 
 feature 'Un icarien inscrit au concours courant' do
   before :all do
@@ -64,10 +66,12 @@ feature 'Un icarien inscrit au concours courant' do
       degel('concours-phase-2')
     end
 
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     peut_rejoindre_le_concours
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     ne_peut_pas_transmettre_de_dossier
     peut_detruire_son_inscription
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
+    ne_peut_pas_telecharger_une_ancienne_fiche_de_lecture(raison = :first_concours)
 
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation

@@ -95,4 +95,5 @@ class HTML
     return redirect_to(redir)
   end #/ unable_reconnection
 
+
 end #/class HTML

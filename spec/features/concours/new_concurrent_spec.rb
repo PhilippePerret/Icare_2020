@@ -55,8 +55,8 @@ feature 'Un nouveau concurrent', newconc:true do
 
     context 'qui ne veut pas recevoir sa fiche de lecture' do
       before(:each){ visitor.set_pref_fiche_lecture(false);reconnecte_visitor }
-      peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent, MESSAGES[:prefs_dont_want_fiches_lecture])
-      ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :not_want)
+      peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent, MESSAGES[:concours][:fiches_lecture][:prefs_no_fiche])
+      ne_peut_pas_telecharger_sa_fiche_de_lecture
     end
 
     context 'qui veut recevoir sa fiche de lecture' do
@@ -88,7 +88,7 @@ feature 'Un nouveau concurrent', newconc:true do
     peut_modifier_ses_preferences_fiche_de_lecture
 
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(:new)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
 
     peut_detruire_son_inscription
 
@@ -122,7 +122,7 @@ feature 'Un nouveau concurrent', newconc:true do
     peut_rejoindre_le_concours
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(:new)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
 
     peut_detruire_son_inscription
 
@@ -155,7 +155,7 @@ feature 'Un nouveau concurrent', newconc:true do
     peut_rejoindre_le_concours
     ne_peut_plus_transmettre_son_dossier
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :new)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_detruire_son_inscription
 
     # === Interdictions ===

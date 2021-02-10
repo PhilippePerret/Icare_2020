@@ -33,12 +33,7 @@ class << self
   # Pour authentifier le concurrent d'identifiant +concurrent_id+. Son ID
   # de session doit correspondre à la session courante
   def authentify(concurrent_id)
-    log("Tentative d'authentification de #{concurrent_id}")
-    # log("Session ID courant : #{session.id}")
     cand = get(concurrent_id)
-    log("Candidat.data : #{cand.data.inspect}")
-    log("Session enregistrée : #{cand.session_id.inspect}")
-    log("Participe au concours courant ? #{cand.current?.inspect}")
     if cand.session_id == session.id
       return cand
     else
@@ -226,6 +221,11 @@ def current?
 end #/ current?
 # alias :concurrent? :current?
 
+# Retourne true si c'est sa première participation à un concours
+def first_concours?
+  :TRUE === @is_first_concours ||= all_concours.count == 1 ? :TRUE : :FALSE
+end #/ first_concours?
+
 # Retourne TRUE pour savoir si le concurrent, identifié par le concurrent_id en
 # session et l'identifiant de session fourni existe véritablement dans la
 # base de données.
@@ -234,28 +234,28 @@ def exists?
 end #/ exists?
 
 def femme?
-  :TRUE == ( @is_femme ||= (sexe == 'F' ? :TRUE : :FALSE) )
+  :TRUE === @is_femme ||= sexe == 'F' ? :TRUE : :FALSE
 end #/ femme?
 
 def icarien?
-  :TRUE == ( @is_icarien ||= (option(2) == 1 ? :TRUE : :FALSE) )
+  :TRUE === @is_icarien ||= option(2) == 1 ? :TRUE : :FALSE
 end #/ icarien?
 
 # Retourne TRUE si le concurrent veut recevoir sa fiche de lecture
 def fiche_lecture?
-  :TRUE == ( @fiche_lecture ||= (option(1) == 1 ? :TRUE : :FALSE) )
+  :TRUE === @fiche_lecture ||= option(1) == 1 ? :TRUE : :FALSE
 end
 alias :want_fiche_lecture? :fiche_lecture?
 
 # Retourne TRUE si le concurrent veut recevoir des informations sur
 # le concours.
 def warned?
-  :TRUE == ( @is_warned ||= (option(0) == 1 ? :TRUE : :FALSE) )
+  :TRUE === @is_warned ||= option(0) == 1 ? :TRUE : :FALSE
 end
 
 # OUT   True si le concurrent, pour le concours courant, a été présélectionné
 def preselected?
-  :TRUE == ( @is_preselected ||= (spec(2) == 1 ? :TRUE : :FALSE) )
+  :TRUE === @is_preselected ||= spec(2) == 1 ? :TRUE : :FALSE
 end
 
 # OUT   Le prix reçu (1, 2 ou 3) ou nil

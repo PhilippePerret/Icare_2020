@@ -337,6 +337,7 @@ end
 RSpec::Matchers.define :be_section_fiches_lecture do |as|
   match do |page|
     @errors = []
+    as ||= :concurrent # note : maintenant, c'est presque toujours ça
     for_concurrent = as == :concurrent
     expected_titre = for_concurrent ? "Vos fiches de lecture" : "Fiches de lecture"
     actual_titre = title_of_page

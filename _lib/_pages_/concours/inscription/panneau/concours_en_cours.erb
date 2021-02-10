@@ -1,4 +1,15 @@
 <%
 # frozen_string_literal: true
 %>
-<p>Les inscriptions sont closes car <%= MESSAGES[:concours][:en_cours_de_preselection] %>. Vous devez attendre la prochaine session pour vous inscrire.</p>
+<p>Les inscriptions sont suspendues car <%=
+
+  key = case Concours.current.phase
+  when 2 then :en_cours_de_preselection
+  when 3 then :en_cours_de_selection_final
+  when 5 then :en_cours_de_recompenses
+  else :en_phase_finale
+  end
+  MESSAGES[:concours][key]
+%>.</p>
+
+<p>Vous devez attendre la prochaine session pour vous inscrire.</p>

@@ -923,12 +923,12 @@ emoji.texte
 Les tailles suivantes existent :
 
 ```
-tiny                    # Très petit
+tiny                  # Très petit
 mini
 small
-texte                    # Pour les utiliser dans le texte
-regular                # Par exemple dans les div.goto
-page_title        # spécialement pour les pages de titre
+texte                 # Pour les utiliser dans le texte
+regular               # Par exemple dans les div.goto
+page_title            # spécialement pour les pages de titre
 large
 big
 ```

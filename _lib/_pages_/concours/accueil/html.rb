@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 class HTML
   def titre
-    "#{EMO_TITRE}#{UI_TEXTS[:concours_titre_home_page]}"
+    "#{EMO_TITRE}#{UI_TEXTS[:concours][:titres][:home_page]}"
   end #/titre
 
   # Code à exécuter avant la construction de la page

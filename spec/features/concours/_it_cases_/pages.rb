@@ -32,7 +32,7 @@ def peut_rejoindre_toutes_les_sections_depuis_laccueil
     UI_TEXTS[:concours_btn_identifiez_vous] = phase_min ? "vous identifier" : "Identifiez-vous"
     expect(page).to have_link(UI_TEXTS[:concours_bouton_inscription])
     click_on(UI_TEXTS[:concours_bouton_inscription])
-    expect(page).to have_titre(UI_TEXTS[:titre_page_inscription])
+    expect(page).to have_titre(UI_TEXTS[:concours][:titres][:signup_page])
     revenir_accueil
     expect(page).to have_link(UI_TEXTS[:concours_btn_identifiez_vous])
     click_on(UI_TEXTS[:concours_btn_identifiez_vous])

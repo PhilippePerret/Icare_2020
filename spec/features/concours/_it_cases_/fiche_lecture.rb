@@ -3,6 +3,7 @@
 =begin
   Tous les IT-CASES pour la fiche de lecture
 =end
+require './_lib/_pages_/concours/fiches_lecture/constants'
 
 def peut_rejoindre_la_section_fiches_de_lecture_as(as = nil, msg = nil)
   itstr = "peut rejoindre la section fiches de lecture comme #{as||concurrent}"
@@ -42,8 +43,8 @@ def peut_telecharger_une_ancienne_fiche_de_lecture(as = :ancien)
   it "peut télécharger une ancienne fiche de lecture" do
     require './_lib/_pages_/concours/espace_concurrent/constants'
     goto("concours/espace_concurrent")
-    expect(page).to have_link(UI_TEXTS[:btn_vers_fiches_lecture])
-    visitor.click_on(UI_TEXTS[:btn_vers_fiches_lecture])
+    expect(page).to have_link(UI_TEXTS[:concours][:buttons][:vers_fiches_lecture])
+    visitor.click_on(UI_TEXTS[:concours][:buttons][:vers_fiches_lecture])
     expect(page).to be_section_fiches_lecture(:concurrent)
     if as == :ancien
       dold = db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ?", [visitor.id]).first
@@ -56,22 +57,28 @@ alias :peut_telecharger_ses_fiches_de_lecture :peut_telecharger_une_ancienne_fic
 
 # it-case qui teste que le visiteur ne peut pas télécharger sa fiche de
 # lecture. Il peut y avoir plusieurs raisons pour ça, qui sont décrites avec
-# le paramètre +raison+
-# OBSOLÈTE
-#   :new        C'est un nouveau concurrent, il n'a pas de lien le conduisant
-#               à sa fiche de lecture avant la phase 5.
-#   :too_soon   C'est un ancien concurrent qui peut rejoindre la section des
-#               fiche de lecture, mais qui ne trouve pas la fiche de lecture
-#               du concours courant car il est trop tôt (phase < 5)
-#   :old        C'est un ancien concurrent, mais il ne participe pas au concours
-#               courant donc il ne pourra pas avoir de fiche de lecture.
-#   :not_want   Il ne veut pas sa fiche de lecture, dans ses préférences.
-#
-def ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = nil)
+def ne_peut_pas_telecharger_sa_fiche_de_lecture
   it "ne peut pas telecharger sa fiche de lecture" do
-    require './_lib/_pages_/concours/espace_concurrent/constants'
+    require './_lib/_pages_/concours/xrequired/constants'
     goto("concours/espace_concurrent")
     expect(page).to be_espace_personnel
-    expect(page).not_to have_link("TÉLÉCHARGER LA FICHE DE LECTURE")
+    expect(page).not_to have_link(UI_TEXTS[:concours][:buttons][:download_fiche_lecture])
   end
-end #/
+end
+
+# Pour tester que le candidat peut rejoindre la section des fiches
+# de lecture mais que pour une +raison+ ou une autre il n'ait aucune
+# fiche de lecture à lire (raison principale : c'est son premier
+# concours)
+def ne_peut_pas_telecharger_une_ancienne_fiche_de_lecture(raison = nil)
+  it "ne peut pas télécharger d'ancienne fiche de lecture" do
+    goto("concours/fiches_lecture")
+    screenshot('section-fiches-lecture-sans-fiche')
+    expect(page).to be_section_fiches_lecture
+    expect(page).not_to have_link(UI_TEXTS[:concours][:fiches_lecture][:download_btn_name_template] % {annee:ANNEE_CONCOURS_COURANTE})
+    case raison
+    when :first_concours
+      expect(page).to have_content("C’est votre premier concours")
+    end
+  end
+end #/ ne_peut_pas_telecharger_une_ancienne_fiche_de_lecture

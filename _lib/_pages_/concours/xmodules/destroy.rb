@@ -32,11 +32,13 @@ class Concurrent
   end
 
   def destroy_folder
-    log("On passe par la destruction du dossier :\n#{self.folder}")
-    FileUtils.rm_rf(self.folder) if File.exists?(self.folder)
-    if File.exists?(self.folder)
-      log("ERREUR : Le dossier '#{(self.folder)}' ne devrait plus exister…")
-      raise "Le dossier '#{(self.folder)}' ne devrait plus exister…"
+    fpath = self.folder
+    if File.exists?(fpath)
+      log("Destruction du dossier existant :\n#{fpath}")
+    end
+    FileUtils.rm_rf(fpath) if File.exists?(fpath)
+    if File.exists?(fpath)
+      log("ERREUR : Le dossier '#{(fpath)}' ne devrait plus exister…")
     end
   end
 
@@ -46,6 +48,7 @@ class Concurrent
 
   def destroy_in_session
     session.delete('concours_user_id')
+    html.concurrent = nil
   end
 
   def redirect_to_accueil

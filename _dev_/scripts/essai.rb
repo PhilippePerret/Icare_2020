@@ -1,18 +1,18 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-require 'fileutils'
 
-# `wkhtmltopdf http://localhost/AlwaysData/Icare_2020/overview/policy ./atelier.pdf`
+require './_lib/required/__first/extensions/Hash'
 
-def methode
-  puts "pour voir"
-end
+h = {
+  un: {un_un: {un_un_un: "pour voir"}}
+}
 
+newh = {un: { un_un: {deux_deux: "Pour voir les deux" } } }
+h1 = h.dup
+h2 = h.dup
 
-if self.respond_to?(:methode)
-  puts ":methode est définie"
-else
-  puts "elle n'est pas définie"
-end
+h1.merge!(newh)
+h2.smart_merge!(newh)
 
-puts "Je suis là"
+puts h1.inspect
+puts h2.inspect

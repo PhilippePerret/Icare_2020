@@ -6,10 +6,19 @@ require_relative './constants_mini'
 require './_lib/required/__first/constants/paths'
 require './_lib/required/__first/helpers/Linker'
 
+UI_TEXTS.smart_merge!({
+  concours:{
+    buttons:{
+      download_fiche_lecture: "TÉLÉCHARGER LA FICHE DE LECTURE"
+    },
+    titres:{
+      home_page: "Concours de synopsis de l’atelier Icare",
+      signup_page: "Inscription au concours"
+    }
+  }
+})
 UI_TEXTS.merge!({
   # *** Titres ***
-  concours_titre_home_page: "Concours de synopsis de l’atelier Icare",
-  titre_page_inscription: "Inscription au concours",
   concours_bouton_inscription: "Inscription au concours",
   concours_btn_signup_next: 'Inscription au prochain concours',
   concours_titre_participant: "Espace personnel",
@@ -43,14 +52,8 @@ MESSAGES.merge!({
   concours_icarien_inscrit_login_required: "%{pseudo}, vous êtes déjà inscrit%{e}. Il vous suffit de vous identifier pour demander à participer à cette session du concours.",
   concours_confirm_inscription_session_courante: "Bravo, %{pseudo}, vous êtes inscrit%{e} à la session #{ANNEE_CONCOURS_COURANTE} du concours.",
   concurrent_login_required: "Vous êtes déjà concurrent du concours, vous devez vous identifier (pour participer à la nouvelle session ou rejoindre votre espace personnel).",
-  prefs_dont_want_fiches_lecture: "Vos préférences indiquent que vous ne désirez pas de fiches de lecture.",
-  too_soon_to_get_fiche_lecture: "Il est trop tôt pour obtenir votre fiche de lecture."
 })
-MESSAGES.merge!({
-  concours:{
-    en_cours_de_preselection: "le concours est en phase de présélection"
-  }
-})
+
 
 REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
 

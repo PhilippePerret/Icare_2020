@@ -38,6 +38,7 @@ class << self
     Errorer.sessionnize
     Noticer.sessionnize
     puts cgi.header('status'=>'REDIRECT', 'location' => "#{App.url}/#{road}")
+    exit # <=== À SURVEILLER
   end
 
 end #/<< self

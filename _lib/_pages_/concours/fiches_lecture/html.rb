@@ -15,14 +15,14 @@
 =end
 class HTML
   def titre
-    "Vos fiches de lecture"
-  end #/titre
+    "#{bouton_retour_espace_perso}#{Emoji.get('objets/porte-document').page_title + SPACE}Vos fiches de lecture"
+  end
 
   # Code à exécuter avant la construction de la page
   def exec
     require_xmodule('synopsis')
     try_to_reconnect_visitor(required = true)
-  end # /exec
+  end
 
   # Fabrication du body
   def build_body
@@ -34,18 +34,17 @@ class HTML
   def link_to_fiche_lecture_concours(dconcours)
     @template_link ||= Tag.link(
       route:"concours/fiches_lecture?op=download&cid=#{concurrent.id}&an=%{annee}",
-      text: "Télécharger la fiche de lecture du concours %{annee}"
+      text: UI_TEXTS[:concours][:fiches_lecture][:download_btn_name_template]
     )
     annee = dconcours[:annee].to_i
     if annee == Concours.current.annee && Concours.current.phase < 5
-      MESSAGES[:too_soon_to_get_fiche_lecture]
+      MESSAGES[:concours][:fiches_lecture][:too_soon]
     else
       @template_link % {annee: annee}
     end
   end
 
   def designation_visiteur_courant
-    log("-> designation_visiteur_courant. concurrent = #{concurrent.inspect}")
     if user.admin?
       "administrateur (#{user.pseudo})"
     elsif user.evaluator?
@@ -53,7 +52,7 @@ class HTML
     elsif user.concurrent?
       "concurrent (#{concurrent.pseudo} ##{concurrent.id})"
     else
-      "anonyme"
+      raise "Un anonyme ne peut pas passer par cette section."
     end
   end #/ designation_visiteur_courant
 

@@ -131,6 +131,7 @@ end
 def ne_peut_pas_sinscrire_au_concours(raison_affichee = "déjà inscrit")
   it "ne peut pas s'inscrire au concours (#{raison_affichee})" do
     goto("concours/inscription")
+    screenshot("page-signup-unable")
     expect(page).to be_inscription_concours(formulaire = false)
     expect(page).to have_content(raison_affichee)
   end
@@ -160,7 +161,7 @@ def peut_detruire_son_inscription
     # TConcurrent car sinon les propriétés '.folder', '.id' etc.
     # seront fausses.
     testedvisitor = visitor.is_a?(TUser) ? visitor.as_concurrent : visitor
-    puts "testedvisitor = #{testedvisitor.inspect}"
+    # puts "testedvisitor = #{testedvisitor.inspect}"
     dossier = testedvisitor.folder
 
     # *** Vérifications préliminaires ***
@@ -170,24 +171,24 @@ def peut_detruire_son_inscription
     expect(File).to be_exists(dossier), "Le dossier du concurrent devrait exister avec ses documents."
 
     goto("concours/espace_concurrent")
-    puts "Est-ce que son dossier existe ici ? #{File.exists?(dossier).inspect}"
     expect(page).to have_css("form#destroy-form")
     within("form#destroy-form") do
       fill_in("c_numero", with: testedvisitor.id)
       click_on(UI_TEXTS[:concours_button_destroy])
     end
     screenshot("destroy-inscription")
-    puts "Est-ce que son dossier '#{dossier}' existe là (il ne devrait pas) ? #{File.exists?(dossier).inspect}"
+    puts "Le dossier #{File.basename(dossier)} existe…".rouge if File.exists?(dossier)
+    expect(File).not_to be_exists(dossier)
 
     # *** Vérifications ***
     nb = db_count(DBTBL_CONCURS_PER_CONCOURS, {concurrent_id: testedvisitor.id})
     expect(nb).to eq(0), "Il ne devrait plus y avoir de participations du concurrent dans '#{DBTBL_CONCURS_PER_CONCOURS}'…"
     d = db_exec("SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ?", [testedvisitor.id])
     expect(d).to be_empty
+
     if File.exists?(dossier)
       puts "Le dossier '#{dossier}' existe (il ne devrait pas)".jaune
     end
-    expect(File).not_to be_exists(dossier), "Le dossier du concurrent ne devrait plus exister."
 
     goto("concours/accueil")
     # Étonnament (ou pas), ci-dessous, le lien s'appelle "Identifiez-vous" même
@@ -208,7 +209,18 @@ def peut_detruire_son_inscription
   @visitor = nil # pour forcer sa réinitialisation
 end #/ peut_detruire_son_inscription
 
-
+def ne_peut_pas_detruire_son_inscription
+  it "ne peut pas détruire son inscription" do
+    goto("concours/espace_concurrent")
+    expect(page).not_to be_espace_personnel
+    expect(page).to be_identification_concours
+  end
+  it "ne peut pas détruire son inscription par lien direct" do
+    goto("concours/espace_concurrent?form-id=destroy-form")
+    expect(page).not_to be_espace_personnel
+    expect(page).to be_identification_concours
+  end
+end #/ ne_peut_pas_detruire_son_inscription
 # ---------------------------------------------------------------------
 #
 #   Méthodes fonctionnelle

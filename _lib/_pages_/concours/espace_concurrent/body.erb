@@ -33,6 +33,7 @@ end # si c'est gaetan deves
 #   DÉBUT NORMAL DE LA PAGE
 #
 # ---------------------------------------------------------------------
+#PAS ICI
 %>
 <p>
   <strong><%= concurrent.pseudo.patronimize %></strong>, bienvenue dans votre espace du <strong>Concours de Synopsis de l’atelier Icare</strong>. <%
@@ -56,6 +57,8 @@ end # si c'est gaetan deves
   else
     " Veuillez noter que <strong>vous n'êtes pas encore inscrit à la session #{Concours.current.annee} du concours</strong>."
   end
+
+#PAS ICI
 %></p>
 
 <%
@@ -63,10 +66,11 @@ end # si c'est gaetan deves
 if not(concurrent.current?) && Concours.current.phase < 2 %>
 
   <div class="right mt2 mb2">
-    <%= CONCOURS_SIGNUP.with("☞#{ISPACE}S’inscrire à la session #{Concours.current.annee} du concours.") %>
-  </div>
 
-  <%
+    <%= CONCOURS_SIGNUP.with("☞#{ISPACE}S’inscrire à la session #{Concours.current.annee} du concours.") %>
+
+  </div><%
+
 end
 
 # ---------------------------------------------------------------------
@@ -167,7 +171,7 @@ end
 %>
 <% if concurrent.synopsis.fiche_lecture.downloadable? %>
   <div id="chargement-fiche-lecture" class="border center mt2 big air">
-    <%= Tag.link(text:"TÉLÉCHARGER LA FICHE DE LECTURE", route:concurrent.synopsis.fiche_lecture.download_link) %>
+    <%= Tag.link(text:UI_TEXTS[:concours][:buttons][:download_fiche_lecture], route:concurrent.synopsis.fiche_lecture.download_link) %>
   </div>
 <% end %>
 
@@ -265,7 +269,7 @@ end
     if concurrent.want_fiche_lecture?
 
       %><div class="right"><%=
-        Tag.link(text:UI_TEXTS[:btn_vers_fiches_lecture], route:"concours/fiches_lecture?cid=#{concurrent.id}") %>
+        Tag.link(text:UI_TEXTS[:concours][:buttons][:vers_fiches_lecture], route:"concours/fiches_lecture?cid=#{concurrent.id}") %>
       </div><%
 
     end # Si le concurrent veut recevoir sa fiche de lecture

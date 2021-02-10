@@ -1,30 +1,32 @@
-<% Synopsis.evaluated? || Synopsis.evaluate_all_synopsis %>
-
 <%
-# ---------------------------------------------------------------------
-#
-#   Si un synopsis est désigné, i.e. paramètres 'cid' (ID du concurrent)
-#   et 'an' (année du concours à voir, pas forcément courant)
-#
-# ---------------------------------------------------------------------
-log("concurrent.options: #{concurrent ? concurrent.options : 'pas de concurrent'}")
-if param(:cid) && param(:an) %><%=
-  code_css_fiche_lecture
-  %><%=
-  syno = Synopsis.get(param(:cid), param(:an))
-  log("Clés de catégories : #{syno.evaluation.owners.keys}")
-  log("syno catégories : #{syno.evaluation.owners.inspect}")
-  syno.fiche_lecture.out %><%
+# frozen_string_literal: true
 
-elsif user.concurrent? && not(concurrent.fiche_lecture?) %><%=
-  MESSAGES[:prefs_dont_want_fiches_lecture] %><%
-elsif concurrent %><%
-  concurrent.all_concours.each do |dconcours| %>
-    <div><%= link_to_fiche_lecture_concours(dconcours) %></div><%
-  end %><%
+# ---------------------------------------------------------------------
+#
+#   Maintenant, cette section n'affiche plus que la liste des fiches
+#   de lecture avec des liens pour les voir (ou les charger)
+#
+# ---------------------------------------------------------------------
+if param(:cid) && param(:an)
+
+  %><iframe src="<%= Synopsis.get(param(:cid), param(:an).fiche_lecture.pdf_path) %>" style="width:21cm;height:29.7cm"></iframe><%
+
+elsif not concurrent.fiche_lecture?
+
+  %><%= MESSAGES[:concours][:fiches_lecture][:prefs_no_fiche] %><%
+
+elsif concurrent.first_concours? && Concours.current.phase < 5
+
+  %><%= MESSAGES[:concours][:fiches_lecture][:no_fiche_first_concours]%><%
+
+else
+
+  concurrent.all_concours.each do |dconcours|
+
+    %><div><%= link_to_fiche_lecture_concours(dconcours) %></div><%
+
+  end
+
 end %>
 
-<div id="lien_revenir" class="right" style="display:none;">
-  <%= Tag.lien(text: "☞ Liste des fiches de lecture", route:"concours/fiches_lecture?cid=#{param(:cid)}") %>
-</div>
 <div class="mt3"><span class="small">Consultation : <%= designation_visiteur_courant %></span></div>

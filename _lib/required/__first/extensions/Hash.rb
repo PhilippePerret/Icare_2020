@@ -9,4 +9,22 @@ class Hash
     end
     res.join("\n")
   end #/ pretty_inspect
+
+  def smart_merge(hash)
+    h = self
+    hash.each do |k, v|
+      h.merge!(k => {}) unless h.key?(k)
+      if v.is_a?(Hash)
+        h[k] = h[k].smart_merge(v)
+      else
+        h[k] = v
+      end
+    end
+    return h
+  end #/ smart_merge
+
+  def smart_merge!(hash)
+    self.replace(self.smart_merge(hash))
+  end #/ smart_merge!
+
 end #/Hash

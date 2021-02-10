@@ -31,7 +31,7 @@ feature 'Un ancien concurrent (non courant)' do
     peut_atteindre_lannonce_du_prochain_concours
     ne_peut_pas_atteindre_lespace_personnel
     ne_peut_pas_atteindre_la_section_evalutation
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 0
@@ -66,13 +66,15 @@ feature 'Un ancien concurrent (non courant)' do
       degel('concours-phase-2')
     end
 
-    # peut_rejoindre_le_concours
-    # ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
-    # ne_peut_pas_transmettre_de_dossier
-    # ne_peut_pas_atteindre_la_section_evalutation
+    peut_rejoindre_le_concours
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
+    ne_peut_pas_transmettre_de_dossier
     peut_detruire_son_inscription
-    # ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
-    # peut_telecharger_une_ancienne_fiche_de_lecture
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
+    peut_telecharger_une_ancienne_fiche_de_lecture
+
+    # --- Section interdite ---
+    ne_peut_pas_atteindre_la_section_evalutation
 
   end #/context PHASE 2
 
@@ -85,7 +87,7 @@ feature 'Un ancien concurrent (non courant)' do
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 3
@@ -99,7 +101,7 @@ feature 'Un ancien concurrent (non courant)' do
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 5
@@ -113,7 +115,7 @@ feature 'Un ancien concurrent (non courant)' do
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 8
@@ -127,7 +129,7 @@ feature 'Un ancien concurrent (non courant)' do
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
-    ne_peut_pas_telecharger_sa_fiche_de_lecture(raison = :old)
+    ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
 
   end #/context PHASE 9

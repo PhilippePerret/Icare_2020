@@ -6,7 +6,7 @@ if user.guest?
 end
 class HTML
   def titre
-    "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:titre_page_inscription]}"
+    "#{bouton_retour}#{EMO_TITRE}#{UI_TEXTS[:concours][:titres][:signup_page]}"
   end #/titre
 
   # Code à exécuter avant la construction de la page
@@ -49,6 +49,7 @@ class HTML
   def panneau_name
     case true
     when user.admin?              then 'admin'
+    when inscription_impossible?  then 'concours_en_cours'
     when icarien_inscrit?         then 'icarien_deja_inscrit'
     when concurrent_inscrit?      then 'concurrent_deja_inscrit'
     when concours_en_cours?       then 'concours_en_cours'
@@ -59,6 +60,9 @@ class HTML
     end
   end #/ panneau_name
 
+  def inscription_impossible?
+    !(Concours.current.phase < 2)
+  end
   def concours_en_cours?
     Concours.current.phase > 1
   end

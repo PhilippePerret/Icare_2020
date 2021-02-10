@@ -40,6 +40,8 @@ class HTML
   # Produit un bouton pour le titre, pour revenir à l'accueil du concours
   def bouton_retour
     @bouton_retour ||= Tag.retour(route:"concours/accueil", titre:"Le Concours")
-  end #/ bouton_retour
-
+  end
+  def bouton_retour_espace_perso
+    @bouton_retour_espace_perso ||=  Tag.retour(route:"concours/espace_concurrent", titre:"")
+  end
 end #/HTML
