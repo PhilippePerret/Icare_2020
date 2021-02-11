@@ -119,11 +119,9 @@ feature 'Un nouveau concurrent', newconc:true do
       # puts "Je dégèle la phase 2".bleu
       degel('concours-phase-2')
     end
-    peut_rejoindre_le_concours
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
     ne_peut_pas_telecharger_sa_fiche_de_lecture
-
     ne_peut_pas_detruire_son_inscription(:concurrent)
 
     context 'qui a envoyé un dossier valide' do

@@ -70,3 +70,15 @@ def peut_rejoindre_le_concours
     expect(page).to have_css('a[href="concours"].goto')
   end
 end #/ peut_rejoindre_le_concours
+
+def ne_peut_plus_rejoindre_le_concours
+  it "ne peut plus rejoindre le concours" do
+    expect(page).not_to be_page_erreur
+    # Lien par l'encard d'annonce
+    ['/','user/login','user/signup', 'plan'].each do |endroit|
+      goto(endroit)
+      expect(page).not_to be_page_erreur
+      expect(page).not_to have_encart_concours
+    end
+  end
+end #/ ne_peut_plus_rejoindre_le_concours

@@ -68,7 +68,7 @@ feature "Un membre du premier jury", jury1:true do
     end
     peut_rejoindre_le_concours
     ne_peut_plus_evaluer_les_projets
-  end #/context PHASE 3
+  end #/context jury 1 en PHASE 3
 
   context 'PHASE 5', jury1:'phase5', phase5:true do
     before :all do

@@ -276,6 +276,9 @@ RSpec::Matchers.define :be_fiches_synopsis do
   failure_message do
     "Ce n'est pas la page des cartes des synopsis."
   end
+  failure_message_when_negated do
+    "Ça ne devrait pas être les cartes de synopsis…"
+  end
 end
 RSpec::Matchers.alias_matcher :be_page_evaluation, :be_fiches_synopsis
 

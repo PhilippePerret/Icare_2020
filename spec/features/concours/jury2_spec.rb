@@ -46,6 +46,7 @@ feature "Un membre du second jury" do
       degel('concours-phase-1')
     end
     peut_rejoindre_le_concours
+    ne_peut_pas_encore_evaluer_un_projet
     ne_peut_pas_lire_un_projet(raison = :too_soon)
   end #/context PHASE 1
 
@@ -54,8 +55,8 @@ feature "Un membre du second jury" do
       degel('concours-phase-2')
     end
     peut_rejoindre_le_concours
-    peut_lire_un_projet
-    peut_evaluer_un_projet
+    ne_peut_pas_lire_un_projet(raison = :too_soon)
+    ne_peut_pas_encore_evaluer_un_projet
   end #/context PHASE 2
 
   context 'PHASE 3', phase3:true, jury2:'phase3' do
@@ -64,7 +65,9 @@ feature "Un membre du second jury" do
     end
     peut_rejoindre_le_concours
     peut_lire_un_projet
-    ne_peut_plus_evaluer_les_projets
+    peut_evaluer_un_projet
+    peut_evaluer_un_synopsis_par_la_fiche
+    peut_modifier_son_evaluation
   end #/context PHASE 3
 
   context 'PHASE 5', phase5:true, jury2:'phase5' do
@@ -89,7 +92,7 @@ feature "Un membre du second jury" do
     before :all do
       degel('concours-phase-9')
     end
-    peut_rejoindre_le_concours
+    ne_peut_plus_rejoindre_le_concours
   end #/context PHASE 9
 
 end

@@ -4,7 +4,7 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/administrateur_spec.rb[1:1:2]      | unknown |               |
 ./spec/features/concours/administrateur_spec.rb[1:1:3]      | unknown |               |
 ./spec/features/concours/administrateur_spec.rb[1:2:1]      | passed  | 11.34 seconds |
-./spec/features/concours/administrateur_spec.rb[1:3:1]      | passed  | 10.89 seconds |
+./spec/features/concours/administrateur_spec.rb[1:3:1]      | passed  | 12.03 seconds |
 ./spec/features/concours/administrateur_spec.rb[1:4:1]      | unknown |               |
 ./spec/features/concours/administrateur_spec.rb[1:5:1]      | unknown |               |
 ./spec/features/concours/administrateur_spec.rb[1:6:1]      | unknown |               |
@@ -31,13 +31,13 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/ancien_concurrent_spec.rb[1:2:11]  | unknown |               |
 ./spec/features/concours/ancien_concurrent_spec.rb[1:2:12]  | unknown |               |
 ./spec/features/concours/ancien_concurrent_spec.rb[1:2:13]  | unknown |               |
-./spec/features/concours/ancien_concurrent_spec.rb[1:3:1]   | passed  | 17.18 seconds |
-./spec/features/concours/ancien_concurrent_spec.rb[1:3:2]   | passed  | 4.81 seconds  |
-./spec/features/concours/ancien_concurrent_spec.rb[1:3:3]   | passed  | 4.07 seconds  |
-./spec/features/concours/ancien_concurrent_spec.rb[1:3:4]   | passed  | 5.29 seconds  |
-./spec/features/concours/ancien_concurrent_spec.rb[1:3:5]   | passed  | 2.43 seconds  |
-./spec/features/concours/ancien_concurrent_spec.rb[1:3:6]   | passed  | 3.07 seconds  |
-./spec/features/concours/ancien_concurrent_spec.rb[1:3:7]   | passed  | 6.71 seconds  |
+./spec/features/concours/ancien_concurrent_spec.rb[1:3:1]   | passed  | 18.54 seconds |
+./spec/features/concours/ancien_concurrent_spec.rb[1:3:2]   | passed  | 4.52 seconds  |
+./spec/features/concours/ancien_concurrent_spec.rb[1:3:3]   | passed  | 4.11 seconds  |
+./spec/features/concours/ancien_concurrent_spec.rb[1:3:4]   | passed  | 5.39 seconds  |
+./spec/features/concours/ancien_concurrent_spec.rb[1:3:5]   | passed  | 2.4 seconds   |
+./spec/features/concours/ancien_concurrent_spec.rb[1:3:6]   | passed  | 3.06 seconds  |
+./spec/features/concours/ancien_concurrent_spec.rb[1:3:7]   | passed  | 6.83 seconds  |
 ./spec/features/concours/ancien_concurrent_spec.rb[1:4:1]   | unknown |               |
 ./spec/features/concours/ancien_concurrent_spec.rb[1:4:2]   | unknown |               |
 ./spec/features/concours/ancien_concurrent_spec.rb[1:4:3]   | unknown |               |
@@ -77,14 +77,14 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/icarien_new_conc_spec.rb[1:2:9:1]  | unknown |               |
 ./spec/features/concours/icarien_new_conc_spec.rb[1:2:10]   | unknown |               |
 ./spec/features/concours/icarien_new_conc_spec.rb[1:2:11]   | unknown |               |
-./spec/features/concours/icarien_new_conc_spec.rb[1:3:1]    | passed  | 17.49 seconds |
-./spec/features/concours/icarien_new_conc_spec.rb[1:3:2]    | passed  | 4.48 seconds  |
-./spec/features/concours/icarien_new_conc_spec.rb[1:3:3]    | passed  | 4.88 seconds  |
-./spec/features/concours/icarien_new_conc_spec.rb[1:3:4]    | passed  | 2.4 seconds   |
-./spec/features/concours/icarien_new_conc_spec.rb[1:3:5]    | passed  | 2.59 seconds  |
-./spec/features/concours/icarien_new_conc_spec.rb[1:3:6]    | passed  | 2.46 seconds  |
-./spec/features/concours/icarien_new_conc_spec.rb[1:3:7]    | passed  | 2.33 seconds  |
-./spec/features/concours/icarien_new_conc_spec.rb[1:3:8]    | passed  | 6.69 seconds  |
+./spec/features/concours/icarien_new_conc_spec.rb[1:3:1]    | passed  | 17.39 seconds |
+./spec/features/concours/icarien_new_conc_spec.rb[1:3:2]    | passed  | 4.51 seconds  |
+./spec/features/concours/icarien_new_conc_spec.rb[1:3:3]    | passed  | 4.34 seconds  |
+./spec/features/concours/icarien_new_conc_spec.rb[1:3:4]    | passed  | 2.28 seconds  |
+./spec/features/concours/icarien_new_conc_spec.rb[1:3:5]    | passed  | 2.24 seconds  |
+./spec/features/concours/icarien_new_conc_spec.rb[1:3:6]    | passed  | 2.25 seconds  |
+./spec/features/concours/icarien_new_conc_spec.rb[1:3:7]    | passed  | 2.31 seconds  |
+./spec/features/concours/icarien_new_conc_spec.rb[1:3:8]    | passed  | 6.51 seconds  |
 ./spec/features/concours/icarien_new_conc_spec.rb[1:4:1]    | unknown |               |
 ./spec/features/concours/icarien_new_conc_spec.rb[1:4:2]    | unknown |               |
 ./spec/features/concours/icarien_new_conc_spec.rb[1:4:3]    | unknown |               |
@@ -107,12 +107,12 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/icarien_not_conc_spec.rb[1:2:1]    | unknown |               |
 ./spec/features/concours/icarien_not_conc_spec.rb[1:2:2]    | unknown |               |
 ./spec/features/concours/icarien_not_conc_spec.rb[1:2:3]    | unknown |               |
-./spec/features/concours/icarien_not_conc_spec.rb[1:3:1]    | passed  | 17 seconds    |
-./spec/features/concours/icarien_not_conc_spec.rb[1:3:2]    | passed  | 4.44 seconds  |
-./spec/features/concours/icarien_not_conc_spec.rb[1:3:3]    | passed  | 4.62 seconds  |
-./spec/features/concours/icarien_not_conc_spec.rb[1:3:4]    | passed  | 6.44 seconds  |
-./spec/features/concours/icarien_not_conc_spec.rb[1:3:5]    | passed  | 6.44 seconds  |
-./spec/features/concours/icarien_not_conc_spec.rb[1:3:6]    | passed  | 6.51 seconds  |
+./spec/features/concours/icarien_not_conc_spec.rb[1:3:1]    | passed  | 16.62 seconds |
+./spec/features/concours/icarien_not_conc_spec.rb[1:3:2]    | passed  | 4.39 seconds  |
+./spec/features/concours/icarien_not_conc_spec.rb[1:3:3]    | passed  | 4.67 seconds  |
+./spec/features/concours/icarien_not_conc_spec.rb[1:3:4]    | passed  | 6.54 seconds  |
+./spec/features/concours/icarien_not_conc_spec.rb[1:3:5]    | passed  | 6.74 seconds  |
+./spec/features/concours/icarien_not_conc_spec.rb[1:3:6]    | passed  | 9.59 seconds  |
 ./spec/features/concours/icarien_not_conc_spec.rb[1:4:1]    | unknown |               |
 ./spec/features/concours/icarien_not_conc_spec.rb[1:4:2]    | unknown |               |
 ./spec/features/concours/icarien_not_conc_spec.rb[1:5:1]    | unknown |               |
@@ -126,8 +126,8 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/jury1_spec.rb[1:1:3]               | unknown |               |
 ./spec/features/concours/jury1_spec.rb[1:2:1]               | unknown |               |
 ./spec/features/concours/jury1_spec.rb[1:2:2]               | unknown |               |
-./spec/features/concours/jury1_spec.rb[1:3:1]               | passed  | 20.23 seconds |
-./spec/features/concours/jury1_spec.rb[1:3:2]               | failed  | 6.22 seconds  |
+./spec/features/concours/jury1_spec.rb[1:3:1]               | passed  | 20.1 seconds  |
+./spec/features/concours/jury1_spec.rb[1:3:2]               | passed  | 30.5 seconds  |
 ./spec/features/concours/jury1_spec.rb[1:4:1]               | unknown |               |
 ./spec/features/concours/jury1_spec.rb[1:4:2]               | unknown |               |
 ./spec/features/concours/jury1_spec.rb[1:5:1]               | unknown |               |
@@ -140,12 +140,15 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/jury2_spec.rb[1:1:3]               | unknown |               |
 ./spec/features/concours/jury2_spec.rb[1:2:1]               | unknown |               |
 ./spec/features/concours/jury2_spec.rb[1:2:2]               | unknown |               |
-./spec/features/concours/jury2_spec.rb[1:3:1]               | passed  | 18.92 seconds |
-./spec/features/concours/jury2_spec.rb[1:3:2]               | failed  | 6.66 seconds  |
-./spec/features/concours/jury2_spec.rb[1:3:3]               | failed  | 6.62 seconds  |
+./spec/features/concours/jury2_spec.rb[1:2:3]               | unknown |               |
+./spec/features/concours/jury2_spec.rb[1:3:1]               | passed  | 19.92 seconds |
+./spec/features/concours/jury2_spec.rb[1:3:2]               | passed  | 5.16 seconds  |
+./spec/features/concours/jury2_spec.rb[1:3:3]               | passed  | 4.92 seconds  |
 ./spec/features/concours/jury2_spec.rb[1:4:1]               | unknown |               |
 ./spec/features/concours/jury2_spec.rb[1:4:2]               | unknown |               |
 ./spec/features/concours/jury2_spec.rb[1:4:3]               | unknown |               |
+./spec/features/concours/jury2_spec.rb[1:4:4]               | unknown |               |
+./spec/features/concours/jury2_spec.rb[1:4:5]               | unknown |               |
 ./spec/features/concours/jury2_spec.rb[1:5:1]               | unknown |               |
 ./spec/features/concours/jury2_spec.rb[1:5:2]               | unknown |               |
 ./spec/features/concours/jury2_spec.rb[1:5:3]               | unknown |               |
@@ -184,18 +187,17 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/new_concurrent_spec.rb[1:2:16]     | unknown |               |
 ./spec/features/concours/new_concurrent_spec.rb[1:2:17]     | unknown |               |
 ./spec/features/concours/new_concurrent_spec.rb[1:2:18]     | unknown |               |
-./spec/features/concours/new_concurrent_spec.rb[1:3:1]      | passed  | 18.44 seconds |
-./spec/features/concours/new_concurrent_spec.rb[1:3:2]      | passed  | 6.35 seconds  |
-./spec/features/concours/new_concurrent_spec.rb[1:3:3]      | passed  | 4.51 seconds  |
-./spec/features/concours/new_concurrent_spec.rb[1:3:4]      | passed  | 4.06 seconds  |
-./spec/features/concours/new_concurrent_spec.rb[1:3:5]      | passed  | 4.06 seconds  |
-./spec/features/concours/new_concurrent_spec.rb[1:3:6]      | passed  | 4.48 seconds  |
-./spec/features/concours/new_concurrent_spec.rb[1:3:7:1]    | passed  | 6.16 seconds  |
-./spec/features/concours/new_concurrent_spec.rb[1:3:8:1]    | passed  | 6.09 seconds  |
-./spec/features/concours/new_concurrent_spec.rb[1:3:9:1]    | passed  | 6.1 seconds   |
-./spec/features/concours/new_concurrent_spec.rb[1:3:10]     | passed  | 8.58 seconds  |
-./spec/features/concours/new_concurrent_spec.rb[1:3:11]     | passed  | 10.58 seconds |
-./spec/features/concours/new_concurrent_spec.rb[1:3:12]     | passed  | 10.61 seconds |
+./spec/features/concours/new_concurrent_spec.rb[1:3:1]      | passed  | 6.88 seconds  |
+./spec/features/concours/new_concurrent_spec.rb[1:3:2]      | passed  | 5.07 seconds  |
+./spec/features/concours/new_concurrent_spec.rb[1:3:3]      | passed  | 4.33 seconds  |
+./spec/features/concours/new_concurrent_spec.rb[1:3:4]      | passed  | 4.35 seconds  |
+./spec/features/concours/new_concurrent_spec.rb[1:3:5]      | passed  | 4.49 seconds  |
+./spec/features/concours/new_concurrent_spec.rb[1:3:6:1]    | passed  | 6.3 seconds   |
+./spec/features/concours/new_concurrent_spec.rb[1:3:7:1]    | passed  | 6.27 seconds  |
+./spec/features/concours/new_concurrent_spec.rb[1:3:8:1]    | passed  | 6.16 seconds  |
+./spec/features/concours/new_concurrent_spec.rb[1:3:9]      | passed  | 8.59 seconds  |
+./spec/features/concours/new_concurrent_spec.rb[1:3:10]     | passed  | 10.78 seconds |
+./spec/features/concours/new_concurrent_spec.rb[1:3:11]     | passed  | 10.67 seconds |
 ./spec/features/concours/new_concurrent_spec.rb[1:4:1]      | unknown |               |
 ./spec/features/concours/new_concurrent_spec.rb[1:4:2]      | unknown |               |
 ./spec/features/concours/new_concurrent_spec.rb[1:4:3]      | unknown |               |
@@ -254,14 +256,14 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/simple_visitor_spec.rb[1:2:10]     | passed  | 1.96 seconds  |
 ./spec/features/concours/simple_visitor_spec.rb[1:2:11]     | passed  | 16.39 seconds |
 ./spec/features/concours/simple_visitor_spec.rb[1:2:12]     | passed  | 1.03 seconds  |
-./spec/features/concours/simple_visitor_spec.rb[1:3:1]      | passed  | 14.72 seconds |
-./spec/features/concours/simple_visitor_spec.rb[1:3:2]      | passed  | 2.73 seconds  |
-./spec/features/concours/simple_visitor_spec.rb[1:3:3]      | passed  | 2.98 seconds  |
-./spec/features/concours/simple_visitor_spec.rb[1:3:4]      | passed  | 4.99 seconds  |
-./spec/features/concours/simple_visitor_spec.rb[1:3:5]      | passed  | 5.01 seconds  |
-./spec/features/concours/simple_visitor_spec.rb[1:3:6]      | passed  | 5.07 seconds  |
-./spec/features/concours/simple_visitor_spec.rb[1:3:7]      | passed  | 6.95 seconds  |
-./spec/features/concours/simple_visitor_spec.rb[1:3:8]      | passed  | 7.11 seconds  |
+./spec/features/concours/simple_visitor_spec.rb[1:3:1]      | passed  | 14.95 seconds |
+./spec/features/concours/simple_visitor_spec.rb[1:3:2]      | passed  | 2.77 seconds  |
+./spec/features/concours/simple_visitor_spec.rb[1:3:3]      | passed  | 2.9 seconds   |
+./spec/features/concours/simple_visitor_spec.rb[1:3:4]      | passed  | 5.01 seconds  |
+./spec/features/concours/simple_visitor_spec.rb[1:3:5]      | passed  | 4.99 seconds  |
+./spec/features/concours/simple_visitor_spec.rb[1:3:6]      | passed  | 5.06 seconds  |
+./spec/features/concours/simple_visitor_spec.rb[1:3:7]      | passed  | 7.11 seconds  |
+./spec/features/concours/simple_visitor_spec.rb[1:3:8]      | passed  | 7.09 seconds  |
 ./spec/features/concours/simple_visitor_spec.rb[1:4:1]      | unknown |               |
 ./spec/features/concours/simple_visitor_spec.rb[1:4:2]      | unknown |               |
 ./spec/features/concours/simple_visitor_spec.rb[1:5:1]      | unknown |               |

@@ -48,6 +48,12 @@ def path_fiche_evaluation(conc)
 end #/ path_fiche_evaluation
 
 class << self
+
+  def get(jure_id)
+    @all_jures ||= get_all_jures
+    @all_jures[jure_id]
+  end
+
   # OUT   Un évaluateur choisi au hasard ou suivant les options +options+
   # IN    +options+ Table d'options parmi :
   #         :femme      Si true, une jurée
@@ -95,6 +101,14 @@ class << self
     return e
   end
 
+  def get_all_jures
+    h = {}
+    data.each do |dj|
+      jure = new(dj)
+      h.merge!(jure.id => jure)
+    end
+    return h
+  end #/ get_all_jures
 
   # OUT   Données des évaluateurs courants
   # ALIAS def evaluators
@@ -112,7 +126,7 @@ end # /<< self
 #   INSTANCE
 #
 # ---------------------------------------------------------------------
-attr_reader :pseudo, :mail, :password, :id
+attr_reader :pseudo, :mail, :password, :id, :jury
 def initialize(data_ini)
   @data_ini = data_ini
   @data_ini.each{|k,v|instance_variable_set("@#{k}",v)}
@@ -121,4 +135,12 @@ end #/ initialize
 def to_s
   @to_s ||= "Le membre du jury #{pseudo}"
 end #/ to_s
+
+def jury1?
+  :TRUE === @is_jury1 ||= jury != 2 ? :TRUE : :FALSE
+end
+def jury2?
+  :TRUE === @is_jury2 ||= jury != 1 ? :TRUE : :FALSE
+end
+
 end #/TEvaluator

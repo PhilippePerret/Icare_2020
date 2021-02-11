@@ -50,6 +50,7 @@ log("DATABASE = #{DATABASE}")
 erreur_required = nil
 Dir.chdir(APP_FOLDER) do
   begin
+    require './_lib/required/__first/extensions/Hash'
     require './_lib/required/__first/constants/String'
     require './_lib/required/__first/db'
     MyDB.DBNAME = DATABASE
