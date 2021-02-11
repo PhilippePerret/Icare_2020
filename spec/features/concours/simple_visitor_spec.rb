@@ -51,8 +51,12 @@ end #/context PHASE 1
     before :all do
       degel('concours-phase-2')
     end
+    peut_rejoindre_le_concours
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     ne_peut_pas_transmettre_de_dossier
+    ne_peut_pas_detruire_son_inscription(:non_concurrent)
+    ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
   end #/context PHASE 2
 
   context 'PHASE 3', phase3:true, visitor:'phase3' do

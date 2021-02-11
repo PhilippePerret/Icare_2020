@@ -1527,3 +1527,18 @@ DATABASE = icare_test
 UUID Bad uuid (inexistant)
 STOP PIRATE (Le check UUID est invalide)
 --- Pirate ---
+
+
+--- [2021-02-11 07:40:11 +0100] Entrée dans ajax.rb
+[Ajax] APP_FOLDER = "/Users/philippeperret/Sites/AlwaysData/Icare_2020"
+=> Chargement des modules requis
+++ REQUÉRIR DOSSIER : /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/constants_site.rb
+---> Module /Users/philippeperret/Sites/AlwaysData/Icare_2020/_lib/ajax/ajax/required/mock_site_methods.rb
+<= Chargement des modules requis
+ENV['HTTP_HOST'] = "localhost"
+DATABASE = icare_test
+= Script : concours/get_score.rb
+UUID Bad uuid (inexistant)
+STOP PIRATE (Le check UUID est invalide)
+--- Pirate ---
