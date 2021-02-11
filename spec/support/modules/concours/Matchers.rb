@@ -208,7 +208,7 @@ RSpec::Matchers.define :be_espace_personnel do
     if not page.has_css?("h2.page-title", text: "Espace personnel")
       @errors << "la page devrait porter le titre “Espace personnel” (son titre est #{title_of_page})"
     end
-    if not page.has_css?("section#concours-destruction")
+    if not(TConcours.current.phase.between?(2,5)) && not(page.has_css?("section#concours-destruction"))
       @errors << "ne contient pas la section #concours-destruction"
     end
     unless page.has_link?("Se déconnecter")

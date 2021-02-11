@@ -178,7 +178,8 @@ end
 <%
 # ---------------------------------------------------------------------
 #
-# FORMULAIRE DE DÉPÔT DU FICHIER DE CANDIDATURE (if any)
+#     FORMULAIRE DE DÉPÔT DU FICHIER DE CANDIDATURE (if any)
+#
 # OU    Annonce en lice ou pas suivant dépôt de fichier et conformité
 # OU    Téléchargement de la fiche de lecture
 #
@@ -200,21 +201,25 @@ end
 
       %><%= section_fichier_candidature %><%
 
-    elsif concours.phase2?
+    elsif concours.phase2? && concurrent.current?
 
       %><p><%
 
-        if concurrent.current? && concurrent.cfile.conforme?
+        if not concurrent.cfile.transmis?
 
-          %><span>Votre synopsis est conforme, il est en lice</span><%
+          %><span><%= UI_TEXTS[:concours][:dossier][:not_lice_no_dossier] %></span><%
 
-        else
+        elsif concurrent.cfile.conforme?
 
-          %><span>Vous n'êtes pas en lice</span><%
+          %><span><%= UI_TEXTS[:concours][:dossier][:en_lice] %></span><%
+
+        elsif not concurrent.cfile.conforme?
+
+          %><span><%= UI_TEXTS[:concours][:dossier][:not_lice_dossier_invalide] %></span><%
 
         end
 
-        %><span> pour la session <%= ANNEE_CONCOURS_COURANTE %></span>.
+        %><span> pour la session <%= ANNEE_CONCOURS_COURANTE %> du concours</span>.
 
       </p><%
 
@@ -245,6 +250,8 @@ end
 <%
 
 # ---------------------------------------------------------------------
+#
+#     LIEN VERS LES FICHES DE LECTURE
 #
 # Informations sur le concurrent et ses participations précédentes
 # Contient aussi un lien vers ses fiches (if any)
@@ -292,21 +299,29 @@ end
 <%
 # ---------------------------------------------------------------------
 #
-#   Pour détruire son profil
+#       FORMULAIRE DE DESTRUCTION DE SON INSCRIPTION
 #
+#  Seulement si le concurrent n'est pas un concurrent courant en
+# cours de phase 2, 3 ou 5 (phases de sélection)
 # ---------------------------------------------------------------------
-formdestroy = Form.new(id:"destroy-form", route:route.to_s, class:"nopadding nomargin noborder nolibelle nobackground")
-formdestroy.rows = {
-  '<operation/>' => {type:"hidden", name:"op", value:"destroy"},
-  'Numéro d’inscription' => {type:"text", name:"c_numero", explication:"Numéro de participation qui vous a été fourni et envoyé par mail lors de votre inscription.", placeholder:"Numéro d'inscription (14 chiffres)"}
-}
-formdestroy.submit_button = UI_TEXTS[:concours_button_destroy]
-formdestroy.submit_button_class = "btn warning discret"
+if not( concurrent.current? && Concours.current.phase.between?(2,5) )
+
+  formdestroy = Form.new(id:"destroy-form", route:route.to_s, class:"nopadding nomargin noborder nolibelle nobackground")
+  formdestroy.rows = {
+    '<operation/>' => {type:"hidden", name:"op", value:"destroy"},
+    'Numéro d’inscription' => {type:"text", name:"c_numero", explication:"Numéro de participation qui vous a été fourni et envoyé par mail lors de votre inscription.", placeholder:"Numéro d'inscription (14 chiffres)"}
+  }
+  formdestroy.submit_button = UI_TEXTS[:concours_button_destroy]
+  formdestroy.submit_button_class = "btn warning discret"
+  %>
+  <h3>Détruire mes informations</h3>
+  <section id="concours-destruction">
+    <p>Vous pouvez à tout moment détruire votre inscription — ainsi que toutes les données et tous les fichiers qui y sont associés en renseignant le champ ci-desous et en cliquant sur le bouton de destruction.</p>
+    <p>Notez bien que cette opération est irréversible. Une fois vos informations et vos fichiers détruits, il sera impossible de les récupérer.</p>
+    <p>Cette destruction s'applique à toutes les sessions auxquelles vous avez pu participer, c'est-à-dire <%= concurrent.all_concours.count == 1 ? "la session" : "les sessions" %>&nbsp;: <%= concurrent.all_concours.collect{|dc|dc[:annee]}.pretty_join %>.</p>
+    <%= formdestroy.out %>
+  </section><%
+
+end
+# /si c'est un concurrent qui peut détruire son inscription
 %>
-<h3>Détruire mes informations</h3>
-<section id="concours-destruction">
-  <p>Vous pouvez à tout moment détruire votre inscription — ainsi que toutes les données et tous les fichiers qui y sont associés en renseignant le champ ci-desous et en cliquant sur le bouton de destruction.</p>
-  <p>Notez bien que cette opération est irréversible. Une fois vos informations et vos fichiers détruits, il sera impossible de les récupérer.</p>
-  <p>Cette destruction s'applique à toutes les sessions auxquelles vous avez pu participer, c'est-à-dire <%= concurrent.all_concours.count == 1 ? "la session" : "les sessions" %>&nbsp;: <%= concurrent.all_concours.collect{|dc|dc[:annee]}.pretty_join %>.</p>
-  <%= formdestroy.out %>
-</section>

@@ -69,7 +69,7 @@ feature 'Un icarien inscrit au concours courant' do
     peut_rejoindre_le_concours
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     ne_peut_pas_transmettre_de_dossier
-    peut_detruire_son_inscription
+    ne_peut_pas_detruire_son_inscription(:concurrent)
     ne_peut_pas_telecharger_sa_fiche_de_lecture
     ne_peut_pas_telecharger_une_ancienne_fiche_de_lecture(raison = :first_concours)
 

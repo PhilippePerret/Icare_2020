@@ -124,21 +124,21 @@ feature 'Un nouveau concurrent', newconc:true do
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
     ne_peut_pas_telecharger_sa_fiche_de_lecture
 
-    peut_detruire_son_inscription
+    ne_peut_pas_detruire_son_inscription(:concurrent)
 
     context 'qui a envoyé un dossier valide' do
       before(:each){ visitor.make_fichier_conforme }
-      ne_peut_plus_transmettre_son_dossier("Votre dossier a été pris en compte")
+      ne_peut_plus_transmettre_son_dossier(UI_TEXTS[:concours][:dossier][:en_lice])
     end
 
     context 'qui a envoyé un dossier invalide' do
       before(:each){ visitor.make_fichier_non_conforme }
-      ne_peut_plus_transmettre_son_dossier("Votre dossier est invalide")
+      ne_peut_plus_transmettre_son_dossier(UI_TEXTS[:concours][:dossier][:not_lice_dossier_invalide])
     end
 
     context 'qui n’a pas envoyé de dossier' do
       before(:each){ visitor.destroy_fichier } # au cas où
-      ne_peut_plus_transmettre_son_dossier("Vous n'avez transmis aucun dossier de candidature")
+      ne_peut_plus_transmettre_son_dossier(UI_TEXTS[:concours][:dossier][:not_lice_no_dossier])
     end
 
     # === Interdictions ===
@@ -156,7 +156,7 @@ feature 'Un nouveau concurrent', newconc:true do
     ne_peut_plus_transmettre_son_dossier
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
     ne_peut_pas_telecharger_sa_fiche_de_lecture
-    peut_detruire_son_inscription
+    ne_peut_pas_detruire_son_inscription(:concurrent)
 
     # === Interdictions ===
     ne_peut_pas_atteindre_la_section_evalutation
@@ -173,7 +173,7 @@ feature 'Un nouveau concurrent', newconc:true do
     ne_peut_plus_transmettre_son_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_telecharger_sa_fiche_de_lecture
-    peut_detruire_son_inscription
+    ne_peut_pas_detruire_son_inscription(:concurrent)
 
     # === Interdictions ===
     ne_peut_pas_produire_les_fiches_de_lecture

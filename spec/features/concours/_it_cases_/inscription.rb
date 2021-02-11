@@ -209,16 +209,36 @@ def peut_detruire_son_inscription
   @visitor = nil # pour forcer sa réinitialisation
 end #/ peut_detruire_son_inscription
 
-def ne_peut_pas_detruire_son_inscription
-  it "ne peut pas détruire son inscription" do
-    goto("concours/espace_concurrent")
-    expect(page).not_to be_espace_personnel
-    expect(page).to be_identification_concours
-  end
-  it "ne peut pas détruire son inscription par lien direct" do
-    goto("concours/espace_concurrent?form-id=destroy-form")
-    expect(page).not_to be_espace_personnel
-    expect(page).to be_identification_concours
+def ne_peut_pas_detruire_son_inscription(raison = :non_concurrent)
+  if raison == :non_concurrent
+    it "ne peut pas détruire son inscription" do
+      goto("concours/espace_concurrent")
+      expect(page).not_to be_espace_personnel
+      expect(page).to be_identification_concours
+    end
+    it "ne peut pas détruire son inscription par lien direct" do
+      goto("concours/espace_concurrent?form-id=destroy-form")
+      expect(page).not_to be_espace_personnel
+      expect(page).to be_identification_concours
+    end
+  elsif raison == :concurrent
+    it 'ne peut pas détruire son inscription en cours de concours' do
+      goto("concours/espace_concurrent")
+      expect(page).to be_espace_personnel
+      expect(page).not_to have_css("form#destroy-form"), "La page ne devrait pas avoir de formulaire pour détruire son inscription."
+      pitch("Le page ne présente pas de formulaire pour détruire son inscription")
+    end
+    it 'ne peut pas détruire son inscription par lien direct' do
+      vtested = visitor.is_a?(TUser) ? visitor.as_concurrent : visitor
+      dossier = vtested.folder
+      goto("concours/espace_concurrent?form-id=destroy-form&c_numero=#{vtested.concurrent_id}")
+      # *** Vérifications ***
+      expect(File).to be_exists(dossier), "le dossier du concurrent devrait toujours exister"
+      nb = db_count(DBTBL_CONCURS_PER_CONCOURS, {concurrent_id: vtested.concurrent_id})
+      expect(nb).to be(1), "le concurrent devrait toujours exister dans la base de données"
+    end
+  else
+    raise "La raison #{raison.inspect} est inconnue."
   end
 end #/ ne_peut_pas_detruire_son_inscription
 # ---------------------------------------------------------------------
