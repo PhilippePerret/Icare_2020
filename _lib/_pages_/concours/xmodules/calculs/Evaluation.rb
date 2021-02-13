@@ -29,6 +29,9 @@
           questions de troisième niveau un coefficiant de 0.8 (elles valent
           encore moins), etc.
       2.  Toutes les réponses n'ont pas à être données
+      3.  Il y a des ajustements àfa ire. Par exemple, quand le facteur U est
+          fort, mais que le facteur O est faible, on doit baisser l'apport du
+          facteur U au total.
 
   Pour obtenir la note finale, on procède ainsi :
   PREMIERS CALCULS

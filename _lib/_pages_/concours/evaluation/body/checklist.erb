@@ -36,8 +36,22 @@ const EVALUATOR_ID = <%= evaluator.id %>;
       <a href="<%= App.url %>/_lib/data/concours/<%=param(:cid)%>/<%=param(:synoid)%>.pdf" target="_blank">Lire le projet</a>
     </div>
     <%= Tag.retour(route:"concours/evaluation", titre:"Fiches des synopsis", class:'big') %>
-  </div>
-  <%= checklist %>
-<% else %>
-  <div class="big-air">Vous ne pouvez <%= plus_ou_pas_encore %> évaluer ce synopsis.</div>
-<% end %>
+  </div><%=
+
+  # Le formulaire pour mettre les notes
+  checklist
+
+  %><%=
+
+  # Le formulaire pour entrer des notes manuelles
+  formulaire_notes_manuelles
+
+  %><%
+
+else
+
+  %><div class="big-air">Vous ne pouvez <%= plus_ou_pas_encore %> évaluer ce synopsis.</div><%
+
+end
+
+%>

@@ -6,11 +6,15 @@ $(document).ready(()=>{
     // => On place les observeurs
     FicheLecture.prepare();
   } else if ($('div#checklist').length) {
+
+    // Évaluation d'un synopsis en particulier
+
     CheckList.prepare();
     const syno = new Synopsis(synid);
     syno.prepare();
     syno.checklist.open();
 
+    HandNotes.init();
 
   }
 })

@@ -10,7 +10,7 @@ def trouve_les_dix_synopsis_preselectionnes
     goto("concours/admin")
     expect(page).to have_select("current_phase", selected:"Sélection finale en cours")
     goto("concours/evaluation")
-    expect(page).to be_fiches_synopsis
+    expect(page).to be_cartes_synopsis
     expect(page).to have_css("div#synopsis-container")
     # sleep 10
     TConcurrent.all_current.each do |conc|
@@ -26,13 +26,31 @@ def trouve_les_dix_synopsis_preselectionnes
 end #/trouve_les_dix_synopsis_preselectionnes
 
 def peut_evaluer_un_projet
-  it "peut évaluer un projet" do
-    goto('concours/evaluation')
-    expect(page).to be_page_evaluation
+  # Pour rejoindre l'évaluation du premier synopsis depuis la page
+  # des cartes de synopsis.
+  # @return evaluation
+  #         Instance TEvaluation du synopsis
+  def edite_evaluation_premier_synopsis
     id_synopsis = first('div.synopsis')[:id].split('-')[1..2].join('-')
     id_concurrent = id_synopsis.split('-')[0]
-
     evaluation = TEvaluation.new(visitor.id, id_synopsis)
+    first('div.synopsis').click_on('Évaluer')
+    expect(page).to be_page_evaluation
+    sleep 4 # Le temps que les données se chargent
+    return evaluation
+  end #/ edite_evaluation_premier_synopsis
+
+  it "peut évaluer un projet en attribuant des “notes”" do
+
+    pending("À remettre en service")
+    return
+
+    goto('concours/evaluation')
+    expect(page).to be_cartes_synopsis
+
+    evaluation = edite_evaluation_premier_synopsis
+    id_synopsis = evaluation.synopsis_id
+
     score_path = evaluation.path
     # puts "score_path: #{score_path.inspect} (existe ? #{File.exists?(score_path)})"
     # puts "Données :\n#{evaluation.data}"
@@ -44,11 +62,6 @@ def peut_evaluer_un_projet
     # même si ça n'est pas encore traité
     keys = evaluation.data.keys.shuffle.shuffle[0..4]
     keys << 'po' unless keys.include?('po')
-
-    first('div.synopsis').click_on('Évaluer')
-    expect(page).to have_titre("Évaluation de #{id_synopsis}")
-    expect(page).to have_css('form#checklist-form')
-    sleep 4 # Le temps que les données se chargent
     # On initialise le formulaire en remettant tout à rien
     page.execute_script('$("form#checklist-form select").val("-")')
     within('form#checklist-form') do
@@ -73,7 +86,6 @@ def peut_evaluer_un_projet
       end
     end
 
-
     # Maintenant, en cliquant sur le bouton pour écarter toutes les
     # questions non répondus
     # On initialise le formulaire en remettant tout à rien
@@ -94,7 +106,7 @@ def peut_evaluer_un_projet
       click_on('Enregistrer')
     end
     expect(page).to have_message("Le nouveau score est enregistré")
-    # On vérifie que le score ait été bien enregistré
+    # On vérifie que le score a été bien enregistré
     evaluation = TEvaluation.new(visitor.id, id_synopsis)
     evaluation.data.each do |k, v|
       if keys.include?(k)
@@ -109,12 +121,81 @@ def peut_evaluer_un_projet
     # "div.line-note select[name=\"#{key}\"]"
     # "div#checklist-gauge"
   end
+
+  it "trouve un formulaire pour des notes manuelles conforme" do
+    goto('concours/evaluation')
+    expect(page).to be_cartes_synopsis
+    evaluation = edite_evaluation_premier_synopsis
+  # La page doit posséder un formulaire conforme
+    expect(page).to have_css('form#notes-manuelles')
+    within('form#notes-manuelles') do
+      expect(page).to have_css('select#note-manuelle-categorie')
+      expect(page).to have_css('textarea#note-manuelle-content')
+      expect(page).to have_css('button#btn-save-note-manuelle')
+    end
+  end
+
+  it "peut écrire des notes propres aux catégories (notes manuelles)" do
+    goto('concours/evaluation')
+    expect(page).to be_cartes_synopsis
+    evaluation = edite_evaluation_premier_synopsis
+    contenu_note = "Une note pour essayer les notes manuelles le #{Time.now}."
+    within('form#notes-manuelles') do
+      select('Projet', from: 'note-manuelle-categorie')
+      fill_in('note-manuelle-content', with: contenu_note)
+      click_on('Enregistrer')
+    end
+    screenshot('after-save-note-manuelle')
+    expect(page).to have_message("La note sur le projet, catégorie “projet”, a été enregistrée.")
+    note_path = File.join(evaluation.folder, "note-projet-#{visitor.id}.md")
+    expect(File).to be_exists(note_path), "Le fichier de la note devrait exister"
+    contenu_fichier = File.read(note_path)
+    expect(contenu_fichier).to eq(contenu_note), "Le fichier devrait contenir le texte de la note."
+  end
+
+  it "peut modifier une note manuelle" do
+    goto('concours/evaluation')
+    expect(page).to be_cartes_synopsis
+    evaluation = edite_evaluation_premier_synopsis
+    form = 'form#notes-manuelles'
+    # = Préparation =
+    # Il faut fait une note dans deux catégories
+    note_projet_path = File.join(evaluation.folder,"note-projet-#{visitor.id}.md")
+    note_redaction_path = File.join(evaluation.folder,"note-redaction-#{visitor.id}.md")
+    note_projet     = "Note sur le projet.\nPour voir.\n\nElle date du #{Time.now}."
+    note_redaction  = "Note rédactionnelle sur le projet #{evaluation.synopsis_id} datant du #{Time.now}."
+    mkdir(File.dirname(note_projet_path))
+    File.open(note_projet_path,'wb'){|f| f.write(note_projet)}
+    File.open(note_redaction_path,'wb'){|f| f.write(note_redaction)}
+    # = On peut procéder à l'essai =
+    textarea = page.find('textarea#note-manuelle-content')
+    expect(textarea.value).to be_empty
+    within(form) do
+      select('Rédaction', from:'note-manuelle-categorie')
+    end
+    sleep 2
+    expect(textarea.value).to eq(note_redaction)
+
+    within(form) do
+      select('Projet', from:'note-manuelle-categorie')
+    end
+    sleep 2
+    expect(textarea.value).to eq(note_projet)
+    new_note_projet = note_projet + "\n" + "Modifié le #{Time.now}"
+    within(form) do
+      fill_in('note-manuelle-content', with: new_note_projet)
+      click_on('Enregistrer')
+    end
+    sleep 2
+    expect(File.read(note_projet_path)).to eq(new_note_projet)
+  end
+
 end #/ peut_evaluer_un_projet
 
 def ne_peut_plus_evaluer_les_projets
   it "ne peut plus evaluer les projets" do
     goto("concours/evaluation")
-    expect(page).to be_page_evaluation
+    expect(page).to be_cartes_synopsis
     id_synopsis = first('div.synopsis')[:id].split('-')[1..2].join('-')
     expect(first('div.synopsis')).not_to have_link('Évaluer')
   end
@@ -122,7 +203,7 @@ end
 def ne_peut_pas_encore_evaluer_un_projet
   it "ne peut pas évaluer un projet" do
     goto("concours/evaluation")
-    expect(page).to be_page_evaluation
+    expect(page).to be_cartes_synopsis
     expect(page).not_to have_css('div.synopsis')
     expect(page).to have_content("Vous ne pouvez pas encore évaluer")
   end
@@ -131,7 +212,7 @@ end
 
 def peut_evaluer_un_synopsis_par_la_fiche
   it "peut évaluer un synopsis par la fiche" do
-    expect(page).to be_fiches_synopsis
+    expect(page).to be_cartes_synopsis
     syno_id = "#{concurrent.id}-#{annee}"
     div_syno_id = "synopsis-#{syno_id}"
     expect(page).to have_css("div##{div_syno_id}")
@@ -151,7 +232,7 @@ end #/ peut_evaluer_un_synopsis_par_la_fiche
 
 def peut_modifier_son_evaluation
   it "peut modifier son évaluation" do
-    expect(page).to be_fiches_synopsis
+    expect(page).to be_cartes_synopsis
     syno_id = "#{concurrent.id}-#{annee}"
     div_syno_id = "synopsis-#{syno_id}"
     within("div##{div_syno_id}") do
@@ -208,7 +289,7 @@ def peut_modifier_son_evaluation
     pitch("Le membre du jury, grâce à un lien évident, retourne à la liste des synopsis pour voir la nouvelle note affichée")
     expect(page).to have_link("Fiches des synopsis")
     visitor.click_on("Fiches des synopsis")
-    expect(page).to be_fiches_synopsis
+    expect(page).to be_cartes_synopsis
 
     # La note doit avoir été recalculée et rectifiée
     expect(page).to have_css("div##{div_syno_id} span.note-evaluator", text: nouvelle_note)

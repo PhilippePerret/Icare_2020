@@ -65,7 +65,7 @@ def ne_peut_pas_atteindre_la_section_evalutation
     if page.has_content?("Un membre du jury ou un administrateur est requis")
       expect(page).to have_content("Un membre du jury ou un administrateur est requis")
     else
-      expect(page).not_to be_page_evaluation
+      expect(page).not_to be_cartes_synopsis
       expect(page).to be_indentification_jury
     end
   end

@@ -2,9 +2,9 @@
 
 ## Rapid list
 
-* Regarder si les évaluations du petit canard d'amour ont été comptabilisées
-* Reprendre la fiche de 20201227134821 et limiter toujours les listes à 3 éléments max (voir le projet dans sa globalité)
-* Bug au niveau du nombre de projets, dans la mention de la place du dossier
+* Une mention spéciale quand l'orthographe est excellente
+* Une mention spéciale lorsque l'émotion n'est pas assez mise en avant
+* Bug au niveau du nombre de projets, dans la mention de la place du dossier (en fait, c'est quand on ne demande la fiche que d'un seul projet — il faut prendre le nombre de projets ailleurs, puisqu'on est obligé de toute façon de le prendre)
 * Pouvoir insérer un "vrai texte propre" dans la fiche de lecture
 * Dans le mail de phase 2, faire un premier bilan de la participation, avec :
   - le nombre d'inscrits

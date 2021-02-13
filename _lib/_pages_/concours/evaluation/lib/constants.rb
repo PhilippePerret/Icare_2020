@@ -5,6 +5,7 @@
 =end
 require './_lib/_pages_/concours/xmodules/synopsis/constants'
 
+
 UI_TEXTS.merge!({
   button_marquer_non_conforme: "NON conforme",
 })

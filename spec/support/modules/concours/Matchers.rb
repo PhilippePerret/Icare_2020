@@ -266,7 +266,7 @@ RSpec::Matchers.define :be_indentification_jury do
   end
 end
 
-RSpec::Matchers.define :be_fiches_synopsis do
+RSpec::Matchers.define :be_cartes_synopsis do
   match do |page|
     page.has_css?("h2.page-title", text: "Cartes des synopsis")
   end
@@ -280,8 +280,38 @@ RSpec::Matchers.define :be_fiches_synopsis do
     "Ça ne devrait pas être les cartes de synopsis…"
   end
 end
-RSpec::Matchers.alias_matcher :be_page_evaluation, :be_fiches_synopsis
 
+RSpec::Matchers.define :be_page_evaluation do
+  match do |page|
+    @errors = []
+    if not page.has_css?("h2.page-title", text: /Évaluation de (?:[0-9]+)/)
+      @errors << "devrait avoir le titre “Évaluation de xxxx” (son titre est #{title_of_page})"
+    end
+    if not page.has_css?('form#checklist-form')
+      @errors << "devrait avoir une listing pour affecter les notes"
+    end
+    if not page.has_link?('Lire le projet')
+      @errors << "devrait posséder un lien pour lire le projet"
+    end
+    if not page.has_link?('Fiches des synopsis')
+      @errors << "devrait posséder un lien pour revenir à la liste des synopsis"
+    end
+    if not page.has_css?('form#notes-manuelles')
+      @errors << "devrait avoir un formulaire pour entrer des notes manuelles"
+    end
+
+    return @errors.empty?
+  end
+  description do
+    "C'est bien la page d’évaluation d’un dossier."
+  end
+  failure_message do
+    "Ce n'est pas la page d’évaluation d’un dossier. Elle #{@errors.join(', ')}."
+  end
+  failure_message_when_negated do
+    "Ça ne devrait pas être la page d’évaluation d’un dosser…"
+  end
+end
 
 RSpec::Matchers.define :be_dashboard_administration do
   match do |page|

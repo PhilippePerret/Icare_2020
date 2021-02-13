@@ -45,11 +45,17 @@ def path
 end
 # Chemin d'accès à l'évaluation pour les présélections
 def path_preselection
-  @path_preselection ||= File.join(CONCOURS_DATA_FOLDER, concurrent_id, synopsis_id, "evaluation-pres-#{evaluator_id}.json")
+  @path_preselection ||= File.join(folder, "evaluation-pres-#{evaluator_id}.json")
 end #/ path
 # Chemin d'accès à l'évaluation pour le prix (jury 2)
 def path_prix
-  @path_prix ||= File.join(CONCOURS_DATA_FOLDER, concurrent_id, synopsis_id, "evaluation-prix-#{evaluator_id}.json")
+  @path_prix ||= File.join(folder, "evaluation-prix-#{evaluator_id}.json")
 end #/ path
+
+# Chemin d'accès au fichier de l'évaluation, c'est-à-dire la dossier propre
+# au concours courant
+def folder
+  @folder ||= File.join(CONCOURS_DATA_FOLDER, concurrent_id, synopsis_id)
+end #/ folder
 
 end #/TEvaluation

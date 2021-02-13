@@ -7,6 +7,18 @@ class HTML
     deserb('../partials/checklist', self)
   end #/ checklist
 
+  def formulaire_notes_manuelles
+    code = deserb('../partials/notes-manuelles', self)
+    return code.sub(/__OPTIONS__/, options_categories)
+  end #/ formulaire_notes_manuelles
+
+  def options_categories
+    "<option value=''>Choisir…</option>" +
+    TABLE_PROPERTIES_DETAIL.collect do |k, dk|
+      "<option value='#{k}'>#{dk[:name]}</option>"
+    end.join('')
+  end #/ options_categories
+
   # OUT   Code HTML de la ligne permettant de choisir l'ordre de classement
   #       des fiches
   # IN    key   La clé de classement actuelle ('note' ou 'progress')

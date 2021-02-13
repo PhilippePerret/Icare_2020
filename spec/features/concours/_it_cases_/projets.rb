@@ -6,7 +6,7 @@ def peut_lire_un_projet
   # Méthode qui teste que le visiteur courant peut lire un projet, sous forme de PDF, sur le site. Pour pouvoir fonctionner, il faut que le before crée au moins un document à lire.
   it "peut lire un projet déposé" do
     goto('concours/evaluation')
-    expect(page).to be_page_evaluation
+    expect(page).to be_cartes_synopsis
     id_synopsis = first('div.synopsis')[:id].split('-')[1..2].join('-')
     id_concurrent = id_synopsis.split('-')[0]
     first('div.synopsis').click_on('Évaluer')
@@ -26,11 +26,11 @@ def ne_peut_pas_lire_un_projet(raison = nil)
     # sleep 30
     case raison
     when :too_soon
-      expect(page).to be_page_evaluation
+      expect(page).to be_cartes_synopsis
       # mais…
       expect(page).to have_content("Vous ne pouvez pas encore évaluer les synopsis")
     else
-      expect(page).not_to be_page_evaluation
+      expect(page).not_to be_cartes_synopsis
     end
   end
 end #/ ne_peut_pas_lire_un_projet

@@ -68,7 +68,7 @@ def peut_refuser_un_dossier(concurrent)
 
     phil.rejoint_le_site
     goto("concours/evaluation")
-    expect(page).to be_fiches_synopsis
+    expect(page).to be_cartes_synopsis
     expect(page).to have_css(fiche_concurrent_selector)
     screenshot("avec-bouton-fichier-concours-non-conforme")
     within(fiche_concurrent_selector) do
