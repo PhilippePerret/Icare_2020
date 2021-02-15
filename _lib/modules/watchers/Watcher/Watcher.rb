@@ -81,7 +81,7 @@ end #/ _destroy
 def download_from_watcher(path_folder)
   require_module('ticket')
   ticket = Ticket.create(user_id:user.id, code:"download('#{path_folder}')")
-  redirect_to("#{route.to_s}?tikd=#{ticket.id}")
+  redirect_to("#{route.to_s}?tikd=#{ticket.id}", {exit: false})
 end #/ download_from_watcher
 
 # Édition du watcher TODO

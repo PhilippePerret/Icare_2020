@@ -30,6 +30,7 @@ class Watcher < ContainerClass
       erreur "Désolé, mais le dossier #{path_folder} est introuvable.".freeze
     end
     owner.icetape.set(status:3)
+    message("Document téléchargé et statut de l'étape modifiée.")
     # Note : le watcher suivant est automatiquement créé
   end # / download_work
 end # /Watcher < ContainerClass
