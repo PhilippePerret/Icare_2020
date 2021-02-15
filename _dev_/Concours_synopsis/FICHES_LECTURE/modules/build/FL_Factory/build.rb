@@ -11,7 +11,13 @@ class << self
   # Ou de la fiche de lecture du concurrent d'identifiant +concurrent_id+
   def proceed_build_fiches_lecture(concurrent_id = nil)
     require_folder(CALCUL_FOLDER)
-    option?(:reload) && rapatriement_des_fiches_evaluations
+    option?(:reload) && begin
+      rapatriement_des_fiches_evaluations
+      rapatriement_notes_per_categorie
+    end
+
+    # return # Pour l'essai de rapatriement
+
     @projets_valides = evaluations_des_synopsis
     if concurrent_id
       @projets_valides = @projets_valides.select {|projet| projet.concurrent_id == concurrent_id}
@@ -49,6 +55,29 @@ class << self
     end
   end #/ rapatriement_des_fiches_evaluations
 
+  def rapatriement_notes_per_categorie
+    require './_dev_/CLI/lib/commands/concours/download'
+    suivi("\n== Rapatriement des notes par catégorie ==", :bleu)
+    suivi("== Dossier de réception : #{data_folder}", :bleu)
+    if mode_tests?
+      suivi("   MODE TESTS => Pas de rapatriement")
+      return
+    end
+    # On n'est pas en mode test il faut ramener les évaluations des
+    # synopsis.
+    # cmd = "scp -C -r -p -q #{SSH_ICARE_SERVER}:www/_lib/data/concours/**/evaluation-*.json #{mkdir(data_folder)}"
+    cmd = "rsync -avm --include='*/' --include='note-*.md' --exclude='*' #{SSH_ICARE_SERVER}:www/_lib/data/concours/ #{mkdir(data_folder)}"
+    # Options :
+    #   a : archiver => récursif
+    #   m : prune empty dirs (ne les copie pas)
+    #   v : verbose
+    # puts "Command RSync: #{cmd.inspect}"
+    res = `#{cmd} 2>&1`
+    if not false
+      puts "Retour de rsync : #{res.gsub(/\\n/,"\n")}"
+    end
+  end #/ rapatriement_notes_per_categorie
+
 
   # Note : on ne doit traiter que les projets qui ont un dossier conforme
   def evaluations_des_synopsis
@@ -74,7 +103,7 @@ class << self
     end
     puts "\r= Calcul de la position respective des projets effectué".vert
     sorted_by_note.each do |projet|
-      puts "#{projet.position}. #{projet.titre} de “#{projet.patronyme}”"
+      puts "#{projet.position}. “#{projet.titre}” de #{projet.patronyme}"
     end
 
     return avec_fiches_evaluation

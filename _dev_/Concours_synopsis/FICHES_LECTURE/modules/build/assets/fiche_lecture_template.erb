@@ -58,13 +58,14 @@
     end
 
     %><%
-    FicheLecture::TABLE_PROPERTIES_DETAIL.each do |cate, dcate|
+    TABLE_PROPERTIES_DETAIL.each do |cate, dcate|
     %>
       <div class="divnote note-<%= cate.to_s %>">
         <span class="libelle"><%= dcate[:name] %></span>
         <span class="value note"><%= fnote_categorie(cate) %></span>
         <div class="explication"><%= explication_categorie(cate) %></div>
         <div class="explication-note"><%= explication_categorie_per_note(cate) %></div>
+        <div class="explication-note"><%= note_manuelle_pour_categorie(cate) %></div>
       </div>
     <% end %>
 

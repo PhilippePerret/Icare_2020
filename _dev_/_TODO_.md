@@ -2,6 +2,8 @@
 
 ## Rapid list
 
+* Essayer les notes manuelles avec le projet 20201229184458
+ => icare concours fiches_lecture 20201229184458 --build 
 * Une mention spéciale quand l'orthographe est excellente
 * Une mention spéciale lorsque l'émotion n'est pas assez mise en avant
 * Bug au niveau du nombre de projets, dans la mention de la place du dossier (en fait, c'est quand on ne demande la fiche que d'un seul projet — il faut prendre le nombre de projets ailleurs, puisqu'on est obligé de toute façon de le prendre)

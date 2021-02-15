@@ -27,6 +27,7 @@
 =end
 require 'yaml'
 require 'erb'
+require 'kramdown'
 require_relative '../constants'
 require_relative '../Projet'
 
@@ -43,7 +44,10 @@ def moyenne_notes_detail
     nombre = TABLE_PROPERTIES_DETAIL.count
     total  = 0.0
     TABLE_PROPERTIES_DETAIL.each do |cate, dcate|
-      total += note_categorie(cate)
+      nc = note_categorie(cate)
+      # puts "cate : #{dcate} / #{nc.inspect}"
+      next if nc == 'NC'
+      total += nc
     end
     (total / nombre).round(1)
   end
@@ -88,7 +92,7 @@ end
 def build_with_whtmltopdf
    res = `/usr/local/bin/wkhtmltopdf "file://#{html_file}" "#{pdf_file}" 2>&1`
    # puts "Retour : #{res.inspect}"
-end #/ build_with_whtmltopdf
+end
 
 def build_HTML_file
   File.open(html_file,'wb'){|f|f.write(out)}
@@ -159,6 +163,35 @@ def explication_categorie_per_note(cate)
   return if n.nil? || n == 'NC'
   traite_balises_in(FicheLecture::DATA_MAIN_PROPERTIES[cate][key_per_note(n)])
 end
+
+# Pour chaque dossier, il peut exister un ou plusieurs fichiers de notes
+# appelées "notes manuelles" qui permettent de laisse un commentaire personnel
+# sur un projet.
+# Ce fichier porte le nom générique 'note-<categorie>-<id juré>.md' (il est
+# toujours en markdown)
+def note_manuelle_pour_categorie(cate)
+  # Récupération de tous les fichiers notes "note-<cate>-*.md"
+  folder_notes_path = "#{projet.folder}/#{projet.concurrent_id}-#{annee_edition}"
+  # puts "Notes manuelles recherchées dans : #{folder_notes_path}/"
+  notes_paths = Dir["#{folder_notes_path}/note-#{cate}-*.md"]
+  # On peut s'arrêter là s'il n'y a pas de note
+  return '' if notes_paths.empty?
+  puts "Nombre de notes manuelles trouvées : #{notes_paths.count}"
+  # On les assemble
+  str = notes_paths.collect {|pth| File.read(pth).force_encoding('utf-8')}.join("\n\n")
+  str = str.strip
+  return '' if str.empty?
+  # On les kramdown
+  html_code = Kramdown::Document.new(str, kramdown_options).send(:to_html)
+  puts "html_code de la note #{cate} : #{html_code}"
+  # On peut retourner
+  return html_code
+end
+def kramdown_options
+  @kramdown_options ||= {
+    header_offset:    0, # pour que '#' fasse un chapter
+  }
+end #/ kramdown_options
 
 # / Fin des balises
 # ---------------------------------------------------------------------
