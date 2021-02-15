@@ -62,7 +62,7 @@ feature "Un administrateur", admin:true do
       degel('concours-phase-3')
     end
     peut_passer_le_concours_a_la_phase_suivante(5)
-
+    peut_atteindre_la_page_devaluation
   end #/context PHASE 3
 
   context 'PHASE 5', admin:'phase5', phase5:true do

@@ -179,12 +179,24 @@ end
 RSpec::Matchers.define :be_palmares_concours do |phase|
   match do |page|
     @errors = []
+    phase ||= TConcours.current.phase
     if not page.has_css?("h2.page-title", text: "Palmarès du concours de synopsis")
       @errors << "la page devrait avoir le titre “Palmarès du concours de synopsis” (son titre est #{title_of_page})"
     end
-    if phase > 2
-      if not page.has_css?('h2', text: /Lauréats du Concours de Synopsis/i)
-        @errors << "la page devrait contenir le sous-titre “Lauréats du Concours de Synopsis”"
+    case phase
+    when 0, 1
+      if not page.has_css?('h2', text: /Palmarès final du concours de Synopsis/i)
+        @errors << "la page devrait contenir le sous-titre ”Palmarès du concours de Synopsis”"
+      end
+    when 2
+      if not page.has_css?('h2', text: /Présélectionnés du concours de Synopsis/i)
+        @errors << "la page devrait contenir le sous-titre ”Présélectionnés du concours de Synopsis”"
+      end
+    else
+      # Quand le choix final a été effectué
+      # On trouve alors la liste des lauréats du concours
+      if not page.has_css?('h2', text: /Lauréats du concours de Synopsis/i)
+        @errors << "la page devrait contenir le sous-titre “Lauréats du concours de Synopsis”"
       end
     end
     actual_route = route_of_page
@@ -192,7 +204,16 @@ RSpec::Matchers.define :be_palmares_concours do |phase|
     if not actual_route == expected_route
       @errors << "la route de la page devrait être '#{expected_route}', or c'est '#{actual_route}'"
     end
-    @errors.empty?
+
+    # On doit trouver un lien vers les anciens concours
+    expect(page).to have_css('h3', text: 'Palmarès des années précédentes')
+    db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} GROUP BY annee").each do |dc|
+      an = dc[:annee]
+      next if an == TConcours.current.annee
+      expect(page).to have_link("Palmarès de l’année #{an}", href:"concours/palmares?an=#{an}")
+    end
+
+    return @errors.empty?
   end
   description do
     "C'est bien la page de palmarès du concours"

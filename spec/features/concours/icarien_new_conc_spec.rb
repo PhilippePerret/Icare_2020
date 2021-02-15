@@ -84,6 +84,7 @@ feature 'Un icarien inscrit au concours courant' do
     end
 
     peut_rejoindre_le_concours
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_selection_finale])
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription

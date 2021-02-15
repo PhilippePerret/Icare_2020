@@ -4,6 +4,30 @@
   Cmd R   ---> liste des méthodes
 =end
 
+def peut_atteindre_la_page_devaluation
+  it "peut atteindre la page d'évaluation" do
+    goto("concours/evaluation")
+    expect(page).to be_cartes_synopsis
+  end
+end #/ peut_atteindre_la_page_devaluation
+
+# Utiliser it { ne_peut_pas_atteindre_la_section_evalutation } pour tester
+# que le membre courant ne peut pas atteindre la section d'évaluation
+def ne_peut_pas_atteindre_la_section_evalutation
+  it "ne peut pas atteindre la section d'évaluation" do
+    goto("concours/evaluation")
+    # Si le visiteur est identifié, il trouve le message :
+    # "Un membre du jury ou un administrateur est requis"
+    # Sinon, il trouve le formulaire d'identification
+    if page.has_content?("Un membre du jury ou un administrateur est requis")
+      expect(page).to have_content("Un membre du jury ou un administrateur est requis")
+    else
+      expect(page).not_to be_cartes_synopsis
+      expect(page).to be_indentification_jury
+    end
+  end
+end
+
 def trouve_les_dix_synopsis_preselectionnes
   it 'trouve les dix cartes des synopsis présélectionnés à évaluer' do
     # On s'assure que c'est la bonne phase
@@ -42,8 +66,8 @@ def peut_evaluer_un_projet
 
   it "peut évaluer un projet en attribuant des “notes”" do
 
-    pending("À remettre en service")
-    return
+    # pending("À remettre en service")
+    # return
 
     goto('concours/evaluation')
     expect(page).to be_cartes_synopsis

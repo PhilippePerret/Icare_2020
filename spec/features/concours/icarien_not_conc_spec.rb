@@ -58,7 +58,7 @@ feature 'Un icarien' do
     before :all do
       degel('concours-phase-3')
     end
-    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_selection_finale])
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
   end #/context PHASE 3

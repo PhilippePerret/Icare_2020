@@ -56,7 +56,7 @@ feature "Un membre du premier jury", jury1:true do
     before :all do
       degel('concours-phase-2')
     end
-    # peut_rejoindre_le_concours
+    peut_rejoindre_le_concours
     peut_evaluer_un_projet
 
   end #/context PHASE 2

@@ -81,6 +81,12 @@ class << self
     end
   end #/ set_phase
 
+  # Retourne une autre année que l'année courante
+  def get_another_year
+    db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} GROUP BY annee").each do |dc|
+      return dc[:annee] if dc[:annee] != ANNEE_CONCOURS_COURANTE
+    end
+  end #/ TConcours.get_another_year
 
 end # /<< self
 # ---------------------------------------------------------------------

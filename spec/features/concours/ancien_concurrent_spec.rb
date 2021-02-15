@@ -73,8 +73,12 @@ feature 'Un ancien concurrent (non courant)' do
     ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
 
+    # --- Impossibilités ---
+    ne_peut_pas_voir_la_liste_des_preselectionnes
+    
     # --- Section interdite ---
     ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 2
 
@@ -84,11 +88,17 @@ feature 'Un ancien concurrent (non courant)' do
     end
 
     peut_rejoindre_le_concours
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_selection_finale])
     ne_peut_pas_transmettre_de_dossier
-    ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
     ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
+
+    peut_voir_la_liste_des_preselectionnes
+
+    # --- Section interdite ---
+    ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 3
 
@@ -99,10 +109,13 @@ feature 'Un ancien concurrent (non courant)' do
 
     peut_rejoindre_le_concours
     ne_peut_pas_transmettre_de_dossier
-    ne_peut_pas_atteindre_la_section_evalutation
     peut_detruire_son_inscription
     ne_peut_pas_telecharger_sa_fiche_de_lecture
     peut_telecharger_une_ancienne_fiche_de_lecture
+
+    # --- Section interdite ---
+    ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
 
   end #/context PHASE 5
 

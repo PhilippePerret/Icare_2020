@@ -60,9 +60,6 @@ class HTML
     end
   end #/ panneau_name
 
-  def inscription_impossible?
-    !(Concours.current.phase < 2)
-  end
   def concours_en_cours?
     Concours.current.phase > 1
   end
@@ -80,23 +77,15 @@ class HTML
   end
 
   def icarien?
-    (@is_an_icarian ||= begin
-      user.guest? ? :false : :true
-    end) == :true
-  end
-  def guest?
-    (@is_a_guest ||= begin
-      user.guest? ? :true : :false
-    end) == :true
+    :TRUE === @is_an_icarien ||= user.guest? ? :FALSE : :TRUE
   end
 
-  # Retourne false si l'inscription n'est pas possible.
-  # Les raisons de l'impossibilité sont les suivantes :
-  #   - c'est un icarien déjà inscrit
-  #   - c'est un concurrent déjà inscrit
-  #   - le concours est en phase 2 ou plus
+  def guest?
+    :TRUE === @is_a_guest ||= user.guest? ? :TRUE : :FALSE
+  end
+
   def inscription_impossible?
-    icarien_inscrit? || concurrent_inscrit? || concours_en_cours?
+    Concours.current.phase >= 2
   end
 
 end #/HTML

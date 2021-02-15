@@ -151,6 +151,7 @@ feature 'Un nouveau concurrent', newconc:true do
     end
 
     peut_rejoindre_le_concours
+    ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_selection_finale])
     ne_peut_plus_transmettre_son_dossier
     peut_rejoindre_la_section_fiches_de_lecture_as(as = :concurrent)
     ne_peut_pas_telecharger_sa_fiche_de_lecture

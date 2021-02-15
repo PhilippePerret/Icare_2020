@@ -30,10 +30,17 @@ feature "Un simple visiteur", visitor:true do
     before :all do
       degel('concours-phase-0')
     end
+
     peut_atteindre_lannonce_du_prochain_concours
     peut_sinscrire_au_concours(as = :simple)
     ne_peut_pas_sinscrire_au_concours_avec_des_donnees_erronnees
     ne_peut_pas_transmettre_de_dossier
+
+    peut_rejoindre_la_page_des_palmares
+    ne_peut_pas_voir_la_liste_des_preselectionnes
+    ne_peut_pas_voir_le_palmares_final
+    peut_voir_les_palmares_precedents
+    
   end #/context PHASE 0
 
 
@@ -45,6 +52,11 @@ feature "Un simple visiteur", visitor:true do
     peut_sinscrire_au_concours(as = :simple)
     ne_peut_pas_sinscrire_au_concours_avec_des_donnees_erronnees
     ne_peut_pas_transmettre_de_dossier
+
+    # --- Section interdite ---
+    ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
+
 end #/context PHASE 1
 
   context 'PHASE 2', phase2:true, visitor:'phase2' do
@@ -55,8 +67,11 @@ end #/context PHASE 1
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours][:en_cours_de_preselection])
     ne_peut_pas_transmettre_de_dossier
     ne_peut_pas_detruire_son_inscription(:non_concurrent)
+
+    # --- Section interdite ---
     ne_peut_pas_atteindre_la_section_evalutation
     ne_peut_pas_produire_les_fiches_de_lecture
+
   end #/context PHASE 2
 
   context 'PHASE 3', phase3:true, visitor:'phase3' do
@@ -65,6 +80,11 @@ end #/context PHASE 1
     end
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
+
+    # --- Section interdite ---
+    ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
+
   end #/context PHASE 3
 
   context 'PHASE 5', phase5:true, visitor:'phase5' do
@@ -73,6 +93,11 @@ end #/context PHASE 1
     end
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
+
+    # --- Section interdite ---
+    ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
+
   end #/context PHASE 5
 
   context 'PHASE 8', phase8:true, visitor:'phase8' do
@@ -81,6 +106,11 @@ end #/context PHASE 1
     end
     ne_peut_pas_sinscrire_au_concours(MESSAGES[:concours_en_cours])
     ne_peut_pas_transmettre_de_dossier
+
+    # --- Section interdite ---
+    ne_peut_pas_atteindre_la_section_evalutation
+    ne_peut_pas_produire_les_fiches_de_lecture
+
   end #/context PHASE 8
 
   context 'PHASE 9', phase9:true, visitor:'phase9' do
