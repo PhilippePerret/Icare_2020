@@ -8,6 +8,49 @@ class Operation
 # conforme est considéré comme un non sélectionné (ou alors faut-il simplement
 # le zapper ?)
 
+
+# Méthode qui produit le fichier palmares.yaml qui contient les informations
+# sur les résultats pour le concours (cf. le manuel pour le détail)
+def consigne_resultats_in_file_palmares
+  # Structure de la donnée qui sera enregistrée dans palmares-<annee>.yaml
+  dpalm = {
+    infos:{
+      annee: ANNEE_CONCOURS_COURANTE,
+      nombre_inscriptions:  nil,
+      nombre_concurrents:   nil,
+      nombre_sans_dossier:  nil,
+      nombre_non_conforme:  nil,
+    },
+    classement:   [],
+    non_conforme: [],
+    sans_dossier: []
+  }
+
+  inscriptions  = db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ?", [ANNEE_CONCOURS_COURANTE])
+  concurrents   = inscriptions.select { |dc| dc[:specs][0..1] == '11'}
+  sans_dossier  = inscriptions.select { |dc| dc[:specs][0]    == '0' }
+  non_conforme  = inscriptions.select { |dc| dc[:specs][0..1] == '12'}
+
+  hpalm[:infos][:nombre_inscriptions] = inscriptions.count
+  hpalm[:infos][:nombre_concurrents]  = concurrents.count
+  hpalm[:infos][:nombre_non_conforme] = non_conforme.count
+  hpalm[:infos][:nombre_sans_dossier] = sans_dossier.count
+
+  # Pour pouvoir procéder au calcul des notes et du classement
+  require './_lib/_pages_/concours/xmodules/calculs/Dossier'
+  dpalm[:classement] = Dossier.classement.collect do |dossier|
+    {concurrent_id: dossier.concurrent_id, note: dossier.note_totale}
+  end
+
+  dpalm[:non_conforme] = non_conforme.collect { |dc| dc[:concurrent_id] }
+  dpalm[:sans_dossier] = sans_dossier.collect { |dc| dc[:concurrent_id] }
+
+  palmares_file_path = Dossier.palmares_file_path(ANNEE_CONCOURS_COURANTE)
+  File.delete(palmares_file_path) if File.exists?(palmares_file_path)
+  File.open(palmares_file_path,'wb'){|f| f.write(YAML.dump(dpalm))}
+
+end #/ consigne_resultats_in_file_palmares
+
   # Envoie les mails aux concurrents après la première sélection
   # Note : il y a trois mails différents
   #   1) Celui aux concurrents présélectionnés

@@ -31,6 +31,7 @@ PHASES_DATA[2].merge!(operations:[
   {name:"📣 Actualité annonçant la fin de l'échéance du concours", method: :add_actualite_concours_echeance}
 ])
 PHASES_DATA[3].merge!(operations:[
+  {name:"📋 Production du fichier de données Palmarès contenant les résultats provisoires", method: :consigne_resultats_in_file_palmares},
   {name:"📤 Envoi du mail aux concurrents annonçant les résultats de la pré-sélection", method: :send_mail_concurrents_preselection},
   {name:"📤 Envoi du mail aux membres des deux jurys", method: :send_mail_jury_preselection},
   {name:"📣 Actualité annonçant la fin des présélections", method: :add_actualite_concours_fin_preselection},

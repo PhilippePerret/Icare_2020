@@ -41,13 +41,14 @@ require './_lib/_pages_/concours/evaluation/lib/constants_shared'
 
 def moyenne_notes_detail
   @moyenne_notes_detail ||= begin
-    nombre = TABLE_PROPERTIES_DETAIL.count
+    nombre = 0
     total  = 0.0
     TABLE_PROPERTIES_DETAIL.each do |cate, dcate|
       nc = note_categorie(cate)
       # puts "cate : #{dcate} / #{nc.inspect}"
       next if nc == 'NC'
       total += nc
+      nombre += 1
     end
     (total / nombre).round(1)
   end

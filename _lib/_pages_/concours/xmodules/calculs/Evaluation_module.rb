@@ -7,7 +7,7 @@ module EvaluationMethodsModule
   attr_reader :evaluation, :evaluation_totale
 
   # Note qui doit servir de note de classement en fonction du contexte
-  attr_accessor :sort_note
+  # attr_accessor :sort_note
 
   # Retourne une instance {Evaluation} correspondant aux arguments transmis
   # Si +options+ contient all: true, c'est une évaluation de tous les synopsis

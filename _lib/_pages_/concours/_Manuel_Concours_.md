@@ -243,3 +243,32 @@ html.res << "Mon message de résultat"
 
 <%= html.resultat %>
 ```
+
+# Fichier des palmarès
+
+Le fichier des palmarès est un fichier `YAML` qui contient tout ce qu'il faut savoir pour produire la section des résultats (`concours/palmares`). Ce fichier contient :
+
+```yaml
+---
+:infos:
+  :annee: <année>
+  :nombre_inscriptions: <integer> # donc tout confondu
+  :nombre_concurrents:  <integer> # avec dossier conforme
+  :nombre_sans_dossier: <integer>
+  :nombre_non_conforme: <integer>
+:classement:
+  - :concurrent_id: <id>
+    :note: <note générale>
+  - :concurrent_id: <id>
+    :note: <note générale>
+  # etc. dans l'ordre décroissant des notes
+  # Note : les 10 premiers sont susceptibles de bouger entre
+  # la phase 3 et la phase 5
+:non_conforme: # liste des concurrents avec un dossier non conforme
+  - <id concurrent>
+  - <id concurrent>
+  # etc.
+:sans_dossier: # liste des concurrents sans dossier
+  - <id concurrent>
+  - <id concurrent>
+```

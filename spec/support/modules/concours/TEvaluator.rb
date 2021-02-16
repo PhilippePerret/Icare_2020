@@ -119,6 +119,7 @@ class << self
     end
   end #/ data
   alias :evaluators :data
+  alias :data_jures :data
 
 end # /<< self
 # ---------------------------------------------------------------------
