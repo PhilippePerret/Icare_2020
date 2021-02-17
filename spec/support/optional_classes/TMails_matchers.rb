@@ -33,6 +33,8 @@ RSpec::Matchers.define :have_mail do |params|
     params.merge!(content: params.delete(:message)) if params[:message]
     params.merge!(content: params.delete(:contenu)) if params[:contenu]
 
+    # puts "---> Je vais chercher des mails avec : #{params.inspect}"
+
     begin # pour pouvoir finir en raisant
       # On commence par ne garder que les mails du destinataire voulu s'il est
       # défini.
@@ -58,6 +60,7 @@ RSpec::Matchers.define :have_mail do |params|
         candidats = TMails.all.dup
         if candidats.count == 0
           @failures << "Aucun mail n'a été envoyé."
+          # puts "<--- Je breake car aucun mail n'a été envoyé"
           raise
         end
       end
@@ -78,6 +81,7 @@ RSpec::Matchers.define :have_mail do |params|
           @positifs << msg_success
         else
           @failures << "Aucun mail envoyé par #{params[:from]} n'a été trouvé"
+          # puts "<--- Je breake car aucun mail n'a été envoyé par #{params[:from]}"
           raise
         end
       end
@@ -199,10 +203,12 @@ RSpec::Matchers.define :have_mail do |params|
         conditions_tested << :content
       end
 
+      # puts "J'arrive en fin de recherche avec :\n@positifs:#{@positifs.inspect}\n@failures: #{@failures.inspect}"
     rescue Exception => e
-      # puts "#{e.message}"
+      # puts "<-- Raise dans la recherche de mail : #{e.message}"
       return false
     else
+      # puts "=== J'ai donc #{candidats.count} candidat(s)"
       return candidats.count > 0 # ok
     end
   end

@@ -54,7 +54,17 @@ class << self
         Dossier.new(dp[:concurrent_id], ANNEE_CONCOURS_COURANTE)
       end
     end
-  end #/ conformes
+  end
+
+  # Retourne la liste Array des instances de concurrents sans dossiers
+  def sans_dossiers
+    @sans_dossiers ||= begin
+      request = "SELECT concurrent_id FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ? AND SUBSTRING(specs,1,1) = ?"
+      db_exec(request, [ANNEE_CONCOURS_COURANTE, '0']).collect do |dp|
+        Dossier.new(dp[:concurrent_id], ANNEE_CONCOURS_COURANTE)
+      end
+    end
+  end
 
   def palmares_file_path(annee)
     @palmares_file_path ||= File.join(CONCOURS_DATA_FOLDER, "palmares-#{annee}.yaml")

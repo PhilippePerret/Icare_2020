@@ -75,12 +75,11 @@ def check_phase_3
   # Tous les segments message commun à tous les destinataires, concurrents
   # présélectionnés, non retenus, jurés et admins
   segments_communs = [
-    'https://www.atelier-icare.net/concours/palmares',
+    'http://localhost/AlwaysData/Icare_2020/concours/palmares',
     'présélections',
     /Concours de Synopsis de l'atelier Icare/i
   ]
 
-  pitch("Un message a été envoyé aux 10 présélectionnés")
   expect(Dossier.preselecteds.count).to eq(10)
   Dossier.preselecteds.each do |dossier|
     conc = TConcurrent.get(dossier.concurrent_id)
@@ -89,8 +88,8 @@ def check_phase_3
       'Bravo à vous !'
     ])
   end
+  pitch("Un message a été envoyé aux 10 présélectionnés")
 
-  pitch("Un message de regret a été envoyé aux non présélectionnés")
   Dossier.non_preselecteds.each do |dossier|
     conc = TConcurrent.get(dossier.concurrent_id)
     expect(conc).to have_mail(after: start_time, subject:'Fin des présélections',
@@ -98,22 +97,34 @@ def check_phase_3
       'malheureusement', 'regrets sincères'
     ])
   end
+  pitch("Un message de regret a été envoyé aux non présélectionnés")
 
-  pitch("Un message a été envoyé aux jurés du premier jury pour les remercier")
+
+  Dossier.sans_dossiers.each do |dossier|
+    conc = TConcurrent.get(dossier.concurrent_id)
+    expect(conc).to have_mail(after: start_time, subject:'Fin des présélections',
+    message: segments_communs + [
+      'malheureusement', 'pas été envoyé à temps ou jugé non conforme'
+    ])
+  end
+  pitch("Un message de regret a été envoyé aux candidats sans dossier")
+
+
   TEvaluator.premiers_jures.each do |jure|
     expect(jure).to have_mail(after: start_time, subject: 'Fin des présélections',
     message: segments_communs + [
       'vous remercier'
     ])
   end
+  pitch("Un message a été envoyé aux jurés du premier jury pour les remercier")
 
-  pitch("Un message a été envoyé aux jurés du second jury pour lancer la sélection finale")
   TEvaluator.seconds_jures.each do |jure|
     expect(jure).to have_mail(after: start_time, subject:'Fin des présélections',
     message: segments_communs + [
       'procéder à la sélection des 3 lauréats parmi les 10 dossiers présélectionnés',
     ])
   end
+  pitch("Un message a été envoyé aux jurés du second jury pour lancer la sélection finale")
 
 end
 

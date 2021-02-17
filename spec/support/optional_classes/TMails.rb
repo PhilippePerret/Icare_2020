@@ -217,7 +217,9 @@ TMail = Struct.new(:path) do
     @ne_contient_pas = [] # idem
     searched = [searched] if searched.is_a?(String)
     searched.each do |seg|
-      if content.include?(seg)
+      method = seg.is_a?(String) ? :include? : :match?
+      # if content.include?(seg)
+      if content.send(method, seg)
         @contient << seg
       else
         @ne_contient_pas << seg
