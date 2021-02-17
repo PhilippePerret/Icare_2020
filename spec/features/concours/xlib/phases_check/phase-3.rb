@@ -42,11 +42,11 @@ def check_phase_3
 
   expect(data_palmares).to have_key(:infos)
   expect(data_palmares).to have_key(:classement)
-  expect(data_palmares).to have_key(:non_conformes)
+  expect(data_palmares).to have_key(:non_conforme)
   expect(data_palmares).to have_key(:sans_dossier)
 
   dinfos = data_palmares[:infos]
-  expect(dinfos[:annee]).to eq(ANNEE_CONCOURS_COURANT)
+  expect(dinfos[:annee]).to eq(ANNEE_CONCOURS_COURANTE)
   expect(dinfos[:nombre_inscriptions]).to eq(candidatures.count)
   expect(dinfos[:nombre_concurrents]).to eq(conformes.count)
   expect(dinfos[:nombre_sans_dossier]).to eq(sans_dossiers.count)
@@ -54,23 +54,79 @@ def check_phase_3
 
   # Vérification du classement
   Dossier.conformes.each do |dossier|
-    expect(data_palmares[:classement][dossier.position - 1][:concurrent_id]).to eq(dossier.concurrent_id),
+    # puts "dossier.position: #{dossier.position.inspect} (#{dossier.note_totale})"
+    dpalm = data_palmares[:classement][dossier.position - 1]
+    expect(dpalm[:concurrent_id]).to eq(dossier.concurrent_id),
       "Le concurrent #{dossier.concurrent_id} devrait être à la position #{dossier.position}…"
+    expect(dpalm[:note]).to eq(dossier.note_totale),
+      "La note consignée devrait valoir #{dossier.note_totale}, elle vaut #{dpalm[:note]}"
+    expect(dpalm[:note]).not_to eq('NC'), "La note consignée ne devrait pas valoir 'NC'…"
   end
 
 
   # LES MAILS ENVOYÉS
   # -----------------
-  pending "traiter les mails envoyés pour annoncer le premier classement"
 
-  # Le mail doit contenir un lien conduisant à la présélection
-  # TODO
+  nombre_femmes = conformes.select do |conc|
+    TConcurrent.get(conc[:concurrent_id]).fille?
+  end.count
+  nombre_hommes = conformes.count - nombre_femmes
 
-  # Le mail doit être différent pour les présélectionnés
-  # TODO
+  # Tous les segments message commun à tous les destinataires, concurrents
+  # présélectionnés, non retenus, jurés et admins
+  segments_communs = [
+    'https://www.atelier-icare.net/concours/palmares',
+    'présélections',
+    /Concours de Synopsis de l'atelier Icare/i
+  ]
+
+  pitch("Un message a été envoyé aux 10 présélectionnés")
+  expect(Dossier.preselecteds.count).to eq(10)
+  Dossier.preselecteds.each do |dossier|
+    conc = TConcurrent.get(dossier.concurrent_id)
+    expect(conc).to have_mail(after: start_time, subject: 'Bravo pour votre présélection',
+    message: segments_communs + [
+      'Bravo à vous !'
+    ])
+  end
+
+  pitch("Un message de regret a été envoyé aux non présélectionnés")
+  Dossier.non_preselecteds.each do |dossier|
+    conc = TConcurrent.get(dossier.concurrent_id)
+    expect(conc).to have_mail(after: start_time, subject:'Fin des présélections',
+    message: segments_communs + [
+      'malheureusement', 'regrets sincères'
+    ])
+  end
+
+  pitch("Un message a été envoyé aux jurés du premier jury pour les remercier")
+  TEvaluator.premiers_jures.each do |jure|
+    expect(jure).to have_mail(after: start_time, subject: 'Fin des présélections',
+    message: segments_communs + [
+      'vous remercier'
+    ])
+  end
+
+  pitch("Un message a été envoyé aux jurés du second jury pour lancer la sélection finale")
+  TEvaluator.seconds_jures.each do |jure|
+    expect(jure).to have_mail(after: start_time, subject:'Fin des présélections',
+    message: segments_communs + [
+      'procéder à la sélection des 3 lauréats parmi les 10 dossiers présélectionnés',
+    ])
+  end
 
 end
 
+def pluriels(nb)
+  nb = nb.count if not nb.is_a?(Integer)
+  plus = nb > 1
+  {
+    s: plus ? 's' : '',
+    ont: plus ? 'ont' : 'a',
+    sont: plus ? 'sont' : 'est',
+    leur: plus ? 'leur' : 'son'
+  }
+end #/ pluriels
 
 # Avant de procéder au changement de phase, on s'assure d'avoir ce qu'il faut
 def ensure_test_phase_3

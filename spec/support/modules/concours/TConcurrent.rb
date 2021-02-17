@@ -484,7 +484,8 @@ end
 
 def femme?
   sexe == 'F'
-end #/ femme?
+end
+alias :fille? :femme?
 
 
 def set_spec(bit,value, save = true)

@@ -101,13 +101,25 @@ class << self
     return e
   end
 
+  # => Array d'instance TEvaluator des jurés du premier jury
+  def premiers_jures
+    @premiers_jures ||= get_all_jures.values.select { |j| j.jury1? }
+  end
+
+  # => Array d'instance TEvaluator des jurés du second jury
+  def seconds_jures
+    @seconds_jures ||= get_all_jures.values.select { |j| j.jury2? }
+  end
+
   def get_all_jures
-    h = {}
-    data.each do |dj|
-      jure = new(dj)
-      h.merge!(jure.id => jure)
+    @all_jures ||= begin
+      h = {}
+      data.each do |dj|
+        jure = new(dj)
+        h.merge!(jure.id => jure)
+      end
+      h
     end
-    return h
   end #/ get_all_jures
 
   # OUT   Données des évaluateurs courants

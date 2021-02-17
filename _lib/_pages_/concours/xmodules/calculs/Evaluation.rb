@@ -155,7 +155,7 @@ end #/ initialize
 def self.NOMBRE_ABSOLU_QUESTIONS
   @nombre_absolu_questions ||= begin
     if not File.exists?(NOMBRE_QUESTIONS_PATH)
-      require_xmodule('evaluation/rebuild_checklist')
+      require './_lib/_pages_/concours/xmodules/evaluation/rebuild_checklist'
       CheckList.remake_nombre_questions_file
       message("J'ai dû reconstruire le fichier du nombre de questions…")
     end

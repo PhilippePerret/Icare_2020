@@ -27,7 +27,6 @@ class << self
       f.puts "<%\n# Ce partiel est généré de façon automatique. NE PAS LE TOUCHER\n%>"
       f.puts deserb('checklist_template',self)
     end
-    # message("La check-list a été reconstruite.")
     File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(@nombre_questions)}
   rescue Exception => e
     raise e
@@ -41,7 +40,7 @@ class << self
     log("-> remake_nombre_questions_file")
     @nombre_questions = 0
     build_sujet(data, [], [])
-    File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(nombre_questions)}
+    File.open(NOMBRE_QUESTIONS_PATH,'wb'){|f|f.write(@nombre_questions)}
     log("Le fichier du nombre de questions est reconstruit.")
   end #/ remake_nombre_questions_file
 

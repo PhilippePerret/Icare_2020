@@ -1,13 +1,14 @@
 <%
 # frozen_string_literal: true
 
-subject("[CONCOURS #{Concours.current.annee}] Fin des présélections")
+subject("[CONCOURS #{Concours.current.annee}] Bravo pour votre présélection !")
 %>
 <p>
 Ch%{ere} %{pseudo},
 </p>
-<p>J'ai le privilège et surtout le plaisir de vous annoncer que votre projet “%{titre}” <strong>a été présélectionné pour la Finale du Concours de Synopsis de l'atelier Icare</strong>. Il entre donc en lice avec 9 autres projets pour le palmarès définitif.</p>
-<p>Vous pouvez retrouver toutes les informations sur cette préselection, et notamment votre classement (actuel) dans la section “<%= RESULTATS_LINKS.with(full:true) %>” du concours, sur le site de l'atelier Icare.</p>
-<p>Encore bravo à vous !</p>
-<p>Bien cordialement,</p>
+<p>J'ai le privilège et surtout le plaisir de vous annoncer que votre projet “%{titre}” <strong>a été présélectionné pour la Finale du Concours de Synopsis de l'atelier Icare</strong>.</p>
+<p>Bravo à vous !</p>
+<p>Votre projet entre donc en lice avec 9 autres projets pour le palmarès définitif et les trois prix.</p>
+<p>Vous pouvez retrouver toutes les informations sur cette préselection, et notamment votre classement (actuel) dans la section “<%= PALMARES_LINK.with(full:true) %>” du concours, sur le site de l'atelier Icare.</p>
+<p>Bien cordialement, encore bravo et bonne chance pour la suite,</p>
 <p>L’administration du concours de l'atelier Icare</p>

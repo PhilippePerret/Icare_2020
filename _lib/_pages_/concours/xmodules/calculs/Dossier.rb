@@ -21,7 +21,11 @@ class << self
   # Méthode qui permet de calculer la note de tous les projets conformes et
   # leur classement actuel.
   def calculate_all_notes_and_positions
-    @classement = conformes.sort_by { |d| - d.note_totale }
+    # On commence par calculer les évaluations de tous les dossiers conformes
+    conformes.each { |dossier| dossier.calc_evaluation_for_all(nil) }
+    # On les classe suivant leur note générale
+    @classement = conformes.sort_by { |dossier| - dossier.note_totale }
+    # On renseigne leur position
     @classement.each_with_index do |dossier, idx|
       dossier.position = 1 + idx
     end
@@ -32,10 +36,20 @@ class << self
     @classement || calculate_all_notes_and_positions
   end
 
+  # Retourne les dix présélectionnés
+  def preselecteds
+    @preselecteds ||= classement[0..9]
+  end
+
+  # Retourne les non présélectionnés
+  def non_preselecteds
+    @non_preselecteds ||= classement[10..-1]
+  end
+
   # Retourne la liste Array des instances de tous les projets conformes
   def conformes
     @conformes ||= begin
-      request = "SELECT concurrent_id FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ? AND SUBSTRING(specs,1,2) == ?"
+      request = "SELECT concurrent_id FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ? AND SUBSTRING(specs,1,2) = ?"
       db_exec(request, [ANNEE_CONCOURS_COURANTE, '11']).collect do |dp|
         Dossier.new(dp[:concurrent_id], ANNEE_CONCOURS_COURANTE)
       end
@@ -43,7 +57,7 @@ class << self
   end #/ conformes
 
   def palmares_file_path(annee)
-    @palmares_file_path ||= File.join(CONCOURS_DATA_FOLDER, "palmares-#{annee}.yaml"
+    @palmares_file_path ||= File.join(CONCOURS_DATA_FOLDER, "palmares-#{annee}.yaml")
   end #/ palmares_file_path
 
 
@@ -61,12 +75,10 @@ def initialize(concurrent_id, annee)
 end #/ initialize
 
 def position
-  @position ||= begin
-    # Si la position n'est pas défini, il faut la calculer pour tous les
-    # projets conformes.
-    self.class.calculate_all_notes_and_positions
-  end
+  @position || self.class.calculate_all_notes_and_positions
+  @position
 end
+
 def position=(value); @position = value end
 
 def folder

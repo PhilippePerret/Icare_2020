@@ -24,6 +24,7 @@ module EvaluationMethodsModule
   end
 
   def calc_evaluation_for_all(options)
+    options ||= { prix: Concours.current.phase > 3 }
     @evaluation_totale = Evaluation.new(score_paths_for(options.merge(evaluator:nil)))
   end
 
