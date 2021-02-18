@@ -180,23 +180,29 @@ RSpec::Matchers.define :be_palmares_concours do |phase|
   match do |page|
     @errors = []
     phase ||= TConcours.current.phase
+    puts "Page palmarès pour phase #{phase}"
     if not page.has_css?("h2.page-title", text: "Palmarès du concours de synopsis")
       @errors << "la page devrait avoir le titre “Palmarès du concours de synopsis” (son titre est #{title_of_page})"
     end
     case phase
     when 0, 1
-      if not page.has_css?('h2', text: /Palmarès final du concours de Synopsis/i)
-        @errors << "la page devrait contenir le sous-titre ”Palmarès du concours de Synopsis”"
-      end
+      # Rien de particulier (le texte sera testé ailleurs)
     when 2
-      if not page.has_css?('h2', text: /Présélectionnés du concours de Synopsis/i)
-        @errors << "la page devrait contenir le sous-titre ”Présélectionnés du concours de Synopsis”"
+      if not page.has_css?('h3', text: /Présélections en cours…/)
+        @errors << "La page devrait contenir le sous-titre de niveau 3 “Préselections en cours…”"
+      end
+    when 3
+      if not page.has_css?('h3', text: /Projets présélectionnés/i)
+        @errors << "la page devrait contenir le sous-titre ”Projets présélectionnés”"
+      end
+      if not page.has_css?('h3', text: /Projets non présélectionnés/i)
+        @errors << "la page devrait contenir le sous-titre ”Projets non présélectionnés”"
       end
     else
       # Quand le choix final a été effectué
       # On trouve alors la liste des lauréats du concours
-      if not page.has_css?('h2', text: /Lauréats du concours de Synopsis/i)
-        @errors << "la page devrait contenir le sous-titre “Lauréats du concours de Synopsis”"
+      if not page.has_css?('h3', text: /Lauréats #{ANNEE_CONCOURS_COURANTE}/i)
+        @errors << "la page devrait contenir le sous-titre “Lauréats #{ANNEE_CONCOURS_COURANTE}”"
       end
     end
     actual_route = route_of_page
@@ -206,11 +212,14 @@ RSpec::Matchers.define :be_palmares_concours do |phase|
     end
 
     # On doit trouver un lien vers les anciens concours
-    expect(page).to have_css('h3', text: 'Palmarès des années précédentes')
-    db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} GROUP BY annee").each do |dc|
-      an = dc[:annee]
-      next if an == TConcours.current.annee
-      expect(page).to have_link("Palmarès de l’année #{an}", href:"concours/palmares?an=#{an}")
+    if not page.has_css?('h3', text: 'Palmarès des sessions précédentes')
+      @errors << "on devrait trouver une section menant vers les palmarès des années précédentes"
+    else
+      db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} GROUP BY annee").each do |dc|
+        an = dc[:annee]
+        next if an == TConcours.current.annee
+        expect(page).to have_link("Palmarès de la session #{an}", href:"concours/palmares?an=#{an}")
+      end
     end
 
     return @errors.empty?

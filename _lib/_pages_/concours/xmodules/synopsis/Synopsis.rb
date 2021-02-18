@@ -70,6 +70,12 @@ end #/ add
   # Méthode principale qui évalue les synopsis (détermine les propriétés
   # :evaluation et :evaluation_all — cf. le module évaluation)
   #
+  # ===========================================================================
+  #   NOTE
+  # Cette méthode ne sert qu'au moment des évaluations. Pour le palmarès
+  # et la présélection, les résultats sont comptés une bonne fois pour toute
+  # ===========================================================================
+  #
   # Méthode principale qui prépare l'affichage des synopsis et des fiches
   # de lecture. En fonction des +options+, on évalue les synopsis pour un
   # membre du jury ou tous

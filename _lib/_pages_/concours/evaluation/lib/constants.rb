@@ -39,6 +39,7 @@ REBUILDER_CHECK_LIST = File.join(XMODULES_FOLDER,'evaluation','rebuild_checklist
 # permet de rédiger le mail au concurrent.
 MOTIF_NON_CONFORMITE = {
   auteurs: {motif:'absence de la mention de ou des auteurs'},
+  identifiant:{motif: 'absence de votre numéro d’inscription', precision: 'vous devez indiquer le numéro d’inscription à 14 chiffres qui vous a été remis à l’inscription (et qui vous permet de vous identifier)'},
   titre: {motif:'absence du titre du projet'},
   support: {motif:'absence de l’indication du support de destination', precision: "vous devez indiquer si c'est un roman, une nouvelle, un long-métrage, un court-métrage, une bande dessinée, etc."},
   longueur: {motif:'absence de l’indication du nombre de mots'},

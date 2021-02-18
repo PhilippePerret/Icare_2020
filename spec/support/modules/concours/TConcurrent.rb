@@ -28,7 +28,13 @@ def synopsis
     load File.join(__dir__,'Synopsis.rb') # pour surclasser les méthodes
     Synopsis.new(id, ANNEE_CONCOURS_COURANTE)
   end
-end #/ synopsis
+end
+
+# def projet
+#   @projet ||= begin
+#     TProjet.new(id, ANNEE_CONCOURS_COURANTE)
+#   end
+# end
 
 # Pour savoir si le concurrent a reçu un mail
 def has_mail?(data)

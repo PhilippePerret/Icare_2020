@@ -1,43 +1,41 @@
+<%# frozen_string_literal: true %>
 <%
-# frozen_string_literal: true
+
+if concours.phase > 3
+  # =>  Soit le concours courant, en phase terminale, soit un
+  #     concours précédent.
+
+  %><%= concours.tableau_palmares %><%
+
+else
+
+  if concours.phase == 1
+
+    %><p>Le concours est en cours, il n’y a pas encore de résultats.</p><%
+
+  elsif concours.phase == 2
+
+    %><h3>Présélections en cours…</h3>
+    <p>Les présélections sont en cours, les résultats seront affichés très prochainement.</p><%
+
+  elsif concours.phase > 2
+
+    %><%= concours.tableau_preselecteds %>
+
+    <%= concours.tableau_nonselecteds %><%
+
+  end
+
+end #/ une année ou l'année courante
+
 %>
-<% if concours.phase > 3 %>
-  <h2>Lauréats du Concours de Synopsis <%= concours.annee %></h2>
-  <%
-    data_prix = {1 => "PREMIER", 2 => "DEUXIÈME", 3 => "TROISIÈME"}
-  %>
-  <% data_prix.each do |idprix, prix_name| %>
-    <% syno = concours.send("synopsis_prix#{idprix}".to_sym) %>
-    <div class="laureat">
-      <span class="laureat-prix"><%= prix_name %> PRIX</span>
-      <span class="laureat-titre"><%= syno.titre %></span>
-      <span class="laureat-auteurs"><%= syno.formated_auteurs %></span>
-    </div>
-  <% end %>
-<% end %>
-<%
-# ---------------------------------------------------------------------
-#
-#   Fin de si c'est le palmarès final
-#
-# ---------------------------------------------------------------------
+
+<h3>Palmarès des précédentes sessions</h3><%
+
+  Concours.sessions_precedentes.each do |concours|
+
+    %><%= concours.lien_palmares %><%
+
+  end
+
 %>
-<% if concours.phase1? %>
-  <p>Ici seront annoncés les résultats du prochain <%= CONCOURS_LINK %>.</p>
-<% elsif concours.phase2? %>
-  <p>Les présélections sont en cours, les résultats seront affichés très prochainement.</p>
-<% elsif concours.phase > 2 %>
-  <h2>Synopsis présélectionnés</h2>
-  <ul class="no_liststyle">
-    <% Synopsis.preselecteds.each do |syno| %>
-      <li><%= syno.out(format: :fiche_classement, current_cid: concurrent&.id) %></li>
-    <% end %>
-  </ul>
-  <h2>Synopsis non présélectionnés</h2>
-  <ol class="palmares" start="11">
-    <% position = 10 %>
-    <% Synopsis.not_preselecteds.each do |syno| %>
-      <li><%= syno.out(position: (position+=1), format: :fiche_classement, current_cid: concurrent&.id) %></li>
-    <% end %>
-  </ol>
-<% end %>
