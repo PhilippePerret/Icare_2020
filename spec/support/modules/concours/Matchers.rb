@@ -212,13 +212,15 @@ RSpec::Matchers.define :be_palmares_concours do |phase|
     end
 
     # On doit trouver un lien vers les anciens concours
-    if not page.has_css?('h3', text: 'Palmarès des sessions précédentes')
+    if not page.has_css?('h3', text: 'Palmarès des précédentes sessions')
       @errors << "on devrait trouver une section menant vers les palmarès des années précédentes"
     else
       db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} GROUP BY annee").each do |dc|
         an = dc[:annee]
         next if an == TConcours.current.annee
-        expect(page).to have_link("Palmarès de la session #{an}", href:"concours/palmares?an=#{an}")
+        if not page.has_link?("Palmarès de la session #{an}", href:"concours/palmares?an=#{an}")
+          @errors << "La page ne contient pas le lien vers le palmarès de la session #{an}"
+        end
       end
     end
 
@@ -298,13 +300,29 @@ end
 
 RSpec::Matchers.define :be_cartes_synopsis do
   match do |page|
-    page.has_css?("h2.page-title", text: "Cartes des synopsis")
+    @errors = []
+    if not page.has_css?("h2.page-title", text: "Cartes des synopsis")
+      @errors << "la page devrait avoir le titre “Cartes des synopsis” (son titre est “#{title_of_page}”)"
+    end
+    if not page.has_css?('div#synopsis-container')
+      @errors << "la page devrait contenir le div container des cartes de synopsis"
+    end
+    if not page.has_css?('div.top-buttons')
+      @errors << "la page devrait contenir les boutons pour définir le classement"
+    else
+      ['Notes >', 'Notes <', 'Progression >', 'Progression <'].each do |sens|
+        if not page.has_link?(sens)
+          @errors << "la page devrait contenir un bouton pour afficher dans l'ordre “#{sens}”…"
+        end
+      end
+    end
+    return @errors.empty?
   end
   description do
     "C'est bien la page des cartes des synopsis"
   end
   failure_message do
-    "Ce n'est pas la page des cartes des synopsis."
+    "Ce n'est pas la page des cartes des synopsis : #{@errors.join(', ')}"
   end
   failure_message_when_negated do
     "Ça ne devrait pas être les cartes de synopsis…"

@@ -95,6 +95,7 @@ end
 def peut_rejoindre_la_page_des_palmares
   it "peut atteindre la page des palmarès des concours" do
     goto("concours/palmares")
+    screenshot("page-palmares-phase-#{TConcours.current.phase}")
     expect(page).not_to be_page_erreur
     expect(page).to be_palmares_concours
   end
@@ -107,6 +108,7 @@ def peut_rejoindre_la_page_des_palmares
       palmares_data = YAML.load_file(palmares_path)
     end
     goto("concours/palmares")
+    screenshot("page-palmares-phase-#{TConcours.current.phase}")
     # Inspection minimale (titre et sous-titre)
     expect(page).not_to be_page_erreur
     expect(page).to be_palmares_concours

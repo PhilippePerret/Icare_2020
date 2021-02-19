@@ -21,19 +21,35 @@ def consigne_resultats_in_file_palmares(options)
       nombre_concurrents:   nil,
       nombre_sans_dossier:  nil,
       nombre_non_conforme:  nil,
+      nombre_femmes:        nil,
+      nombre_hommes:        nil,
+      concurrents_femmes:   nil,
+      concurrents_hommes:   nil
     },
     classement:   [],
     non_conforme: [],
     sans_dossier: []
   }
 
-  inscriptions  = db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ?", [ANNEE_CONCOURS_COURANTE])
+  request = <<-SQL
+SELECT
+  *, c.sexe AS sexe
+  FROM #{DBTBL_CONCURS_PER_CONCOURS} cpc
+  INNER JOIN #{DBTBL_CONCURRENTS} c ON c.concurrent_id = cpc.concurrent_id
+  WHERE annee = ?
+  SQL
+  inscriptions  = db_exec(request, [ANNEE_CONCOURS_COURANTE])
+  log("Inscriptions : #{inscriptions.pretty_inspect}")
   concurrents   = inscriptions.select { |dc| dc[:specs][0..1] == '11'}
   sans_dossier  = inscriptions.select { |dc| dc[:specs][0]    == '0' }
   non_conforme  = inscriptions.select { |dc| dc[:specs][0..1] == '12'}
 
   dpalm[:infos][:nombre_inscriptions] = inscriptions.count
+  dpalm[:infos][:nombre_femmes]       = inscriptions.select{|d|d[:sexe]=='F'}.count
+  dpalm[:infos][:nombre_hommes]       = inscriptions.select{|d|d[:sexe]=='H'}.count
   dpalm[:infos][:nombre_concurrents]  = concurrents.count
+  dpalm[:infos][:concurrents_femmes]  = concurrents.select{|d|d[:sexe]=='F'}.count
+  dpalm[:infos][:concurrents_hommes]  = concurrents.select{|d|d[:sexe]=='H'}.count
   dpalm[:infos][:nombre_non_conforme] = non_conforme.count
   dpalm[:infos][:nombre_sans_dossier] = sans_dossier.count
 

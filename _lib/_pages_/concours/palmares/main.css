@@ -1,3 +1,20 @@
 div.fiche-lecture div.infos-projet div.note-totale div.note {
   font-size:16pt!important;
 }
+
+
+table#infos-palmares {
+  font-size:11pt;
+  padding:0.3em;
+  border:1px solid;
+}
+table#infos-palmares td:nth-child(1) {
+  width: 140px;
+  text-align: left;
+  /* background:blue; */
+}
+table#infos-palmares td:nth-child(2) {
+  width: 50px;
+  text-align: right;
+  /* background:red; */
+}

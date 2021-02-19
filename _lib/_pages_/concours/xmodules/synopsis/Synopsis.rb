@@ -246,7 +246,11 @@ end #/ add
   def sorteds_by(key = 'note', sens = 'desc', options)
     options ||= {}
     options.merge!(total: key == 'total')
+    # log("evaluate_all_synopsis(options): #{evaluate_all_synopsis(options).pretty_inspect}")
     synos_max_to_min, synos_sans_fiche, synos_sans_fichier, synos_sorted_by_progress = evaluate_all_synopsis(options)
+    if synos_max_to_min.nil?
+      return []
+    end
     liste = if key == 'progress'
               synos_sorted_by_progress
             else # classement par note de l'user OU classement par note totale
@@ -278,6 +282,8 @@ attr_reader :concurrent_id, :annee, :data, :id
 attr_reader :data_score
 # Position de classement par rapport à la note
 attr_accessor :position
+# La note pour le classement (dépend du choix de tri)
+attr_accessor :sort_note
 
 # Instanciation
 def initialize concurrent_id, annee, dat = nil

@@ -7,6 +7,7 @@
 def peut_atteindre_la_page_devaluation
   it "peut atteindre la page d'évaluation" do
     goto("concours/evaluation")
+    expect(page).not_to be_page_erreur
     expect(page).to be_cartes_synopsis
   end
 end #/ peut_atteindre_la_page_devaluation

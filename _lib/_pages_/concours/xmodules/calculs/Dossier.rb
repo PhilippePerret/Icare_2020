@@ -45,6 +45,7 @@ class << self
   def non_preselecteds
     @non_preselecteds ||= classement[10..-1]
   end
+  alias :nonselecteds :non_preselecteds
 
   # Retourne la liste Array des instances de tous les projets conformes
   def conformes
@@ -64,6 +65,10 @@ class << self
         Dossier.new(dp[:concurrent_id], ANNEE_CONCOURS_COURANTE)
       end
     end
+  end
+
+  def palmares_data(annee)
+    YAML.load_file(palmares_file_path(annee))
   end
 
   def palmares_file_path(annee)

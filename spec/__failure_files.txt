@@ -4,10 +4,10 @@ example_id                                                  | status  | run_time
 ./spec/features/concours/administrateur_spec.rb[1:1:2]      | unknown |               |
 ./spec/features/concours/administrateur_spec.rb[1:2:1]      | passed  | 18.32 seconds |
 ./spec/features/concours/administrateur_spec.rb[1:4:1]      | unknown |               |
-./spec/features/concours/administrateur_spec.rb[1:5:1]      | failed  | 12.28 seconds |
-./spec/features/concours/administrateur_spec.rb[1:6:1]      | passed  | 6.26 seconds  |
-./spec/features/concours/administrateur_spec.rb[1:7:1]      | unknown |               |
-./spec/features/concours/administrateur_spec.rb[1:7:2]      | unknown |               |
+./spec/features/concours/administrateur_spec.rb[1:5:1]      | passed  | 10.41 seconds |
+./spec/features/concours/administrateur_spec.rb[1:6:1]      | passed  | 7.88 seconds  |
+./spec/features/concours/administrateur_spec.rb[1:7:1]      | passed  | 12.57 seconds |
+./spec/features/concours/administrateur_spec.rb[1:7:2]      | passed  | 3.76 seconds  |
 ./spec/features/concours/administrateur_spec.rb[1:8:1]      | unknown |               |
 ./spec/features/concours/administrateur_spec.rb[1:10:1]     | unknown |               |
 ./spec/features/concours/administrateur_spec.rb[1:12:1]     | unknown |               |

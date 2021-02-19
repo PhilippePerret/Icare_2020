@@ -35,10 +35,18 @@ def line_palmares_as_nonselected
   template_line_palmares
 end
 
+# === Helpers ====
+
 def template_line_palmares
   @template_line_palmares ||= '<li><span class="titre">“%{projet}”</span> de <span class="auteurs">%{auteurs}</span><span class="note">%{note}</span><span class="position">%{position}</span></li>'
   @template_line_palmares % {projet:titre, auteurs:formated_auteurs, note:note, position:position}
 end
+
+def formated_auteurs
+  @formated_auteurs ||= auteurs # pour moment, pareil
+end
+
+# === Statut ===
 
 def laureat?
   :TRUE === @is_laureat ||= position < 4 ? :TRUE : :FALSE
@@ -50,4 +58,18 @@ def nonselected?
   :TRUE === @is_not_preselected ||= position > 10 ? :TRUE : :FALSE
 end
 
+# === LES DONNÉES ===
+
+def titre     ; @titre      ||= data[:titre]      end
+def auteurs   ; @auteurs    ||= data[:auteurs] || concurrent.patronyme  end
+
+# L'instance Concurrent du concurrent de ce document
+def concurrent
+  @concurrent ||= Concurrent.get(concurrent_id)
+end
+
+# Les données de l'enregistrement du concurrent pour la session
+def data
+  @data ||= db_exec("SELECT * FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE concurrent_id = ? AND annee = ?", [concurrent_id, annee]).first
+end #/ data
 end #/class Dossier
