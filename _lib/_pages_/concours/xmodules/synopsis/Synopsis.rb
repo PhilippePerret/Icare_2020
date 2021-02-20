@@ -9,7 +9,7 @@
 =end
 require_relative './constants'
 require_relative './FicheLecture'
-if defined?(HTML)
+if defined?(HTML) && defined?(html) && html.respond_to?(:require_xmodule)
   html.require_xmodule('calculs')
 else
   # Quand chargé par ajax par exemple

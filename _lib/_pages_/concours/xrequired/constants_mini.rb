@@ -8,6 +8,7 @@ CONCOURS_FOLDER       = File.join(PAGES_FOLDER,'concours')
 TEMP_CONCOURS_FOLDER  = mkdir(File.join(TEMP_FOLDER,'concours'))
 XMODULES_FOLDER       = File.join(CONCOURS_FOLDER,'xmodules')
 CONCOURS_DATA_FOLDER  = mkdir(File.expand_path(File.join(DATA_FOLDER,'concours')))
+CONCOURS_PALM_FOLDER  = mkdir(File.expand_path(File.join(DATA_FOLDER,'concours_palmares')))
 NOMBRE_QUESTIONS_PATH = File.join(CONCOURS_DATA_FOLDER,'NOMBRE_QUESTIONS')
 CALCUL_FOLDER         = File.join(CONCOURS_FOLDER,'xmodules','calculs')
 

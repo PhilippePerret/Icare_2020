@@ -5,6 +5,7 @@ require_relative './constants_mini'
 
 require './_lib/required/__first/constants/paths'
 require './_lib/required/__first/helpers/Linker'
+require './_lib/required/__first/extensions/Hash'
 
 UI_TEXTS.smart_merge!({
   concours:{
