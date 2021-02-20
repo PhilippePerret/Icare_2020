@@ -1,43 +1,40 @@
 <%# frozen_string_literal: true %>
 <%
 
-if concours.phase > 3
-  # =>  Soit le concours courant, en phase terminale, soit un
-  #     concours précédent.
+#
+# Note : 'concours' peut être soit le concours courant (si param(:an) n'est pas
+# défini) soit le concours de l'année param(:an). Cf. le fichier html.rb
+#
 
-  %><%= concours.tableau_palmares %><%
+if concours.phase == 1 # Inscription et dépôt des documents
 
-else
+  %><p>Le concours est en cours, il n’y a pas encore de résultats.</p><%
 
-  if concours.phase == 1
+elsif concours.phase == 2 # Présélections en cours
 
-    %><p>Le concours est en cours, il n’y a pas encore de résultats.</p><%
+  %><h3>Présélections en cours…</h3>
+  <p>Les présélections sont en cours, les résultats seront affichés très prochainement.</p><%
 
-  elsif concours.phase == 2
+else # Sélection finale en cours, palmarès final, etc.
 
-    %><h3>Présélections en cours…</h3>
-    <p>Les présélections sont en cours, les résultats seront affichés très prochainement.</p><%
+  %><%=
 
-  elsif concours.phase > 2
+    # Le tableau du palmarès
+    # ----------------------
+    # En fonction de la phase, le tableau affiche le palmarès final ou
+    # seulement les projets présélectionnés.
 
-    %><%= concours.tableau_recapitulatif %>
+    concours.tableau_palmares
 
-    <%= concours.tableau_preselecteds %>
+  %><%
 
-    <%= concours.tableau_nonselecteds %><%
-
-  end
-
-end #/ une année ou l'année courante
+end
 
 %>
 
-<h3>Palmarès des précédentes sessions</h3><%
+<%=
 
-  Concours.sessions_precedentes.each do |concours|
-
-    %><%= concours.lien_palmares %><%
-
-  end
+  # Section qui contient les liens vers toutes les sessions du concours
+  Concours.section_previous_sessions
 
 %>

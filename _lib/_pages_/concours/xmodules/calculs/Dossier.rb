@@ -72,8 +72,12 @@ class << self
   end
 
   def palmares_file_path(annee)
-    @palmares_file_path ||= File.join(CONCOURS_DATA_FOLDER, "palmares-#{annee}.yaml")
-  end #/ palmares_file_path
+    @palmares_file_path ||= File.join(palmares_folder(annee), "palmares.yaml")
+  end
+
+  def palmares_folder(anne)
+    mkdir(File.join(CONCOURS_PALM_FOLDER,annee.to_s))
+  end
 
 
 end # /<< self

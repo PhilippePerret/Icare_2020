@@ -5,14 +5,18 @@
 =end
 class Concours
 class << self
-  def sessions_precedentes
-    @sessions_precedentes ||= begin
-      db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} GROUP BY annee ORDER BY annee DESC").collect do |dc|
-        next if dc[:annee] == current.annee
-        new(dc[:annee])
-      end.compact
+  def section_previous_sessions
+    File.exists?(previous_sessions_file) || begin
+      html.require_xmodule('palmares')
+      build_section_previous_sessions
     end
-  end #/ sessions_precedentes
+    File.read(previous_sessions_file)
+  end
+
+  def previous_sessions_file
+    @previous_sessions_file ||= File.join(CONCOURS_PALM_FOLDER,'previous_sessions_section.html')
+  end
+
 end # /<< self
 
 # ---------------------------------------------------------------------
@@ -21,12 +25,6 @@ end # /<< self
 #
 # ---------------------------------------------------------------------
 
-# Un lien pour revoir le palmarès
-def lien_palmares
-  @lien_palmares ||= begin
-    Linker.new(route:"concours/palmares?an=#{annee}", text: "Palmarès de la session #{annee}")
-  end
-end
 
 # = main =
 #
@@ -40,6 +38,7 @@ def tableau_palmares
 end #/ tableau
 
 def tableau_laureats
+  return '' if phase < 5
   "<h3>Lauréats #{annee}</h3>" +
   "Les Lauréats du Concours de Synopsis de l’atelier Icare session #{ANNEE_CONCOURS_COURANTE} sont :" +
   '<ul id="laureats" class="palmares">' +
@@ -50,7 +49,7 @@ end #/tableau_laureats
 def tableau_preselecteds
   "<h3>Projets présélectionnés</h3>" +
   '<ul id="preselecteds" class="palmares">' +
-  Dossier.preselecteds.collect { |dossier| dossier.line_palmares }.join +
+  Dossier.preselecteds.shuffle.collect { |dossier| dossier.line_palmares }.join +
   '</ul>'
 end #/tableau_preselecteds
 
@@ -75,7 +74,7 @@ def tableau_recapitulatif
   tbl.output
 end #/ tableau_recapitulatif
 
-# Les données du fichier palmares-annee.yaml
+# Les données du fichier annee/palmares.yaml
 def palmares_data
   @palmares_data ||= YAML.load_file(palmares_file)
 end #/ palmares_data
@@ -83,7 +82,7 @@ end #/ palmares_data
 # Le fichier qui contient le palmarès pour cette année
 # Normalement, il doit toujours exister, sauf pour les tests…
 def palmares_file
-  @palmares_file ||= File.join(CONCOURS_DATA_FOLDER, "palmares-#{annee}.yaml")
+  @palmares_file ||= File.join(CONCOURS_PALM_FOLDER, annee, "palmares.yaml")
 end
 
 end #/Concours
