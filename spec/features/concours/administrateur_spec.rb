@@ -65,7 +65,7 @@ feature "Un administrateur", admin:true do
     peut_rejoindre_la_page_des_palmares
   end
 
-  context 'PHASE 2 à 3', admin:'phase2', phase2:true do
+  context 'PHASE 2 à 3', admin:'phase2a3', phase2:true do
     before :all do
       degel('concours-phase-2')
     end

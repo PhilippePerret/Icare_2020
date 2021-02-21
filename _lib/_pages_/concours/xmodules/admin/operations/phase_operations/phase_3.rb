@@ -12,7 +12,6 @@ class Operation
 # Méthode qui produit le fichier palmares.yaml qui contient les informations
 # sur les résultats pour le concours (cf. le manuel pour le détail)
 def consigne_resultats_in_file_palmares(options)
-  log("-> consigne_resultats_in_file_palmares(options=#{options.inspect})")
   # Structure de la donnée qui sera enregistrée dans palmares-<annee>.yaml
   dpalm = {
     infos:{
@@ -39,7 +38,6 @@ SELECT
   WHERE annee = ?
   SQL
   inscriptions  = db_exec(request, [ANNEE_CONCOURS_COURANTE])
-  log("Inscriptions : #{inscriptions.pretty_inspect}")
   concurrents   = inscriptions.select { |dc| dc[:specs][0..1] == '11'}
   sans_dossier  = inscriptions.select { |dc| dc[:specs][0]    == '0' }
   non_conforme  = inscriptions.select { |dc| dc[:specs][0..1] == '12'}
@@ -72,6 +70,30 @@ SELECT
   end
 
 end #/ consigne_resultats_in_file_palmares
+
+# Méthode qui construit le tableau présentant les présélectionnés dans la
+# section Palmarès du site
+#
+def build_tableau_preselections_palmares(options)
+  if options[:noop]
+    html.res << "Je dois créer le tableau des présélections pour la section Palmarès"
+  else
+    require_xmodule('palmares')
+    Concours.current.build_tableau_palmares(3)
+  end
+end #/ build_tableau_preselections_palmares
+
+# Méthode qui construit le tableau présentant les lauréats dans la
+# section Palmarès du site
+#
+def build_tableau_laureats_palmares(options)
+  if options[:noop]
+    html.res << "Je dois créer le tableau des lauréats pour la section Palmarès"
+  else
+    require_xmodule('palmares')
+    Concours.current.build_tableau_palmares(5)
+  end
+end #/ build_tableau_preselections_palmares
 
   # Envoie les mails aux concurrents après la première sélection
   # Note : il y a trois mails différents
@@ -124,7 +146,7 @@ end #/ consigne_resultats_in_file_palmares
     }
     log("Concours.current.jury: #{Concours.current.jury.inspect}")
     Concours.current.jury.each do |membre|
-      log("étude du juré : #{membre.inspect}")
+      # log("étude du juré : #{membre.inspect}")
       if membre[:jury].nil?
         raise "Le membre #{membre.inspect} ne définit pas son jury (1, 2 ou 3 — 1 + 2)"
       end

@@ -44,6 +44,7 @@ MOTIF_NON_CONFORMITE = {
   support: {motif:'absence de l’indication du support de destination', precision: "vous devez indiquer si c'est un roman, une nouvelle, un long-métrage, un court-métrage, une bande dessinée, etc."},
   longueur: {motif:'absence de l’indication du nombre de mots'},
   attestation:{motif:'absence de l’attestion sur l’honneur'},
+  date_attestation:{motif:'absence de la date et/ou du lieu de l’attestation', precision:"une attestation non datée et non localisée n’a pas de valeur légale"},
   signature:{motif:'absence de votre adresse mail (celle ayant servi à vous inscrire) en guise de signature dans l’attestation'},
   bio:{motif: 'absence de la courte biographie de l’auteur ou des auteurs', precision:"cette biographie, qui peut être très courte, nous permet de mieux vous connaitre"},
   incomplet: {motif: "synopsis incomplet", precision: "le synopsis doit raconter l'intégralité de l'histoire, du début jusqu'à sa conclusion"},

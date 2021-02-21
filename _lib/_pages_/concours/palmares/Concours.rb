@@ -10,7 +10,7 @@ class << self
       html.require_xmodule('palmares')
       build_section_previous_sessions
     end
-    File.read(previous_sessions_file)
+    File.read(previous_sessions_file).force_encoding('utf-8')
   end
 
   def previous_sessions_file
@@ -33,56 +33,22 @@ end # /<< self
 #   - les lauréats
 #   - les présélectionnés
 #   - les non présélectionnés
+#
+# Le tableau doit toujours exister quand on utilise cette méthode car il
+# doit avoir été construit au cours du changement de phase.
 def tableau_palmares
-  tableau_laureats + tableau_preselecteds + tableau_nonselecteds + tableau_recapitulatif
-end #/ tableau
+  File.read(phase == 3 ? palm_preselecteds_path : palm_laureats_path).force_encoding('utf-8')
+end
 
-def tableau_laureats
-  return '' if phase < 5
-  "<h3>Lauréats #{annee}</h3>" +
-  "Les Lauréats du Concours de Synopsis de l’atelier Icare session #{ANNEE_CONCOURS_COURANTE} sont :" +
-  '<ul id="laureats" class="palmares">' +
-  Dossier.laureats.collect { |dossier| dossier.line_palmares }.join +
-  '</ul>'
-end #/tableau_laureats
+def palm_preselecteds_path
+  @palm_preselecteds_path ||= File.join(palm_folder, 'preselections.html')
+end
+def palm_laureats_path
+  @palm_laureats_path ||= File.join(palm_folder, 'laureats.html')
+end
 
-def tableau_preselecteds
-  "<h3>Projets présélectionnés</h3>" +
-  '<ul id="preselecteds" class="palmares">' +
-  Dossier.preselecteds.shuffle.collect { |dossier| dossier.line_palmares }.join +
-  '</ul>'
-end #/tableau_preselecteds
-
-def tableau_nonselecteds
-  "<h3>Projets non présélectionnés</h3>" +
-  '<ul id="nonselecteds" class="palmares">' +
-  Dossier.nonselecteds.collect { |dossier| dossier.line_palmares }.join +
-  '</ul>'
-end #/ tableau_nonselecteds
-
-# Tableau qui parle du concours en chiffres
-def tableau_recapitulatif
-  infos = palmares_data[:infos]
-  tbl = HTMLHelper::Table.new(id: 'infos-palmares', class:'fright')
-  tbl << ['', ''] # ligne de titre
-  tbl << ['Inscrits', infos[:nombre_inscriptions]]
-  tbl << ['Femmes/ Hommes', "#{infos[:nombre_femmes]} / #{infos[:nombre_hommes]}"]
-  tbl << ['Dossiers valides', infos[:nombre_concurrents]]
-  tbl << ['Femmes/ Hommes', "#{infos[:concurrents_femmes]} / #{infos[:concurrents_hommes]}"]
-  tbl << ['Sans dossier', infos[:nombre_sans_dossier]]
-  tbl << ['Non conforme', infos[:nombre_non_conforme]]
-  tbl.output
-end #/ tableau_recapitulatif
-
-# Les données du fichier annee/palmares.yaml
-def palmares_data
-  @palmares_data ||= YAML.load_file(palmares_file)
-end #/ palmares_data
-
-# Le fichier qui contient le palmarès pour cette année
-# Normalement, il doit toujours exister, sauf pour les tests…
-def palmares_file
-  @palmares_file ||= File.join(CONCOURS_PALM_FOLDER, annee, "palmares.yaml")
+def palm_folder
+  @palm_folder ||= File.join(CONCOURS_PALM_FOLDER,annee.to_s)
 end
 
 end #/Concours

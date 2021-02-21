@@ -18,3 +18,25 @@ table#infos-palmares td:nth-child(2) {
   text-align: right;
   /* background:red; */
 }
+
+ul#preselecteds li, ul#nonselecteds li {
+  margin-top: 1em;
+  vertical-align:baseline;
+}
+
+ul#nonselecteds li span.note_et_classement {
+  float:right;
+  vertical-align:baseline;
+}
+ul#nonselecteds li span.note,
+ul#nonselecteds li span.position {
+  display:inline-block;
+  width: 50px;
+  text-align:right;
+  vertical-align:baseline;
+}
+
+ul#nonselecteds li span.note {
+}
+ul#nonselecteds li span.position {
+}

@@ -16,12 +16,21 @@ class Dossier
 # Retourne la ligne LI pour le palmarès, pour le projet courant
 #
 # Note : on fait une distinction pour les lauréats, présélectionnés, etc.
-# mais pour le moment, c'est strictement la même ligne.
-def line_palmares
+# suivant la phase. Par exemple, en phase 3, on ne doit pas afficher les
+# lauréats (on ne les connait pas encore) et on affiche les présélectionnés sans
+# classement.
+def line_palmares(phase)
   case
-  when laureat?     then line_palmares_as_laureat
-  when preselected? then line_palmares_as_preselected
-  when nonselected? then line_palmares_as_nonselected
+  when phase > 3 && laureat?
+    line_palmares_as_laureat
+  when preselected?
+    if phase == 3
+      line_palmares_as_preselected
+    else
+      regular_line_palmares
+    end
+  when nonselected?
+    regular_line_palmares
   end
 end #/ line_palmares
 
@@ -29,21 +38,36 @@ def line_palmares_as_laureat
   template_line_palmares
 end
 def line_palmares_as_preselected
-  template_line_palmares
+  template_line_palmares_as_preselected
 end
-def line_palmares_as_nonselected
+def regular_line_palmares
   template_line_palmares
 end
 
 # === Helpers ====
 
+def template_line_palmares_as_preselected
+  @template_line_palmares_aspres ||= '<li><span class="titre">“%{projet}”</span> <span class="auteurs">(%{auteurs})</span></li>'
+  @template_line_palmares_aspres % {projet:titre, auteurs:formated_auteurs}
+end
+
 def template_line_palmares
-  @template_line_palmares ||= '<li><span class="titre">“%{projet}”</span> de <span class="auteurs">%{auteurs}</span><span class="note">%{note}</span><span class="position">%{position}</span></li>'
-  @template_line_palmares % {projet:titre, auteurs:formated_auteurs, note:note, position:position}
+  @template_line_palmares ||= '<li><span class="note_et_classement"><span class="note">%{note}</span><span class="position">%{position}</span></span><span class="titre">“%{projet}”</span> <span class="auteurs">(%{auteurs})</span></li>'
+  @template_line_palmares % {projet:titre, auteurs:formated_auteurs, note:note_totale, position:formated_position}
 end
 
 def formated_auteurs
-  @formated_auteurs ||= auteurs # pour moment, pareil
+  @formated_auteurs ||= auteurs.patronimize # pour moment, pareil
+end
+
+def formated_position
+  @formated_position ||= begin
+    if position > 1
+      "#{position}<sup>e</sup>"
+    else
+      "1<sup>er</sup>"
+    end
+  end
 end
 
 # === Statut ===

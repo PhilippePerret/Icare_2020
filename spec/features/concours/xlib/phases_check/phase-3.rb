@@ -6,6 +6,9 @@
   Dans cette phase, notamment, doit être calculé le premier classement, avec
   les dix présélectionnés. Les autres concurrents sont "figés" à leur place.
 
+  C'est dans cette phase aussi qu'on construit le fichier HTML du tableau
+  des palmarès.
+
 =end
 
 # Le test profond de la phase
@@ -13,8 +16,8 @@ def check_phase_3
 
   start_time = Time.now.to_i - 4
 
-  # LE FICHIER PALMARÈS
-  # -------------------
+  # LE FICHIER DES DONNÉES (PALMARÈS)
+  # ---------------------------------
   # Il faut vérifier que le fichier des résultats a bien été produit
   # C'est le fichier qui contient les classements et qui permet de faire
   # la page des palmarès.
@@ -62,6 +65,15 @@ def check_phase_3
       "La note consignée devrait valoir #{dossier.note_totale}, elle vaut #{dpalm[:note]}"
     expect(dpalm[:note]).not_to eq('NC'), "La note consignée ne devrait pas valoir 'NC'…"
   end
+
+
+  # LE TABLEAU DES PRÉSÉLECTIONNÉS
+  # ------------------------------
+  # Dans la section "Palmarès", on doit pouvoir trouver la liste des présélec-
+  # tionnés et des non présélectionnés
+  fpath = File.join(CONCOURS_PALM_FOLDER,ANNEE_CONCOURS_COURANTE.to_s,"preselections.html")
+  expect(File).to be_exists(fpath), "le fichier des présélections pour la section “Palmarès” du site devrait exister"
+  pitch("Le tableau des présélectionnés et non retenus a été construit")
 
 
   # LES MAILS ENVOYÉS

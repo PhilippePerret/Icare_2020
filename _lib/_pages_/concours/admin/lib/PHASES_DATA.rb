@@ -32,24 +32,25 @@ PHASES_DATA[2].merge!(operations:[
 ])
 PHASES_DATA[3].merge!(operations:[
   {name:"📋 Production du fichier de données Palmarès contenant les résultats provisoires", method: :consigne_resultats_in_file_palmares},
+  {name:"📊 Production du tableau des présélectionnés et non retenus", method: :build_tableau_preselections_palmares},
   {name:"📤 Envoi du mail aux concurrents annonçant les résultats de la pré-sélection", method: :send_mail_concurrents_preselection},
   {name:"📤 Envoi du mail aux membres des deux jurys", method: :send_mail_jury_preselection},
   {name:"📣 Actualité annonçant la fin des présélections", method: :add_actualite_concours_fin_preselection},
   {name:"Panneau dans la section “Résultats” pour voir les pré-sélections", info: true}
 ])
 PHASES_DATA[5].merge!(operations:[
-  {name:"📤 Envoi du mail aux concurrent annonçant le palmarès final"},
-  {name:"Construction du panneau pour voir les résultats finaux"},
-  {name:"Construction des fiches de lecture de chaque concurrent"},
-  {name:"Affichage de la fiche de lecture sur l'espace personnel"}
+  {name:"📤 Envoi du mail aux concurrent annonçant le palmarès final", method: :none},
+  {name:"📊 Production du tableau des lauréats finaux", method: :build_tableau_laureats_palmares},
+  {name:"Construction des fiches de lecture de chaque concurrent", method: :none},
+  {name:"Affichage de la fiche de lecture sur l'espace personnel", method: :none}
 ])
 PHASES_DATA[8].merge!(operations:[
-  {name:"📤 Envoi du mail de remerciement (et félicitations) à tous concurrents"},
-  {name:"📤 Envoi du mail de remerciement aux jurés"},
-  {name:"Le concours n'est plus annoncé sur l'atelier"}
+  {name:"📤 Envoi du mail de remerciement (et félicitations) à tous concurrents", method: :none},
+  {name:"📤 Envoi du mail de remerciement aux jurés", method: :none},
+  {name:"Le concours n'est plus annoncé sur l'atelier", method: :none}
 ])
 PHASES_DATA[9].merge!(operations:[
-  {name:"Mise des dossiers de côté (zippés)"}
+  {name:"Mise des dossiers de côté (zippés)", method: :none}
 ])
 
 end #/Concours

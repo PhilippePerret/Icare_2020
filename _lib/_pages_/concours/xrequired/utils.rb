@@ -8,7 +8,14 @@ def mail_path(mailp)
   File.join(XMODULES_FOLDER,'mails', mailp)
 end #/ mail_path
 
+# TODO Rationaliser l'utilisation de cette méthode, pour qu'elle puisse
+# fonctionner partout.
+def require_xmodule(name)
+  HTML.new.require_xmodule(name)
+end
+
 class HTML
+
   def require_xmodule(name)
     p = File.join(XMODULES_FOLDER,name)
     File.exists?(p) || File.exists?("#{p}.rb") || raise("File inconnu : #{p}")
@@ -17,5 +24,6 @@ class HTML
     else
       require p
     end
-  end #/ require_xmodule
+  end
+
 end #/HTML
