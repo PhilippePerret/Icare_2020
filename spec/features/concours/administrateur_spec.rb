@@ -49,9 +49,22 @@ feature "Un administrateur", admin:true do
     before :all do
       degel('concours-phase-1')
     end
+    let(:concurrent_courant) { TConcurrent.get_random(avec_fichier:true, conformite_definie:false, current:true) }
+    context 'avant la limite d’échéance' do
+      peut_refuser_un_dossier_pour_non_conformite
+    end
+
+    # # Je ne sais pas tester ça
+    # context 'après la limite d’échéance' do
+    #   before :all do
+    #     ENV['TESTS_TIME_NOW'] = Time.new(ANNEE_CONCOURS_COURANTE,3,1,0,0,0).to_i.to_s
+    #   end
+    #   peut_refuser_un_dossier_pour_non_conformite(true)
+    # end
+
   end
 
-  context 'PHASE 1 à 2', admin:'phase1', phase1:true do
+  context 'PHASE 1 à 2', admin:'phase1a2', phase1:true do
     before :all do
       degel('concours-phase-1')
     end

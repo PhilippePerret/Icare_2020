@@ -32,12 +32,5 @@ def confirme_validite
   message("Le projet “#{synopsis.titre}” (#{name}) a bien été marqué conforme.<br/>#{concurrent.pseudo}, son auteur#{concurrent.fem(:e)}, a été informé#{concurrent.fem(:e)}.")
 end #/ confirme_validite
 
-# Indique que le dossier n'est pas conforme et qu'il faut le corriger
-#   - met le 2e bit des specs à 2
-#   - envoie un message à l'auteur indiquant la non conformité
-def demande_mise_en_conformite
-
-end #/ demande_mise_en_conformite
-
 end #/Concours::CFile
 end #/Concours

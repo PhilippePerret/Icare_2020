@@ -32,7 +32,7 @@ class HTML
   # bien été pris en compte
   def informe_concurrent_consignation_fichier(file)
     require_module('mail')
-    @candidature_filename = file.original_name
+    @candidature_filename = file.original_name.force_encoding('utf-8')
     MailSender.send({
       to:   concurrent.mail,
       from: CONCOURS_MAIL,

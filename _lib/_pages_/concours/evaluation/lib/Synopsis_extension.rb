@@ -48,7 +48,12 @@ def set_non_conforme(motifs, motif_detailled)
   concurrent.set_spec(1,2)
 
   # Envoi du mail à l'auteur
-  MailSender.send(to:concurrent.mail, from:CONCOURS_MAIL, file:mail_path('phase1/mail_non_conformite'), bind: self)
+  # -------------------------
+  # S'il est à la limite de l'échéance (2 jours avant) il ne peut plus
+  # renvoyer son dossier
+  mail_name = "mail_non_conformite"
+  mail_name = "#{mail_name}_definitive" if Concours.proche_echeance?
+  MailSender.send(to:concurrent.mail, from:CONCOURS_MAIL, file:mail_path("phase1/#{mail_name}"), bind: self)
 
   # Message de confirmation
   message(MESSAGES[:msg_file_non_conforme] % {pseudo:concurrent.pseudo, e:concurrent.fem(:e)})

@@ -1,0 +1,19 @@
+<%
+# encoding: UTF-8
+# frozen_string_literal: true
+=begin
+  Contrairement au mail "mail_non_conformite", ce message est envoyé lorsque
+  le concurrent ne peut plus renvoyer son dossier, car il est trop proche
+  de l'échéance finale.
+=end
+subject("[CONCOURS] Votre fichier n'est pas conforme ")
+%>
+<p>Bonjour <%= concurrent.pseudo.patronimize %>,</p>
+<p>Merci à vous pour votre fichier de candidature destiné au <%= CONCOURS_LINK.with(full:true, distant:true) %>.</p>
+<p>Ce fichier n'est malheureusement pas conforme aux articles 17 et 19 du <%= REGLEMENT_LINK.with(distant:true, text: "règlement du concours") %>, pour les raisons suivantes :</p>
+<ul>
+<%= motifs %>
+</ul>
+<p>Il est malheureusement trop tard pour renvoyer un dossier conforme, votre candidature ne peut plus être prise en compte.</p>
+<p>Bien à vous,</p>
+<p>L'Administration du concours</p>

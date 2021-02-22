@@ -21,7 +21,24 @@ class << self
   def evaluator
     user
   end
+
+  # Retourne TRUE si concours arrive à proximité de l'échéance de dépôt des
+  # fichier, c'est-à-dire 2 jours avant
+  def proche_echeance?
+    (date_echeance.to_i - Time.now.to_i) < 2.days
+  end
+
+  def date_echeance
+    @date_echeance ||= Time.new(ANNEE_CONCOURS_COURANTE, 3, 1, 24, 0, 0)
+  end #/ date_echeance
 end # / << self
+
+# ---------------------------------------------------------------------
+#
+#   INSTANCE
+#
+# ---------------------------------------------------------------------
+
 # ---------------------------------------------------------------------
 #
 #   Property

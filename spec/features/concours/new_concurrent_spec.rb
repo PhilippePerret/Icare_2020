@@ -107,6 +107,12 @@ feature 'Un nouveau concurrent', newconc:true do
       peut_transmettre_son_dossier
     end
 
+    context 's’il dépose un dossier non conforme au dernier moment' do
+      # NOTE Ce test est fait par le biais de l'administrateur
+      # before(:each){ visitor.make_fichier_non_conforme }
+      # se_voit_refuser_son_dossier
+    end
+
     # --- Sections interdites ---
     ne_peut_pas_atteindre_la_section_evalutation
     ne_peut_pas_produire_les_fiches_de_lecture

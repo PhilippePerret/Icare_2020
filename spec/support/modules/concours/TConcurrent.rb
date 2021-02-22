@@ -216,6 +216,7 @@ end #/ jury
     # preselected: false signifie "qui a participé au concours avec un bon
     # fichier mais n'a pas été présélectionné".
     options.merge!(avec_fichier: true) if options.key?(:avec_fichier_conforme)
+    options.merge!(avec_fichier: true) if options.key?(:avec_fichier_non_conforme)
     options.merge!(count: 1) if not options.key?(:count)
     options.merge!(current: true) if options.key?(:avec_fichier)
     options.merge!(not_mail: []) unless options.key?(:not_mail)
@@ -231,6 +232,10 @@ end #/ jury
     case options[:avec_fichier_conforme]
     when TrueClass  then where << "SUBSTRING(cpc.specs,2,1) = 1"
     when FalseClass then where << "SUBSTRING(cpc.specs,2,1) = 0 OR SUBSTRING(cpc.specs,2,1) = 2"
+    end
+    case options[:avec_fichier_non_conforme]
+    when TrueClass  then where << "SUBSTRING(cpc.specs,2,1) = 2"
+    when FalseClass then where << "SUBSTRING(cpc.specs,2,1) = 1"
     end
     case options[:conformite_definie]
     when TrueClass  then where << "SUBSTRING(cpc.specs,2,1) = 1"

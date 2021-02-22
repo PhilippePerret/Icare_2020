@@ -58,13 +58,22 @@ end #/ ne_peut_pas_transmettre_de_dossier
 alias :ne_peut_plus_transmettre_son_dossier :ne_peut_pas_transmettre_de_dossier
 
 
-
-def peut_refuser_un_dossier(concurrent)
+def peut_refuser_un_dossier_pour_non_conformite(definitivement = false)
   it 'peut refuser un dossier pour non conformité' do
+
+    start_time = Time.now.to_i - 1
+
+    require './_lib/_pages_/concours/evaluation/lib/constants'
+
+    concurrent = concurrent_courant
 
     # *** Vérifications préliminaires ***
     expect(concurrent.specs[0]).to eq('1')
     expect(concurrent.specs[1]).to eq('0')
+
+    fiche_concurrent_selector = "div#synopsis-#{concurrent.concurrent_id}-#{ANNEE_CONCOURS_COURANTE}"
+
+    bouton_non_conforme = UI_TEXTS[:button_marquer_non_conforme]
 
     phil.rejoint_le_site
     goto("concours/evaluation")
@@ -72,8 +81,8 @@ def peut_refuser_un_dossier(concurrent)
     expect(page).to have_css(fiche_concurrent_selector)
     screenshot("avec-bouton-fichier-concours-non-conforme")
     within(fiche_concurrent_selector) do
-      expect(page).to have_link(BUTTON_NON_CONFORME)
-      phil.click_on(BUTTON_NON_CONFORME)
+      expect(page).to have_link(bouton_non_conforme)
+      phil.click_on(bouton_non_conforme)
     end
     screenshot("phil-on-synopsis-form-pour-non-conformite")
     expect(page).to be_formulaire_synopsis(conformite: true)
@@ -89,11 +98,12 @@ def peut_refuser_un_dossier(concurrent)
         check("motif_#{motif}")
       end
       fill_in('motif_detailled', with: motif_detailled)
-      phil.click_on(BUTTON_NON_CONFORME)
+      phil.click_on(bouton_non_conforme)
     end
     screenshot("phil-envoie-non-conformite")
 
     # Un message confirme la bonne manœuvre
+    expect(page).not_to be_page_erreur
     expect(page).to have_message("Le synopsis a été marqué non conforme. #{concurrent.pseudo} a été averti#{concurrent.fem(:e)}")
 
     # Le synopsis a été marqué non conforme
@@ -112,14 +122,20 @@ def peut_refuser_un_dossier(concurrent)
     end
     bouts << "#{premier_motif_ajouted}," # noter la virgule
     bouts << "#{second_motif_ajouted}." # noter le point
+    # Si l'échéance est trop proche, c'est définitif
+    if definitivement
+      bouts << "votre candidature ne peut plus être prise en compte"
+    else
+      bouts << "vous avez la possibilité de corriger"
+    end
     expect(concurrent).to have_mail(after: start_time, from:CONCOURS_MAIL, subject:"Votre fichier n'est pas conforme", message: bouts)
 
     goto("concours/evaluation")
-    expect(page).to have_css("div#synopsis-#{synopsis.id}.not-conforme"),
+    expect(page).to have_css("#{fiche_concurrent_selector}.not-conforme"),
       "La page devrait contenir la fiche du synopsis entourée de rouge (class not-conforme)"
     within(fiche_concurrent_selector) do
       expect(page).not_to have_link("Marquer conforme")
-      expect(page).not_to have_link(BUTTON_NON_CONFORME)
+      expect(page).not_to have_link(bouton_non_conforme)
     end
     phil.se_deconnecte
   end
