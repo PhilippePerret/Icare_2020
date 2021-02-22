@@ -37,7 +37,23 @@ end # /<< self
 # Le tableau doit toujours exister quand on utilise cette méthode car il
 # doit avoir été construit au cours du changement de phase.
 def tableau_palmares
-  File.read(phase == 3 ? palm_preselecteds_path : palm_laureats_path).force_encoding('utf-8')
+  palmpath = phase == 3 ? palm_preselecteds_path : palm_laureats_path
+  if not File.exists?(palmpath)
+    # Normalement, ça n'arrive qu'en offline (quand on détruit le fichier
+    # des palmarès pour le reconstruire)
+    require './_lib/_pages_/concours/xmodules/admin/operations/phase_operations/phase_3'
+    ope = ConcoursPhase::Operation.new
+    if phase == 3
+      ope.build_tableau_preselections_palmares(noop:false)
+    else
+      ope.build_tableau_laureats_palmares(noop:false)
+    end
+    # Si le fichier n'existe toujours pas, c'est qu'il y a un problème
+    if not File.exists?(palmpath)
+      return "<div class='red'>Désolé, impossible d'afficher le palmarès de ce concours…</div>"
+    end
+  end
+  File.read(palmpath).force_encoding('utf-8')
 end
 
 def palm_preselecteds_path

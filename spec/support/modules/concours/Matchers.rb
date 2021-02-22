@@ -212,7 +212,7 @@ RSpec::Matchers.define :be_palmares_concours do |phase|
     end
 
     # On doit trouver un lien vers les anciens concours
-    if not page.has_css?('h3', text: 'Palmarès des précédentes sessions')
+    if not page.has_css?('h3', text: 'Palmarès de toutes les sessions')
       @errors << "on devrait trouver une section menant vers les palmarès des années précédentes"
     else
       db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} GROUP BY annee").each do |dc|

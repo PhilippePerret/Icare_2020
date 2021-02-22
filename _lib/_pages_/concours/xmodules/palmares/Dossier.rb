@@ -47,12 +47,12 @@ end
 # === Helpers ====
 
 def template_line_palmares_as_preselected
-  @template_line_palmares_aspres ||= '<li><span class="titre">“%{projet}”</span> <span class="auteurs">(%{auteurs})</span></li>'
+  @template_line_palmares_aspres ||= '<li><span class="titre">%{projet}</span> <span class="auteurs">(%{auteurs})</span></li>'
   @template_line_palmares_aspres % {projet:titre, auteurs:formated_auteurs}
 end
 
 def template_line_palmares
-  @template_line_palmares ||= '<li><span class="note_et_classement"><span class="note">%{note}</span><span class="position">%{position}</span></span><span class="titre">“%{projet}”</span> <span class="auteurs">(%{auteurs})</span></li>'
+  @template_line_palmares ||= '<li><span class="note_et_classement"><span class="note">%{note}</span><span class="position">%{position}</span></span><span class="titre">%{projet}</span> <span class="auteurs">(%{auteurs})</span></li>'
   @template_line_palmares % {projet:titre, auteurs:formated_auteurs, note:note_totale, position:formated_position}
 end
 

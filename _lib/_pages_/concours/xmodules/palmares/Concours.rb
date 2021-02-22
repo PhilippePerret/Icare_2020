@@ -7,20 +7,21 @@
 class Concours
 class << self
 
-  # Fabrication de la section "Palmarès des précédentes sessions" qui
+  # Fabrication de la section "Palmarès de toutes les sessions" qui
   # affiche des liens vers les sessions précédentes des concours.
   def build_section_previous_sessions
-    code = ['<h3>Palmarès des précédentes sessions</h3>']
+    code = ['<h3>Palmarès de toutes les sessions</h3>']
+    code << '<div id="other-sessions-links">'
     code << previous_sessions.collect{|concours| concours.lien_palmares}.join
     File.open(previous_sessions_file,'wb'){|f|f.write(code.join)}
+    code << '</div>'
   end #/ build_section_previous_sessions
 
   def previous_sessions
     @previous_sessions ||= begin
       db_exec("SELECT annee FROM #{DBTBL_CONCURS_PER_CONCOURS} GROUP BY annee ORDER BY annee DESC").collect do |dc|
-        next if dc[:annee] == current.annee
         new(dc[:annee])
-      end.compact
+      end
     end
   end
 

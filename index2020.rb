@@ -4,6 +4,8 @@ begin
   require './_lib/required'
   App.run
   # Note : Le programme ne passera jamais par ici
+rescue SystemExit => e
+  # On ne fait rien
 rescue Exception => e
   ERROR = e
   File.open('./fatal_errors.log','a') do |f|
