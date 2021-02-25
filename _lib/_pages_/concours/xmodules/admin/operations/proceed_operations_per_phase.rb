@@ -1,6 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
-require_relative './Operation'
+require_relative 'binding'
 
 class Concours
   def proceed_operations_per_phase(data_phase, options = nil)

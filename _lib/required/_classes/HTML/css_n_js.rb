@@ -62,7 +62,7 @@ class HTML
     else
       @table_js.merge!(path => true)
     end
-    log("-> add_js(#{path})")
+    # log("-> add_js(#{path})")
     @all_js ||= []
     path = path.sub(/#{APP_FOLDER}/,'.')
     if before

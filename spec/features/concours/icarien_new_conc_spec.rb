@@ -8,7 +8,6 @@
 =end
 require_relative './_required'
 require './_lib/_pages_/concours/xrequired/constants'
-require './_lib/_pages_/concours/inscription/constants'
 
 feature 'Un icarien inscrit au concours courant' do
   before :all do

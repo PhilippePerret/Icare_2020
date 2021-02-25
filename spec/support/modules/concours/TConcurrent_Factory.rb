@@ -42,8 +42,12 @@ class << self
         0,0,0,0,0,0]
       opts.join('')
     end
-    histime = Time.now - (rand(10000) + rand(10000))
-    now = histime.to_i
+    begin
+      histime = Time.now.to_i - (rand(1000) + rand(1000))
+      now     = histime.to_s
+    end while now.length > 10
+    histime = Time.at(histime)
+    # puts "now (created_at) = #{now.inspect}"
     {
       patronyme: "Patro #{now}",
       mail: "patro_#{now}@chez.lui",

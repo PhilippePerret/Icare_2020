@@ -4,6 +4,7 @@ require_relative '../_required'
 
 require_support('concours')
 
+require './_lib/_pages_/concours/xrequired/constants'
 require './_lib/_pages_/concours/espace_concurrent/constants'
 
 Dir["#{__dir__}/xlib/required/**/*.rb"].each{|m|require m}

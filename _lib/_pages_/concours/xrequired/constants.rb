@@ -55,6 +55,14 @@ MESSAGES.merge!({
   concurrent_login_required: "Vous êtes déjà concurrent du concours, vous devez vous identifier (pour participer à la nouvelle session ou rejoindre votre espace personnel).",
 })
 
+MESSAGES.smart_merge!({
+concours:{
+  en_cours_de_preselection:     "le concours est en phase de présélection",
+  en_cours_de_selection_finale: "le concours est en phase de sélection finale",
+  en_cours_de_recompenses:      "le concours est en phase de récompenses",
+  en_phase_finale:              "le concours est en phase finale"
+}
+})
 
 REQUEST_CHECK_CONCURRENT = "SELECT * FROM #{DBTBL_CONCURRENTS} WHERE concurrent_id = ? AND mail = ?"
 

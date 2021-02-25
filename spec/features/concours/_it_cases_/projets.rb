@@ -23,10 +23,9 @@ end
 def ne_peut_pas_lire_un_projet(raison = nil)
   it "ne peut pas lire de projet en se rendant sur la page d'évaluation" do
     goto('concours/evaluation')
-    # sleep 30
     case raison
     when :too_soon
-      expect(page).to be_cartes_synopsis
+      expect(page).to be_cartes_synopsis(complete = false)
       # mais…
       expect(page).to have_content("Vous ne pouvez pas encore évaluer les synopsis")
     else

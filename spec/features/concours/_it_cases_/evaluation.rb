@@ -164,17 +164,25 @@ def peut_evaluer_un_projet
     goto('concours/evaluation')
     expect(page).to be_cartes_synopsis
     evaluation = edite_evaluation_premier_synopsis
-    contenu_note = "Une note pour essayer les notes manuelles le #{Time.now}."
+    note_path = File.join(evaluation.folder, "note-projet-#{visitor.id}.md")
+    File.delete(note_path) if File.exists?(note_path)
+    contenu_note = "Une autre note de l’évaluateur #{visitor.id} pour essayer les notes manuelles le #{Time.now}."
     within('form#notes-manuelles') do
       select('Projet', from: 'note-manuelle-categorie')
+      sleep 2
       fill_in('note-manuelle-content', with: contenu_note)
       click_on('Enregistrer')
     end
+    # sleep 1
     screenshot('after-save-note-manuelle')
     expect(page).to have_message("La note sur le projet, catégorie “projet”, a été enregistrée.")
-    note_path = File.join(evaluation.folder, "note-projet-#{visitor.id}.md")
     expect(File).to be_exists(note_path), "Le fichier de la note devrait exister"
-    contenu_fichier = File.read(note_path)
+    contenu_fichier = File.read(note_path).force_encoding('utf-8')
+    if contenu_fichier != contenu_note
+      puts "Problème de contenu".rouge
+      puts "Contenu fichier : \n#{contenu_fichier.inspect}".rouge
+      puts "Contenu attendu : \n#{contenu_note.inspect}".rouge
+    end
     expect(contenu_fichier).to eq(contenu_note), "Le fichier devrait contenir le texte de la note."
   end
 

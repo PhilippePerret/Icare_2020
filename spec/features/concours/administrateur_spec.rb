@@ -39,9 +39,8 @@ feature "Un administrateur", admin:true do
   end #/context PHASE 0
 
   context 'PHASE 0 à 1', admin:'phase0', phase0:true do
-    before :all do
-      degel('concours-phase-0')
-    end
+    before(:all){ degel('concours-phase-0') }
+    after(:each){ degel('concours-phase-0') }
     peut_passer_le_concours_a_la_phase_suivante(1)
   end #/context PHASE 0
 
@@ -65,9 +64,8 @@ feature "Un administrateur", admin:true do
   end
 
   context 'PHASE 1 à 2', admin:'phase1a2', phase1:true do
-    before :all do
-      degel('concours-phase-1')
-    end
+    before(:all){ degel('concours-phase-1') }
+    after(:each){ degel('concours-phase-1') }
     peut_passer_le_concours_a_la_phase_suivante(2)
   end #/context PHASE 1
 
@@ -79,9 +77,8 @@ feature "Un administrateur", admin:true do
   end
 
   context 'PHASE 2 à 3', admin:'phase2a3', phase2:true do
-    before :all do
-      degel('concours-phase-2')
-    end
+    before(:all){ degel('concours-phase-2') }
+    after(:each){ degel('concours-phase-2') }
     peut_passer_le_concours_a_la_phase_suivante(3)
   end
 
@@ -95,10 +92,9 @@ feature "Un administrateur", admin:true do
 
   end #/context PHASE 3
 
-  context 'PHASE 3 à 4' do
-    before(:all) do
-      degel('concours-phase-3')
-    end
+  context 'PHASE 3 à 4', admin:'phase3a4', phase3:true do
+    before(:all){ degel('concours-phase-3') }
+    after(:each){ degel('concours-phase-3') }
     peut_passer_le_concours_a_la_phase_suivante(5)
   end
 
@@ -110,9 +106,8 @@ feature "Un administrateur", admin:true do
   end
 
   context 'PHASE 5 à 8', admin:'phase5', phase5:true do
-    before :all do
-      degel('concours-phase-5')
-    end
+    before(:all){ degel('concours-phase-5') }
+    after(:each){ degel('concours-phase-5') }
     peut_passer_le_concours_a_la_phase_suivante(8)
 
   end #/context PHASE 5
@@ -124,9 +119,8 @@ feature "Un administrateur", admin:true do
   end #/context PHASE 8
 
   context 'PHASE 8 à 9', admin:'phase8', phase8:true do
-    before :all do
-      degel('concours-phase-8')
-    end
+    before(:all){ degel('concours-phase-8') }
+    after(:each){ degel('concours-phase-8') }
     peut_passer_le_concours_a_la_phase_suivante(9)
   end #/context PHASE 8
 

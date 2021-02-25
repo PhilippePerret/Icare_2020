@@ -8,7 +8,7 @@ def peut_rejoindre_la_page_des_palmares
   end
 end #/ peut_rejoindre_la_page_des_palmares
 
-def ne_peut_pas_voir_la_liste_des_preselectionnes(raison = "trop tôt pour voir le palmarès ou la liste des présélectionnés")
+def ne_peut_pas_voir_la_liste_des_preselectionnes(raison = "Les présélections sont en cours")
   it 'ne peut pas voir la liste des présélectionnés' do
     goto('concours/palmares')
     expect(page).to be_palmares_concours

@@ -75,7 +75,7 @@ feature 'Un ancien concurrent (non courant)' do
 
     # --- Impossibilités ---
     ne_peut_pas_voir_la_liste_des_preselectionnes
-    
+
     # --- Section interdite ---
     ne_peut_pas_atteindre_la_section_evalutation
     ne_peut_pas_produire_les_fiches_de_lecture

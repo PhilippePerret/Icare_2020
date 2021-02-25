@@ -180,7 +180,7 @@ RSpec::Matchers.define :be_palmares_concours do |phase|
   match do |page|
     @errors = []
     phase ||= TConcours.current.phase
-    puts "Page palmarès pour phase #{phase}"
+    # puts "Page palmarès pour phase #{phase}"
     if not page.has_css?("h2.page-title", text: "Palmarès du concours de synopsis")
       @errors << "la page devrait avoir le titre “Palmarès du concours de synopsis” (son titre est #{title_of_page})"
     end
@@ -298,21 +298,24 @@ RSpec::Matchers.define :be_indentification_jury do
   end
 end
 
-RSpec::Matchers.define :be_cartes_synopsis do
+RSpec::Matchers.define :be_cartes_synopsis do |full|
   match do |page|
     @errors = []
+    full = true if not defined?(full)
     if not page.has_css?("h2.page-title", text: "Cartes des synopsis")
       @errors << "la page devrait avoir le titre “Cartes des synopsis” (son titre est “#{title_of_page}”)"
     end
-    if not page.has_css?('div#synopsis-container')
+    if full && not(page.has_css?('div#synopsis-container'))
       @errors << "la page devrait contenir le div container des cartes de synopsis"
     end
-    if not page.has_css?('div.top-buttons')
-      @errors << "la page devrait contenir les boutons pour définir le classement"
-    else
-      ['Notes >', 'Notes <', 'Progression >', 'Progression <'].each do |sens|
-        if not page.has_link?(sens)
-          @errors << "la page devrait contenir un bouton pour afficher dans l'ordre “#{sens}”…"
+    if full
+      if not page.has_css?('div.top-buttons')
+        @errors << "la page devrait contenir les boutons pour définir le classement"
+      else
+        ['Notes >', 'Notes <', 'Progression >', 'Progression <'].each do |sens|
+          if not page.has_link?(sens)
+            @errors << "la page devrait contenir un bouton pour afficher dans l'ordre “#{sens}”…"
+          end
         end
       end
     end
