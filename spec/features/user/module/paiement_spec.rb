@@ -12,6 +12,11 @@ feature "Paiement d'un module d'apprentissage avec les différents modes de paie
     require './_lib/_watchers_processus_/_constants_'
   end
 
+  it 'doit être fait à la main', seul:true do
+    manip = "-- Dégeler 'marion_avec_paiement' (icare degel marion_avec_paiement)\n-- S'identifier comme Marion (gmail)\n-- Procéder au paiement avec le compte sandbox de Benoit"
+    puts manip.rouge
+    expect(4).to eq(5), "Le vrai test du paiement doit être fait à la main : \n#{manip}"
+  end
 
   scenario 'juste pour produire le gel marion_avec_paiement', gel:true do
     # On modifie la date de paiement pour que la notification apparaisse.

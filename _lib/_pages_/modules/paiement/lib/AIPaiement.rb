@@ -31,14 +31,12 @@ end # /<< self
 
 def owner
   @owner ||= User.get(user_id)
-end #/ owner
+end
 def icmodule
   @icmodule ||= IcModule.get(icmodule_id)
-end #/ icmodule
+end
 def date_next_paiement
-  @date_next_paiement ||= begin
-    formate_date(icmodule.next_paiement_at) unless icmodule.next_paiement_at.nil?
-  end
+  @date_next_paiement
 end #/ date_next_paiement
 
 # Traitement du paiement APRÈS retour de paypal

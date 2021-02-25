@@ -53,28 +53,28 @@ end # /<< self
 # ---------------------------------------------------------------------
 def ref
   @ref ||= "module “#{name}”#{f_id}"
-end #/ ref
+end
 
 def suivi?
   absmodule.suivi?
-end #/ suivi?
+end
 
 def absmodule
   @absmodule ||= AbsModule.get(data[:absmodule_id])
-end #/ absmodule
+end
 
 def name
   @name ||= absmodule.name
-end #/ name
+end
 
 # Étape courante
 def icetape
   @icetape ||= IcEtape.get(icetape_id)
-end #/ icetape
+end
 
 def montant_humain
   @montant_humain ||= "#{absmodule.tarif}#{ISPACE}€"
-end #/ montant_humain
+end
 
 # Retourne la date de prochain paiement
 # Noter qu'elle existe dans deux cas :
@@ -82,11 +82,11 @@ end #/ montant_humain
 # 2) c'est un module de suivi de projet
 def paiement_time
   watcher_paiement && watcher_paiement[:triggered_at].to_i
-end #/ paiement_time
+end
 
 def watcher_paiement
   @watcher_paiement ||= db_get('watchers', {objet_id:id, wtype:'paiement_module'})
-end #/ watcher_paiement
+end
 
 # Retourne la valeur corrigées des pauses. Certaines, pour une raison inconnue,
 # sont enregistrées comme "[{". On passe donc  par ici pour corriger cette

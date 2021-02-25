@@ -4,5 +4,5 @@ class Watcher < ContainerClass
     icarien_required
     # On ne doit jamais passer par là, car le paiement sera
     # traiter dans la section module et le watcher sera détruit à ce moment-là.
-  end # / paiement
+  end
 end # /Watcher < ContainerClass
