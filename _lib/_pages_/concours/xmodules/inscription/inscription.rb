@@ -30,6 +30,7 @@ class HTML
     dc = db_get(DBTBL_CONCURRENTS, {mail: user.mail})
     dc || raise("Vous n'êtes pas un ancien concurrent… Je dois renoncer.")
     make_inscription_session_courante_for(dc[:concurrent_id])
+    user.concurrent_id = dc[:concurrent_id]
     finish_inscription(user, {icarien: true})
   end #/ traite_inscription_icarien_session_courante
 
@@ -53,6 +54,7 @@ class HTML
     db_compose_insert(DBTBL_CONCURRENTS, data_cc)
     make_inscription_session_courante_for(concid)
     session['concours_user_id'] = concid
+    user.concurrent_id = concid
     finish_inscription(user, {icarien: true})
   end #/ traite_inscription_icarien
 

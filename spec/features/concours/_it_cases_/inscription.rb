@@ -118,7 +118,7 @@ def peut_sinscrire_au_concours(as)
     # son statut à son arrivée)
     msg_content = case as
     when :icarien
-      ["Je vous confirme que votre inscription à la session #{ANNEE_CONCOURS_COURANTE} du Concours de Synopsis"]
+      ["Je vous confirme que votre inscription à la session #{ANNEE_CONCOURS_COURANTE} du Concours de Synopsis","Numéro de concurrent",concurrent_id.to_s]
     else
       ["vous confirmons par la présente votre inscription au Concours de Synopsis","Numéro de concurrent",concurrent_id.to_s]
     end
