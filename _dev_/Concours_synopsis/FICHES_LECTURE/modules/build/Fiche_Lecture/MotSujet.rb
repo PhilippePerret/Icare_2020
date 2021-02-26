@@ -167,6 +167,11 @@ class MotSujet
   end
   def main_subject ; @main_subject ||= MotSujet.get(main, fiche) end
 
+  # Retourne "du sujet", par exemple "de la clarté"
+  def du_sujet
+    "#{du}#{sujet}"
+  end
+
   def article(art)
     art = case art
     when :des, :de, :du then :du
@@ -302,7 +307,7 @@ def get(key, fiche)
     when 'rédaction'
       MotSujet.new(fiche, 'rédaction', 'r', 'F', false, false)
     when 'r:cla'
-      MotSujet.new(fiche, 'clarté rédaction', 'r:cla', 'F', false, false, 'rédaction')
+      MotSujet.new(fiche, 'clarté', 'r:cla', 'F', false, false, 'rédaction')
     when 'r:ortho'
       MotSujet.new(fiche, 'orthographe', 'r:ortho', 'F', false, true)
     when 'r:style'

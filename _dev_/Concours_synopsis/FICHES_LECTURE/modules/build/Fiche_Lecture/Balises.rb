@@ -118,7 +118,7 @@ def balise_deficiences_personnages
 end
 
 def balise_raisons_bonnes_intrigues
-  ary = ['ori int', 'uni int', 'adq int', 'i:fO', 'i:fU', 'predic', 'i:cohe', 'i:adth']
+  ary = ['predic', 'i:fO', 'i:fU', 'i:cohe', 'i:adth']
   interets_et_regrets_dans(ary)
 end
 
@@ -149,7 +149,17 @@ def ary_themes
 end
 
 def balise_raisons_bons_themes
-  interets_et_regrets_dans(ary_themes)
+  raisons = MotSujet.formate_liste(MotSujet.meilleurs_parmi(ary_themes), as: :quality, article: :le)
+end
+
+def balise_raisons_mauvais_themes
+  MotSujet.formate_liste( MotSujet.inferieurs_a_10_parmi(ary_themes, true), as: :defect, aticle: :le )
+end
+
+def balise_if_ameliorations_themes
+  lst = MotSujet.inferieurs_a_10_parmi(ary_themes)
+  return '' if lst.empty?
+  " Des améliorations pourraient cependant être apportées au niveau #{MotSujet.formate_liste(lst, {as: :defect, article: :de})}"
 end
 
 def balise_les_ameliorations_themes
@@ -158,6 +168,26 @@ end
 
 def ary_redaction
   @ary_redaction ||= ['r:cla', 'r:ortho', 'r:style', 'r:sim', 'r:emo']
+end
+
+def balise_if_deficiences_redaction
+  # S'il y a des notes < 10, on ajoute ", particulièrement au niveau [[...]]"
+  surtouts = []
+  # S'il y a des notes < 15, on ajoute "notamment au niveau"
+  notammes = []
+  ary_redaction.each do |key|
+    mots = motSujet(key)
+    if mots.note < 10
+      surtouts << mots.du_sujet
+    elsif mots.note < 15
+      notammes << mots.du_sujet
+    end
+  end
+  if surtouts.empty?
+    ", notamment au niveau #{notammes.pretty_join}"
+  else
+    ", tout particulièrement au niveau #{surtouts.pretty_join}"
+  end
 end
 
 def balise_deficiences_redaction

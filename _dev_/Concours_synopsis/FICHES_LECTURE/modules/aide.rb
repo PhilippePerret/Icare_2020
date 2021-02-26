@@ -8,8 +8,8 @@ Produire les fiches de lecture
 
 Options
 -------
---reload => Recharcer les fiches d'évaluation distantes (sinon,
-prendre celles qui sont déjà téléchargées)
+--reload      => Recharger les fiches d'évaluation distantes (sinon,
+                 prendre celles qui sont déjà téléchargées)
 --only_good   => Seulement les fiches qui ont la moyenne
 --only_bad    => Seulement les fiches qui n'ont pas la moyenne
 --not_built   => Seulement les fiches inexistantes
@@ -23,8 +23,8 @@ prendre celles qui sont déjà téléchargées)
 
 SI <id concurrent> est fourni, on ne fait que sa fiche
 
-Uploader les fiches de lecture
-==============================
+Téléverser les fiches de lecture vers le site distant
+=====================================================
 #{'icare concours fiches_lecture --upload'.jaune}
 
 Infos sur le fiches de lecture
