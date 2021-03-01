@@ -1,7 +1,7 @@
 <% unless listing %>
   <p class="explication">Le <strong>Quai des docs</strong> est un lieu unique en son genre qui rassemble tous les documents produits au sein de l'Atelier (plus de 1000 documents à ce jour — juin 2020).</p>
 <% end %>
-<% if user.guest? %>
+<% if user.guest? || user.candidat? %>
   <p>Une icarienne ou un icarien peut consulter ici tous ces documents, pour s'en inspirer ou s'en écarter dans les travaux qui lui sont demandés.</p>
 <% else %>
 
