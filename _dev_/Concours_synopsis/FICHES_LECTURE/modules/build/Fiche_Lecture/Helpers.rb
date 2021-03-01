@@ -29,7 +29,6 @@ def ecusson
     Emoji.new('objets/blason').regular
   end
 end #/ ecusson
-def annee_edition ; FLFactory.annee_courante end
 
 def formated_auteurs
   projet.real_auteurs

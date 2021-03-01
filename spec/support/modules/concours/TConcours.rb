@@ -39,7 +39,7 @@ class << self
     # D'abord on crée les concours
     ANNEES_CONCOURS_TESTS.uniq.each do |annee, dannee|
       theme = random_theme
-      # phase = annee < (Time.now.month < 3 ? Time.now.year : Time.now.year + 1) ? 9 : 1
+      # phase = annee < (Time.now.month < 11 ? Time.now.year : Time.now.year + 1) ? 9 : 1
       phase = annee < ANNEE_CONCOURS_COURANTE ? 9 : 1
       db_compose_insert(DBTBL_CONCOURS, {annee:annee, phase:phase, theme:theme, theme_d:"L'explication du thème “#{theme}”", prix1: "1000€", prix2:"800€", prix3:"200€"})
     end

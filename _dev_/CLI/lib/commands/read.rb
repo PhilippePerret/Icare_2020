@@ -119,7 +119,7 @@ SSH
 private
 
   def annee_concours
-    @annee_concours ||= Time.now.month < 3 ? Time.now.year : Time.now.year + 1
+    @annee_concours ||= Time.now.month < 11 ? Time.now.year : Time.now.year + 1
   end #/ annee_concours
 end # /<< self
 end #/IcareCLI

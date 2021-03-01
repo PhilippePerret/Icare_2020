@@ -28,7 +28,7 @@ DATA_TESTS_PER_PHASE = YAML.load_file(File.join(__dir__,'_DATA_CONCOURS_PER_PHAS
     request_ssh = <<-SSH
 ssh icare@ssh-icare.alwaysdata.net ruby << RUBY
 Dir.chdir("www") do
-  ANNEE_CONCOURS_COURANTE = Time.now.month < 3 ? Time.now.year : Time.now.year + 1
+  ANNEE_CONCOURS_COURANTE = Time.now.month < 11 ? Time.now.year : Time.now.year + 1
   ONLINE = true
   require './_lib/required/__first/db'
   MyDB.DBNAME = 'icare_db'

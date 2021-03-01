@@ -103,7 +103,7 @@ end #/ data_folder
 
 # Année du concours courant
 def annee_courante
-  @annee_courante ||= Time.now.month < 3 ? Time.now.year : Time.now.year + 1
+  @annee_courante ||= Time.now.month < 11 ? Time.now.year : Time.now.year + 1
 end
 
 # La requête pour obtenir les données des concurrents de l'année
