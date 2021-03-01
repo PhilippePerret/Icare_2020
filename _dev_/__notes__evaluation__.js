@@ -9,3 +9,6 @@ var h = {"po":"4","po-fO":"3","po-fU":"4","po-adth":"1","po-ti":"4","po-ti-fO":"
 for (var key in h){
   document.querySelector(`select[name="${key}"]`).value = h[key]
 }
+
+https://www.atelier-icare.net/bureau/home?tik=109938654
+[{:id=>109938654, :authentif=>nil, :code=>"run_watcher(2725)", :user_id=>128, :created_at=>"1614548408", :updated_at=>"1614548408"}]

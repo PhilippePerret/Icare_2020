@@ -53,6 +53,7 @@ class Activity < ContainerClass # attention, ce n'est pas Actualite
 class << self
   def get_formated_from_for(from_page, per_page)
     from_page ||= 0
+    from_page = 0   if from_page < 0
     per_page  = 40  if not per_page > 0
     request = "SELECT message, created_at FROM #{table} ORDER BY created_at DESC LIMIT #{per_page} OFFSET #{from_page * per_page}"
     db_exec(request).collect do |dactu|
