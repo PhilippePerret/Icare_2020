@@ -4,11 +4,15 @@
   Mail pour informer les concurrents que l'échéance est arrivée.
   Il s'agit ici des concurrents qui ont envoyé un fichier conforme.
 =end
+
+request = "SELECT concurrent_id FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ? AND SUBSTRING(specs,1,2) = '11'"
+nombre_candidats = db_exec(request, [ANNEE_CONCOURS_COURANTE]).count
+
 subject("[CONCOURS] Fin de l’échéance des dépôts")
 %>
 <p>Bonjour %{pseudo} !</p>
 <p>L'échéance de fin des dépôts pour le <%= CONCOURS_LINK.with(text:"Concours de Synopsis de l'atelier Icare", full:true) %> touche à son terme.</p>
-<p>Vous avez transmis un fichier de candidature conforme dans les temps, vous êtes donc en lice pour la présélection.</p>
+<p>Vous avez transmis un fichier de candidature conforme dans les temps, vous êtes donc en lice pour la présélection parmi <%= nombre_candidats %> candidates et candidats.</p>
 <p>Nous vous remercions de votre participation.</p>
 <p>Bonne chance à vous de tout cœur !</p>
 <p>Bien cordialement,</p>

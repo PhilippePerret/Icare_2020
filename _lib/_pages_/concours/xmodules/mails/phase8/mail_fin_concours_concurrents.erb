@@ -3,6 +3,7 @@
 =begin
   Mail pour annoncer la fin du concours
   Remerciements aux participants
+  Et bilan
 
   Note : ce mail n'est pas à confondre avec celui qui annonce le palmarès
 =end
@@ -10,9 +11,13 @@
 <p>
 Bonjour <%= concurrent.pseudo %> !
 </p>
-<p>
-Un grand merci à vous pour votre participation à la session <%= concours.annee %> du Concours de Synopsis de l'atelier Icare.
-</p>
+<p>Un grand merci à vous pour votre participation à la session <%= concours.annee %> du Concours de Synopsis de l'atelier Icare.</p>
+
+<p>Cette première session a été un franc succès — la contre partie peut-être de la période difficile que nous vivons avec XXX inscriptions ETC.</p>
+
+des projets qui venaient de tous les pays du monde, de Dublin en Allemagne, de Douala au Cameroun, de Marseille, xxxx, xxxx ou encore xxx en France, de xxx en Colombie
+ETC.
+
 <% if concurrent.winner? %>
   <p>Vous avez remporté un prix et nous vous en félicitons.</p>
 <% else %>
