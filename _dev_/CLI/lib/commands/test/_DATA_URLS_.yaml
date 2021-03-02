@@ -398,4 +398,3 @@
         click_on "CONCOURS"
     - :tag: h2.page-title
       :text: Concours de synopsis de l’atelier Icare
-    - :tag: a[href="concours/inscription"]

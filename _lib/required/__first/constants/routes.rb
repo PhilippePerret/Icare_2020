@@ -10,8 +10,8 @@
 
 =end
 ROUTES = {
-  aide:             'aide/home',
-  hall_of_fame:     'overview/reussites',
-  parcours_fictifs: 'overview/parcours',
-  phil:             'overview/phil'
+  aide:                 'aide/home',
+  hall_of_fame:         'overview/reussites',
+  parcours_fictifs:     'overview/parcours',
+  phil:                 'overview/phil'
 }

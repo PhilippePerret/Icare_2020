@@ -15,6 +15,14 @@
         :text: Règlement du concours
       - :tag: a[href="concours/dossier"]
         :text: format du fichier de candidature
+    2:
+      - :tag: h2.page-title
+        :text: Concours de synopsis de l’atelier Icare
+      - :tag: a.btn-faq
+        :text: Foire Aux Questions
+      - :tag: a[href="public/concours/Concours_ICARE_2021.pdf"]
+        :text: Règlement du concours
+      - :no_tag: a[href="concours/inscription"]
 - :name: "Accueil du site"
   :route: "home"
   :seek_and_do:
@@ -23,6 +31,10 @@
       - :no_tag: 'a#annonce span'
         :text: "Concours"
     1:
+      - :tag: 'a#annonce'
+      - :tag: 'a#annonce span'
+        :text: "Concours"
+    2:
       - :tag: 'a#annonce'
       - :tag: 'a#annonce span'
         :text: "Concours"

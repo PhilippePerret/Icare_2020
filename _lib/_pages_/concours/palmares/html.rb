@@ -9,7 +9,7 @@
 
 class HTML
   def titre
-    "#{bouton_retour}#{EMO_TITRE}Palmarès du concours de synopsis"
+    "#{bouton_retour}#{EMO_TITRE}Palmarès du concours de synopsis #{param(:an) || ANNEE_CONCOURS_COURANTE}"
   end #/titre
 
   # Code à exécuter avant la construction de la page

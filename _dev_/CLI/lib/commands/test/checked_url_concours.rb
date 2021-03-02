@@ -13,7 +13,7 @@ class << self
   # de synopsis.
   def phase_concours
     define_current_phase
-    puts "-- Phase du concours : #{current_phase.inspect}" if IcareCLI.verbose?
+    puts "   = Phase du concours : #{current_phase.inspect}".bleu if IcareCLI.verbose?
     DATA_TESTS_PER_PHASE.each do |data_route|
       data_route.merge!(seek_and_do: data_route[:seek_and_do][current_phase])
       # puts "data_route: #{data_route}"

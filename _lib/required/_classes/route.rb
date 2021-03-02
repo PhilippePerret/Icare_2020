@@ -6,7 +6,9 @@ ROUTES_SHORTCUTS = {
   'concours'        => 'concours/accueil',
   'bureau'          => 'bureau/home',
   'identification'  => 'user/login',
-  'icariens'        => 'overview/icariens'
+  'icariens'        => 'overview/icariens',
+  # Redirections
+  'concours/resultats' => 'concours/palmares'
 }
 class << self
 
