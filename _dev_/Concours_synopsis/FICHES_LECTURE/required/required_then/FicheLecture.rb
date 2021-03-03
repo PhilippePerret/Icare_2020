@@ -76,7 +76,8 @@ def build
   build_with_whtmltopdf
   if built?
     # On détruit le fichier HTML qui a servi à faire le PDF
-    File.delete(html_file) if File.exists?(html_file)
+    puts "IcareCLI.option?(:keep) = #{IcareCLI.option?(:keep).inspect}"
+    File.delete(html_file) if File.exists?(html_file) && not(IcareCLI.option?(:keep))
     `open '#{pdf_file}'` if IcareCLI.option?(:open)
   end
 end #/ build
@@ -139,7 +140,7 @@ def template
 end
 
 def template_path
-  File.expand_path(File.join(__dir__,'..','assets','fiche_lecture_template.erb'))
+  File.expand_path(File.join(assets_folder,'fiche_lecture_template.erb'))
 end
 
 def styles_css_code
@@ -149,8 +150,12 @@ def styles_css_code
 end #/ styles_css_code
 
 def cssfile_path
-  File.expand_path(File.join(__dir__,'..','assets','fiche_lecture.css'))
+  File.expand_path(File.join(assets_folder,'fiche_lecture.css'))
 end
+
+def assets_folder
+  @assets_folder ||= File.join(FL_MODULES_FOLDER,'build','assets')
+end #/ assets_folder
 
 # Une des méthodes principales qui retourne le texte dynamique en fonction
 # de la note et du contexte.

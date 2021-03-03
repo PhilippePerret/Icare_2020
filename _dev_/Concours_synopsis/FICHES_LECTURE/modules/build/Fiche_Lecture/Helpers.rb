@@ -30,6 +30,12 @@ def ecusson
   end
 end #/ ecusson
 
+def formated_titre
+  @formated_titre ||= begin
+    projet.titre.upcase
+  end
+end
+
 def formated_auteurs
   projet.real_auteurs
 end #/ auteurs
@@ -44,7 +50,7 @@ def formated_position
       pstr = p == 1 ? "1<exp>er</exp>" : "#{p}<exp>e</exp>"
       pstr = "#{pstr}#{ISPACE}<img src='/Users/philippeperret/Sites/AlwaysData/Icare_2020/img/Emojis/objets/coupe/coupe-regular.png' alt='Trophée' class='img-trophee' />" if p < 4 # => S'il est primé
     end
-    "#{pstr} sur #{FLFactory.projets_valides.count} projets"
+    "#{pstr} sur #{FLFactory.nombre_projets_valides} projets"
   end
 end #/ position
 

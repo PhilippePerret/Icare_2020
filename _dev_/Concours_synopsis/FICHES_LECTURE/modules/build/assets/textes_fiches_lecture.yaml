@@ -62,27 +62,31 @@
   A: Cette note indique que la structure (actes et scènes-clés) ont fait grande impression sur le lecteur, que cette [[histoire]] lui a paru parfaitement construite, dans les règles de l’art ou qu’au contraire elle faisait preuve d’une originalité forte.
   B: La structure de ce projet a été relativement bien perçue par le lecteur mais il lui a semblé qu’elle pouvait être renforcée, plus affirmée. Commencer par s’assurer que tous les éléments, actes et scènes-clés, remplissent parfaitement leur rôle pourrait être une piste intéressante à suivre.
   C: Les lecteurs ont perçu la structure comme un peu trop floue, un peu trop incertaine dans cette [[histoire]].[[mention manque clarte]] Il convient peut-être de s’assurer que cette structure est bien en place et que tous les nœuds remplissent leurs rôles.
-  D: Les lecteurs ont trouvé que cette [[histoire]] s'appuyait sur une forme beaucoup trop lâche.[[mention manque clarte]]
+  D: Les lecteurs ont trouvé que cette [[histoire]] s'appuyait sur une forme beaucoup trop lâche et floue. Que ce soit au niveau de la fonction des actes, de la qualité des charnières ou du rôle des scènes-clés, il y aurait beaucoup de choses à revoir ici.[[mention manque clarte]]
 
 :facteurO:
   :diminutif: fO
   :short_name: Facteur O
   :name: Facteur O (facteur d’originalité)
   :explication: Le « facteur O », dans l’approche théorique de Philippe Perret (<a href="https://scenariopole.fr/narration">collection Narration</a>), indique le DEGRÉ D’ORIGINALITÉ de l’histoire et de ses “ingrédients”. C'est-à-dire, concrètement, leur singularité et la rareté de leur utilisation dans les histoires. Ce facteur est à mettre en regard avec le « facteur U ».
-  A: Votre histoire et/ou ses ingrédients ont été perçus comme très originaux, et c’est un point fort.
-  B: Les lecteurs ont perçu l’histoire comme plutôt originale, sans que cette originalité ne soit trop affirmée.
+  A: Votre histoire et/ou ses ingrédients ont été perçus comme très originaux, et c’est un point fort. [[mention manque universalite]]
+  B: Les lecteurs ont perçu l’histoire comme plutôt originale, sans que cette originalité ne soit trop affirmée.[[mention manque universalite]]
   C: L’histoire et ses ingrédients ont été jugés comme manquant d’originalité, particulièrement au niveau [[deficiences originalite]].[[mention manque clarte]]
-  D: Les lecteurs n’ont rien trouvé d’originale dans cette histoire. Que ce soit au niveau [[deficiences originalite]], elle a été perçue comme trop banale.[[mention manque clarte]]
+  D: Les lecteurs ont trouvé que cette histoire manquait cruellement d’originalité. Que ce soit au niveau [[deficiences originalite]], elle a été perçue comme beaucoup trop banale pour remporter l’adhésion.[[mention manque clarte]]
+  :manque_universalite: Attention cependant à ce que cette originalité ne se fasse pas trop au détriment de l’universalité que doit atteindre tout bon récit.
+  :grand_manque_universalite: Malheureusement, cette originalité se fait trop au détriment de l’universalité à laquelle tout bon récit doit aspirer.
 
 :facteurU:
   :diminutif: fU
   :name: Facteur U (facteur d’Universalité)
   :short_name: Facteur U
   :explication: Le « facteur U », dans l’approche théorique de Philippe Perret (<a href="https://scenariopole.fr/narration">collection Narration</a>), indique le DEGRÉ D’UNIVERSALITÉ de l’histoire et de ses ingrédients. C’est-à-dire, concrètement, leur capacité à toucher le public ou les lecteurs par le traitement de sujets et de problématiques universelles (l’amour, la mort, l’argent, la solitude, etc.). Ce facteur est en mettre en regard avec son opposé, le « facteur O ».
-  A: Votre histoire a été perçue comme très universelle, avec un fort potentiel pour parler aux autres, les interpeler, les accrocher.
-  B: Votre histoire a été perçue comme assez universelle, susceptible de capter l’attention d’une large audience. Mais cette note inférieure à 16 indique également que cette universalité peut être approfondie, renforcée, afin de toucher un nombre encore plus grand de lecteurs, de spectateurs ou d’auditeurs.
+  A: Votre histoire a été perçue comme très universelle, avec un fort potentiel pour parler aux autres, les interpeler, les accrocher. [[mention manque originalite]]
+  B: Votre histoire a été perçue comme assez universelle, susceptible de capter l’attention d’une large audience. Mais cette note inférieure à 16 indique également que cette universalité peut être approfondie, renforcée, afin de toucher un nombre encore plus grand de lecteurs, de spectateurs ou d’auditeurs. [[mention manque originalite]]
   C: Les lecteurs du concours ont jugé que cette histoire manquait d’universalité, qu’elle était sans doute trop singulière pour parler au plus grand nombre. L’originalité est une bonne chose, mais trop d’originalité peut empêcher le public d’être captivé ou simplement intéressé.
   D: "Les membres du jury ont trouvé, peut-être à tort, que votre histoire manquait sa vocation à communiquer avec le plus grand nombre, à captiver ou même à intéresser. Peut-être serait-il intéressant de reprendre ce projet avec cette nouvelle préoccupation : comment permettre au lecteur, au spectateur ou à l’auditeur, de s’approcher du sujet, comment le concerner et l’impliquer ?"
+  :manque_originalite: Il faut prendre garde cependant à ce que cette universalité ne se fasse pas au détriment de l’originalité dont tout récit a besoin pour ne pas succomber à la banalité.
+  :grand_manque_originalite: Malheureusement, cette universalité se fait au détriment de l’originalité, ce qui conduit à un récit trop banal qui prend le risque de donner le sentiment d’être poncif et cliché.
 
 :coherence:
   :diminutif: cohe
@@ -90,25 +94,25 @@
   :short_name: Cohérence
   :explication: Cette note concerne la cohérence perçue par le jury au niveau des intrigues, des personnages et des thèmes.
   A: Les lecteurs ont perçu une très forte cohérence dans cette histoire. C’est un atout indéniable pour « faire croire à l’histoire », capacité indispensable pour capter l’attention du public.
-  B: Si les lecteurs ont indéniablement cru en l’avancée de l’histoire et le comportement des différents personnages, il n’en reste pas moins qu’ils pensent que cette cohérence pourrait encore être renforcée, notamment au niveau [[deficiences coherence]], afin de pousser plus loin sa crédibilité et, partant, lui donner un caractère plus fort et impactant.
-  C: Tout en ayant bien conscience que la <em>cohérence</em> revêt parfois un caractère subjectif, les lecteurs ont estimé que cette histoire comportaient trop de manquements à ce niveau pour accorder de la crédibilité à cette histoire et de ses personnages. Il est pourtant important de comprendre que sans cette cohérence, le lecteur, l’auditeur ou le spectateur ne peut croire en l’histoire et se laisser captiver par elle.
-  D: Ce récit, que ce soit au niveau des personnages ou au niveau des intrigues, a paru bien trop incohérent aux lecteurs du concours. Ces incohérences, en nuisant à la crédibilité, les ont empêchés, de façon rédhibitoire, d’entrer dans l’histoire, quel que soit l’intérêt qu’elle puisse avoir.
+  B: Si les lecteurs ont indéniablement cru en l’histoire et les personnages, il n’en reste pas moins qu’ils pensent que cette cohérence pourrait encore être renforcée, notamment au niveau [[deficiences coherence]], afin de pousser plus loin sa crédibilité et, partant, lui donner un caractère plus fort et impactant.
+  C: Tout en ayant bien conscience que la <em>cohérence</em> revêt parfois un caractère subjectif à la lecture d’un simple synopsis, les lecteurs ont estimé que cette histoire comportaient trop de manquements à ce niveau pour accorder de la crédibilité à cette histoire et ses personnages. Il est pourtant important de comprendre que sans cette cohérence, le lecteur, l’auditeur ou le spectateur ne peut croire en l’histoire et se laisser captiver par elle.
+  D: Ce récit, que ce soit au niveau des personnages ou au niveau des intrigues, a paru bien trop incohérent aux lecteurs du concours. Ces incohérences, en nuisant à la crédibilité, les ont empêchés, de façon rédhibitoire, d’entrer dans l’histoire, quel que soit l’intérêt qu’elle puisse avoir par ailleurs au niveau de ses thèmes ou de son approche.
 
 :adequation:
   :diminutif: adth
   :name: Adéquation avec le thème
   :short_name: Adéquation thème
   :explication: Perception par les lecteurs de l’adéquation entre le projet et le thème du concours.
-  A: Les lecteurs ont perçu une adéquation très forte entre le projet et le thème du concours, ce qui n’est pas étranger à [[la note generale]] attribuée à votre dossier.
-  B: Les lecteurs ont perçu l’adéquation entre le projet et le thème du concours, mais ils attendaient peut-être une adéquation plus forte et plus patente encore, en l’exploitant mieux dans tous les aspects de la narration.
-  C: Les lecteurs n’ont pas assez senti l’adéquation entre le projet et le thème du concours. Sans être hors-sujet pour autant, l’exploitation du thème a plus été ressenti comme un prétexte que comme réellement le sujet au cœur de la narration, ce qui explique entre autres choses [[la note generale]] attribuée à ce dossier.
+  A: Les jurés ont perçu une adéquation très forte entre le projet et le thème du concours, ce qui n’est pas étranger à [[la note generale]] attribuée à votre dossier.
+  B: Les jurés ont perçu l’adéquation entre le projet et le thème du concours, mais ils attendaient peut-être une adéquation plus forte et plus patente encore, en l’exploitant mieux dans tous les aspects de la narration.
+  C: Les membres du jury n’ont pas assez senti l’adéquation entre le projet et le thème du concours. Sans être hors-sujet pour autant, l’exploitation du thème a plus été ressenti comme un prétexte que comme réellement le sujet au cœur de la narration, ce qui explique entre autres choses [[la note generale]] attribuée à ce dossier.
   D: Aucune adéquation n’a été perçue par les membres du jury entre le projet et le thème du concours. Cette adéquation jouant pour beaucoup dans [[la note generale]] attribuée au dossier, elle explique en grande partie le fait que ce dossier n’ait pas été retenu comme lauréats.
 
 :themes:
   :diminutif: t
   :explication: Perception des thèmes abordés, de leur exploitation et de leur développement.
   A: Les lecteurs se sont passionnés pour les thèmes développés dans ce projet et la façon dont ils ont été exploités notamment au niveau [[raisons bons themes]].[[if ameliorations themes]]
-  B: Le jury a été sensible aux thèmes développés et leur façon d’être exploités, notamment au niveau [[raisons bons themes]]. Il leur a semblé toutefois que l’approche pouvait être renforcée et affinée afin de pouvoir tirer vraiment tout le potentiel des éléments mis en place, principalement en ce qui concerne [[les ameliorations themes]].
+  B: Le jury a été sensible aux thèmes développés et leur façon d’être exploités, notamment au niveau de [[raisons bons themes]]. Il leur a semblé toutefois que l’approche pouvait être renforcée et affinée afin de pouvoir tirer vraiment tout le potentiel des éléments mis en place, principalement en ce qui concerne [[les ameliorations themes]].
   C: Les lecteurs ont perçu une certaine faiblesse au niveau des thèmes développés dans cette histoire, particulièrement en ce qui concerne [[raisons mauvais themes]].[[mention manque clarte]] Si ces lecteurs ont senti leur présence, ils ne les ont pas jugés suffisamment aptes à susciter un intérêt certain.
   D: Les lecteurs se sont malheureusement montrés indifférents à vos thèmes ou la façon de les exploiter/développer, particulièrement en ce qui concerne [[raisons mauvais themes]].[[mention manque clarte]] Un travail important est à mener à ce niveau, entendu qu’une bonne histoire, même une histoire d’action de comédie ou d’aventure, ne peut faire l’économie de thèmes précis et bien exploités.
 
@@ -126,9 +130,9 @@
   :name: Rédaction du dossier
   :short_name: Rédaction
   :explication: Cette note concerne l’aspect rédactionnel du projet (aisance, clarté, orthographe, style).
-  A: Les lecteurs ont jugé excellente la rédaction et la présentation de ce projet, tant au niveau de son orthographe que de son style. Un grand bravo à vous !
-  B: Les lecteurs ont jugé que la rédaction et la présentation de ce projet étaient tout à fait correctes. Peut-être pourraient-elles être encore améliorées pour donner des chances encore meilleures à [[ce projet]][[if deficiences redaction]].
-  C: La rédaction et l’orthographe de ce dossier a été jugé par les lecteurs d’un niveau très insuffisant, particulièrement au niveau [[deficiences redaction]]. [[importance redaction]]
+  A: Les lecteurs ont jugé excellente la rédaction et la présentation de ce projet, tant au niveau de sa grammaire, au niveau de l'aisance de la langue ou le style. Un grand bravo à vous pour cet effort !
+  B: Les lecteurs ont jugé la rédaction et la présentation de ce projet tout à fait correctes. Peut-être pourraient-elles être encore améliorées pour donner des chances encore plus grandes à [[ce projet]][[if deficiences redaction]].
+  C: La rédaction et la grammaire de ce dossier a été jugé par les lecteurs d’un niveau très insuffisant, particulièrement au niveau [[deficiences redaction]]. [[importance redaction]]
   D: Les lecteurs ont jugé que le projet se mettaient lui-même en danger de par ses déficiences rédactionnelles, particulièrement au niveau [[deficiences redaction]]. [[importance redaction]]
   :importance: "Que vous écriviez pour l’écran, pour la scène, pour l’oreille ou pour le livre, il est capital de comprendre que tout projet narratif, à un moment ou à un autre, passe par la <em>lecture</em> pour être retenu et se réaliser, et nécessite donc à ce niveau une attention tout à fait particulière de l’auteur·e."
 
@@ -158,7 +162,7 @@ p:cohe:
   :defect: " (cohérence en ce qui concerne le comportement général, les attitudes et/ou les décisions)"
 
 p:idio:
-  :defect: " c’est-à-dire leur comportement prorpe qui n’a pas été jugé suffisamment précis, particulier et unique"
+  :defect: " c’est-à-dire leur comportement propre qui n’a pas été jugé suffisamment précis, particulier et unique"
 
 i:fO:
   :quality: ", originalité au niveau de leur énoncé comme au niveau de leur parcours"

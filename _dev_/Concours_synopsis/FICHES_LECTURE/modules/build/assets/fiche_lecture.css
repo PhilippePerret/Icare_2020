@@ -75,18 +75,19 @@ div.fiche-lecture div.infos-projet div.projet-titre {
 }
 div.fiche-lecture div.infos-projet div.projet-titre div.titre {
   color: #111111;
-  font-variant:all-small-caps;
+  font-size:30pt;
 }
 
-div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.titre {
+/* div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.titre {
   font-size:1.5rem;
   font-weight:bold;
 }
 div.fiche-lecture.exergue div.infos-projet div.projet-titre div.titre {
   font-size:2.5rem;
-}
+} */
+
 div.fiche-lecture:not(.exergue) div.infos-projet div.projet-titre div.auteurs {
-  font-size:1rem;
+  font-size:26pt;
 }
 div.fiche-lecture.exergue div.infos-projet div.projet-titre div.auteurs {
   font-size:1rem;
@@ -95,11 +96,12 @@ div.fiche-lecture div.infos-projet div.note-totale {
   grid-column:2;
   grid-row:1;
   text-align:center;
-  font-size: 30pt;
 }
-div.fiche-lecture div.infos-projet div.note-totale div.note {font-size:30pt}
+div.fiche-lecture div.infos-projet div.note-totale div.note {
+  font-size:28pt
+}
 div.fiche-lecture div.infos-projet div.note-totale div.position {
-  font-size:20pt;
+  font-size:16pt;
 }
 
 /* *** APPRÉCIATION GLOBALE *** */
@@ -136,6 +138,7 @@ div.fiche-lecture div.detail span.value
 }
 div.fiche-lecture div.detail span.libelle {
   font-style: normal;
+  font-weight:bold;
   font-size:1em;
 }
 div.fiche-lecture div.detail span.value {

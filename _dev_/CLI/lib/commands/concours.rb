@@ -11,6 +11,7 @@ CHOICES_CONCOURS = [
   {name:"Transformer tous les docs en PDF [#{'doc_to_pdf'.jaune}]", value:'docs_to_pdf'},
   {name:"Produire les fiches de lecture [#{'fiches_lecture'.jaune}]", value:'fiches_lecture'},
   {name:"Éléments ou informations sur un projet [#{'show'.jaune}]", value:'show'},
+  {name:'Ouvrir un dossier ['+'open'.jaune+']', value:'open'},
   {name:"Renoncer", value: :cancel}
 ]
 ACTIONS_CONCOURS = CHOICES_CONCOURS.collect{|d|d[:value]}

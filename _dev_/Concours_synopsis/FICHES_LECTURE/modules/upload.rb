@@ -25,11 +25,11 @@ class FicheLecture
   # Pour téléverser la fiche de lecture
   # Son chemin local est défini dans 'pdf_file'
   def upload
-    print "- Téléchargement de la fiche du projet #{projet.ref}…".bleu
+    print "- Téléchargement de la fiche du projet #{projet.ref} (#{pdf_size})…".bleu
     cmd = "scp -p '#{pdf_file}' #{SSH_ICARE_SERVER}:www/_lib/data/concours/#{projet.concurrent_id}/#{pdf_fname}"
     res = `#{cmd}`
     if res.empty?
-      puts "\r- Téléchargement de la fiche du projet #{projet.ref}. 👍".vert
+      puts "\r- Téléchargement de la fiche du projet #{projet.ref}. 👍#{' '*20}".vert
       return true
     else
       puts "res : #{res.inspect}".rouge
@@ -37,6 +37,15 @@ class FicheLecture
     end
   end #/ upload
 
+  def pdf_size
+    @pdf_size ||= begin
+      kilo = File.stat(pdf_file).size
+      megao   = kilo / 1000000
+      kilo    = kilo % 1000000
+      tonnes  = kilo / 1000
+      "#{megao}.#{tonnes.to_s[0]}Mo"
+    end
+  end #/ pdf_size
   def exists?
     File.exists?(pdf_file)
   end

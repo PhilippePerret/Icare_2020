@@ -3,7 +3,7 @@
 
 class FLFactory
 class << self
-  attr_reader :projets_valides
+  attr_reader :projets_valides, :nombre_projets_valides
 
   # = main =
   #
@@ -19,6 +19,7 @@ class << self
     # return # Pour l'essai de rapatriement
 
     @projets_valides = evaluations_des_synopsis
+    @nombre_projets_valides = @projets_valides.count.freeze
     if concurrent_id
       @projets_valides = @projets_valides.select {|projet| projet.concurrent_id == concurrent_id}
     end

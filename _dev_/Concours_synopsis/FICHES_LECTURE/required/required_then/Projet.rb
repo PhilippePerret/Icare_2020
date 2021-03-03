@@ -51,7 +51,7 @@ def note; evaluation.note end
 def real_auteurs
   @real_auteurs ||= begin
     patros =  if data[:auteurs]
-                data[:auteurs].split(', ').collect{|p|p.strip}
+                data[:auteurs].split(',').collect{|p|p.strip}
               else
                 [data[:patronyme]]
               end

@@ -17,7 +17,13 @@ attr_reader :options
 #
 def build_fiches_lecture(options, concurrent_id = nil)
   @options = options
-  puts "=== CONSTRUCTION FICHES DE LECTURE ===\n===".bleu
+  ope = case
+  when option?(:build) then "CONSTRUCTION "
+  when option?(:upload) then "TÉLÉVERSEMENT "
+  when option?(:infos)  then "INFORMATIONS "
+  else ""
+  end
+  puts "=== #{ope}FICHES DE LECTURE ===\n===".bleu
   puts "=== Mode : #{verbose? ? 'verbeux' : 'silencieux'}".bleu
   puts "=== Options: #{options.inspect}".bleu
   if concurrent_id

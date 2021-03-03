@@ -34,11 +34,12 @@ def balise_histoire
 end
 
 def balise_la_note_generale
-  case motSujet('projet').note_lettre
-  when 'A' then 'l’excellente note'
-  when 'B' then 'la bonne note'
-  when 'C' then 'la note passable'
-  when 'D' then 'la mauvaise note'
+  case motSujet('projet').note
+  when (17..20)   then 'l’excellente note'
+  when (14...17)  then 'la bonne note'
+  when (11...14)  then 'la note honnorable'
+  when (7...11)   then 'la note passable'
+  else 'la mauvaise note'
   end
 end
 
@@ -78,6 +79,28 @@ end
 def balise_deficiences_originalite
   ary = ['p:fO', 't:fO', 'i:fO']
   MotSujet.formate_liste(MotSujet.inferieurs_a_10_parmi(ary, true), as: :defect, full_name:true)
+end
+
+def balise_mention_manque_universalite
+  nfU = motSujet('fU').note
+  if nfU < 8
+    texte(:facteurO, :grand_manque_universalite)
+  elsif nfU < 12
+    texte(:facteurO, :manque_universalite)
+  else
+    ''
+  end
+end
+
+def balise_mention_manque_originalite
+  nfO = motSujet('fO').note
+  if nfO < 8
+    texte(:facteurO, :grand_manque_originalite)
+  elsif nfO < 12
+    texte(:facteurO, :manque_originalite)
+  else
+    ''
+  end
 end
 
 
