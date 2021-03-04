@@ -13,7 +13,7 @@ end #/ mailing_json_path
 
 def unicarien
   @unicarien ||= begin
-    TUser.get(30)
+    TUser.get_random
   end
 end #/ unicarien
 
@@ -23,7 +23,6 @@ BTN_DESTROY_ENVOI_MAILING = "Détruire ce mailing"
 feature 'Mailing-list d’administration' do
 
   before(:all) do
-    require './_lib/_pages_/contact/mail/constants'
     require './_lib/modules/mail/constants'
     degel('real-icare') # Pour avoir beaucoup d'icariens
   end
@@ -70,6 +69,7 @@ feature 'Mailing-list d’administration' do
     scenario 'ne peut pas utiliser le mailing-list pour envoyer des messages' do
 
       expect(File.exists?(mailing_json_path)).to eq(true)
+      unicarien.rejoint_le_site
       unicarien.rejoint_son_bureau
       goto('contact/mail')
       expect(page).not_to have_link(BTN_PROCEED_ENVOI_MAILING)
@@ -94,7 +94,7 @@ feature 'Mailing-list d’administration' do
 
   context 'Un administrateur' do
 
-    scenario 'peut envoyer des messages par le formulaire de contact' do
+    scenario 'peut envoyer des messages par le formulaire de contact', only:true do
 
       # Avant toute chose, on s'assure qu'il n'existe pas un mailing
       # enregistré
@@ -104,16 +104,8 @@ feature 'Mailing-list d’administration' do
       phil.click('contact', within: '#footer')
 
       pitch("Je rejoins le site, m'identifie et rejoint le formulaire de contact.")
-      expect(page).to have_titre("Mailing-list")
-
       # *** Vérifications préliminaires ***
-
-      pitch("Je trouve un formulaire valide, avec des choix pour caractériser l'envoi")
-      expect(page).to have_css('form#contact-form')
-      expect(page).to have_css('div#div-statuts')
-      expect(page).to have_css('select#message_format')
-      expect(page).to have_css('select#mail_signature')
-      expect(page).to have_button(UI_TEXTS[:btn_apercu])
+      expect(page).to be_contact_page(admin:true)
 
       start_time = Time.now.to_i
 
@@ -158,10 +150,11 @@ feature 'Mailing-list d’administration' do
       expect(page).to have_link(UI_TEXTS[:proceed_envoi])
       click_link(UI_TEXTS[:proceed_envoi])
 
+      # sleep 60
       # *** Vérifications ***
 
       users_pause.each do |duser|
-        expect(page).to have_css('div', text: "Message envoyé à #{duser[:mail]}")
+        expect(page).to have_css('li', text: "Message envoyé à #{duser[:mail]}")
         expect(TUser.get(duser[:id])).to have_mail(subject: msg_sujet, after: start_time)
       end
       pitch("La confirmation a été donnée de l'envoi à chaque icarien et chaque icarien a bien reçu le message.")
@@ -232,22 +225,97 @@ feature 'Mailing-list d’administration' do
       # sleep 60
       users_actifs.each do |duser|
         # next if duser[:id] == phil.id
-        expect(page).to have_css('div', text: "Message envoyé à #{duser[:mail]}")
+        expect(page).to have_css('li', text: "Message envoyé à #{duser[:mail]}")
         expect(TUser.get(duser[:id])).to have_mail(subject: msg_sujet, after: start_time)
       end
       users_inactifs.each do |duser|
-        expect(page).not_to have_css('div', text: "Message envoyé à #{duser[:mail]}")
+        expect(page).not_to have_css('li', text: "Message envoyé à #{duser[:mail]}")
         expect(TUser.get(duser[:id])).not_to have_mail(subject: msg_sujet, after: start_time)
       end
       pitch("La confirmation a été donnée de l'envoi à chaque actif et chaque actif a bien reçu le message. Aucun icarien inactif n'a été contacté.")
 
     end
 
-
-
-
-
-
+    context 'peut envoyer un mailing-list au format…', test_formats:true do
+      before(:all) do
+        icariens_inactifs = {}
+        begin
+          ii = TUser.get_random(inactif: true, contact: {admin:true})
+          icariens_inactifs.merge!(ii.mail => ii)
+        end while icariens_inactifs.count < 3
+        @inactif1 = icariens_inactifs.values[0]
+        @inactif2 = icariens_inactifs.values[1]
+        @inactif3 = icariens_inactifs.values[2]
+      end
+      before(:each) do
+        # Avant toute chose, on s'assure qu'il n'existe pas un mailing
+        # enregistré
+        File.delete(mailing_json_path) if File.exists?(mailing_json_path)
+        # On détruit tous les mails
+        TMails.remove_all
+        @start_time = Time.now.to_i
+        phil.rejoint_le_site
+        phil.click('contact', within: '#footer')
+        expect(page).to be_contact_page(admin: true)
+      end
+      let(:start_time) { @start_time }
+      scenario 'ERB', only_erb:true do
+        msg_sujet = "Sujet ERB du #{formate_date}"
+        msg_message  = "<p><%= pseudo %>,</p><p>C'est un message ERB de mailing</p>"
+        within('form#contact-form') do
+          fill_in 'envoi_titre', with: msg_sujet
+          fill_in 'envoi_message', with: msg_message
+          check('cb-statut-inactif')
+          click_on(UI_TEXTS[:btn_apercu])
+        end
+        expect(page).to have_link(UI_TEXTS[:proceed_envoi])
+        click_link(UI_TEXTS[:proceed_envoi])
+        # *** Vérifications ***
+        sleep 3 # pour laisser le temps d'écrire le mail ?…
+        expect(page).to have_css('li', text: "Message envoyé à #{@inactif1.mail}")
+        msg_message_final = "<p>#{@inactif1.pseudo},</p><p>C'est un message ERB de mailing</p>"
+        expect(@inactif1).to have_mail(after: start_time, subject: msg_sujet, message: msg_message_final)
+      end
+      scenario 'HTML', only_html:true do
+        msg_sujet = "Sujet HTML du #{formate_date}"
+        msg_message  = '<p>#{pseudo},</p><p>C’est un message HTML de mailing</p>'
+        within('form#contact-form') do
+          fill_in 'envoi_titre', with: msg_sujet
+          fill_in 'envoi_message', with: msg_message
+          check('cb-statut-inactif')
+          click_on(UI_TEXTS[:btn_apercu])
+        end
+        expect(page).to have_link(UI_TEXTS[:proceed_envoi])
+        click_link(UI_TEXTS[:proceed_envoi])
+        # *** Vérifications ***
+        sleep 3 # pour laisser le temps d'écrire le mail ?…
+        expect(page).to have_css('li', text: "Message envoyé à #{@inactif2.mail}")
+        msg_message_final = "<p>#{@inactif2.pseudo},</p><p>C’est un message HTML de mailing</p>"
+        expect(@inactif2).to have_mail(after: start_time, subject: msg_sujet, message: msg_message_final)
+      end
+      scenario 'MARKDOWN/texte simple', only_md:true do
+        msg_sujet = "Sujet HTML du #{formate_date}"
+        msg_message  = "\#{pseudo},\n\nC’est un message Markdown de mailing.\n\nAvec une seconde ligne."
+        within('form#contact-form') do
+          fill_in 'envoi_titre', with: msg_sujet
+          fill_in 'envoi_message', with: msg_message
+          check('cb-statut-inactif')
+          click_on(UI_TEXTS[:btn_apercu])
+        end
+        expect(page).to have_link(UI_TEXTS[:proceed_envoi])
+        click_link(UI_TEXTS[:proceed_envoi])
+        # *** Vérifications ***
+        sleep 3 # pour laisser le temps d'écrire le mail ?…
+        if not page.has_css?('li', text: "Message envoyé à #{@inactif3.mail}")
+          puts "Je ne trouve pas de LI avec le texte “Message envoyé à #{@inactif3.mail}”".rouge
+          # puts "Tu as 60 secondes pour vérifier".bleu
+          # sleep 60
+        end
+        expect(page).to have_css('li', text: "Message envoyé à #{@inactif3.mail}")
+        msg_message_final = ["<p>#{@inactif3.pseudo},</p>",'<p>C’est un message Markdown de mailing.</p>', '<p>Avec une seconde ligne.</p>']
+        expect(@inactif3).to have_mail(after: start_time, subject: msg_sujet, message: msg_message_final)
+      end
+    end
 
 
 

@@ -32,7 +32,7 @@ class << self
     self.procedure_current = new
     self.procedure_current.data_proceed = JSON.parse(File.read(data_path))
     self.procedure_current.proceed
-  end #/ traite
+  end
 
 
   # Pour détruire le mailing enregistré (i.e. le fichier mailing.json sauvé
@@ -103,15 +103,17 @@ def proceed
     raise("L'UUID du mailing est invalide, je ne peux pas procéder à l'opération.")
   end
 
-  @resultat = ["<p class=bold>=== Mailing #{uuid} du #{formate_date}===</p>"]
-  destinataires.each do |u|
-    u.send_mail({
-      subject: mail_subject,
-      message: message_per_format(user: u)
-    })
-    @resultat << "<div>Message envoyé à #{u.mail}</div>"
-  end
-  @resultat << "<p class='success'>=== Mailing transmis avec succès à #{destinataires.count} destinataires. ===</p>"
+  @resultat = ["<p class=bold>=== Mailing #{uuid} du #{formate_date}===</p><ul>"]
+  @resultat += MailSender.send_mailing(to:destinataires, message:mail_message, subject:mail_subject)
+
+  # destinataires.each do |u|
+  #   u.send_mail({
+  #     subject: mail_subject,
+  #     message: message_per_format(user: u)
+  #   })
+  #   @resultat << "<div>Message envoyé à #{u.mail}</div>"
+  # end
+  @resultat << "</ul><p class='success'>=== Mailing transmis avec succès à #{destinataires.count} destinataires. ===</p>"
 
   File.delete(self.class.data_path)
 
@@ -179,9 +181,9 @@ end #/ boite_confirmation
 
 def message_per_format(params)
   case mail_format
-  when 'html' then mail_message
   when 'md'   then kramdown(mail_message, params[:user])
   when 'erb'  then deserb(mail_message, params[:user])
+  else mail_message
   end
 end #/ message_per_format
 

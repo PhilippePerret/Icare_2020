@@ -15,7 +15,7 @@ class << self
   #   {String}  OU le code à évaluer.
   def kramdown(fpath, owner = nil, folder = nil)
     if fpath.match?(/[\n ,']/)
-      code = fpath
+      code = fpath.dup
     else
       fpath = "#{fpath}.md" unless fpath.end_with?('.md') || fpath.end_with?('.mmd')
       fpath = File.join(folder, fpath) unless folder.nil?

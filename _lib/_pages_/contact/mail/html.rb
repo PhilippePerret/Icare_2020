@@ -1,9 +1,6 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require_modules(['form','mail'])
-MESSAGES.merge!({
-  confirme_envoi: 'Votre message a bien été transmis à %s.'
-})
 class HTML
   def mailing_list?
     !!user.admin?
@@ -56,8 +53,7 @@ class HTML
     end
     # On envoie le message
     Mail.send(dmail)
-    destinataire = 'Phil'
-    message(MESSAGES[:confirme_envoi] % destinataire)
+    message(MESSAGES[:contact][:confirme_envoi])
     param({envoi_titre:nil, envoi_message:nil, envoi_mail:nil, envoi_mail_confirmation:nil})
   end #/ traite_envoi
 
@@ -66,6 +62,5 @@ class HTML
   # de mailing-list par un administrateur
   def setup_mailing_list
     require_module 'user/helpers/menus'
-
   end #/ setup_mailing_list
 end #/HTML

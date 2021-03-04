@@ -116,53 +116,56 @@ end #/ simuler_unique_message
 def send_mailing(dmail, options = nil)
   options ||= {}
   options.merge!(noop: dmail.delete(:noop)) unless options.key?(:noop)
+
+  # Les destinataires
   destinataires = dmail[:to]
-  # log("Destinataires du mailing: #{destinataires}")
-  # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
-  implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))
-  # On construit le texte avant pour définir le titre
-  message = deserb(dmail[:file], dmail[:bind])
-  sujet_mail = dmail[:bind].mail_subject
+
+  #
+  # Deux modes d'utilisation : soit un message dans un fichier, et dans ce
+  # cas, dmail[:bind] est défini, soit un message "brut" et dans ce cas,
+  # dmail[:message] contient le message, et dmail[:file] n'est pas défini
+  #
+  message_mail = nil ; sujet_mail = nil ;
+  if dmail[:message]
+    sujet_mail    = dmail[:subject]
+    message_mail  = dmail[:message]
+  elsif dmail[:bind]
+    # log("Destinataires du mailing: #{destinataires}")
+    # S'assurer que l'objet bindé connait les méthodes pour le sujet du mail
+    implemente_subject_to( dmail[:bind] ) if not(dmail[:bind].respond_to?(:subject))
+    # On construit le texte avant pour définir le titre (si c'est dans un fichier
+    # ERB, mais ça pourrait aussi être du code)
+    message_mail  = deserb(dmail[:file], dmail[:bind])
+    sujet_mail    = dmail[:bind].mail_subject
+  elsif dmail[:file]
+    sujet_mail    = dmail[:subject]
+    message_mail  = deserb(dmail[:file])
+  else
+    raise "Il faut au moins que :message, :bind ou :file soit défini."
+  end
+
+  # Détection automatique du format s'il n'est pas défini, en fonction du
+  # message
+  options[:format] ||= case
+  when message_mail.match?(/<%/) then 'erb'
+  when message_mail.match?(/<(p|div|span)>/) then 'html'
+  else 'md'
+  end
+
+  log("\n\n-> send_mailing\ndmail = #{dmail.inspect}\noptions = #{options.inspect}\n\n")
+  log("Message mail template : #{message_mail}")
 
   # maillog("Sujet du message : #{sujet_mail.inspect}")
-  # maillog("Le message template final : #{message}")
+  # maillog("Le message template final : #{message_mail}")
 
   if noop?(options)
-    simuler_mailing(sujet_mail, message, destinataires, options)
+    simuler_mailing(sujet_mail, message_mail, destinataires, options)
   else # On procède vraiment à l'opération
-    envois = destinataires.collect do |dd|
-      # Si c'est un destinataire sans mail, on ne le traite pas
-      if not(dd.key?(:mail)) || dd[:mail].nil_if_empty.nil?
-        maillog("<div class='error'>Donnée destinataire sans mail : #{dd.inspect}. Pas d'envoi possible.</div>")
-        next
-      end
-      # Si le sexe est défini dans les données, on renseigne des propriétés
-      # de base à commencer par le "e" pour les filles. Cf. ci-dessous la
-      # méthode :sexize_destinataire_properties
-      dd = sexize_destinataire_properties(dd) if dd.key?(:sexe)
-      begin
-        Mail.send(to: dd[:mail], subject: sujet_mail, message: (message % dd))
-        case options[:format]
-        when 'html'
-          "<li>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
-        else
-          "- #{dd[:pseudo]} (#{dd[:mail]})" # collect
-        end
-        # Si on n'est pas en mode test, on attend environ une seconde entre
-        # chaque envoi
-        unless mode_test?
-          sleep 0.75
-        end
-      rescue Exception => e
-        maillog "<div class='error'>PROBLÈME D'ENVOI DE MAIL : #{e.message} (avec dd = #{dd.inspect})</div>"
-        case options[:format]
-        when 'html'
-          "<li class='error'>#{dd[:pseudo]} (#{dd[:mail]})</li>" # collect
-        else
-          "ERROR: #{dd[:pseudo]} (#{dd[:mail]})"
-        end
-      end
-    end
+    require 'timeout'
+    envois = nil
+    Timeout.timeout(0) {
+      envois = release_mailing(sujet_mail, message_mail, destinataires, options, dmail)
+    }
     if verbose?(options)
       ret = case options[:format]
         when 'html'
@@ -172,8 +175,54 @@ def send_mailing(dmail, options = nil)
         end
       maillog(ret)
     end
+
+    return envois
   end
-end #/ send
+end #/ send_mailing
+
+def release_mailing(sujet_mail, message, destinataires, options, dmail)
+  log("Message mail template dans release_mailing : #{message.inspect}")
+  destinataires.collect do |ddinit| # NOTE : collect (= retour de la méthode)
+    # Si on n'est pas en mode test, on attend environ une seconde entre chaque envoi
+    unless mode_test?
+      sleep 0.75
+    end
+    dd = ddinit.is_a?(User) ? ddinit.data : ddinit
+    # Si c'est un destinataire sans mail, on ne le traite pas
+    if not(dd.key?(:mail)) || dd[:mail].nil_if_empty.nil?
+      maillog("<div class='error'>Donnée destinataire sans mail : #{dd.inspect}. Pas d'envoi possible.</div>")
+      next
+    end
+    # Si le sexe est défini dans les données, on renseigne des propriétés
+    # de base à commencer par le "e" pour les filles. Cf. ci-dessous la
+    # méthode :sexize_destinataire_properties
+    dd = sexize_destinataire_properties(dd) if dd.key?(:sexe)
+    begin
+      message_final = case options[:format]
+                      when 'md'   then kramdown(message, ddinit)
+                      when 'erb'  then deserb(message, ddinit)
+                      else
+                        if message.match?('#{')
+                          ddinit.bind.eval(%Q{"#{message}"})
+                        else
+                          message
+                        end
+                      end
+      # On procède à l'envoi du mail
+      # Mail.send(to: dd[:mail], from:dmail[:from], subject: sujet_mail, message: (message % dd))
+      Mail.send(to: dd[:mail], from:dmail[:from], subject: sujet_mail, message: message_final)
+
+      # Avant, je retournais un message au format différent suivant le format
+      # du message à envoyer (erb, html ou md) mais maintenant je prends
+      # l'option que c'est toujours une page HTML qui se chargera d'afficher
+      # le résultat, donc on retourne :
+      "<li>Message envoyé à #{dd[:mail]} (#{dd[:pseudo]})</li>" # collect
+    rescue Exception => e
+      maillog "<div class='error'>PROBLÈME D'ENVOI DE MAIL : #{e.message} (avec dd = #{dd.inspect})</div>"
+      "<li class='error'>ERROR: #{dd[:pseudo]} (#{dd[:mail]}) : #{e.message}</li>" # collect
+    end
+  end #/ collect
+end #/ release_mailing
 
 # Ajouter quelques féminines communes aux propriétés du destinataire
 def sexize_destinataire_properties(props)

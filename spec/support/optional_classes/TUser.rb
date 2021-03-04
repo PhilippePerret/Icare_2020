@@ -48,14 +48,24 @@ class << self
   #
   BITSCONTACTVALUES = {none: 0, mail: 1, frigo:2, both: 3}
   BITSTATUSVALUES = {actif: 2, candidat:3, inactif:4, detruit:5, recu:6, en_pause:8}
-  def get_random(params)
+  def get_random(params = {})
     where = []
     valus = []
+
+    # statut exprimé en clé
+    if params[:inactif]
+      params.merge!(status: :inactif)
+    elsif params[:actif]
+      params.merge!(status: :actif)
+    end
+
     # :pseudo
     if params[:pseudo]
       where << "pseudo = ?"
       valus << params[:pseudo]
     end
+
+
     # :real
     where << "SUBSTRING(options,25,1) = 1" if params[:real]
     if params[:admin] === true
@@ -79,18 +89,25 @@ class << self
       if vcon == :none || vcon === false
         where << "SUBSTRING(options,27,3) = '000'"
       else
-        vbitadmin = BITSCONTACTVALUES[vcon[:admin]] || '?'
-        vbiticar  = BITSCONTACTVALUES[vcon[:icarien]] || '?'
-        vbitworld = BITSCONTACTVALUES[vcon[:world]] || '?'
-        where << "SUBSTRING(options,27,3) IS LIKE ?"
-        valus << "#{vbitadmin}#{vbiticar}#{vbitworld}"
+        if vcon[:admin]
+          where << "SUBSTRING(options,27,1) = ?"
+          valus << (vcon[:admin] === true ? '3' : vcon[:admin])
+        end
+        if vcon[:icarien]
+          where << "SUBSTRING(options,28,1) = ?"
+          valus << vcon[:icarien] === true ? '3' : vcon[:icarien]
+        end
+        if vcon[:world]
+          where << "SUBSTRING(options,29,1) = ?"
+          valus << vcon[:world] === true ? '3' : vcon[:world]
+        end
       end
     end
     where << "id > 9"
     request = "SELECT * FROM users WHERE #{where.join(' AND ')}"
 
     # Debug
-    # puts "REQUÊTE TUser.random : #{request} (values = #{valus.inspect})"
+    # puts "REQUÊTE TUser.get_random : #{request} (values = #{valus.inspect})"
 
     res = db_exec(request, valus)
     if res.empty?
