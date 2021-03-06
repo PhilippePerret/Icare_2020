@@ -33,7 +33,7 @@ class << self
     default_value = (pms[:value] || pms[:default] || pms[:default_value]).to_i
     self.collect do |absmod|
       selected = (default_value == absmod.id) ? SELECTED : EMPTY_STRING
-      TAG_OPTION % {value:absmod.id, selected:selected, titre:absmod.name}
+      TAG_OPTION % {value:absmod.id, selected:selected, titre:"#{absmod.name} <span style='font-size:10pt;'>(ID #{absmod.id})</span>"}
     end.unshift(TAG_OPTION % {value:'', selected:'', titre:pms[:titre]||'Voir le module…'.freeze}).join
   end #/ menus_absmodule
 
