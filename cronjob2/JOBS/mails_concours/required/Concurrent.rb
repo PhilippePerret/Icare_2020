@@ -28,6 +28,14 @@ class << self
     @count ||= db_count(DBTBL_CONCURS_PER_CONCOURS, {annee: Concours.current.annee})
   end #/ count
 
+  # OUT le Nombre de vrais concurrents pour la session courante du concours
+  def count_real
+    @count_real ||= begin
+      request = "SELECT specs FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ? AND SUBSTRING(specs,1,2) = ?"
+      db_exec(request, [Concours.current.annee, '11']).count
+    end
+  end #/ count_real
+
   def send_mail_info_hebdomadaire
     require_module('mail')
     Logger << "Nombre de concurrents à contacter : #{contactables.count}"
@@ -37,7 +45,7 @@ class << self
   end #/ send_mail_info_hebdomadaire
 
   def info_hebdo_mail_path
-    @info_hebdo_mail_path ||= File.join(APPFOLDER,'_lib','_pages_','concours','xmodules','mails','phase1','mail_infos_hebdomadaire.erb')
+    @info_hebdo_mail_path ||= File.join(APPFOLDER,'_lib','_pages_','concours','xmodules','mails',"phase#{Concours.current.phase}",'mail_infos_hebdomadaire.erb')
   end #/ info_hebdo_mail_path
 end # /<< self
 # ---------------------------------------------------------------------

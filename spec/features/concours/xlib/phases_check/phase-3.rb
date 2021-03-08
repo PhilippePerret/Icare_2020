@@ -66,6 +66,28 @@ def check_phase_3
     expect(dpalm[:note]).not_to eq('NC'), "La note consignée ne devrait pas valoir 'NC'…"
   end
 
+  # RÉSULTATS DANS BASE DE DONNÉES
+  # ------------------------------
+  # Les résultats du calcul (note et position) ont été enregistrées dans la
+  # base de données pour chaque concurrent.
+  pending "Vérifier ça"
+  # On récupère les données dans la base
+  db_dossiers = db_exec("SELECT pre_note, fin_note, specs, concurrent_id FROM #{DBTBL_CONCURS_PER_CONCOURS} WHERE annee = ?", [ANNEE_CONCOURS_COURANTE])
+  db_hdossiers = {}
+  db_dossiers.each do |hdossier|
+    db_hdossiers.merge!(hdossier[:concurrent_id] => hdossier)
+  end
+
+  Dossier.conformes.each do |dossier|
+    # puts "dossier.position: #{dossier.position.inspect} (#{dossier.note_totale})"
+    dpalm = data_palmares[:classement][dossier.position - 1]
+    expect(dpalm[:concurrent_id]).to eq(dossier.concurrent_id),
+      "Le concurrent #{dossier.concurrent_id} devrait être à la position #{dossier.position}…"
+    expect(dpalm[:note]).to eq(dossier.note_totale),
+      "La note consignée devrait valoir #{dossier.note_totale}, elle vaut #{dpalm[:note]}"
+    expect(dpalm[:note]).not_to eq('NC'), "La note consignée ne devrait pas valoir 'NC'…"
+  end
+
 
   # LE TABLEAU DES PRÉSÉLECTIONNÉS
   # ------------------------------

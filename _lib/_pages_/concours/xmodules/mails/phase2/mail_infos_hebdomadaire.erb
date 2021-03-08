@@ -1,0 +1,71 @@
+<%
+# frozen_string_literal: true
+=begin
+  Mail d'information hebdomadaire envoyé à ceux qui veulent le recevoir
+=end
+CONCOURS = Concours.current unless defined?(CONCOURS)
+ANNEE = CONCOURS.annee unless defined?(ANNEE)
+subject("[CONCOURS #{ANNEE}] Mail hebdomadaire d'information")
+%>
+<p>
+Ch<%=fem(:ere)%> <%= patronyme.patronimize %>,
+</p>
+<p>Veuillez trouver ci-dessous les informations sur le Concours de Synopsis <%= ANNEE %> de l'atelier Icare.</p>
+<%
+# Ici une partie qui dépend du fait que le concurrent a envoyé ou non son fichier
+%>
+
+<p style="font-weight:bold;margin-top:50px;">ÉTAT DE VOTRE CANDIDATURE</p>
+
+<% if synopsis.cfile.sent? && synopsis.cfile.conforme? %>
+
+  <p>Votre fichier de candidature a été reçu et validé, il ne vous reste donc plus qu'à patienter jusqu'à la présélection des 10 projets qui participeront à la finale. Nous espérons que cette attente n'est pas trop stressante pour vous ;-).</p>
+
+<% else %>
+  <%# CAS D'UN FICHIER PAS ENCORE ENVOYÉ %>
+  <p>La date d’échéance est dépassée. Vous ne pouvez plus participer au concours, malheureusement.</p>
+  <p>Mais rassurez-vous, il y aura d’autres sessions sur les prochaines années.</p><%
+
+end
+
+%><%
+
+if synopsis.cfile.sent? && synopsis.cfile.conforme?
+
+  %><p>Votre projet “<span style="font-weight:bold;"><%=synopsis.titre%></span>” est aujourd'hui en lice contre <span style="font-weight:bold;"><%= Concurrent.count_real - 1 %> autres vraies concurrentes et vrais concurrents</span> qui ont tout comme vous transmis un dossier conforme.</p><%
+
+end
+
+%><%
+
+if Cronjob.current_time.day < 8 %>
+  <p style="font-weight:bold;margin-top:50px;">ÉCHÉANCIER</p>
+<table style="font-size:0.9em;" border="1" cellpadding="8">
+  <tr>
+    <td>Démarrage du concours</td><td>le <%= formate_date(CONCOURS.date_lancement) %>.</td>
+  </tr>
+  <tr>
+    <td>Rendu des fichiers de candidature</td><td>le <%= formate_date(CONCOURS.date_echeance) %> à minuit.</td>
+  </tr>
+  <tr>
+    <td></td><td>L'organisation de l'atelier Icare procède à une première sélection.</td>
+  </tr>
+  <tr>
+    <td>Résultats de la préselection</td><td>le <%= formate_date(CONCOURS.date_fin_preselection) %> environ.</td>
+  </tr>
+  <tr>
+    <td></td><td>Le jury procède à la sélection finale.</td>
+  </tr>
+  <tr>
+    <td>Palmarès final</td><td>le <%= formate_date(CONCOURS.date_palmares) %> environ.</td>
+  </tr>
+</table>
+<%
+end #/ fin de si on est la première semaine du mois
+%>
+
+<p style="font-size:0.85em;">Rappel : si vous ne voulez plus recevoir ces mails d'information, modifiez vos réglages dans votre <%= Tag.link(route:"concours/espace_concurrent", full:true, text:"espace personnel") %> dans la section “Concours” de l'atelier.</p>
+
+<p>Bien à vous et bonne chance !</p>
+
+<p>L’administration du Concours</p>

@@ -59,18 +59,18 @@ feature "Un membre du second jury" do
     ne_peut_pas_encore_evaluer_un_projet
   end #/context PHASE 2
 
-  context 'PHASE 3', phase3:true, jury2:'phase3' do
+  context 'en PHASE 3', phase3:true, jury2:'phase3' do
     before :all do
       degel('concours-phase-3')
     end
-    peut_rejoindre_le_concours
-    peut_lire_un_projet
-    peut_evaluer_un_projet
-    peut_evaluer_un_synopsis_par_la_fiche
-    peut_modifier_son_evaluation
+    # peut_rejoindre_le_concours
+    peut_lire_un_projet_preselectionned
+    # peut_evaluer_un_projet_preselectionned
+    # peut_evaluer_un_synopsis_par_la_fiche
+    # peut_modifier_son_evaluation
   end #/context PHASE 3
 
-  context 'PHASE 5', phase5:true, jury2:'phase5' do
+  context 'en PHASE 5', phase5:true, jury2:'phase5' do
     before :all do
       degel('concours-phase-5')
     end
